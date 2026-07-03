@@ -4,4 +4,4 @@ draft = false
 title = "Liming Zhang's Blog"
 +++
 
-欢迎来到张黎明的博客！
+欢迎来到张黎明的博客
