@@ -1,7 +1,7 @@
 +++
 date = "2026-07-03T08:00:02Z"
 draft = false
-title = "My First Post"
+title = "Liming Zhang's Blog"
 +++
 
-这是我的第一篇博客文章。
+欢迎来到张黎明的博客！
