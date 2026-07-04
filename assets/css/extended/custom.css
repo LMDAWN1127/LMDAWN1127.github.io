@@ -1,0 +1,62 @@
+/* 自定义样式 - 美化博客 */
+
+/* 文章卡片悬停效果 */
+article.post-entry {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    border-radius: 8px;
+}
+
+article.post-entry:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* 代码块美化 */
+.highlight pre {
+    border-radius: 8px;
+    padding: 16px;
+}
+
+/* 标签样式 */
+.post-tags a {
+    display: inline-block;
+    padding: 2px 10px;
+    margin: 2px;
+    border-radius: 15px;
+    background: var(--entry);
+    border: 1px solid var(--border);
+    font-size: 0.85em;
+    transition: all 0.2s ease;
+}
+
+.post-tags a:hover {
+    background: var(--primary);
+    color: var(--background);
+    border-color: var(--primary);
+}
+
+/* 面包屑导航美化 */
+.breadcrumbs {
+    font-size: 0.9em;
+    margin-bottom: 1em;
+    color: var(--secondary);
+}
+
+/* 目录样式 */
+.toc {
+    border-radius: 8px;
+    padding: 1em;
+}
+
+/* 页脚美化 */
+.footer {
+    border-top: 1px solid var(--border);
+    padding-top: 1em;
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+    .post-entry {
+        padding: 1em;
+    }
+}

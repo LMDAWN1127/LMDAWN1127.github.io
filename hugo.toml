@@ -1,4 +1,111 @@
 baseURL = "https://LMDAWN1127.github.io/"
-locale = "zh-cn"
-title = "我的博客"
+languageCode = "zh-cn"
+defaultContentLanguage = "zh"
+title = "DAWN's Blog"
 theme = "PaperMod"
+paginate = 10
+
+# 启用 emoji 和代码高亮
+enableEmoji = true
+enableRobotsTXT = true
+
+[params]
+  env = "production"
+  description = "技术分享 | 学习笔记 | 生活记录"
+  keywords = ["博客", "技术", "Claude Code", "AI", "CentOS"]
+  author = "DAWN"
+  defaultTheme = "auto"  # 自动跟随系统主题
+  ShowReadingTime = true  # 显示阅读时间
+  ShowShareButtons = true  # 显示分享按钮
+  ShowPostNavLinks = true  # 显示文章导航
+  ShowBreadCrumbs = true  # 显示面包屑导航
+  ShowCodeCopyButtons = true  # 代码复制按钮
+  ShowWordCount = true  # 显示字数统计
+  ShowRssButtonInSectionTermList = true
+  UseHugoToc = true  # 启用目录
+  disableSpecial1stPost = false
+  disableScrollToTop = false
+  hidemeta = false
+  hideSummary = false
+  showtoc = true
+  tocopen = true
+  comments = false
+
+  [params.homeInfoParams]
+    Title = "👋 欢迎来到 DAWN 的博客"
+    Content = "这里记录我的技术学习、项目实践和生活感悟。希望能和大家一起交流成长！"
+
+  [[params.socialIcons]]
+    name = "github"
+    url = "https://github.com/LMDAWN1127"
+
+  [[params.socialIcons]]
+    name = "rss"
+    url = "/index.xml"
+
+  [params.editPost]
+    URL = ""
+    Text = "编辑本文"
+    appendFilePath = true
+
+  [params.assets]
+    favicon = "/favicon.ico"
+    disableFingerprinting = true
+
+  [params.cover]
+    hidden = false
+    hiddenInList = false
+    hiddenInSingle = false
+
+  [params.label]
+    text = "DAWN's Blog"
+    icon = "🖊️"
+
+# 菜单配置
+[[menu.main]]
+  identifier = "posts"
+  name = "📝 文章"
+  url = "/posts/"
+  weight = 10
+
+[[menu.main]]
+  identifier = "tags"
+  name = "🏷️ 标签"
+  url = "/tags/"
+  weight = 20
+
+[[menu.main]]
+  identifier = "categories"
+  name = "📂 分类"
+  url = "/categories/"
+  weight = 30
+
+[[menu.main]]
+  identifier = "search"
+  name = "🔍 搜索"
+  url = "/search/"
+  weight = 40
+
+# 搜索配置
+[outputs]
+  home = ["HTML", "RSS", "JSON"]
+
+# Markdown 渲染配置
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+  [markup.highlight]
+    codeFences = true
+    guessSyntax = true
+    lineNos = true
+    style = "monokai"
+  [markup.tableOfContents]
+    endLevel = 4
+    ordered = false
+    startLevel = 2
+
+# 分类配置
+[taxonomies]
+  category = "categories"
+  tag = "tags"
