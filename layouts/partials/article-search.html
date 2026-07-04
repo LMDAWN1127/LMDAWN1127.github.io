@@ -1,20 +1,16 @@
 <div id="article-search-box" style="display:none; position:fixed; top:20px; right:20px; z-index:1000; background:var(--entry); border:1px solid var(--border); border-radius:12px; padding:0; box-shadow:0 8px 24px rgba(0,0,0,0.2); min-width:320px; overflow:hidden;">
   <div style="display:flex; align-items:center; gap:8px; padding:12px 16px; background:linear-gradient(135deg, var(--primary), var(--secondary)); color:var(--theme); cursor:move;">
     <span style="font-size:14px; font-weight:600;">🔍 文章搜索</span>
-    <span style="margin-left:auto; font-size:11px; opacity:0.8;">拖拽移动</span>
-    <button id="search-close" style="padding:4px 8px; background:rgba(255,255,255,0.2); color:white; border:none; border-radius:4px; cursor:pointer; font-size:12px; margin-left:8px;">✕</button>
+    <button id="search-close" style="padding:4px 8px; background:rgba(255,255,255,0.2); color:white; border:none; border-radius:4px; cursor:pointer; font-size:12px; margin-left:auto;">✕</button>
   </div>
   <div style="padding:12px 16px;">
     <div style="display:flex; align-items:center; gap:8px; margin-bottom:12px;">
-      <input type="text" id="article-search-input" placeholder="输入关键词..." style="flex:1; padding:10px 12px; border:2px solid var(--border); border-radius:8px; background:var(--theme); color:var(--primary); font-size:14px; outline:none; transition:border-color 0.2s;">
+      <input type="text" id="article-search-input" placeholder="输入关键词搜索..." style="flex:1; padding:10px 12px; border:2px solid var(--border); border-radius:8px; background:var(--theme); color:var(--primary); font-size:14px; outline:none; transition:border-color 0.2s;">
       <span id="search-count" style="font-size:12px; color:var(--secondary); white-space:nowrap; min-width:50px; text-align:center;"></span>
     </div>
     <div style="display:flex; gap:8px;">
       <button id="search-prev" style="flex:1; padding:8px; border:1px solid var(--border); border-radius:6px; background:var(--theme); color:var(--primary); cursor:pointer; font-size:13px; transition:all 0.2s;">◀ 上一个</button>
       <button id="search-next" style="flex:1; padding:8px; border:1px solid var(--border); border-radius:6px; background:var(--theme); color:var(--primary); cursor:pointer; font-size:13px; transition:all 0.2s;">下一个 ▶</button>
-    </div>
-    <div style="margin-top:10px; font-size:11px; color:var(--secondary); text-align:center;">
-      快捷键: Ctrl+F 打开 | Esc 关闭 | Enter 下一个
     </div>
   </div>
 </div>
