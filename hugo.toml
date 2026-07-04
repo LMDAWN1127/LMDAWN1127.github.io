@@ -109,3 +109,9 @@ enableRobotsTXT = true
 [taxonomies]
   category = "categories"
   tag = "tags"
+
+[[menu.main]]
+  identifier = "about"
+  name = "👤 关于"
+  url = "/about/"
+  weight = 5
