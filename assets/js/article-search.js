@@ -1,99 +1,76 @@
 (function() {
-  const searchBox = document.getElementById("article-search-box");
-  const searchInput = document.getElementById("article-search-input");
-  const searchCount = document.getElementById("search-count");
-  const searchPrev = document.getElementById("search-prev");
-  const searchNext = document.getElementById("search-next");
-  const searchClose = document.getElementById("search-close");
-  const articleContent = document.querySelector(".post-content") || document.querySelector("article") || document.querySelector(".entry-content");
+  var searchBox = document.getElementById("article-search-box");
+  var searchInput = document.getElementById("article-search-input");
+  var searchCount = document.getElementById("search-count");
+  var searchPrev = document.getElementById("search-prev");
+  var searchNext = document.getElementById("search-next");
+  var searchClose = document.getElementById("search-close");
+  var articleContent = document.querySelector(".post-content") || document.querySelector("article") || document.querySelector(".entry-content");
   
-  if (!articleContent) return;
+  if (!searchBox || !articleContent) return;
   
-  let matches = [];
-  let currentMatch = -1;
-  let originalContent = "";
+  var matches = [];
+  var currentMatch = -1;
+  var originalContent = "";
+  var isDragging = false;
+  var dragStartX, dragStartY, boxStartX, boxStartY;
+  var dragHandle = searchBox.querySelector("div:first-child");
   
-  // Drag functionality
-  let isDragging = false;
-  let dragStartX, dragStartY, boxStartX, boxStartY;
-  const dragHandle = searchBox.querySelector("div:first-child");
-  
-  dragHandle.style.cursor = "move";
-  dragHandle.style.userSelect = "none";
-  
-  dragHandle.addEventListener("mousedown", function(e) {
-    if (e.target.tagName === "INPUT" || e.target.tagName === "BUTTON") return;
-    isDragging = true;
-    dragStartX = e.clientX;
-    dragStartY = e.clientY;
-    const rect = searchBox.getBoundingClientRect();
-    boxStartX = rect.left;
-    boxStartY = rect.top;
-    searchBox.style.transition = "none";
-    e.preventDefault();
-  });
+  if (dragHandle) {
+    dragHandle.style.cursor = "move";
+    dragHandle.style.userSelect = "none";
+    
+    dragHandle.addEventListener("mousedown", function(e) {
+      if (e.target.tagName === "INPUT" || e.target.tagName === "BUTTON") return;
+      isDragging = true;
+      dragStartX = e.clientX;
+      dragStartY = e.clientY;
+      var rect = searchBox.getBoundingClientRect();
+      boxStartX = rect.left;
+      boxStartY = rect.top;
+      searchBox.style.transition = "none";
+      e.preventDefault();
+    });
+    
+    dragHandle.addEventListener("touchstart", function(e) {
+      if (e.target.tagName === "INPUT" || e.target.tagName === "BUTTON") return;
+      var touch = e.touches[0];
+      isDragging = true;
+      dragStartX = touch.clientX;
+      dragStartY = touch.clientY;
+      var rect = searchBox.getBoundingClientRect();
+      boxStartX = rect.left;
+      boxStartY = rect.top;
+      searchBox.style.transition = "none";
+      e.preventDefault();
+    });
+  }
   
   document.addEventListener("mousemove", function(e) {
     if (!isDragging) return;
-    const deltaX = e.clientX - dragStartX;
-    const deltaY = e.clientY - dragStartY;
-    let newX = boxStartX + deltaX;
-    let newY = boxStartY + deltaY;
-    
-    // Keep within viewport
-    const boxRect = searchBox.getBoundingClientRect();
-    const maxX = window.innerWidth - boxRect.width;
-    const maxY = window.innerHeight - boxRect.height;
-    newX = Math.max(0, Math.min(newX, maxX));
-    newY = Math.max(0, Math.min(newY, maxY));
-    
-    searchBox.style.left = newX + "px";
-    searchBox.style.top = newY + "px";
+    var newX = boxStartX + (e.clientX - dragStartX);
+    var newY = boxStartY + (e.clientY - dragStartY);
+    var maxX = window.innerWidth - searchBox.offsetWidth;
+    var maxY = window.innerHeight - searchBox.offsetHeight;
+    searchBox.style.left = Math.max(0, Math.min(newX, maxX)) + "px";
+    searchBox.style.top = Math.max(0, Math.min(newY, maxY)) + "px";
     searchBox.style.right = "auto";
-  });
-  
-  document.addEventListener("mouseup", function() {
-    isDragging = false;
-    searchBox.style.transition = "";
-  });
-  
-  // Touch support
-  dragHandle.addEventListener("touchstart", function(e) {
-    if (e.target.tagName === "INPUT" || e.target.tagName === "BUTTON") return;
-    const touch = e.touches[0];
-    isDragging = true;
-    dragStartX = touch.clientX;
-    dragStartY = touch.clientY;
-    const rect = searchBox.getBoundingClientRect();
-    boxStartX = rect.left;
-    boxStartY = rect.top;
-    searchBox.style.transition = "none";
-    e.preventDefault();
   });
   
   document.addEventListener("touchmove", function(e) {
     if (!isDragging) return;
-    const touch = e.touches[0];
-    const deltaX = touch.clientX - dragStartX;
-    const deltaY = touch.clientY - dragStartY;
-    let newX = boxStartX + deltaX;
-    let newY = boxStartY + deltaY;
-    
-    const boxRect = searchBox.getBoundingClientRect();
-    const maxX = window.innerWidth - boxRect.width;
-    const maxY = window.innerHeight - boxRect.height;
-    newX = Math.max(0, Math.min(newX, maxX));
-    newY = Math.max(0, Math.min(newY, maxY));
-    
-    searchBox.style.left = newX + "px";
-    searchBox.style.top = newY + "px";
+    var touch = e.touches[0];
+    var newX = boxStartX + (touch.clientX - dragStartX);
+    var newY = boxStartY + (touch.clientY - dragStartY);
+    var maxX = window.innerWidth - searchBox.offsetWidth;
+    var maxY = window.innerHeight - searchBox.offsetHeight;
+    searchBox.style.left = Math.max(0, Math.min(newX, maxX)) + "px";
+    searchBox.style.top = Math.max(0, Math.min(newY, maxY)) + "px";
     searchBox.style.right = "auto";
   });
   
-  document.addEventListener("touchend", function() {
-    isDragging = false;
-    searchBox.style.transition = "";
-  });
+  document.addEventListener("mouseup", function() { isDragging = false; });
+  document.addEventListener("touchend", function() { isDragging = false; });
   
   function showSearchBox() {
     searchBox.style.display = "block";
@@ -111,50 +88,43 @@
   }
   
   function clearHighlights() {
-    if (originalContent) {
-      articleContent.innerHTML = originalContent;
-    }
+    if (originalContent) articleContent.innerHTML = originalContent;
   }
   
   function highlightMatches(keyword) {
     clearHighlights();
     matches = [];
     currentMatch = -1;
+    if (!keyword.trim()) { searchCount.textContent = ""; return; }
     
-    if (!keyword.trim()) {
-      searchCount.textContent = "";
-      return;
-    }
+    var regex = new RegExp("(" + keyword.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + ")", "gi");
     
-    const escapedKeyword = keyword.replace(/[.*+?${}()|[\]\\]/g, "\\$&&");
-    const regex = new RegExp("(" + escapedKeyword + ")", "gi");
-    
-    function highlightNode(node) {
+    function walk(node) {
       if (node.nodeType === 3) {
-        const text = node.textContent;
-        if (regex.test(text)) {
-          const span = document.createElement("span");
-          span.innerHTML = text.replace(regex, "<span class=\"search-highlight\"></span>");
+        if (regex.test(node.textContent)) {
+          var span = document.createElement("span");
+          span.innerHTML = node.textContent.replace(regex, '<mark class="search-highlight">$1</mark>');
           node.parentNode.replaceChild(span, node);
         }
       } else if (node.nodeType === 1 && node.tagName !== "SCRIPT" && node.tagName !== "STYLE") {
-        Array.from(node.childNodes).forEach(highlightNode);
+        for (var i = 0; i < node.childNodes.length; i++) walk(node.childNodes[i]);
       }
     }
-    
-    highlightNode(articleContent);
+    walk(articleContent);
     
     matches = articleContent.querySelectorAll(".search-highlight");
-    searchCount.textContent = matches.length > 0 ? "0/" + matches.length : "未找到";
-    
     if (matches.length > 0) {
       currentMatch = 0;
-      setActiveMatch();
+      matches[0].classList.add("search-highlight-active");
+      matches[0].scrollIntoView({ behavior: "smooth", block: "center" });
+      searchCount.textContent = "1/" + matches.length;
+    } else {
+      searchCount.textContent = "未找到";
     }
   }
   
-  function setActiveMatch() {
-    matches.forEach(function(m) { m.classList.remove("search-highlight-active"); });
+  function setActive() {
+    for (var i = 0; i < matches.length; i++) matches[i].classList.remove("search-highlight-active");
     if (currentMatch >= 0 && currentMatch < matches.length) {
       matches[currentMatch].classList.add("search-highlight-active");
       matches[currentMatch].scrollIntoView({ behavior: "smooth", block: "center" });
@@ -162,53 +132,24 @@
     }
   }
   
-  function nextMatch() {
-    if (matches.length === 0) return;
-    currentMatch = (currentMatch + 1) % matches.length;
-    setActiveMatch();
-  }
-  
-  function prevMatch() {
-    if (matches.length === 0) return;
-    currentMatch = (currentMatch - 1 + matches.length) % matches.length;
-    setActiveMatch();
-  }
-  
-  // Keyboard shortcuts
-  document.addEventListener("keydown", function(e) {
-    if ((e.ctrlKey || e.metaKey) && e.key === "f") {
-      if (searchBox.style.display === "none") {
-        e.preventDefault();
-        showSearchBox();
-      }
-    }
-    if (e.key === "Escape") {
-      hideSearchBox();
-    }
-    if (searchBox.style.display !== "none") {
-      if (e.key === "Enter") {
-        e.preventDefault();
-        if (e.shiftKey) prevMatch(); else nextMatch();
-      }
-    }
-  });
-  
-  searchInput.addEventListener("input", function() {
-    highlightMatches(this.value);
-  });
-  
-  searchPrev.addEventListener("click", prevMatch);
-  searchNext.addEventListener("click", nextMatch);
+  searchNext.addEventListener("click", function() { if (matches.length) { currentMatch = (currentMatch + 1) % matches.length; setActive(); } });
+  searchPrev.addEventListener("click", function() { if (matches.length) { currentMatch = (currentMatch - 1 + matches.length) % matches.length; setActive(); } });
   searchClose.addEventListener("click", hideSearchBox);
+  searchInput.addEventListener("input", function() { highlightMatches(this.value); });
   
-  // Add search button to article header
-  const articleHeader = document.querySelector(".post-header") || document.querySelector(".entry-header") || document.querySelector("header.page-header");
-  if (articleHeader) {
-    const searchBtn = document.createElement("button");
-    searchBtn.innerHTML = "🔍 搜索";
-    searchBtn.style.cssText = "position:absolute; top:10px; right:10px; padding:8px 16px; background:var(--primary); color:var(--theme); border:none; border-radius:6px; cursor:pointer; font-size:14px; z-index:10;";
-    searchBtn.addEventListener("click", showSearchBox);
-    articleHeader.style.position = "relative";
-    articleHeader.appendChild(searchBtn);
+  document.addEventListener("keydown", function(e) {
+    if ((e.ctrlKey || e.metaKey) && e.key === "f" && searchBox.style.display === "none") { e.preventDefault(); showSearchBox(); }
+    if (e.key === "Escape") hideSearchBox();
+    if (searchBox.style.display !== "none" && e.key === "Enter") { e.preventDefault(); if (e.shiftKey) { if (matches.length) { currentMatch = (currentMatch - 1 + matches.length) % matches.length; setActive(); } } else { if (matches.length) { currentMatch = (currentMatch + 1) % matches.length; setActive(); } } }
+  });
+  
+  var header = document.querySelector(".post-header");
+  if (header) {
+    var btn = document.createElement("button");
+    btn.textContent = "🔍 搜索";
+    btn.style.cssText = "position:absolute;top:10px;right:10px;padding:8px 16px;background:var(--primary);color:var(--theme);border:none;border-radius:6px;cursor:pointer;font-size:14px;z-index:10;";
+    btn.addEventListener("click", showSearchBox);
+    header.style.position = "relative";
+    header.appendChild(btn);
   }
 })();
