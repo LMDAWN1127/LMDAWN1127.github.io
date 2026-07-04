@@ -49,7 +49,7 @@ enableRobotsTXT = true
     appendFilePath = true
 
   [params.assets]
-    favicon = "/favicon.ico"
+    favicon = "/favicon.svg"
     disableFingerprinting = true
 
   [params.cover]
