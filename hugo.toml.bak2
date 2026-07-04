@@ -14,15 +14,15 @@ enableRobotsTXT = true
   description = "技术分享 | 学习笔记 | 生活记录"
   keywords = ["博客", "技术", "Claude Code", "AI", "CentOS"]
   author = "DAWN"
-  defaultTheme = "auto"
-  ShowReadingTime = true
-  ShowShareButtons = true
-  ShowPostNavLinks = true
-  ShowBreadCrumbs = true
-  ShowCodeCopyButtons = true
-  ShowWordCount = true
+  defaultTheme = "auto"  # 自动跟随系统主题
+  ShowReadingTime = true  # 显示阅读时间
+  ShowShareButtons = true  # 显示分享按钮
+  ShowPostNavLinks = true  # 显示文章导航
+  ShowBreadCrumbs = true  # 显示面包屑导航
+  ShowCodeCopyButtons = true  # 代码复制按钮
+  ShowWordCount = true  # 显示字数统计
   ShowRssButtonInSectionTermList = true
-  UseHugoToc = true
+  UseHugoToc = true  # 启用目录
   disableSpecial1stPost = false
   disableScrollToTop = false
   hidemeta = false
@@ -31,16 +31,9 @@ enableRobotsTXT = true
   tocopen = true
   comments = true
 
-  # 启用个人主页模式
-  [params.homeProfileParams]
-    Title = "👋 Hi, 我是 DAWN"
-    Content = """
-    热爱技术的开发者 🚀
-
-    专注 AI 编程工具、Linux 运维、Web 开发
-
-    喜欢探索新技术，折腾服务器，写代码解决问题
-    """
+  [params.homeInfoParams]
+    Title = "👋 欢迎来到 DAWN 的博客"
+    Content = "这里记录我的技术学习、项目实践和生活感悟。希望能和大家一起交流成长！"
 
   [[params.socialIcons]]
     name = "github"
@@ -70,22 +63,10 @@ enableRobotsTXT = true
 
 # 菜单配置
 [[menu.main]]
-  identifier = "about"
-  name = "👤 关于"
-  url = "/about/"
-  weight = 5
-
-[[menu.main]]
   identifier = "posts"
   name = "📝 文章"
   url = "/posts/"
   weight = 10
-
-[[menu.main]]
-  identifier = "archives"
-  name = "📚 归档"
-  url = "/archives/"
-  weight = 15
 
 [[menu.main]]
   identifier = "tags"
@@ -128,3 +109,15 @@ enableRobotsTXT = true
 [taxonomies]
   category = "categories"
   tag = "tags"
+
+[[menu.main]]
+  identifier = "about"
+  name = "👤 关于"
+  url = "/about/"
+  weight = 5
+
+[[menu.main]]
+  identifier = "archives"
+  name = "📚 归档"
+  url = "/archives/"
+  weight = 15
