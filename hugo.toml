@@ -33,7 +33,7 @@ enableRobotsTXT = true
   # 启用个人主页模式
   [params.profileMode]
     enabled = true
-    avatarURL = "/images/avatar.svg"
+    avatarURL = "/images/DAWN.jpg"
     Title = "👋 Hi, 我是 DAWN"
     Content = """
     热爱技术的开发者 🚀
