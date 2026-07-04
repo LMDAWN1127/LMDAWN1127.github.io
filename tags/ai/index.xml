@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>AI on DAWN's Blog</title><link>https://LMDAWN1127.github.io/tags/ai/</link><description>Recent content in AI on DAWN's Blog</description><generator>Hugo</generator><language>zh-cn</language><lastBuildDate>Sat, 04 Jul 2026 05:00:00 +0000</lastBuildDate><atom:link href="https://LMDAWN1127.github.io/tags/ai/index.xml" rel="self" type="application/rss+xml"/><item><title>CentOS 部署 Claude Code 全流程指南</title><link>https://LMDAWN1127.github.io/posts/centos-deploy-claude-code/</link><pubDate>Sat, 04 Jul 2026 05:00:00 +0000</pubDate><guid>https://LMDAWN1127.github.io/posts/centos-deploy-claude-code/</guid><description>&lt;h2 id="前言"&gt;前言&lt;/h2&gt;
+&lt;p&gt;Claude Code 是 Anthropic 推出的官方 CLI 工具，可以在终端中直接与 Claude AI 进行交互，完成代码编写、调试、重构等任务。本文将详细介绍如何在 CentOS 系统上部署 Claude Code。&lt;/p&gt;
+&lt;h2 id="环境要求"&gt;环境要求&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;操作系统&lt;/strong&gt;: CentOS 7/8/Stream 9&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Node.js&lt;/strong&gt;: v18 或更高版本&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;内存&lt;/strong&gt;: 建议 2GB 以上&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;网络&lt;/strong&gt;: 需要访问 Anthropic API&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="一安装-nodejs"&gt;一、安装 Node.js&lt;/h2&gt;
+&lt;p&gt;Claude Code 依赖 Node.js 运行环境，推荐使用 NodeSource 安装最新 LTS 版本。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;
+&lt;table style="border-spacing:0;padding:0;margin:0;border:0;"&gt;&lt;tr&gt;&lt;td style="vertical-align:top;padding:0;margin:0;border:0;"&gt;
+&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code&gt;&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"&gt;1
+&lt;/span&gt;&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"&gt;2
+&lt;/span&gt;&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"&gt;3
+&lt;/span&gt;&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"&gt;4
+&lt;/span&gt;&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"&gt;5
+&lt;/span&gt;&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"&gt;6
+&lt;/span&gt;&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"&gt;7
+&lt;/span&gt;&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"&gt;8
+&lt;/span&gt;&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"&gt;9
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%"&gt;
+&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# 安装 NodeSource 仓库&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;curl -fsSL https://rpm.nodesource.com/setup_lts.x | sudo bash -
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# 安装 Node.js&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;sudo yum install -y nodejs
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# 验证安装&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;node -v
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;npm -v
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h2 id="二安装-claude-code"&gt;二、安装 Claude Code&lt;/h2&gt;
+&lt;p&gt;使用 npm 全局安装 Claude Code CLI：&lt;/p&gt;</description></item></channel></rss>
