@@ -29,7 +29,7 @@ enableRobotsTXT = true
   hideSummary = false
   showtoc = true
   tocopen = true
-  comments = false
+  comments = true
 
   [params.homeInfoParams]
     Title = "👋 欢迎来到 DAWN 的博客"
