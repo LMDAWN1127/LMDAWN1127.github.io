@@ -13,6 +13,88 @@
   let currentMatch = -1;
   let originalContent = "";
   
+  // Drag functionality
+  let isDragging = false;
+  let dragStartX, dragStartY, boxStartX, boxStartY;
+  const dragHandle = searchBox.querySelector("div:first-child");
+  
+  dragHandle.style.cursor = "move";
+  dragHandle.style.userSelect = "none";
+  
+  dragHandle.addEventListener("mousedown", function(e) {
+    if (e.target.tagName === "INPUT" || e.target.tagName === "BUTTON") return;
+    isDragging = true;
+    dragStartX = e.clientX;
+    dragStartY = e.clientY;
+    const rect = searchBox.getBoundingClientRect();
+    boxStartX = rect.left;
+    boxStartY = rect.top;
+    searchBox.style.transition = "none";
+    e.preventDefault();
+  });
+  
+  document.addEventListener("mousemove", function(e) {
+    if (!isDragging) return;
+    const deltaX = e.clientX - dragStartX;
+    const deltaY = e.clientY - dragStartY;
+    let newX = boxStartX + deltaX;
+    let newY = boxStartY + deltaY;
+    
+    // Keep within viewport
+    const boxRect = searchBox.getBoundingClientRect();
+    const maxX = window.innerWidth - boxRect.width;
+    const maxY = window.innerHeight - boxRect.height;
+    newX = Math.max(0, Math.min(newX, maxX));
+    newY = Math.max(0, Math.min(newY, maxY));
+    
+    searchBox.style.left = newX + "px";
+    searchBox.style.top = newY + "px";
+    searchBox.style.right = "auto";
+  });
+  
+  document.addEventListener("mouseup", function() {
+    isDragging = false;
+    searchBox.style.transition = "";
+  });
+  
+  // Touch support
+  dragHandle.addEventListener("touchstart", function(e) {
+    if (e.target.tagName === "INPUT" || e.target.tagName === "BUTTON") return;
+    const touch = e.touches[0];
+    isDragging = true;
+    dragStartX = touch.clientX;
+    dragStartY = touch.clientY;
+    const rect = searchBox.getBoundingClientRect();
+    boxStartX = rect.left;
+    boxStartY = rect.top;
+    searchBox.style.transition = "none";
+    e.preventDefault();
+  });
+  
+  document.addEventListener("touchmove", function(e) {
+    if (!isDragging) return;
+    const touch = e.touches[0];
+    const deltaX = touch.clientX - dragStartX;
+    const deltaY = touch.clientY - dragStartY;
+    let newX = boxStartX + deltaX;
+    let newY = boxStartY + deltaY;
+    
+    const boxRect = searchBox.getBoundingClientRect();
+    const maxX = window.innerWidth - boxRect.width;
+    const maxY = window.innerHeight - boxRect.height;
+    newX = Math.max(0, Math.min(newX, maxX));
+    newY = Math.max(0, Math.min(newY, maxY));
+    
+    searchBox.style.left = newX + "px";
+    searchBox.style.top = newY + "px";
+    searchBox.style.right = "auto";
+  });
+  
+  document.addEventListener("touchend", function() {
+    isDragging = false;
+    searchBox.style.transition = "";
+  });
+  
   function showSearchBox() {
     searchBox.style.display = "block";
     searchInput.focus();
