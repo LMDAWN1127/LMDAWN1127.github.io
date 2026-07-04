@@ -115,3 +115,9 @@ enableRobotsTXT = true
   name = "👤 关于"
   url = "/about/"
   weight = 5
+
+[[menu.main]]
+  identifier = "archives"
+  name = "📚 归档"
+  url = "/archives/"
+  weight = 15
