@@ -5,7 +5,6 @@ title = "DAWN's Blog"
 theme = "PaperMod"
 paginate = 10
 
-# 启用 emoji 和代码高亮
 enableEmoji = true
 enableRobotsTXT = true
 
@@ -32,7 +31,9 @@ enableRobotsTXT = true
   comments = true
 
   # 启用个人主页模式
-  [params.homeProfileParams]
+  [params.profileMode]
+    enabled = true
+    avatarURL = "/images/avatar.svg"
     Title = "👋 Hi, 我是 DAWN"
     Content = """
     热爱技术的开发者 🚀
@@ -68,7 +69,6 @@ enableRobotsTXT = true
     text = "DAWN's Blog"
     icon = "🖊️"
 
-# 菜单配置
 [[menu.main]]
   identifier = "about"
   name = "👤 关于"
@@ -105,11 +105,9 @@ enableRobotsTXT = true
   url = "/search/"
   weight = 40
 
-# 搜索配置
 [outputs]
   home = ["HTML", "RSS", "JSON"]
 
-# Markdown 渲染配置
 [markup]
   [markup.goldmark]
     [markup.goldmark.renderer]
@@ -124,7 +122,6 @@ enableRobotsTXT = true
     ordered = false
     startLevel = 2
 
-# 分类配置
 [taxonomies]
   category = "categories"
   tag = "tags"
