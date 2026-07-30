@@ -369,6 +369,150 @@ FROM node:18.17.0-alpine3.18@sha256:abc123...
 
 ---
 
+
+## 🧱 镜像层级详解
+
+### 什么是镜像层级？
+
+Docker 镜像由多个只读层叠加而成，每个指令都会创建一个新的层。理解层级对于优化构建至关重要。
+
+```bash
+# 查看镜像层历史
+docker history <image-name>
+
+# 示例输出
+IMAGE          CREATED        CREATED BY                                      SIZE
+a1b2c3d4e5f6   2 minutes ago  CMD ["node" "server.js"]                       0B
+f6e5d4c3b2a1   2 minutes ago  COPY . .                                        15.2MB
+b2a1f6e5d4c3   3 minutes ago  RUN npm ci --production                         128MB
+a1f6e5d4c3b2   4 minutes ago  COPY package.json package-lock.json ./          2.1kB
+```
+
+### 会创建新层的指令
+
+| 指令 | 创建层 | 说明 |
+|------|--------|------|
+| `FROM` | ✅ | 基础镜像层 |
+| `RUN` | ✅ | 每个 RUN 创建一层 |
+| `COPY` | ✅ | 每个 COPY 创建一层 |
+| `ADD` | ✅ | 每个 ADD 创建一层 |
+
+```dockerfile
+# 这会创建 4 个层
+FROM node:18-alpine        # 层 1：基础镜像
+RUN apk add --no-cache curl # 层 2：安装 curl
+COPY package.json .         # 层 3：复制 package.json
+RUN npm install             # 层 4：安装依赖
+```
+
+### 不会创建新层的指令
+
+| 指令 | 创建层 | 说明 |
+|------|--------|------|
+| `CMD` | ❌ | 只是元数据 |
+| `ENTRYPOINT` | ❌ | 只是元数据 |
+| `ENV` | ❌ | 只是元数据 |
+| `EXPOSE` | ❌ | 只是元数据 |
+| `WORKDIR` | ❌ | 只是元数据 |
+| `USER` | ❌ | 只是元数据 |
+| `LABEL` | ❌ | 只是元数据 |
+| `ARG` | ❌ | 只是元数据 |
+| `VOLUME` | ❌ | 只是元数据 |
+| `HEALTHCHECK` | ❌ | 只是元数据 |
+| `SHELL` | ❌ | 只是元数据 |
+| `ONBUILD` | ❌ | 只是元数据 |
+| `STOPSIGNAL` | ❌ | 只是元数据 |
+
+```dockerfile
+# 这些指令不会增加层
+FROM node:18-alpine        # 层 1：基础镜像
+WORKDIR /app               # 不增加层
+ENV NODE_ENV=production    # 不增加层
+EXPOSE 3000               # 不增加层
+USER node                 # 不增加层
+CMD ["node", "server.js"]  # 不增加层
+```
+
+### 层级优化技巧
+
+#### 技巧 1：合并多个 RUN 指令
+
+```dockerfile
+# ❌ 错误：创建 3 个层
+RUN apt-get update
+RUN apt-get install -y curl
+RUN apt-get clean
+
+# ✅ 正确：只创建 1 个层
+RUN apt-get update && \
+    apt-get install -y curl && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+```
+
+#### 技巧 2：合理安排 COPY 指令
+
+```dockerfile
+# ❌ 错误：创建 3 个层
+COPY package.json .
+COPY package-lock.json .
+COPY . .
+
+# ✅ 正确：创建 2 个层（利用缓存）
+COPY package.json package-lock.json ./
+RUN npm ci --production
+COPY . .
+```
+
+#### 技巧 3：清理在同一个 RUN 中
+
+```dockerfile
+# ❌ 错误：清理无效（文件已在上一层）
+RUN apt-get update && apt-get install -y build-essential
+RUN make && make install
+RUN apt-get clean  # 太晚了！
+
+# ✅ 正确：在同一层中清理
+RUN apt-get update && \
+    apt-get install -y build-essential && \
+    make && make install && \
+    apt-get purge -y --auto-remove build-essential && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+```
+
+### 层级数量对比
+
+| 优化策略 | 层数 | 镜像大小 |
+|----------|------|----------|
+| 每个指令一层 | 10+ | 1.2GB |
+| 合并 RUN 指令 | 4-5 | 800MB |
+| 多阶段构建 | 2-3 | 150MB |
+
+### 层级缓存机制
+
+```dockerfile
+# 层 1：变化很少
+FROM node:18-alpine
+
+# 层 2：变化很少（依赖定义）
+COPY package.json package-lock.json ./
+
+# 层 3：变化很少（安装依赖）
+RUN npm ci --production
+
+# 层 4：变化频繁（源代码）
+COPY . .
+
+# 层 5：构建命令
+RUN npm run build
+```
+
+**缓存规则：**
+- 如果某层的所有输入都没有变化，Docker 会使用缓存
+- 一旦某层失效，后续所有层都会重新构建
+- 把变化少的指令放在前面，变化多的放在后面
+
 ## 📊 优化效果对比
 
 让我们看看应用这些技巧后的效果：
