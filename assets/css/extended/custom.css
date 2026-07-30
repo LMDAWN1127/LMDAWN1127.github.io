@@ -98,17 +98,6 @@ article.post-entry:hover {
     margin-top: 0.5em;
 }
 
-/* 阅读进度条 */
-.reading-progress {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 0%;
-    height: 3px;
-    background: linear-gradient(90deg, var(--primary), #ff6b6b);
-    z-index: 9999;
-    transition: width 0.3s ease;
-}
 
 /* 文章目录固定 */
 .toc {

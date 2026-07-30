@@ -1,10 +1,6 @@
 {{- $scratch := newScratch }}
 
-{{/* 日期已隐藏 - 如需显示请取消注释
-{{- if not .Date.IsZero -}}
-    {{- $scratch.Add "meta" (slice (printf "<span title=%s>%s</span>" (.Date) (.Date | time.Format (default ":date_long" site.Params.DateFormat)))) }}
-{{- end }}
-*/}}
+{{/* 日期已完全隐藏 */}}
 
 {{- if (.Param "ShowReadingTime") -}}
     {{- $scratch.Add "meta" (slice (printf "<span>%s</span>" (i18n "read_time" .ReadingTime | default (printf "%d min" .ReadingTime)))) }}
