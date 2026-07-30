@@ -176,3 +176,31 @@ article.post-entry:hover {
         display: none;
     }
 }
+
+/* 归档页面标签分组样式 */
+.archive-section {
+    margin-bottom: 2em;
+}
+
+.archive-section-title {
+    font-size: 1.5em;
+    font-weight: 600;
+    margin-bottom: 0.8em;
+    padding-bottom: 0.3em;
+    border-bottom: 2px solid var(--primary);
+    color: var(--primary);
+}
+
+.archive-posts {
+    padding-left: 1em;
+}
+
+.archive-entry {
+    margin-bottom: 0.8em;
+    padding: 0.5em 0;
+}
+
+.archive-entry-title {
+    font-size: 1.1em;
+    margin-bottom: 0;
+}
