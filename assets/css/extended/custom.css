@@ -60,3 +60,40 @@ article.post-entry:hover {
         padding: 1em;
     }
 }
+
+/* 文章标题居中 */
+.post-title.entry-hint-parent {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+/* 隐藏草稿图标（非草稿文章） */
+.post-title .entry-hint {
+    display: none;
+}
+
+/* 文章描述居中 */
+.post-description {
+    text-align: center;
+}
+
+/* 文章元数据居中 */
+.post-meta {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+/* 封面图片标题居中 */
+.entry-cover figcaption {
+    text-align: center;
+    font-style: italic;
+    color: var(--secondary);
+    margin-top: 0.5em;
+}
