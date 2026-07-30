@@ -48,9 +48,6 @@
       </span>
       {{- end }}
     </h3>
-    <div class="archive-meta">
-      {{- .Date | time.Format ":date_long" }}
-    </div>
     <a class="entry-link" aria-label="post link to {{ .Title | plainify }}" href="{{ .Permalink }}"></a>
   </div>
   {{- end }}
