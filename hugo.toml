@@ -28,9 +28,7 @@ enableRobotsTXT = true
   hideSummary = false
   showtoc = true
   tocopen = true
-  comments = true
 
-  # 启用个人主页模式
   [params.profileMode]
     enabled = true
     imageUrl = "/images/DAWN.jpg"
@@ -58,7 +56,10 @@ enableRobotsTXT = true
 
   [params.assets]
     favicon = "/favicon.svg"
-    disableFingerprinting = true
+    disableFingerprinting = false
+    [params.assets.images]
+      quality = 80
+      resampleFilter = "Lanczos"
 
   [params.cover]
     hidden = false
@@ -68,6 +69,29 @@ enableRobotsTXT = true
   [params.label]
     text = "DAWN's Blog"
     icon = "🖊️"
+
+  [params.opengraph]
+    enabled = true
+    
+  [params.twitter]
+    enabled = true
+
+  [params.comments]
+    enabled = true
+
+  [params.share]
+    enabled = true
+    platforms = ["twitter", "facebook", "linkedin", "reddit", "telegram", "weibo", "qq"]
+
+  [params.related]
+    enabled = true
+    count = 3
+
+  [params.readingTime]
+    wordsPerMinute = 200
+
+  [params.backToTop]
+    enabled = true
 
 [[menu.main]]
   identifier = "about"
@@ -106,7 +130,12 @@ enableRobotsTXT = true
   weight = 40
 
 [outputs]
-  home = ["HTML", "RSS", "JSON"]
+  home = ["HTML", "RSS", "JSON", "WebAppManifest"]
+
+[outputFormats.WebAppManifest]
+  mediaType = "application/manifest+json"
+  rel = "manifest"
+  baseName = "manifest"
 
 [markup]
   [markup.goldmark]
@@ -125,3 +154,8 @@ enableRobotsTXT = true
 [taxonomies]
   category = "categories"
   tag = "tags"
+
+[sitemap]
+  changefreq = "weekly"
+  filename = "sitemap.xml"
+  priority = 0.5

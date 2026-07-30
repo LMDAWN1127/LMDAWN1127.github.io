@@ -97,3 +97,100 @@ article.post-entry:hover {
     color: var(--secondary);
     margin-top: 0.5em;
 }
+
+/* 阅读进度条 */
+.reading-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 0%;
+    height: 3px;
+    background: linear-gradient(90deg, var(--primary), #ff6b6b);
+    z-index: 9999;
+    transition: width 0.3s ease;
+}
+
+/* 文章目录固定 */
+.toc {
+    position: sticky;
+    top: 20px;
+    max-height: calc(100vh - 40px);
+    overflow-y: auto;
+}
+
+/* 代码块复制按钮优化 */
+.code-block {
+    position: relative;
+}
+
+.code-block:hover .copy-button {
+    opacity: 1;
+}
+
+/* 暗色模式代码高亮 */
+[data-theme="dark"] .highlight pre {
+    background-color: #1e1e1e;
+}
+
+/* 响应式图片 */
+.post-content img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin: 1em 0;
+}
+
+/* 文章链接样式 */
+.post-content a {
+    color: var(--primary);
+    text-decoration: underline;
+    text-decoration-color: rgba(var(--primary-rgb), 0.3);
+    text-underline-offset: 3px;
+}
+
+.post-content a:hover {
+    text-decoration-color: var(--primary);
+}
+
+/* 引用块美化 */
+.post-content blockquote {
+    border-left: 4px solid var(--primary);
+    padding-left: 1em;
+    margin-left: 0;
+    font-style: italic;
+    color: var(--secondary);
+}
+
+/* 表格响应式 */
+.post-content table {
+    width: 100%;
+    border-collapse: collapse;
+    overflow-x: auto;
+    display: block;
+}
+
+.post-content th, .post-content td {
+    padding: 0.75em;
+    border: 1px solid var(--border);
+}
+
+.post-content th {
+    background: var(--entry);
+    font-weight: 600;
+}
+
+/* 移动端优化 */
+@media (max-width: 768px) {
+    .post-content {
+        font-size: 16px;
+        line-height: 1.8;
+    }
+    
+    .post-content pre {
+        font-size: 14px;
+    }
+    
+    .toc {
+        display: none;
+    }
+}
