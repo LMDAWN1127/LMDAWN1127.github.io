@@ -105,6 +105,35 @@ RUN curl -L https://github.com/prometheus/prometheus/releases/download/v2.45.0/p
 - 无法验证下载完整性
 - 下载的文件会保留在镜像中
 
+### 3. 自动创建目标目录
+
+**COPY 的隐藏能力：** 自动创建不存在的目录
+
+```dockerfile
+# 如果 /app/config 不存在，COPY 会自动创建
+COPY config.yml /app/config/
+
+# 等同于
+RUN mkdir -p /app/config
+COPY config.yml /app/config/
+```
+
+**对比 ADD：**
+
+```dockerfile
+# COPY - 自动创建目录
+COPY app.conf /etc/myapp/config/  # ✅ 自动创建 /etc/myapp/config/
+
+# ADD - 同样自动创建目录
+ADD app.conf /etc/myapp/config/  # ✅ 也会自动创建
+```
+
+**注意事项：**
+- 两者都会自动创建缺失的中间目录
+- 目录权限默认继承父目录
+- 使用 `--chown` 可以指定所有者
+
+
 ### 3. 构建缓存行为
 
 两者在缓存机制上有细微差别：
@@ -134,6 +163,7 @@ ADD app.tar.gz /opt/app/
 | 复制本地文件 | ✅ | ✅ |
 | 复制目录 | ✅ | ✅ |
 | 支持通配符 | ✅ | ✅ |
+| 自动创建目标目录 | ✅ | ✅ |
 | 自动解压压缩文件 | ❌ | ✅ |
 | 支持远程 URL | ❌ | ✅ |
 | 语义清晰度 | ⭐⭐⭐⭐⭐ | ⭐⭐⭐ |
@@ -245,6 +275,19 @@ node_modules
 .env
 .DS_Store
 ```
+
+### 规则 5：利用自动创建目录
+
+```dockerfile
+# ✅ 无需手动创建目录
+COPY nginx.conf /etc/nginx/conf.d/
+COPY app.py /opt/myapp/src/
+
+# ❌ 不必要的 mkdir
+RUN mkdir -p /etc/nginx/conf.d
+COPY nginx.conf /etc/nginx/conf.d/
+```
+
 
 ### 规则 5：合理安排 COPY 顺序利用缓存
 
@@ -386,6 +429,7 @@ CMD ["app"]
 3. **避免 ADD 远程 URL** - 使用 RUN + curl/wget 替代
 4. **善用 .dockerignore** - 减少不必要的文件复制
 5. **合理安排 COPY 顺序** - 优化构建缓存
+6. **利用自动创建目录** - 无需手动 mkdir
 
 ### 选择决策树
 
