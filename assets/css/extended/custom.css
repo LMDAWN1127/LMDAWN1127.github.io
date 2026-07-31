@@ -1464,15 +1464,17 @@ html[data-theme="light"] #theme-toggle .moon {
     }
 }
 
-/* v13: Full width content - remove max-width limit */
+/* v13: Full width content - with side padding */
 .main {
     max-width: 100% !important;
-    padding-left: var(--gap) !important;
-    padding-right: var(--gap) !important;
+    padding-left: 3rem !important;
+    padding-right: 3rem !important;
 }
 
 .post-single {
     max-width: 100% !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
 }
 
 .post-content {
@@ -1481,4 +1483,12 @@ html[data-theme="light"] #theme-toggle .moon {
 
 .post-entry {
     max-width: 100% !important;
+}
+
+/* Responsive: smaller padding on mobile */
+@media (max-width: 768px) {
+    .main {
+        padding-left: 1.2rem !important;
+        padding-right: 1.2rem !important;
+    }
 }
