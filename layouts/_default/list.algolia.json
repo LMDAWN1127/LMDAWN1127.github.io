@@ -1,0 +1,18 @@
+{{- $.Scratch.Add "index" slice -}}
+{{- range where .Site.Pages "IsPage" true -}}
+  {{- if and (ne .Type "page") (eq .Kind "page") -}}
+    {{- $.Scratch.Add "index" (dict
+      "objectID" .RelPermalink
+      "title" .Title
+      "content" .Plain
+      "url" .RelPermalink
+      "date" .Date.Format "2006-01-02"
+      "tags" .Params.tags
+      "categories" .Params.categories
+      "description" .Description
+      "readingTime" .ReadingTime
+      "wordCount" .WordCount
+    ) -}}
+  {{- end -}}
+{{- end -}}
+{{- $.Scratch.Get "index" | jsonify -}}

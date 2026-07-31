@@ -1,0 +1,256 @@
+<!-- Algolia DocSearch Modal -->
+<div id="algolia-search-modal" class="algolia-modal" style="display: none;">
+  <div class="algolia-modal-overlay"></div>
+  <div class="algolia-modal-content">
+    <div class="algolia-search-header">
+      <div class="algolia-search-input-wrapper">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <input type="text" id="algolia-search-input" placeholder="搜索文章..." autofocus>
+        <kbd class="algolia-esc">Esc</kbd>
+      </div>
+    </div>
+    <div id="algolia-search-results" class="algolia-search-results">
+      <div class="algolia-empty-state">
+        <p>输入关键词开始搜索</p>
+      </div>
+    </div>
+    <div class="algolia-search-footer">
+      <span class="algolia-footer-text">
+        <kbd>↑</kbd> <kbd>↓</kbd> 导航
+        <kbd>↵</kbd> 打开
+        <kbd>Esc</kbd> 关闭
+      </span>
+      <span class="algolia-footer-logo">
+        搜索由 <a href="https://www.algolia.com/" target="_blank" rel="noopener">Algolia</a> 提供
+      </span>
+    </div>
+  </div>
+</div>
+
+<!-- Algolia DocSearch CSS and JS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3" />
+<script src="https://cdn.jsdelivr.net/npm/@docsearch/js@3"></script>
+<script>
+  // Initialize Algolia DocSearch
+  docsearch({
+    container: '#algolia-search-input',
+    appId: '{{ site.Params.algolia.appId }}',
+    indexName: '{{ site.Params.algolia.indexName }}',
+    apiKey: '{{ site.Params.algolia.apiKey }}',
+  });
+</script>
+
+<style>
+  /* Algolia Modal Styles */
+  .algolia-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: 10vh;
+  }
+
+  .algolia-modal-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+  }
+
+  .algolia-modal-content {
+    position: relative;
+    width: 90%;
+    max-width: 600px;
+    background: #1a1a1a;
+    border-radius: 12px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+    border: 1px solid #333;
+  }
+
+  .algolia-search-header {
+    padding: 16px;
+    border-bottom: 1px solid #333;
+  }
+
+  .algolia-search-input-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: #2a2a2a;
+    border-radius: 8px;
+    padding: 12px 16px;
+    border: 1px solid #444;
+  }
+
+  .algolia-search-input-wrapper svg {
+    color: #666;
+    flex-shrink: 0;
+  }
+
+  #algolia-search-input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: #fff;
+    font-size: 16px;
+    font-family: inherit;
+  }
+
+  #algolia-search-input::placeholder {
+    color: #666;
+  }
+
+  .algolia-esc {
+    background: #444;
+    color: #999;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-family: inherit;
+  }
+
+  .algolia-search-results {
+    max-height: 400px;
+    overflow-y: auto;
+    padding: 8px;
+  }
+
+  .algolia-empty-state {
+    padding: 40px 20px;
+    text-align: center;
+    color: #666;
+  }
+
+  .algolia-search-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+    border-top: 1px solid #333;
+    background: #222;
+    font-size: 12px;
+    color: #666;
+  }
+
+  .algolia-footer-text kbd {
+    background: #444;
+    color: #999;
+    padding: 2px 4px;
+    border-radius: 3px;
+    font-size: 10px;
+    margin: 0 2px;
+  }
+
+  .algolia-footer-logo a {
+    color: #5EEAD4;
+    text-decoration: none;
+  }
+
+  .algolia-footer-logo a:hover {
+    text-decoration: underline;
+  }
+
+  /* Search Results Styling */
+  .algolia-hit {
+    display: block;
+    padding: 12px;
+    border-radius: 6px;
+    text-decoration: none;
+    color: #fff;
+    transition: background 0.2s;
+  }
+
+  .algolia-hit:hover {
+    background: #2a2a2a;
+  }
+
+  .algolia-hit-title {
+    font-weight: 600;
+    color: #5EEAD4;
+    margin-bottom: 4px;
+  }
+
+  .algolia-hit-content {
+    font-size: 14px;
+    color: #999;
+    line-height: 1.4;
+  }
+
+  .algolia-hit-date {
+    font-size: 12px;
+    color: #666;
+    margin-top: 4px;
+  }
+
+  .algolia-hit-tags {
+    display: flex;
+    gap: 6px;
+    margin-top: 6px;
+  }
+
+  .algolia-hit-tag {
+    background: #333;
+    color: #999;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+  }
+
+  /* DocSearch Overrides */
+  .DocSearch-Modal {
+    background: #1a1a1a !important;
+    border: 1px solid #333 !important;
+  }
+
+  .DocSearch-Input {
+    background: #2a2a2a !important;
+    color: #fff !important;
+  }
+
+  .DocSearch-Input::placeholder {
+    color: #666 !important;
+  }
+
+  .DocSearch-Hit {
+    background: transparent !important;
+  }
+
+  .DocSearch-Hit-source {
+    color: #5EEAD4 !important;
+    font-weight: 600 !important;
+  }
+
+  .DocSearch-Hit-title {
+    color: #fff !important;
+  }
+
+  .DocSearch-Hit-path {
+    color: #666 !important;
+  }
+
+  .DocSearch-Footer {
+    background: #222 !important;
+    border-top: 1px solid #333 !important;
+  }
+
+  .DocSearch-Logo {
+    color: #666 !important;
+  }
+
+  .DocSearch-Logo a {
+    color: #5EEAD4 !important;
+  }
+</style>

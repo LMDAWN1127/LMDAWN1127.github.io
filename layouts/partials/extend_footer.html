@@ -5,3 +5,55 @@
 {{- if not site.Params.disableLangToggle }}
 <script defer src="{{ "/js/custom.js" | relURL }}"></script>
 {{- end }}
+
+{{- if not site.Params.disableSearch }}
+{{- partial "algolia-search.html" . -}}
+<script>
+  // Algolia Search Modal Control
+  function openAlgoliaSearch() {
+    document.getElementById('algolia-search-modal').style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+    // Focus the search input
+    setTimeout(() => {
+      const input = document.getElementById('algolia-search-input');
+      if (input) input.focus();
+    }, 100);
+  }
+
+  function closeAlgoliaSearch() {
+    document.getElementById('algolia-search-modal').style.display = 'none';
+    document.body.style.overflow = '';
+  }
+
+  // Keyboard shortcuts
+  document.addEventListener('keydown', function(e) {
+    // Cmd+K or Ctrl+K to open search
+    if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+      e.preventDefault();
+      openAlgoliaSearch();
+    }
+    
+    // Escape to close search
+    if (e.key === 'Escape') {
+      closeAlgoliaSearch();
+    }
+    
+    // Alt+/ to open search
+    if (e.altKey && e.key === '/') {
+      e.preventDefault();
+      openAlgoliaSearch();
+    }
+  });
+
+  // Close modal when clicking overlay
+  document.addEventListener('DOMContentLoaded', function() {
+    const modal = document.getElementById('algolia-search-modal');
+    if (modal) {
+      const overlay = modal.querySelector('.algolia-modal-overlay');
+      if (overlay) {
+        overlay.addEventListener('click', closeAlgoliaSearch);
+      }
+    }
+  });
+</script>
+{{- end }}

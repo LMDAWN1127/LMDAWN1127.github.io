@@ -99,6 +99,11 @@ enableRobotsTXT = true
   [params.backToTop]
     enabled = true
 
+  [params.algolia]
+    appId = "Y0SCRI4LCW"
+    apiKey = "03dda5e44aec7e0dd93b6a3653250b1f"
+    indexName = "lmdawn1127-blog"
+
 # 多语言菜单（只保留 Archive）
 [languages.zh.menu]
   [[languages.zh.menu.main]]
@@ -129,12 +134,18 @@ enableRobotsTXT = true
     weight = 20
 
 [outputs]
-  home = ["HTML", "RSS", "JSON", "WebAppManifest"]
+  home = ["HTML", "RSS", "JSON", "WebAppManifest", "Algolia"]
 
 [outputFormats.WebAppManifest]
   mediaType = "application/manifest+json"
   rel = "manifest"
   baseName = "manifest"
+
+[outputFormats.Algolia]
+  baseName = "algolia"
+  isPlainText = true
+  mediaType = "application/json"
+  notAlternative = true
 
 [markup]
   [markup.goldmark]
