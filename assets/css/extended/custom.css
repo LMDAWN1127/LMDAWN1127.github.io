@@ -1467,13 +1467,14 @@ html[data-theme="light"] #theme-toggle .moon {
 /* v13: Full width content - with side padding */
 .main {
     max-width: 100% !important;
-    padding-left: 6rem !important;
-    padding-right: 6rem !important;
+    padding-left: 12rem !important;
+    padding-right: 12rem !important;
 }
 
+/* Article detail page: left 12rem, right 0 (TOC fills right side) */
 .post-single {
     max-width: 100% !important;
-    padding-left: 0 !important;
+    padding-left: 12rem !important;
     padding-right: 0 !important;
 }
 
@@ -1488,6 +1489,10 @@ html[data-theme="light"] #theme-toggle .moon {
 /* Responsive: smaller padding on mobile */
 @media (max-width: 768px) {
     .main {
+        padding-left: 1.2rem !important;
+        padding-right: 1.2rem !important;
+    }
+    .post-single {
         padding-left: 1.2rem !important;
         padding-right: 1.2rem !important;
     }
