@@ -9,9 +9,6 @@ ShowShareButtons: false
 ShowDate: false
 ---
 
-## Hi, 我是 DAWN
-
-一名热爱技术的开发者，喜欢探索新技术、折腾服务器、写代码解决问题。
 
 ### 关注领域
 
