@@ -114,7 +114,7 @@ enableRobotsTXT = true
 
   [params.label]
     text = "DAWN's Blog"
-    icon = "/images/logo.png"
+    icon = "/images/DAWN.jpg"
     iconHeight = 38
 
   [params.opengraph]
@@ -140,74 +140,54 @@ enableRobotsTXT = true
   [params.backToTop]
     enabled = true
 
-# 多语言菜单（每个语言自己的菜单项，方便本地化）
+# 多语言菜单（参照 geuni.tech：只保留 Tags + Archive，统一英文命名）
 [languages.zh.menu]
   [[languages.zh.menu.main]]
-    identifier = "posts"
-    name = "首页"
-    url = "/posts/"
-    weight = 10
-  [[languages.zh.menu.main]]
     identifier = "tags"
-    name = "标签"
+    name = "Tags"
     url = "/tags/"
-    weight = 20
+    weight = 10
   [[languages.zh.menu.main]]
     identifier = "archives"
-    name = "归档"
+    name = "Archive"
     url = "/archives/"
-    weight = 30
+    weight = 20
 
 [languages.en.menu]
-  [[languages.en.menu.main]]
-    identifier = "posts"
-    name = "Posts"
-    url = "/posts/"
-    weight = 10
   [[languages.en.menu.main]]
     identifier = "tags"
     name = "Tags"
     url = "/tags/"
-    weight = 20
+    weight = 10
   [[languages.en.menu.main]]
     identifier = "archives"
     name = "Archive"
     url = "/archives/"
-    weight = 30
+    weight = 20
 
 [languages.ko.menu]
   [[languages.ko.menu.main]]
-    identifier = "posts"
-    name = "게시글"
-    url = "/posts/"
+    identifier = "tags"
+    name = "Tags"
+    url = "/tags/"
     weight = 10
   [[languages.ko.menu.main]]
-    identifier = "tags"
-    name = "태그"
-    url = "/tags/"
-    weight = 20
-  [[languages.ko.menu.main]]
     identifier = "archives"
-    name = "아카이브"
+    name = "Archive"
     url = "/archives/"
-    weight = 30
+    weight = 20
 
 [languages.ja.menu]
   [[languages.ja.menu.main]]
-    identifier = "posts"
-    name = "記事"
-    url = "/posts/"
+    identifier = "tags"
+    name = "Tags"
+    url = "/tags/"
     weight = 10
   [[languages.ja.menu.main]]
-    identifier = "tags"
-    name = "タグ"
-    url = "/tags/"
-    weight = 20
-  [[languages.ja.menu.main]]
     identifier = "archives"
-    name = "アーカイブ"
+    name = "Archive"
     url = "/archives/"
-    weight = 30
+    weight = 20
 
 [outputs]
   home = ["HTML", "RSS", "JSON", "WebAppManifest"]

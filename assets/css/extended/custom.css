@@ -1049,3 +1049,63 @@ header .brand-name {
     line-height: 1 !important;
     white-space: nowrap !important;
 }
+/* ===========================================
+   v5 补丁：顶栏浅色 + 正文黑色 + 顶栏全宽覆盖
+   （覆盖之前 v4 的深色顶栏）
+   =========================================== */
+
+/* PaperMod 暗色主题变量：正文纯黑 */
+.dark {
+    --theme: #000000 !important;
+    --entry: #141416 !important;
+}
+
+/* 顶栏：浅色（相对正文黑色），全宽覆盖 */
+header.header,
+.header {
+    background: #2b2b30 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4) !important;
+}
+
+/* 滚动时顶栏保持浅色 + 模糊 */
+.header.scrolled {
+    background: rgba(43, 43, 48, 0.92) !important;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+/* 黑色背景上的文章卡片：稍微提亮一点可见度 */
+.post-entry {
+    background: rgba(255, 255, 255, 0.04) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+.post-entry:hover {
+    background: rgba(255, 255, 255, 0.07) !important;
+    border-color: var(--accent-teal) !important;
+}
+
+/* first-entry 区域在黑色背景上 */
+.first-entry {
+    background: transparent;
+}
+
+/* 顶栏按钮在浅灰底上的协调色 */
+.theme-toggle,
+.lang-toggle,
+.search-toggle {
+    background: rgba(255, 255, 255, 0.05) !important;
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+}
+
+/* 页脚在黑色背景上 */
+.footer {
+    background: #141416 !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
