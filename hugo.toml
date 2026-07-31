@@ -61,7 +61,7 @@ enableRobotsTXT = true
     appendFilePath = true
 
   [params.assets]
-    favicon = "/favicon.svg"
+    favicon = "/images/DAWN.jpg"
     disableFingerprinting = false
     [params.assets.images]
       quality = 80
