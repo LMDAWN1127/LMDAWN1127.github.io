@@ -28,6 +28,33 @@ jobs:
       - name: Build
         run: hugo --minify
 
+      - name: Upload Algolia Index
+        if: env.ALGOLIA_API_KEY != ''
+        env:
+          ALGOLIA_APP_ID: Y0SCRI4LCW
+          ALGOLIA_API_KEY: ${{ secrets.ALGOLIA_API_KEY }}
+          ALGOLIA_INDEX_NAME: lmdawn1127-blog
+        run: |
+          if [ -f public/algolia.json ]; then
+            echo "Uploading algolia.json to Algolia..."
+            # Clear existing index
+            curl -s -X POST \
+              "https://${ALGOLIA_APP_ID}-dsn.algolia.net/1/indexes/${ALGOLIA_INDEX_NAME}/clear" \
+              -H "X-Algolia-Application-Id: ${ALGOLIA_APP_ID}" \
+              -H "X-Algolia-API-Key: ${ALGOLIA_API_KEY}"
+            # Upload new records
+            RECORDS=$(cat public/algolia.json)
+            curl -s -X POST \
+              "https://${ALGOLIA_APP_ID}-dsn.algolia.net/1/indexes/${ALGOLIA_INDEX_NAME}/batch" \
+              -H "X-Algolia-Application-Id: ${ALGOLIA_APP_ID}" \
+              -H "X-Algolia-API-Key: ${ALGOLIA_API_KEY}" \
+              -H "Content-Type: application/json" \
+              -d "{\"requests\":[{\"action\":\"addObject\",\"body\":${RECORDS}}]}"
+            echo "Algolia index uploaded successfully."
+          else
+            echo "algolia.json not found, skipping upload."
+          fi
+
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v4
         with:
