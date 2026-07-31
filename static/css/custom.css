@@ -1,0 +1,125 @@
+/* 自定义样式 - 参考 geuni.tech 风格 */
+
+/* 文章列表卡片样式 */
+.post-entry {
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.post-entry:hover {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  transform: translateY(-2px);
+}
+
+/* 文章标题 */
+.post-entry .entry-header h2 {
+  margin: 0 0 10px 0;
+  font-size: 1.5rem;
+  color: #1a1a1a;
+}
+
+.post-entry .entry-header h2 a {
+  color: #1a1a1a;
+  text-decoration: none;
+}
+
+.post-entry .entry-header h2 a:hover {
+  color: #0066cc;
+}
+
+/* 文章元信息 */
+.post-entry .entry-meta {
+  color: #666;
+  font-size: 0.9rem;
+  margin-bottom: 10px;
+}
+
+.post-entry .entry-meta span {
+  margin-right: 15px;
+}
+
+/* 文章摘要 */
+.post-entry .entry-content {
+  color: #444;
+  line-height: 1.6;
+  margin-bottom: 15px;
+}
+
+/* 标签样式 */
+.post-entry .entry-tags {
+  margin-top: 10px;
+}
+
+.post-entry .entry-tags a {
+  display: inline-block;
+  background: #f0f0f0;
+  color: #555;
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  margin-right: 8px;
+  margin-bottom: 8px;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+
+.post-entry .entry-tags a:hover {
+  background: #e0e0e0;
+}
+
+/* 阅读时间显示 */
+.reading-time {
+  color: #888;
+  font-size: 0.85rem;
+  font-style: italic;
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+  .post-entry {
+    padding: 15px;
+  }
+
+  .post-entry .entry-header h2 {
+    font-size: 1.3rem;
+  }
+}
+
+/* 深色模式适配 */
+@media (prefers-color-scheme: dark) {
+  .post-entry {
+    background: #1e1e1e;
+    border-color: #333;
+  }
+
+  .post-entry .entry-header h2,
+  .post-entry .entry-header h2 a {
+    color: #e0e0e0;
+  }
+
+  .post-entry .entry-header h2 a:hover {
+    color: #4da6ff;
+  }
+
+  .post-entry .entry-meta {
+    color: #aaa;
+  }
+
+  .post-entry .entry-content {
+    color: #ccc;
+  }
+
+  .post-entry .entry-tags a {
+    background: #333;
+    color: #ccc;
+  }
+
+  .post-entry .entry-tags a:hover {
+    background: #444;
+  }
+}

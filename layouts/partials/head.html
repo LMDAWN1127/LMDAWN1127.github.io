@@ -1,0 +1,17 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="{{ .Site.Params.description }}">
+<meta name="keywords" content="{{ delimit .Site.Params.keywords ", " }}">
+<meta name="author" content="{{ .Site.Params.author }}">
+
+<title>{{ if not .IsHome }}{{ .Title }} - {{ end }}{{ .Site.Title }}</title>
+
+<link rel="canonical" href="{{ .Permalink }}">
+<link rel="icon" type="image/svg+xml" href="{{ .Site.Params.assets.favicon | absURL }}">
+
+<!-- 自定义CSS -->
+<link rel="stylesheet" href="{{ "css/custom.css" | absURL }}">
+
+<!-- 其他meta标签 -->
+{{- template "_internal/opengraph.html" . }}
+{{- template "_internal/twitter_cards.html" . }}
