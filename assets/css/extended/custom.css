@@ -555,4 +555,335 @@ article.post-entry {
     .nav-menu li:nth-child(3) {
         display: none; /* 小屏隐藏 Archive，仅留 Tags */
     }
+}/* ===========================================
+   3. home_info 区域微调（按 geuni.tech 截图）
+   "Hi, 我是 DAWN" 不应该是大字号
+   =========================================== */
+
+.first-entry.home-info {
+    margin-bottom: 2.5rem;
+    padding: 1.5rem 0 1.5rem;
+    border-bottom: 1px solid var(--border-subtle);
+}
+
+.first-entry.home-info .entry-header h1 {
+    color: var(--text-lighter);
+    font-size: 1.7rem;
+    font-weight: 600;
+    line-height: 1.3;
+    margin-bottom: 0.7rem;
+    letter-spacing: -0.005em;
+}
+
+.first-entry.home-info .entry-content {
+    color: var(--text-light);
+    font-size: 0.95rem;
+    line-height: 1.7;
+    margin-top: 0.6rem;
+}
+
+.first-entry.home-info .entry-content p {
+    color: var(--text-light);
+    margin: 0;
+}
+
+.first-entry.home-info .entry-footer {
+    margin-top: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+.first-entry.home-info .entry-footer a {
+    color: var(--secondary);
+    opacity: 0.85;
+    transition: opacity 0.15s ease, color 0.15s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.first-entry.home-info .entry-footer a:hover {
+    opacity: 1;
+    color: var(--accent-teal);
+}
+
+.first-entry.home-info .entry-footer svg {
+    width: 20px;
+    height: 20px;
+}
+
+
+/* ===========================================
+   4. 文章卡片微调（去掉 meta 后更紧凑）
+   =========================================== */
+
+.post-entry {
+    border-radius: 10px;
+    padding: 1.1rem 1.4rem;
+    margin-bottom: 0.9rem;
+}
+
+/* 保险：完全隐藏文章卡片的 footer（已通过覆盖 post_meta.html 变空，但保险起见隐藏） */
+.post-entry .entry-footer {
+    display: none;
+}
+
+/* 文章详情页头部不显示 post-meta */
+.post-single .post-meta {
+    display: none;
+}
+
+/* 文章详情页底部不显示 post-tags */
+.post-single .post-tags,
+.post-single .post-footer > ul.post-tags {
+    display: none;
+}
+
+/* 隐藏文章详情页的 post-footer 整块（包含 tags + share buttons） */
+.post-single .post-footer {
+    display: none;
+}
+
+
+/* ===========================================
+   5. post-entry 标题/描述微调（按截图）
+   =========================================== */
+
+.post-entry .entry-header h2 {
+    color: var(--accent-teal);
+    font-size: 1.35rem;
+    font-weight: 600;
+    line-height: 1.4;
+    margin-bottom: 0.4rem;
+}
+
+.post-entry .entry-content {
+    color: var(--text-light);
+    font-size: 0.92rem;
+    line-height: 1.65;
+    margin-top: 0.3rem;
+    margin-bottom: 0;
+}
+
+.post-entry .entry-content p {
+    color: var(--text-light);
+    margin: 0;
+}
+
+
+/* ===========================================
+   6. Algolia DocSearch 容器样式（占位）
+   =========================================== */
+
+#docsearch {
+    width: 100%;
+}
+
+.DocSearch-Button {
+    background: var(--bg-card) !important;
+    border: 1px solid var(--border-subtle) !important;
+    border-radius: 8px !important;
+    padding: 0.4rem 0.7rem !important;
+    color: var(--secondary) !important;
+    margin: 0 !important;
+    height: auto !important;
+    box-shadow: none !important;
+}
+
+.DocSearch-Button:hover {
+    background: var(--bg-card-hover) !important;
+    border-color: var(--accent-teal) !important;
+    color: var(--primary) !important;
+    box-shadow: none !important;
+}
+
+.DocSearch-Button-Placeholder {
+    font-size: 0.88rem !important;
+    padding: 0 !important;
+}
+
+.DocSearch-Button-Keys {
+    min-width: auto !important;
+    padding-right: 0 !important;
+}
+
+
+/* ===========================================
+   7. 响应式微调
+   =========================================== */
+
+@media (max-width: 768px) {
+    .first-entry.home-info .entry-header h1 {
+        font-size: 1.5rem;
+    }
+    .post-entry .entry-header h2 {
+        font-size: 1.2rem;
+    }
+}
+/* ===========================================
+   3. home_info 区域微调（按 geuni.tech 截图）
+   "Hi, 我是 DAWN" 不应该是大字号
+   =========================================== */
+
+.first-entry.home-info {
+    margin-bottom: 2.5rem;
+    padding: 1.5rem 0 1.5rem;
+    border-bottom: 1px solid var(--border-subtle);
+}
+
+.first-entry.home-info .entry-header h1 {
+    color: var(--text-lighter);
+    font-size: 1.7rem;
+    font-weight: 600;
+    line-height: 1.3;
+    margin-bottom: 0.7rem;
+    letter-spacing: -0.005em;
+}
+
+.first-entry.home-info .entry-content {
+    color: var(--text-light);
+    font-size: 0.95rem;
+    line-height: 1.7;
+    margin-top: 0.6rem;
+}
+
+.first-entry.home-info .entry-content p {
+    color: var(--text-light);
+    margin: 0;
+}
+
+.first-entry.home-info .entry-footer {
+    margin-top: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+.first-entry.home-info .entry-footer a {
+    color: var(--secondary);
+    opacity: 0.85;
+    transition: opacity 0.15s ease, color 0.15s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.first-entry.home-info .entry-footer a:hover {
+    opacity: 1;
+    color: var(--accent-teal);
+}
+
+.first-entry.home-info .entry-footer svg {
+    width: 20px;
+    height: 20px;
+}
+
+
+/* ===========================================
+   4. 文章卡片微调（去掉 meta 后更紧凑）
+   =========================================== */
+
+.post-entry {
+    border-radius: 10px;
+    padding: 1.1rem 1.4rem;
+    margin-bottom: 0.9rem;
+}
+
+/* 保险：完全隐藏文章卡片的 footer（已通过覆盖 post_meta.html 变空，但保险起见隐藏） */
+.post-entry .entry-footer {
+    display: none;
+}
+
+/* 文章详情页头部不显示 post-meta */
+.post-single .post-meta {
+    display: none;
+}
+
+/* 文章详情页底部不显示 post-tags */
+.post-single .post-tags,
+.post-single .post-footer > ul.post-tags {
+    display: none;
+}
+
+/* 隐藏文章详情页的 post-footer 整块（包含 tags + share buttons） */
+.post-single .post-footer {
+    display: none;
+}
+
+
+/* ===========================================
+   5. post-entry 标题/描述微调（按截图）
+   =========================================== */
+
+.post-entry .entry-header h2 {
+    color: var(--accent-teal);
+    font-size: 1.35rem;
+    font-weight: 600;
+    line-height: 1.4;
+    margin-bottom: 0.4rem;
+}
+
+.post-entry .entry-content {
+    color: var(--text-light);
+    font-size: 0.92rem;
+    line-height: 1.65;
+    margin-top: 0.3rem;
+    margin-bottom: 0;
+}
+
+.post-entry .entry-content p {
+    color: var(--text-light);
+    margin: 0;
+}
+
+
+/* ===========================================
+   6. Algolia DocSearch 容器样式（占位）
+   =========================================== */
+
+#docsearch {
+    width: 100%;
+}
+
+.DocSearch-Button {
+    background: var(--bg-card) !important;
+    border: 1px solid var(--border-subtle) !important;
+    border-radius: 8px !important;
+    padding: 0.4rem 0.7rem !important;
+    color: var(--secondary) !important;
+    margin: 0 !important;
+    height: auto !important;
+    box-shadow: none !important;
+}
+
+.DocSearch-Button:hover {
+    background: var(--bg-card-hover) !important;
+    border-color: var(--accent-teal) !important;
+    color: var(--primary) !important;
+    box-shadow: none !important;
+}
+
+.DocSearch-Button-Placeholder {
+    font-size: 0.88rem !important;
+    padding: 0 !important;
+}
+
+.DocSearch-Button-Keys {
+    min-width: auto !important;
+    padding-right: 0 !important;
+}
+
+
+/* ===========================================
+   7. 响应式微调
+   =========================================== */
+
+@media (max-width: 768px) {
+    .first-entry.home-info .entry-header h1 {
+        font-size: 1.5rem;
+    }
+    .post-entry .entry-header h2 {
+        font-size: 1.2rem;
+    }
 }

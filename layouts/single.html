@@ -1,7 +1,5 @@
 {{- define "main" }}
 
-{{ partial "article-search.html" . }}
-
 <article class="post-single">
   <header class="post-header">
     {{ partial "breadcrumbs.html" . }}
@@ -21,6 +19,8 @@
       {{ .Description }}
     </div>
     {{- end }}
+    {{/* 移除 post-meta div - 不再显示日期、作者、字数、阅读时间 */}}
+    {{/* 原代码:
     {{- if not (.Param "hideMeta") }}
     <div class="post-meta">
       {{- partial "post_meta.html" . -}}
@@ -29,6 +29,7 @@
       {{- partial "post_canonical.html" . -}}
     </div>
     {{- end }}
+    */}}
   </header>
   {{- $isHidden := (.Param "cover.hiddenInSingle") | default (.Param "cover.hidden") | default false }}
   {{- partial "cover.html" (dict "cxt" . "IsSingle" true "isHidden" $isHidden) }}
@@ -46,6 +47,8 @@
 
   {{- partial "extend_post_content.html" . }}
 
+  {{/* 移除 post-footer 中的 post-tags - 不再显示文章底部 tags 标签列表 */}}
+  {{/* 原代码:
   <footer class="post-footer">
     {{- $tags := .Language.Params.Taxonomies.tag | default "tags" }}
     <ul class="post-tags">
@@ -60,12 +63,11 @@
     {{- partial "share_icons.html" . -}}
     {{- end }}
   </footer>
+  */}}
 
   {{- if (.Param "comments") }}
   {{- partial "comments.html" . }}
   {{- end }}
 </article>
-
-<script src="/js/article-search.js"></script>
 
 {{- end }}{{/* end main */}}

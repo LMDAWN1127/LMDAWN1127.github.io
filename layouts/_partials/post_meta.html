@@ -1,23 +1,3 @@
-{{- $scratch := newScratch }}
-
-{{/* 日期已完全隐藏 */}}
-
-{{- if (.Param "ShowReadingTime") -}}
-    {{- $scratch.Add "meta" (slice (printf "<span>%s</span>" (i18n "read_time" .ReadingTime | default (printf "%d min" .ReadingTime)))) }}
-{{- end }}
-
-{{- if (.Param "ShowWordCount") -}}
-    {{- $scratch.Add "meta" (slice (printf "<span>%s</span>" (i18n "words" .WordCount | default (printf "%d words" .WordCount)))) }}
-{{- end }}
-
-{{- if not (.Param "hideAuthor") -}}
-    {{- with (partial "author.html" .) }}
-        {{- $scratch.Add "meta" (slice (printf "<span>%s</span>" .)) }}
-    {{- end }}
-{{- end }}
-
-{{/* Combine all meta information into a single string with separators and render it as HTML.*/}}
-
-{{- with ($scratch.Get "meta") }}
-    {{- delimit . "&nbsp;·&nbsp;" | safeHTML -}}
-{{- end -}}
+{{/* 覆盖 PaperMod 主题的 post_meta.html - 输出空，彻底移除首页卡片和文章页头部的所有 meta 信息（日期、阅读时间、字数、作者） */}}
+{{/* 这样首页文章卡片不再显示 "3 分钟 · 600 字 · DAWN" 之类的元信息 */}}
+{{/* 文章详情页头部也不再显示日期/作者/字数 */}}
