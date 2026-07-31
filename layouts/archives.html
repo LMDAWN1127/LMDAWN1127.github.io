@@ -1,0 +1,48 @@
+{{- define "main" }}
+
+<header class="page-header">
+  <h1>{{ .Title }}</h1>
+</header>
+
+{{- $pages := where site.RegularPages "Type" "in" site.Params.mainSections }}
+
+{{- if site.Params.ShowAllPagesInArchive }}
+{{- $pages = site.RegularPages }}
+{{- end }}
+
+{{/* Collect all unique tags */}}
+{{- $allTags := slice }}
+{{- range $pages }}
+  {{- range .Params.tags }}
+    {{- $allTags = $allTags | append . }}
+  {{- end }}
+{{- end }}
+{{- $allTags = $allTags | uniq | sort }}
+
+{{/* For each tag, list its pages */}}
+{{- range $allTags }}
+{{- $tag := . }}
+{{- $tagPages := where $pages "Params.tags" "intersect" (slice $tag) }}
+<div class="archive-tag-group">
+  <h2 class="archive-tag-header" id="{{ $tag | urlize }}">
+    <a class="archive-header-link" href="#{{ $tag | urlize }}">
+      {{ $tag }}
+    </a>
+    <sup class="archive-count">&nbsp;{{ len $tagPages }}</sup>
+  </h2>
+  <div class="archive-posts">
+    {{- range $tagPages }}
+    {{- if eq .Kind "page" }}
+    <div class="archive-entry">
+      <h3 class="archive-entry-title">
+        {{- .Title | markdownify }}
+      </h3>
+      <a class="entry-link" aria-label="post link to {{ .Title | plainify }}" href="{{ .Permalink }}"></a>
+    </div>
+    {{- end }}
+    {{- end }}
+  </div>
+</div>
+{{- end }}
+
+{{- end }}

@@ -1263,3 +1263,39 @@ html[data-theme="light"] #theme-toggle .moon {
     border: none !important;
     background: transparent !important;
 }
+
+/* v10: Tag-based archive page styles */
+.archive-tag-group {
+    margin-bottom: 2.5rem;
+}
+.archive-tag-header {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--accent-teal);
+    margin-bottom: 0.8rem;
+    padding-bottom: 0.3rem;
+    border-bottom: 1px solid var(--border-subtle);
+}
+.archive-tag-header .archive-count {
+    font-size: 0.8rem;
+    color: var(--body-gray);
+    font-weight: 400;
+}
+.archive-posts {
+    padding-left: 0;
+}
+.archive-entry {
+    position: relative;
+    padding: 0.4rem 0;
+}
+.archive-entry-title {
+    font-size: 1rem;
+    font-weight: 400;
+    margin: 0;
+}
+.archive-entry-title a {
+    color: var(--body-gray);
+}
+.archive-entry:hover .archive-entry-title a {
+    color: var(--accent-teal);
+}
