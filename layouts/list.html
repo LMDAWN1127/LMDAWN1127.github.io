@@ -80,36 +80,11 @@
     </h2>
   </header>
 
-  {{/* 日期和阅读时间 */}}
-  <div class="post-meta">
-    <time class="meta-date" datetime="{{ .Date.Format "2006-01-02" }}">
-      {{ .Date.Format "2006年1月2日" }}
-    </time>
-    <span class="meta-separator">·</span>
-    <span class="meta-reading-time">
-      阅读需 {{ .ReadingTime }} 分钟
-    </span>
-  </div>
-
-  {{/* 标签 */}}
-  {{- if .Params.tags }}
-  <div class="post-tags">
-    {{- range .Params.tags }}
-    <a href="{{ "tags/" | absURL }}{{ . | urlize }}/" class="tag-link">{{ . }}</a>
-    {{- end }}
-  </div>
-  {{- end }}
-
   {{- if (ne (.Param "hideSummary") true) }}
   <div class="entry-content">
     <p>{{ .Summary | plainify | htmlUnescape }}{{ if .Truncated }}...{{ end }}</p>
   </div>
   {{- end }}
-
-  {{/* 阅读更多链接 */}}
-  <div class="read-more">
-    <a href="{{ .Permalink }}">阅读更多</a>
-  </div>
 
   {{- if not (.Param "hideMeta") }}
   <footer class="entry-footer">
