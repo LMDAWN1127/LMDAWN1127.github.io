@@ -1299,3 +1299,87 @@ html[data-theme="light"] #theme-toggle .moon {
 .archive-entry:hover .archive-entry-title a {
     color: var(--accent-teal);
 }
+
+/* v11: Homepage article list - geuni.tech style */
+.post-entry {
+    margin-bottom: 2.5rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--border-subtle);
+}
+
+.post-entry:last-child {
+    border-bottom: none;
+}
+
+/* Title with link */
+.post-entry .entry-header h2 a {
+    color: var(--accent-teal);
+    font-weight: 700;
+    font-size: 1.3rem;
+    text-decoration: none;
+}
+
+.post-entry .entry-header h2 a:hover {
+    color: #fff;
+}
+
+/* Meta info: date + reading time */
+.post-meta {
+    margin: 0.5rem 0;
+    font-size: 0.85rem;
+    color: var(--body-gray);
+}
+
+.meta-separator {
+    margin: 0 0.4rem;
+}
+
+/* Tags */
+.post-tags {
+    margin: 0.5rem 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.tag-link {
+    font-size: 0.8rem;
+    color: var(--body-gray);
+    text-decoration: none;
+    padding: 0.15rem 0.5rem;
+    border: 1px solid var(--border-subtle);
+    border-radius: 3px;
+}
+
+.tag-link:hover {
+    color: var(--accent-teal);
+    border-color: var(--accent-teal);
+}
+
+/* Summary */
+.entry-content {
+    margin: 0.8rem 0;
+    color: var(--body-gray);
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+/* Read more link */
+.read-more {
+    margin-top: 0.8rem;
+}
+
+.read-more a {
+    color: var(--accent-teal);
+    font-size: 0.9rem;
+    text-decoration: none;
+}
+
+.read-more a:hover {
+    text-decoration: underline;
+}
+
+/* Hide duplicate footer meta */
+.entry-footer {
+    display: none;
+}

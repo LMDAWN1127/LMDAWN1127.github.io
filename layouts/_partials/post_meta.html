@@ -1,3 +1,9 @@
-{{/* 覆盖 PaperMod 主题的 post_meta.html - 输出空，彻底移除首页卡片和文章页头部的所有 meta 信息（日期、阅读时间、字数、作者） */}}
-{{/* 这样首页文章卡片不再显示 "3 分钟 · 600 字 · DAWN" 之类的元信息 */}}
-{{/* 文章详情页头部也不再显示日期/作者/字数 */}}
+{{/* 自定义 post_meta.html - 显示日期和阅读时间 */}}
+{{/* 参照 geuni.tech 风格 */}}
+<time class="meta-date" datetime="{{ .Date.Format "2006-01-02" }}">
+  {{ .Date.Format "2006年1月2日" }}
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 {{ .ReadingTime }} 分钟
+</span>
