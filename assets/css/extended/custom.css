@@ -1463,3 +1463,22 @@ html[data-theme="light"] #theme-toggle .moon {
         flex-direction: column;
     }
 }
+
+/* v13: Full width content - remove max-width limit */
+.main {
+    max-width: 100% !important;
+    padding-left: var(--gap) !important;
+    padding-right: var(--gap) !important;
+}
+
+.post-single {
+    max-width: 100% !important;
+}
+
+.post-content {
+    max-width: 100% !important;
+}
+
+.post-entry {
+    max-width: 100% !important;
+}
