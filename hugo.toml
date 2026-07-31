@@ -114,8 +114,8 @@ enableRobotsTXT = true
 
   [params.label]
     text = "DAWN's Blog"
-    icon = "/images/DAWN.jpg"
-    iconHeight = 35
+    icon = "/images/logo.png"
+    iconHeight = 38
 
   [params.opengraph]
     enabled = true
