@@ -84,8 +84,7 @@
 }
 
 .nav-menu li a:hover {
-    background: var(--bg-card-hover);
-    color: var(--primary);
+    color: var(--accent-teal);
 }
 
 .nav-menu li a span.active {
@@ -116,7 +115,7 @@
 }
 
 .theme-toggle:hover {
-    background: var(--bg-card-hover);
+    color: var(--accent-teal);
     border-color: var(--accent-teal);
 }
 
@@ -141,7 +140,7 @@
 }
 
 .lang-toggle:hover {
-    background: var(--bg-card-hover);
+    color: var(--accent-teal);
     border-color: var(--accent-teal);
 }
 
@@ -221,9 +220,8 @@
 }
 
 .search-toggle:hover {
-    background: var(--bg-card-hover);
+    color: var(--accent-teal);
     border-color: var(--accent-teal);
-    color: var(--primary);
 }
 
 .search-toggle svg {
@@ -949,8 +947,7 @@ body {
 }
 
 .nav-menu li a:hover {
-    color: #ffffff !important;
-    background: rgba(255, 255, 255, 0.08) !important;
+    color: var(--accent-teal);
 }
 
 .nav-menu li a span.active {
@@ -966,9 +963,8 @@ body {
 }
 
 .theme-toggle:hover {
-    background: rgba(255, 255, 255, 0.08) !important;
-    border-color: var(--accent-teal) !important;
-    color: #ffffff !important;
+    color: var(--accent-teal);
+    border-color: var(--accent-teal);
 }
 
 /* 语言下拉和搜索按钮：同样风格 */
@@ -979,11 +975,9 @@ body {
     color: #cbd5e1 !important;
 }
 
-.lang-toggle:hover,
-.search-toggle:hover {
-    background: rgba(255, 255, 255, 0.08) !important;
-    border-color: var(--accent-teal) !important;
-    color: #ffffff !important;
+.lang-toggle:hover {
+    color: var(--accent-teal);
+    border-color: var(--accent-teal);
 }
 
 /* 滚动时顶栏保持深色 + 模糊 */
@@ -1253,4 +1247,19 @@ html[data-theme="light"] .moon,
 html[data-theme="light"] .theme-toggle .moon,
 html[data-theme="light"] #theme-toggle .moon {
     display: none !important;
+}
+
+/* v9: Remove border boxes from nav buttons, match geuni.tech style */
+.theme-toggle,
+.lang-toggle,
+.search-toggle {
+    border: none !important;
+    background: transparent !important;
+}
+.theme-toggle:hover,
+.lang-toggle:hover,
+.search-toggle:hover {
+    color: var(--accent-teal) !important;
+    border: none !important;
+    background: transparent !important;
 }
