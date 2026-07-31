@@ -30,7 +30,7 @@ enableRobotsTXT = true
   tocopen = true
 
   [params.profileMode]
-    enabled = false
+    enabled = true
     imageUrl = "/images/DAWN.jpg"
     Title = "Hi, 我是 DAWN"
     Content = """
