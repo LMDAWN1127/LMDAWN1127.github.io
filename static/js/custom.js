@@ -85,14 +85,54 @@
         });
     }
 
+    /* ============ 3. TOC 侧边栏滚动高亮 ============ */
+    function setupTocHighlight() {
+        const tocLinks = document.querySelectorAll('.toc-link');
+        if (tocLinks.length === 0) return;
+
+        const headings = [];
+        tocLinks.forEach(function (link) {
+            const targetId = link.getAttribute('data-target');
+            if (targetId) {
+                const heading = document.getElementById(targetId);
+                if (heading) {
+                    headings.push({ id: targetId, element: heading, link: link });
+                }
+            }
+        });
+
+        if (headings.length === 0) return;
+
+        function updateActiveLink() {
+            const scrollPos = window.scrollY + 100;
+
+            let activeIndex = 0;
+            for (let i = 0; i < headings.length; i++) {
+                if (headings[i].element.offsetTop <= scrollPos) {
+                    activeIndex = i;
+                }
+            }
+
+            tocLinks.forEach(function (link) {
+                link.classList.remove('active');
+            });
+            headings[activeIndex].link.classList.add('active');
+        }
+
+        window.addEventListener('scroll', updateActiveLink);
+        updateActiveLink();
+    }
+
     /* ============ 启动 ============ */
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', function () {
             setupLangDropdown();
             setupSearch();
+            setupTocHighlight();
         });
     } else {
         setupLangDropdown();
         setupSearch();
+        setupTocHighlight();
     }
 })();
