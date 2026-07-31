@@ -1,5 +1,5 @@
 +++
-date = "2026-07-31T10:00:00Z"
+date = "2026-07-31T02:00:00Z"
 draft = false
 title = "Dockerfile 构建镜像太大？10 个技巧让你的镜像瘦身 90%"
 tags = ["Docker", "Dockerfile", "镜像优化", "DevOps", "容器化"]
