@@ -1179,3 +1179,27 @@ body.dark .theme-toggle .moon,
 body.dark #theme-toggle .moon {
     display: inline-block !important;
 }
+/* ===========================================
+   v7 补丁：主题图标跟随 html[data-theme] 切换
+   （PaperMod 用 <html data-theme="dark|light">，不是 body.dark）
+   =========================================== */
+
+/* 两个图标默认都隐藏（覆盖之前 v6 的 body.dark 错误选择器） */
+.theme-toggle .sun,
+.theme-toggle .moon,
+#theme-toggle .sun,
+#theme-toggle .moon {
+    display: none !important;
+}
+
+/* 夜间（html data-theme="dark"）：只显示月亮 */
+[data-theme="dark"] .theme-toggle .moon,
+[data-theme="dark"] #theme-toggle .moon {
+    display: inline-block !important;
+}
+
+/* 日间（html data-theme="light"）：只显示太阳 */
+[data-theme="light"] .theme-toggle .sun,
+[data-theme="light"] #theme-toggle .sun {
+    display: inline-block !important;
+}
