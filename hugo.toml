@@ -54,12 +54,12 @@ enableRobotsTXT = true
 
 [params]
   env = "production"
-    keywords = ["博客", "技术", "Claude Code", "AI", "CentOS", "Docker", "Linux", "DevOps"]
+  keywords = ["博客", "技术", "Claude Code", "AI", "CentOS", "Docker", "Linux", "DevOps"]
   author = "DAWN"
   defaultTheme = "auto"
   ShowReadingTime = true
   ShowShareButtons = true
-  disableSearch = true
+  disableSearch = false
   ShowPostNavLinks = true
   ShowBreadCrumbs = true
   ShowCodeCopyButtons = true
@@ -75,7 +75,7 @@ enableRobotsTXT = true
 
   images = ["/images/DAWN.jpg"]
 
-    [params.profileMode]
+  [params.profileMode]
     enabled = false
     imageUrl = "/images/DAWN.jpg"
     Title = "Hi, 我是 DAWN"
@@ -108,9 +108,9 @@ enableRobotsTXT = true
       resampleFilter = "Lanczos"
 
   [params.cover]
-  hidden = true
-  hiddenInList = true
-  hiddenInSingle = true
+    hidden = true
+    hiddenInList = true
+    hiddenInSingle = true
 
   [params.label]
     text = "DAWN's Blog"
@@ -140,11 +140,74 @@ enableRobotsTXT = true
   [params.backToTop]
     enabled = true
 
-[[menu.main]]
-  identifier = "posts"
-  name = "文章"
-  url = "/posts/"
-  weight = 10
+# 多语言菜单（每个语言自己的菜单项，方便本地化）
+[languages.zh.menu]
+  [[languages.zh.menu.main]]
+    identifier = "posts"
+    name = "首页"
+    url = "/posts/"
+    weight = 10
+  [[languages.zh.menu.main]]
+    identifier = "tags"
+    name = "标签"
+    url = "/tags/"
+    weight = 20
+  [[languages.zh.menu.main]]
+    identifier = "archives"
+    name = "归档"
+    url = "/archives/"
+    weight = 30
+
+[languages.en.menu]
+  [[languages.en.menu.main]]
+    identifier = "posts"
+    name = "Posts"
+    url = "/posts/"
+    weight = 10
+  [[languages.en.menu.main]]
+    identifier = "tags"
+    name = "Tags"
+    url = "/tags/"
+    weight = 20
+  [[languages.en.menu.main]]
+    identifier = "archives"
+    name = "Archive"
+    url = "/archives/"
+    weight = 30
+
+[languages.ko.menu]
+  [[languages.ko.menu.main]]
+    identifier = "posts"
+    name = "게시글"
+    url = "/posts/"
+    weight = 10
+  [[languages.ko.menu.main]]
+    identifier = "tags"
+    name = "태그"
+    url = "/tags/"
+    weight = 20
+  [[languages.ko.menu.main]]
+    identifier = "archives"
+    name = "아카이브"
+    url = "/archives/"
+    weight = 30
+
+[languages.ja.menu]
+  [[languages.ja.menu.main]]
+    identifier = "posts"
+    name = "記事"
+    url = "/posts/"
+    weight = 10
+  [[languages.ja.menu.main]]
+    identifier = "tags"
+    name = "タグ"
+    url = "/tags/"
+    weight = 20
+  [[languages.ja.menu.main]]
+    identifier = "archives"
+    name = "アーカイブ"
+    url = "/archives/"
+    weight = 30
 
 [outputs]
   home = ["HTML", "RSS", "JSON", "WebAppManifest"]

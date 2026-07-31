@@ -1,2 +1,7 @@
-{{/* Extend footer - 加载语言切换器 JS */}}
-<script src="{{ "js/lang_dropdown.js" | relURL }}" defer></script>
+{{- /*
+  PaperMod 主题官方扩展点：extend_footer.html
+  加载我们的自定义 JS（语言下拉、搜索快捷键）
+*/ -}}
+{{- if not site.Params.disableLangToggle }}
+<script defer src="{{ "/js/custom.js" | relURL }}"></script>
+{{- end }}
