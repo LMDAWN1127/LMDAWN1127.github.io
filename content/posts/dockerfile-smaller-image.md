@@ -1,6 +1,6 @@
 ---
 title: "Dockerfile 构建镜像太大？10 个技巧让镜像瘦身 90%"
-date: 2024-07-30T12:00:00+08:00
+date: 2026-07-30T12:00:00+08:00
 draft: false
 author: "DAWN"
 tags: ["Docker", "Dockerfile", "镜像优化", "DevOps", "容器化"]
@@ -9,6 +9,9 @@ description: "10 个经过验证的技巧，把 Docker 镜像体积缩小 90% �
 summary: "Docker 镜像太大导致部署慢、存储成本高？本文分享 10 个经过验证的优化技巧，帮你把镜像缩小 90% 以上。"
 showToc: true
 TocOpen: true
+cover:
+  image: "/images/covers/dockerfile-smaller-image.png"
+  alt: "Dockerfile 镜像瘦身"
 ---
 
 #### 1. 选择合适的基础镜像

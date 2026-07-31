@@ -8,10 +8,13 @@ paginate = 10
 enableEmoji = true
 enableRobotsTXT = true
 
+[services.googleAnalytics]
+  id = ""
+
 [params]
   env = "production"
   description = "技术分享 | 学习笔记 | 生活记录"
-  keywords = ["博客", "技术", "Claude Code", "AI", "CentOS"]
+  keywords = ["博客", "技术", "Claude Code", "AI", "CentOS", "Docker", "Linux", "DevOps"]
   author = "DAWN"
   defaultTheme = "auto"
   ShowReadingTime = true
@@ -29,8 +32,14 @@ enableRobotsTXT = true
   showtoc = true
   tocopen = true
 
+  images = ["/images/DAWN.jpg"]
+
+  [params.homeInfoParams]
+    Title = "Hi, 我是 DAWN"
+    Content = "热爱技术的开发者，专注 AI 编程工具、Linux 运维、Web 开发。喜欢探索新技术，折腾服务器，写代码解决问题。"
+
   [params.profileMode]
-    enabled = true
+    enabled = false
     imageUrl = "/images/DAWN.jpg"
     Title = "Hi, 我是 DAWN"
     Content = """
@@ -50,7 +59,7 @@ enableRobotsTXT = true
     url = "/index.xml"
 
   [params.editPost]
-    URL = ""
+    URL = "https://github.com/LMDAWN1127/LMDAWN1127.github.io/edit/main/content/"
     Text = "编辑本文"
     appendFilePath = true
 
@@ -68,11 +77,12 @@ enableRobotsTXT = true
 
   [params.label]
     text = "DAWN's Blog"
-    icon = ""
+    icon = "/images/DAWN.jpg"
+    iconHeight = 35
 
   [params.opengraph]
     enabled = true
-    
+
   [params.twitter]
     enabled = true
 

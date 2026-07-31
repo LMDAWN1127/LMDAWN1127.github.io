@@ -1,6 +1,6 @@
 ---
 title: "CentOS 部署 Claude Code 全流程指南"
-date: 2024-07-04T05:00:00+08:00
+date: 2026-07-04T05:00:00+08:00
 draft: false
 author: "DAWN"
 tags: ["Claude Code", "CentOS", "AI", "部署"]
@@ -9,6 +9,9 @@ description: "在 CentOS 上从零部署 Claude Code，涵盖 Node.js 安装、A
 summary: "Claude Code 是 Anthropic 推出的 CLI 工具，可在终端直接与 Claude AI 交互完成编码任务。本文介绍 CentOS 部署全流程。"
 showToc: true
 TocOpen: true
+cover:
+  image: "/images/covers/centos-deploy-claude-code.png"
+  alt: "CentOS 部署 Claude Code"
 ---
 
 #### 1. 环境要求
