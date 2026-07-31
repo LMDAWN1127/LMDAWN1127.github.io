@@ -1,4 +1,4 @@
-<!-- Algolia DocSearch Modal -->
+<!-- Algolia Search Modal -->
 <div id="algolia-search-modal" class="algolia-modal" style="display: none;">
   <div class="algolia-modal-overlay"></div>
   <div class="algolia-modal-content">
@@ -30,9 +30,6 @@
   </div>
 </div>
 
-<!-- Algolia Search Client -->
-<script src="https://cdn.jsdelivr.net/npm/algoliasearch@4/dist/algoliasearch-lite.umd.js"></script>
-
 <script>
 (function() {
   'use strict';
@@ -40,171 +37,149 @@
   var APP_ID = '{{ site.Params.algolia.appId }}';
   var SEARCH_KEY = '{{ site.Params.algolia.apiKey }}';
   var INDEX_NAME = '{{ site.Params.algolia.indexName }}';
-
-  var client = null;
-  var index = null;
+  var API_URL = 'https://' + APP_ID + '-dsn.algolia.net/1/indexes/' + INDEX_NAME + '/query';
   var debounceTimer = null;
+  var selectedIndex = -1;
 
-  function initAlgolia() {
-    if (client) return;
-    try {
-      client = algoliasearch(APP_ID, SEARCH_KEY);
-      index = client.initIndex(INDEX_NAME);
-    } catch (e) {
-      console.error('Algolia init failed:', e);
-    }
-  }
-
+  /* ---- Search via fetch ---- */
   function doSearch(query) {
-    if (!index || !query.trim()) {
+    if (!query || !query.trim()) {
       showEmpty();
       return;
     }
 
-    index.search(query, {
+    var body = JSON.stringify({
+      query: query,
       hitsPerPage: 10,
       attributesToRetrieve: ['title', 'content', 'url', 'date', 'tags'],
       attributesToHighlight: ['title', 'content'],
       highlightPreFragment: '<mark class="algolia-highlight">',
       highlightPostFragment: '</mark>'
-    }).then(function(res) {
-      renderResults(res.hits, query);
-    }).catch(function(err) {
+    });
+
+    fetch(API_URL, {
+      method: 'POST',
+      headers: {
+        'X-Algolia-Application-Id': APP_ID,
+        'X-Algolia-API-Key': SEARCH_KEY,
+        'Content-Type': 'application/json'
+      },
+      body: body
+    })
+    .then(function(resp) {
+      if (!resp.ok) throw new Error('HTTP ' + resp.status);
+      return resp.json();
+    })
+    .then(function(data) {
+      renderResults(data.hits || [], query);
+    })
+    .catch(function(err) {
       console.error('Algolia search error:', err);
       showError();
     });
   }
 
+  /* ---- UI helpers ---- */
   function showEmpty() {
-    var container = document.getElementById('algolia-search-results');
-    container.innerHTML = '<div class="algolia-empty-state"><p>输入关键词开始搜索</p></div>';
+    document.getElementById('algolia-search-results').innerHTML =
+      '<div class="algolia-empty-state"><p>输入关键词开始搜索</p></div>';
   }
 
   function showError() {
-    var container = document.getElementById('algolia-search-results');
-    container.innerHTML = '<div class="algolia-empty-state"><p>搜索出错，请稍后再试</p></div>';
+    document.getElementById('algolia-search-results').innerHTML =
+      '<div class="algolia-empty-state"><p>搜索出错，请稍后再试</p></div>';
   }
 
   function showNoResults(query) {
-    var container = document.getElementById('algolia-search-results');
-    container.innerHTML = '<div class="algolia-empty-state"><p>未找到与「' + escapeHtml(query) + '」相关的结果</p></div>';
+    document.getElementById('algolia-search-results').innerHTML =
+      '<div class="algolia-empty-state"><p>未找到与「' + escapeHtml(query) + '」相关的结果</p></div>';
   }
 
-  function escapeHtml(str) {
-    var div = document.createElement('div');
-    div.appendChild(document.createTextNode(str));
-    return div.innerHTML;
+  function escapeHtml(s) {
+    var d = document.createElement('div');
+    d.appendChild(document.createTextNode(s));
+    return d.innerHTML;
   }
 
-  function stripHighlightHtml(str) {
-    if (!str) return '';
-    return str;
-  }
-
-  function getHighlightedValue(hit, attr) {
-    if (hit._highlightResult && hit._highlightResult[attr]) {
-      return hit._highlightResult[attr].value;
-    }
+  function getHL(hit, attr) {
+    if (hit._highlightResult && hit._highlightResult[attr]) return hit._highlightResult[attr].value;
     return hit[attr] || '';
   }
 
-  function truncate(str, len) {
-    if (!str) return '';
-    str = str.replace(/<[^>]+>/g, '');
-    if (str.length > len) return str.substring(0, len) + '...';
-    return str;
+  function trunc(s, n) {
+    if (!s) return '';
+    s = s.replace(/<[^>]+>/g, '');
+    return s.length > n ? s.substring(0, n) + '…' : s;
   }
 
   function renderResults(hits, query) {
-    var container = document.getElementById('algolia-search-results');
-    if (!hits || hits.length === 0) {
-      showNoResults(query);
-      return;
-    }
+    var box = document.getElementById('algolia-search-results');
+    if (!hits.length) { showNoResults(query); return; }
 
-    var html = '<div class="algolia-results-count">' + hits.length + ' 个结果</div>';
+    var h = '<div class="algolia-results-count">' + hits.length + ' 个结果</div>';
     hits.forEach(function(hit, i) {
-      var title = getHighlightedValue(hit, 'title');
-      var content = getHighlightedValue(hit, 'content');
+      var title = getHL(hit, 'title') || '无标题';
+      var content = getHL(hit, 'content');
       var url = hit.url || '#';
       var date = hit.date || '';
       var tags = hit.tags || [];
 
-      html += '<a class="algolia-hit" href="' + url + '" data-index="' + i + '">';
-      html += '  <div class="algolia-hit-title">' + (title || '无标题') + '</div>';
-      html += '  <div class="algolia-hit-content">' + truncate(content, 150) + '</div>';
-      if (date || tags.length > 0) {
-        html += '  <div class="algolia-hit-meta">';
-        if (date) html += '<span class="algolia-hit-date">' + date + '</span>';
-        if (tags.length > 0) {
-          html += '<span class="algolia-hit-tags">';
-          tags.slice(0, 3).forEach(function(tag) {
-            html += '<span class="algolia-hit-tag">' + escapeHtml(tag) + '</span>';
-          });
-          html += '</span>';
+      h += '<a class="algolia-hit" href="' + url + '" data-index="' + i + '">';
+      h += '<div class="algolia-hit-title">' + title + '</div>';
+      h += '<div class="algolia-hit-content">' + trunc(content, 150) + '</div>';
+      if (date || tags.length) {
+        h += '<div class="algolia-hit-meta">';
+        if (date) h += '<span class="algolia-hit-date">' + date + '</span>';
+        if (tags.length) {
+          h += '<span class="algolia-hit-tags">';
+          tags.slice(0, 3).forEach(function(t) { h += '<span class="algolia-hit-tag">' + escapeHtml(t) + '</span>'; });
+          h += '</span>';
         }
-        html += '  </div>';
+        h += '</div>';
       }
-      html += '</a>';
+      h += '</a>';
     });
+    box.innerHTML = h;
 
-    container.innerHTML = html;
-
-    // Click events
-    container.querySelectorAll('.algolia-hit').forEach(function(el) {
-      el.addEventListener('click', function() {
-        closeAlgoliaSearch();
-      });
+    box.querySelectorAll('.algolia-hit').forEach(function(el) {
+      el.addEventListener('click', closeAlgoliaSearch);
     });
   }
 
-  // Debounced search
+  /* ---- Input handling ---- */
   function onInput(e) {
-    var query = e.target.value;
+    var q = e.target.value;
     clearTimeout(debounceTimer);
-    debounceTimer = setTimeout(function() {
-      doSearch(query);
-    }, 200);
+    debounceTimer = setTimeout(function() { doSearch(q); }, 200);
   }
 
-  // Keyboard navigation
-  var selectedIndex = -1;
   function onKeydown(e) {
     var hits = document.querySelectorAll('.algolia-hit');
     if (!hits.length) return;
-
     if (e.key === 'ArrowDown') {
       e.preventDefault();
       selectedIndex = Math.min(selectedIndex + 1, hits.length - 1);
-      updateSelection(hits);
+      sel(hits);
     } else if (e.key === 'ArrowUp') {
       e.preventDefault();
       selectedIndex = Math.max(selectedIndex - 1, 0);
-      updateSelection(hits);
+      sel(hits);
     } else if (e.key === 'Enter' && selectedIndex >= 0) {
       e.preventDefault();
-      var selected = hits[selectedIndex];
-      if (selected) {
-        window.location.href = selected.getAttribute('href');
-        closeAlgoliaSearch();
-      }
+      window.location.href = hits[selectedIndex].getAttribute('href');
+      closeAlgoliaSearch();
     }
   }
 
-  function updateSelection(hits) {
+  function sel(hits) {
     hits.forEach(function(el, i) {
-      if (i === selectedIndex) {
-        el.classList.add('selected');
-        el.scrollIntoView({ block: 'nearest' });
-      } else {
-        el.classList.remove('selected');
-      }
+      if (i === selectedIndex) { el.classList.add('selected'); el.scrollIntoView({ block: 'nearest' }); }
+      else el.classList.remove('selected');
     });
   }
 
-  // Attach events
+  /* ---- Init ---- */
   document.addEventListener('DOMContentLoaded', function() {
-    initAlgolia();
     var input = document.getElementById('algolia-search-input');
     if (input) {
       input.addEventListener('input', onInput);
@@ -212,25 +187,18 @@
     }
   });
 
-  // Expose globally for header button
   window.openAlgoliaSearch = function() {
-    initAlgolia();
     var modal = document.getElementById('algolia-search-modal');
     modal.style.display = 'flex';
     document.body.style.overflow = 'hidden';
     setTimeout(function() {
       var input = document.getElementById('algolia-search-input');
-      if (input) {
-        input.value = '';
-        input.focus();
-        showEmpty();
-      }
+      if (input) { input.value = ''; input.focus(); showEmpty(); }
     }, 100);
   };
 
   window.closeAlgoliaSearch = function() {
-    var modal = document.getElementById('algolia-search-modal');
-    modal.style.display = 'none';
+    document.getElementById('algolia-search-modal').style.display = 'none';
     document.body.style.overflow = '';
     selectedIndex = -1;
   };
@@ -238,197 +206,30 @@
 </script>
 
 <style>
-  /* Algolia Modal Styles */
-  .algolia-modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1000;
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;
-    padding-top: 10vh;
-  }
-
-  .algolia-modal-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.6);
-    backdrop-filter: blur(4px);
-  }
-
-  .algolia-modal-content {
-    position: relative;
-    width: 90%;
-    max-width: 600px;
-    background: #1a1a1a;
-    border-radius: 12px;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-    overflow: hidden;
-    border: 1px solid #333;
-  }
-
-  .algolia-search-header {
-    padding: 16px;
-    border-bottom: 1px solid #333;
-  }
-
-  .algolia-search-input-wrapper {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    background: #2a2a2a;
-    border-radius: 8px;
-    padding: 12px 16px;
-    border: 1px solid #444;
-  }
-
-  .algolia-search-input-wrapper svg {
-    color: #666;
-    flex-shrink: 0;
-  }
-
-  #algolia-search-input {
-    flex: 1;
-    background: transparent;
-    border: none;
-    outline: none;
-    color: #fff;
-    font-size: 16px;
-    font-family: inherit;
-  }
-
-  #algolia-search-input::placeholder {
-    color: #666;
-  }
-
-  .algolia-esc {
-    background: #444;
-    color: #999;
-    padding: 2px 6px;
-    border-radius: 4px;
-    font-size: 11px;
-    font-family: inherit;
-  }
-
-  .algolia-search-results {
-    max-height: 400px;
-    overflow-y: auto;
-    padding: 8px;
-  }
-
-  .algolia-empty-state {
-    padding: 40px 20px;
-    text-align: center;
-    color: #666;
-  }
-
-  .algolia-results-count {
-    padding: 8px 12px;
-    font-size: 12px;
-    color: #666;
-  }
-
-  .algolia-search-footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 12px 16px;
-    border-top: 1px solid #333;
-    background: #222;
-    font-size: 12px;
-    color: #666;
-  }
-
-  .algolia-footer-text kbd {
-    background: #444;
-    color: #999;
-    padding: 2px 4px;
-    border-radius: 3px;
-    font-size: 10px;
-    margin: 0 2px;
-  }
-
-  .algolia-footer-logo a {
-    color: #5EEAD4;
-    text-decoration: none;
-  }
-
-  .algolia-footer-logo a:hover {
-    text-decoration: underline;
-  }
-
-  /* Search Results */
-  .algolia-hit {
-    display: block;
-    padding: 12px;
-    border-radius: 6px;
-    text-decoration: none;
-    color: #fff;
-    transition: background 0.2s;
-  }
-
-  .algolia-hit:hover,
-  .algolia-hit.selected {
-    background: #2a2a2a;
-  }
-
-  .algolia-hit-title {
-    font-weight: 600;
-    color: #5EEAD4;
-    margin-bottom: 4px;
-    font-size: 15px;
-  }
-
-  .algolia-hit-title mark,
-  .algolia-highlight {
-    background: rgba(94, 234, 212, 0.25);
-    color: #5EEAD4;
-    padding: 0 2px;
-    border-radius: 2px;
-  }
-
-  .algolia-hit-content {
-    font-size: 13px;
-    color: #999;
-    line-height: 1.5;
-  }
-
-  .algolia-hit-content mark,
-  .algolia-hit-content .algolia-highlight {
-    background: rgba(94, 234, 212, 0.2);
-    color: #ccc;
-    padding: 0 2px;
-    border-radius: 2px;
-  }
-
-  .algolia-hit-meta {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-top: 8px;
-  }
-
-  .algolia-hit-date {
-    font-size: 12px;
-    color: #666;
-  }
-
-  .algolia-hit-tags {
-    display: flex;
-    gap: 6px;
-  }
-
-  .algolia-hit-tag {
-    background: #333;
-    color: #999;
-    padding: 2px 8px;
-    border-radius: 4px;
-    font-size: 11px;
-  }
+  .algolia-modal{position:fixed;top:0;left:0;width:100%;height:100%;z-index:1000;display:flex;align-items:flex-start;justify-content:center;padding-top:10vh}
+  .algolia-modal-overlay{position:absolute;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.6);backdrop-filter:blur(4px)}
+  .algolia-modal-content{position:relative;width:90%;max-width:600px;background:#1a1a1a;border-radius:12px;box-shadow:0 20px 60px rgba(0,0,0,.5);overflow:hidden;border:1px solid #333}
+  .algolia-search-header{padding:16px;border-bottom:1px solid #333}
+  .algolia-search-input-wrapper{display:flex;align-items:center;gap:12px;background:#2a2a2a;border-radius:8px;padding:12px 16px;border:1px solid #444}
+  .algolia-search-input-wrapper svg{color:#666;flex-shrink:0}
+  #algolia-search-input{flex:1;background:transparent;border:none;outline:none;color:#fff;font-size:16px;font-family:inherit}
+  #algolia-search-input::placeholder{color:#666}
+  .algolia-esc{background:#444;color:#999;padding:2px 6px;border-radius:4px;font-size:11px;font-family:inherit}
+  .algolia-search-results{max-height:400px;overflow-y:auto;padding:8px}
+  .algolia-empty-state{padding:40px 20px;text-align:center;color:#666}
+  .algolia-results-count{padding:8px 12px;font-size:12px;color:#666}
+  .algolia-search-footer{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;border-top:1px solid #333;background:#222;font-size:12px;color:#666}
+  .algolia-footer-text kbd{background:#444;color:#999;padding:2px 4px;border-radius:3px;font-size:10px;margin:0 2px}
+  .algolia-footer-logo a{color:#5EEAD4;text-decoration:none}
+  .algolia-footer-logo a:hover{text-decoration:underline}
+  .algolia-hit{display:block;padding:12px;border-radius:6px;text-decoration:none;color:#fff;transition:background .2s}
+  .algolia-hit:hover,.algolia-hit.selected{background:#2a2a2a}
+  .algolia-hit-title{font-weight:600;color:#5EEAD4;margin-bottom:4px;font-size:15px}
+  .algolia-hit-title mark,.algolia-highlight{background:rgba(94,234,212,.25);color:#5EEAD4;padding:0 2px;border-radius:2px}
+  .algolia-hit-content{font-size:13px;color:#999;line-height:1.5}
+  .algolia-hit-content mark,.algolia-hit-content .algolia-highlight{background:rgba(94,234,212,.2);color:#ccc;padding:0 2px;border-radius:2px}
+  .algolia-hit-meta{display:flex;align-items:center;gap:10px;margin-top:8px}
+  .algolia-hit-date{font-size:12px;color:#666}
+  .algolia-hit-tags{display:flex;gap:6px}
+  .algolia-hit-tag{background:#333;color:#999;padding:2px 8px;border-radius:4px;font-size:11px}
 </style>
