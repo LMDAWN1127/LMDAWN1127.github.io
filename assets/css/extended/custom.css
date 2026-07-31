@@ -1109,3 +1109,73 @@ header.header,
     background: #141416 !important;
     border-top: 1px solid rgba(255, 255, 255, 0.06);
 }
+/* ===========================================
+   v6 补丁：修按钮超出顶栏 + 主题图标只显示一个
+   =========================================== */
+
+/* --- 1. 顶栏按钮：固定高度，垂直居中，不超出 60px 顶栏 --- */
+.header-nav {
+    height: 60px !important;
+    display: flex !important;
+    align-items: center !important;
+}
+
+.nav-right {
+    display: flex !important;
+    align-items: center !important;
+    gap: 0.5rem !important;
+    height: 100% !important;
+}
+
+.theme-toggle,
+.lang-toggle,
+.search-toggle {
+    height: 36px !important;
+    max-height: 36px !important;
+    box-sizing: border-box !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 0 0.7rem !important;
+    margin: 0 !important;
+    font-size: 0.88rem !important;
+    line-height: 1 !important;
+    vertical-align: middle !important;
+}
+
+.theme-toggle {
+    width: 36px !important;
+    padding: 0 !important;
+}
+
+.theme-toggle svg {
+    width: 17px !important;
+    height: 17px !important;
+}
+
+.search-kbd {
+    line-height: 1 !important;
+    padding: 2px 5px !important;
+    font-size: 0.7rem !important;
+}
+
+/* --- 2. 主题图标：日间只显示太阳，夜间只显示月亮 --- */
+/* 先清掉两个图标的显示（包括之前坏掉的 var(--display-xxx) 规则） */
+.theme-toggle .sun,
+.theme-toggle .moon,
+#theme-toggle .sun,
+#theme-toggle .moon {
+    display: none !important;
+}
+
+/* 日间（body 无 .dark）：只显示太阳 */
+body:not(.dark) .theme-toggle .sun,
+body:not(.dark) #theme-toggle .sun {
+    display: inline-block !important;
+}
+
+/* 夜间（body 有 .dark）：只显示月亮 */
+body.dark .theme-toggle .moon,
+body.dark #theme-toggle .moon {
+    display: inline-block !important;
+}
