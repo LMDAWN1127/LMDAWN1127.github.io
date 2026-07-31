@@ -36,20 +36,20 @@ jobs:
         run: |
           if [ -f public/algolia.json ] && [ -n "$ALGOLIA_API_KEY" ]; then
             echo "Uploading algolia.json to Algolia..."
-            # Build batch request from JSON array
-            BATCH=$(jq '{requests: [.[] | {action: "addObject", body: .}]}' public/algolia.json)
-            # Clear existing index first
+            # Clear existing index
             curl -s -X POST \
               "https://${ALGOLIA_APP_ID}-dsn.algolia.net/1/indexes/${ALGOLIA_INDEX_NAME}/clear" \
               -H "X-Algolia-Application-Id: ${ALGOLIA_APP_ID}" \
               -H "X-Algolia-API-Key: ${ALGOLIA_API_KEY}"
-            # Upload new records
-            curl -s -X POST \
-              "https://${ALGOLIA_APP_ID}-dsn.algolia.net/1/indexes/${ALGOLIA_INDEX_NAME}/batch" \
-              -H "X-Algolia-Application-Id: ${ALGOLIA_APP_ID}" \
-              -H "X-Algolia-API-Key: ${ALGOLIA_API_KEY}" \
-              -H "Content-Type: application/json" \
-              -d "$BATCH"
+            # Upload each record individually
+            cat public/algolia.json | jq -c '.[]' | while read -r record; do
+              curl -s -X POST \
+                "https://${ALGOLIA_APP_ID}-dsn.algolia.net/1/indexes/${ALGOLIA_INDEX_NAME}" \
+                -H "X-Algolia-Application-Id: ${ALGOLIA_APP_ID}" \
+                -H "X-Algolia-API-Key: ${ALGOLIA_API_KEY}" \
+                -H "Content-Type: application/json" \
+                -d "$record"
+            done
             echo "Algolia index uploaded successfully."
           else
             echo "algolia.json not found or ALGOLIA_API_KEY not set, skipping upload."
