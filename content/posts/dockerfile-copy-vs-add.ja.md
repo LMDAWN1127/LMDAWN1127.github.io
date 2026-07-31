@@ -1,19 +1,19 @@
 ---
-title: "Dockerfile 中 COPY 与 ADD 的区别详解"
+title: "Dockerfile における COPY と ADD の違いを詳しく解説"
 date: 2026-07-30T10:00:00+08:00
 draft: false
 author: "DAWN"
-tags: ["Docker", "Dockerfile", "容器化", "DevOps"]
-categories: ["容器技术"]
-description: "COPY 和 ADD 都能复制文件，但行为差异很大。本文通过对比和示例讲清两者区别。"
-summary: "COPY 和 ADD 都可以复制文件，但它们有本质区别。本文详解两者差异，助你写出更好的 Dockerfile。"
+tags: ["Docker", "Dockerfile", "コンテナ化", "DevOps"]
+categories: ["コンテナ技術"]
+description: "COPY と ADD はどちらもファイルをコピーできますが、動作に大きな違いがあります。本記事では比較とサンプルを通じて両者の違いを明確に解説します。"
+summary: "COPY と ADD はどちらもファイルをコピーできますが、本質的な違いがあります。本記事では両者の違いを詳しく解説し、より良い Dockerfile を書くための助けとします。"
 showToc: true
 TocOpen: true
 ---
 
-#### 1. 基本语法
+#### 1. 基本構文
 
-两者语法几乎一样，但行为差异很大：
+両者の構文はほぼ同じですが、動作には大きな違いがあります：
 
 ```dockerfile
 # COPY - 纯粹的文件复制，不做任何额外处理
@@ -23,9 +23,9 @@ COPY [--chown=<user>:<group>] <src>... <dest>
 ADD [--chown=<user>:<group>] <src>... <dest>
 ```
 
-#### 2. 自动解压压缩文件
+#### 2. 圧縮ファイルの自動解凍
 
-***ADD*** 会自动解压本地压缩包，***COPY*** 不会：
+***ADD*** はローカルの圧縮ファイルを自動的に解凍しますが、***COPY*** は解凍しません：
 
 ```dockerfile
 # ADD 自动解压 .tar.gz
@@ -37,13 +37,13 @@ COPY app.tar.gz /opt/app/
 # 结果：/opt/app/app.tar.gz 是原始压缩包
 ```
 
-支持的压缩格式：`.tar`、`.tar.gz`/`.tgz`、`.tar.bz2`、`.tar.xz`
+対応する圧縮形式：`.tar`、`.tar.gz`/`.tgz`、`.tar.bz2`、`.tar.xz`
 
-> 如果你想复制压缩包本身而不解压，必须用 COPY。
+> 圧縮ファイル自体を解凍せずにコピーしたい場合は、COPY を使う必要があります。
 
-#### 3. 远程 URL 下载
+#### 3. リモート URL のダウンロード
 
-***ADD*** 可以直接从 URL 下载文件，***COPY*** 不支持：
+***ADD*** は URL から直接ファイルをダウンロードできますが、***COPY*** はサポートしていません：
 
 ```dockerfile
 # ADD 可以下载远程文件（但不推荐）
@@ -53,7 +53,7 @@ ADD https://example.com/app.tar.gz /opt/
 COPY https://example.com/app.tar.gz /opt/  # 报错！
 ```
 
-> 推荐用 `RUN + curl` 替代 ADD 下载远程文件，因为 ADD 下载无法利用构建缓存、无法做错误处理、无法验证完整性。
+> リモートファイルのダウンロードには `RUN + curl` で ADD を代替することを推奨します。ADD によるダウンロードはビルドキャッシュを利用できず、エラーハンドリングもなく、整合性の検証もできないためです。
 
 ```dockerfile
 # 推荐：RUN + curl
@@ -62,9 +62,9 @@ RUN curl -fsSL -o /tmp/app.tar.gz https://example.com/app.tar.gz \
     && rm /tmp/app.tar.gz
 ```
 
-#### 4. 自动创建目录
+#### 4. ディレクトリの自動作成
 
-两者都会自动创建不存在的中间目录：
+どちらも存在しない中間ディレクトリを自動的に作成します：
 
 ```dockerfile
 # 如果 /etc/myapp/config/ 不存在，会自动创建
@@ -75,7 +75,7 @@ ADD app.conf /etc/myapp/config/
 # RUN mkdir -p /etc/myapp/config   ← 多余
 ```
 
-#### 5. 构建缓存行为
+#### 5. ビルドキャッシュの動作
 
 ```dockerfile
 # COPY - 严格匹配文件内容，内容变了才缓存失效
@@ -85,28 +85,28 @@ COPY config/app.conf /etc/app/
 ADD app.tar.gz /opt/app/
 ```
 
-| 场景 | COPY | ADD |
+| シナリオ | COPY | ADD |
 |------|------|-----|
-| 文件内容变化 | 缓存失效 | 缓存失效 |
-| 文件元数据变化 | 缓存失效 | 缓存失效 |
-| 压缩文件内容相同 | N/A | 缓存有效 |
+| ファイル内容の変化 | キャッシュ無効 | キャッシュ無効 |
+| ファイルメタデータの変化 | キャッシュ無効 | キャッシュ無効 |
+| 圧縮ファイルの内容が同じ | N/A | キャッシュ有効 |
 
-#### 6. 功能对比
+#### 6. 機能比較
 
 | 特性 | COPY | ADD |
 |------|------|-----|
-| 复制本地文件 | ✅ | ✅ |
-| 复制目录 | ✅ | ✅ |
-| 支持通配符 | ✅ | ✅ |
-| 自动创建目录 | ✅ | ✅ |
-| 自动解压压缩文件 | ❌ | ✅ |
-| 支持远程 URL | ❌ | ✅ |
-| 语义清晰度 | ✅ 高 | ❌ 低 |
-| 推荐使用 | ✅ 首选 | ⚠️ 特定场景 |
+| ローカルファイルのコピー | ✅ | ✅ |
+| ディレクトリのコピー | ✅ | ✅ |
+| ワイルドカードのサポート | ✅ | ✅ |
+| ディレクトリの自動作成 | ✅ | ✅ |
+| 圧縮ファイルの自動解凍 | ❌ | ✅ |
+| リモート URL のサポート | ❌ | ✅ |
+| 意味の明確さ | ✅ 高 | ❌ 低 |
+| 推奨使用 | ✅ 第一選択 | ⚠️ 特定シナリオ |
 
-#### 7. 使用场景
+#### 7. 使用シナリオ
 
-**COPY 适用于：**
+**COPY が適しているケース：**
 
 ```dockerfile
 # 复制配置文件
@@ -120,7 +120,7 @@ COPY package.json /app/
 COPY --from=builder /app/build/app /usr/local/bin/
 ```
 
-**ADD 仅适用于需要自动解压的场景：**
+**ADD は自動解凍が必要なシナリオのみに適しています：**
 
 ```dockerfile
 # 合理使用 ADD
@@ -130,7 +130,7 @@ ADD node-v18.17.0-linux-x64.tar.gz /usr/local/
 ADD app.conf /etc/app/  # ← 用 COPY 代替
 ```
 
-#### 8. 最佳实践
+#### 8. ベストプラクティス
 
 ```dockerfile
 # 规则 1：默认用 COPY
@@ -159,7 +159,7 @@ RUN npm ci --production
 COPY . .                                # 再复制代码（变化多）
 ```
 
-#### 9. 常见陷阱
+#### 9. よくある落とし穴
 
 ```dockerfile
 # 陷阱 1：意外的自动解压
@@ -174,7 +174,7 @@ ADD https://github.com/user/repo/releases/download/v1.0/app.tar.gz /tmp/
 COPY --chown=app:app src/ /app/src/    # 指定所有者
 ```
 
-#### 10. 选择决策
+#### 10. 選択の判断基準
 
 ```
 需要复制文件？

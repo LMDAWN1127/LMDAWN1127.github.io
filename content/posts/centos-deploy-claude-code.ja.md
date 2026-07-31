@@ -1,24 +1,24 @@
 ---
-title: "CentOS 部署 Claude Code 全流程指南"
+title: "CentOS に Claude Code をデプロイする完全ガイド"
 date: 2026-07-04T05:00:00+08:00
 draft: false
 author: "DAWN"
-tags: ["Claude Code", "CentOS", "AI", "部署"]
-categories: ["技术教程"]
-description: "在 CentOS 上从零部署 Claude Code，涵盖 Node.js 安装、API Key 配置、常见问题排查。"
-summary: "Claude Code 是 Anthropic 推出的 CLI 工具，可在终端直接与 Claude AI 交互完成编码任务。本文介绍 CentOS 部署全流程。"
+tags: ["Claude Code", "CentOS", "AI", "デプロイ"]
+categories: ["技術チュートリアル"]
+description: "CentOS 上でゼロから Claude Code をデプロイし、Node.js のインストール、API Key の設定、よくある問題のトラブルシューティングまでカバーします。"
+summary: "Claude Code は Anthropic が提供する CLI ツールで、ターミナルで直接 Claude AI と対話しながらコーディング作業を行えます。本記事では CentOS へのデプロイ手順を全工程にわたり紹介します。"
 showToc: true
 TocOpen: true
 ---
 
-#### 1. 环境要求
+#### 1. 環境要件
 
-- **操作系统**: CentOS 7/8/Stream 9
-- **Node.js**: v18 或更高
-- **内存**: 建议 2GB 以上
-- **网络**: 需要访问 Anthropic API
+- **OS**: CentOS 7/8/Stream 9
+- **Node.js**: v18 以上
+- **メモリ**: 2GB 以上を推奨
+- **ネットワーク**: Anthropic API へのアクセスが必要
 
-#### 2. 安装 Node.js
+#### 2. Node.js のインストール
 
 ```bash
 # 安装 NodeSource 仓库
@@ -32,7 +32,7 @@ node -v
 npm -v
 ```
 
-> 如果 Node.js 版本过低，使用 nvm 管理版本：
+> Node.js のバージョンが低い場合は、nvm でバージョンを管理します：
 > ```bash
 > curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
 > source ~/.bashrc
@@ -40,7 +40,7 @@ npm -v
 > nvm use 20
 > ```
 
-#### 3. 安装 Claude Code
+#### 3. Claude Code のインストール
 
 ```bash
 # 全局安装
@@ -50,7 +50,7 @@ npm install -g @anthropic-ai/claude-code
 claude --version
 ```
 
-> 遇到权限问题有两种解决方案：
+> 権限の問題が発生した場合、2 つの解決策があります：
 > ```bash
 > # 方案一：sudo
 > sudo npm install -g @anthropic-ai/claude-code
@@ -62,7 +62,7 @@ claude --version
 > source ~/.bashrc
 > ```
 
-#### 4. 配置 API Key
+#### 4. API Key の設定
 
 ```bash
 # 方式一：环境变量（推荐）
@@ -73,9 +73,9 @@ source ~/.bashrc
 echo $ANTHROPIC_API_KEY
 ```
 
-> 方式二：直接运行 `claude`，首次启动时会提示输入 API Key。
+> 方法 2：`claude` を直接実行すると、初回起動時に API Key の入力が求められます。
 
-#### 5. 基本使用
+#### 5. 基本的な使い方
 
 ```bash
 # 启动交互式会话
@@ -95,16 +95,16 @@ claude config
 claude update
 ```
 
-| 命令 | 说明 |
+| コマンド | 説明 |
 |------|------|
-| `claude` | 启动交互式会话 |
-| `claude -p "问题"` | 直接提问，非交互模式 |
-| `claude config` | 查看/修改配置 |
-| `claude update` | 更新到最新版本 |
+| `claude` | インタラクティブセッションを開始 |
+| `claude -p "質問"` | 直接質問、非インタラクティブモード |
+| `claude config` | 設定の確認/変更 |
+| `claude update` | 最新バージョンに更新 |
 
-#### 6. 网络问题排查
+#### 6. ネットワーク問題のトラブルシューティング
 
-如果连接 Anthropic API 超时：
+Anthropic API への接続がタイムアウトする場合：
 
 ```bash
 # 配置代理
@@ -115,7 +115,7 @@ export http_proxy="http://your-proxy:port"
 curl -s https://api.anthropic.com/ | head -5
 ```
 
-#### 7. 安全建议
+#### 7. セキュリティの推奨事項
 
 ```bash
 # 不要硬编码 API Key，始终用环境变量

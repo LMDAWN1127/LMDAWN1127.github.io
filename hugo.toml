@@ -11,14 +11,55 @@ enableRobotsTXT = true
 [services.googleAnalytics]
   id = ""
 
+[languages]
+  [languages.zh]
+    languageName = "中文"
+    weight = 1
+    title = "DAWN's Blog"
+    [languages.zh.params]
+      description = "技术分享 | 学习笔记 | 生活记录"
+      [languages.zh.params.homeInfoParams]
+        Title = "Hi, 我是 DAWN"
+        Content = "热爱技术的开发者，专注 AI 编程工具、Linux 运维、Web 开发。喜欢探索新技术，折腾服务器，写代码解决问题。"
+
+  [languages.en]
+    languageName = "English"
+    weight = 2
+    title = "DAWN's Blog"
+    [languages.en.params]
+      description = "Tech Sharing | Study Notes | Life Records"
+      [languages.en.params.homeInfoParams]
+        Title = "Hi, I'm DAWN"
+        Content = "A developer passionate about technology, focused on AI coding tools, Linux operations, and web development. Love exploring new tech, tinkering with servers, and solving problems with code."
+
+  [languages.ko]
+    languageName = "한국어"
+    weight = 3
+    title = "DAWN's Blog"
+    [languages.ko.params]
+      description = "기술 공유 | 학습 노트 | 일상 기록"
+      [languages.ko.params.homeInfoParams]
+        Title = "안녕하세요, DAWN입니다"
+        Content = "기술에 열정을 가진 개발자로, AI 코딩 도구, Linux 운영, 웹 개발에 집중합니다. 새로운 기술을 탐색하고, 서버를 만지작거리며, 코드로 문제를 해결하는 것을 좋아합니다."
+
+  [languages.ja]
+    languageName = "日本語"
+    weight = 4
+    title = "DAWN's Blog"
+    [languages.ja.params]
+      description = "技術共有 | 学習ノート | 生活記録"
+      [languages.ja.params.homeInfoParams]
+        Title = "こんにちは、DAWNです"
+        Content = "技術に情熱を持つ開発者として、AIコーディングツール、Linux運用、Web開発に焦点を当てています。新技術の探求、サーバーのいじり、コードによる問題解決が好きです。"
+
 [params]
   env = "production"
-  description = "技术分享 | 学习笔记 | 生活记录"
-  keywords = ["博客", "技术", "Claude Code", "AI", "CentOS", "Docker", "Linux", "DevOps"]
+    keywords = ["博客", "技术", "Claude Code", "AI", "CentOS", "Docker", "Linux", "DevOps"]
   author = "DAWN"
   defaultTheme = "auto"
   ShowReadingTime = true
   ShowShareButtons = true
+  disableSearch = true
   ShowPostNavLinks = true
   ShowBreadCrumbs = true
   ShowCodeCopyButtons = true
@@ -34,11 +75,7 @@ enableRobotsTXT = true
 
   images = ["/images/DAWN.jpg"]
 
-  [params.homeInfoParams]
-    Title = "Hi, 我是 DAWN"
-    Content = "热爱技术的开发者，专注 AI 编程工具、Linux 运维、Web 开发。喜欢探索新技术，折腾服务器，写代码解决问题。"
-
-  [params.profileMode]
+    [params.profileMode]
     enabled = false
     imageUrl = "/images/DAWN.jpg"
     Title = "Hi, 我是 DAWN"
@@ -71,9 +108,9 @@ enableRobotsTXT = true
       resampleFilter = "Lanczos"
 
   [params.cover]
-    hidden = false
-    hiddenInList = false
-    hiddenInSingle = false
+  hidden = true
+  hiddenInList = true
+  hiddenInSingle = true
 
   [params.label]
     text = "DAWN's Blog"
@@ -108,30 +145,6 @@ enableRobotsTXT = true
   name = "文章"
   url = "/posts/"
   weight = 10
-
-[[menu.main]]
-  identifier = "archives"
-  name = "归档"
-  url = "/archives/"
-  weight = 15
-
-[[menu.main]]
-  identifier = "tags"
-  name = "标签"
-  url = "/tags/"
-  weight = 20
-
-[[menu.main]]
-  identifier = "categories"
-  name = "分类"
-  url = "/categories/"
-  weight = 30
-
-[[menu.main]]
-  identifier = "search"
-  name = "搜索"
-  url = "/search/"
-  weight = 40
 
 [outputs]
   home = ["HTML", "RSS", "JSON", "WebAppManifest"]

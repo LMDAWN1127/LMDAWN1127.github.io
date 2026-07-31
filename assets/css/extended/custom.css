@@ -204,3 +204,101 @@ article.post-entry:hover {
     font-size: 1.1em;
     margin-bottom: 0;
 }
+
+/* ============================================ */
+/* 语言切换器（下拉菜单）样式                  */
+/* ============================================ */
+
+.lang-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.lang-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 8px;
+    background: transparent;
+    border: 0;
+    color: var(--primary);
+    font: inherit;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: background 0.15s ease;
+}
+
+.lang-toggle:hover,
+.lang-toggle:focus-visible {
+    background: var(--entry);
+    outline: none;
+}
+
+.lang-toggle-arrow {
+    transition: transform 0.2s ease;
+    margin-top: 1px;
+}
+
+.lang-dropdown.open .lang-toggle-arrow {
+    transform: rotate(180deg);
+}
+
+.lang-menu {
+    position: absolute;
+    top: calc(100% + 6px);
+    right: 0;
+    min-width: 140px;
+    margin: 0;
+    padding: 6px 0;
+    list-style: none;
+    background: var(--entry);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.18);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-6px);
+    transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s;
+    z-index: 100;
+}
+
+.lang-dropdown.open .lang-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.lang-menu li {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.lang-link {
+    display: block;
+    padding: 6px 14px;
+    color: var(--primary);
+    text-decoration: none;
+    font-size: 14px;
+    transition: background 0.12s ease;
+    cursor: default;
+}
+
+a.lang-link {
+    cursor: pointer;
+}
+
+a.lang-link:hover {
+    background: var(--border);
+}
+
+.lang-menu li.active .lang-link {
+    color: var(--secondary);
+    font-weight: 600;
+}
+
+/* 暗色模式下微调阴影 */
+[data-theme="dark"] .lang-menu {
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.5);
+}

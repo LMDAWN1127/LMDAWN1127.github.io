@@ -1,19 +1,19 @@
 ---
-title: "Dockerfile 构建镜像如何更快？10 个实用优化技巧"
+title: "Dockerfile のビルドをより速くするには？10 の実用的な最適化テクニック"
 date: 2026-07-30T11:00:00+08:00
 draft: false
 author: "DAWN"
-tags: ["Docker", "Dockerfile", "性能优化", "DevOps", "CI/CD"]
-categories: ["容器技术"]
-description: "10 个经过验证的技巧，从缓存策略到多阶段构建，大幅缩短 Docker 构建时间。"
-summary: "Docker 构建太慢？本文分享 10 个经过验证的优化技巧，从缓存策略到多阶段构建，帮你大幅缩短构建时间。"
+tags: ["Docker", "Dockerfile", "パフォーマンス最適化", "DevOps", "CI/CD"]
+categories: ["コンテナ技術"]
+description: "10 の実証済みテクニックで、キャッシュ戦略からマルチステージビルドまで、Docker のビルド時間を大幅に短縮します。"
+summary: "Docker のビルドが遅い？本記事では 10 の実証済み最適化テクニックを共有し、キャッシュ戦略からマルチステージビルドまで、ビルド時間を大幅に短縮する方法を紹介します。"
 showToc: true
 TocOpen: true
 ---
 
-#### 1. 合理安排指令顺序（利用缓存）
+#### 1. 命令の順序を適切に配置する（キャッシュの活用）
 
-把变化频率低的指令放前面，变化频率高的放后面。一旦某层缓存失效，后续所有层都会重新构建。
+変更頻度の低い命令を前に、変更頻度の高い命令を後に配置します。あるレイヤーのキャッシュが無効になると、以降のすべてのレイヤーが再ビルドされます。
 
 ```dockerfile
 # ❌ 错误：每次改代码都要重新装依赖
@@ -37,9 +37,9 @@ CMD ["node", "server.js"]
 docker build -t myapp . 2>&1 | grep -E "(CACHED|Using cache)"
 ```
 
-#### 2. 使用 .dockerignore 减少上下文
+#### 2. .dockerignore でコンテキストを削減する
 
-`docker build` 会把整个目录发送到 Docker daemon，包括 `.git`、`node_modules` 等不需要的文件。
+`docker build` は `.git` や `node_modules` など不要なファイルを含むディレクトリ全体を Docker daemon に送信します。
 
 ```dockerignore
 # .dockerignore
@@ -66,13 +66,13 @@ docker build --no-cache -t test . 2>&1 | grep "Sending build context"
 # 优化后：Sending build context to Docker daemon  50MB
 ```
 
-#### 3. 使用轻量级基础镜像
+#### 3. 軽量なベースイメージを使用する
 
-| 基础镜像 | 大小 | 说明 |
+| ベースイメージ | サイズ | 説明 |
 |----------|------|------|
-| `ubuntu:22.04` | ~77MB | 完整 Ubuntu |
-| `python:3.11` | ~1GB | 包含完整 Python |
-| `python:3.11-slim` | ~130MB | 精简版 |
+| `ubuntu:22.04` | ~77MB | 完全な Ubuntu |
+| `python:3.11` | ~1GB | 完全な Python を含む |
+| `python:3.11-slim` | ~130MB | スリム版 |
 | `python:3.11-alpine` | ~50MB | Alpine 版 |
 
 ```dockerfile
@@ -86,11 +86,11 @@ FROM python:3.11-slim     # 130MB
 FROM python:3.11-alpine   # 50MB
 ```
 
-> Alpine 使用 `musl` 而非 `glibc`，某些软件可能不兼容。遇到问题选 `slim` 版本。
+> Alpine は `glibc` ではなく `musl` を使用するため、一部のソフトウェアで互換性の問題が生じる可能性があります。問題に遭遇した場合は `slim` 版を選択してください。
 
-#### 4. 合并 RUN 指令减少层数
+#### 4. RUN 命令を統合してレイヤー数を削減する
 
-每个 RUN 创建一个新层，层越多构建越慢、镜像越大。
+各 RUN は新しいレイヤーを作成し、レイヤーが多いほどビルドが遅くなり、イメージも大きくなります。
 
 ```dockerfile
 # ❌ 5 个层
@@ -114,9 +114,9 @@ RUN apt-get update && \
 docker history myapp:latest
 ```
 
-#### 5. 使用多阶段构建
+#### 5. マルチステージビルドを使用する
 
-在一个阶段构建，在另一个阶段运行，只复制需要的文件。
+あるステージでビルドを行い、別のステージで実行し、必要なファイルだけをコピーします。
 
 ```dockerfile
 # 阶段 1：构建
@@ -136,14 +136,14 @@ EXPOSE 8080
 CMD ["./app"]
 ```
 
-| 方案 | 镜像大小 | 构建时间 |
+| 方式 | イメージサイズ | ビルド時間 |
 |------|----------|----------|
-| 单阶段 | ~1.2GB | 5 分钟 |
-| 多阶段 | ~15MB | 2 分钟 |
+| シングルステージ | ~1.2GB | 5 分 |
+| マルチステージ | ~15MB | 2 分 |
 
-#### 6. 使用 BuildKit 加速构建
+#### 6. BuildKit でビルドを高速化する
 
-BuildKit 支持并行构建和高级缓存。
+BuildKit は並列ビルドと高度なキャッシュをサポートしています。
 
 ```bash
 # 启用 BuildKit
@@ -173,9 +173,9 @@ CMD ["node", "server.js"]
 docker build --progress=plain -t myapp . 2>&1 | head -5
 ```
 
-#### 7. 使用缓存导入导出
+#### 7. キャッシュのインポート・エクスポートを使用する
 
-在 CI/CD 中，缓存会在每次构建后丢失。使用缓存导入导出可以跨构建保留缓存。
+CI/CD では、キャッシュは毎回のビルド後に失われます。キャッシュのインポート・エクスポートを使うことで、ビルド間でキャッシュを保持できます。
 
 ```bash
 # 导出到本地
@@ -203,7 +203,7 @@ docker build \
     cache-to: type=gha,mode=max
 ```
 
-#### 8. 并行安装依赖
+#### 8. 依存関係の並列インストール
 
 ```dockerfile
 # Node.js - npm ci 比 npm install 快
@@ -220,9 +220,9 @@ COPY --from=chef /app/recipe.json recipe.json
 RUN cargo chef cook --release --recipe-path recipe.json
 ```
 
-#### 9. 清理构建缓存和临时文件
+#### 9. ビルドキャッシュと一時ファイルのクリーンアップ
 
-在同一个 RUN 指令中清理，避免文件保留在层中。
+同じ RUN 命令内でクリーンアップを行い、ファイルがレイヤーに残らないようにします。
 
 ```dockerfile
 # ✅ 正确：同一层中清理
@@ -239,7 +239,7 @@ RUN make && make install
 RUN apt-get clean  # 太晚了！前面的层已经包含了文件
 ```
 
-各语言清理命令：
+各言語のクリーンアップコマンド：
 
 ```dockerfile
 # Node.js
@@ -252,7 +252,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 RUN go build -o app . && go clean -cache
 ```
 
-#### 10. 使用特定版本标签
+#### 10. 特定バージョンのタグを使用する
 
 ```dockerfile
 # ❌ latest 可能变化，缓存不可预测
@@ -265,16 +265,16 @@ FROM node:18.17.0-alpine3.18
 FROM node:18.17.0-alpine3.18@sha256:abc123...
 ```
 
-#### 镜像层级详解
+#### イメージレイヤーの詳細
 
 ```bash
 # 查看镜像层历史
 docker history <image-name>
 ```
 
-创建新层的指令：`FROM`、`RUN`、`COPY`、`ADD`
+新しいレイヤーを作成する命令：`FROM`、`RUN`、`COPY`、`ADD`
 
-不创建新层的指令（只是元数据）：`CMD`、`ENTRYPOINT`、`ENV`、`EXPOSE`、`WORKDIR`、`USER`、`LABEL`、`ARG`、`VOLUME`
+新しいレイヤーを作成しない命令（メタデータのみ）：`CMD`、`ENTRYPOINT`、`ENV`、`EXPOSE`、`WORKDIR`、`USER`、`LABEL`、`ARG`、`VOLUME`
 
 ```dockerfile
 # 这会创建 4 个层
@@ -290,7 +290,7 @@ EXPOSE 3000               # 无层
 CMD ["node", "server.js"]  # 无层
 ```
 
-#### 优化效果对比
+#### 最適化効果の比較
 
 ```dockerfile
 # ❌ 优化前（8 分钟，1.2GB）
@@ -321,14 +321,14 @@ EXPOSE 8000
 CMD ["python", "app.py"]
 ```
 
-| 指标 | 优化前 | 优化后 | 提升 |
+| 指標 | 最適化前 | 最適化後 | 改善 |
 |------|--------|--------|------|
-| 构建时间 | 8 分钟 | 1.5 分钟 | 81% ⬇️ |
-| 镜像大小 | 1.2GB | 150MB | 87% ⬇️ |
-| 上下文大小 | 500MB | 50MB | 90% ⬇️ |
-| 缓存命中率 | 10% | 90% | 80% ⬆️ |
+| ビルド時間 | 8 分 | 1.5 分 | 81% ⬇️ |
+| イメージサイズ | 1.2GB | 150MB | 87% ⬇️ |
+| コンテキストサイズ | 500MB | 50MB | 90% ⬇️ |
+| キャッシュヒット率 | 10% | 90% | 80% ⬆️ |
 
-#### 监控和调试
+#### 監視とデバッグ
 
 ```bash
 # 显示详细构建时间

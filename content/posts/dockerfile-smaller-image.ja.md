@@ -1,17 +1,17 @@
 ---
-title: "Dockerfile 构建镜像太大？10 个技巧让镜像瘦身 90%"
+title: "Dockerfile のビルドイメージが大きすぎる？10 のテクニックでイメージを 90% スリム化"
 date: 2026-07-30T12:00:00+08:00
 draft: false
 author: "DAWN"
-tags: ["Docker", "Dockerfile", "镜像优化", "DevOps", "容器化"]
-categories: ["容器技术"]
-description: "10 个经过验证的技巧，把 Docker 镜像体积缩小 90% 以上。"
-summary: "Docker 镜像太大导致部署慢、存储成本高？本文分享 10 个经过验证的优化技巧，帮你把镜像缩小 90% 以上。"
+tags: ["Docker", "Dockerfile", "イメージ最適化", "DevOps", "コンテナ化"]
+categories: ["コンテナ技術"]
+description: "10 の実証済みテクニックで、Docker イメージサイズを 90% 以上削減します。"
+summary: "Docker イメージが大きすぎてデプロイが遅く、ストレージコストが高くなっていませんか？本記事では 10 の実証済み最適化テクニックを共有し、イメージを 90% 以上スリム化する方法を紹介します。"
 showToc: true
 TocOpen: true
 ---
 
-#### 1. 选择合适的基础镜像
+#### 1. 適切なベースイメージを選択する
 
 ```dockerfile
 # ❌ 太大
@@ -26,16 +26,16 @@ FROM python:3.11-slim      # ~130MB
 FROM gcr.io/distroless/python3  # ~20MB
 ```
 
-| 基础镜像 | 大小 |
+| ベースイメージ | サイズ |
 |---------|------|
 | `ubuntu:22.04` | ~77MB |
 | `python:3.11` | ~1GB |
 | `python:3.11-alpine` | ~50MB |
 | `distroless` | ~20MB |
 
-#### 2. 使用多阶段构建
+#### 2. マルチステージビルドを使用する
 
-最有效的优化手段：编译阶段用大镜像，运行阶段只复制产物。
+最も効果的な最適化手法：コンパイルステージでは大きなイメージを使い、実行ステージでは成果物だけをコピーします。
 
 ```dockerfile
 # 阶段 1：编译
@@ -51,9 +51,9 @@ COPY --from=builder /app/myapp .
 CMD ["./myapp"]
 ```
 
-> Go 应用从 ~1GB 缩小到 ~15MB。
+> Go アプリケーションが ~1GB から ~15MB に縮小されます。
 
-#### 3. 合并 RUN 指令
+#### 3. RUN 命令を統合する
 
 ```dockerfile
 # ❌ 多个层
@@ -70,7 +70,7 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/*
 ```
 
-#### 4. 清理构建缓存
+#### 4. ビルドキャッシュのクリーンアップ
 
 ```dockerfile
 # Python - 禁用 pip 缓存
@@ -84,7 +84,7 @@ RUN npm ci --only=production && \
 RUN go build -ldflags="-s -w" -o myapp
 ```
 
-#### 5. 使用 .dockerignore
+#### 5. .dockerignore を使用する
 
 ```dockerignore
 # .dockerignore
@@ -105,7 +105,7 @@ coverage
 docker build --no-cache -t test . 2>&1 | grep "Sending build context"
 ```
 
-#### 6. 只安装必要的包
+#### 6. 必要なパッケージのみインストールする
 
 ```dockerfile
 # ❌ 运行镜像里装了编译工具
@@ -126,7 +126,7 @@ COPY --from=builder /app/myapp .
 CMD ["./myapp"]
 ```
 
-#### 7. 使用 --no-install-recommends
+#### 7. --no-install-recommends を使用する
 
 ```dockerfile
 # ❌ 安装了所有推荐包
@@ -136,7 +136,7 @@ RUN apt-get install -y curl
 RUN apt-get install -y --no-install-recommends curl
 ```
 
-#### 8. 压缩静态资源
+#### 8. 静的リソースの圧縮
 
 ```dockerfile
 # 压缩 JavaScript
@@ -152,16 +152,16 @@ RUN find . -name "*.png" -exec optipng {} \;
 RUN go build -ldflags="-s -w" -o myapp
 ```
 
-#### 9. 使用 Squash 合并层
+#### 9. Squash でレイヤーを統合する
 
 ```bash
 # 合并所有层为一层，去除中间层的重复文件
 docker build --squash -t myapp:slim .
 ```
 
-> 需要在 `/etc/docker/daemon.json` 中启用 experimental 功能。
+> `/etc/docker/daemon.json` で experimental 機能を有効にする必要があります。
 
-#### 10. 分析镜像层
+#### 10. イメージレイヤーを分析する
 
 ```bash
 # 使用 dive 工具分析每层大小和内容
@@ -173,7 +173,7 @@ docker run --rm -it \
 docker history myapp:latest
 ```
 
-#### 实战案例：Python 应用
+#### 実践例：Python アプリケーション
 
 ```dockerfile
 # ❌ 优化前（1.2GB）
@@ -199,7 +199,7 @@ ENV PATH=/root/.local/bin:$PATH
 CMD ["python", "app.py"]
 ```
 
-#### 实战案例：Node.js 应用
+#### 実践例：Node.js アプリケーション
 
 ```dockerfile
 # ❌ 优化前（1.1GB）
@@ -225,11 +225,11 @@ USER node
 CMD ["node", "server.js"]
 ```
 
-#### 推荐工具
+#### 推奨ツール
 
-| 工具 | 用途 |
+| ツール | 用途 |
 |------|------|
-| `dive` | 分析镜像每层内容和大小 |
-| `docker-slim` | 自动精简镜像 |
-| `hadolint` | Dockerfile 静态检查 |
-| `trivy` | 镜像安全扫描 |
+| `dive` | イメージの各レイヤーの内容とサイズを分析 |
+| `docker-slim` | イメージを自動的にスリム化 |
+| `hadolint` | Dockerfile の静的チェック |
+| `trivy` | イメージのセキュリティスキャン |
