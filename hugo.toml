@@ -94,12 +94,6 @@ enableRobotsTXT = true
     enabled = true
 
 [[menu.main]]
-  identifier = "about"
-  name = "关于"
-  url = "/about/"
-  weight = 5
-
-[[menu.main]]
   identifier = "posts"
   name = "文章"
   url = "/posts/"
