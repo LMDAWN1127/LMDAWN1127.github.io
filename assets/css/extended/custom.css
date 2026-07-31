@@ -120,8 +120,6 @@
     border-color: var(--accent-teal);
 }
 
-.theme-toggle .moon { display: var(--display-moon); }
-.theme-toggle .sun { display: var(--display-sun); }
 
 /* 语言下拉 */
 .lang-dropdown {
@@ -1159,26 +1157,6 @@ header.header,
     font-size: 0.7rem !important;
 }
 
-/* --- 2. 主题图标：日间只显示太阳，夜间只显示月亮 --- */
-/* 先清掉两个图标的显示（包括之前坏掉的 var(--display-xxx) 规则） */
-.theme-toggle .sun,
-.theme-toggle .moon,
-#theme-toggle .sun,
-#theme-toggle .moon {
-    display: none !important;
-}
-
-/* 日间（body 无 .dark）：只显示太阳 */
-body:not(.dark) .theme-toggle .sun,
-body:not(.dark) #theme-toggle .sun {
-    display: inline-block !important;
-}
-
-/* 夜间（body 有 .dark）：只显示月亮 */
-body.dark .theme-toggle .moon,
-body.dark #theme-toggle .moon {
-    display: inline-block !important;
-}
 /* ===========================================
    v7 补丁：主题图标跟随 html[data-theme] 切换
    （PaperMod 用 <html data-theme="dark|light">，不是 body.dark）
@@ -1202,4 +1180,77 @@ body.dark #theme-toggle .moon {
 [data-theme="light"] .theme-toggle .sun,
 [data-theme="light"] #theme-toggle .sun {
     display: inline-block !important;
+}
+
+/* v8 补丁：用 html 前缀强制覆盖 PaperMod 主题默认的反向规则 */
+/* PaperMod 默认：dark 时隐藏 .moon，light 时隐藏 .sun（逻辑反的） */
+html[data-theme="dark"] .moon,
+html[data-theme="dark"] .theme-toggle .moon,
+html[data-theme="dark"] #theme-toggle .moon {
+    display: inline-block !important;
+}
+
+html[data-theme="light"] .sun,
+html[data-theme="light"] .theme-toggle .sun,
+html[data-theme="light"] #theme-toggle .sun {
+    display: inline-block !important;
+}
+
+html[data-theme="dark"] .sun,
+html[data-theme="dark"] .theme-toggle .sun,
+html[data-theme="dark"] #theme-toggle .sun {
+    display: none !important;
+}
+
+html[data-theme="light"] .moon,
+html[data-theme="light"] .theme-toggle .moon,
+html[data-theme="light"] #theme-toggle .moon {
+    display: none !important;
+}
+
+/* v8: Force override PaperMod default (reversed) sun/moon logic */
+html[data-theme="dark"] .moon,
+html[data-theme="dark"] .theme-toggle .moon,
+html[data-theme="dark"] #theme-toggle .moon {
+    display: inline-block !important;
+}
+
+html[data-theme="light"] .sun,
+html[data-theme="light"] .theme-toggle .sun,
+html[data-theme="light"] #theme-toggle .sun {
+    display: inline-block !important;
+}
+
+html[data-theme="dark"] .sun,
+html[data-theme="dark"] .theme-toggle .sun,
+html[data-theme="dark"] #theme-toggle .sun {
+    display: none !important;
+}
+
+html[data-theme="light"] .moon,
+html[data-theme="light"] .theme-toggle .moon,
+html[data-theme="light"] #theme-toggle .moon {
+    display: none !important;
+}
+
+/* PaperMod hides .moon in dark and .sun in light by default */
+html[data-theme="dark"] .moon,
+html[data-theme="dark"] .theme-toggle .moon,
+html[data-theme="dark"] #theme-toggle .moon {
+    display: inline-block !important;
+}
+html[data-theme="light"] .sun,
+html[data-theme="light"] .theme-toggle .sun,
+html[data-theme="light"] #theme-toggle .sun {
+    display: inline-block !important;
+}
+html[data-theme="dark"] .sun,
+html[data-theme="dark"] .theme-toggle .sun,
+html[data-theme="dark"] #theme-toggle .sun {
+    display: none !important;
+}
+html[data-theme="light"] .moon,
+html[data-theme="light"] .theme-toggle .moon,
+html[data-theme="light"] #theme-toggle .moon {
+    display: none !important;
 }
