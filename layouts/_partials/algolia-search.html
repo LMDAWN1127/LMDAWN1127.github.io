@@ -34,9 +34,9 @@
 (function() {
   'use strict';
 
-  var APP_ID = '{{ site.Params.algolia.appId }}';
-  var SEARCH_KEY = '{{ site.Params.algolia.apiKey }}';
-  var INDEX_NAME = '{{ site.Params.algolia.indexName }}';
+  var APP_ID = '{{ .Site.Params.algolia.appId }}';
+  var SEARCH_KEY = '{{ .Site.Params.algolia.apiKey }}';
+  var INDEX_NAME = '{{ .Site.Params.algolia.indexName }}';
   var API_URL = 'https://' + APP_ID + '-dsn.algolia.net/1/indexes/' + INDEX_NAME + '/query';
   var debounceTimer = null;
   var selectedIndex = -1;
@@ -75,7 +75,7 @@
     })
     .catch(function(err) {
       console.error('Algolia search error:', err);
-      showError();
+      showError(err.message || '未知错误');
     });
   }
 
@@ -85,9 +85,11 @@
       '<div class="algolia-empty-state"><p>输入关键词开始搜索</p></div>';
   }
 
-  function showError() {
+  function showError(detail) {
+    var msg = '搜索出错，请稍后再试';
+    if (detail) msg += '<br><small style="color:#888">错误详情: ' + escapeHtml(detail) + '</small>';
     document.getElementById('algolia-search-results').innerHTML =
-      '<div class="algolia-empty-state"><p>搜索出错，请稍后再试</p></div>';
+      '<div class="algolia-empty-state"><p>' + msg + '</p></div>';
   }
 
   function showNoResults(query) {
