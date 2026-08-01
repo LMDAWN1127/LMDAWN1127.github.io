@@ -54,7 +54,6 @@ ExecStart=/usr/local/bin/etcd --name etcd1 --data-dir /var/lib/etcd --listen-cli
 WantedBy=multi-user.target
 ```
 
-> 注意： 整个蓝色部分均为一行
 
 2. 重载系统服务配置并启动 etcd：
 
@@ -78,7 +77,6 @@ tcp        0      0 127.0.0.1:2379          0.0.0.0:*               LISTEN      
 etcdctl --endpoints http://127.0.0.1:2379 put /coreos.com/network/config '{"Network": "172.16.0.0/16", "SubnetLen": 24, "SubnetMin": "172.16.1.0","SubnetMax": "172.16.10.0", "Backend": {"Type": "vxlan"}}'
 ```
 
-> 上述内容全部为一行，验证配置是否写入成功
 
 ```bash
 etcdctl --endpoints http://192.168.8.88:2379 get /coreos.com/network/config

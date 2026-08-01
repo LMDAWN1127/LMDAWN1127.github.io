@@ -54,7 +54,6 @@ ExecStart=/usr/local/bin/etcd --name etcd1 --data-dir /var/lib/etcd --listen-cli
 WantedBy=multi-user.target
 ```
 
-> 참고: 전체 파란색 부분은 모두 한 줄입니다
 
 2. 시스템 서비스 구성을 다시 로드하고 etcd를 시작합니다:
 
@@ -78,7 +77,6 @@ tcp        0      0 127.0.0.1:2379          0.0.0.0:*               LISTEN      
 etcdctl --endpoints http://127.0.0.1:2379 put /coreos.com/network/config '{"Network": "172.16.0.0/16", "SubnetLen": 24, "SubnetMin": "172.16.1.0","SubnetMax": "172.16.10.0", "Backend": {"Type": "vxlan"}}'
 ```
 
-> 위 내용은 모두 한 줄이며, 구성이 성공적으로 기입되었는지 확인합니다
 
 ```bash
 etcdctl --endpoints http://192.168.8.88:2379 get /coreos.com/network/config

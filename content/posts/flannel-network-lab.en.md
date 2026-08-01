@@ -54,7 +54,6 @@ ExecStart=/usr/local/bin/etcd --name etcd1 --data-dir /var/lib/etcd --listen-cli
 WantedBy=multi-user.target
 ```
 
-> Note: The entire blue section is on one line
 
 2. Reload system service configuration and start etcd:
 
