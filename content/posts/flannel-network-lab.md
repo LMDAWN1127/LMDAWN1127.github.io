@@ -104,7 +104,7 @@ etcdctl --endpoints http://192.168.8.88:2379 get /coreos.com/network/config
 2. 解压文件：
 
 ```bash
-[root@web01 data]# tar -zxvf flannel-v0.26.7-linux-amd64.tar.gz
+[root@web01 ~]# tar -zxvf flannel-v0.26.7-linux-amd64.tar.gz
 ```
 
 ### 步骤 2：安装 flannel 可执行文件

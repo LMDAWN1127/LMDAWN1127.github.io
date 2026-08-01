@@ -104,7 +104,7 @@ etcdctl --endpoints http://192.168.8.88:2379 get /coreos.com/network/config
 2. 파일의 압축을 해제합니다:
 
 ```bash
-[root@web01 data]# tar -zxvf flannel-v0.26.7-linux-amd64.tar.gz
+[root@web01 ~]# tar -zxvf flannel-v0.26.7-linux-amd64.tar.gz
 ```
 
 ### 단계 2: flannel 실행 파일 설치
