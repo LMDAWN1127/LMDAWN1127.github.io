@@ -6,19 +6,14 @@
 {{- $pages = site.RegularPages }}
 {{- end }}
 
-{{/* Collect all unique tags */}}
-{{- $allTags := slice }}
-{{- range $pages }}
-  {{- range .Params.tags }}
-    {{- $allTags = $allTags | append . }}
-  {{- end }}
-{{- end }}
-{{- $allTags = $allTags | uniq | sort }}
+{{/* Only show AI and Docker tags */}}
+{{- $allowedTags := slice "AI" "Docker" }}
 
-{{/* For each tag, list its pages */}}
-{{- range $allTags }}
+{{/* For each allowed tag, list its pages */}}
+{{- range $allowedTags }}
 {{- $tag := . }}
 {{- $tagPages := where $pages "Params.tags" "intersect" (slice $tag) }}
+{{- if gt (len $tagPages) 0 }}
 <div class="archive-tag-group">
   <h2 class="archive-tag-header" id="{{ $tag | urlize }}">
     <a class="archive-header-link" href="#{{ $tag | urlize }}">
@@ -39,6 +34,7 @@
     {{- end }}
   </div>
 </div>
+{{- end }}
 {{- end }}
 
 {{- end }}
