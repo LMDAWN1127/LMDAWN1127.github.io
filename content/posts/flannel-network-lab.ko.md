@@ -2,7 +2,7 @@
 title: "flannel 네트워크 실험 매뉴얼"
 date: 2025-05-21
 draft: false
-tags: ["flannel", "docker", "네트워크", "etcd"]
+tags: ["flannel", "Docker", "네트워크", "etcd"]
 ---
 
 # flannel 네트워크 실험 매뉴얼

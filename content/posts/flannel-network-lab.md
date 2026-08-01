@@ -2,7 +2,7 @@
 title: "flannel 网络实验手册"
 date: 2025-05-21
 draft: false
-tags: ["flannel", "docker", "网络", "etcd"]
+tags: ["flannel", "Docker", "网络", "etcd"]
 ---
 
 # flannel 网络实验手册
