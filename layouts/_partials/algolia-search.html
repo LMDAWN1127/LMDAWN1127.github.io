@@ -53,8 +53,8 @@
       hitsPerPage: 10,
       attributesToRetrieve: ['title', 'content', 'url', 'date', 'tags'],
       attributesToHighlight: ['title', 'content'],
-      highlightPreFragment: '<mark class="algolia-highlight">',
-      highlightPostFragment: '</mark>'
+      highlightPreTag: '<mark class="algolia-highlight">',
+      highlightPostTag: '</mark>'
     });
 
     fetch(API_URL, {
