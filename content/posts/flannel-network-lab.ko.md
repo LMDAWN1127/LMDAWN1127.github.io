@@ -96,7 +96,7 @@ etcdctl --endpoints http://192.168.8.88:2379 get /coreos.com/network/config
 [root@docker-network ~]# systemctl stop firewalld
 ```
 
-## 3. docker01 호스트 구성 (Host1: 192.168.8.188)
+## 3. web01 호스트 구성 (Host1: 192.168.8.188)
 
 ### 단계 1: flannel 다운로드 및 압축 해제
 
@@ -110,7 +110,7 @@ etcdctl --endpoints http://192.168.8.88:2379 get /coreos.com/network/config
 ### 단계 2: flannel 실행 파일 설치
 
 ```bash
-[root@docker01 ~]# cp -p flanneld mk-docker-opts.sh /usr/local/bin/
+[root@web01 ~]# cp -p flanneld mk-docker-opts.sh /usr/local/bin/
 ```
 
 ### 단계 3: flannel 서비스 구성 및 시작
@@ -146,15 +146,15 @@ WantedBy=multi-user.target
 서비스 구성을 다시 로드하고 flannel을 시작합니다:
 
 ```bash
-[root@docker01 ~]# systemctl daemon-reload
-[root@docker01 ~]# systemctl enable flanneld.service
-[root@docker01 ~]# systemctl restart flanneld.service
+[root@web01 ~]# systemctl daemon-reload
+[root@web01 ~]# systemctl enable flanneld.service
+[root@web01 ~]# systemctl restart flanneld.service
 ```
 
 ### 단계 4: flannel 네트워크 인터페이스 확인
 
 ```bash
-[root@docker01 ~]# ifconfig
+[root@web01 ~]# ifconfig
 ```
 
 flannel.1 인터페이스가 표시되어야 합니다 (예시 출력):
@@ -175,7 +175,7 @@ flannel.1: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1450
 1. flannel이 생성한 서브넷 환경 변수를 확인합니다:
 
 ```bash
-[root@docker01 ~]# cat /run/flannel/subnet.env
+[root@web01 ~]# cat /run/flannel/subnet.env
 ```
 
 출력 예시:
@@ -188,7 +188,7 @@ FLANNEL_IPMASQ=true
 ```
 
 ```bash
-[root@docker01 ~]# cat /run/docker_opts.env
+[root@web01 ~]# cat /run/docker_opts.env
 ```
 
 출력 예시:
@@ -203,7 +203,7 @@ DOCKER_OPTS=" --bip=172.16.5.1/24 --ip-masq=false --mtu=1450"
 2. docker 서비스 구성을 수정합니다:
 
 ```bash
-[root@docker01 ~]# vim /usr/lib/systemd/system/docker.service
+[root@web01 ~]# vim /usr/lib/systemd/system/docker.service
 ```
 
 [Service] 섹션에 다음을 추가합니다:
@@ -217,8 +217,8 @@ EnvironmentFile=-/run/docker_opts.env
 3. docker 서비스를 재시작합니다:
 
 ```bash
-[root@docker01 ~]# systemctl daemon-reload
-[root@docker01 ~]# systemctl restart docker.service
+[root@web01 ~]# systemctl daemon-reload
+[root@web01 ~]# systemctl restart docker.service
 ```
 
 ### 단계 6: docker 네트워크 확인
@@ -238,8 +238,8 @@ docker0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1450
 ```
 
 ```bash
-[root@docker01 ~]# docker run -d -p 8800:80 nginx
-[root@docker01 ~]# docker exec -it <컨테이너 ID> /bin/bash
+[root@web01 ~]# docker run -d -p 8800:80 nginx
+[root@web01 ~]# docker exec -it <컨테이너 ID> /bin/bash
 ```
 
 2. 컨테이너 IP를 확인합니다 (예시: 172.16.5.3):
@@ -249,21 +249,21 @@ root@컨테이너 ID:/# ifconfig
 eth0: inet 172.16.5.3 netmask 255.255.255.0
 ```
 
-![docker01 컨테이너 네트워크 확인](/images/flannel/page6_img1.png)
+![web01 컨테이너 네트워크 확인](/images/flannel/page6_img1.png)
 
-## 4. docker02 호스트 구성 (Host2: 192.168.0.208)
+## 4. web02 호스트 구성 (Host2: 192.168.0.208)
 
 ### 단계 설명
 
-1. 구성 단계는 docker01과 완전히 동일하며, 다음 매개변수만 수정하면 됩니다:
+1. 구성 단계는 web01과 완전히 동일하며, 다음 매개변수만 수정하면 됩니다:
    - `--iface=192.168.8.99` (로컬 IP)
    - docker 컨테이너 IP 예시: 172.16.5.2 (flannel에 의해 자동 할당)
 
 ## 5. 실험 확인
 
-docker01 컨테이너에서 docker02 컨테이너 IP (예시: 172.16.9.2)로 ping을 수행합니다:
+web01 컨테이너에서 web02 컨테이너 IP (예시: 172.16.9.2)로 ping을 수행합니다:
 
-![docker01 ping docker02 컨테이너](/images/flannel/page7_img1.png)
+![web01 ping web02 컨테이너](/images/flannel/page7_img1.png)
 
 Docker02에서 컨테이너를 생성하고 컨테이너 IP 주소를 확인합니다.
 

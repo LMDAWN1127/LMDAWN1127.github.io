@@ -96,7 +96,7 @@ etcdctl --endpoints http://192.168.8.88:2379 get /coreos.com/network/config
 [root@docker-network ~]# systemctl stop firewalld
 ```
 
-## 三、docker01 ホストの設定（Host1: 192.168.8.188）
+## 三、web01 ホストの設定（Host1: 192.168.8.188）
 
 ### ステップ 1：flannel のダウンロードと解凍
 
@@ -110,7 +110,7 @@ etcdctl --endpoints http://192.168.8.88:2379 get /coreos.com/network/config
 ### ステップ 2：flannel 実行ファイルのインストール
 
 ```bash
-[root@docker01 ~]# cp -p flanneld mk-docker-opts.sh /usr/local/bin/
+[root@web01 ~]# cp -p flanneld mk-docker-opts.sh /usr/local/bin/
 ```
 
 ### ステップ 3：flannel サービスの設定と起動
@@ -146,15 +146,15 @@ WantedBy=multi-user.target
 サービス設定をリロードして flannel を起動します：
 
 ```bash
-[root@docker01 ~]# systemctl daemon-reload
-[root@docker01 ~]# systemctl enable flanneld.service
-[root@docker01 ~]# systemctl restart flanneld.service
+[root@web01 ~]# systemctl daemon-reload
+[root@web01 ~]# systemctl enable flanneld.service
+[root@web01 ~]# systemctl restart flanneld.service
 ```
 
 ### ステップ 4：flannel ネットワークインターフェースの確認
 
 ```bash
-[root@docker01 ~]# ifconfig
+[root@web01 ~]# ifconfig
 ```
 
 flannel.1 インターフェースが表示されるはずです（出力例）：
@@ -175,7 +175,7 @@ flannel.1: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1450
 1. flannel が生成したサブネット環境変数を確認します：
 
 ```bash
-[root@docker01 ~]# cat /run/flannel/subnet.env
+[root@web01 ~]# cat /run/flannel/subnet.env
 ```
 
 出力例：
@@ -188,7 +188,7 @@ FLANNEL_IPMASQ=true
 ```
 
 ```bash
-[root@docker01 ~]# cat /run/docker_opts.env
+[root@web01 ~]# cat /run/docker_opts.env
 ```
 
 出力例：
@@ -203,7 +203,7 @@ DOCKER_OPTS=" --bip=172.16.5.1/24 --ip-masq=false --mtu=1450"
 2. docker サービス設定を変更します：
 
 ```bash
-[root@docker01 ~]# vim /usr/lib/systemd/system/docker.service
+[root@web01 ~]# vim /usr/lib/systemd/system/docker.service
 ```
 
 [Service] セクションに以下を追加します：
@@ -217,8 +217,8 @@ EnvironmentFile=-/run/docker_opts.env
 3. docker サービスを再起動します：
 
 ```bash
-[root@docker01 ~]# systemctl daemon-reload
-[root@docker01 ~]# systemctl restart docker.service
+[root@web01 ~]# systemctl daemon-reload
+[root@web01 ~]# systemctl restart docker.service
 ```
 
 ### ステップ 6：docker ネットワークの確認
@@ -238,8 +238,8 @@ docker0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1450
 ```
 
 ```bash
-[root@docker01 ~]# docker run -d -p 8800:80 nginx
-[root@docker01 ~]# docker exec -it <コンテナID> /bin/bash
+[root@web01 ~]# docker run -d -p 8800:80 nginx
+[root@web01 ~]# docker exec -it <コンテナID> /bin/bash
 ```
 
 2. コンテナ IP を確認します（例：172.16.5.3）：
@@ -249,21 +249,21 @@ root@コンテナID:/# ifconfig
 eth0: inet 172.16.5.3 netmask 255.255.255.0
 ```
 
-![docker01 コンテナネットワーク検証](/images/flannel/page6_img1.png)
+![web01 コンテナネットワーク検証](/images/flannel/page6_img1.png)
 
-## 四、docker02 ホストの設定（Host2: 192.168.0.208）
+## 四、web02 ホストの設定（Host2: 192.168.0.208）
 
 ### ステップの説明
 
-1. 設定手順は docker01 と完全に同じです。以下のパラメータのみ変更してください：
+1. 設定手順は web01 と完全に同じです。以下のパラメータのみ変更してください：
    - `--iface=192.168.8.99`（本機の IP）
    - docker コンテナ IP の例：172.16.5.2（flannel が自動割り当て）
 
 ## 五、実験の検証
 
-docker01 のコンテナから docker02 のコンテナ IP（例：172.16.9.2）に ping を実行します：
+web01 のコンテナから web02 のコンテナ IP（例：172.16.9.2）に ping を実行します：
 
-![docker01 から docker02 コンテナへの ping](/images/flannel/page7_img1.png)
+![web01 から web02 コンテナへの ping](/images/flannel/page7_img1.png)
 
 Docker02 でコンテナを作成し、コンテナ IP アドレスを確認します
 

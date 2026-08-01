@@ -96,7 +96,7 @@ etcdctl --endpoints http://192.168.8.88:2379 get /coreos.com/network/config
 [root@docker-network ~]# systemctl stop firewalld
 ```
 
-## 三、docker01 主机配置（Host1: 192.168.8.188）
+## 三、web01 主机配置（Host1: 192.168.8.188）
 
 ### 步骤 1：下载并解压 flannel
 
@@ -110,7 +110,7 @@ etcdctl --endpoints http://192.168.8.88:2379 get /coreos.com/network/config
 ### 步骤 2：安装 flannel 可执行文件
 
 ```bash
-[root@docker01 ~]# cp -p flanneld mk-docker-opts.sh /usr/local/bin/
+[root@web01 ~]# cp -p flanneld mk-docker-opts.sh /usr/local/bin/
 ```
 
 ### 步骤 3：配置并启动 flannel 服务
@@ -146,15 +146,15 @@ WantedBy=multi-user.target
 重载服务配置并启动 flannel：
 
 ```bash
-[root@docker01 ~]# systemctl daemon-reload
-[root@docker01 ~]# systemctl enable flanneld.service
-[root@docker01 ~]# systemctl restart flanneld.service
+[root@web01 ~]# systemctl daemon-reload
+[root@web01 ~]# systemctl enable flanneld.service
+[root@web01 ~]# systemctl restart flanneld.service
 ```
 
 ### 步骤 4：验证 flannel 网络接口
 
 ```bash
-[root@docker01 ~]# ifconfig
+[root@web01 ~]# ifconfig
 ```
 
 应显示flannel.1 接口（示例输出）：
@@ -175,7 +175,7 @@ flannel.1: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1450
 1. 查看 flannel 生成的子网环境变量：
 
 ```bash
-[root@docker01 ~]# cat /run/flannel/subnet.env
+[root@web01 ~]# cat /run/flannel/subnet.env
 ```
 
 输出示例：
@@ -188,7 +188,7 @@ FLANNEL_IPMASQ=true
 ```
 
 ```bash
-[root@docker01 ~]# cat /run/docker_opts.env
+[root@web01 ~]# cat /run/docker_opts.env
 ```
 
 输出示例：
@@ -203,7 +203,7 @@ DOCKER_OPTS=" --bip=172.16.5.1/24 --ip-masq=false --mtu=1450"
 2. 修改 docker 服务配置：
 
 ```bash
-[root@docker01 ~]# vim /usr/lib/systemd/system/docker.service
+[root@web01 ~]# vim /usr/lib/systemd/system/docker.service
 ```
 
 在[Service]部分添加：
@@ -217,8 +217,8 @@ EnvironmentFile=-/run/docker_opts.env
 3. 重启 docker 服务：
 
 ```bash
-[root@docker01 ~]# systemctl daemon-reload
-[root@docker01 ~]# systemctl restart docker.service
+[root@web01 ~]# systemctl daemon-reload
+[root@web01 ~]# systemctl restart docker.service
 ```
 
 ### 步骤 6：验证 docker 网络
@@ -238,8 +238,8 @@ docker0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1450
 ```
 
 ```bash
-[root@docker01 ~]# docker run -d -p 8800:80 nginx
-[root@docker01 ~]# docker exec -it <容器ID> /bin/bash
+[root@web01 ~]# docker run -d -p 8800:80 nginx
+[root@web01 ~]# docker exec -it <容器ID> /bin/bash
 ```
 
 2. 查看容器 IP（示例为172.16.5.3）：
@@ -249,21 +249,21 @@ root@容器ID:/# ifconfig
 eth0: inet 172.16.5.3 netmask 255.255.255.0
 ```
 
-![docker01 容器网络验证](/images/flannel/page6_img1.png)
+![web01 容器网络验证](/images/flannel/page6_img1.png)
 
-## 四、docker02 主机配置（Host2: 192.168.0.208）
+## 四、web02 主机配置（Host2: 192.168.0.208）
 
 ### 步骤说明
 
-1. 配置步骤与 docker01 完全一致，仅需修改以下参数：
+1. 配置步骤与 web01 完全一致，仅需修改以下参数：
    - `--iface=192.168.8.99`（本机 IP）
    - docker 容器 IP 示例：172.16.5.2（由 flannel 自动分配）
 
 ## 五、实验验证
 
-在 docker01 容器中 ping docker02 容器 IP（示例：172.16.9.2）：
+在 web01 容器中 ping web02 容器 IP（示例：172.16.9.2）：
 
-![docker01 ping docker02 容器](/images/flannel/page7_img1.png)
+![web01 ping web02 容器](/images/flannel/page7_img1.png)
 
 在Docker02 中创建容器，查看容器IP 地址
 
