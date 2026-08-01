@@ -265,7 +265,7 @@ eth0: inet 172.16.5.3 netmask 255.255.255.0
 
 ![web01 ping web02 容器](/images/flannel/page7_img1.png)
 
-在Docker02 中创建容器，查看容器IP 地址
+在web02 中创建容器，查看容器IP 地址
 
 结果：容器间通信成功，flannel 网络配置完成。
 

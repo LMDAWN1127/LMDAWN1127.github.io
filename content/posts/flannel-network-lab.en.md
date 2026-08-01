@@ -266,7 +266,7 @@ Ping web02 container IP (example: 172.16.9.2) from web01 container:
 
 ![web01 ping web02 container](/images/flannel/page7_img1.png)
 
-Create a container in Docker02 and view the container IP address
+Create a container in web02 and view the container IP address
 
 Result: Inter-container communication successful, flannel network configuration complete.
 
