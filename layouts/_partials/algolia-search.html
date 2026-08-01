@@ -1,4 +1,5 @@
-<!-- Algolia Search Modal -->
+cat /root/myblog/layouts/_partials/algolia-search.html
+[?2004l<!-- Algolia Search Modal -->
 <div id="algolia-search-modal" class="algolia-modal" style="display: none;">
   <div class="algolia-modal-overlay"></div>
   <div class="algolia-modal-content">
@@ -130,14 +131,6 @@
       h += '<div class="algolia-hit-title">' + title + '</div>';
       h += '<div class="algolia-hit-content">' + trunc(content, 150) + '</div>';
       if (date || tags.length) {
-        h += '<div class="algolia-hit-meta">';
-        if (date) h += '<span class="algolia-hit-date">' + date + '</span>';
-        if (tags.length) {
-          h += '<span class="algolia-hit-tags">';
-          tags.slice(0, 3).forEach(function(t) { h += '<span class="algolia-hit-tag">' + escapeHtml(t) + '</span>'; });
-          h += '</span>';
-        }
-        h += '</div>';
       }
       h += '</a>';
     });
@@ -229,9 +222,4 @@
   .algolia-hit-title{font-weight:600;color:#5EEAD4;margin-bottom:4px;font-size:15px}
   .algolia-hit-title mark,.algolia-highlight{background:rgba(94,234,212,.25);color:#5EEAD4;padding:0 2px;border-radius:2px}
   .algolia-hit-content{font-size:13px;color:#999;line-height:1.5}
-  .algolia-hit-content mark,.algolia-hit-content .algolia-highlight{background:rgba(94,234,212,.2);color:#ccc;padding:0 2px;border-radius:2px}
-  .algolia-hit-meta{display:flex;align-items:center;gap:10px;margin-top:8px}
-  .algolia-hit-date{font-size:12px;color:#666}
-  .algolia-hit-tags{display:flex;gap:6px}
-  .algolia-hit-tag{background:#333;color:#999;padding:2px 8px;border-radius:4px;font-size:11px}
-</style>
+  .algolia-hit-content mark,.algolia-hit-content .algolia-highlight{background:rgba(94,234,212,.2);color:#ccc;padding:0 2px;border-radius:2px}
