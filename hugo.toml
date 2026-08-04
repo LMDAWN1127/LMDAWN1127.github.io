@@ -38,7 +38,6 @@ enableRobotsTXT = true
 
   [params.homeInfoParams]
     Title = "欢迎来到 DAWN's Blog"
-    Content = "分享 Docker、Linux、KVM、DevOps 等技术实践与学习笔记"
   env = "production"
   keywords = ["博客", "技术", "Claude Code", "AI", "CentOS", "Docker", "Linux", "DevOps"]
   author = "DAWN"
