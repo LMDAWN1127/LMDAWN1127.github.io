@@ -1,11 +1,11 @@
 ---
-title: "flannel ネットワーク実験マニュアル"
+title: "flannel 実践：Docker クロスホストコンテナネットワークをゼロから構築"
 date: 2025-05-21
 draft: false
 tags: ["flannel", "Docker", "ネットワーク", "etcd"]
 ---
 
-# flannel ネットワーク実験マニュアル
+# flannel 実践：Docker クロスホストコンテナネットワークをゼロから構築
 
 ## 一、ネットワーク環境の計画
 

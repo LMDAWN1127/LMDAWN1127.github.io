@@ -1,11 +1,11 @@
 ---
-title: "flannel 네트워크 실험 매뉴얼"
+title: "flannel 실전: Docker 크로스 호스트 컨테이너 네트워크 구축"
 date: 2025-05-21
 draft: false
 tags: ["flannel", "Docker", "네트워크", "etcd"]
 ---
 
-# flannel 네트워크 실험 매뉴얼
+# flannel 실전: Docker 크로스 호스트 컨테이너 네트워크 구축
 
 ## 1. 네트워크 환경 계획
 

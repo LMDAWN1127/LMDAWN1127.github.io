@@ -1,11 +1,11 @@
 ---
-title: "flannel Network Lab Manual"
+title: "flannel in Action: Building Docker Cross-Host Container Networks from Scratch"
 date: 2025-05-21
 draft: false
 tags: ["flannel", "Docker", "networking", "etcd"]
 ---
 
-# flannel Network Lab Manual
+# flannel in Action: Building Docker Cross-Host Container Networks from Scratch
 
 ## I. Network Environment Planning
 
