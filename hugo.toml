@@ -4,6 +4,7 @@ defaultContentLanguage = "zh"
 title = "DAWN's Blog"
 theme = "PaperMod"
 paginate = 5
+mainSections = ["posts"]
 
 enableEmoji = true
 enableRobotsTXT = true
