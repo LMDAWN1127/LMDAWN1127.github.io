@@ -3,7 +3,7 @@ languageCode = "zh-cn"
 defaultContentLanguage = "zh"
 title = "DAWN's Blog"
 theme = "PaperMod"
-paginate = 10
+paginate = 5
 
 enableEmoji = true
 enableRobotsTXT = true
