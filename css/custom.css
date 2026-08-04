@@ -1,12 +1,13 @@
-/* 减少主页简介卡片上下间距 */
+/* 减少主页简介卡片上下间距 - 更紧凑 */
 .home-info {
-    padding: 1rem var(--gap) !important;
-    margin-bottom: 0.5rem !important;
+    padding: 0.3rem var(--gap) !important;
+    margin-bottom: 0 !important;
 }
 
 .home-info .entry-header h1 {
     margin: 0 !important;
     padding: 0 !important;
+    line-height: 1.2 !important;
 }
 
 .home-info .entry-content {
@@ -15,5 +16,11 @@
 }
 
 .home-info .entry-footer {
-    margin-top: 0.5rem !important;
+    margin-top: 0.2rem !important;
+}
+
+/* 减少文章列表间距 */
+.post-entry {
+    padding-top: 0.4rem !important;
+    padding-bottom: 0.4rem !important;
 }
