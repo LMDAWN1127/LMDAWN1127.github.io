@@ -1,0 +1,19 @@
+/* 减少主页简介卡片上下间距 */
+.home-info {
+    padding: 1rem var(--gap) !important;
+    margin-bottom: 0.5rem !important;
+}
+
+.home-info .entry-header h1 {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.home-info .entry-content {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.home-info .entry-footer {
+    margin-top: 0.5rem !important;
+}
