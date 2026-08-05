@@ -4,3 +4,20 @@
     margin: 0 !important;
     padding: 20px 0 !important;
 }
+
+/* Algolia 搜索按钮：复用主题切换按钮的视觉风格，与 .logo-switches 内其他图标对齐 */
+.search-toggle {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: inherit;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 0.4rem;
+}
+
+.search-toggle svg {
+    width: 17px;
+    height: 17px;
+}
