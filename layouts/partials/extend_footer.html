@@ -69,11 +69,25 @@
 <script>
   document.addEventListener('DOMContentLoaded', function() {
     var cur = (document.documentElement.lang || 'zh').toLowerCase();
+    // 基于当前路径智能生成各语言链接：在非首页切换语言时保留当前路径，
+    // 仅替换语言前缀（如 /archives/ -> /en/archives/），实现"停留当前页切换语言"。
+    // 前置条件：站点部署在域名根路径（baseURL 无子路径），当前部署满足。
+    var rawPath = location.pathname.replace(/\/+$/, '');
+    var pm = rawPath.match(/^\/(en|ko|ja)(?:\/(.*))?$/);
+    var rest = pm ? (pm[2] ? '/' + pm[2] : '') : rawPath; // 站点相对路径；首页为 ''
+    function langHref(code) {
+      var base = (code === 'zh') ? '' : '/' + code;
+      if (rest === '' || rest === '/') {
+        return base === '' ? '/' : base + '/';
+      }
+      return base + rest + '/';
+    }
+
     var langs = [
-      { code: 'zh', label: '中文',   href: '/' },
-      { code: 'en', label: 'English', href: '/en/' },
-      { code: 'ko', label: '한국어',  href: '/ko/' },
-      { code: 'ja', label: '日本語',  href: '/ja/' }
+      { code: 'zh', label: '中文' },
+      { code: 'en', label: 'English' },
+      { code: 'ko', label: '한국어' },
+      { code: 'ja', label: '日本語' }
     ];
     var wrap = document.querySelector('.logo-switches') || document.querySelector('.header-nav');
     if (!wrap || document.getElementById('lang-dropdown')) return;
@@ -96,7 +110,7 @@
       var li = document.createElement('li');
       if (l.code === cur) li.className = 'active';
       var a = document.createElement('a');
-      a.href = l.href;
+      a.href = langHref(l.code);
       a.textContent = l.label;
       li.appendChild(a);
       menu.appendChild(li);
