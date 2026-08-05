@@ -1,6 +1,6 @@
 {{- /*
   PaperMod 主题官方扩展点：extend_footer.html
-  加载我们的自定义 JS（语言下拉、搜索快捷键）
+  加载我们的自定义 JS（语言下拉、搜索快捷键、搜索按钮）
 */ -}}
 {{- if not site.Params.disableLangToggle }}
 <script defer src="{{ "/js/custom.js" | relURL }}"></script>
@@ -38,6 +38,24 @@
         });
       }
     }
+  });
+
+  // Inject a visible search button into the header (restore the search entry point
+  // that was lost when the custom header.html was removed during earlier reverts).
+  document.addEventListener('DOMContentLoaded', function() {
+    if (document.getElementById('algolia-search-btn')) return;
+    var btn = document.createElement('button');
+    btn.id = 'algolia-search-btn';
+    btn.className = 'theme-toggle search-toggle';
+    btn.type = 'button';
+    btn.title = '搜索 (Ctrl+K)';
+    btn.setAttribute('aria-label', '搜索');
+    btn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>';
+    btn.addEventListener('click', function() {
+      if (typeof openAlgoliaSearch === 'function') openAlgoliaSearch();
+    });
+    var target = document.querySelector('.logo-switches') || document.querySelector('.header-nav');
+    if (target) target.appendChild(btn);
   });
 </script>
 {{- end }}
