@@ -22,28 +22,49 @@
     height: 17px;
 }
 
-/* 确保语言切换菜单在所有页面始终可见（防御性，避免被任何父级样式隐藏） */
+/* 语言切换：主题 CSS 把 .lang-menu 默认 opacity:0;visibility:hidden，
+   且其显示规则依赖并不存在的 .lang-dropdown.open 祖先，导致语言菜单被永久隐藏。
+   这里强制改为始终可见的内联链接（En/Ko/Ja），与主题/搜索按钮并排常驻页头。 */
 .lang-menu {
+    position: static !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: none !important;
     display: inline-flex !important;
-    align-items: center;
-    gap: 0.2rem;
-    margin: 0;
-    padding: 0;
-    list-style: none;
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 0.25rem !important;
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    margin: 0 0 0 0.35rem !important;
+    min-width: auto !important;
+    list-style: none !important;
+    z-index: auto !important;
 }
 
 .lang-menu li {
-    display: inline-flex;
+    display: inline-flex !important;
 }
 
-.lang-menu a {
+.lang-menu a,
+.lang-menu .lang-link {
     display: inline-flex !important;
     align-items: center;
-    padding: 0 0.35rem;
-    font-weight: 600;
-    border-radius: 4px;
+    padding: 0 0.35rem !important;
+    color: var(--primary) !important;
+    font-weight: 600 !important;
+    font-size: 0.95rem !important;
+    text-decoration: none !important;
 }
 
-.lang-menu a:hover {
-    background: var(--tertiary);
+.lang-menu li.active .lang-link {
+    color: var(--accent-teal) !important;
+}
+
+.lang-menu a:hover,
+.lang-menu .lang-link:hover {
+    background: var(--tertiary) !important;
+    border-radius: 4px !important;
 }
