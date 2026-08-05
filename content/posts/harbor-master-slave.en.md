@@ -5,6 +5,8 @@ categories: ["Container Tech", "DevOps"]
 tags: ["Harbor", "Docker", "Image Registry", "Replication", "HTTPS"]
 summary: "Complete guide to deploying Harbor enterprise Docker registry with active-standby architecture, HTTP/HTTPS modes, self-signed certificates, and cross-host replication."
 weight: 1
+showToc: true
+TocOpen: true
 ---
 
 # Harbor Active-Standby Deployment

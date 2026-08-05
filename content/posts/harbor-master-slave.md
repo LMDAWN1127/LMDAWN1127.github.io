@@ -5,6 +5,8 @@ categories: ["容器技术", "DevOps"]
 tags: ["Harbor", "Docker", "镜像仓库", "主备复制", "HTTPS"]
 summary: "完整记录 Harbor 企业级镜像仓库的主备部署过程，涵盖 HTTP/HTTPS 双模式安装、自签名证书配置、跨主机主备复制等核心运维技能。"
 weight: 1
+showToc: true
+TocOpen: true
 ---
 
 # Harbor 主备部署

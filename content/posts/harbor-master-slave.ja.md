@@ -5,6 +5,8 @@ categories: ["コンテナ技術", "DevOps"]
 tags: ["Harbor", "Docker", "イメージレジストリ", "レプリケーション", "HTTPS"]
 summary: "HarborエンタープライズDockerレジストリのアクティブスタンバイアーキテクチャ、HTTP/HTTPSモード、自己署名証明書、クロスホストレプリケーションを完全にカバーするデプロイガイドです。"
 weight: 1
+showToc: true
+TocOpen: true
 ---
 
 # Harbor アクティブスタンバイデプロイ

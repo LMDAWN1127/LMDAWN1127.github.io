@@ -3,6 +3,8 @@ title: "KVM 虚拟化入门到实战：部署、管理与网络配置"
 date: 2026-08-02
 draft: false
 tags: ["KVM", "虚拟化", "Linux", "CentOS"]
+showToc: true
+TocOpen: true
 ---
 
 # KVM 虚拟化入门到实战：部署、管理与网络配置

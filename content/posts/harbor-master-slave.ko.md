@@ -5,6 +5,8 @@ categories: ["컨테이너 기술", "DevOps"]
 tags: ["Harbor", "Docker", "이미지 레지스트리", "복제", "HTTPS"]
 summary: "Harbor 엔터프라이즈 Docker 레지스트리의 액티브-스탠바이 아키텍처, HTTP/HTTPS 모드, 자체 서명 인증서, 크로스 호스트 복제를 완전히 다루는 배포 가이드입니다."
 weight: 1
+showToc: true
+TocOpen: true
 ---
 
 # Harbor 액티브-스탠바이 배포

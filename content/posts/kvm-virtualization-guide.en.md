@@ -4,6 +4,8 @@ date: 2026-08-02
 tags: ["KVM", "Virtualization", "Linux", "CentOS"]
 categories: ["Virtualization"]
 summary: "A systematic introduction to KVM virtualization technology, covering development history, deployment methods, virtual machine management, network mode configuration, and automated VM installation using the command line."
+showToc: true
+TocOpen: true
 ---
 
 > This article systematically introduces KVM virtualization technology, covering its development history, deployment methods, virtual machine management, network mode configuration, and automated VM installation via command line. All commands have been verified on CentOS/RHEL environments.
