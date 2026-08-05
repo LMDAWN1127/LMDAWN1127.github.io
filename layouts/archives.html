@@ -1,15 +1,16 @@
 {{- define "main" }}
 
-{{- $pages := where site.RegularPages "Type" "in" site.Params.mainSections }}
+{{- $lang := .Site.Language.Lang }}
+{{- $pages := where .Site.RegularPages "Language.Lang" $lang }}
 
 {{- if site.Params.ShowAllPagesInArchive }}
-{{- $pages = site.RegularPages }}
+{{- $pages = where site.RegularPages "Language.Lang" $lang }}
 {{- end }}
 
-{{/* Only show AI and Docker tags */}}
+{{/* 允许的标签列表 */}}
 {{- $allowedTags := slice "AI" "Docker" "KVM" }}
 
-{{/* For each allowed tag, list its pages */}}
+{{/* 遍历每个标签 */}}
 {{- range $allowedTags }}
 {{- $tag := . }}
 {{- $tagPages := where $pages "Params.tags" "intersect" (slice $tag) }}
