@@ -59,3 +59,59 @@
   });
 </script>
 {{- end }}
+
+{{- /*
+  语言下拉框：注入到 .logo-switches，显示 中文 / English / 한국어 / 日本語，
+  点击或悬停展开。替代主题原生 .lang-menu（其显示规则依赖并不存在的
+  .lang-dropdown.open 祖先，已被 custom.css 永久隐藏），避免语言切换不可见。
+  点击某项跳转对应语言主页（沿用既定行为）。
+*/ -}}
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var cur = (document.documentElement.lang || 'zh').toLowerCase();
+    var langs = [
+      { code: 'zh', label: '中文',   href: '/' },
+      { code: 'en', label: 'English', href: '/en/' },
+      { code: 'ko', label: '한국어',  href: '/ko/' },
+      { code: 'ja', label: '日本語',  href: '/ja/' }
+    ];
+    var wrap = document.querySelector('.logo-switches') || document.querySelector('.header-nav');
+    if (!wrap || document.getElementById('lang-dropdown')) return;
+
+    var current = langs.find(function(l) { return l.code === cur; }) || langs[0];
+
+    var dd = document.createElement('div');
+    dd.className = 'lang-dropdown';
+    dd.id = 'lang-dropdown';
+
+    var toggle = document.createElement('button');
+    toggle.type = 'button';
+    toggle.className = 'lang-dropdown-toggle';
+    toggle.setAttribute('aria-label', '选择语言');
+    toggle.innerHTML = '<span class="lang-current">' + current.label + '</span><span class="lang-caret">▾</span>';
+
+    var menu = document.createElement('ul');
+    menu.className = 'lang-dropdown-menu';
+    langs.forEach(function(l) {
+      var li = document.createElement('li');
+      if (l.code === cur) li.className = 'active';
+      var a = document.createElement('a');
+      a.href = l.href;
+      a.textContent = l.label;
+      li.appendChild(a);
+      menu.appendChild(li);
+    });
+
+    dd.appendChild(toggle);
+    dd.appendChild(menu);
+    wrap.appendChild(dd);
+
+    toggle.addEventListener('click', function(e) {
+      e.stopPropagation();
+      dd.classList.toggle('open');
+    });
+    document.addEventListener('click', function(e) {
+      if (!dd.contains(e.target)) dd.classList.remove('open');
+    });
+  });
+</script>
