@@ -122,7 +122,7 @@ enableRobotsTXT = true
 [languages.zh.menu]
   [[languages.zh.menu.main]]
     identifier = "archives"
-    name = "Archive"
+    name = "归档"
     url = "/archives/"
     weight = 20
 
@@ -136,14 +136,14 @@ enableRobotsTXT = true
 [languages.ko.menu]
   [[languages.ko.menu.main]]
     identifier = "archives"
-    name = "Archive"
+    name = "아카이브"
     url = "/archives/"
     weight = 20
 
 [languages.ja.menu]
   [[languages.ja.menu.main]]
     identifier = "archives"
-    name = "Archive"
+    name = "アーカイブ"
     url = "/archives/"
     weight = 20
 
