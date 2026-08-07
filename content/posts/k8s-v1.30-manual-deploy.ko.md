@@ -225,6 +225,10 @@ Kubernetes를 수동으로 설치하면 기본적으로 데이터 전송에 ipta
 
 ## 1. 모든 노드에 ipvsadm 패키지 설치
 
+```bash
+[root@master ~]# yum -y install ipvsadm
+```
+
 ## 2. 모든 노드에서 모듈 로드
 
 ```bash

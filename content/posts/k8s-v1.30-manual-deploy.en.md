@@ -221,6 +221,10 @@ If you installed Kubernetes manually, it uses iptables for data forwarding by de
 
 ## 1. Install the ipvsadm package on all nodes
 
+```bash
+[root@master ~]# yum -y install ipvsadm
+```
+
 ## 2. Load the modules on all nodes
 
 ```bash

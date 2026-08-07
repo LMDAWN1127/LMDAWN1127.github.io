@@ -238,6 +238,9 @@ EOF
 
 ## 1. 在所有的节点上安装ipvsadm软件包
 
+```bash
+[root@master ~]# yum -y install ipvsadm
+```
 
 ## 2. 在所有节点上加载模块
 

@@ -225,6 +225,10 @@ Kubernetes を手動でインストールした場合、デフォルトではデ
 
 ## 1. 全ノードに ipvsadm パッケージをインストールする
 
+```bash
+[root@master ~]# yum -y install ipvsadm
+```
+
 ## 2. 全ノードでモジュールをロードする
 
 ```bash
