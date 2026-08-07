@@ -251,7 +251,7 @@ nf_conntrack
 EOF
 ```
 
-## 2. 编辑kube-proxy ConfigMap
+## 3. 编辑kube-proxy ConfigMap
 
 ```bash
 kubectl edit cm kube-proxy -n kube-system
@@ -270,7 +270,7 @@ ipvs:
 ```
 
 
-## 3. 强制重启 kube-proxy Pods
+## 4. 强制重启 kube-proxy Pods
 
 
 删除所有kube-proxy Pod，触发重建
@@ -279,14 +279,14 @@ ipvs:
 #kubectl delete pods -n kube-system -l k8s-app=kube-proxy
 ```
 
-## 4. 验证新 Pod 是否正常运行：
+## 5. 验证新 Pod 是否正常运行：
 
 ```bash
 #kubectl get pods -n kube-system -l k8s-app=kube-proxy
 # 所有Pod状态应为Running
 ```
 
-## 5. 验证 IPVS 配置生效
+## 6. 验证 IPVS 配置生效
 
 ```bash
 [root@master ~]# ipvsadm -L -n
