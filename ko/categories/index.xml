@@ -1,1 +1,45 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Categories on DAWN's Blog</title><link>https://LMDAWN1127.github.io/ko/categories/</link><description>Recent content in Categories on DAWN's Blog</description><generator>Hugo</generator><language>ko</language><lastBuildDate>Sun, 02 Aug 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://LMDAWN1127.github.io/ko/categories/index.xml" rel="self" type="application/rss+xml"/><item><title>가상화</title><link>https://LMDAWN1127.github.io/ko/categories/%EA%B0%80%EC%83%81%ED%99%94/</link><pubDate>Sun, 02 Aug 2026 00:00:00 +0000</pubDate><guid>https://LMDAWN1127.github.io/ko/categories/%EA%B0%80%EC%83%81%ED%99%94/</guid><description/></item><item><title>컨테이너 기술</title><link>https://LMDAWN1127.github.io/ko/categories/%EC%BB%A8%ED%85%8C%EC%9D%B4%EB%84%88-%EA%B8%B0%EC%88%A0/</link><pubDate>Thu, 30 Jul 2026 12:00:00 +0800</pubDate><guid>https://LMDAWN1127.github.io/ko/categories/%EC%BB%A8%ED%85%8C%EC%9D%B4%EB%84%88-%EA%B8%B0%EC%88%A0/</guid><description/></item><item><title>기술 튜토리얼</title><link>https://LMDAWN1127.github.io/ko/categories/%EA%B8%B0%EC%88%A0-%ED%8A%9C%ED%86%A0%EB%A6%AC%EC%96%BC/</link><pubDate>Sat, 04 Jul 2026 05:00:00 +0800</pubDate><guid>https://LMDAWN1127.github.io/ko/categories/%EA%B8%B0%EC%88%A0-%ED%8A%9C%ED%86%A0%EB%A6%AC%EC%96%BC/</guid><description/></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Categories on DAWN&#39;s Blog</title>
+    <link>https://LMDAWN1127.github.io/ko/categories/</link>
+    <description>Recent content in Categories on DAWN&#39;s Blog</description>
+    <image>
+      <title>DAWN&#39;s Blog</title>
+      <url>https://LMDAWN1127.github.io/images/DAWN.jpg</url>
+      <link>https://LMDAWN1127.github.io/images/DAWN.jpg</link>
+    </image>
+    <generator>Hugo</generator>
+    <language>ko</language>
+    <lastBuildDate>Tue, 04 Aug 2026 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://LMDAWN1127.github.io/ko/categories/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>DevOps</title>
+      <link>https://LMDAWN1127.github.io/ko/categories/devops/</link>
+      <pubDate>Tue, 04 Aug 2026 00:00:00 +0000</pubDate>
+      <guid>https://LMDAWN1127.github.io/ko/categories/devops/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>컨테이너 기술</title>
+      <link>https://LMDAWN1127.github.io/ko/categories/%EC%BB%A8%ED%85%8C%EC%9D%B4%EB%84%88-%EA%B8%B0%EC%88%A0/</link>
+      <pubDate>Tue, 04 Aug 2026 00:00:00 +0000</pubDate>
+      <guid>https://LMDAWN1127.github.io/ko/categories/%EC%BB%A8%ED%85%8C%EC%9D%B4%EB%84%88-%EA%B8%B0%EC%88%A0/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>가상화</title>
+      <link>https://LMDAWN1127.github.io/ko/categories/%EA%B0%80%EC%83%81%ED%99%94/</link>
+      <pubDate>Sun, 02 Aug 2026 00:00:00 +0000</pubDate>
+      <guid>https://LMDAWN1127.github.io/ko/categories/%EA%B0%80%EC%83%81%ED%99%94/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>기술 튜토리얼</title>
+      <link>https://LMDAWN1127.github.io/ko/categories/%EA%B8%B0%EC%88%A0-%ED%8A%9C%ED%86%A0%EB%A6%AC%EC%96%BC/</link>
+      <pubDate>Sat, 04 Jul 2026 05:00:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/ko/categories/%EA%B8%B0%EC%88%A0-%ED%8A%9C%ED%86%A0%EB%A6%AC%EC%96%BC/</guid>
+      <description></description>
+    </item>
+  </channel>
+</rss>

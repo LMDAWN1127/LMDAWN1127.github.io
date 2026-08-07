@@ -1,0 +1,97 @@
+/* 主页 homeInfoParams 间距调整 */
+.first-entry {
+    min-height: auto !important;
+    margin: 0 !important;
+    padding: 20px 0 !important;
+}
+
+/* Algolia 搜索按钮：复用主题切换按钮的视觉风格，与 .logo-switches 内其他图标对齐 */
+.search-toggle {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: inherit;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 0.4rem;
+}
+
+.search-toggle svg {
+    width: 17px;
+    height: 17px;
+}
+
+/* 隐藏 PaperMod 原生 .lang-menu：其显示规则依赖并不存在的 .lang-dropdown.open 祖先，
+   已在主题 CSS 中默认 opacity:0;visibility:hidden。这里彻底 display:none，
+   避免与下方自定义下拉框重复出现。 */
+.lang-menu {
+    display: none !important;
+}
+
+/* 语言下拉框（JS 注入到 .logo-switches）：显示 中文 / English / 한국어 / 日本語，
+   点击或悬停展开，下拉项跳转对应语言主页。亮/暗模式通过主题变量自动适配。 */
+.lang-dropdown {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+}
+
+.lang-dropdown-toggle {
+    background: transparent;
+    border: none;
+    color: inherit;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0 0.4rem;
+    font: inherit;
+    line-height: 1;
+}
+
+.lang-dropdown-toggle .lang-caret {
+    font-size: 0.7em;
+    opacity: 0.65;
+    transform: translateY(1px);
+}
+
+.lang-dropdown-menu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    margin: 0.4rem 0 0;
+    min-width: 8rem;
+    list-style: none;
+    padding: 0.3rem;
+    background: var(--bg-card, #fff);
+    border: 1px solid var(--border, rgba(0, 0, 0, 0.12));
+    border-radius: var(--radius, 8px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+    display: none;
+    z-index: 200;
+}
+
+.lang-dropdown.open .lang-dropdown-menu,
+.lang-dropdown:hover .lang-dropdown-menu {
+    display: block;
+}
+
+.lang-dropdown-menu li a {
+    display: block;
+    padding: 0.42rem 0.6rem;
+    border-radius: 6px;
+    color: var(--content, #333);
+    text-decoration: none;
+    font-size: 0.95rem;
+    white-space: nowrap;
+}
+
+.lang-dropdown-menu li a:hover {
+    background: var(--bg-card-hover, rgba(0, 0, 0, 0.06));
+}
+
+.lang-dropdown-menu li.active a {
+    color: var(--primary, #2a9d8f);
+    font-weight: 600;
+}

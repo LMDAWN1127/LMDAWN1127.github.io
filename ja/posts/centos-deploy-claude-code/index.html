@@ -1,138 +1,930 @@
-<!doctype html><html lang=ja dir=auto data-theme=auto><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><meta name=robots content="index, follow"><title>CentOS に Claude Code をデプロイする完全ガイド | DAWN's Blog</title><meta name=keywords content="Claude Code,CentOS,AI,デプロイ"><meta name=description content="CentOS 上でゼロから Claude Code をデプロイし、Node.js のインストール、API Key の設定、よくある問題のトラブルシューティングまでカバーします。"><meta name=author content="DAWN"><link rel=canonical href=https://LMDAWN1127.github.io/ja/posts/centos-deploy-claude-code/><link crossorigin=anonymous href=/assets/css/stylesheet.4bf808bff57bddc46d61c8ae060b00400fc679ab876e37243b11bd3f832f2958.css integrity="sha256-S/gIv/V73cRtYciuBgsAQA/GeauHbjckOxG9P4MvKVg=" rel="preload stylesheet" as=style><link rel=icon href=https://LMDAWN1127.github.io/images/DAWN.jpg><link rel=icon type=image/png sizes=16x16 href=https://LMDAWN1127.github.io/favicon-16x16.png><link rel=icon type=image/png sizes=32x32 href=https://LMDAWN1127.github.io/favicon-32x32.png><link rel=apple-touch-icon href=https://LMDAWN1127.github.io/apple-touch-icon.png><link rel=mask-icon href=https://LMDAWN1127.github.io/safari-pinned-tab.svg><meta name=theme-color content="#2e2e33"><meta name=msapplication-TileColor content="#2e2e33"><link rel=alternate hreflang=zh href=https://LMDAWN1127.github.io/posts/centos-deploy-claude-code/><link rel=alternate hreflang=en href=https://LMDAWN1127.github.io/en/posts/centos-deploy-claude-code/><link rel=alternate hreflang=ko href=https://LMDAWN1127.github.io/ko/posts/centos-deploy-claude-code/><link rel=alternate hreflang=ja href=https://LMDAWN1127.github.io/ja/posts/centos-deploy-claude-code/><noscript><style>#theme-toggle,.top-link{display:none}</style><style>@media(prefers-color-scheme:dark){:root{--theme:rgb(29, 30, 32);--entry:rgb(46, 46, 51);--primary:rgb(218, 218, 219);--secondary:rgb(155, 156, 157);--tertiary:rgb(65, 66, 68);--content:rgb(196, 196, 197);--code-block-bg:rgb(46, 46, 51);--code-bg:rgb(55, 56, 62);--border:rgb(51, 51, 51);color-scheme:dark}.list{background:var(--theme)}.toc{background:var(--entry)}}</style></noscript><script>localStorage.getItem("pref-theme")==="dark"?document.querySelector("html").dataset.theme="dark":localStorage.getItem("pref-theme")==="light"?document.querySelector("html").dataset.theme="light":window.matchMedia("(prefers-color-scheme: dark)").matches?document.querySelector("html").dataset.theme="dark":document.querySelector("html").dataset.theme="light"</script><link rel=stylesheet href=/css/custom.css><meta property="og:url" content="https://LMDAWN1127.github.io/ja/posts/centos-deploy-claude-code/"><meta property="og:site_name" content="DAWN's Blog"><meta property="og:title" content="CentOS に Claude Code をデプロイする完全ガイド"><meta property="og:description" content="CentOS 上でゼロから Claude Code をデプロイし、Node.js のインストール、API Key の設定、よくある問題のトラブルシューティングまでカバーします。"><meta property="og:locale" content="ja"><meta property="og:type" content="article"><meta property="article:section" content="posts"><meta property="article:published_time" content="2026-07-04T05:00:00+08:00"><meta property="article:modified_time" content="2026-07-04T05:00:00+08:00"><meta property="article:tag" content="Claude Code"><meta property="article:tag" content="CentOS"><meta property="article:tag" content="AI"><meta property="article:tag" content="デプロイ"><meta name=twitter:card content="summary"><meta name=twitter:title content="CentOS に Claude Code をデプロイする完全ガイド"><meta name=twitter:description content="CentOS 上でゼロから Claude Code をデプロイし、Node.js のインストール、API Key の設定、よくある問題のトラブルシューティングまでカバーします。"><script type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Posts","item":"https://LMDAWN1127.github.io/ja/posts/"},{"@type":"ListItem","position":2,"name":"CentOS に Claude Code をデプロイする完全ガイド","item":"https://LMDAWN1127.github.io/ja/posts/centos-deploy-claude-code/"}]}</script><script type=application/ld+json>{"@context":"https://schema.org","@type":"BlogPosting","headline":"CentOS に Claude Code をデプロイする完全ガイド","name":"CentOS に Claude Code をデプロイする完全ガイド","description":"CentOS 上でゼロから Claude Code をデプロイし、Node.js のインストール、API Key の設定、よくある問題のトラブルシューティングまでカバーします。","keywords":["Claude Code","CentOS","AI","デプロイ"],"articleBody":"1. 環境要件 OS: CentOS 7/8/Stream 9 Node.js: v18 以上 メモリ: 2GB 以上を推奨 ネットワーク: Anthropic API へのアクセスが必要 2. Node.js のインストール 1 2 3 4 5 6 7 8 9 # 安装 NodeSource 仓库 curl -fsSL https://rpm.nodesource.com/setup_lts.x | sudo bash - # 安装 Node.js sudo yum install -y nodejs # 检查 node -v npm -v Node.js のバージョンが低い場合は、nvm でバージョンを管理します：\n1 2 3 4 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash source ~/.bashrc nvm install 20 nvm use 20 3. Claude Code のインストール 1 2 3 4 5 # 全局安装 npm install -g @anthropic-ai/claude-code # 检查 claude --version 権限の問題が発生した場合、2 つの解決策があります：\n1 2 3 4 5 6 7 8 # 方案一：sudo sudo npm install -g @anthropic-ai/claude-code # 方案二：修改 npm 全局目录（推荐） mkdir -p ~/.npm-global npm config set prefix \"~/.npm-global\" echo 'export PATH=~/.npm-global/bin:$PATH' \u003e\u003e ~/.bashrc source ~/.bashrc 4. API Key の設定 1 2 3 4 5 6 # 方式一：环境变量（推荐） echo 'export ANTHROPIC_API_KEY=\"your-api-key-here\"' \u003e\u003e ~/.bashrc source ~/.bashrc # 检查 echo $ANTHROPIC_API_KEY 方法 2：claude を直接実行すると、初回起動時に API Key の入力が求められます。\n5. 基本的な使い方 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 # 启动交互式会话 cd /path/to/your/project claude # 直接提问（非交互模式） claude -p \"写一个 Python 脚本，统计当前目录下所有文件的数量\" # 分析代码 cat main.py | claude -p \"分析这段代码的潜在问题\" # 查看/修改配置 claude config # 更新到最新版本 claude update コマンド 説明 claude インタラクティブセッションを開始 claude -p \"質問\" 直接質問、非インタラクティブモード claude config 設定の確認/変更 claude update 最新バージョンに更新 6. ネットワーク問題のトラブルシューティング Anthropic API への接続がタイムアウトする場合：\n1 2 3 4 5 6 # 配置代理 export https_proxy=\"http://your-proxy:port\" export http_proxy=\"http://your-proxy:port\" # 测试连通性 curl -s https://api.anthropic.com/ | head -5 7. セキュリティの推奨事項 1 2 3 4 5 6 7 8 9 # 不要硬编码 API Key，始终用环境变量 echo 'export ANTHROPIC_API_KEY=\"sk-ant-xxx\"' \u003e\u003e ~/.bashrc # ✅ # ANTHROPIC_API_KEY=sk-ant-xxx 写在代码里 # ❌ # 限制文件权限 chmod 600 ~/.bashrc # 检查是否泄露 grep -r \"ANTHROPIC_API_KEY\" --include=\"*.py\" --include=\"*.js\" . ","wordCount":"281","inLanguage":"ja","datePublished":"2026-07-04T05:00:00+08:00","dateModified":"2026-07-04T05:00:00+08:00","author":{"@type":"Person","name":"DAWN"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://LMDAWN1127.github.io/ja/posts/centos-deploy-claude-code/"},"publisher":{"@type":"Organization","name":"DAWN's Blog","logo":{"@type":"ImageObject","url":"https://LMDAWN1127.github.io/images/DAWN.jpg"}}}</script></head><body id=top><header class=header><nav class=header-nav><div class=nav-left><a href=https://LMDAWN1127.github.io/ja/ accesskey=h title="DAWN's Blog (Alt + H)" class=brand-link><img src=https://LMDAWN1127.github.io/images/DAWN.jpg alt aria-label=logo height=38><span class=brand-name>DAWN's Blog</span></a><ul id=menu class=nav-menu><li><a href=https://LMDAWN1127.github.io/ja/archives/ title=Archive><span>Archive</span></a></li></ul></div><div class=nav-right><button id=theme-toggle class=theme-toggle accesskey=t title="(Alt + T)" aria-label="Toggle theme">
-<svg class="moon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
-<svg class="sun" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></button><div class=lang-dropdown><button type=button class=lang-toggle aria-haspopup=true aria-expanded=false aria-label="选择语言 / Select language">
-<span class=lang-toggle-text>日本語</span>
-<svg class="lang-toggle-arrow" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg></button><ul class=lang-menu role=menu><li role=none><a class=lang-link role=menuitem href=https://LMDAWN1127.github.io/zh/ lang=zh>中文</a></li><li role=none><a class=lang-link role=menuitem href=https://LMDAWN1127.github.io/en/ lang=en>English</a></li><li role=none><a class=lang-link role=menuitem href=https://LMDAWN1127.github.io/ko/ lang=ko>한국어</a></li><li role=none class=active><span class=lang-link role=menuitem lang=ja aria-current=true>日本語</span></li></ul></div><button type=button class=search-toggle aria-label="搜索 (Alt + /)" accesskey=/ onclick=openAlgoliaSearch()>
-<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-<span class=search-toggle-text>検索</span>
-<kbd class=search-kbd>⌘ K</kbd></button></div></nav></header><main class=main><article class=post-single><header class=post-header><h1 class="post-title entry-hint-parent">CentOS に Claude Code をデプロイする完全ガイド</h1><div class=post-description>CentOS 上でゼロから Claude Code をデプロイし、Node.js のインストール、API Key の設定、よくある問題のトラブルシューティングまでカバーします。</div></header><div class=post-layout><div class=post-content-wrapper><div class="post-content md-content"><h4 id=1-環境要件>1. 環境要件<a hidden class=anchor aria-hidden=true href=#1-環境要件>#</a></h4><ul><li><strong>OS</strong>: CentOS 7/8/Stream 9</li><li><strong>Node.js</strong>: v18 以上</li><li><strong>メモリ</strong>: 2GB 以上を推奨</li><li><strong>ネットワーク</strong>: Anthropic API へのアクセスが必要</li></ul><h4 id=2-nodejs-のインストール>2. Node.js のインストール<a hidden class=anchor aria-hidden=true href=#2-nodejs-のインストール>#</a></h4><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">8
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">9
-</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e># 安装 NodeSource 仓库</span>
-</span></span><span style=display:flex><span>curl -fsSL https://rpm.nodesource.com/setup_lts.x | sudo bash -
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#75715e># 安装 Node.js</span>
-</span></span><span style=display:flex><span>sudo yum install -y nodejs
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#75715e># 检查</span>
-</span></span><span style=display:flex><span>node -v
-</span></span><span style=display:flex><span>npm -v
-</span></span></code></pre></td></tr></table></div></div><blockquote><p>Node.js のバージョンが低い場合は、nvm でバージョンを管理します：</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
-</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-bash data-lang=bash><span style=display:flex><span>curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
-</span></span><span style=display:flex><span>source ~/.bashrc
-</span></span><span style=display:flex><span>nvm install <span style=color:#ae81ff>20</span>
-</span></span><span style=display:flex><span>nvm use <span style=color:#ae81ff>20</span>
-</span></span></code></pre></td></tr></table></div></div></blockquote><h4 id=3-claude-code-のインストール>3. Claude Code のインストール<a hidden class=anchor aria-hidden=true href=#3-claude-code-のインストール>#</a></h4><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
-</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e># 全局安装</span>
-</span></span><span style=display:flex><span>npm install -g @anthropic-ai/claude-code
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#75715e># 检查</span>
-</span></span><span style=display:flex><span>claude --version
-</span></span></code></pre></td></tr></table></div></div><blockquote><p>権限の問題が発生した場合、2 つの解決策があります：</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">8
-</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e># 方案一：sudo</span>
-</span></span><span style=display:flex><span>sudo npm install -g @anthropic-ai/claude-code
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#75715e># 方案二：修改 npm 全局目录（推荐）</span>
-</span></span><span style=display:flex><span>mkdir -p ~/.npm-global
-</span></span><span style=display:flex><span>npm config set prefix <span style=color:#e6db74>&#34;~/.npm-global&#34;</span>
-</span></span><span style=display:flex><span>echo <span style=color:#e6db74>&#39;export PATH=~/.npm-global/bin:$PATH&#39;</span> &gt;&gt; ~/.bashrc
-</span></span><span style=display:flex><span>source ~/.bashrc
-</span></span></code></pre></td></tr></table></div></div></blockquote><h4 id=4-api-key-の設定>4. API Key の設定<a hidden class=anchor aria-hidden=true href=#4-api-key-の設定>#</a></h4><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
-</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e># 方式一：环境变量（推荐）</span>
-</span></span><span style=display:flex><span>echo <span style=color:#e6db74>&#39;export ANTHROPIC_API_KEY=&#34;your-api-key-here&#34;&#39;</span> &gt;&gt; ~/.bashrc
-</span></span><span style=display:flex><span>source ~/.bashrc
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#75715e># 检查</span>
-</span></span><span style=display:flex><span>echo $ANTHROPIC_API_KEY
-</span></span></code></pre></td></tr></table></div></div><blockquote><p>方法 2：<code>claude</code> を直接実行すると、初回起動時に API Key の入力が求められます。</p></blockquote><h4 id=5-基本的な使い方>5. 基本的な使い方<a hidden class=anchor aria-hidden=true href=#5-基本的な使い方>#</a></h4><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
-</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e># 启动交互式会话</span>
-</span></span><span style=display:flex><span>cd /path/to/your/project
-</span></span><span style=display:flex><span>claude
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#75715e># 直接提问（非交互模式）</span>
-</span></span><span style=display:flex><span>claude -p <span style=color:#e6db74>&#34;写一个 Python 脚本，统计当前目录下所有文件的数量&#34;</span>
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#75715e># 分析代码</span>
-</span></span><span style=display:flex><span>cat main.py | claude -p <span style=color:#e6db74>&#34;分析这段代码的潜在问题&#34;</span>
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#75715e># 查看/修改配置</span>
-</span></span><span style=display:flex><span>claude config
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#75715e># 更新到最新版本</span>
-</span></span><span style=display:flex><span>claude update
-</span></span></code></pre></td></tr></table></div></div><table><thead><tr><th>コマンド</th><th>説明</th></tr></thead><tbody><tr><td><code>claude</code></td><td>インタラクティブセッションを開始</td></tr><tr><td><code>claude -p "質問"</code></td><td>直接質問、非インタラクティブモード</td></tr><tr><td><code>claude config</code></td><td>設定の確認/変更</td></tr><tr><td><code>claude update</code></td><td>最新バージョンに更新</td></tr></tbody></table><h4 id=6-ネットワーク問題のトラブルシューティング>6. ネットワーク問題のトラブルシューティング<a hidden class=anchor aria-hidden=true href=#6-ネットワーク問題のトラブルシューティング>#</a></h4><p>Anthropic API への接続がタイムアウトする場合：</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
-</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e># 配置代理</span>
-</span></span><span style=display:flex><span>export https_proxy<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;http://your-proxy:port&#34;</span>
-</span></span><span style=display:flex><span>export http_proxy<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;http://your-proxy:port&#34;</span>
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#75715e># 测试连通性</span>
-</span></span><span style=display:flex><span>curl -s https://api.anthropic.com/ | head -5
-</span></span></code></pre></td></tr></table></div></div><h4 id=7-セキュリティの推奨事項>7. セキュリティの推奨事項<a hidden class=anchor aria-hidden=true href=#7-セキュリティの推奨事項>#</a></h4><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">8
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">9
-</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e># 不要硬编码 API Key，始终用环境变量</span>
-</span></span><span style=display:flex><span>echo <span style=color:#e6db74>&#39;export ANTHROPIC_API_KEY=&#34;sk-ant-xxx&#34;&#39;</span> &gt;&gt; ~/.bashrc  <span style=color:#75715e># ✅</span>
-</span></span><span style=display:flex><span><span style=color:#75715e># ANTHROPIC_API_KEY=sk-ant-xxx 写在代码里  # ❌</span>
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#75715e># 限制文件权限</span>
-</span></span><span style=display:flex><span>chmod <span style=color:#ae81ff>600</span> ~/.bashrc
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#75715e># 检查是否泄露</span>
-</span></span><span style=display:flex><span>grep -r <span style=color:#e6db74>&#34;ANTHROPIC_API_KEY&#34;</span> --include<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;*.py&#34;</span> --include<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;*.js&#34;</span> .
-</span></span></code></pre></td></tr></table></div></div></div><div id=giscus-container style="margin-top:2rem;padding-top:1rem;border-top:1px solid var(--border)"><script src=https://giscus.app/client.js data-repo=LMDAWN1127/LMDAWN1127.github.io data-repo-id=R_kgDOTMWmvw data-category=Announcements data-category-id=DIC_kwDOTMWmv84DAd3g data-mapping=pathname data-strict=0 data-reactions-enabled=1 data-emit-metadata=0 data-input-position=bottom data-theme=preferred_color_scheme data-lang=zh-CN crossorigin=anonymous async></script></div></div><aside class=toc-sidebar id=toc-sidebar><div class=toc-header>目录</div><nav class=toc-nav><ul class=toc-list><li><a href=#1-%e7%92%b0%e5%a2%83%e8%a6%81%e4%bb%b6 class=toc-link data-target=1-環境要件>1. 環境要件</a></li><li><a href=#2-nodejs-%e3%81%ae%e3%82%a4%e3%83%b3%e3%82%b9%e3%83%88%e3%83%bc%e3%83%ab class=toc-link data-target=2-nodejs-のインストール>2. Node.js のインストール</a></li><li><a href=#3-claude-code-%e3%81%ae%e3%82%a4%e3%83%b3%e3%82%b9%e3%83%88%e3%83%bc%e3%83%ab class=toc-link data-target=3-claude-code-のインストール>3. Claude Code のインストール</a></li><li><a href=#4-api-key-%e3%81%ae%e8%a8%ad%e5%ae%9a class=toc-link data-target=4-api-key-の設定>4. API Key の設定</a></li><li><a href=#5-%e5%9f%ba%e6%9c%ac%e7%9a%84%e3%81%aa%e4%bd%bf%e3%81%84%e6%96%b9 class=toc-link data-target=5-基本的な使い方>5. 基本的な使い方</a></li><li><a href=#6-%e3%83%8d%e3%83%83%e3%83%88%e3%83%af%e3%83%bc%e3%82%af%e5%95%8f%e9%a1%8c%e3%81%ae%e3%83%88%e3%83%a9%e3%83%96%e3%83%ab%e3%82%b7%e3%83%a5%e3%83%bc%e3%83%86%e3%82%a3%e3%83%b3%e3%82%b0 class=toc-link data-target=6-ネットワーク問題のトラブルシューティング>6. ネットワーク問題のトラブルシューティング</a></li><li><a href=#7-%e3%82%bb%e3%82%ad%e3%83%a5%e3%83%aa%e3%83%86%e3%82%a3%e3%81%ae%e6%8e%a8%e5%a5%a8%e4%ba%8b%e9%a0%85 class=toc-link data-target=7-セキュリティの推奨事項>7. セキュリティの推奨事項</a></li></ul></nav></aside></div></article></main><a href=#top id=top-link class="top-link hidden" aria-label="go to top" title="Go to Top (Alt + G)" accesskey=g><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevrons-up"><polyline points="17 11 12 6 7 11"/><polyline points="17 18 12 13 7 18"/></svg>
-</a><script defer src=/js/custom.js></script><div id=algolia-search-modal class=algolia-modal style=display:none><div class=algolia-modal-overlay></div><div class=algolia-modal-content><div class=algolia-search-header><div class=algolia-search-input-wrapper><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-<input type=text id=algolia-search-input placeholder=搜索文章... autofocus>
-<kbd class=algolia-esc>Esc</kbd></div></div><div id=algolia-search-results class=algolia-search-results><div class=algolia-empty-state><p>输入关键词开始搜索</p></div></div><div class=algolia-search-footer><span class=algolia-footer-text><kbd>↑</kbd> <kbd>↓</kbd> 导航
-<kbd>↵</kbd> 打开
-<kbd>Esc</kbd> 关闭
-</span><span class=algolia-footer-logo>搜索由 <a href=https://www.algolia.com/ target=_blank rel=noopener>Algolia</a> 提供</span></div></div></div><script>(function(){"use strict";var a="Y0SCRI4LCW",g="03dda5e44aec7e0dd93b6a3653250b1f",u="lmdawn1127-blog",d="https://"+a+"-dsn.algolia.net/1/indexes/"+u+"/query",i=null,e=-1;function c(e){if(!e||!e.trim()){t();return}var n=JSON.stringify({query:e,hitsPerPage:10,attributesToRetrieve:["title","content","url"],attributesToHighlight:["title","content"],highlightPreTag:'<mark class="algolia-highlight">',highlightPostTag:"</mark>"});fetch(d,{method:"POST",headers:{"X-Algolia-Application-Id":a,"X-Algolia-API-Key":g,"Content-Type":"application/json"},body:n}).then(function(e){if(!e.ok)throw new Error("HTTP "+e.status);return e.json()}).then(function(t){m(t.hits||[],e)}).catch(function(e){console.error("Algolia search error:",e),r(e.message||"未知错误")})}function t(){document.getElementById("algolia-search-results").innerHTML='<div class="algolia-empty-state"><p>输入关键词开始搜索</p></div>'}function r(e){var t="搜索出错，请稍后再试";e&&(t+='<br><small style="color:#888">错误详情: '+o(e)+"</small>"),document.getElementById("algolia-search-results").innerHTML='<div class="algolia-empty-state"><p>'+t+"</p></div>"}function l(e){document.getElementById("algolia-search-results").innerHTML='<div class="algolia-empty-state"><p>未找到与「'+o(e)+"」相关的结果</p></div>"}function o(e){var t=document.createElement("div");return t.appendChild(document.createTextNode(e)),t.innerHTML}function s(e,t){return e._highlightResult&&e._highlightResult[t]?e._highlightResult[t].value:e[t]||""}function h(e,t){return e?(e=e.replace(/<[^>]+>/g,""),e.length>t?e.substring(0,t)+"…":e):""}function m(e,t){var n,o=document.getElementById("algolia-search-results");if(!e.length){l(t);return}n='<div class="algolia-results-count">'+e.length+" 个结果</div>",e.forEach(function(e,t){var o=s(e,"title")||"无标题",i=s(e,"content"),a=e.url||"#";n+='<a class="algolia-hit" href="'+a+'" data-index="'+t+'">',n+='<div class="algolia-hit-title">'+o+"</div>",n+='<div class="algolia-hit-content">'+h(i,150)+"</div>",n+="</a>"}),o.innerHTML=n,o.querySelectorAll(".algolia-hit").forEach(function(e){e.addEventListener("click",closeAlgoliaSearch)})}function f(e){var t=e.target.value;clearTimeout(i),i=setTimeout(function(){c(t)},200)}function p(t){var s=document.querySelectorAll(".algolia-hit");if(!s.length)return;t.key==="ArrowDown"?(t.preventDefault(),e=Math.min(e+1,s.length-1),n(s)):t.key==="ArrowUp"?(t.preventDefault(),e=Math.max(e-1,0),n(s)):t.key==="Enter"&&e>=0&&(t.preventDefault(),window.location.href=s[e].getAttribute("href"),closeAlgoliaSearch())}function n(t){t.forEach(function(t,n){n===e?(t.classList.add("selected"),t.scrollIntoView({block:"nearest"})):t.classList.remove("selected")})}document.addEventListener("DOMContentLoaded",function(){var e=document.getElementById("algolia-search-input");e&&(e.addEventListener("input",f),e.addEventListener("keydown",p))}),window.openAlgoliaSearch=function(){var e=document.getElementById("algolia-search-modal");e.style.display="flex",document.body.style.overflow="hidden",setTimeout(function(){var e=document.getElementById("algolia-search-input");e&&(e.value="",e.focus(),t())},100)},window.closeAlgoliaSearch=function(){document.getElementById("algolia-search-modal").style.display="none",document.body.style.overflow="",e=-1}})()</script><style>.algolia-modal{position:fixed;top:0;left:0;width:100%;height:100%;z-index:1000;display:flex;align-items:flex-start;justify-content:center;padding-top:10vh}.algolia-modal-overlay{position:absolute;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.6);backdrop-filter:blur(4px)}.algolia-modal-content{position:relative;width:90%;max-width:600px;background:#1a1a1a;border-radius:12px;box-shadow:0 20px 60px rgba(0,0,0,.5);overflow:hidden;border:1px solid #333}.algolia-search-header{padding:16px;border-bottom:1px solid #333}.algolia-search-input-wrapper{display:flex;align-items:center;gap:12px;background:#2a2a2a;border-radius:8px;padding:12px 16px;border:1px solid #444}.algolia-search-input-wrapper svg{color:#666;flex-shrink:0}#algolia-search-input{flex:1;background:0 0;border:none;outline:none;color:#fff;font-size:16px;font-family:inherit}#algolia-search-input::placeholder{color:#666}.algolia-esc{background:#444;color:#999;padding:2px 6px;border-radius:4px;font-size:11px;font-family:inherit}.algolia-search-results{max-height:400px;overflow-y:auto;padding:8px}.algolia-empty-state{padding:40px 20px;text-align:center;color:#666}.algolia-results-count{padding:8px 12px;font-size:12px;color:#666}.algolia-search-footer{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;border-top:1px solid #333;background:#222;font-size:12px;color:#666}.algolia-footer-text kbd{background:#444;color:#999;padding:2px 4px;border-radius:3px;font-size:10px;margin:0 2px}.algolia-footer-logo a{color:#5eead4;text-decoration:none}.algolia-footer-logo a:hover{text-decoration:underline}.algolia-hit{display:block;padding:12px;border-radius:6px;text-decoration:none;color:#fff;transition:background .2s}.algolia-hit:hover,.algolia-hit.selected{background:#2a2a2a}.algolia-hit-title{font-weight:600;color:#5eead4;margin-bottom:4px;font-size:15px}.algolia-hit-title mark,.algolia-highlight{background:rgba(94,234,212,.25);color:#5eead4;padding:0 2px;border-radius:2px}.algolia-hit-content{font-size:13px;color:#999;line-height:1.5}.algolia-hit-content mark,.algolia-hit-content .algolia-highlight{background:rgba(94,234,212,.2);color:#ccc;padding:0 2px;border-radius:2px}.algolia-hit-meta{display:flex;align-items:center;gap:10px;margin-top:8px}.algolia-hit-date{font-size:12px;color:#666}.algolia-hit-tags{display:flex;gap:6px}.algolia-hit-tag{background:#333;color:#999;padding:2px 8px;border-radius:4px;font-size:11px}</style><script>document.addEventListener("keydown",function(e){(e.metaKey||e.ctrlKey)&&e.key==="k"&&(e.preventDefault(),typeof openAlgoliaSearch=="function"&&openAlgoliaSearch()),e.key==="Escape"&&typeof closeAlgoliaSearch=="function"&&closeAlgoliaSearch(),e.altKey&&e.key==="/"&&(e.preventDefault(),typeof openAlgoliaSearch=="function"&&openAlgoliaSearch())}),document.addEventListener("DOMContentLoaded",function(){var e,t=document.getElementById("algolia-search-modal");t&&(e=t.querySelector(".algolia-modal-overlay"),e&&e.addEventListener("click",function(){typeof closeAlgoliaSearch=="function"&&closeAlgoliaSearch()}))})</script><script>let menu=document.getElementById("menu");if(menu){const e=localStorage.getItem("menu-scroll-position");e&&(menu.scrollLeft=parseInt(e,10)),menu.onscroll=function(){localStorage.setItem("menu-scroll-position",menu.scrollLeft)}}document.querySelectorAll('a[href^="#"]').forEach(e=>{e.addEventListener("click",function(e){e.preventDefault();var t=this.getAttribute("href").substr(1);window.matchMedia("(prefers-reduced-motion: reduce)").matches?document.querySelector(`[id='${decodeURIComponent(t)}']`).scrollIntoView():document.querySelector(`[id='${decodeURIComponent(t)}']`).scrollIntoView({behavior:"smooth"}),t==="top"?history.replaceState(null,null," "):history.pushState(null,null,`#${t}`)})})</script><script>var toplink=document.getElementById("top-link");window.onscroll=function(){const e=window.innerHeight;document.body.scrollTop>e||document.documentElement.scrollTop>e?toplink.classList.remove("hidden"):toplink.classList.add("hidden")}</script><script>document.getElementById("theme-toggle").addEventListener("click",()=>{const e=document.querySelector("html");e.dataset.theme==="dark"?(e.dataset.theme="light",localStorage.setItem("pref-theme","light")):(e.dataset.theme="dark",localStorage.setItem("pref-theme","dark"))})</script></body></html>
+<!DOCTYPE html>
+<html lang="ja" dir="auto" data-theme="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>CentOS に Claude Code をデプロイする完全ガイド | DAWN&#39;s Blog</title>
+<meta name="keywords" content="Claude Code, CentOS, AI, デプロイ">
+<meta name="description" content="CentOS 上でゼロから Claude Code をデプロイし、Node.js のインストール、API Key の設定、よくある問題のトラブルシューティングまでカバーします。">
+<meta name="author" content="DAWN">
+<link rel="canonical" href="https://LMDAWN1127.github.io/ja/posts/centos-deploy-claude-code/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.4bf808bff57bddc46d61c8ae060b00400fc679ab876e37243b11bd3f832f2958.css" integrity="sha256-S/gIv/V73cRtYciuBgsAQA/GeauHbjckOxG9P4MvKVg=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://LMDAWN1127.github.io/images/DAWN.jpg">
+<link rel="icon" type="image/png" sizes="16x16" href="https://LMDAWN1127.github.io/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://LMDAWN1127.github.io/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://LMDAWN1127.github.io/apple-touch-icon.png">
+<link rel="mask-icon" href="https://LMDAWN1127.github.io/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="zh" href="https://LMDAWN1127.github.io/posts/centos-deploy-claude-code/">
+<link rel="alternate" hreflang="en" href="https://LMDAWN1127.github.io/en/posts/centos-deploy-claude-code/">
+<link rel="alternate" hreflang="ko" href="https://LMDAWN1127.github.io/ko/posts/centos-deploy-claude-code/">
+<link rel="alternate" hreflang="ja" href="https://LMDAWN1127.github.io/ja/posts/centos-deploy-claude-code/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+                color-scheme: dark;
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .toc {
+                background: var(--entry);
+            }
+        }
+
+    </style>
+</noscript>
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.querySelector("html").dataset.theme = 'dark';
+    } else if (localStorage.getItem("pref-theme") === "light") {
+       document.querySelector("html").dataset.theme = 'light';
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.querySelector("html").dataset.theme = 'dark';
+    } else {
+        document.querySelector("html").dataset.theme = 'light';
+    }
+
+</script><link rel="stylesheet" href='https://LMDAWN1127.github.io/css/custom.css'>
+<meta property="og:url" content="https://LMDAWN1127.github.io/ja/posts/centos-deploy-claude-code/">
+  <meta property="og:site_name" content="DAWN&#39;s Blog">
+  <meta property="og:title" content="CentOS に Claude Code をデプロイする完全ガイド">
+  <meta property="og:description" content="CentOS 上でゼロから Claude Code をデプロイし、Node.js のインストール、API Key の設定、よくある問題のトラブルシューティングまでカバーします。">
+  <meta property="og:locale" content="ja">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2026-07-04T05:00:00+08:00">
+    <meta property="article:modified_time" content="2026-07-04T05:00:00+08:00">
+    <meta property="article:tag" content="Claude Code">
+    <meta property="article:tag" content="CentOS">
+    <meta property="article:tag" content="AI">
+    <meta property="article:tag" content="デプロイ">
+      <meta property="og:image" content="https://LMDAWN1127.github.io/images/DAWN.jpg">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://LMDAWN1127.github.io/images/DAWN.jpg">
+  <meta name="twitter:title" content="CentOS に Claude Code をデプロイする完全ガイド">
+  <meta name="twitter:description" content="CentOS 上でゼロから Claude Code をデプロイし、Node.js のインストール、API Key の設定、よくある問題のトラブルシューティングまでカバーします。">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://LMDAWN1127.github.io/ja/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "CentOS に Claude Code をデプロイする完全ガイド",
+      "item": "https://LMDAWN1127.github.io/ja/posts/centos-deploy-claude-code/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "CentOS に Claude Code をデプロイする完全ガイド",
+  "name": "CentOS に Claude Code をデプロイする完全ガイド",
+  "description": "CentOS 上でゼロから Claude Code をデプロイし、Node.js のインストール、API Key の設定、よくある問題のトラブルシューティングまでカバーします。",
+  "keywords": [
+    "Claude Code", "CentOS", "AI", "デプロイ"
+  ],
+  "articleBody": "1. 環境要件 OS: CentOS 7/8/Stream 9 Node.js: v18 以上 メモリ: 2GB 以上を推奨 ネットワーク: Anthropic API へのアクセスが必要 2. Node.js のインストール 1 2 3 4 5 6 7 8 9 # 安装 NodeSource 仓库 curl -fsSL https://rpm.nodesource.com/setup_lts.x | sudo bash - # 安装 Node.js sudo yum install -y nodejs # 检查 node -v npm -v Node.js のバージョンが低い場合は、nvm でバージョンを管理します：\n1 2 3 4 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash source ~/.bashrc nvm install 20 nvm use 20 3. Claude Code のインストール 1 2 3 4 5 # 全局安装 npm install -g @anthropic-ai/claude-code # 检查 claude --version 権限の問題が発生した場合、2 つの解決策があります：\n1 2 3 4 5 6 7 8 # 方案一：sudo sudo npm install -g @anthropic-ai/claude-code # 方案二：修改 npm 全局目录（推荐） mkdir -p ~/.npm-global npm config set prefix \"~/.npm-global\" echo 'export PATH=~/.npm-global/bin:$PATH' \u003e\u003e ~/.bashrc source ~/.bashrc 4. API Key の設定 1 2 3 4 5 6 # 方式一：环境变量（推荐） echo 'export ANTHROPIC_API_KEY=\"your-api-key-here\"' \u003e\u003e ~/.bashrc source ~/.bashrc # 检查 echo $ANTHROPIC_API_KEY 方法 2：claude を直接実行すると、初回起動時に API Key の入力が求められます。\n5. 基本的な使い方 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 # 启动交互式会话 cd /path/to/your/project claude # 直接提问（非交互模式） claude -p \"写一个 Python 脚本，统计当前目录下所有文件的数量\" # 分析代码 cat main.py | claude -p \"分析这段代码的潜在问题\" # 查看/修改配置 claude config # 更新到最新版本 claude update コマンド 説明 claude インタラクティブセッションを開始 claude -p \"質問\" 直接質問、非インタラクティブモード claude config 設定の確認/変更 claude update 最新バージョンに更新 6. ネットワーク問題のトラブルシューティング Anthropic API への接続がタイムアウトする場合：\n1 2 3 4 5 6 # 配置代理 export https_proxy=\"http://your-proxy:port\" export http_proxy=\"http://your-proxy:port\" # 测试连通性 curl -s https://api.anthropic.com/ | head -5 7. セキュリティの推奨事項 1 2 3 4 5 6 7 8 9 # 不要硬编码 API Key，始终用环境变量 echo 'export ANTHROPIC_API_KEY=\"sk-ant-xxx\"' \u003e\u003e ~/.bashrc # ✅ # ANTHROPIC_API_KEY=sk-ant-xxx 写在代码里 # ❌ # 限制文件权限 chmod 600 ~/.bashrc # 检查是否泄露 grep -r \"ANTHROPIC_API_KEY\" --include=\"*.py\" --include=\"*.js\" . ",
+  "wordCount" : "281",
+  "inLanguage": "ja",
+  "image": "https://LMDAWN1127.github.io/images/DAWN.jpg","datePublished": "2026-07-04T05:00:00+08:00",
+  "dateModified": "2026-07-04T05:00:00+08:00",
+  "author":{
+    "@type": "Person",
+    "name": "DAWN"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://LMDAWN1127.github.io/ja/posts/centos-deploy-claude-code/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "DAWN's Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://LMDAWN1127.github.io/images/DAWN.jpg"
+    }
+  }
+}
+</script>
+</head>
+<body id="top">
+    <header class="header">
+    <nav class="header-nav">
+        <div class="logo">
+            <a href="https://LMDAWN1127.github.io/ja/" accesskey="h" title="DAWN&#39;s Blog (Alt + H)">
+                <img src="https://LMDAWN1127.github.io/images/DAWN.jpg" alt="" aria-label="logo"
+                    height="38">DAWN&#39;s Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" class="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
+                    <svg class="moon" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg class="sun" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button><span class="nav-sep">|</span>
+                    <ul class="lang-menu">
+                        <li>
+                            <a href="https://LMDAWN1127.github.io/" title="中文"
+                                aria-label="中文">Zh</a>
+                        </li>
+                        <li>
+                            <a href="https://LMDAWN1127.github.io/en/" title="English"
+                                aria-label="English">En</a>
+                        </li>
+                        <li>
+                            <a href="https://LMDAWN1127.github.io/ko/" title="한국어"
+                                aria-label="한국어">Ko</a>
+                        </li>
+                    </ul>
+            </div>
+        </div>
+        <ul id="menu" class="menu">
+            <li>
+                <a href="https://LMDAWN1127.github.io/ja/archives/" title="アーカイブ">
+                    <span>アーカイブ</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <h1 class="post-title entry-hint-parent">
+      CentOS に Claude Code をデプロイする完全ガイド
+    </h1>
+    <div class="post-description">
+      CentOS 上でゼロから Claude Code をデプロイし、Node.js のインストール、API Key の設定、よくある問題のトラブルシューティングまでカバーします。
+    </div>
+  </header>
+
+  <div class="post-layout">
+    <div class="post-content-wrapper"> 
+      <div class="post-content md-content"><h4 id="1-環境要件">1. 環境要件<a hidden class="anchor" aria-hidden="true" href="#1-環境要件">#</a></h4>
+<ul>
+<li><strong>OS</strong>: CentOS 7/8/Stream 9</li>
+<li><strong>Node.js</strong>: v18 以上</li>
+<li><strong>メモリ</strong>: 2GB 以上を推奨</li>
+<li><strong>ネットワーク</strong>: Anthropic API へのアクセスが必要</li>
+</ul>
+<h4 id="2-nodejs-のインストール">2. Node.js のインストール<a hidden class="anchor" aria-hidden="true" href="#2-nodejs-のインストール">#</a></h4>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">9
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 安装 NodeSource 仓库</span>
+</span></span><span style="display:flex;"><span>curl -fsSL https://rpm.nodesource.com/setup_lts.x | sudo bash -
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 安装 Node.js</span>
+</span></span><span style="display:flex;"><span>sudo yum install -y nodejs
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 检查</span>
+</span></span><span style="display:flex;"><span>node -v
+</span></span><span style="display:flex;"><span>npm -v
+</span></span></code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>Node.js のバージョンが低い場合は、nvm でバージョンを管理します：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
+</span></span><span style="display:flex;"><span>source ~/.bashrc
+</span></span><span style="display:flex;"><span>nvm install <span style="color:#ae81ff">20</span>
+</span></span><span style="display:flex;"><span>nvm use <span style="color:#ae81ff">20</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></blockquote>
+<h4 id="3-claude-code-のインストール">3. Claude Code のインストール<a hidden class="anchor" aria-hidden="true" href="#3-claude-code-のインストール">#</a></h4>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 全局安装</span>
+</span></span><span style="display:flex;"><span>npm install -g @anthropic-ai/claude-code
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 检查</span>
+</span></span><span style="display:flex;"><span>claude --version
+</span></span></code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>権限の問題が発生した場合、2 つの解決策があります：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 方案一：sudo</span>
+</span></span><span style="display:flex;"><span>sudo npm install -g @anthropic-ai/claude-code
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 方案二：修改 npm 全局目录（推荐）</span>
+</span></span><span style="display:flex;"><span>mkdir -p ~/.npm-global
+</span></span><span style="display:flex;"><span>npm config set prefix <span style="color:#e6db74">&#34;~/.npm-global&#34;</span>
+</span></span><span style="display:flex;"><span>echo <span style="color:#e6db74">&#39;export PATH=~/.npm-global/bin:$PATH&#39;</span> &gt;&gt; ~/.bashrc
+</span></span><span style="display:flex;"><span>source ~/.bashrc
+</span></span></code></pre></td></tr></table>
+</div>
+</div></blockquote>
+<h4 id="4-api-key-の設定">4. API Key の設定<a hidden class="anchor" aria-hidden="true" href="#4-api-key-の設定">#</a></h4>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 方式一：环境变量（推荐）</span>
+</span></span><span style="display:flex;"><span>echo <span style="color:#e6db74">&#39;export ANTHROPIC_API_KEY=&#34;your-api-key-here&#34;&#39;</span> &gt;&gt; ~/.bashrc
+</span></span><span style="display:flex;"><span>source ~/.bashrc
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 检查</span>
+</span></span><span style="display:flex;"><span>echo $ANTHROPIC_API_KEY
+</span></span></code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>方法 2：<code>claude</code> を直接実行すると、初回起動時に API Key の入力が求められます。</p>
+</blockquote>
+<h4 id="5-基本的な使い方">5. 基本的な使い方<a hidden class="anchor" aria-hidden="true" href="#5-基本的な使い方">#</a></h4>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 启动交互式会话</span>
+</span></span><span style="display:flex;"><span>cd /path/to/your/project
+</span></span><span style="display:flex;"><span>claude
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 直接提问（非交互模式）</span>
+</span></span><span style="display:flex;"><span>claude -p <span style="color:#e6db74">&#34;写一个 Python 脚本，统计当前目录下所有文件的数量&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 分析代码</span>
+</span></span><span style="display:flex;"><span>cat main.py | claude -p <span style="color:#e6db74">&#34;分析这段代码的潜在问题&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 查看/修改配置</span>
+</span></span><span style="display:flex;"><span>claude config
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 更新到最新版本</span>
+</span></span><span style="display:flex;"><span>claude update
+</span></span></code></pre></td></tr></table>
+</div>
+</div><table>
+	<thead>
+			<tr>
+					<th>コマンド</th>
+					<th>説明</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td><code>claude</code></td>
+					<td>インタラクティブセッションを開始</td>
+			</tr>
+			<tr>
+					<td><code>claude -p &quot;質問&quot;</code></td>
+					<td>直接質問、非インタラクティブモード</td>
+			</tr>
+			<tr>
+					<td><code>claude config</code></td>
+					<td>設定の確認/変更</td>
+			</tr>
+			<tr>
+					<td><code>claude update</code></td>
+					<td>最新バージョンに更新</td>
+			</tr>
+	</tbody>
+</table>
+<h4 id="6-ネットワーク問題のトラブルシューティング">6. ネットワーク問題のトラブルシューティング<a hidden class="anchor" aria-hidden="true" href="#6-ネットワーク問題のトラブルシューティング">#</a></h4>
+<p>Anthropic API への接続がタイムアウトする場合：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 配置代理</span>
+</span></span><span style="display:flex;"><span>export https_proxy<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;http://your-proxy:port&#34;</span>
+</span></span><span style="display:flex;"><span>export http_proxy<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;http://your-proxy:port&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 测试连通性</span>
+</span></span><span style="display:flex;"><span>curl -s https://api.anthropic.com/ | head -5
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="7-セキュリティの推奨事項">7. セキュリティの推奨事項<a hidden class="anchor" aria-hidden="true" href="#7-セキュリティの推奨事項">#</a></h4>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">9
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 不要硬编码 API Key，始终用环境变量</span>
+</span></span><span style="display:flex;"><span>echo <span style="color:#e6db74">&#39;export ANTHROPIC_API_KEY=&#34;sk-ant-xxx&#34;&#39;</span> &gt;&gt; ~/.bashrc  <span style="color:#75715e"># ✅</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># ANTHROPIC_API_KEY=sk-ant-xxx 写在代码里  # ❌</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 限制文件权限</span>
+</span></span><span style="display:flex;"><span>chmod <span style="color:#ae81ff">600</span> ~/.bashrc
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 检查是否泄露</span>
+</span></span><span style="display:flex;"><span>grep -r <span style="color:#e6db74">&#34;ANTHROPIC_API_KEY&#34;</span> --include<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;*.py&#34;</span> --include<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;*.js&#34;</span> .
+</span></span></code></pre></td></tr></table>
+</div>
+</div>
+
+      </div><div id="giscus-container" style="margin-top: 2rem; padding-top: 1rem; border-top: 1px solid var(--border);">
+  <script src="https://giscus.app/client.js"
+          data-repo="LMDAWN1127/LMDAWN1127.github.io"
+          data-repo-id="R_kgDOTMWmvw"
+          data-category="Announcements"
+          data-category-id="DIC_kwDOTMWmv84DAd3g"
+          data-mapping="pathname"
+          data-strict="0"
+          data-reactions-enabled="1"
+          data-emit-metadata="0"
+          data-input-position="bottom"
+          data-theme="preferred_color_scheme"
+          data-lang="zh-CN"
+          crossorigin="anonymous"
+          async>
+  </script>
+</div>
+
+    </div>
+
+    <aside class="toc-sidebar" id="toc-sidebar">
+    <div class="toc-header">目录</div>
+    <nav class="toc-nav"><ul class="toc-list">
+            <li>
+                <a href="#1-%e7%92%b0%e5%a2%83%e8%a6%81%e4%bb%b6" class="toc-link" data-target="1-環境要件">1. 環境要件</a></li>
+            <li>
+                <a href="#2-nodejs-%e3%81%ae%e3%82%a4%e3%83%b3%e3%82%b9%e3%83%88%e3%83%bc%e3%83%ab" class="toc-link" data-target="2-nodejs-のインストール">2. Node.js のインストール</a></li>
+            <li>
+                <a href="#3-claude-code-%e3%81%ae%e3%82%a4%e3%83%b3%e3%82%b9%e3%83%88%e3%83%bc%e3%83%ab" class="toc-link" data-target="3-claude-code-のインストール">3. Claude Code のインストール</a></li>
+            <li>
+                <a href="#4-api-key-%e3%81%ae%e8%a8%ad%e5%ae%9a" class="toc-link" data-target="4-api-key-の設定">4. API Key の設定</a></li>
+            <li>
+                <a href="#5-%e5%9f%ba%e6%9c%ac%e7%9a%84%e3%81%aa%e4%bd%bf%e3%81%84%e6%96%b9" class="toc-link" data-target="5-基本的な使い方">5. 基本的な使い方</a></li>
+            <li>
+                <a href="#6-%e3%83%8d%e3%83%83%e3%83%88%e3%83%af%e3%83%bc%e3%82%af%e5%95%8f%e9%a1%8c%e3%81%ae%e3%83%88%e3%83%a9%e3%83%96%e3%83%ab%e3%82%b7%e3%83%a5%e3%83%bc%e3%83%86%e3%82%a3%e3%83%b3%e3%82%b0" class="toc-link" data-target="6-ネットワーク問題のトラブルシューティング">6. ネットワーク問題のトラブルシューティング</a></li>
+            <li>
+                <a href="#7-%e3%82%bb%e3%82%ad%e3%83%a5%e3%83%aa%e3%83%86%e3%82%a3%e3%81%ae%e6%8e%a8%e5%a5%a8%e4%ba%8b%e9%a0%85" class="toc-link" data-target="7-セキュリティの推奨事項">7. セキュリティの推奨事項</a>
+            </li>
+        </ul>
+    </nav>
+</aside>
+
+  </div>
+</article>
+    </main>
+    
+<a href="#top" id="top-link" class="top-link hidden" aria-label="go to top" title="Go to Top (Alt + G)" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevrons-up">
+        <polyline points="17 11 12 6 7 11"></polyline>
+        <polyline points="17 18 12 13 7 18"></polyline>
+    </svg>
+</a>
+<script defer src="/js/custom.js"></script>
+<div id="algolia-search-modal" class="algolia-modal" style="display: none;">
+  <div class="algolia-modal-overlay"></div>
+  <div class="algolia-modal-content">
+    <div class="algolia-search-header">
+      <div class="algolia-search-input-wrapper">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <input type="text" id="algolia-search-input" placeholder="搜索文章..." autofocus>
+        <kbd class="algolia-esc">Esc</kbd>
+      </div>
+    </div>
+    <div id="algolia-search-results" class="algolia-search-results">
+      <div class="algolia-empty-state">
+        <p>输入关键词开始搜索</p>
+      </div>
+    </div>
+    <div class="algolia-search-footer">
+      <span class="algolia-footer-text">
+        <kbd>↑</kbd> <kbd>↓</kbd> 导航
+        <kbd>↵</kbd> 打开
+        <kbd>Esc</kbd> 关闭
+      </span>
+      <span class="algolia-footer-logo">
+        搜索由 <a href="https://www.algolia.com/" target="_blank" rel="noopener">Algolia</a> 提供
+      </span>
+    </div>
+  </div>
+</div>
+
+<script>
+(function() {
+  'use strict';
+
+  var APP_ID = 'Y0SCRI4LCW';
+  var SEARCH_KEY = '03dda5e44aec7e0dd93b6a3653250b1f';
+  var INDEX_NAME = 'lmdawn1127-blog';
+  var API_URL = 'https://' + APP_ID + '-dsn.algolia.net/1/indexes/' + INDEX_NAME + '/query';
+  var debounceTimer = null;
+  var selectedIndex = -1;
+
+   
+  function doSearch(query) {
+    if (!query || !query.trim()) {
+      showEmpty();
+      return;
+    }
+
+    var body = JSON.stringify({
+      query: query,
+      hitsPerPage: 10,
+      attributesToRetrieve: ['title', 'content', 'url'],
+      attributesToHighlight: ['title', 'content'],
+      highlightPreTag: '<mark class="algolia-highlight">',
+      highlightPostTag: '</mark>'
+    });
+
+    fetch(API_URL, {
+      method: 'POST',
+      headers: {
+        'X-Algolia-Application-Id': APP_ID,
+        'X-Algolia-API-Key': SEARCH_KEY,
+        'Content-Type': 'application/json'
+      },
+      body: body
+    })
+    .then(function(resp) {
+      if (!resp.ok) throw new Error('HTTP ' + resp.status);
+      return resp.json();
+    })
+    .then(function(data) {
+      renderResults(data.hits || [], query);
+    })
+    .catch(function(err) {
+      console.error('Algolia search error:', err);
+      showError(err.message || '未知错误');
+    });
+  }
+
+   
+  function showEmpty() {
+    document.getElementById('algolia-search-results').innerHTML =
+      '<div class="algolia-empty-state"><p>输入关键词开始搜索</p></div>';
+  }
+
+  function showError(detail) {
+    var msg = '搜索出错，请稍后再试';
+    if (detail) msg += '<br><small style="color:#888">错误详情: ' + escapeHtml(detail) + '</small>';
+    document.getElementById('algolia-search-results').innerHTML =
+      '<div class="algolia-empty-state"><p>' + msg + '</p></div>';
+  }
+
+  function showNoResults(query) {
+    document.getElementById('algolia-search-results').innerHTML =
+      '<div class="algolia-empty-state"><p>未找到与「' + escapeHtml(query) + '」相关的结果</p></div>';
+  }
+
+  function escapeHtml(s) {
+    var d = document.createElement('div');
+    d.appendChild(document.createTextNode(s));
+    return d.innerHTML;
+  }
+
+  function getHL(hit, attr) {
+    if (hit._highlightResult && hit._highlightResult[attr]) return hit._highlightResult[attr].value;
+    return hit[attr] || '';
+  }
+
+  function trunc(s, n) {
+    if (!s) return '';
+    s = s.replace(/<[^>]+>/g, '');
+    return s.length > n ? s.substring(0, n) + '…' : s;
+  }
+
+  function renderResults(hits, query) {
+    var box = document.getElementById('algolia-search-results');
+    if (!hits.length) { showNoResults(query); return; }
+
+    var h = '<div class="algolia-results-count">' + hits.length + ' 个结果</div>';
+    hits.forEach(function(hit, i) {
+      var title = getHL(hit, 'title') || '无标题';
+      var content = getHL(hit, 'content');
+      var url = hit.url || '#';
+
+      h += '<a class="algolia-hit" href="' + url + '" data-index="' + i + '">';
+      h += '<div class="algolia-hit-title">' + title + '</div>';
+      h += '<div class="algolia-hit-content">' + trunc(content, 150) + '</div>';
+
+      h += '</a>';
+    });
+    box.innerHTML = h;
+
+    box.querySelectorAll('.algolia-hit').forEach(function(el) {
+      el.addEventListener('click', closeAlgoliaSearch);
+    });
+  }
+
+   
+  function onInput(e) {
+    var q = e.target.value;
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(function() { doSearch(q); }, 200);
+  }
+
+  function onKeydown(e) {
+    var hits = document.querySelectorAll('.algolia-hit');
+    if (!hits.length) return;
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      selectedIndex = Math.min(selectedIndex + 1, hits.length - 1);
+      sel(hits);
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      selectedIndex = Math.max(selectedIndex - 1, 0);
+      sel(hits);
+    } else if (e.key === 'Enter' && selectedIndex >= 0) {
+      e.preventDefault();
+      window.location.href = hits[selectedIndex].getAttribute('href');
+      closeAlgoliaSearch();
+    }
+  }
+
+  function sel(hits) {
+    hits.forEach(function(el, i) {
+      if (i === selectedIndex) { el.classList.add('selected'); el.scrollIntoView({ block: 'nearest' }); }
+      else el.classList.remove('selected');
+    });
+  }
+
+   
+  document.addEventListener('DOMContentLoaded', function() {
+    var input = document.getElementById('algolia-search-input');
+    if (input) {
+      input.addEventListener('input', onInput);
+      input.addEventListener('keydown', onKeydown);
+    }
+  });
+
+  window.openAlgoliaSearch = function() {
+    var modal = document.getElementById('algolia-search-modal');
+    modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+    setTimeout(function() {
+      var input = document.getElementById('algolia-search-input');
+      if (input) { input.value = ''; input.focus(); showEmpty(); }
+    }, 100);
+  };
+
+  window.closeAlgoliaSearch = function() {
+    document.getElementById('algolia-search-modal').style.display = 'none';
+    document.body.style.overflow = '';
+    selectedIndex = -1;
+  };
+})();
+</script>
+
+<style>
+  .algolia-modal{position:fixed;top:0;left:0;width:100%;height:100%;z-index:1000;display:flex;align-items:flex-start;justify-content:center;padding-top:10vh}
+  .algolia-modal-overlay{position:absolute;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.6);backdrop-filter:blur(4px)}
+  .algolia-modal-content{position:relative;width:90%;max-width:600px;background:#1a1a1a;border-radius:12px;box-shadow:0 20px 60px rgba(0,0,0,.5);overflow:hidden;border:1px solid #333}
+  .algolia-search-header{padding:16px;border-bottom:1px solid #333}
+  .algolia-search-input-wrapper{display:flex;align-items:center;gap:12px;background:#2a2a2a;border-radius:8px;padding:12px 16px;border:1px solid #444}
+  .algolia-search-input-wrapper svg{color:#666;flex-shrink:0}
+  #algolia-search-input{flex:1;background:transparent;border:none;outline:none;color:#fff;font-size:16px;font-family:inherit}
+  #algolia-search-input::placeholder{color:#666}
+  .algolia-esc{background:#444;color:#999;padding:2px 6px;border-radius:4px;font-size:11px;font-family:inherit}
+  .algolia-search-results{max-height:400px;overflow-y:auto;padding:8px}
+  .algolia-empty-state{padding:40px 20px;text-align:center;color:#666}
+  .algolia-results-count{padding:8px 12px;font-size:12px;color:#666}
+  .algolia-search-footer{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;border-top:1px solid #333;background:#222;font-size:12px;color:#666}
+  .algolia-footer-text kbd{background:#444;color:#999;padding:2px 4px;border-radius:3px;font-size:10px;margin:0 2px}
+  .algolia-footer-logo a{color:#5EEAD4;text-decoration:none}
+  .algolia-footer-logo a:hover{text-decoration:underline}
+  .algolia-hit{display:block;padding:12px;border-radius:6px;text-decoration:none;color:#fff;transition:background .2s}
+  .algolia-hit:hover,.algolia-hit.selected{background:#2a2a2a}
+  .algolia-hit-title{font-weight:600;color:#5EEAD4;margin-bottom:4px;font-size:15px}
+  .algolia-hit-title mark,.algolia-highlight{background:rgba(94,234,212,.25);color:#5EEAD4;padding:0 2px;border-radius:2px}
+  .algolia-hit-content{font-size:13px;color:#999;line-height:1.5}
+  .algolia-hit-content mark,.algolia-hit-content .algolia-highlight{background:rgba(94,234,212,.2);color:#ccc;padding:0 2px;border-radius:2px}
+  .algolia-hit-meta{display:flex;align-items:center;gap:10px;margin-top:8px}
+  .algolia-hit-date{font-size:12px;color:#666}
+  .algolia-hit-tags{display:flex;gap:6px}
+  .algolia-hit-tag{background:#333;color:#999;padding:2px 8px;border-radius:4px;font-size:11px}
+</style>
+<script>
+  
+  document.addEventListener('keydown', function(e) {
+    
+    if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+      e.preventDefault();
+      if (typeof openAlgoliaSearch === 'function') openAlgoliaSearch();
+    }
+    
+    if (e.key === 'Escape') {
+      if (typeof closeAlgoliaSearch === 'function') closeAlgoliaSearch();
+    }
+    
+    if (e.altKey && e.key === '/') {
+      e.preventDefault();
+      if (typeof openAlgoliaSearch === 'function') openAlgoliaSearch();
+    }
+  });
+
+  
+  document.addEventListener('DOMContentLoaded', function() {
+    var modal = document.getElementById('algolia-search-modal');
+    if (modal) {
+      var overlay = modal.querySelector('.algolia-modal-overlay');
+      if (overlay) {
+        overlay.addEventListener('click', function() {
+          if (typeof closeAlgoliaSearch === 'function') closeAlgoliaSearch();
+        });
+      }
+    }
+  });
+
+  
+  
+  document.addEventListener('DOMContentLoaded', function() {
+    if (document.getElementById('algolia-search-btn')) return;
+    var btn = document.createElement('button');
+    btn.id = 'algolia-search-btn';
+    btn.className = 'theme-toggle search-toggle';
+    btn.type = 'button';
+    btn.title = '搜索 (Ctrl+K)';
+    btn.setAttribute('aria-label', '搜索');
+    btn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>';
+    btn.addEventListener('click', function() {
+      if (typeof openAlgoliaSearch === 'function') openAlgoliaSearch();
+    });
+    var target = document.querySelector('.logo-switches') || document.querySelector('.header-nav');
+    if (target) target.appendChild(btn);
+  });
+</script><script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var cur = (document.documentElement.lang || 'zh').toLowerCase();
+    
+    
+    
+    var rawPath = location.pathname.replace(/\/+$/, '');
+    var pm = rawPath.match(/^\/(en|ko|ja)(?:\/(.*))?$/);
+    var rest = pm ? (pm[2] ? '/' + pm[2] : '') : rawPath; 
+    function langHref(code) {
+      var base = (code === 'zh') ? '' : '/' + code;
+      if (rest === '' || rest === '/') {
+        return base === '' ? '/' : base + '/';
+      }
+      return base + rest + '/';
+    }
+
+    var langs = [
+      { code: 'zh', label: '中文' },
+      { code: 'en', label: 'English' },
+      { code: 'ko', label: '한국어' },
+      { code: 'ja', label: '日本語' }
+    ];
+    var wrap = document.querySelector('.logo-switches') || document.querySelector('.header-nav');
+    if (!wrap || document.getElementById('lang-dropdown')) return;
+
+    var current = langs.find(function(l) { return l.code === cur; }) || langs[0];
+
+    var dd = document.createElement('div');
+    dd.className = 'lang-dropdown';
+    dd.id = 'lang-dropdown';
+
+    var toggle = document.createElement('button');
+    toggle.type = 'button';
+    toggle.className = 'lang-dropdown-toggle';
+    toggle.setAttribute('aria-label', '选择语言');
+    toggle.innerHTML = '<span class="lang-current">' + current.label + '</span><span class="lang-caret">▾</span>';
+
+    var menu = document.createElement('ul');
+    menu.className = 'lang-dropdown-menu';
+    langs.forEach(function(l) {
+      var li = document.createElement('li');
+      if (l.code === cur) li.className = 'active';
+      var a = document.createElement('a');
+      a.href = langHref(l.code);
+      a.textContent = l.label;
+      li.appendChild(a);
+      menu.appendChild(li);
+    });
+
+    dd.appendChild(toggle);
+    dd.appendChild(menu);
+    wrap.appendChild(dd);
+
+    toggle.addEventListener('click', function(e) {
+      e.stopPropagation();
+      dd.classList.toggle('open');
+    });
+    document.addEventListener('click', function(e) {
+      if (!dd.contains(e.target)) dd.classList.remove('open');
+    });
+  });
+</script>
+
+
+<script>
+    let menu = document.getElementById('menu');
+    if (menu) {
+        const scrollPosition = localStorage.getItem("menu-scroll-position");
+        if (scrollPosition) {
+            menu.scrollLeft = parseInt(scrollPosition, 10);
+        }
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+</script>
+<script>
+    var toplink = document.getElementById("top-link");
+    window.onscroll = function () {
+        const scrollThreshold = window.innerHeight;
+        if (document.body.scrollTop > scrollThreshold || document.documentElement.scrollTop > scrollThreshold) {
+            toplink.classList.remove("hidden");
+        } else {
+            toplink.classList.add("hidden");
+        }
+    };
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        const html = document.querySelector("html");
+        if (html.dataset.theme === "dark") {
+            html.dataset.theme = 'light';
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            html.dataset.theme = 'dark';
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'コピー';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'コピーされました!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'コピー';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>

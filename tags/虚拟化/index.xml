@@ -1,8 +1,28 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>虚拟化 on DAWN's Blog</title><link>https://LMDAWN1127.github.io/tags/%E8%99%9A%E6%8B%9F%E5%8C%96/</link><description>Recent content in 虚拟化 on DAWN's Blog</description><generator>Hugo</generator><language>zh-cn</language><lastBuildDate>Sun, 02 Aug 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://LMDAWN1127.github.io/tags/%E8%99%9A%E6%8B%9F%E5%8C%96/index.xml" rel="self" type="application/rss+xml"/><item><title>KVM 虚拟化入门到实战：部署、管理与网络配置</title><link>https://LMDAWN1127.github.io/posts/kvm-virtualization-guide/</link><pubDate>Sun, 02 Aug 2026 00:00:00 +0000</pubDate><guid>https://LMDAWN1127.github.io/posts/kvm-virtualization-guide/</guid><description>&lt;h1 id="kvm-虚拟化入门到实战部署管理与网络配置"&gt;KVM 虚拟化入门到实战：部署、管理与网络配置&lt;/h1&gt;
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>虚拟化 on DAWN&#39;s Blog</title>
+    <link>https://LMDAWN1127.github.io/tags/%E8%99%9A%E6%8B%9F%E5%8C%96/</link>
+    <description>Recent content in 虚拟化 on DAWN&#39;s Blog</description>
+    <image>
+      <title>DAWN&#39;s Blog</title>
+      <url>https://LMDAWN1127.github.io/images/DAWN.jpg</url>
+      <link>https://LMDAWN1127.github.io/images/DAWN.jpg</link>
+    </image>
+    <generator>Hugo</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sun, 02 Aug 2026 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://LMDAWN1127.github.io/tags/%E8%99%9A%E6%8B%9F%E5%8C%96/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>KVM 虚拟化入门到实战：部署、管理与网络配置</title>
+      <link>https://LMDAWN1127.github.io/posts/kvm-virtualization-guide/</link>
+      <pubDate>Sun, 02 Aug 2026 00:00:00 +0000</pubDate>
+      <guid>https://LMDAWN1127.github.io/posts/kvm-virtualization-guide/</guid>
+      <description>&lt;h1 id=&#34;kvm-虚拟化入门到实战部署管理与网络配置&#34;&gt;KVM 虚拟化入门到实战：部署、管理与网络配置&lt;/h1&gt;
 &lt;blockquote&gt;
 &lt;p&gt;本文系统介绍 KVM 虚拟化技术，涵盖发展历史、部署方法、虚拟机管理、网络模式配置，以及使用命令行自动化安装虚拟机。所有命令均在 CentOS/RHEL 环境下验证。&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;h2 id="一kvm-发展历史"&gt;一、KVM 发展历史&lt;/h2&gt;
+&lt;h2 id=&#34;一kvm-发展历史&#34;&gt;一、KVM 发展历史&lt;/h2&gt;
 &lt;p&gt;KVM（Kernel-based Virtual Machine，基于内核的虚拟机）是当前云计算领域主流的虚拟化技术。了解它的发展脉络，有助于理解为什么业界最终选择了 KVM。&lt;/p&gt;
 &lt;p&gt;虚拟化技术大致可分为两类：闭源虚拟化（如 VMware、Microsoft Hyper-V）和开源虚拟化（如 Xen、KVM）。&lt;/p&gt;
 &lt;p&gt;早期的开源虚拟化代表是 Xen。AWS 和阿里云早期都采用 Xen 方案；Citrix 的 XenServer（思杰）以及桌面云产品 FusionAccess（对应 Citrix XenDesktop）也基于 Xen。华为的 FusionCompute 在 6.3 版本之前同样使用 Xen。&lt;/p&gt;
@@ -13,4 +33,7 @@
 &lt;li&gt;&lt;strong&gt;2014 年&lt;/strong&gt;：RHEL 5.11 发布（RHEL 5.x 系列的生命周期终点，提供 7 年有效技术支持，可免费升级到 KVM）。&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;2017 年前后&lt;/strong&gt;：AWS 推出基于 KVM 的 Nitro 平台实例，阿里云及全球众多厂商全面拥抱 KVM。&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;如今，主流云厂商的虚拟化底层基本都是 KVM。华为 FusionCompute 6.3 版本也从 Xen 切换到了 KVM。2019 年 IBM 以约 340 亿美金收购红帽公司，ansible、glusterfs、ceph 等红帽生态项目随之纳入麾下，进一步印证了这条技术路线的价值。&lt;/p&gt;</description></item></channel></rss>
+&lt;p&gt;如今，主流云厂商的虚拟化底层基本都是 KVM。华为 FusionCompute 6.3 版本也从 Xen 切换到了 KVM。2019 年 IBM 以约 340 亿美金收购红帽公司，ansible、glusterfs、ceph 等红帽生态项目随之纳入麾下，进一步印证了这条技术路线的价值。&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>
