@@ -11,8 +11,22 @@
     </image>
     <generator>Hugo</generator>
     <language>en</language>
-    <lastBuildDate>Tue, 04 Aug 2026 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 07 Aug 2026 13:52:00 +0800</lastBuildDate>
     <atom:link href="https://LMDAWN1127.github.io/en/categories/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Kubernetes</title>
+      <link>https://LMDAWN1127.github.io/en/categories/kubernetes/</link>
+      <pubDate>Fri, 07 Aug 2026 13:52:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/categories/kubernetes/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Operations &amp; Deployment</title>
+      <link>https://LMDAWN1127.github.io/en/categories/operations--deployment/</link>
+      <pubDate>Fri, 07 Aug 2026 13:52:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/categories/operations--deployment/</guid>
+      <description></description>
+    </item>
     <item>
       <title>Container Tech</title>
       <link>https://LMDAWN1127.github.io/en/categories/container-tech/</link>

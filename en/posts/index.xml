@@ -11,7 +11,7 @@
     </image>
     <generator>Hugo</generator>
     <language>en</language>
-    <lastBuildDate>Tue, 04 Aug 2026 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 07 Aug 2026 13:52:00 +0800</lastBuildDate>
     <atom:link href="https://LMDAWN1127.github.io/en/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Harbor Active-Standby Deployment: From Installation to HTTPS and Replication</title>
@@ -19,6 +19,13 @@
       <pubDate>Tue, 04 Aug 2026 00:00:00 +0000</pubDate>
       <guid>https://LMDAWN1127.github.io/en/posts/harbor-master-slave/</guid>
       <description>Complete guide to deploying Harbor enterprise Docker registry with active-standby architecture, HTTP/HTTPS modes, self-signed certificates, and cross-host replication.</description>
+    </item>
+    <item>
+      <title>Manually Deploying a Kubernetes v1.30 Cluster (via kubeadm)</title>
+      <link>https://LMDAWN1127.github.io/en/posts/k8s-v1.30-manual-deploy/</link>
+      <pubDate>Fri, 07 Aug 2026 13:52:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/posts/k8s-v1.30-manual-deploy/</guid>
+      <description>A step-by-step guide to manually deploying a Kubernetes v1.30 cluster with kubeadm — covering firewall/SELinux, swap, kernel modules, Containerd, kubeadm init, worker join, Calico, and an IPVS add-on.</description>
     </item>
     <item>
       <title>KVM Virtualization from Beginner to Practice: Deployment, Management, and Network Configuration</title>

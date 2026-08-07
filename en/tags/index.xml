@@ -11,8 +11,50 @@
     </image>
     <generator>Hugo</generator>
     <language>en</language>
-    <lastBuildDate>Tue, 04 Aug 2026 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 07 Aug 2026 13:52:00 +0800</lastBuildDate>
     <atom:link href="https://LMDAWN1127.github.io/en/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Calico</title>
+      <link>https://LMDAWN1127.github.io/en/tags/calico/</link>
+      <pubDate>Fri, 07 Aug 2026 13:52:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/tags/calico/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Cluster-Deployment</title>
+      <link>https://LMDAWN1127.github.io/en/tags/cluster-deployment/</link>
+      <pubDate>Fri, 07 Aug 2026 13:52:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/tags/cluster-deployment/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Containerd</title>
+      <link>https://LMDAWN1127.github.io/en/tags/containerd/</link>
+      <pubDate>Fri, 07 Aug 2026 13:52:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/tags/containerd/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Kubeadm</title>
+      <link>https://LMDAWN1127.github.io/en/tags/kubeadm/</link>
+      <pubDate>Fri, 07 Aug 2026 13:52:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/tags/kubeadm/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Kubernetes</title>
+      <link>https://LMDAWN1127.github.io/en/tags/kubernetes/</link>
+      <pubDate>Fri, 07 Aug 2026 13:52:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/tags/kubernetes/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>V1.30</title>
+      <link>https://LMDAWN1127.github.io/en/tags/v1.30/</link>
+      <pubDate>Fri, 07 Aug 2026 13:52:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/tags/v1.30/</guid>
+      <description></description>
+    </item>
     <item>
       <title>Docker</title>
       <link>https://LMDAWN1127.github.io/en/tags/docker/</link>

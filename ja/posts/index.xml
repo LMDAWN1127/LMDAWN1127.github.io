@@ -11,7 +11,7 @@
     </image>
     <generator>Hugo</generator>
     <language>ja</language>
-    <lastBuildDate>Tue, 04 Aug 2026 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 07 Aug 2026 13:52:00 +0800</lastBuildDate>
     <atom:link href="https://LMDAWN1127.github.io/ja/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Harbor アクティブスタンバイデプロイ：インストールからHTTPS・レプリケーションまで</title>
@@ -19,6 +19,13 @@
       <pubDate>Tue, 04 Aug 2026 00:00:00 +0000</pubDate>
       <guid>https://LMDAWN1127.github.io/ja/posts/harbor-master-slave/</guid>
       <description>HarborエンタープライズDockerレジストリのアクティブスタンバイアーキテクチャ、HTTP/HTTPSモード、自己署名証明書、クロスホストレプリケーションを完全にカバーするデプロイガイドです。</description>
+    </item>
+    <item>
+      <title>Kubernetes v1.30 クラスタを手動デプロイする（kubeadm 方式）</title>
+      <link>https://LMDAWN1127.github.io/ja/posts/k8s-v1.30-manual-deploy/</link>
+      <pubDate>Fri, 07 Aug 2026 13:52:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/ja/posts/k8s-v1.30-manual-deploy/</guid>
+      <description>kubeadm を用いて Kubernetes v1.30 クラスタを手動でデプロイする手順を解説します。ファイアウォール/SELinux、スワップ、カーネルモジュール、Containerd、kubeadm init、ワーカー参加、Calico、IPVS 追加まで網羅。</description>
     </item>
     <item>
       <title>KVM仮想化 入門から実戦まで：デプロイ、管理とネットワーク構成</title>

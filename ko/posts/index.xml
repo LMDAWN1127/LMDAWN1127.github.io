@@ -11,7 +11,7 @@
     </image>
     <generator>Hugo</generator>
     <language>ko</language>
-    <lastBuildDate>Tue, 04 Aug 2026 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 07 Aug 2026 13:52:00 +0800</lastBuildDate>
     <atom:link href="https://LMDAWN1127.github.io/ko/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Harbor 액티브-스탠바이 배포: 설치부터 HTTPS 및 복제까지</title>
@@ -19,6 +19,13 @@
       <pubDate>Tue, 04 Aug 2026 00:00:00 +0000</pubDate>
       <guid>https://LMDAWN1127.github.io/ko/posts/harbor-master-slave/</guid>
       <description>Harbor 엔터프라이즈 Docker 레지스트리의 액티브-스탠바이 아키텍처, HTTP/HTTPS 모드, 자체 서명 인증서, 크로스 호스트 복제를 완전히 다루는 배포 가이드입니다.</description>
+    </item>
+    <item>
+      <title>Kubernetes v1.30 클러스터 수동 배포 (kubeadm 방식)</title>
+      <link>https://LMDAWN1127.github.io/ko/posts/k8s-v1.30-manual-deploy/</link>
+      <pubDate>Fri, 07 Aug 2026 13:52:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/ko/posts/k8s-v1.30-manual-deploy/</guid>
+      <description>kubeadm으로 Kubernetes v1.30 클러스터를 수동 배포하는 단계별 가이드입니다. 방화벽/SELinux, 스왑, 커널 모듈, Containerd, kubeadm init, 워커 가입, Calico, IPVS 추가까지 다룹니다.</description>
     </item>
     <item>
       <title>KVM 가상화 입문부터 실전까지: 배포, 관리 및 네트워크 구성</title>
