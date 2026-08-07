@@ -5,8 +5,6 @@ draft: false
 categories: ["Kubernetes", "운영・배포"]
 tags: ["Kubernetes", "kubeadm", "containerd", "calico", "v1.30", "클러스터배포"]
 summary: "kubeadm으로 Kubernetes v1.30 클러스터를 수동 배포하는 단계별 가이드입니다. 방화벽/SELinux, 스왑, 커널 모듈, Containerd, kubeadm init, 워커 가입, Calico, IPVS 추가까지 다룹니다."
-showToc: true
-TocOpen: true
 ---
 
 계획은 다음과 같습니다:
@@ -192,6 +190,10 @@ vim /root/.bashrc
 alias docker='crictl'
 source /root/.bashrc
 ```
+
+> **참고:**
+> - **kubectl 셸 완성:** 위의 첫 두 줄은 kubectl 완성 스크립트를 `/etc/bash_completion.d/`에 기록합니다. 단, 이전에 **시스템에 `bash-completion` 패키지가 설치되어 있어야** 합니다(`yum install -y bash-completion` 또는 `apt install -y bash-completion`). 설치되어 있지 않으면 해당 디렉터리가 존재하지 않아 완성이 동작하지 않습니다. 또한 kubectl 자체도 이 두 명령을 실행해야 비로소 완성이 활성화됩니다(Kubernetes는 이 추가 설정이 필요합니다).
+> - **`docker` 별칭:** Kubernetes가 containerd 런타임으로 전환되면서 컨테이너 관리 명령은 `docker` 대신 `crictl`을 사용합니다. 여기서 `docker`를 `crictl`로 별칭하는 것은 `docker` 명령에 익숙한 사용자를 배려하여 기존 작업 습관을 그대로 유지할 수 있게 하기 위함입니다.
 
 `# docker images`를 실행했을 때 다음과 같은 오류가 발생하는 경우：
 

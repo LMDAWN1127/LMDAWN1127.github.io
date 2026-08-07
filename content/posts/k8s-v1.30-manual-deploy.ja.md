@@ -5,8 +5,6 @@ draft: false
 categories: ["Kubernetes", "運用・デプロイ"]
 tags: ["Kubernetes", "kubeadm", "containerd", "calico", "v1.30", "クラスタデプロイ"]
 summary: "kubeadm を用いて Kubernetes v1.30 クラスタを手動でデプロイする手順を解説します。ファイアウォール/SELinux、スワップ、カーネルモジュール、Containerd、kubeadm init、ワーカー参加、Calico、IPVS 追加まで網羅。"
-showToc: true
-TocOpen: true
 ---
 
 計画は以下の通りです：
@@ -192,6 +190,10 @@ vim /root/.bashrc
 alias docker='crictl'
 source /root/.bashrc
 ```
+
+> **補足：**
+> - **kubectl の補完**：上の 2 行は kubectl の補完スクリプトを `/etc/bash_completion.d/` に書き出します。ただしその前提として、**システムに `bash-completion` パッケージがインストールされていること**（`yum install -y bash-completion` や `apt install -y bash-completion`）が必要です。インストールされていないと該当ディレクトリが存在せず、補完は機能しません。さらに kubectl 自体もこの 2 行を実行して初めて補完が有効になります（Kubernetes は別途この設定が必要です）。
+> - **`docker` エイリアス**：Kubernetes が containerd ランタイムに切り替わったため、コンテナ管理コマンドは `docker` から `crictl` に変わります。ここで `docker` を `crictl` にエイリアスするのは、`docker` コマンドに慣れたユーザーの操作性を考慮し、これまでの操作感を維持するためです。
 
 `# docker images` を実行した際に、以下のエラーが発生した場合：
 

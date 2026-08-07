@@ -4,8 +4,6 @@ date: 2026-08-07T13:52:00+08:00
 draft: false
 categories: ["Kubernetes", "运维部署"]
 tags: ["Kubernetes", "kubeadm", "containerd", "calico", "v1.30", "集群部署"]
-showToc: true
-TocOpen: true
 ---
 
 规划如下：
@@ -197,6 +195,10 @@ vim  /root/.bashrc
 alias docker='crictl'
 source /root/.bashrc
 ```
+
+> **说明：**
+> - **kubectl 命令补全**：上面前两行把 kubectl 的补全脚本写入 `/etc/bash_completion.d/`。但前提是**系统已安装 `bash-completion` 软件包**（如 `yum install -y bash-completion` 或 `apt install -y bash-completion`），否则该目录不存在、补全无法生效；此外 kubectl 本身还需执行这两条命令才能真正开启补全（即 k8s 需额外配置才能补全）。
+> - **`docker` 别名**：Kubernetes 改用 containerd 容器运行时后，容器管理命令由 `docker` 变为 `crictl`。这里把 `docker` 别名成 `crictl`，是为了照顾习惯使用 `docker` 命令的用户，使其沿用原有的操作习惯。
 
 当如果执行#docker images，报错情况：
 

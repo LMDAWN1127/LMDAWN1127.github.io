@@ -5,8 +5,6 @@ draft: false
 categories: ["Kubernetes", "Operations & Deployment"]
 tags: ["Kubernetes", "kubeadm", "containerd", "calico", "v1.30", "cluster-deployment"]
 summary: "A step-by-step guide to manually deploying a Kubernetes v1.30 cluster with kubeadm — covering firewall/SELinux, swap, kernel modules, Containerd, kubeadm init, worker join, Calico, and an IPVS add-on."
-showToc: true
-TocOpen: true
 ---
 
 Planning is as follows:
@@ -188,6 +186,10 @@ vim /root/.bashrc
 alias docker='crictl'
 source /root/.bashrc
 ```
+
+> **Note:**
+> - **kubectl shell completion:** The first two lines write kubectl's completion script into `/etc/bash_completion.d/`. This only works if the **`bash-completion` package is installed on the system** first (e.g. `yum install -y bash-completion` or `apt install -y bash-completion`); otherwise that directory does not exist and completion will not work. kubectl itself also requires these two commands to actually enable completion (Kubernetes needs this extra configuration).
+> - **`docker` alias:** After Kubernetes switches to the containerd runtime, container management uses `crictl` instead of `docker`. Aliasing `docker` to `crictl` here is for users accustomed to the `docker` command, so they can keep their familiar workflow.
 
 If you run `# docker images` and encounter the following error:
 
