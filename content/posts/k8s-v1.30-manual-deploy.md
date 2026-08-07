@@ -3,7 +3,9 @@ title: "手动部署 Kubernetes v1.30 集群（kubeadm 方式）"
 date: 2026-08-07T13:52:00+08:00
 draft: false
 categories: ["Kubernetes", "运维部署"]
-tags: ["kubernetes", "kubeadm", "containerd", "calico", "v1.30", "集群部署"]
+tags: ["Kubernetes", "kubeadm", "containerd", "calico", "v1.30", "集群部署"]
+showToc: true
+TocOpen: true
 ---
 
 规划如下：
@@ -260,11 +262,9 @@ kind: KubeProxyConfiguration
 
 mode: "ipvs"  # 将原来的"iptables"改为"ipvs"
 
-```bash
 ipvs:
+  scheduler: "rr"  # 负载均衡算法，可选 rr|wrr|lc
 ```
-
-scheduler: "rr"  # 负载均衡算法，可选rr|wrr|lc
 
 
 ## 3. 强制重启 kube-proxy Pods
