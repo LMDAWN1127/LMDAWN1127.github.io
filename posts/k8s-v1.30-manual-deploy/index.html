@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html lang="zh" dir="auto" data-theme="auto">
 
-<head><meta charset="utf-8">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="robots" content="index, follow">
 <title>手动部署 Kubernetes v1.30 集群（kubeadm 方式） | DAWN&#39;s Blog</title>
-<meta name="keywords" content="Kubernetes, kubeadm, containerd, calico, v1.30, 集群部署">
-<meta name="description" content="规划如下：
+<meta name="keywords" content="kubernetes, kubeadm, containerd, calico, v1.30, 集群部署">
+<meta name="description" content="Toc: true
+TocOpen: true
+规划如下：
 master节点：   计算机名： master   IP地址：192.168.8.30
 worker01节点： 计算机名： node1   IP地址： 192.168.8.31
 worker02节点： 计算机名： node2   IP地址： 192.168.8.32
@@ -72,19 +74,17 @@ EOF
 4. 安装容器运行时（Containerd）
 Kubernetes v1.30 推荐使用 Containerd 作为容器运行时：">
 <meta name="author" content="DAWN">
-<link rel="canonical" href="https://LMDAWN1127.github.io/posts/k8s-v1.30-manual-deploy/">
+<link rel="canonical" href="http://192.168.100.30:1313/posts/k8s-v1.30-manual-deploy/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.4bf808bff57bddc46d61c8ae060b00400fc679ab876e37243b11bd3f832f2958.css" integrity="sha256-S/gIv/V73cRtYciuBgsAQA/GeauHbjckOxG9P4MvKVg=" rel="preload stylesheet" as="style">
-<link rel="icon" href="https://LMDAWN1127.github.io/images/DAWN.jpg">
-<link rel="icon" type="image/png" sizes="16x16" href="https://LMDAWN1127.github.io/favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="https://LMDAWN1127.github.io/favicon-32x32.png">
-<link rel="apple-touch-icon" href="https://LMDAWN1127.github.io/apple-touch-icon.png">
-<link rel="mask-icon" href="https://LMDAWN1127.github.io/safari-pinned-tab.svg">
+<link rel="icon" href="http://192.168.100.30:1313/images/DAWN.jpg">
+<link rel="icon" type="image/png" sizes="16x16" href="http://192.168.100.30:1313/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://192.168.100.30:1313/favicon-32x32.png">
+<link rel="apple-touch-icon" href="http://192.168.100.30:1313/apple-touch-icon.png">
+<link rel="mask-icon" href="http://192.168.100.30:1313/safari-pinned-tab.svg">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
-<link rel="alternate" hreflang="zh" href="https://LMDAWN1127.github.io/posts/k8s-v1.30-manual-deploy/">
-<link rel="alternate" hreflang="en" href="https://LMDAWN1127.github.io/en/posts/k8s-v1.30-manual-deploy/">
-<link rel="alternate" hreflang="ko" href="https://LMDAWN1127.github.io/ko/posts/k8s-v1.30-manual-deploy/">
-<link rel="alternate" hreflang="ja" href="https://LMDAWN1127.github.io/ja/posts/k8s-v1.30-manual-deploy/">
+<link rel="alternate" hreflang="zh" href="http://192.168.100.30:1313/posts/k8s-v1.30-manual-deploy/">
+<link rel="alternate" hreflang="en" href="http://192.168.100.30:1313/en/posts/k8s-v1.30-manual-deploy/">
 <noscript>
     <style>
         #theme-toggle,
@@ -130,11 +130,11 @@ Kubernetes v1.30 推荐使用 Containerd 作为容器运行时：">
         document.querySelector("html").dataset.theme = 'light';
     }
 
-</script><link rel="stylesheet" href='https://LMDAWN1127.github.io/css/custom.css'>
-<meta property="og:url" content="https://LMDAWN1127.github.io/posts/k8s-v1.30-manual-deploy/">
+</script><link rel="stylesheet" href='http://192.168.100.30:1313/css/custom.css'>
+<meta property="og:url" content="http://192.168.100.30:1313/posts/k8s-v1.30-manual-deploy/">
   <meta property="og:site_name" content="DAWN&#39;s Blog">
   <meta property="og:title" content="手动部署 Kubernetes v1.30 集群（kubeadm 方式）">
-  <meta property="og:description" content="规划如下：
+  <meta property="og:description" content="Toc: true TocOpen: true 规划如下：
 master节点： 计算机名： master IP地址：192.168.8.30
 worker01节点： 计算机名： node1 IP地址： 192.168.8.31
 worker02节点： 计算机名： node2 IP地址： 192.168.8.32
@@ -151,12 +151,12 @@ worker02节点： 计算机名： node2 IP地址： 192.168.8.32
     <meta property="article:tag" content="Calico">
     <meta property="article:tag" content="V1.30">
     <meta property="article:tag" content="集群部署">
-      <meta property="og:image" content="https://LMDAWN1127.github.io/images/DAWN.jpg">
+      <meta property="og:image" content="http://192.168.100.30:1313/images/DAWN.jpg">
 
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:image" content="https://LMDAWN1127.github.io/images/DAWN.jpg">
+  <meta name="twitter:image" content="http://192.168.100.30:1313/images/DAWN.jpg">
   <meta name="twitter:title" content="手动部署 Kubernetes v1.30 集群（kubeadm 方式）">
-  <meta name="twitter:description" content="规划如下：
+  <meta name="twitter:description" content="Toc: true TocOpen: true 规划如下：
 master节点： 计算机名： master IP地址：192.168.8.30
 worker01节点： 计算机名： node1 IP地址： 192.168.8.31
 worker02节点： 计算机名： node2 IP地址： 192.168.8.32
@@ -173,13 +173,13 @@ worker02节点： 计算机名： node2 IP地址： 192.168.8.32
       "@type": "ListItem",
       "position":  1 ,
       "name": "Posts",
-      "item": "https://LMDAWN1127.github.io/posts/"
+      "item": "http://192.168.100.30:1313/posts/"
     }, 
     {
       "@type": "ListItem",
       "position":  2 ,
       "name": "手动部署 Kubernetes v1.30 集群（kubeadm 方式）",
-      "item": "https://LMDAWN1127.github.io/posts/k8s-v1.30-manual-deploy/"
+      "item": "http://192.168.100.30:1313/posts/k8s-v1.30-manual-deploy/"
     }
   ]
 }
@@ -190,14 +190,14 @@ worker02节点： 计算机名： node2 IP地址： 192.168.8.32
   "@type": "BlogPosting",
   "headline": "手动部署 Kubernetes v1.30 集群（kubeadm 方式）",
   "name": "手动部署 Kubernetes v1.30 集群（kubeadm 方式）",
-  "description": "规划如下：\nmaster节点： 计算机名： master IP地址：192.168.8.30\nworker01节点： 计算机名： node1 IP地址： 192.168.8.31\nworker02节点： 计算机名： node2 IP地址： 192.168.8.32\n在三个节点上均完成以下步骤，并且保证三个节点时间均一致。\n1. 关闭防火墙和SELinux 1 2 3 4 [root@master ~]# systemctl disable firewalld.service --now [root@master ~]# vim /etc/selinux/config SELINUX=disabled [root@master ~]# setenforce 0 2. 关闭swap 1 2 [root@master ~]#sed -i \u0026#39;/swap/s/^/#/\u0026#39; /etc/fstab [root@master ~]# swapoff -a 3. 设置系统参数，加载内核模块 1 2 3 4 5 6 7 8 9 10 11 12 [root@master ~]# cat \u0026gt; /etc/modules-load.d/k8s.conf \u0026lt;\u0026lt; EOF overlay br_netfilter EOF [root@master ~]#modprobe overlay [root@master ~]#modprobe br_netfilter [root@master ~]# cat \u0026gt; /etc/sysctl.d/k8s.conf \u0026lt;\u0026lt; EOF net.bridge.bridge-nf-call-iptables = 1 net.bridge.bridge-nf-call-ip6tables = 1 net.ipv4.ip_forward = 1 EOF [root@master ~]# sysctl --system 4. 安装容器运行时（Containerd） Kubernetes v1.30 推荐使用 Containerd 作为容器运行时：\n",
+  "description": "Toc: true TocOpen: true 规划如下：\nmaster节点： 计算机名： master IP地址：192.168.8.30\nworker01节点： 计算机名： node1 IP地址： 192.168.8.31\nworker02节点： 计算机名： node2 IP地址： 192.168.8.32\n在三个节点上均完成以下步骤，并且保证三个节点时间均一致。\n1. 关闭防火墙和SELinux 1 2 3 4 [root@master ~]# systemctl disable firewalld.service --now [root@master ~]# vim /etc/selinux/config SELINUX=disabled [root@master ~]# setenforce 0 2. 关闭swap 1 2 [root@master ~]#sed -i \u0026#39;/swap/s/^/#/\u0026#39; /etc/fstab [root@master ~]# swapoff -a 3. 设置系统参数，加载内核模块 1 2 3 4 5 6 7 8 9 10 11 12 [root@master ~]# cat \u0026gt; /etc/modules-load.d/k8s.conf \u0026lt;\u0026lt; EOF overlay br_netfilter EOF [root@master ~]#modprobe overlay [root@master ~]#modprobe br_netfilter [root@master ~]# cat \u0026gt; /etc/sysctl.d/k8s.conf \u0026lt;\u0026lt; EOF net.bridge.bridge-nf-call-iptables = 1 net.bridge.bridge-nf-call-ip6tables = 1 net.ipv4.ip_forward = 1 EOF [root@master ~]# sysctl --system 4. 安装容器运行时（Containerd） Kubernetes v1.30 推荐使用 Containerd 作为容器运行时：\n",
   "keywords": [
-    "Kubernetes", "kubeadm", "containerd", "calico", "v1.30", "集群部署"
+    "kubernetes", "kubeadm", "containerd", "calico", "v1.30", "集群部署"
   ],
-  "articleBody": "规划如下：\nmaster节点： 计算机名： master IP地址：192.168.8.30\nworker01节点： 计算机名： node1 IP地址： 192.168.8.31\nworker02节点： 计算机名： node2 IP地址： 192.168.8.32\n在三个节点上均完成以下步骤，并且保证三个节点时间均一致。\n1. 关闭防火墙和SELinux 1 2 3 4 [root@master ~]# systemctl disable firewalld.service --now [root@master ~]# vim /etc/selinux/config SELINUX=disabled [root@master ~]# setenforce 0 2. 关闭swap 1 2 [root@master ~]#sed -i '/swap/s/^/#/' /etc/fstab [root@master ~]# swapoff -a 3. 设置系统参数，加载内核模块 1 2 3 4 5 6 7 8 9 10 11 12 [root@master ~]# cat \u003e /etc/modules-load.d/k8s.conf \u003c\u003c EOF overlay br_netfilter EOF [root@master ~]#modprobe overlay [root@master ~]#modprobe br_netfilter [root@master ~]# cat \u003e /etc/sysctl.d/k8s.conf \u003c\u003c EOF net.bridge.bridge-nf-call-iptables = 1 net.bridge.bridge-nf-call-ip6tables = 1 net.ipv4.ip_forward = 1 EOF [root@master ~]# sysctl --system 4. 安装容器运行时（Containerd） Kubernetes v1.30 推荐使用 Containerd 作为容器运行时：\n1 [root@master ~]# yum -y remove runc 删除系统自带的yum仓库文件\n1 [root@master ~]# rm -rf /etc/yum.repos.d/Cent*.repo 配置本地yum仓库\n1 2 3 4 5 6 7 8 9 10 11 12 [root@master ~]# mount /dev/cdrom /media/ [root@master ~]# cat /etc/fstab |grep iso9660 /dev/cdrom\t/media\tiso9660 defaults 0 0 [root@master ~]# cat /etc/yum.repos.d/dvd.repo [BaseOS] name=BaseOS baseurl=file:///media/BaseOS gpgcheck=0 [AppStream] name=AppStream baseurl=file:///media/AppStream gpgcheck=0 配置Containerd\n1 2 [root@master ~]#yum install -y yum-utils [root@master ~]#yum-config-manager --add-repo https://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo 安装containerd.io\n1 2 3 4 5 6 7 8 9 10 [root@master ~]#yum install -y containerd.io # 生成并修改配置文件 [root@master ~]#mkdir -p /etc/containerd [root@master ~]#containerd config default \u003e /etc/containerd/config.toml # 修改配置使用systemd cgroup驱动 #sed -i 's/SystemdCgroup = false/SystemdCgroup = true/g' /etc/containerd/config.toml # 配置镜像加速（可选） #sed -i 's|registry.k8s.io|registry.aliyuncs.com/google_containers|g' /etc/containerd/config.toml # 启动并设置开机自启 #systemctl enable --now containerd 5. 安装和配置kubernetes 1 2 3 4 5 6 [root@master yum.repos.d]# cat kubernetes.repo [kubernetes] name=Kubernetes baseurl=https://mirrors.aliyun.com/kubernetes-new/core/stable/v1.30/rpm/ enabled=1 gpgcheck=1 gpgkey=https://mirrors.aliyun.com/kubernetes-new/core/stable/v1.30/rpm/repodata/repomd.xml.key\n安装指定版本的kubernetes组件\n1 2 3 [root@master ~]#yum install -y kubelet-1.30.0 kubeadm-1.30.0 kubectl-1.30.0 --disableexcludes=kubernetes # 启动kubelet [root@master ~]#systemctl enable --now kubelet 6. 初始化kubernetes 注意：当所有的节点完成以上配置后，仅需在master节点上执行以下步骤\n1 2 3 4 5 [root@master ~]# kubeadm init --pod-network-cidr=10.244.0.0/16 --service-cidr=172.16.0.0/16 --image-repository registry.aliyuncs.com/google_containers --kubernetes-version v1.30.0 --control-plane-endpoint=\"192.168.8.30:6443\" --upload-certs # 配置kubectl [root@master ~]#mkdir -p $HOME/.kube [root@master ~]#cp -i /etc/kubernetes/admin.conf $HOME/.kube/config [root@master ~]#chown $(id -u):$(id -g) $HOME/.kube/config 7. 将worker节点加入kubernetes集群 按照以下命令在worker节点上执行，注意：不同的节点token和ca证书可能都会不同，请根据自己系统的提示执行，证书也可能会过期，如果已经过期，可以执行kubeadm token create –print-join-command重新生成\n1 2 [root@node1 ~]# kubeadm join 192.168.8.30:6443 --token yfjrsi.60lmqgzobp0b8al3 --discovery-token-ca-cert-hash sha256:f4e3c924918545abfd8148e71a377e086d591c6a59856a496b4b33e0987d9c18 [root@node2 ~]# kubeadm join 192.168.8.30:6443 --token yfjrsi.60lmqgzobp0b8al3 --discovery-token-ca-cert-hash sha256:f4e3c924918545abfd8148e71a377e086d591c6a59856a496b4b33e0987d9c18 8. 在master节点上安装calico网络插件 1 2 # 安装Calico网络插件 [root@master ~]#kubectl apply -f https://raw.githubusercontent.com/projectcalico/calico/v3.26.1/manifests/calico.yaml 备注：由于众所周知的原因，可能会出现无法下载calico镜像的问题\n我重新修改了该文件，请下载到master节点上，执行该文件即可\n文件已上传至百度网盘，下载链接：https://pan.baidu.com/s/1BPCFxv0kE0KWb04Qsgy71g （提取码：s44k）\n1 [root@master ~]#kubectl apply -f /root/calico-ucloud.yaml 安装完成后，执行\n1 2 3 4 5 [root@master ~]# kubectl get nodes NAME STATUS ROLES AGE VERSION master Ready control-plane 65m v1.30.13 node1 Ready 62m v1.30.0 node2 Ready 62m v1.30.0 如果看到以上结果，表示kubernetes已经安装完成。\n9. 扩展内容 在各个节点上执行以下命令\n1 2 3 4 5 kubectl completion bash \u003e /etc/bash_completion.d/kubectl source /etc/bash_completion.d/kubectl vim /root/.bashrc alias docker='crictl' source /root/.bashrc 当如果执行#docker images，报错情况：\nk8s出现以下提示，如何解决\nWARN[0000] image connect using default endpoints: [unix:///run/containerd/containerd.sock unix:///run/crio/crio.sock unix:///var/run/cri-dockerd.sock]. As the default settings are now deprecated, you should set the endpoint instead.\n这个警告提示表明你使用的容器运行时客户端（如 crictl 或 kubelet）正在使用默认的端点配置，而这些默认配置已被弃用，需要显式指定端点。以下是解决此问题的详细步骤：\n1 2 3 4 5 6 7 cat \u003e /etc/crictl.yaml \u003c\u003c EOF runtime-endpoint: unix:///run/containerd/containerd.sock # 根据你的容器运行时选择 image-endpoint: unix:///run/containerd/containerd.sock timeout: 10 debug: false pull-image-on-create: false EOF 说明：\n若使用 Containerd，端点为 unix:///run/containerd/containerd.sock。\n若使用 CRI-O，端点为 unix:///run/crio/crio.sock。\n备注： 可选\n如果手动安装kubernetes，默认使用的是iptables转发数据，如果大规模的场景，则建议修改为ipvs模式，如果需要在安装完成后，修改为ipvs模式\n1. 在所有的节点上安装ipvsadm软件包 2. 在所有节点上加载模块 1 2 3 4 5 6 7 cat \u003e /etc/modules-load.d/ipvs.conf \u003c\u003c EOF ip_vs ip_vs_rr ip_vs_wrr ip_vs_sh nf_conntrack EOF 2. 编辑kube-proxy ConfigMap 1 kubectl edit cm kube-proxy -n kube-system 在打开的编辑器中，找到并修改以下部分：\n1 2 3 4 5 6 7 apiVersion: kubeproxy.config.k8s.io/v1alpha1 kind: KubeProxyConfiguration mode: \"ipvs\" # 将原来的\"iptables\"改为\"ipvs\" ipvs: scheduler: \"rr\" # 负载均衡算法，可选 rr|wrr|lc 3. 强制重启 kube-proxy Pods 删除所有kube-proxy Pod，触发重建\n1 #kubectl delete pods -n kube-system -l k8s-app=kube-proxy 4. 验证新 Pod 是否正常运行： 1 2 #kubectl get pods -n kube-system -l k8s-app=kube-proxy # 所有Pod状态应为Running 5. 验证 IPVS 配置生效 1 2 3 4 5 [root@master ~]# ipvsadm -L -n TCP 192.168.8.30:30080 rr -\u003e 10.244.104.3:80 Masq 1 0 0 -\u003e 10.244.104.4:80 Masq 1 0 0 -\u003e 10.244.166.132:80 Masq 1 0 0 ",
-  "wordCount" : "583",
+  "articleBody": "Toc: true TocOpen: true 规划如下：\nmaster节点： 计算机名： master IP地址：192.168.8.30\nworker01节点： 计算机名： node1 IP地址： 192.168.8.31\nworker02节点： 计算机名： node2 IP地址： 192.168.8.32\n在三个节点上均完成以下步骤，并且保证三个节点时间均一致。\n1. 关闭防火墙和SELinux 1 2 3 4 [root@master ~]# systemctl disable firewalld.service --now [root@master ~]# vim /etc/selinux/config SELINUX=disabled [root@master ~]# setenforce 0 2. 关闭swap 1 2 [root@master ~]#sed -i '/swap/s/^/#/' /etc/fstab [root@master ~]# swapoff -a 3. 设置系统参数，加载内核模块 1 2 3 4 5 6 7 8 9 10 11 12 [root@master ~]# cat \u003e /etc/modules-load.d/k8s.conf \u003c\u003c EOF overlay br_netfilter EOF [root@master ~]#modprobe overlay [root@master ~]#modprobe br_netfilter [root@master ~]# cat \u003e /etc/sysctl.d/k8s.conf \u003c\u003c EOF net.bridge.bridge-nf-call-iptables = 1 net.bridge.bridge-nf-call-ip6tables = 1 net.ipv4.ip_forward = 1 EOF [root@master ~]# sysctl --system 4. 安装容器运行时（Containerd） Kubernetes v1.30 推荐使用 Containerd 作为容器运行时：\n1 [root@master ~]# yum -y remove runc 删除系统自带的yum仓库文件\n1 [root@master ~]# rm -rf /etc/yum.repos.d/Cent*.repo 配置本地yum仓库\n1 2 3 4 5 6 7 8 9 10 11 12 [root@master ~]# mount /dev/cdrom /media/ [root@master ~]# cat /etc/fstab |grep iso9660 /dev/cdrom\t/media\tiso9660 defaults 0 0 [root@master ~]# cat /etc/yum.repos.d/dvd.repo [BaseOS] name=BaseOS baseurl=file:///media/BaseOS gpgcheck=0 [AppStream] name=AppStream baseurl=file:///media/AppStream gpgcheck=0 配置Containerd\n1 2 [root@master ~]#yum install -y yum-utils [root@master ~]#yum-config-manager --add-repo https://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo 安装containerd.io\n1 2 3 4 5 6 7 8 9 10 [root@master ~]#yum install -y containerd.io # 生成并修改配置文件 [root@master ~]#mkdir -p /etc/containerd [root@master ~]#containerd config default \u003e /etc/containerd/config.toml # 修改配置使用systemd cgroup驱动 #sed -i 's/SystemdCgroup = false/SystemdCgroup = true/g' /etc/containerd/config.toml # 配置镜像加速（可选） #sed -i 's|registry.k8s.io|registry.aliyuncs.com/google_containers|g' /etc/containerd/config.toml # 启动并设置开机自启 #systemctl enable --now containerd 5. 安装和配置kubernetes 1 2 3 4 5 6 7 [root@master yum.repos.d]# cat kubernetes.repo [kubernetes] name=Kubernetes baseurl=https://mirrors.aliyun.com/kubernetes-new/core/stable/v1.30/rpm/ enabled=1 gpgcheck=1 gpgkey=https://mirrors.aliyun.com/kubernetes-new/core/stable/v1.30/rpm/repodata/repomd.xml.key 安装指定版本的kubernetes组件\n1 2 3 [root@master ~]#yum install -y kubelet-1.30.0 kubeadm-1.30.0 kubectl-1.30.0 --disableexcludes=kubernetes # 启动kubelet [root@master ~]#systemctl enable --now kubelet 6. 初始化kubernetes 注意：当所有的节点完成以上配置后，仅需在master节点上执行以下步骤\n1 2 3 4 5 [root@master ~]# kubeadm init --pod-network-cidr=10.244.0.0/16 --service-cidr=172.16.0.0/16 --image-repository registry.aliyuncs.com/google_containers --kubernetes-version v1.30.0 --control-plane-endpoint=\"192.168.8.30:6443\" --upload-certs # 配置kubectl [root@master ~]#mkdir -p $HOME/.kube [root@master ~]#cp -i /etc/kubernetes/admin.conf $HOME/.kube/config [root@master ~]#chown $(id -u):$(id -g) $HOME/.kube/config 7. 将worker节点加入kubernetes集群 按照以下命令在worker节点上执行，注意：不同的节点token和ca证书可能都会不同，请根据自己系统的提示执行，证书也可能会过期，如果已经过期，可以执行kubeadm token create –print-join-command重新生成\n1 2 [root@node1 ~]# kubeadm join 192.168.8.30:6443 --token yfjrsi.60lmqgzobp0b8al3 --discovery-token-ca-cert-hash sha256:f4e3c924918545abfd8148e71a377e086d591c6a59856a496b4b33e0987d9c18 [root@node2 ~]# kubeadm join 192.168.8.30:6443 --token yfjrsi.60lmqgzobp0b8al3 --discovery-token-ca-cert-hash sha256:f4e3c924918545abfd8148e71a377e086d591c6a59856a496b4b33e0987d9c18 8. 在master节点上安装calico网络插件 1 2 # 安装Calico网络插件 [root@master ~]#kubectl apply -f https://raw.githubusercontent.com/projectcalico/calico/v3.26.1/manifests/calico.yaml 备注：由于众所周知的原因，可能会出现无法下载calico镜像的问题\n我重新修改了该文件，请下载到master节点上，执行该文件即可\n文件已上传至百度网盘，下载链接：https://pan.baidu.com/s/1BPCFxv0kE0KWb04Qsgy71g （提取码：s44k）\n1 [root@master ~]#kubectl apply -f /root/calico-ucloud.yaml 安装完成后，执行\n1 2 3 4 5 [root@master ~]# kubectl get nodes NAME STATUS ROLES AGE VERSION master Ready control-plane 65m v1.30.13 node1 Ready 62m v1.30.0 node2 Ready 62m v1.30.0 如果看到以上结果，表示kubernetes已经安装完成。\n9. 扩展内容 在各个节点上执行以下命令\n1 2 3 4 5 kubectl completion bash \u003e /etc/bash_completion.d/kubectl source /etc/bash_completion.d/kubectl vim /root/.bashrc alias docker='crictl' source /root/.bashrc 当如果执行#docker images，报错情况：\nk8s出现以下提示，如何解决\nWARN[0000] image connect using default endpoints: [unix:///run/containerd/containerd.sock unix:///run/crio/crio.sock unix:///var/run/cri-dockerd.sock]. As the default settings are now deprecated, you should set the endpoint instead.\n这个警告提示表明你使用的容器运行时客户端（如 crictl 或 kubelet）正在使用默认的端点配置，而这些默认配置已被弃用，需要显式指定端点。以下是解决此问题的详细步骤：\n1 2 3 4 5 6 7 cat \u003e /etc/crictl.yaml \u003c\u003c EOF runtime-endpoint: unix:///run/containerd/containerd.sock # 根据你的容器运行时选择 image-endpoint: unix:///run/containerd/containerd.sock timeout: 10 debug: false pull-image-on-create: false EOF 说明：\n若使用 Containerd，端点为 unix:///run/containerd/containerd.sock。\n若使用 CRI-O，端点为 unix:///run/crio/crio.sock。\n备注： 可选\n如果手动安装kubernetes，默认使用的是iptables转发数据，如果大规模的场景，则建议修改为ipvs模式，如果需要在安装完成后，修改为ipvs模式\n1. 在所有的节点上安装ipvsadm软件包 2. 在所有节点上加载模块 1 2 3 4 5 6 7 cat \u003e /etc/modules-load.d/ipvs.conf \u003c\u003c EOF ip_vs ip_vs_rr ip_vs_wrr ip_vs_sh nf_conntrack EOF 2. 编辑kube-proxy ConfigMap 1 kubectl edit cm kube-proxy -n kube-system 在打开的编辑器中，找到并修改以下部分：\n1 2 3 4 5 6 7 apiVersion: kubeproxy.config.k8s.io/v1alpha1 kind: KubeProxyConfiguration mode: \"ipvs\" # 将原来的\"iptables\"改为\"ipvs\" ipvs: scheduler: \"rr\" # 负载均衡算法，可选 rr|wrr|lc 3. 强制重启 kube-proxy Pods 删除所有kube-proxy Pod，触发重建\n1 #kubectl delete pods -n kube-system -l k8s-app=kube-proxy 4. 验证新 Pod 是否正常运行： 1 2 #kubectl get pods -n kube-system -l k8s-app=kube-proxy # 所有Pod状态应为Running 5. 验证 IPVS 配置生效 1 2 3 [root@master ~]# ipvsadm -L -n TCP 192.168.8.30:30080 rr -\u003e 10.244.104.3:80 Masq 1 0 0 ",
+  "wordCount" : "574",
   "inLanguage": "zh",
-  "image": "https://LMDAWN1127.github.io/images/DAWN.jpg","datePublished": "2026-08-07T13:52:00+08:00",
+  "image": "http://192.168.100.30:1313/images/DAWN.jpg","datePublished": "2026-08-07T13:52:00+08:00",
   "dateModified": "2026-08-07T13:52:00+08:00",
   "author":{
     "@type": "Person",
@@ -205,14 +205,14 @@ worker02节点： 计算机名： node2 IP地址： 192.168.8.32
   },
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "https://LMDAWN1127.github.io/posts/k8s-v1.30-manual-deploy/"
+    "@id": "http://192.168.100.30:1313/posts/k8s-v1.30-manual-deploy/"
   },
   "publisher": {
     "@type": "Organization",
     "name": "DAWN's Blog",
     "logo": {
       "@type": "ImageObject",
-      "url": "https://LMDAWN1127.github.io/images/DAWN.jpg"
+      "url": "http://192.168.100.30:1313/images/DAWN.jpg"
     }
   }
 }
@@ -222,8 +222,8 @@ worker02节点： 计算机名： node2 IP地址： 192.168.8.32
     <header class="header">
     <nav class="header-nav">
         <div class="logo">
-            <a href="https://LMDAWN1127.github.io/" accesskey="h" title="DAWN&#39;s Blog (Alt + H)">
-                <img src="https://LMDAWN1127.github.io/images/DAWN.jpg" alt="" aria-label="logo"
+            <a href="http://192.168.100.30:1313/" accesskey="h" title="DAWN&#39;s Blog (Alt + H)">
+                <img src="http://192.168.100.30:1313/images/DAWN.jpg" alt="" aria-label="logo"
                     height="38">DAWN&#39;s Blog</a>
             <div class="logo-switches">
                 <button id="theme-toggle" class="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
@@ -248,15 +248,15 @@ worker02节点： 计算机名： node2 IP地址： 192.168.8.32
                 </button><span class="nav-sep">|</span>
                     <ul class="lang-menu">
                         <li>
-                            <a href="https://LMDAWN1127.github.io/en/" title="English"
+                            <a href="http://192.168.100.30:1313/en/" title="English"
                                 aria-label="English">En</a>
                         </li>
                         <li>
-                            <a href="https://LMDAWN1127.github.io/ko/" title="한국어"
+                            <a href="http://192.168.100.30:1313/ko/" title="한국어"
                                 aria-label="한국어">Ko</a>
                         </li>
                         <li>
-                            <a href="https://LMDAWN1127.github.io/ja/" title="日本語"
+                            <a href="http://192.168.100.30:1313/ja/" title="日本語"
                                 aria-label="日本語">Ja</a>
                         </li>
                     </ul>
@@ -264,7 +264,7 @@ worker02节点： 计算机名： node2 IP地址： 192.168.8.32
         </div>
         <ul id="menu" class="menu">
             <li>
-                <a href="https://LMDAWN1127.github.io/archives/" title="归档">
+                <a href="http://192.168.100.30:1313/archives/" title="归档">
                     <span>归档</span>
                 </a>
             </li>
@@ -282,7 +282,9 @@ worker02节点： 计算机名： node2 IP地址： 192.168.8.32
 
   <div class="post-layout">
     <div class="post-content-wrapper"> 
-      <div class="post-content md-content"><p>规划如下：</p>
+      <div class="post-content md-content"><h2 id="tocopen-true">Toc: true
+TocOpen: true</h2>
+<p>规划如下：</p>
 <p>master节点：   计算机名： master   IP地址：192.168.8.30</p>
 <p>worker01节点： 计算机名： node1   IP地址： 192.168.8.31</p>
 <p>worker02节点： 计算机名： node2   IP地址： 192.168.8.32</p>
@@ -441,6 +443,7 @@ worker02节点： 计算机名： node2 IP地址： 192.168.8.32
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
 <pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master yum.repos.d<span style="color:#f92672">]</span><span style="color:#75715e"># cat kubernetes.repo </span>
@@ -449,10 +452,10 @@ worker02节点： 计算机名： node2 IP地址： 192.168.8.32
 </span></span><span style="display:flex;"><span>baseurl<span style="color:#f92672">=</span>https://mirrors.aliyun.com/kubernetes-new/core/stable/v1.30/rpm/
 </span></span><span style="display:flex;"><span>enabled<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>
 </span></span><span style="display:flex;"><span>gpgcheck<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>gpgkey<span style="color:#f92672">=</span>https://mirrors.aliyun.com/kubernetes-new/core/stable/v1.30/rpm/repodata/repomd.xml.key
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>gpgkey=https://mirrors.aliyun.com/kubernetes-new/core/stable/v1.30/rpm/repodata/repomd.xml.key</p>
-<p>安装指定版本的kubernetes组件</p>
+</div><p>安装指定版本的kubernetes组件</p>
 <div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -663,15 +666,11 @@ worker02节点： 计算机名： node2 IP地址： 192.168.8.32
 <pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
 <pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master ~<span style="color:#f92672">]</span><span style="color:#75715e"># ipvsadm -L -n</span>
 </span></span><span style="display:flex;"><span>TCP  192.168.8.30:30080 rr
-</span></span><span style="display:flex;"><span>  -&gt; 10.244.104.3:80              Masq    <span style="color:#ae81ff">1</span>      <span style="color:#ae81ff">0</span>          <span style="color:#ae81ff">0</span>         
-</span></span><span style="display:flex;"><span>  -&gt; 10.244.104.4:80              Masq    <span style="color:#ae81ff">1</span>      <span style="color:#ae81ff">0</span>          <span style="color:#ae81ff">0</span>         
-</span></span><span style="display:flex;"><span>  -&gt; 10.244.166.132:80            Masq    <span style="color:#ae81ff">1</span>      <span style="color:#ae81ff">0</span>          <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>  -&gt; 10.244.104.3:80              Masq    <span style="color:#ae81ff">1</span>      <span style="color:#ae81ff">0</span>          <span style="color:#ae81ff">0</span>    
 </span></span></code></pre></td></tr></table>
 </div>
 </div>
