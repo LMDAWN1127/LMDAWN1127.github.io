@@ -115,9 +115,8 @@ name=Kubernetes
 baseurl=https://mirrors.aliyun.com/kubernetes-new/core/stable/v1.30/rpm/
 enabled=1
 gpgcheck=1
-```
-
 gpgkey=https://mirrors.aliyun.com/kubernetes-new/core/stable/v1.30/rpm/repodata/repomd.xml.key
+```
 
 Install the specified version of the Kubernetes components:
 

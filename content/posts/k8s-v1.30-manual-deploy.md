@@ -119,9 +119,8 @@ name=Kubernetes
 baseurl=https://mirrors.aliyun.com/kubernetes-new/core/stable/v1.30/rpm/
 enabled=1
 gpgcheck=1
-```
-
 gpgkey=https://mirrors.aliyun.com/kubernetes-new/core/stable/v1.30/rpm/repodata/repomd.xml.key
+```
 
 
 安装指定版本的kubernetes组件
