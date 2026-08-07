@@ -167,6 +167,8 @@ gpgkey=https://mirrors.aliyun.com/kubernetes-new/core/stable/v1.30/rpm/repodata/
 
 我重新修改了该文件，请下载到master节点上，执行该文件即可
 
+> 文件已上传至百度网盘，下载链接：https://pan.baidu.com/s/1BPCFxv0kE0KWb04Qsgy71g （提取码：s44k）
+
 ```bash
 [root@master ~]#kubectl apply -f  /root/calico-ucloud.yaml
 ```

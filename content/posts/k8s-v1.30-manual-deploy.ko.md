@@ -163,6 +163,8 @@ gpgkey=https://mirrors.aliyun.com/kubernetes-new/core/stable/v1.30/rpm/repodata/
 
 해당 매니페스트 파일을 수정해 두었으니, master 노드에 다운로드하여 적용하세요：
 
+> 이 파일은 Baidu Netdisk(百度网盘)에 업로드되어 있습니다. 다운로드 링크: https://pan.baidu.com/s/1BPCFxv0kE0KWb04Qsgy71g (추출 코드: s44k)
+
 ```bash
 [root@master ~]# kubectl apply -f /root/calico-ucloud.yaml
 ```

@@ -159,6 +159,8 @@ Note: For well-known reasons, you may encounter issues downloading the Calico im
 
 I have revised that manifest file — download it to the master node and apply it:
 
+> The file is on Baidu Netdisk. Download link: https://pan.baidu.com/s/1BPCFxv0kE0KWb04Qsgy71g (extraction code: s44k)
+
 ```bash
 [root@master ~]# kubectl apply -f /root/calico-ucloud.yaml
 ```
