@@ -21,7 +21,7 @@
       <description>完整记录 Harbor 企业级镜像仓库的主备部署过程，涵盖 HTTP/HTTPS 双模式安装、自签名证书配置、跨主机主备复制等核心运维技能。</description>
     </item>
     <item>
-      <title>Zabbix 安装部署（CentOS 7）</title>
+      <title>Zabbix 安装部署</title>
       <link>https://LMDAWN1127.github.io/posts/zabbix-install/</link>
       <pubDate>Wed, 23 Sep 2026 01:52:00 +0800</pubDate>
       <guid>https://LMDAWN1127.github.io/posts/zabbix-install/</guid>
