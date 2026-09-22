@@ -1,5 +1,5 @@
 ---
-title: "Zabbix 安装部署（CentOS 7）"
+title: "Zabbix 安装部署"
 date: 2026-09-23T01:52:00+08:00
 draft: false
 categories: ["Zabbix", "监控运维"]
