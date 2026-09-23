@@ -11,7 +11,7 @@
     </image>
     <generator>Hugo</generator>
     <language>ja</language>
-    <lastBuildDate>Fri, 07 Aug 2026 13:52:00 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 23 Sep 2026 13:21:00 +0800</lastBuildDate>
     <atom:link href="https://LMDAWN1127.github.io/ja/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Harbor アクティブスタンバイデプロイ：インストールからHTTPS・レプリケーションまで</title>
@@ -19,6 +19,20 @@
       <pubDate>Tue, 04 Aug 2026 00:00:00 +0000</pubDate>
       <guid>https://LMDAWN1127.github.io/ja/posts/harbor-master-slave/</guid>
       <description>HarborエンタープライズDockerレジストリのアクティブスタンバイアーキテクチャ、HTTP/HTTPSモード、自己署名証明書、クロスホストレプリケーションを完全にカバーするデプロイガイドです。</description>
+    </item>
+    <item>
+      <title>Zabbix でサーバー情報を監視する</title>
+      <link>https://LMDAWN1127.github.io/ja/posts/zabbix-monitor-server/</link>
+      <pubDate>Wed, 23 Sep 2026 13:21:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/ja/posts/zabbix-monitor-server/</guid>
+      <description>対象サーバー (web02, 11.0.1.8) に Zabbix エージェントを導入し、Zabbix サーバーへ紐づけて、Web UI から監視を開始する手順です。</description>
+    </item>
+    <item>
+      <title>Zabbix のインストールとデプロイ</title>
+      <link>https://LMDAWN1127.github.io/ja/posts/zabbix-install/</link>
+      <pubDate>Wed, 23 Sep 2026 01:52:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/ja/posts/zabbix-install/</guid>
+      <description>CentOS 7 に Zabbix 5.0 をインストールする手順を解説。リポジトリ設定、サーバー/エージェント/フロントエンドの導入、MariaDB 構築、スキーマのインポート、Web UI の中国語化とフォント設定まで。</description>
     </item>
     <item>
       <title>Kubernetes v1.30 クラスタを手動デプロイする（kubeadm 方式）</title>

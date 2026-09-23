@@ -11,7 +11,7 @@
     </image>
     <generator>Hugo</generator>
     <language>en</language>
-    <lastBuildDate>Fri, 07 Aug 2026 13:52:00 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 23 Sep 2026 13:21:00 +0800</lastBuildDate>
     <atom:link href="https://LMDAWN1127.github.io/en/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Harbor Active-Standby Deployment: From Installation to HTTPS and Replication</title>
@@ -19,6 +19,20 @@
       <pubDate>Tue, 04 Aug 2026 00:00:00 +0000</pubDate>
       <guid>https://LMDAWN1127.github.io/en/posts/harbor-master-slave/</guid>
       <description>Complete guide to deploying Harbor enterprise Docker registry with active-standby architecture, HTTP/HTTPS modes, self-signed certificates, and cross-host replication.</description>
+    </item>
+    <item>
+      <title>Monitoring Server Information with Zabbix</title>
+      <link>https://LMDAWN1127.github.io/en/posts/zabbix-monitor-server/</link>
+      <pubDate>Wed, 23 Sep 2026 13:21:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/posts/zabbix-monitor-server/</guid>
+      <description>How to deploy the Zabbix agent on a target server (web02, 11.0.1.8), point it at the Zabbix server, and start monitoring it from the Zabbix web UI.</description>
+    </item>
+    <item>
+      <title>Installing and Deploying Zabbix</title>
+      <link>https://LMDAWN1127.github.io/en/posts/zabbix-install/</link>
+      <pubDate>Wed, 23 Sep 2026 01:52:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/posts/zabbix-install/</guid>
+      <description>Step-by-step guide to installing Zabbix 5.0 on CentOS 7 — configuring repositories, installing the server/agent/frontend, setting up MariaDB, importing the schema, and switching the web UI to Chinese with a custom font.</description>
     </item>
     <item>
       <title>Manually Deploying a Kubernetes v1.30 Cluster (via kubeadm)</title>

@@ -11,8 +11,50 @@
     </image>
     <generator>Hugo</generator>
     <language>ko</language>
-    <lastBuildDate>Fri, 07 Aug 2026 13:52:00 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 23 Sep 2026 13:21:00 +0800</lastBuildDate>
     <atom:link href="https://LMDAWN1127.github.io/ko/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Zabbix</title>
+      <link>https://LMDAWN1127.github.io/ko/tags/zabbix/</link>
+      <pubDate>Wed, 23 Sep 2026 13:21:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/ko/tags/zabbix/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Zabbix-Agent</title>
+      <link>https://LMDAWN1127.github.io/ko/tags/zabbix-agent/</link>
+      <pubDate>Wed, 23 Sep 2026 13:21:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/ko/tags/zabbix-agent/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>모니터링</title>
+      <link>https://LMDAWN1127.github.io/ko/tags/%EB%AA%A8%EB%8B%88%ED%84%B0%EB%A7%81/</link>
+      <pubDate>Wed, 23 Sep 2026 13:21:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/ko/tags/%EB%AA%A8%EB%8B%88%ED%84%B0%EB%A7%81/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>모니터링설정</title>
+      <link>https://LMDAWN1127.github.io/ko/tags/%EB%AA%A8%EB%8B%88%ED%84%B0%EB%A7%81%EC%84%A4%EC%A0%95/</link>
+      <pubDate>Wed, 23 Sep 2026 13:21:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/ko/tags/%EB%AA%A8%EB%8B%88%ED%84%B0%EB%A7%81%EC%84%A4%EC%A0%95/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>CentOS7</title>
+      <link>https://LMDAWN1127.github.io/ko/tags/centos7/</link>
+      <pubDate>Wed, 23 Sep 2026 01:52:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/ko/tags/centos7/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>설치</title>
+      <link>https://LMDAWN1127.github.io/ko/tags/%EC%84%A4%EC%B9%98/</link>
+      <pubDate>Wed, 23 Sep 2026 01:52:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/ko/tags/%EC%84%A4%EC%B9%98/</guid>
+      <description></description>
+    </item>
     <item>
       <title>Calico</title>
       <link>https://LMDAWN1127.github.io/ko/tags/calico/</link>

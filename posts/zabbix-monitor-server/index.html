@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh" dir="auto" data-theme="auto">
 
-<head><meta charset="utf-8">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="robots" content="index, follow">
@@ -52,16 +52,16 @@ Hostname=web02
 3.zabbix监控web02
 ">
 <meta name="author" content="DAWN">
-<link rel="canonical" href="https://LMDAWN1127.github.io/posts/zabbix-monitor-server/">
+<link rel="canonical" href="http://192.168.100.30:1313/posts/zabbix-monitor-server/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.4bf808bff57bddc46d61c8ae060b00400fc679ab876e37243b11bd3f832f2958.css" integrity="sha256-S/gIv/V73cRtYciuBgsAQA/GeauHbjckOxG9P4MvKVg=" rel="preload stylesheet" as="style">
-<link rel="icon" href="https://LMDAWN1127.github.io/images/DAWN.jpg">
-<link rel="icon" type="image/png" sizes="16x16" href="https://LMDAWN1127.github.io/favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="https://LMDAWN1127.github.io/favicon-32x32.png">
-<link rel="apple-touch-icon" href="https://LMDAWN1127.github.io/apple-touch-icon.png">
-<link rel="mask-icon" href="https://LMDAWN1127.github.io/safari-pinned-tab.svg">
+<link rel="icon" href="http://192.168.100.30:1313/images/DAWN.jpg">
+<link rel="icon" type="image/png" sizes="16x16" href="http://192.168.100.30:1313/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://192.168.100.30:1313/favicon-32x32.png">
+<link rel="apple-touch-icon" href="http://192.168.100.30:1313/apple-touch-icon.png">
+<link rel="mask-icon" href="http://192.168.100.30:1313/safari-pinned-tab.svg">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
-<link rel="alternate" hreflang="zh" href="https://LMDAWN1127.github.io/posts/zabbix-monitor-server/">
+<link rel="alternate" hreflang="zh" href="http://192.168.100.30:1313/posts/zabbix-monitor-server/">
 <noscript>
     <style>
         #theme-toggle,
@@ -107,8 +107,8 @@ Hostname=web02
         document.querySelector("html").dataset.theme = 'light';
     }
 
-</script><link rel="stylesheet" href='https://LMDAWN1127.github.io/css/custom.css'>
-<meta property="og:url" content="https://LMDAWN1127.github.io/posts/zabbix-monitor-server/">
+</script><link rel="stylesheet" href='http://192.168.100.30:1313/css/custom.css'>
+<meta property="og:url" content="http://192.168.100.30:1313/posts/zabbix-monitor-server/">
   <meta property="og:site_name" content="DAWN&#39;s Blog">
   <meta property="og:title" content="Zabbix 监控服务器信息">
   <meta property="og:description" content="1.安装zabbix-agent客户端 准备一台服务器11.0.1.8 1 2 3 4 5 6 7 8 配置仓库: [root@web02 ~]# rpm -Uvh https://repo.zabbix.com/zabbix/5.0/rhel/7/x86_64/zabbix-release-5.0-1.el7.noarch.rpm 将服务端和客户端的yum仓库同步: [root@zabbix ~]#scp /etc/yum.repos.d/CentOS-SCLo-scl.repo root@172.16.1.8:/etc/yum.repos.d/CentOS-SCLo-scl.repo [root@zabbix ~]#scp /etc/yum.repos.d/CentOS-SCLo-scl-rh.repo root@172.16.1.8:/etc/yum.repos.d/CentOS-SCLo-scl-rh.repo [root@zabbix ~]#scp /etc/yum.repos.d/zabbix.repo root@172.16.1.8:/etc/yum.repos.d/zabbix.repo 如果安装提示软件冲突: [root@web02 ~]# yum -y install centos-release-scl 2.配置zabbix客户端服务器信息 启动客户端 1 2 3 4 5 6 [root@web02 ~]# yum -y install zabbix-agent [root@web02 ~]# vim /etc/zabbix/zabbix_agentd.conf Server=172.16.1.71 ServerActive=172.16.1.71 Hostname=web02 [root@web02 ~]# systemctl enable zabbix-agent --now 3.zabbix监控web02">
@@ -121,10 +121,10 @@ Hostname=web02
     <meta property="article:tag" content="监控">
     <meta property="article:tag" content="Zabbix-Agent">
     <meta property="article:tag" content="监控配置">
-      <meta property="og:image" content="https://LMDAWN1127.github.io/images/DAWN.jpg">
+      <meta property="og:image" content="http://192.168.100.30:1313/images/DAWN.jpg">
 
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:image" content="https://LMDAWN1127.github.io/images/DAWN.jpg">
+  <meta name="twitter:image" content="http://192.168.100.30:1313/images/DAWN.jpg">
   <meta name="twitter:title" content="Zabbix 监控服务器信息">
   <meta name="twitter:description" content="1.安装zabbix-agent客户端 准备一台服务器11.0.1.8 1 2 3 4 5 6 7 8 配置仓库: [root@web02 ~]# rpm -Uvh https://repo.zabbix.com/zabbix/5.0/rhel/7/x86_64/zabbix-release-5.0-1.el7.noarch.rpm 将服务端和客户端的yum仓库同步: [root@zabbix ~]#scp /etc/yum.repos.d/CentOS-SCLo-scl.repo root@172.16.1.8:/etc/yum.repos.d/CentOS-SCLo-scl.repo [root@zabbix ~]#scp /etc/yum.repos.d/CentOS-SCLo-scl-rh.repo root@172.16.1.8:/etc/yum.repos.d/CentOS-SCLo-scl-rh.repo [root@zabbix ~]#scp /etc/yum.repos.d/zabbix.repo root@172.16.1.8:/etc/yum.repos.d/zabbix.repo 如果安装提示软件冲突: [root@web02 ~]# yum -y install centos-release-scl 2.配置zabbix客户端服务器信息 启动客户端 1 2 3 4 5 6 [root@web02 ~]# yum -y install zabbix-agent [root@web02 ~]# vim /etc/zabbix/zabbix_agentd.conf Server=172.16.1.71 ServerActive=172.16.1.71 Hostname=web02 [root@web02 ~]# systemctl enable zabbix-agent --now 3.zabbix监控web02">
 
@@ -138,13 +138,13 @@ Hostname=web02
       "@type": "ListItem",
       "position":  1 ,
       "name": "Posts",
-      "item": "https://LMDAWN1127.github.io/posts/"
+      "item": "http://192.168.100.30:1313/posts/"
     }, 
     {
       "@type": "ListItem",
       "position":  2 ,
       "name": "Zabbix 监控服务器信息",
-      "item": "https://LMDAWN1127.github.io/posts/zabbix-monitor-server/"
+      "item": "http://192.168.100.30:1313/posts/zabbix-monitor-server/"
     }
   ]
 }
@@ -162,7 +162,7 @@ Hostname=web02
   "articleBody": "1.安装zabbix-agent客户端 准备一台服务器11.0.1.8 1 2 3 4 5 6 7 8 配置仓库: [root@web02 ~]# rpm -Uvh https://repo.zabbix.com/zabbix/5.0/rhel/7/x86_64/zabbix-release-5.0-1.el7.noarch.rpm 将服务端和客户端的yum仓库同步: [root@zabbix ~]#scp /etc/yum.repos.d/CentOS-SCLo-scl.repo root@172.16.1.8:/etc/yum.repos.d/CentOS-SCLo-scl.repo [root@zabbix ~]#scp /etc/yum.repos.d/CentOS-SCLo-scl-rh.repo root@172.16.1.8:/etc/yum.repos.d/CentOS-SCLo-scl-rh.repo [root@zabbix ~]#scp /etc/yum.repos.d/zabbix.repo root@172.16.1.8:/etc/yum.repos.d/zabbix.repo 如果安装提示软件冲突: [root@web02 ~]# yum -y install centos-release-scl 2.配置zabbix客户端服务器信息 启动客户端 1 2 3 4 5 6 [root@web02 ~]# yum -y install zabbix-agent [root@web02 ~]# vim /etc/zabbix/zabbix_agentd.conf Server=172.16.1.71 ServerActive=172.16.1.71 Hostname=web02 [root@web02 ~]# systemctl enable zabbix-agent --now 3.zabbix监控web02 4.web02服务器完成监控操作 ",
   "wordCount" : "65",
   "inLanguage": "zh",
-  "image": "https://LMDAWN1127.github.io/images/DAWN.jpg","datePublished": "2026-09-23T13:21:00+08:00",
+  "image": "http://192.168.100.30:1313/images/DAWN.jpg","datePublished": "2026-09-23T13:21:00+08:00",
   "dateModified": "2026-09-23T13:21:00+08:00",
   "author":{
     "@type": "Person",
@@ -170,14 +170,14 @@ Hostname=web02
   },
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "https://LMDAWN1127.github.io/posts/zabbix-monitor-server/"
+    "@id": "http://192.168.100.30:1313/posts/zabbix-monitor-server/"
   },
   "publisher": {
     "@type": "Organization",
     "name": "DAWN's Blog",
     "logo": {
       "@type": "ImageObject",
-      "url": "https://LMDAWN1127.github.io/images/DAWN.jpg"
+      "url": "http://192.168.100.30:1313/images/DAWN.jpg"
     }
   }
 }
@@ -187,8 +187,8 @@ Hostname=web02
     <header class="header">
     <nav class="header-nav">
         <div class="logo">
-            <a href="https://LMDAWN1127.github.io/" accesskey="h" title="DAWN&#39;s Blog (Alt + H)">
-                <img src="https://LMDAWN1127.github.io/images/DAWN.jpg" alt="" aria-label="logo"
+            <a href="http://192.168.100.30:1313/" accesskey="h" title="DAWN&#39;s Blog (Alt + H)">
+                <img src="http://192.168.100.30:1313/images/DAWN.jpg" alt="" aria-label="logo"
                     height="38">DAWN&#39;s Blog</a>
             <div class="logo-switches">
                 <button id="theme-toggle" class="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
@@ -213,15 +213,15 @@ Hostname=web02
                 </button><span class="nav-sep">|</span>
                     <ul class="lang-menu">
                         <li>
-                            <a href="https://LMDAWN1127.github.io/en/" title="English"
+                            <a href="http://192.168.100.30:1313/en/" title="English"
                                 aria-label="English">En</a>
                         </li>
                         <li>
-                            <a href="https://LMDAWN1127.github.io/ko/" title="한국어"
+                            <a href="http://192.168.100.30:1313/ko/" title="한국어"
                                 aria-label="한국어">Ko</a>
                         </li>
                         <li>
-                            <a href="https://LMDAWN1127.github.io/ja/" title="日本語"
+                            <a href="http://192.168.100.30:1313/ja/" title="日本語"
                                 aria-label="日本語">Ja</a>
                         </li>
                     </ul>
@@ -229,7 +229,7 @@ Hostname=web02
         </div>
         <ul id="menu" class="menu">
             <li>
-                <a href="https://LMDAWN1127.github.io/archives/" title="归档">
+                <a href="http://192.168.100.30:1313/archives/" title="归档">
                     <span>归档</span>
                 </a>
             </li>
