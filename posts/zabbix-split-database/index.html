@@ -5,54 +5,11 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="robots" content="index, follow">
-<title>Zabbix 监控服务器信息 | DAWN&#39;s Blog</title>
-<meta name="keywords" content="Zabbix, 监控, zabbix-agent, 监控配置">
-<meta name="description" content="1.安装zabbix-agent客户端 准备一台服务器11.0.1.8
-
-
-1
-2
-3
-4
-5
-6
-7
-8
-
-
-配置仓库:
-[root@web02 ~]#  rpm -Uvh https://repo.zabbix.com/zabbix/5.0/rhel/7/x86_64/zabbix-release-5.0-1.el7.noarch.rpm
-将服务端和客户端的yum仓库同步:
-[root@zabbix ~]#scp /etc/yum.repos.d/CentOS-SCLo-scl.repo root@172.16.1.8:/etc/yum.repos.d/CentOS-SCLo-scl.repo
-[root@zabbix ~]#scp /etc/yum.repos.d/CentOS-SCLo-scl-rh.repo root@172.16.1.8:/etc/yum.repos.d/CentOS-SCLo-scl-rh.repo
-[root@zabbix ~]#scp /etc/yum.repos.d/zabbix.repo  root@172.16.1.8:/etc/yum.repos.d/zabbix.repo
-如果安装提示软件冲突:
-[root@web02 ~]# yum -y install centos-release-scl
-
-
-2.配置zabbix客户端服务器信息 启动客户端
-
-
-1
-2
-3
-4
-5
-6
-
-
-[root@web02 ~]# yum -y install zabbix-agent
-[root@web02 ~]# vim /etc/zabbix/zabbix_agentd.conf 
-Server=172.16.1.71
-ServerActive=172.16.1.71
-Hostname=web02
-[root@web02 ~]# systemctl enable zabbix-agent --now
-
-
-3.zabbix监控web02
-">
+<title>拆分数据库 | DAWN&#39;s Blog</title>
+<meta name="keywords" content="Zabbix, 数据库, 拆分, 高并发">
+<meta name="description" content="面向 Zabbix 高并发场景，将数据库从 Zabbix 服务器拆分到独立 MariaDB 服务器（11.0.1.52）的操作步骤：建库授权、导出导入数据、修改 Web 与 Server 的数据库连接配置、重启服务。">
 <meta name="author" content="DAWN">
-<link rel="canonical" href="https://LMDAWN1127.github.io/posts/zabbix-monitor-server/">
+<link rel="canonical" href="https://LMDAWN1127.github.io/posts/zabbix-split-database/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.4bf808bff57bddc46d61c8ae060b00400fc679ab876e37243b11bd3f832f2958.css" integrity="sha256-S/gIv/V73cRtYciuBgsAQA/GeauHbjckOxG9P4MvKVg=" rel="preload stylesheet" as="style">
 <link rel="icon" href="https://LMDAWN1127.github.io/images/DAWN.jpg">
 <link rel="icon" type="image/png" sizes="16x16" href="https://LMDAWN1127.github.io/favicon-16x16.png">
@@ -61,10 +18,7 @@ Hostname=web02
 <link rel="mask-icon" href="https://LMDAWN1127.github.io/safari-pinned-tab.svg">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
-<link rel="alternate" hreflang="zh" href="https://LMDAWN1127.github.io/posts/zabbix-monitor-server/">
-<link rel="alternate" hreflang="en" href="https://LMDAWN1127.github.io/en/posts/zabbix-monitor-server/">
-<link rel="alternate" hreflang="ko" href="https://LMDAWN1127.github.io/ko/posts/zabbix-monitor-server/">
-<link rel="alternate" hreflang="ja" href="https://LMDAWN1127.github.io/ja/posts/zabbix-monitor-server/">
+<link rel="alternate" hreflang="zh" href="https://LMDAWN1127.github.io/posts/zabbix-split-database/">
 <noscript>
     <style>
         #theme-toggle,
@@ -111,25 +65,25 @@ Hostname=web02
     }
 
 </script><link rel="stylesheet" href='https://LMDAWN1127.github.io/css/custom.css'>
-<meta property="og:url" content="https://LMDAWN1127.github.io/posts/zabbix-monitor-server/">
+<meta property="og:url" content="https://LMDAWN1127.github.io/posts/zabbix-split-database/">
   <meta property="og:site_name" content="DAWN&#39;s Blog">
-  <meta property="og:title" content="Zabbix 监控服务器信息">
-  <meta property="og:description" content="1.安装zabbix-agent客户端 准备一台服务器11.0.1.8 1 2 3 4 5 6 7 8 配置仓库: [root@web02 ~]# rpm -Uvh https://repo.zabbix.com/zabbix/5.0/rhel/7/x86_64/zabbix-release-5.0-1.el7.noarch.rpm 将服务端和客户端的yum仓库同步: [root@zabbix ~]#scp /etc/yum.repos.d/CentOS-SCLo-scl.repo root@172.16.1.8:/etc/yum.repos.d/CentOS-SCLo-scl.repo [root@zabbix ~]#scp /etc/yum.repos.d/CentOS-SCLo-scl-rh.repo root@172.16.1.8:/etc/yum.repos.d/CentOS-SCLo-scl-rh.repo [root@zabbix ~]#scp /etc/yum.repos.d/zabbix.repo root@172.16.1.8:/etc/yum.repos.d/zabbix.repo 如果安装提示软件冲突: [root@web02 ~]# yum -y install centos-release-scl 2.配置zabbix客户端服务器信息 启动客户端 1 2 3 4 5 6 [root@web02 ~]# yum -y install zabbix-agent [root@web02 ~]# vim /etc/zabbix/zabbix_agentd.conf Server=172.16.1.71 ServerActive=172.16.1.71 Hostname=web02 [root@web02 ~]# systemctl enable zabbix-agent --now 3.zabbix监控web02">
+  <meta property="og:title" content="拆分数据库">
+  <meta property="og:description" content="面向 Zabbix 高并发场景，将数据库从 Zabbix 服务器拆分到独立 MariaDB 服务器（11.0.1.52）的操作步骤：建库授权、导出导入数据、修改 Web 与 Server 的数据库连接配置、重启服务。">
   <meta property="og:locale" content="zh_cn">
   <meta property="og:type" content="article">
     <meta property="article:section" content="posts">
-    <meta property="article:published_time" content="2026-09-23T13:21:00+08:00">
-    <meta property="article:modified_time" content="2026-09-23T13:21:00+08:00">
+    <meta property="article:published_time" content="2026-09-23T16:00:00+08:00">
+    <meta property="article:modified_time" content="2026-09-23T16:00:00+08:00">
     <meta property="article:tag" content="Zabbix">
-    <meta property="article:tag" content="监控">
-    <meta property="article:tag" content="Zabbix-Agent">
-    <meta property="article:tag" content="监控配置">
+    <meta property="article:tag" content="数据库">
+    <meta property="article:tag" content="拆分">
+    <meta property="article:tag" content="高并发">
       <meta property="og:image" content="https://LMDAWN1127.github.io/images/DAWN.jpg">
 
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:image" content="https://LMDAWN1127.github.io/images/DAWN.jpg">
-  <meta name="twitter:title" content="Zabbix 监控服务器信息">
-  <meta name="twitter:description" content="1.安装zabbix-agent客户端 准备一台服务器11.0.1.8 1 2 3 4 5 6 7 8 配置仓库: [root@web02 ~]# rpm -Uvh https://repo.zabbix.com/zabbix/5.0/rhel/7/x86_64/zabbix-release-5.0-1.el7.noarch.rpm 将服务端和客户端的yum仓库同步: [root@zabbix ~]#scp /etc/yum.repos.d/CentOS-SCLo-scl.repo root@172.16.1.8:/etc/yum.repos.d/CentOS-SCLo-scl.repo [root@zabbix ~]#scp /etc/yum.repos.d/CentOS-SCLo-scl-rh.repo root@172.16.1.8:/etc/yum.repos.d/CentOS-SCLo-scl-rh.repo [root@zabbix ~]#scp /etc/yum.repos.d/zabbix.repo root@172.16.1.8:/etc/yum.repos.d/zabbix.repo 如果安装提示软件冲突: [root@web02 ~]# yum -y install centos-release-scl 2.配置zabbix客户端服务器信息 启动客户端 1 2 3 4 5 6 [root@web02 ~]# yum -y install zabbix-agent [root@web02 ~]# vim /etc/zabbix/zabbix_agentd.conf Server=172.16.1.71 ServerActive=172.16.1.71 Hostname=web02 [root@web02 ~]# systemctl enable zabbix-agent --now 3.zabbix监控web02">
+  <meta name="twitter:title" content="拆分数据库">
+  <meta name="twitter:description" content="面向 Zabbix 高并发场景，将数据库从 Zabbix 服务器拆分到独立 MariaDB 服务器（11.0.1.52）的操作步骤：建库授权、导出导入数据、修改 Web 与 Server 的数据库连接配置、重启服务。">
 
 
 <script type="application/ld+json">
@@ -146,8 +100,8 @@ Hostname=web02
     {
       "@type": "ListItem",
       "position":  2 ,
-      "name": "Zabbix 监控服务器信息",
-      "item": "https://LMDAWN1127.github.io/posts/zabbix-monitor-server/"
+      "name": "拆分数据库",
+      "item": "https://LMDAWN1127.github.io/posts/zabbix-split-database/"
     }
   ]
 }
@@ -156,24 +110,24 @@ Hostname=web02
 {
   "@context": "https://schema.org",
   "@type": "BlogPosting",
-  "headline": "Zabbix 监控服务器信息",
-  "name": "Zabbix 监控服务器信息",
-  "description": "1.安装zabbix-agent客户端 准备一台服务器11.0.1.8 1 2 3 4 5 6 7 8 配置仓库: [root@web02 ~]# rpm -Uvh https://repo.zabbix.com/zabbix/5.0/rhel/7/x86_64/zabbix-release-5.0-1.el7.noarch.rpm 将服务端和客户端的yum仓库同步: [root@zabbix ~]#scp /etc/yum.repos.d/CentOS-SCLo-scl.repo root@172.16.1.8:/etc/yum.repos.d/CentOS-SCLo-scl.repo [root@zabbix ~]#scp /etc/yum.repos.d/CentOS-SCLo-scl-rh.repo root@172.16.1.8:/etc/yum.repos.d/CentOS-SCLo-scl-rh.repo [root@zabbix ~]#scp /etc/yum.repos.d/zabbix.repo root@172.16.1.8:/etc/yum.repos.d/zabbix.repo 如果安装提示软件冲突: [root@web02 ~]# yum -y install centos-release-scl 2.配置zabbix客户端服务器信息 启动客户端 1 2 3 4 5 6 [root@web02 ~]# yum -y install zabbix-agent [root@web02 ~]# vim /etc/zabbix/zabbix_agentd.conf Server=172.16.1.71 ServerActive=172.16.1.71 Hostname=web02 [root@web02 ~]# systemctl enable zabbix-agent --now 3.zabbix监控web02 ",
+  "headline": "拆分数据库",
+  "name": "拆分数据库",
+  "description": "面向 Zabbix 高并发场景，将数据库从 Zabbix 服务器拆分到独立 MariaDB 服务器（11.0.1.52）的操作步骤：建库授权、导出导入数据、修改 Web 与 Server 的数据库连接配置、重启服务。",
   "keywords": [
-    "Zabbix", "监控", "zabbix-agent", "监控配置"
+    "Zabbix", "数据库", "拆分", "高并发"
   ],
-  "articleBody": "1.安装zabbix-agent客户端 准备一台服务器11.0.1.8 1 2 3 4 5 6 7 8 配置仓库: [root@web02 ~]# rpm -Uvh https://repo.zabbix.com/zabbix/5.0/rhel/7/x86_64/zabbix-release-5.0-1.el7.noarch.rpm 将服务端和客户端的yum仓库同步: [root@zabbix ~]#scp /etc/yum.repos.d/CentOS-SCLo-scl.repo root@172.16.1.8:/etc/yum.repos.d/CentOS-SCLo-scl.repo [root@zabbix ~]#scp /etc/yum.repos.d/CentOS-SCLo-scl-rh.repo root@172.16.1.8:/etc/yum.repos.d/CentOS-SCLo-scl-rh.repo [root@zabbix ~]#scp /etc/yum.repos.d/zabbix.repo root@172.16.1.8:/etc/yum.repos.d/zabbix.repo 如果安装提示软件冲突: [root@web02 ~]# yum -y install centos-release-scl 2.配置zabbix客户端服务器信息 启动客户端 1 2 3 4 5 6 [root@web02 ~]# yum -y install zabbix-agent [root@web02 ~]# vim /etc/zabbix/zabbix_agentd.conf Server=172.16.1.71 ServerActive=172.16.1.71 Hostname=web02 [root@web02 ~]# systemctl enable zabbix-agent --now 3.zabbix监控web02 4.web02服务器完成监控操作 ",
-  "wordCount" : "65",
+  "articleBody": "企业 zabbix 高并发场景使用\n1. 准备一台数据库服务器 11.0.1.52 安装 MariaDB 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 [root@db02 ~]#yum -y install mariadb-server [root@db02 ~]#systemctl enable mariadb --now [root@db02 ~]#mysql Welcome to the MariaDB monitor. Commands end with ; or \\g. Your MariaDB connection id is 2 Server version: 5.5.68-MariaDB MariaDB Server Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others. Type 'help;' or '\\h' for help. Type '\\c' to clear the current input statement. MariaDB [(none)]\u003e create database zabbix character set utf8 collate utf8_bin; Query OK, 1 row affected (0.02 sec) MariaDB [(none)]\u003e create user 'zabbix'@'%' identified by 'zabbix'; Query OK, 0 rows affected (0.10 sec) MariaDB [(none)]\u003e grant all privileges on zabbix.* to 'zabbix'@'%'; Query OK, 0 rows affected (0.00 sec) 2. 导出 Zabbix 服务器 zabbix 数据库、导入到新的数据库 1 2 [root@zabbix ~]# mysqldump -uroot -B zabbix \u003e zabbix.sql [root@zabbix ~]# cat zabbix.sql |mysql -h 172.16.1.52 -uzabbix -pzabbix zabbix 3. 配置 Web 连接数据库信息 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 [root@zabbix ~]# systemctl stop mariadb [root@zabbix ~]# cat /etc/zabbix/web/zabbix.conf.php \u003c?php // Zabbix GUI configuration file. global $DB; $DB['TYPE'] = 'MYSQL'; $DB['SERVER'] = '172.16.1.52'; $DB['PORT'] = '0'; $DB['DATABASE'] = 'zabbix'; $DB['USER'] = 'zabbix'; $DB['PASSWORD'] = 'zabbix'; [root@zabbix ~]# grep ^DB /etc/zabbix/zabbix_server.conf DBHost=172.16.1.52 DBName=zabbix DBUser=zabbix DBPassword=zabbix 4. 重启服务 1 [root@zabbix ~]# systemctl restart zabbix-server httpd ",
+  "wordCount" : "232",
   "inLanguage": "zh",
-  "image": "https://LMDAWN1127.github.io/images/DAWN.jpg","datePublished": "2026-09-23T13:21:00+08:00",
-  "dateModified": "2026-09-23T13:21:00+08:00",
+  "image": "https://LMDAWN1127.github.io/images/DAWN.jpg","datePublished": "2026-09-23T16:00:00+08:00",
+  "dateModified": "2026-09-23T16:00:00+08:00",
   "author":{
     "@type": "Person",
     "name": "DAWN"
   },
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "https://LMDAWN1127.github.io/posts/zabbix-monitor-server/"
+    "@id": "https://LMDAWN1127.github.io/posts/zabbix-split-database/"
   },
   "publisher": {
     "@type": "Organization",
@@ -244,61 +198,118 @@ Hostname=web02
 <article class="post-single">
   <header class="post-header">
     <h1 class="post-title entry-hint-parent">
-      Zabbix 监控服务器信息
+      拆分数据库
     </h1>
   </header>
 
   <div class="post-layout">
     <div class="post-content-wrapper"> 
-      <div class="post-content md-content"><h2 id="1安装zabbix-agent客户端-准备一台服务器11018">1.安装zabbix-agent客户端 准备一台服务器11.0.1.8<a hidden class="anchor" aria-hidden="true" href="#1安装zabbix-agent客户端-准备一台服务器11018">#</a></h2>
+      <div class="post-content md-content"><p>企业 zabbix 高并发场景使用</p>
+<h2 id="1-准备一台数据库服务器-110152-安装-mariadb">1. 准备一台数据库服务器 11.0.1.52 安装 MariaDB<a hidden class="anchor" aria-hidden="true" href="#1-准备一台数据库服务器-110152-安装-mariadb">#</a></h2>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@db02 ~<span style="color:#f92672">]</span><span style="color:#75715e">#yum -y install mariadb-server</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@db02 ~<span style="color:#f92672">]</span><span style="color:#75715e">#systemctl enable mariadb --now</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@db02 ~<span style="color:#f92672">]</span><span style="color:#75715e">#mysql</span>
+</span></span><span style="display:flex;"><span>Welcome to the MariaDB monitor.  Commands end with ; or <span style="color:#ae81ff">\g</span>.
+</span></span><span style="display:flex;"><span>Your MariaDB connection id is <span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>Server version: 5.5.68-MariaDB MariaDB Server
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Copyright <span style="color:#f92672">(</span>c<span style="color:#f92672">)</span> 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Type <span style="color:#e6db74">&#39;help;&#39;</span> or <span style="color:#e6db74">&#39;\h&#39;</span> <span style="color:#66d9ef">for</span> help. Type <span style="color:#e6db74">&#39;\c&#39;</span> to clear the current input statement.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>MariaDB <span style="color:#f92672">[(</span>none<span style="color:#f92672">)]</span>&gt; create database zabbix character set utf8 collate utf8_bin;
+</span></span><span style="display:flex;"><span>Query OK, <span style="color:#ae81ff">1</span> row affected <span style="color:#f92672">(</span>0.02 sec<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>MariaDB <span style="color:#f92672">[(</span>none<span style="color:#f92672">)]</span>&gt; create user <span style="color:#e6db74">&#39;zabbix&#39;</span>@<span style="color:#e6db74">&#39;%&#39;</span> identified by <span style="color:#e6db74">&#39;zabbix&#39;</span>;
+</span></span><span style="display:flex;"><span>Query OK, <span style="color:#ae81ff">0</span> rows affected <span style="color:#f92672">(</span>0.10 sec<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>MariaDB <span style="color:#f92672">[(</span>none<span style="color:#f92672">)]</span>&gt; grant all privileges on zabbix.* to <span style="color:#e6db74">&#39;zabbix&#39;</span>@<span style="color:#e6db74">&#39;%&#39;</span>;
+</span></span><span style="display:flex;"><span>Query OK, <span style="color:#ae81ff">0</span> rows affected <span style="color:#f92672">(</span>0.00 sec<span style="color:#f92672">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="2-导出-zabbix-服务器-zabbix-数据库导入到新的数据库">2. 导出 Zabbix 服务器 zabbix 数据库、导入到新的数据库<a hidden class="anchor" aria-hidden="true" href="#2-导出-zabbix-服务器-zabbix-数据库导入到新的数据库">#</a></h2>
 <div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>配置仓库:
-</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@web02 ~<span style="color:#f92672">]</span><span style="color:#75715e">#  rpm -Uvh https://repo.zabbix.com/zabbix/5.0/rhel/7/x86_64/zabbix-release-5.0-1.el7.noarch.rpm</span>
-</span></span><span style="display:flex;"><span>将服务端和客户端的yum仓库同步:
-</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@zabbix ~<span style="color:#f92672">]</span><span style="color:#75715e">#scp /etc/yum.repos.d/CentOS-SCLo-scl.repo root@172.16.1.8:/etc/yum.repos.d/CentOS-SCLo-scl.repo</span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@zabbix ~<span style="color:#f92672">]</span><span style="color:#75715e">#scp /etc/yum.repos.d/CentOS-SCLo-scl-rh.repo root@172.16.1.8:/etc/yum.repos.d/CentOS-SCLo-scl-rh.repo</span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@zabbix ~<span style="color:#f92672">]</span><span style="color:#75715e">#scp /etc/yum.repos.d/zabbix.repo  root@172.16.1.8:/etc/yum.repos.d/zabbix.repo</span>
-</span></span><span style="display:flex;"><span>如果安装提示软件冲突:
-</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@web02 ~<span style="color:#f92672">]</span><span style="color:#75715e"># yum -y install centos-release-scl</span>
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@zabbix ~<span style="color:#f92672">]</span><span style="color:#75715e"># mysqldump -uroot -B zabbix &gt; zabbix.sql</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@zabbix ~<span style="color:#f92672">]</span><span style="color:#75715e"># cat zabbix.sql |mysql -h 172.16.1.52 -uzabbix -pzabbix zabbix</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h2 id="2配置zabbix客户端服务器信息-启动客户端">2.配置zabbix客户端服务器信息 启动客户端<a hidden class="anchor" aria-hidden="true" href="#2配置zabbix客户端服务器信息-启动客户端">#</a></h2>
+</div><h2 id="3-配置-web-连接数据库信息">3. 配置 Web 连接数据库信息<a hidden class="anchor" aria-hidden="true" href="#3-配置-web-连接数据库信息">#</a></h2>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@zabbix ~<span style="color:#f92672">]</span><span style="color:#75715e"># systemctl stop mariadb</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@zabbix ~<span style="color:#f92672">]</span><span style="color:#75715e"># cat /etc/zabbix/web/zabbix.conf.php </span>
+</span></span><span style="display:flex;"><span>&lt;?php
+</span></span><span style="display:flex;"><span>// Zabbix GUI configuration file.
+</span></span><span style="display:flex;"><span>global $DB;
+</span></span><span style="display:flex;"><span>$DB<span style="color:#f92672">[</span><span style="color:#e6db74">&#39;TYPE&#39;</span><span style="color:#f92672">]</span>     <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;MYSQL&#39;</span>;
+</span></span><span style="display:flex;"><span>$DB<span style="color:#f92672">[</span><span style="color:#e6db74">&#39;SERVER&#39;</span><span style="color:#f92672">]</span>   <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;172.16.1.52&#39;</span>;
+</span></span><span style="display:flex;"><span>$DB<span style="color:#f92672">[</span><span style="color:#e6db74">&#39;PORT&#39;</span><span style="color:#f92672">]</span>     <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;0&#39;</span>;
+</span></span><span style="display:flex;"><span>$DB<span style="color:#f92672">[</span><span style="color:#e6db74">&#39;DATABASE&#39;</span><span style="color:#f92672">]</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;zabbix&#39;</span>;
+</span></span><span style="display:flex;"><span>$DB<span style="color:#f92672">[</span><span style="color:#e6db74">&#39;USER&#39;</span><span style="color:#f92672">]</span>     <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;zabbix&#39;</span>;
+</span></span><span style="display:flex;"><span>$DB<span style="color:#f92672">[</span><span style="color:#e6db74">&#39;PASSWORD&#39;</span><span style="color:#f92672">]</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;zabbix&#39;</span>;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@zabbix ~<span style="color:#f92672">]</span><span style="color:#75715e"># grep ^DB /etc/zabbix/zabbix_server.conf </span>
+</span></span><span style="display:flex;"><span>DBHost<span style="color:#f92672">=</span>172.16.1.52
+</span></span><span style="display:flex;"><span>DBName<span style="color:#f92672">=</span>zabbix
+</span></span><span style="display:flex;"><span>DBUser<span style="color:#f92672">=</span>zabbix
+</span></span><span style="display:flex;"><span>DBPassword<span style="color:#f92672">=</span>zabbix
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="4-重启服务">4. 重启服务<a hidden class="anchor" aria-hidden="true" href="#4-重启服务">#</a></h2>
 <div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@web02 ~<span style="color:#f92672">]</span><span style="color:#75715e"># yum -y install zabbix-agent</span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@web02 ~<span style="color:#f92672">]</span><span style="color:#75715e"># vim /etc/zabbix/zabbix_agentd.conf </span>
-</span></span><span style="display:flex;"><span>Server<span style="color:#f92672">=</span>172.16.1.71
-</span></span><span style="display:flex;"><span>ServerActive<span style="color:#f92672">=</span>172.16.1.71
-</span></span><span style="display:flex;"><span>Hostname<span style="color:#f92672">=</span>web02
-</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@web02 ~<span style="color:#f92672">]</span><span style="color:#75715e"># systemctl enable zabbix-agent --now</span>
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@zabbix ~<span style="color:#f92672">]</span><span style="color:#75715e"># systemctl restart zabbix-server httpd</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h2 id="3zabbix监控web02">3.zabbix监控web02<a hidden class="anchor" aria-hidden="true" href="#3zabbix监控web02">#</a></h2>
-<p><img loading="lazy" src="/images/p9_img63.png"></p>
-<p><img loading="lazy" src="/images/p10_img68.png"></p>
-<p><img loading="lazy" src="/images/p10_img70.png"></p>
-<h2 id="4web02服务器完成监控操作">4.web02服务器完成监控操作<a hidden class="anchor" aria-hidden="true" href="#4web02服务器完成监控操作">#</a></h2>
-<p><img loading="lazy" src="/images/p11_img75.png"></p>
-
+</div>
 
       </div><div id="giscus-container" style="margin-top: 2rem; padding-top: 1rem; border-top: 1px solid var(--border);">
   <script src="https://giscus.app/client.js"
@@ -324,13 +335,13 @@ Hostname=web02
     <div class="toc-header">目录</div>
     <nav class="toc-nav"><ul class="toc-list">
             <li>
-                <a href="#1%e5%ae%89%e8%a3%85zabbix-agent%e5%ae%a2%e6%88%b7%e7%ab%af-%e5%87%86%e5%a4%87%e4%b8%80%e5%8f%b0%e6%9c%8d%e5%8a%a1%e5%99%a811018" class="toc-link" data-target="1安装zabbix-agent客户端-准备一台服务器11018">1.安装zabbix-agent客户端 准备一台服务器11.0.1.8</a></li>
+                <a href="#1-%e5%87%86%e5%a4%87%e4%b8%80%e5%8f%b0%e6%95%b0%e6%8d%ae%e5%ba%93%e6%9c%8d%e5%8a%a1%e5%99%a8-110152-%e5%ae%89%e8%a3%85-mariadb" class="toc-link" data-target="1-准备一台数据库服务器-110152-安装-mariadb">1. 准备一台数据库服务器 11.0.1.52 安装 MariaDB</a></li>
             <li>
-                <a href="#2%e9%85%8d%e7%bd%aezabbix%e5%ae%a2%e6%88%b7%e7%ab%af%e6%9c%8d%e5%8a%a1%e5%99%a8%e4%bf%a1%e6%81%af-%e5%90%af%e5%8a%a8%e5%ae%a2%e6%88%b7%e7%ab%af" class="toc-link" data-target="2配置zabbix客户端服务器信息-启动客户端">2.配置zabbix客户端服务器信息 启动客户端</a></li>
+                <a href="#2-%e5%af%bc%e5%87%ba-zabbix-%e6%9c%8d%e5%8a%a1%e5%99%a8-zabbix-%e6%95%b0%e6%8d%ae%e5%ba%93%e5%af%bc%e5%85%a5%e5%88%b0%e6%96%b0%e7%9a%84%e6%95%b0%e6%8d%ae%e5%ba%93" class="toc-link" data-target="2-导出-zabbix-服务器-zabbix-数据库导入到新的数据库">2. 导出 Zabbix 服务器 zabbix 数据库、导入到新的数据库</a></li>
             <li>
-                <a href="#3zabbix%e7%9b%91%e6%8e%a7web02" class="toc-link" data-target="3zabbix监控web02">3.zabbix监控web02</a></li>
+                <a href="#3-%e9%85%8d%e7%bd%ae-web-%e8%bf%9e%e6%8e%a5%e6%95%b0%e6%8d%ae%e5%ba%93%e4%bf%a1%e6%81%af" class="toc-link" data-target="3-配置-web-连接数据库信息">3. 配置 Web 连接数据库信息</a></li>
             <li>
-                <a href="#4web02%e6%9c%8d%e5%8a%a1%e5%99%a8%e5%ae%8c%e6%88%90%e7%9b%91%e6%8e%a7%e6%93%8d%e4%bd%9c" class="toc-link" data-target="4web02服务器完成监控操作">4.web02服务器完成监控操作</a>
+                <a href="#4-%e9%87%8d%e5%90%af%e6%9c%8d%e5%8a%a1" class="toc-link" data-target="4-重启服务">4. 重启服务</a>
             </li>
         </ul>
     </nav>

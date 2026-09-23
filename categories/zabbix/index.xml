@@ -11,8 +11,15 @@
     </image>
     <generator>Hugo</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Wed, 23 Sep 2026 13:21:00 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 23 Sep 2026 16:00:00 +0800</lastBuildDate>
     <atom:link href="https://LMDAWN1127.github.io/categories/zabbix/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>拆分数据库</title>
+      <link>https://LMDAWN1127.github.io/posts/zabbix-split-database/</link>
+      <pubDate>Wed, 23 Sep 2026 16:00:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/posts/zabbix-split-database/</guid>
+      <description>面向 Zabbix 高并发场景，将数据库从 Zabbix 服务器拆分到独立 MariaDB 服务器（11.0.1.52）的操作步骤：建库授权、导出导入数据、修改 Web 与 Server 的数据库连接配置、重启服务。</description>
+    </item>
     <item>
       <title>Zabbix 监控服务器信息</title>
       <link>https://LMDAWN1127.github.io/posts/zabbix-monitor-server/</link>
