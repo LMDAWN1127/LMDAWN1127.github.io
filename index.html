@@ -190,6 +190,28 @@
 <article class="post-entry"> 
   <header class="entry-header">
     <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/posts/zabbix-monitor-server/">Zabbix 监控服务器信息</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>1.安装zabbix-agent客户端 准备一台服务器11.0.1.8 1 2 3 4 5 6 7 8 配置仓库: [root@web02 ~]# rpm -Uvh https://repo.zabbix.com/zabbix/5.0/rhel/7/x86_64/zabbix-release-5.0-1.el7.noarch.rpm 将服务端和客户端的yum仓库同步: [root@zabbix ~]#scp /etc/yum.repos.d/CentOS-SCLo-scl.repo root@172.16.1.8:/etc/yum.repos.d/CentOS-SCLo-scl.repo [root@zabbix ~]#scp /etc/yum.repos.d/CentOS-SCLo-scl-rh.repo root@172.16.1.8:/etc/yum.repos.d/CentOS-SCLo-scl-rh.repo [root@zabbix ~]#scp /etc/yum.repos.d/zabbix.repo root@172.16.1.8:/etc/yum.repos.d/zabbix.repo 如果安装提示软件冲突: [root@web02 ~]# yum -y install centos-release-scl 2.配置zabbix客户端服务器信息 启动客户端 1 2 3 4 5 6 [root@web02 ~]# yum -y install zabbix-agent [root@web02 ~]# vim /etc/zabbix/zabbix_agentd.conf Server=172.16.1.71 ServerActive=172.16.1.71 Hostname=web02 [root@web02 ~]# systemctl enable zabbix-agent --now 3.zabbix监控web02 ...</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-09-23">
+  2026年9月23日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 1 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to Zabbix 监控服务器信息" href="https://LMDAWN1127.github.io/posts/zabbix-monitor-server/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
       <a href="https://LMDAWN1127.github.io/posts/zabbix-install/">Zabbix 安装部署</a>
     </h2>
   </header>
@@ -263,28 +285,6 @@ worker02节点： 计算机名： node2 IP地址： 192.168.8.32
 </span>
 </footer>
   <a class="entry-link" aria-label="post link to KVM 虚拟化入门到实战：部署、管理与网络配置" href="https://LMDAWN1127.github.io/posts/kvm-virtualization-guide/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/posts/dockerfile-smaller-image/">Dockerfile 构建镜像太大？10 个技巧让镜像瘦身 90%</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>Docker 镜像太大导致部署慢、存储成本高？本文分享 10 个经过验证的优化技巧，帮你把镜像缩小 90% 以上。</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-07-30">
-  2026年7月30日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 3 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to Dockerfile 构建镜像太大？10 个技巧让镜像瘦身 90%" href="https://LMDAWN1127.github.io/posts/dockerfile-smaller-image/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">
