@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>值映射 on DAWN&#39;s Blog</title>
+    <link>https://LMDAWN1127.github.io/tags/%E5%80%BC%E6%98%A0%E5%B0%84/</link>
+    <description>Recent content in 值映射 on DAWN&#39;s Blog</description>
+    <image>
+      <title>DAWN&#39;s Blog</title>
+      <url>https://LMDAWN1127.github.io/images/DAWN.jpg</url>
+      <link>https://LMDAWN1127.github.io/images/DAWN.jpg</link>
+    </image>
+    <generator>Hugo</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Wed, 23 Sep 2026 18:30:00 +0800</lastBuildDate>
+    <atom:link href="https://LMDAWN1127.github.io/tags/%E5%80%BC%E6%98%A0%E5%B0%84/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Zabbix 自定义监控</title>
+      <link>https://LMDAWN1127.github.io/posts/zabbix-custom-monitor/</link>
+      <pubDate>Wed, 23 Sep 2026 18:30:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/posts/zabbix-custom-monitor/</guid>
+      <description>Zabbix 自定义监控实战：用 UserParameter 采集登录用户数/内存可用百分比等自定义指标，通过 zabbix_get 验证，在 Web 页面添加监控项、值映射、触发器（含多条件触发器）实现自定义告警。</description>
+    </item>
+  </channel>
+</rss>

@@ -11,7 +11,7 @@
     </image>
     <generator>Hugo</generator>
     <language>ja</language>
-    <lastBuildDate>Wed, 23 Sep 2026 16:00:00 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 23 Sep 2026 18:30:00 +0800</lastBuildDate>
     <atom:link href="https://LMDAWN1127.github.io/ja/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Harbor アクティブスタンバイデプロイ：インストールからHTTPS・レプリケーションまで</title>
@@ -19,6 +19,13 @@
       <pubDate>Tue, 04 Aug 2026 00:00:00 +0000</pubDate>
       <guid>https://LMDAWN1127.github.io/ja/posts/harbor-master-slave/</guid>
       <description>HarborエンタープライズDockerレジストリのアクティブスタンバイアーキテクチャ、HTTP/HTTPSモード、自己署名証明書、クロスホストレプリケーションを完全にカバーするデプロイガイドです。</description>
+    </item>
+    <item>
+      <title>Zabbix カスタム監視</title>
+      <link>https://LMDAWN1127.github.io/ja/posts/zabbix-custom-monitor/</link>
+      <pubDate>Wed, 23 Sep 2026 18:30:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/ja/posts/zabbix-custom-monitor/</guid>
+      <description>Zabbix カスタム監視の実践 — UserParameter でログインユーザー数やメモリ空き率などの独自メトリクスを収集し、zabbix_get で検証、Web UI で監視項目・値マッピング・トリガー（複数条件トリガー含む）を追加してカスタムアラートを実現します。</description>
     </item>
     <item>
       <title>Zabbix データベースの分割</title>

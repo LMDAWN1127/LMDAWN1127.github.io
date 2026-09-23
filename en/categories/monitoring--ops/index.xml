@@ -11,8 +11,15 @@
     </image>
     <generator>Hugo</generator>
     <language>en</language>
-    <lastBuildDate>Wed, 23 Sep 2026 16:00:00 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 23 Sep 2026 18:30:00 +0800</lastBuildDate>
     <atom:link href="https://LMDAWN1127.github.io/en/categories/monitoring--ops/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Custom Monitoring in Zabbix</title>
+      <link>https://LMDAWN1127.github.io/en/posts/zabbix-custom-monitor/</link>
+      <pubDate>Wed, 23 Sep 2026 18:30:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/posts/zabbix-custom-monitor/</guid>
+      <description>A hands-on Zabbix custom monitoring guide — collect custom metrics such as login user count and free-memory percentage with UserParameter, verify them via zabbix_get, then add items, value mappings, and triggers (including a multi-condition trigger) on the web UI for custom alerting.</description>
+    </item>
     <item>
       <title>Splitting the Zabbix Database</title>
       <link>https://LMDAWN1127.github.io/en/posts/zabbix-split-database/</link>

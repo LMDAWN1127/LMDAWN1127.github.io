@@ -11,13 +11,41 @@
     </image>
     <generator>Hugo</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Wed, 23 Sep 2026 16:00:00 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 23 Sep 2026 18:30:00 +0800</lastBuildDate>
     <atom:link href="https://LMDAWN1127.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>UserParameter</title>
+      <link>https://LMDAWN1127.github.io/tags/userparameter/</link>
+      <pubDate>Wed, 23 Sep 2026 18:30:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/tags/userparameter/</guid>
+      <description></description>
+    </item>
     <item>
       <title>Zabbix</title>
       <link>https://LMDAWN1127.github.io/tags/zabbix/</link>
-      <pubDate>Wed, 23 Sep 2026 16:00:00 +0800</pubDate>
+      <pubDate>Wed, 23 Sep 2026 18:30:00 +0800</pubDate>
       <guid>https://LMDAWN1127.github.io/tags/zabbix/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>触发器</title>
+      <link>https://LMDAWN1127.github.io/tags/%E8%A7%A6%E5%8F%91%E5%99%A8/</link>
+      <pubDate>Wed, 23 Sep 2026 18:30:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/tags/%E8%A7%A6%E5%8F%91%E5%99%A8/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>值映射</title>
+      <link>https://LMDAWN1127.github.io/tags/%E5%80%BC%E6%98%A0%E5%B0%84/</link>
+      <pubDate>Wed, 23 Sep 2026 18:30:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/tags/%E5%80%BC%E6%98%A0%E5%B0%84/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>自定义监控</title>
+      <link>https://LMDAWN1127.github.io/tags/%E8%87%AA%E5%AE%9A%E4%B9%89%E7%9B%91%E6%8E%A7/</link>
+      <pubDate>Wed, 23 Sep 2026 18:30:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/tags/%E8%87%AA%E5%AE%9A%E4%B9%89%E7%9B%91%E6%8E%A7/</guid>
       <description></description>
     </item>
     <item>

@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html lang="ja" dir="auto" data-theme="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Zabbix カスタム監視 | DAWN&#39;s Blog</title>
+<meta name="keywords" content="Zabbix, カスタム監視, UserParameter, トリガー, 値マッピング">
+<meta name="description" content="Zabbix カスタム監視の実践 — UserParameter でログインユーザー数やメモリ空き率などの独自メトリクスを収集し、zabbix_get で検証、Web UI で監視項目・値マッピング・トリガー（複数条件トリガー含む）を追加してカスタムアラートを実現します。">
+<meta name="author" content="DAWN">
+<link rel="canonical" href="https://LMDAWN1127.github.io/ja/posts/zabbix-custom-monitor/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.4bf808bff57bddc46d61c8ae060b00400fc679ab876e37243b11bd3f832f2958.css" integrity="sha256-S/gIv/V73cRtYciuBgsAQA/GeauHbjckOxG9P4MvKVg=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://LMDAWN1127.github.io/images/DAWN.jpg">
+<link rel="icon" type="image/png" sizes="16x16" href="https://LMDAWN1127.github.io/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://LMDAWN1127.github.io/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://LMDAWN1127.github.io/apple-touch-icon.png">
+<link rel="mask-icon" href="https://LMDAWN1127.github.io/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="zh" href="https://LMDAWN1127.github.io/posts/zabbix-custom-monitor/">
+<link rel="alternate" hreflang="en" href="https://LMDAWN1127.github.io/en/posts/zabbix-custom-monitor/">
+<link rel="alternate" hreflang="ko" href="https://LMDAWN1127.github.io/ko/posts/zabbix-custom-monitor/">
+<link rel="alternate" hreflang="ja" href="https://LMDAWN1127.github.io/ja/posts/zabbix-custom-monitor/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+                color-scheme: dark;
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .toc {
+                background: var(--entry);
+            }
+        }
+
+    </style>
+</noscript>
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.querySelector("html").dataset.theme = 'dark';
+    } else if (localStorage.getItem("pref-theme") === "light") {
+       document.querySelector("html").dataset.theme = 'light';
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.querySelector("html").dataset.theme = 'dark';
+    } else {
+        document.querySelector("html").dataset.theme = 'light';
+    }
+
+</script><link rel="stylesheet" href='https://LMDAWN1127.github.io/css/custom.css'>
+<meta property="og:url" content="https://LMDAWN1127.github.io/ja/posts/zabbix-custom-monitor/">
+  <meta property="og:site_name" content="DAWN&#39;s Blog">
+  <meta property="og:title" content="Zabbix カスタム監視">
+  <meta property="og:description" content="Zabbix カスタム監視の実践 — UserParameter でログインユーザー数やメモリ空き率などの独自メトリクスを収集し、zabbix_get で検証、Web UI で監視項目・値マッピング・トリガー（複数条件トリガー含む）を追加してカスタムアラートを実現します。">
+  <meta property="og:locale" content="ja">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2026-09-23T18:30:00+08:00">
+    <meta property="article:modified_time" content="2026-09-23T18:30:00+08:00">
+    <meta property="article:tag" content="Zabbix">
+    <meta property="article:tag" content="カスタム監視">
+    <meta property="article:tag" content="UserParameter">
+    <meta property="article:tag" content="トリガー">
+    <meta property="article:tag" content="値マッピング">
+      <meta property="og:image" content="https://LMDAWN1127.github.io/images/DAWN.jpg">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://LMDAWN1127.github.io/images/DAWN.jpg">
+  <meta name="twitter:title" content="Zabbix カスタム監視">
+  <meta name="twitter:description" content="Zabbix カスタム監視の実践 — UserParameter でログインユーザー数やメモリ空き率などの独自メトリクスを収集し、zabbix_get で検証、Web UI で監視項目・値マッピング・トリガー（複数条件トリガー含む）を追加してカスタムアラートを実現します。">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://LMDAWN1127.github.io/ja/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Zabbix カスタム監視",
+      "item": "https://LMDAWN1127.github.io/ja/posts/zabbix-custom-monitor/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Zabbix カスタム監視",
+  "name": "Zabbix カスタム監視",
+  "description": "Zabbix カスタム監視の実践 — UserParameter でログインユーザー数やメモリ空き率などの独自メトリクスを収集し、zabbix_get で検証、Web UI で監視項目・値マッピング・トリガー（複数条件トリガー含む）を追加してカスタムアラートを実現します。",
+  "keywords": [
+    "Zabbix", "カスタム監視", "UserParameter", "トリガー", "値マッピング"
+  ],
+  "articleBody": "1. ログインユーザー数を取得する 1 2 3 4 5 6 7 [root@web02 ~]#w 17:44:18 up 1:17, 2 users, load average: 0.01, 0.02, 0.05 USER TTY FROM LOGIN@ IDLE JCPU PCPU WHAT root pts/0 11.0.1.1 16:31 11:46 0.07s 0.07s -bash root pts/1 11.0.1.52 17:07 2.00s 0.04s 0.00s w [root@web02 ~]#w|awk 'NR==1{print $4}' 2 2. Zabbix の監視項目として定義する 1 2 3 4 5 6 7 [root@web02 ~]# cat /etc/zabbix/zabbix_agentd.d/system.conf UserParameter=login_number,w|awk 'NR==1{print $4}' # zabbix_agentd -p で項目の文法チェックができます [root@web02 ~]#zabbix_agentd -p|grep login_number login_number [t|2] # クライアントを再起動 [root@web02 ~]# systemctl restart zabbix-agent.service 3. Zabbix サーバー側で収集・監視する サーバーからコマンドラインで、監視項目を通じてユーザー定義の値が取得できるかテストします。\n1 2 3 4 # zabbix-get コマンドをインストール [root@zabbix ~]# yum -y install zabbix-get [root@zabbix ~]#zabbix_get -s 172.16.1.8 -k login_number 2 Web ページで監視項目を追加する\n監視項目を確認する\n4. TCP 22 ポートの生存を監視する 監視したい情報に合わせてキー値を選択します。\nTCP ポートが LISTEN 状態かどうかを確認します。戻り値: 0 - 待ち受けなし; 1 - 待ち受け中。\nweb02 の sshd サービスを停止する\n1 [root@web02 ~]# systemctl stop sshd 5. 表示用のカスタム値マッピングを設定する 値マッピングを適用する\n6. サーバーメモリ使用率のカスタム監視 手順 1: カスタム項目を定義し、空き率を取得する\n1 2 3 4 5 6 [root@web02 ~]# cat /etc/zabbix/zabbix_agentd.d/system.conf UserParameter=login_number,w|awk 'NR==1{print $4}' UserParameter=mem_free,free|awk 'NR==2{print $NF/$2*100}' [root@web02 ~]# systemctl restart zabbix-agent.service [root@web02 ~]#zabbix_agentd -p|grep mem_free mem_free [t|79.8753] 手順 2: サーバー側でキー値の取得をテストし、監視項目を追加する\n1 2 [root@zabbix ~]#zabbix_get -s 172.16.1.8 -k mem_free 79.9775 7. 空きメモリにトリガーを設定する 空きメモリ率が 20% を下回った場合にアラートを発報します。\nテスト: swap パーティションを無効にする\n1 [root@web02 ~]# swapoff -a dd でストレステストを実行しメモリを消費する\n1 [root@web02 ~]# dd if=/dev/zero of=/dev/null bs=1200M count=2048 8. 複数条件トリガーを設定する 両方の条件が同時に満たされた場合にのみアラートを発報します。\nswap 空き率を追加する\n1 2 3 4 [root@web02 ~]# cat /etc/zabbix/zabbix_agentd.d/system.conf UserParameter=login_number,w|awk 'NR==1{print $4}' UserParameter=mem_free,free|awk 'NR==2{print $NF/$2*100}' UserParameter=swap_free,free -m|awk 'NR==3{print $3/$2*100}' トリガー設定を変更する\nその後、再度 dd ストレステストを実行して結果を確認します。\n",
+  "wordCount" : "233",
+  "inLanguage": "ja",
+  "image": "https://LMDAWN1127.github.io/images/DAWN.jpg","datePublished": "2026-09-23T18:30:00+08:00",
+  "dateModified": "2026-09-23T18:30:00+08:00",
+  "author":{
+    "@type": "Person",
+    "name": "DAWN"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://LMDAWN1127.github.io/ja/posts/zabbix-custom-monitor/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "DAWN's Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://LMDAWN1127.github.io/images/DAWN.jpg"
+    }
+  }
+}
+</script>
+</head>
+<body id="top">
+    <header class="header">
+    <nav class="header-nav">
+        <div class="logo">
+            <a href="https://LMDAWN1127.github.io/ja/" accesskey="h" title="DAWN&#39;s Blog (Alt + H)">
+                <img src="https://LMDAWN1127.github.io/images/DAWN.jpg" alt="" aria-label="logo"
+                    height="38">DAWN&#39;s Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" class="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
+                    <svg class="moon" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg class="sun" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button><span class="nav-sep">|</span>
+                    <ul class="lang-menu">
+                        <li>
+                            <a href="https://LMDAWN1127.github.io/" title="中文"
+                                aria-label="中文">Zh</a>
+                        </li>
+                        <li>
+                            <a href="https://LMDAWN1127.github.io/en/" title="English"
+                                aria-label="English">En</a>
+                        </li>
+                        <li>
+                            <a href="https://LMDAWN1127.github.io/ko/" title="한국어"
+                                aria-label="한국어">Ko</a>
+                        </li>
+                    </ul>
+            </div>
+        </div>
+        <ul id="menu" class="menu">
+            <li>
+                <a href="https://LMDAWN1127.github.io/ja/archives/" title="アーカイブ">
+                    <span>アーカイブ</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <h1 class="post-title entry-hint-parent">
+      Zabbix カスタム監視
+    </h1>
+  </header>
+
+  <div class="post-layout">
+    <div class="post-content-wrapper"> 
+      <div class="post-content md-content"><h2 id="1-ログインユーザー数を取得する">1. ログインユーザー数を取得する<a hidden class="anchor" aria-hidden="true" href="#1-ログインユーザー数を取得する">#</a></h2>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@web02 ~<span style="color:#f92672">]</span><span style="color:#75715e">#w</span>
+</span></span><span style="display:flex;"><span> 17:44:18 up  1:17,  <span style="color:#ae81ff">2</span> users,  load average: 0.01, 0.02, 0.05
+</span></span><span style="display:flex;"><span>USER     TTY      FROM             LOGIN@   IDLE   JCPU   PCPU WHAT
+</span></span><span style="display:flex;"><span>root     pts/0    11.0.1.1         16:31   11:46   0.07s  0.07s -bash
+</span></span><span style="display:flex;"><span>root     pts/1    11.0.1.52        17:07    2.00s  0.04s  0.00s w
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@web02 ~<span style="color:#f92672">]</span><span style="color:#75715e">#w|awk &#39;NR==1{print $4}&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">2</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="2-zabbix-の監視項目として定義する">2. Zabbix の監視項目として定義する<a hidden class="anchor" aria-hidden="true" href="#2-zabbix-の監視項目として定義する">#</a></h2>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@web02 ~<span style="color:#f92672">]</span><span style="color:#75715e"># cat /etc/zabbix/zabbix_agentd.d/system.conf </span>
+</span></span><span style="display:flex;"><span>UserParameter<span style="color:#f92672">=</span>login_number,w|awk <span style="color:#e6db74">&#39;NR==1{print $4}&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># zabbix_agentd -p で項目の文法チェックができます</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@web02 ~<span style="color:#f92672">]</span><span style="color:#75715e">#zabbix_agentd -p|grep login_number</span>
+</span></span><span style="display:flex;"><span>login_number                                  <span style="color:#f92672">[</span>t|2<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># クライアントを再起動</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@web02 ~<span style="color:#f92672">]</span><span style="color:#75715e"># systemctl restart zabbix-agent.service</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="3-zabbix-サーバー側で収集監視する">3. Zabbix サーバー側で収集・監視する<a hidden class="anchor" aria-hidden="true" href="#3-zabbix-サーバー側で収集監視する">#</a></h2>
+<p>サーバーからコマンドラインで、監視項目を通じてユーザー定義の値が取得できるかテストします。</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># zabbix-get コマンドをインストール</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@zabbix ~<span style="color:#f92672">]</span><span style="color:#75715e"># yum -y install zabbix-get</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@zabbix ~<span style="color:#f92672">]</span><span style="color:#75715e">#zabbix_get -s 172.16.1.8 -k login_number</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">2</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Web ページで監視項目を追加する</p>
+<p><img loading="lazy" src="/images/p13_img93.png"></p>
+<p><img loading="lazy" src="/images/p13_img94.png"></p>
+<p><img loading="lazy" src="/images/p14_img101.png"></p>
+<p>監視項目を確認する</p>
+<p><img loading="lazy" src="/images/p15_img104.png"></p>
+<p><img loading="lazy" src="/images/p15_img106.png"></p>
+<h2 id="4-tcp-22-ポートの生存を監視する">4. TCP 22 ポートの生存を監視する<a hidden class="anchor" aria-hidden="true" href="#4-tcp-22-ポートの生存を監視する">#</a></h2>
+<p>監視したい情報に合わせてキー値を選択します。</p>
+<p>TCP ポートが LISTEN 状態かどうかを確認します。戻り値: 0 - 待ち受けなし; 1 - 待ち受け中。</p>
+<p><img loading="lazy" src="/images/p16_img111.png"></p>
+<p><img loading="lazy" src="/images/p16_img113.png"></p>
+<p>web02 の sshd サービスを停止する</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@web02 ~<span style="color:#f92672">]</span><span style="color:#75715e"># systemctl stop sshd</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img loading="lazy" src="/images/p16_img114.png"></p>
+<h2 id="5-表示用のカスタム値マッピングを設定する">5. 表示用のカスタム値マッピングを設定する<a hidden class="anchor" aria-hidden="true" href="#5-表示用のカスタム値マッピングを設定する">#</a></h2>
+<p><img loading="lazy" src="/images/p17_img119.png"></p>
+<p><img loading="lazy" src="/images/p17_img120.png"></p>
+<p><img loading="lazy" src="/images/p18_img124.png"></p>
+<p>値マッピングを適用する</p>
+<p><img loading="lazy" src="/images/p18_img126.png"></p>
+<p><img loading="lazy" src="/images/p19_img129.png"></p>
+<h2 id="6-サーバーメモリ使用率のカスタム監視">6. サーバーメモリ使用率のカスタム監視<a hidden class="anchor" aria-hidden="true" href="#6-サーバーメモリ使用率のカスタム監視">#</a></h2>
+<p>手順 1: カスタム項目を定義し、空き率を取得する</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@web02 ~<span style="color:#f92672">]</span><span style="color:#75715e"># cat /etc/zabbix/zabbix_agentd.d/system.conf</span>
+</span></span><span style="display:flex;"><span>UserParameter<span style="color:#f92672">=</span>login_number,w|awk <span style="color:#e6db74">&#39;NR==1{print $4}&#39;</span>
+</span></span><span style="display:flex;"><span>UserParameter<span style="color:#f92672">=</span>mem_free,free|awk <span style="color:#e6db74">&#39;NR==2{print $NF/$2*100}&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@web02 ~<span style="color:#f92672">]</span><span style="color:#75715e"># systemctl restart zabbix-agent.service </span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@web02 ~<span style="color:#f92672">]</span><span style="color:#75715e">#zabbix_agentd -p|grep mem_free</span>
+</span></span><span style="display:flex;"><span>mem_free                                      <span style="color:#f92672">[</span>t|79.8753<span style="color:#f92672">]</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>手順 2: サーバー側でキー値の取得をテストし、監視項目を追加する</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@zabbix ~<span style="color:#f92672">]</span><span style="color:#75715e">#zabbix_get -s 172.16.1.8 -k mem_free</span>
+</span></span><span style="display:flex;"><span>79.9775
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img loading="lazy" src="/images/p20_img135.png"></p>
+<p><img loading="lazy" src="/images/p20_img136.png"></p>
+<h2 id="7-空きメモリにトリガーを設定する">7. 空きメモリにトリガーを設定する<a hidden class="anchor" aria-hidden="true" href="#7-空きメモリにトリガーを設定する">#</a></h2>
+<p>空きメモリ率が 20% を下回った場合にアラートを発報します。</p>
+<p><img loading="lazy" src="/images/p20_img139.png"></p>
+<p><img loading="lazy" src="/images/p21_img144.png"></p>
+<p><img loading="lazy" src="/images/p21_img145.png"></p>
+<p><img loading="lazy" src="/images/p22_img148.png"></p>
+<p>テスト: swap パーティションを無効にする</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@web02 ~<span style="color:#f92672">]</span><span style="color:#75715e"># swapoff  -a</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>dd でストレステストを実行しメモリを消費する</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@web02 ~<span style="color:#f92672">]</span><span style="color:#75715e"># dd if=/dev/zero of=/dev/null bs=1200M count=2048</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img loading="lazy" src="/images/p23_img152.png"></p>
+<h2 id="8-複数条件トリガーを設定する">8. 複数条件トリガーを設定する<a hidden class="anchor" aria-hidden="true" href="#8-複数条件トリガーを設定する">#</a></h2>
+<p>両方の条件が同時に満たされた場合にのみアラートを発報します。</p>
+<p>swap 空き率を追加する</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@web02 ~<span style="color:#f92672">]</span><span style="color:#75715e"># cat /etc/zabbix/zabbix_agentd.d/system.conf</span>
+</span></span><span style="display:flex;"><span>UserParameter<span style="color:#f92672">=</span>login_number,w|awk <span style="color:#e6db74">&#39;NR==1{print $4}&#39;</span>
+</span></span><span style="display:flex;"><span>UserParameter<span style="color:#f92672">=</span>mem_free,free|awk <span style="color:#e6db74">&#39;NR==2{print $NF/$2*100}&#39;</span>
+</span></span><span style="display:flex;"><span>UserParameter<span style="color:#f92672">=</span>swap_free,free -m|awk <span style="color:#e6db74">&#39;NR==3{print $3/$2*100}&#39;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img loading="lazy" src="/images/p24_img158.png"></p>
+<p><img loading="lazy" src="/images/p24_img160.png"></p>
+<p>トリガー設定を変更する</p>
+<p><img loading="lazy" src="/images/p25_img163.png"></p>
+<p>その後、再度 dd ストレステストを実行して結果を確認します。</p>
+
+
+      </div><div id="giscus-container" style="margin-top: 2rem; padding-top: 1rem; border-top: 1px solid var(--border);">
+  <script src="https://giscus.app/client.js"
+          data-repo="LMDAWN1127/LMDAWN1127.github.io"
+          data-repo-id="R_kgDOTMWmvw"
+          data-category="Announcements"
+          data-category-id="DIC_kwDOTMWmv84DAd3g"
+          data-mapping="pathname"
+          data-strict="0"
+          data-reactions-enabled="1"
+          data-emit-metadata="0"
+          data-input-position="bottom"
+          data-theme="preferred_color_scheme"
+          data-lang="zh-CN"
+          crossorigin="anonymous"
+          async>
+  </script>
+</div>
+
+    </div>
+
+    <aside class="toc-sidebar" id="toc-sidebar">
+    <div class="toc-header">目录</div>
+    <nav class="toc-nav"><ul class="toc-list">
+            <li>
+                <a href="#1-%e3%83%ad%e3%82%b0%e3%82%a4%e3%83%b3%e3%83%a6%e3%83%bc%e3%82%b6%e3%83%bc%e6%95%b0%e3%82%92%e5%8f%96%e5%be%97%e3%81%99%e3%82%8b" class="toc-link" data-target="1-ログインユーザー数を取得する">1. ログインユーザー数を取得する</a></li>
+            <li>
+                <a href="#2-zabbix-%e3%81%ae%e7%9b%a3%e8%a6%96%e9%a0%85%e7%9b%ae%e3%81%a8%e3%81%97%e3%81%a6%e5%ae%9a%e7%be%a9%e3%81%99%e3%82%8b" class="toc-link" data-target="2-zabbix-の監視項目として定義する">2. Zabbix の監視項目として定義する</a></li>
+            <li>
+                <a href="#3-zabbix-%e3%82%b5%e3%83%bc%e3%83%90%e3%83%bc%e5%81%b4%e3%81%a7%e5%8f%8e%e9%9b%86%e7%9b%a3%e8%a6%96%e3%81%99%e3%82%8b" class="toc-link" data-target="3-zabbix-サーバー側で収集監視する">3. Zabbix サーバー側で収集・監視する</a></li>
+            <li>
+                <a href="#4-tcp-22-%e3%83%9d%e3%83%bc%e3%83%88%e3%81%ae%e7%94%9f%e5%ad%98%e3%82%92%e7%9b%a3%e8%a6%96%e3%81%99%e3%82%8b" class="toc-link" data-target="4-tcp-22-ポートの生存を監視する">4. TCP 22 ポートの生存を監視する</a></li>
+            <li>
+                <a href="#5-%e8%a1%a8%e7%a4%ba%e7%94%a8%e3%81%ae%e3%82%ab%e3%82%b9%e3%82%bf%e3%83%a0%e5%80%a4%e3%83%9e%e3%83%83%e3%83%94%e3%83%b3%e3%82%b0%e3%82%92%e8%a8%ad%e5%ae%9a%e3%81%99%e3%82%8b" class="toc-link" data-target="5-表示用のカスタム値マッピングを設定する">5. 表示用のカスタム値マッピングを設定する</a></li>
+            <li>
+                <a href="#6-%e3%82%b5%e3%83%bc%e3%83%90%e3%83%bc%e3%83%a1%e3%83%a2%e3%83%aa%e4%bd%bf%e7%94%a8%e7%8e%87%e3%81%ae%e3%82%ab%e3%82%b9%e3%82%bf%e3%83%a0%e7%9b%a3%e8%a6%96" class="toc-link" data-target="6-サーバーメモリ使用率のカスタム監視">6. サーバーメモリ使用率のカスタム監視</a></li>
+            <li>
+                <a href="#7-%e7%a9%ba%e3%81%8d%e3%83%a1%e3%83%a2%e3%83%aa%e3%81%ab%e3%83%88%e3%83%aa%e3%82%ac%e3%83%bc%e3%82%92%e8%a8%ad%e5%ae%9a%e3%81%99%e3%82%8b" class="toc-link" data-target="7-空きメモリにトリガーを設定する">7. 空きメモリにトリガーを設定する</a></li>
+            <li>
+                <a href="#8-%e8%a4%87%e6%95%b0%e6%9d%a1%e4%bb%b6%e3%83%88%e3%83%aa%e3%82%ac%e3%83%bc%e3%82%92%e8%a8%ad%e5%ae%9a%e3%81%99%e3%82%8b" class="toc-link" data-target="8-複数条件トリガーを設定する">8. 複数条件トリガーを設定する</a>
+            </li>
+        </ul>
+    </nav>
+</aside>
+
+  </div>
+</article>
+    </main>
+    
+<a href="#top" id="top-link" class="top-link hidden" aria-label="go to top" title="Go to Top (Alt + G)" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevrons-up">
+        <polyline points="17 11 12 6 7 11"></polyline>
+        <polyline points="17 18 12 13 7 18"></polyline>
+    </svg>
+</a>
+<script defer src="/js/custom.js"></script>
+<div id="algolia-search-modal" class="algolia-modal" style="display: none;">
+  <div class="algolia-modal-overlay"></div>
+  <div class="algolia-modal-content">
+    <div class="algolia-search-header">
+      <div class="algolia-search-input-wrapper">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <input type="text" id="algolia-search-input" placeholder="搜索文章..." autofocus>
+        <kbd class="algolia-esc">Esc</kbd>
+      </div>
+    </div>
+    <div id="algolia-search-results" class="algolia-search-results">
+      <div class="algolia-empty-state">
+        <p>输入关键词开始搜索</p>
+      </div>
+    </div>
+    <div class="algolia-search-footer">
+      <span class="algolia-footer-text">
+        <kbd>↑</kbd> <kbd>↓</kbd> 导航
+        <kbd>↵</kbd> 打开
+        <kbd>Esc</kbd> 关闭
+      </span>
+      <span class="algolia-footer-logo">
+        搜索由 <a href="https://www.algolia.com/" target="_blank" rel="noopener">Algolia</a> 提供
+      </span>
+    </div>
+  </div>
+</div>
+
+<script>
+(function() {
+  'use strict';
+
+  var APP_ID = 'Y0SCRI4LCW';
+  var SEARCH_KEY = '03dda5e44aec7e0dd93b6a3653250b1f';
+  var INDEX_NAME = 'lmdawn1127-blog';
+  var API_URL = 'https://' + APP_ID + '-dsn.algolia.net/1/indexes/' + INDEX_NAME + '/query';
+  var debounceTimer = null;
+  var selectedIndex = -1;
+
+   
+  function doSearch(query) {
+    if (!query || !query.trim()) {
+      showEmpty();
+      return;
+    }
+
+    var body = JSON.stringify({
+      query: query,
+      hitsPerPage: 10,
+      attributesToRetrieve: ['title', 'content', 'url'],
+      attributesToHighlight: ['title', 'content'],
+      highlightPreTag: '<mark class="algolia-highlight">',
+      highlightPostTag: '</mark>'
+    });
+
+    fetch(API_URL, {
+      method: 'POST',
+      headers: {
+        'X-Algolia-Application-Id': APP_ID,
+        'X-Algolia-API-Key': SEARCH_KEY,
+        'Content-Type': 'application/json'
+      },
+      body: body
+    })
+    .then(function(resp) {
+      if (!resp.ok) throw new Error('HTTP ' + resp.status);
+      return resp.json();
+    })
+    .then(function(data) {
+      renderResults(data.hits || [], query);
+    })
+    .catch(function(err) {
+      console.error('Algolia search error:', err);
+      showError(err.message || '未知错误');
+    });
+  }
+
+   
+  function showEmpty() {
+    document.getElementById('algolia-search-results').innerHTML =
+      '<div class="algolia-empty-state"><p>输入关键词开始搜索</p></div>';
+  }
+
+  function showError(detail) {
+    var msg = '搜索出错，请稍后再试';
+    if (detail) msg += '<br><small style="color:#888">错误详情: ' + escapeHtml(detail) + '</small>';
+    document.getElementById('algolia-search-results').innerHTML =
+      '<div class="algolia-empty-state"><p>' + msg + '</p></div>';
+  }
+
+  function showNoResults(query) {
+    document.getElementById('algolia-search-results').innerHTML =
+      '<div class="algolia-empty-state"><p>未找到与「' + escapeHtml(query) + '」相关的结果</p></div>';
+  }
+
+  function escapeHtml(s) {
+    var d = document.createElement('div');
+    d.appendChild(document.createTextNode(s));
+    return d.innerHTML;
+  }
+
+  function getHL(hit, attr) {
+    if (hit._highlightResult && hit._highlightResult[attr]) return hit._highlightResult[attr].value;
+    return hit[attr] || '';
+  }
+
+  function trunc(s, n) {
+    if (!s) return '';
+    s = s.replace(/<[^>]+>/g, '');
+    return s.length > n ? s.substring(0, n) + '…' : s;
+  }
+
+  function renderResults(hits, query) {
+    var box = document.getElementById('algolia-search-results');
+    if (!hits.length) { showNoResults(query); return; }
+
+    var h = '<div class="algolia-results-count">' + hits.length + ' 个结果</div>';
+    hits.forEach(function(hit, i) {
+      var title = getHL(hit, 'title') || '无标题';
+      var content = getHL(hit, 'content');
+      var url = hit.url || '#';
+
+      h += '<a class="algolia-hit" href="' + url + '" data-index="' + i + '">';
+      h += '<div class="algolia-hit-title">' + title + '</div>';
+      h += '<div class="algolia-hit-content">' + trunc(content, 150) + '</div>';
+
+      h += '</a>';
+    });
+    box.innerHTML = h;
+
+    box.querySelectorAll('.algolia-hit').forEach(function(el) {
+      el.addEventListener('click', closeAlgoliaSearch);
+    });
+  }
+
+   
+  function onInput(e) {
+    var q = e.target.value;
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(function() { doSearch(q); }, 200);
+  }
+
+  function onKeydown(e) {
+    var hits = document.querySelectorAll('.algolia-hit');
+    if (!hits.length) return;
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      selectedIndex = Math.min(selectedIndex + 1, hits.length - 1);
+      sel(hits);
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      selectedIndex = Math.max(selectedIndex - 1, 0);
+      sel(hits);
+    } else if (e.key === 'Enter' && selectedIndex >= 0) {
+      e.preventDefault();
+      window.location.href = hits[selectedIndex].getAttribute('href');
+      closeAlgoliaSearch();
+    }
+  }
+
+  function sel(hits) {
+    hits.forEach(function(el, i) {
+      if (i === selectedIndex) { el.classList.add('selected'); el.scrollIntoView({ block: 'nearest' }); }
+      else el.classList.remove('selected');
+    });
+  }
+
+   
+  document.addEventListener('DOMContentLoaded', function() {
+    var input = document.getElementById('algolia-search-input');
+    if (input) {
+      input.addEventListener('input', onInput);
+      input.addEventListener('keydown', onKeydown);
+    }
+  });
+
+  window.openAlgoliaSearch = function() {
+    var modal = document.getElementById('algolia-search-modal');
+    modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+    setTimeout(function() {
+      var input = document.getElementById('algolia-search-input');
+      if (input) { input.value = ''; input.focus(); showEmpty(); }
+    }, 100);
+  };
+
+  window.closeAlgoliaSearch = function() {
+    document.getElementById('algolia-search-modal').style.display = 'none';
+    document.body.style.overflow = '';
+    selectedIndex = -1;
+  };
+})();
+</script>
+
+<style>
+  .algolia-modal{position:fixed;top:0;left:0;width:100%;height:100%;z-index:1000;display:flex;align-items:flex-start;justify-content:center;padding-top:10vh}
+  .algolia-modal-overlay{position:absolute;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.6);backdrop-filter:blur(4px)}
+  .algolia-modal-content{position:relative;width:90%;max-width:600px;background:#1a1a1a;border-radius:12px;box-shadow:0 20px 60px rgba(0,0,0,.5);overflow:hidden;border:1px solid #333}
+  .algolia-search-header{padding:16px;border-bottom:1px solid #333}
+  .algolia-search-input-wrapper{display:flex;align-items:center;gap:12px;background:#2a2a2a;border-radius:8px;padding:12px 16px;border:1px solid #444}
+  .algolia-search-input-wrapper svg{color:#666;flex-shrink:0}
+  #algolia-search-input{flex:1;background:transparent;border:none;outline:none;color:#fff;font-size:16px;font-family:inherit}
+  #algolia-search-input::placeholder{color:#666}
+  .algolia-esc{background:#444;color:#999;padding:2px 6px;border-radius:4px;font-size:11px;font-family:inherit}
+  .algolia-search-results{max-height:400px;overflow-y:auto;padding:8px}
+  .algolia-empty-state{padding:40px 20px;text-align:center;color:#666}
+  .algolia-results-count{padding:8px 12px;font-size:12px;color:#666}
+  .algolia-search-footer{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;border-top:1px solid #333;background:#222;font-size:12px;color:#666}
+  .algolia-footer-text kbd{background:#444;color:#999;padding:2px 4px;border-radius:3px;font-size:10px;margin:0 2px}
+  .algolia-footer-logo a{color:#5EEAD4;text-decoration:none}
+  .algolia-footer-logo a:hover{text-decoration:underline}
+  .algolia-hit{display:block;padding:12px;border-radius:6px;text-decoration:none;color:#fff;transition:background .2s}
+  .algolia-hit:hover,.algolia-hit.selected{background:#2a2a2a}
+  .algolia-hit-title{font-weight:600;color:#5EEAD4;margin-bottom:4px;font-size:15px}
+  .algolia-hit-title mark,.algolia-highlight{background:rgba(94,234,212,.25);color:#5EEAD4;padding:0 2px;border-radius:2px}
+  .algolia-hit-content{font-size:13px;color:#999;line-height:1.5}
+  .algolia-hit-content mark,.algolia-hit-content .algolia-highlight{background:rgba(94,234,212,.2);color:#ccc;padding:0 2px;border-radius:2px}
+  .algolia-hit-meta{display:flex;align-items:center;gap:10px;margin-top:8px}
+  .algolia-hit-date{font-size:12px;color:#666}
+  .algolia-hit-tags{display:flex;gap:6px}
+  .algolia-hit-tag{background:#333;color:#999;padding:2px 8px;border-radius:4px;font-size:11px}
+</style>
+<script>
+  
+  document.addEventListener('keydown', function(e) {
+    
+    if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+      e.preventDefault();
+      if (typeof openAlgoliaSearch === 'function') openAlgoliaSearch();
+    }
+    
+    if (e.key === 'Escape') {
+      if (typeof closeAlgoliaSearch === 'function') closeAlgoliaSearch();
+    }
+    
+    if (e.altKey && e.key === '/') {
+      e.preventDefault();
+      if (typeof openAlgoliaSearch === 'function') openAlgoliaSearch();
+    }
+  });
+
+  
+  document.addEventListener('DOMContentLoaded', function() {
+    var modal = document.getElementById('algolia-search-modal');
+    if (modal) {
+      var overlay = modal.querySelector('.algolia-modal-overlay');
+      if (overlay) {
+        overlay.addEventListener('click', function() {
+          if (typeof closeAlgoliaSearch === 'function') closeAlgoliaSearch();
+        });
+      }
+    }
+  });
+
+  
+  
+  document.addEventListener('DOMContentLoaded', function() {
+    if (document.getElementById('algolia-search-btn')) return;
+    var btn = document.createElement('button');
+    btn.id = 'algolia-search-btn';
+    btn.className = 'theme-toggle search-toggle';
+    btn.type = 'button';
+    btn.title = '搜索 (Ctrl+K)';
+    btn.setAttribute('aria-label', '搜索');
+    btn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>';
+    btn.addEventListener('click', function() {
+      if (typeof openAlgoliaSearch === 'function') openAlgoliaSearch();
+    });
+    var target = document.querySelector('.logo-switches') || document.querySelector('.header-nav');
+    if (target) target.appendChild(btn);
+  });
+</script><script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var cur = (document.documentElement.lang || 'zh').toLowerCase();
+    
+    
+    
+    var rawPath = location.pathname.replace(/\/+$/, '');
+    var pm = rawPath.match(/^\/(en|ko|ja)(?:\/(.*))?$/);
+    var rest = pm ? (pm[2] ? '/' + pm[2] : '') : rawPath; 
+    function langHref(code) {
+      var base = (code === 'zh') ? '' : '/' + code;
+      if (rest === '' || rest === '/') {
+        return base === '' ? '/' : base + '/';
+      }
+      return base + rest + '/';
+    }
+
+    var langs = [
+      { code: 'zh', label: '中文' },
+      { code: 'en', label: 'English' },
+      { code: 'ko', label: '한국어' },
+      { code: 'ja', label: '日本語' }
+    ];
+    var wrap = document.querySelector('.logo-switches') || document.querySelector('.header-nav');
+    if (!wrap || document.getElementById('lang-dropdown')) return;
+
+    var current = langs.find(function(l) { return l.code === cur; }) || langs[0];
+
+    var dd = document.createElement('div');
+    dd.className = 'lang-dropdown';
+    dd.id = 'lang-dropdown';
+
+    var toggle = document.createElement('button');
+    toggle.type = 'button';
+    toggle.className = 'lang-dropdown-toggle';
+    toggle.setAttribute('aria-label', '选择语言');
+    toggle.innerHTML = '<span class="lang-current">' + current.label + '</span><span class="lang-caret">▾</span>';
+
+    var menu = document.createElement('ul');
+    menu.className = 'lang-dropdown-menu';
+    langs.forEach(function(l) {
+      var li = document.createElement('li');
+      if (l.code === cur) li.className = 'active';
+      var a = document.createElement('a');
+      a.href = langHref(l.code);
+      a.textContent = l.label;
+      li.appendChild(a);
+      menu.appendChild(li);
+    });
+
+    dd.appendChild(toggle);
+    dd.appendChild(menu);
+    wrap.appendChild(dd);
+
+    toggle.addEventListener('click', function(e) {
+      e.stopPropagation();
+      dd.classList.toggle('open');
+    });
+    document.addEventListener('click', function(e) {
+      if (!dd.contains(e.target)) dd.classList.remove('open');
+    });
+  });
+</script>
+
+
+<script>
+    let menu = document.getElementById('menu');
+    if (menu) {
+        const scrollPosition = localStorage.getItem("menu-scroll-position");
+        if (scrollPosition) {
+            menu.scrollLeft = parseInt(scrollPosition, 10);
+        }
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+</script>
+<script>
+    var toplink = document.getElementById("top-link");
+    window.onscroll = function () {
+        const scrollThreshold = window.innerHeight;
+        if (document.body.scrollTop > scrollThreshold || document.documentElement.scrollTop > scrollThreshold) {
+            toplink.classList.remove("hidden");
+        } else {
+            toplink.classList.add("hidden");
+        }
+    };
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        const html = document.querySelector("html");
+        if (html.dataset.theme === "dark") {
+            html.dataset.theme = 'light';
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            html.dataset.theme = 'dark';
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'コピー';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'コピーされました!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'コピー';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>

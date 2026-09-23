@@ -11,8 +11,15 @@
     </image>
     <generator>Hugo</generator>
     <language>ko</language>
-    <lastBuildDate>Wed, 23 Sep 2026 16:00:00 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 23 Sep 2026 18:30:00 +0800</lastBuildDate>
     <atom:link href="https://LMDAWN1127.github.io/ko/tags/zabbix/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Zabbix 커스텀 모니터링</title>
+      <link>https://LMDAWN1127.github.io/ko/posts/zabbix-custom-monitor/</link>
+      <pubDate>Wed, 23 Sep 2026 18:30:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/ko/posts/zabbix-custom-monitor/</guid>
+      <description>Zabbix 커스텀 모니터링 실전 — UserParameter로 로그인 사용자 수·메모리 가용률 등 사용자 정의 메트릭을 수집하고 zabbix_get으로 검증한 뒤, 웹 UI에서 모니터링 항목·값 매핑·트리거(다중 조건 트리거 포함)를 추가해 커스텀 알림을 구성합니다.</description>
+    </item>
     <item>
       <title>Zabbix 데이터베이스 분리</title>
       <link>https://LMDAWN1127.github.io/ko/posts/zabbix-split-database/</link>

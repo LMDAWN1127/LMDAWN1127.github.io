@@ -11,13 +11,41 @@
     </image>
     <generator>Hugo</generator>
     <language>ko</language>
-    <lastBuildDate>Wed, 23 Sep 2026 16:00:00 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 23 Sep 2026 18:30:00 +0800</lastBuildDate>
     <atom:link href="https://LMDAWN1127.github.io/ko/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>UserParameter</title>
+      <link>https://LMDAWN1127.github.io/ko/tags/userparameter/</link>
+      <pubDate>Wed, 23 Sep 2026 18:30:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/ko/tags/userparameter/</guid>
+      <description></description>
+    </item>
     <item>
       <title>Zabbix</title>
       <link>https://LMDAWN1127.github.io/ko/tags/zabbix/</link>
-      <pubDate>Wed, 23 Sep 2026 16:00:00 +0800</pubDate>
+      <pubDate>Wed, 23 Sep 2026 18:30:00 +0800</pubDate>
       <guid>https://LMDAWN1127.github.io/ko/tags/zabbix/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>값매핑</title>
+      <link>https://LMDAWN1127.github.io/ko/tags/%EA%B0%92%EB%A7%A4%ED%95%91/</link>
+      <pubDate>Wed, 23 Sep 2026 18:30:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/ko/tags/%EA%B0%92%EB%A7%A4%ED%95%91/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>커스텀모니터링</title>
+      <link>https://LMDAWN1127.github.io/ko/tags/%EC%BB%A4%EC%8A%A4%ED%85%80%EB%AA%A8%EB%8B%88%ED%84%B0%EB%A7%81/</link>
+      <pubDate>Wed, 23 Sep 2026 18:30:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/ko/tags/%EC%BB%A4%EC%8A%A4%ED%85%80%EB%AA%A8%EB%8B%88%ED%84%B0%EB%A7%81/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>트리거</title>
+      <link>https://LMDAWN1127.github.io/ko/tags/%ED%8A%B8%EB%A6%AC%EA%B1%B0/</link>
+      <pubDate>Wed, 23 Sep 2026 18:30:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/ko/tags/%ED%8A%B8%EB%A6%AC%EA%B1%B0/</guid>
       <description></description>
     </item>
     <item>
