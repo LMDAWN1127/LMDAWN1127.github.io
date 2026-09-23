@@ -161,6 +161,26 @@
     <lastmod>2026-09-23T16:00:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://LMDAWN1127.github.io/posts/zabbix-split-database/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://LMDAWN1127.github.io/en/posts/zabbix-split-database/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="ko"
+                href="https://LMDAWN1127.github.io/ko/posts/zabbix-split-database/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="ja"
+                href="https://LMDAWN1127.github.io/ja/posts/zabbix-split-database/"
+                />
   </url><url>
     <loc>https://LMDAWN1127.github.io/tags/%E9%AB%98%E5%B9%B6%E5%8F%91/</loc>
     <lastmod>2026-09-23T16:00:00+08:00</lastmod>

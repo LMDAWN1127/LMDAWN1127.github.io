@@ -11,8 +11,15 @@
     </image>
     <generator>Hugo</generator>
     <language>en</language>
-    <lastBuildDate>Wed, 23 Sep 2026 13:21:00 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 23 Sep 2026 16:00:00 +0800</lastBuildDate>
     <atom:link href="https://LMDAWN1127.github.io/en/categories/zabbix/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Splitting the Zabbix Database</title>
+      <link>https://LMDAWN1127.github.io/en/posts/zabbix-split-database/</link>
+      <pubDate>Wed, 23 Sep 2026 16:00:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/posts/zabbix-split-database/</guid>
+      <description>For high-concurrency enterprise Zabbix scenarios — move the database off the Zabbix server onto a dedicated MariaDB server (11.0.1.52): create the database and grant privileges, export and import the data, update the Web UI and Server database connection settings, then restart the services.</description>
+    </item>
     <item>
       <title>Monitoring Server Information with Zabbix</title>
       <link>https://LMDAWN1127.github.io/en/posts/zabbix-monitor-server/</link>

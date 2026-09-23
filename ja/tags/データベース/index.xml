@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>データベース on DAWN&#39;s Blog</title>
+    <link>https://LMDAWN1127.github.io/ja/tags/%E3%83%87%E3%83%BC%E3%82%BF%E3%83%99%E3%83%BC%E3%82%B9/</link>
+    <description>Recent content in データベース on DAWN&#39;s Blog</description>
+    <image>
+      <title>DAWN&#39;s Blog</title>
+      <url>https://LMDAWN1127.github.io/images/DAWN.jpg</url>
+      <link>https://LMDAWN1127.github.io/images/DAWN.jpg</link>
+    </image>
+    <generator>Hugo</generator>
+    <language>ja</language>
+    <lastBuildDate>Wed, 23 Sep 2026 16:00:00 +0800</lastBuildDate>
+    <atom:link href="https://LMDAWN1127.github.io/ja/tags/%E3%83%87%E3%83%BC%E3%82%BF%E3%83%99%E3%83%BC%E3%82%B9/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Zabbix データベースの分割</title>
+      <link>https://LMDAWN1127.github.io/ja/posts/zabbix-split-database/</link>
+      <pubDate>Wed, 23 Sep 2026 16:00:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/ja/posts/zabbix-split-database/</guid>
+      <description>企業の Zabbix 高負荷シナリオ向け — Zabbix サーバーから専用の MariaDB サーバー (11.0.1.52) へデータベースを分割します。データベース作成と権限付与、データのエクスポート/インポート、Web UI と Server のデータベース接続設定の変更、そしてサービスの再起動まで。</description>
+    </item>
+  </channel>
+</rss>
