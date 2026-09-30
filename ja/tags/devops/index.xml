@@ -11,28 +11,14 @@
     </image>
     <generator>Hugo</generator>
     <language>ja</language>
-    <lastBuildDate>Thu, 30 Jul 2026 12:00:00 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 01 Oct 2026 01:20:00 +0800</lastBuildDate>
     <atom:link href="https://LMDAWN1127.github.io/ja/tags/devops/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Dockerfile のビルドイメージが大きすぎる？10 のテクニックでイメージを 90% スリム化</title>
-      <link>https://LMDAWN1127.github.io/ja/posts/dockerfile-smaller-image/</link>
-      <pubDate>Thu, 30 Jul 2026 12:00:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/ja/posts/dockerfile-smaller-image/</guid>
-      <description>10 の実証済みテクニックで、Docker イメージサイズを 90% 以上削減します。</description>
-    </item>
-    <item>
-      <title>Dockerfile のビルドをより速くするには？10 の実用的な最適化テクニック</title>
-      <link>https://LMDAWN1127.github.io/ja/posts/dockerfile-faster-build/</link>
-      <pubDate>Thu, 30 Jul 2026 11:00:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/ja/posts/dockerfile-faster-build/</guid>
-      <description>10 の実証済みテクニックで、キャッシュ戦略からマルチステージビルドまで、Docker のビルド時間を大幅に短縮します。</description>
-    </item>
-    <item>
-      <title>Dockerfile における COPY と ADD の違いを詳しく解説</title>
-      <link>https://LMDAWN1127.github.io/ja/posts/dockerfile-copy-vs-add/</link>
-      <pubDate>Thu, 30 Jul 2026 10:00:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/ja/posts/dockerfile-copy-vs-add/</guid>
-      <description>COPY と ADD はどちらもファイルをコピーできますが、動作に大きな違いがあります。本記事では比較とサンプルを通じて両者の違いを明確に解説します。</description>
+      <title>Git 実践ノート：インストール・基本コマンド・ブランチ管理</title>
+      <link>https://LMDAWN1127.github.io/ja/posts/git-practice-notes/</link>
+      <pubDate>Thu, 01 Oct 2026 01:20:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/ja/posts/git-practice-notes/</guid>
+      <description>インストールから基本コマンド、ブランチ運用、コンフリクト解決までを網羅した Git 実践メモ。</description>
     </item>
   </channel>
 </rss>

@@ -28,7 +28,7 @@
                 />
   </url><url>
     <loc>https://LMDAWN1127.github.io/ko/categories/</loc>
-    <lastmod>2026-09-23T18:30:00+08:00</lastmod>
+    <lastmod>2026-10-01T01:20:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
@@ -53,7 +53,7 @@
                 />
   </url><url>
     <loc>https://LMDAWN1127.github.io/ko/</loc>
-    <lastmod>2026-09-23T18:30:00+08:00</lastmod>
+    <lastmod>2026-10-01T01:20:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
@@ -77,8 +77,108 @@
                 href="https://LMDAWN1127.github.io/ja/"
                 />
   </url><url>
+    <loc>https://LMDAWN1127.github.io/ko/categories/devops/</loc>
+    <lastmod>2026-10-01T01:20:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://LMDAWN1127.github.io/categories/devops/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://LMDAWN1127.github.io/en/categories/devops/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="ko"
+                href="https://LMDAWN1127.github.io/ko/categories/devops/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="ja"
+                href="https://LMDAWN1127.github.io/ja/categories/devops/"
+                />
+  </url><url>
+    <loc>https://LMDAWN1127.github.io/ko/tags/devops/</loc>
+    <lastmod>2026-10-01T01:20:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://LMDAWN1127.github.io/tags/devops/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://LMDAWN1127.github.io/en/tags/devops/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="ko"
+                href="https://LMDAWN1127.github.io/ko/tags/devops/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="ja"
+                href="https://LMDAWN1127.github.io/ja/tags/devops/"
+                />
+  </url><url>
+    <loc>https://LMDAWN1127.github.io/ko/tags/git/</loc>
+    <lastmod>2026-10-01T01:20:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://LMDAWN1127.github.io/tags/git/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://LMDAWN1127.github.io/en/tags/git/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="ko"
+                href="https://LMDAWN1127.github.io/ko/tags/git/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="ja"
+                href="https://LMDAWN1127.github.io/ja/tags/git/"
+                />
+  </url><url>
+    <loc>https://LMDAWN1127.github.io/ko/posts/git-practice-notes/</loc>
+    <lastmod>2026-10-01T01:20:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://LMDAWN1127.github.io/posts/git-practice-notes/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://LMDAWN1127.github.io/en/posts/git-practice-notes/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="ko"
+                href="https://LMDAWN1127.github.io/ko/posts/git-practice-notes/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="ja"
+                href="https://LMDAWN1127.github.io/ja/posts/git-practice-notes/"
+                />
+  </url><url>
     <loc>https://LMDAWN1127.github.io/ko/posts/</loc>
-    <lastmod>2026-09-23T18:30:00+08:00</lastmod>
+    <lastmod>2026-10-01T01:20:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
@@ -103,7 +203,7 @@
                 />
   </url><url>
     <loc>https://LMDAWN1127.github.io/ko/tags/</loc>
-    <lastmod>2026-09-23T18:30:00+08:00</lastmod>
+    <lastmod>2026-10-01T01:20:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
@@ -126,6 +226,11 @@
                 hreflang="ja"
                 href="https://LMDAWN1127.github.io/ja/tags/"
                 />
+  </url><url>
+    <loc>https://LMDAWN1127.github.io/ko/tags/%EB%B2%84%EC%A0%84-%EA%B4%80%EB%A6%AC/</loc>
+    <lastmod>2026-10-01T01:20:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
   </url><url>
     <loc>https://LMDAWN1127.github.io/ko/tags/userparameter/</loc>
     <lastmod>2026-09-23T18:30:00+08:00</lastmod>
@@ -586,31 +691,6 @@
     <lastmod>2026-08-07T13:52:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
-  </url><url>
-    <loc>https://LMDAWN1127.github.io/ko/categories/devops/</loc>
-    <lastmod>2026-08-04T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-    <xhtml:link
-                rel="alternate"
-                hreflang="zh-cn"
-                href="https://LMDAWN1127.github.io/categories/devops/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="https://LMDAWN1127.github.io/en/categories/devops/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="ko"
-                href="https://LMDAWN1127.github.io/ko/categories/devops/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="ja"
-                href="https://LMDAWN1127.github.io/ja/categories/devops/"
-                />
   </url><url>
     <loc>https://LMDAWN1127.github.io/ko/tags/docker/</loc>
     <lastmod>2026-08-04T00:00:00+00:00</lastmod>

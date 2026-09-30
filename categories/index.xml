@@ -11,8 +11,15 @@
     </image>
     <generator>Hugo</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Wed, 23 Sep 2026 18:30:00 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 01 Oct 2026 01:20:00 +0800</lastBuildDate>
     <atom:link href="https://LMDAWN1127.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>DevOps</title>
+      <link>https://LMDAWN1127.github.io/categories/devops/</link>
+      <pubDate>Thu, 01 Oct 2026 01:20:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/categories/devops/</guid>
+      <description></description>
+    </item>
     <item>
       <title>Zabbix</title>
       <link>https://LMDAWN1127.github.io/categories/zabbix/</link>
@@ -39,13 +46,6 @@
       <link>https://LMDAWN1127.github.io/categories/%E8%BF%90%E7%BB%B4%E9%83%A8%E7%BD%B2/</link>
       <pubDate>Fri, 07 Aug 2026 13:52:00 +0800</pubDate>
       <guid>https://LMDAWN1127.github.io/categories/%E8%BF%90%E7%BB%B4%E9%83%A8%E7%BD%B2/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>DevOps</title>
-      <link>https://LMDAWN1127.github.io/categories/devops/</link>
-      <pubDate>Tue, 04 Aug 2026 00:00:00 +0000</pubDate>
-      <guid>https://LMDAWN1127.github.io/categories/devops/</guid>
       <description></description>
     </item>
     <item>

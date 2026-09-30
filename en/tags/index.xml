@@ -11,8 +11,29 @@
     </image>
     <generator>Hugo</generator>
     <language>en</language>
-    <lastBuildDate>Wed, 23 Sep 2026 18:30:00 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 01 Oct 2026 01:20:00 +0800</lastBuildDate>
     <atom:link href="https://LMDAWN1127.github.io/en/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>DevOps</title>
+      <link>https://LMDAWN1127.github.io/en/tags/devops/</link>
+      <pubDate>Thu, 01 Oct 2026 01:20:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/tags/devops/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Git</title>
+      <link>https://LMDAWN1127.github.io/en/tags/git/</link>
+      <pubDate>Thu, 01 Oct 2026 01:20:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/tags/git/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Version Control</title>
+      <link>https://LMDAWN1127.github.io/en/tags/version-control/</link>
+      <pubDate>Thu, 01 Oct 2026 01:20:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/tags/version-control/</guid>
+      <description></description>
+    </item>
     <item>
       <title>Custom-Monitoring</title>
       <link>https://LMDAWN1127.github.io/en/tags/custom-monitoring/</link>

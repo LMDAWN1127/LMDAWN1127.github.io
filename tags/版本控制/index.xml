@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>版本控制 on DAWN&#39;s Blog</title>
+    <link>https://LMDAWN1127.github.io/tags/%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6/</link>
+    <description>Recent content in 版本控制 on DAWN&#39;s Blog</description>
+    <image>
+      <title>DAWN&#39;s Blog</title>
+      <url>https://LMDAWN1127.github.io/images/DAWN.jpg</url>
+      <link>https://LMDAWN1127.github.io/images/DAWN.jpg</link>
+    </image>
+    <generator>Hugo</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Thu, 01 Oct 2026 01:20:00 +0800</lastBuildDate>
+    <atom:link href="https://LMDAWN1127.github.io/tags/%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Git 实战笔记：安装配置、常用命令与分支管理</title>
+      <link>https://LMDAWN1127.github.io/posts/git-practice-notes/</link>
+      <pubDate>Thu, 01 Oct 2026 01:20:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/posts/git-practice-notes/</guid>
+      <description>从安装配置到常用命令，再到分支管理与冲突合并，一份完整的 Git 实操记录。</description>
+    </item>
+  </channel>
+</rss>
