@@ -3,7 +3,7 @@ title: "Docker Image Too Large? 10 Tips to Shrink It by 90%"
 date: 2026-07-30T12:00:00+08:00
 draft: false
 author: "DAWN"
-tags: ["Docker", "Dockerfile", "Image Optimization", "DevOps", "Containerization"]
+tags: ["Docker", "Dockerfile", "Image Optimization", "Containerization"]
 categories: ["Container Tech"]
 description: "10 proven techniques to reduce Docker image size by over 90%."
 summary: "Big Docker images slow down deployments and inflate storage costs? This article shares 10 proven techniques to shrink your image by more than 90%."

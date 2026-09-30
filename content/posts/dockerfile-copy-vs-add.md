@@ -3,7 +3,7 @@ title: "Dockerfile 中 COPY 与 ADD 的区别详解"
 date: 2026-07-30T10:00:00+08:00
 draft: false
 author: "DAWN"
-tags: ["Docker", "Dockerfile", "容器化", "DevOps"]
+tags: ["Docker", "Dockerfile", "容器化"]
 categories: ["容器技术"]
 description: "COPY 和 ADD 都能复制文件，但行为差异很大。本文通过对比和示例讲清两者区别。"
 summary: "COPY 和 ADD 都可以复制文件，但它们有本质区别。本文详解两者差异，助你写出更好的 Dockerfile。"

@@ -3,7 +3,7 @@ title: "Dockerfile のビルドイメージが大きすぎる？10 のテクニ�
 date: 2026-07-30T12:00:00+08:00
 draft: false
 author: "DAWN"
-tags: ["Docker", "Dockerfile", "イメージ最適化", "DevOps", "コンテナ化"]
+tags: ["Docker", "Dockerfile", "イメージ最適化", "コンテナ化"]
 categories: ["コンテナ技術"]
 description: "10 の実証済みテクニックで、Docker イメージサイズを 90% 以上削減します。"
 summary: "Docker イメージが大きすぎてデプロイが遅く、ストレージコストが高くなっていませんか？本記事では 10 の実証済み最適化テクニックを共有し、イメージを 90% 以上スリム化する方法を紹介します。"

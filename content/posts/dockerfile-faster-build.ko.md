@@ -3,7 +3,7 @@ title: "Dockerfile 빌드 속도를 높이는 방법? 10가지 실용적인 최�
 date: 2026-07-30T11:00:00+08:00
 draft: false
 author: "DAWN"
-tags: ["Docker", "Dockerfile", "성능 최적화", "DevOps", "CI/CD"]
+tags: ["Docker", "Dockerfile", "성능 최적화", "CI/CD"]
 categories: ["컨테이너 기술"]
 description: "캐시 전략부터 멀티스테이지 빌드까지, Docker 빌드 시간을 대폭 단축하는 검증된 10가지 팁을 소개합니다."
 summary: "Docker 빌드가 너무 느리신가요? 이 글에서는 캐시 전략부터 멀티스테이지 빌드까지, 빌드 시간을 대폭 단축할 수 있는 검증된 10가지 최적화 팁을 공유합니다."

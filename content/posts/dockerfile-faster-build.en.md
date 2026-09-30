@@ -3,7 +3,7 @@ title: "How to Make Dockerfile Builds Faster: 10 Practical Optimization Tips"
 date: 2026-07-30T11:00:00+08:00
 draft: false
 author: "DAWN"
-tags: ["Docker", "Dockerfile", "Performance", "DevOps", "CI/CD"]
+tags: ["Docker", "Dockerfile", "Performance", "CI/CD"]
 categories: ["Container Tech"]
 description: "10 proven tips — from cache strategy to multi-stage builds — to dramatically cut Docker build time."
 summary: "Docker builds too slow? This article shares 10 proven optimization tips, from cache strategy to multi-stage builds, to help you cut build time dramatically."

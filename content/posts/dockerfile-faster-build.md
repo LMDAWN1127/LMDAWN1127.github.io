@@ -3,7 +3,7 @@ title: "Dockerfile 构建镜像如何更快？10 个实用优化技巧"
 date: 2026-07-30T11:00:00+08:00
 draft: false
 author: "DAWN"
-tags: ["Docker", "Dockerfile", "性能优化", "DevOps", "CI/CD"]
+tags: ["Docker", "Dockerfile", "性能优化", "CI/CD"]
 categories: ["容器技术"]
 description: "10 个经过验证的技巧，从缓存策略到多阶段构建，大幅缩短 Docker 构建时间。"
 summary: "Docker 构建太慢？本文分享 10 个经过验证的优化技巧，从缓存策略到多阶段构建，帮你大幅缩短构建时间。"

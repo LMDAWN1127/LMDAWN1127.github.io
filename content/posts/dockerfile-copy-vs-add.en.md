@@ -3,7 +3,7 @@ title: "COPY vs ADD in Dockerfile: A Detailed Comparison"
 date: 2026-07-30T10:00:00+08:00
 draft: false
 author: "DAWN"
-tags: ["Docker", "Dockerfile", "Containerization", "DevOps"]
+tags: ["Docker", "Dockerfile", "Containerization"]
 categories: ["Container Tech"]
 description: "COPY and ADD can both copy files, but their behaviors differ greatly. This article explains the difference through side-by-side comparisons and examples."
 summary: "Both COPY and ADD can copy files, but they differ in fundamental ways. This article breaks down the differences and helps you write better Dockerfiles."

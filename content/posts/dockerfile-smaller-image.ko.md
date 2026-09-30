@@ -3,7 +3,7 @@ title: "Dockerfile 이미지가 너무 크다고요? 이미지 크기를 90% 줄
 date: 2026-07-30T12:00:00+08:00
 draft: false
 author: "DAWN"
-tags: ["Docker", "Dockerfile", "이미지 최적화", "DevOps", "컨테이너화"]
+tags: ["Docker", "Dockerfile", "이미지 최적화", "컨테이너화"]
 categories: ["컨테이너 기술"]
 description: "Docker 이미지 크기를 90% 이상 줄이는 검증된 10가지 팁을 소개합니다."
 summary: "Docker 이미지가 너무 커서 배포가 느리고 스토리지 비용이 부담되시나요? 이 글에서는 이미지 크기를 90% 이상 줄일 수 있는 검증된 10가지 최적화 팁을 공유합니다."

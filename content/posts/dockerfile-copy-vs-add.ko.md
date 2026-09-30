@@ -3,7 +3,7 @@ title: "Dockerfile에서 COPY와 ADD의 차이점 완벽 정리"
 date: 2026-07-30T10:00:00+08:00
 draft: false
 author: "DAWN"
-tags: ["Docker", "Dockerfile", "컨테이너화", "DevOps"]
+tags: ["Docker", "Dockerfile", "컨테이너화"]
 categories: ["컨테이너 기술"]
 description: "COPY와 ADD 모두 파일을 복사할 수 있지만 동작 방식에 큰 차이가 있습니다. 이 글에서는 비교와 예제를 통해 두 명령어의 차이점을 명확하게 설명합니다."
 summary: "COPY와 ADD 모두 파일을 복사할 수 있지만 근본적인 차이가 있습니다. 이 글에서는 두 명령어의 차이점을 상세히 분석하여 더 나은 Dockerfile을 작성할 수 있도록 도와드립니다."
