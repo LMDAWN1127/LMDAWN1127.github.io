@@ -11,8 +11,15 @@
     </image>
     <generator>Hugo</generator>
     <language>en</language>
-    <lastBuildDate>Thu, 01 Oct 2026 17:50:00 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 01 Oct 2026 21:28:00 +0800</lastBuildDate>
     <atom:link href="https://LMDAWN1127.github.io/en/tags/ci/cd/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Jenkins in Practice: Self-hosted Deployment, Plugin Setup, and GitLab-Driven CI</title>
+      <link>https://LMDAWN1127.github.io/en/posts/jenkins-practice/</link>
+      <pubDate>Thu, 01 Oct 2026 21:28:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/posts/jenkins-practice/</guid>
+      <description>A complete hands-on Jenkins self-hosting guide: RPM install of JDK and Jenkins, running as root, offline plugin install, and wiring GitLab SSH keyless access with webhook-triggered CI builds.</description>
+    </item>
     <item>
       <title>GitLab in Practice: Self-hosted Deployment, SSH Keyless Access, and Repository Management</title>
       <link>https://LMDAWN1127.github.io/en/posts/gitlab-practice/</link>
