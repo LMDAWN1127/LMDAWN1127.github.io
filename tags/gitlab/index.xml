@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>GitLab on DAWN&#39;s Blog</title>
+    <link>https://LMDAWN1127.github.io/tags/gitlab/</link>
+    <description>Recent content in GitLab on DAWN&#39;s Blog</description>
+    <image>
+      <title>DAWN&#39;s Blog</title>
+      <url>https://LMDAWN1127.github.io/images/DAWN.jpg</url>
+      <link>https://LMDAWN1127.github.io/images/DAWN.jpg</link>
+    </image>
+    <generator>Hugo</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Thu, 01 Oct 2026 17:50:00 +0800</lastBuildDate>
+    <atom:link href="https://LMDAWN1127.github.io/tags/gitlab/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>GitLab 实战：私有化部署、SSH 免密与代码仓库管理</title>
+      <link>https://LMDAWN1127.github.io/posts/gitlab-practice/</link>
+      <pubDate>Thu, 01 Oct 2026 17:50:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/posts/gitlab-practice/</guid>
+      <description>从 RPM 安装、组件构成、常用命令到 Web 配置、SSH 免密与多账号协作的完整 GitLab 私有化部署实战。</description>
+    </item>
+  </channel>
+</rss>

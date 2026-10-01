@@ -11,7 +11,7 @@
     </image>
     <generator>Hugo</generator>
     <language>en</language>
-    <lastBuildDate>Thu, 01 Oct 2026 01:20:00 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 01 Oct 2026 17:50:00 +0800</lastBuildDate>
     <atom:link href="https://LMDAWN1127.github.io/en/categories/devops/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Harbor Active-Standby Deployment: From Installation to HTTPS and Replication</title>
@@ -19,6 +19,13 @@
       <pubDate>Tue, 04 Aug 2026 00:00:00 +0000</pubDate>
       <guid>https://LMDAWN1127.github.io/en/posts/harbor-master-slave/</guid>
       <description>Complete guide to deploying Harbor enterprise Docker registry with active-standby architecture, HTTP/HTTPS modes, self-signed certificates, and cross-host replication.</description>
+    </item>
+    <item>
+      <title>GitLab in Practice: Self-hosted Deployment, SSH Keyless Access, and Repository Management</title>
+      <link>https://LMDAWN1127.github.io/en/posts/gitlab-practice/</link>
+      <pubDate>Thu, 01 Oct 2026 17:50:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/posts/gitlab-practice/</guid>
+      <description>A complete hands-on guide to self-hosting GitLab: RPM install, components, common commands, web UI setup, SSH keyless access, and multi-user collaboration.</description>
     </item>
     <item>
       <title>Git in Practice: Installation, Essential Commands, and Branch Management</title>

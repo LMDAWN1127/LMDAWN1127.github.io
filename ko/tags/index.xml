@@ -11,13 +11,27 @@
     </image>
     <generator>Hugo</generator>
     <language>ko</language>
-    <lastBuildDate>Thu, 01 Oct 2026 01:20:00 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 01 Oct 2026 17:50:00 +0800</lastBuildDate>
     <atom:link href="https://LMDAWN1127.github.io/ko/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>CI/CD</title>
+      <link>https://LMDAWN1127.github.io/ko/tags/ci/cd/</link>
+      <pubDate>Thu, 01 Oct 2026 17:50:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/ko/tags/ci/cd/</guid>
+      <description></description>
+    </item>
     <item>
       <title>DevOps</title>
       <link>https://LMDAWN1127.github.io/ko/tags/devops/</link>
-      <pubDate>Thu, 01 Oct 2026 01:20:00 +0800</pubDate>
+      <pubDate>Thu, 01 Oct 2026 17:50:00 +0800</pubDate>
       <guid>https://LMDAWN1127.github.io/ko/tags/devops/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>GitLab</title>
+      <link>https://LMDAWN1127.github.io/ko/tags/gitlab/</link>
+      <pubDate>Thu, 01 Oct 2026 17:50:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/ko/tags/gitlab/</guid>
       <description></description>
     </item>
     <item>
@@ -249,13 +263,6 @@
       <link>https://LMDAWN1127.github.io/ko/tags/%EC%BB%A8%ED%85%8C%EC%9D%B4%EB%84%88%ED%99%94/</link>
       <pubDate>Thu, 30 Jul 2026 12:00:00 +0800</pubDate>
       <guid>https://LMDAWN1127.github.io/ko/tags/%EC%BB%A8%ED%85%8C%EC%9D%B4%EB%84%88%ED%99%94/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>CI/CD</title>
-      <link>https://LMDAWN1127.github.io/ko/tags/ci/cd/</link>
-      <pubDate>Thu, 30 Jul 2026 11:00:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/ko/tags/ci/cd/</guid>
       <description></description>
     </item>
     <item>
