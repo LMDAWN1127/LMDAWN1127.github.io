@@ -202,7 +202,7 @@ Client IP: 11.0.1.201
 # 4. Persist the variable in /etc/profile
 [root@jenkins ~]# vim /etc/profile
 ..
-export PATH="$PATH:/usr/local/sonarqube/bin/"
+export PATH="$PATH:/usr/local/sonar/bin/"
 
 # 5. Test the client by scanning code to the server for analysis
 Push the blog code under /var/lib/jenkins/workspace/test_job/ to SonarQube for testing

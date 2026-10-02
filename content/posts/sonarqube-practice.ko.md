@@ -202,7 +202,7 @@ SonarQube 은 root 로 시작할 수 없으며 반드시 일반 사용자로 실
 # 4. 변수를 /etc/profile 에 영구 저장
 [root@jenkins ~]# vim /etc/profile
 ..
-export PATH="$PATH:/usr/local/sonarqube/bin/"
+export PATH="$PATH:/usr/local/sonar/bin/"
 
 # 5. 클라이언트에서 서버로 코드를 스캔해 분석 테스트
 /var/lib/jenkins/workspace/test_job/ 디렉터리의 blog 코드를 SonarQube 에 푸시하여 테스트

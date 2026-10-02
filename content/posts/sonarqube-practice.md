@@ -202,7 +202,7 @@ sonarqubeQube服务启动不能使用root,必须使用普通用户运行
 # 4. 永久变量写入/etc/profile
 [root@jenkins ~]# vim /etc/profile
 ..
-export PATH="$PATH:/usr/local/sonarqube/bin/"
+export PATH="$PATH:/usr/local/sonar/bin/"
 
 # 5. 客户端测试将代码扫描到服务器进行代码检测
 将/var/lib/jenkins/workspace/test_job/目录下的blog代码推送到SonrQube测试

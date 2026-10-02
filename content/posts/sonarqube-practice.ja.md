@@ -202,7 +202,7 @@ SonarQube は root では起動できず、一般ユーザーで実行する必�
 # 4. 変数を /etc/profile に永続化
 [root@jenkins ~]# vim /etc/profile
 ..
-export PATH="$PATH:/usr/local/sonarqube/bin/"
+export PATH="$PATH:/usr/local/sonar/bin/"
 
 # 5. クライアントからサーバーにコードをスキャンして解析テスト
 /var/lib/jenkins/workspace/test_job/ 配下の blog コードを SonarQube にプッシュしてテスト
