@@ -11,8 +11,15 @@
     </image>
     <generator>Hugo</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Thu, 01 Oct 2026 21:28:00 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 02 Oct 2026 14:12:00 +0800</lastBuildDate>
     <atom:link href="https://LMDAWN1127.github.io/tags/devops/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>SonarQube 实战：私有化部署、Token 配置与代码质量扫描</title>
+      <link>https://LMDAWN1127.github.io/posts/sonarqube-practice/</link>
+      <pubDate>Fri, 02 Oct 2026 14:12:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/posts/sonarqube-practice/</guid>
+      <description>从 JDK8 + MySQL5.6 安装、SonarQube 解压与插件部署、普通用户启动，到 Web Token 配置与 sonar-scanner 客户端代码扫描的完整私有化实战。</description>
+    </item>
     <item>
       <title>Jenkins 实战：私有化部署、插件安装与 GitLab 联动 CI</title>
       <link>https://LMDAWN1127.github.io/posts/jenkins-practice/</link>

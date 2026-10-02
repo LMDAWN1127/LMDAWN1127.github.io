@@ -11,8 +11,15 @@
     </image>
     <generator>Hugo</generator>
     <language>en</language>
-    <lastBuildDate>Thu, 01 Oct 2026 21:28:00 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 02 Oct 2026 14:12:00 +0800</lastBuildDate>
     <atom:link href="https://LMDAWN1127.github.io/en/tags/ci/cd/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>SonarQube in Practice: Self-hosted Deployment, Token Setup, and Code Quality Scanning</title>
+      <link>https://LMDAWN1127.github.io/en/posts/sonarqube-practice/</link>
+      <pubDate>Fri, 02 Oct 2026 14:12:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/posts/sonarqube-practice/</guid>
+      <description>A complete hands-on SonarQube self-hosting guide: JDK 8 and MySQL 5.6 setup, extracting SonarQube with plugins, running as a non-root user, web token configuration, and scanning code with the sonar-scanner client.</description>
+    </item>
     <item>
       <title>Jenkins in Practice: Self-hosted Deployment, Plugin Setup, and GitLab-Driven CI</title>
       <link>https://LMDAWN1127.github.io/en/posts/jenkins-practice/</link>

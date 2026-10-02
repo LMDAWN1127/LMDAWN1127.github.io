@@ -11,7 +11,7 @@
     </image>
     <generator>Hugo</generator>
     <language>ko</language>
-    <lastBuildDate>Thu, 01 Oct 2026 21:28:00 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 02 Oct 2026 14:12:00 +0800</lastBuildDate>
     <atom:link href="https://LMDAWN1127.github.io/ko/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Harbor 액티브-스탠바이 배포: 설치부터 HTTPS 및 복제까지</title>
@@ -19,6 +19,13 @@
       <pubDate>Tue, 04 Aug 2026 00:00:00 +0000</pubDate>
       <guid>https://LMDAWN1127.github.io/ko/posts/harbor-master-slave/</guid>
       <description>Harbor 엔터프라이즈 Docker 레지스트리의 액티브-스탠바이 아키텍처, HTTP/HTTPS 모드, 자체 서명 인증서, 크로스 호스트 복제를 완전히 다루는 배포 가이드입니다.</description>
+    </item>
+    <item>
+      <title>SonarQube 실전: 사설 배포, 토큰 설정, 코드 품질 스캔</title>
+      <link>https://LMDAWN1127.github.io/ko/posts/sonarqube-practice/</link>
+      <pubDate>Fri, 02 Oct 2026 14:12:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/ko/posts/sonarqube-practice/</guid>
+      <description>SonarQube 을 사설로 배포하는 실전 가이드: JDK8/MySQL5.6 설치, 플러그인 포함 압축 해제, 비 root 사용자 실행, 웹 토큰 설정, sonar-scanner 클라이언트 코드 스캔.</description>
     </item>
     <item>
       <title>Jenkins 실전: 사설 배포, 플러그인 설치, GitLab 연동 CI</title>
