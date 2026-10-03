@@ -11,14 +11,14 @@
     </image>
     <generator>Hugo</generator>
     <language>ko</language>
-    <lastBuildDate>Sun, 02 Aug 2026 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 03 Oct 2026 22:50:00 +0800</lastBuildDate>
     <atom:link href="https://LMDAWN1127.github.io/ko/tags/openstack/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>KVM 가상화 입문부터 실전까지: 배포, 관리 및 네트워크 구성</title>
-      <link>https://LMDAWN1127.github.io/ko/posts/kvm-virtualization-guide/</link>
-      <pubDate>Sun, 02 Aug 2026 00:00:00 +0000</pubDate>
-      <guid>https://LMDAWN1127.github.io/ko/posts/kvm-virtualization-guide/</guid>
-      <description>KVM 가상화 기술을 체계적으로 소개합니다. 발전 역사, 배포 방법, 가상 머신 관리, 네트워크 모드 구성 및 명령줄을 통한 가상 머신 자동 설치를 다룹니다.</description>
+      <title>OpenStack 클라우드 OS: 핵심 아키텍처 및 자동화 배포</title>
+      <link>https://LMDAWN1127.github.io/ko/posts/openstack-core-architecture-deployment/</link>
+      <pubDate>Sat, 03 Oct 2026 22:50:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/ko/posts/openstack-core-architecture-deployment/</guid>
+      <description>Nova/Glance/Neutron/Cinder 등 핵심 컴포넌트부터 Packstack 기반 Victoria 릴리스 원클릭 자동 배포, 그리고 Rsyslog 로그 트러블슈팅까지.</description>
     </item>
   </channel>
 </rss>

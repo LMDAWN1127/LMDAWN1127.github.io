@@ -11,8 +11,43 @@
     </image>
     <generator>Hugo</generator>
     <language>en</language>
-    <lastBuildDate>Sat, 03 Oct 2026 17:11:00 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 03 Oct 2026 22:50:00 +0800</lastBuildDate>
     <atom:link href="https://LMDAWN1127.github.io/en/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Automated Deployment</title>
+      <link>https://LMDAWN1127.github.io/en/tags/automated-deployment/</link>
+      <pubDate>Sat, 03 Oct 2026 22:50:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/tags/automated-deployment/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Cloud Computing</title>
+      <link>https://LMDAWN1127.github.io/en/tags/cloud-computing/</link>
+      <pubDate>Sat, 03 Oct 2026 22:50:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/tags/cloud-computing/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>OpenStack</title>
+      <link>https://LMDAWN1127.github.io/en/tags/openstack/</link>
+      <pubDate>Sat, 03 Oct 2026 22:50:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/tags/openstack/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Packstack</title>
+      <link>https://LMDAWN1127.github.io/en/tags/packstack/</link>
+      <pubDate>Sat, 03 Oct 2026 22:50:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/tags/packstack/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Victoria</title>
+      <link>https://LMDAWN1127.github.io/en/tags/victoria/</link>
+      <pubDate>Sat, 03 Oct 2026 22:50:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/tags/victoria/</guid>
+      <description></description>
+    </item>
     <item>
       <title>Multi-Version Deploy</title>
       <link>https://LMDAWN1127.github.io/en/tags/multi-version-deploy/</link>
@@ -277,13 +312,6 @@
       <link>https://LMDAWN1127.github.io/en/tags/linux/</link>
       <pubDate>Sun, 02 Aug 2026 00:00:00 +0000</pubDate>
       <guid>https://LMDAWN1127.github.io/en/tags/linux/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>OpenStack</title>
-      <link>https://LMDAWN1127.github.io/en/tags/openstack/</link>
-      <pubDate>Sun, 02 Aug 2026 00:00:00 +0000</pubDate>
-      <guid>https://LMDAWN1127.github.io/en/tags/openstack/</guid>
       <description></description>
     </item>
     <item>

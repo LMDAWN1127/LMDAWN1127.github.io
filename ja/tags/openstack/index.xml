@@ -11,14 +11,14 @@
     </image>
     <generator>Hugo</generator>
     <language>ja</language>
-    <lastBuildDate>Sun, 02 Aug 2026 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 03 Oct 2026 22:50:00 +0800</lastBuildDate>
     <atom:link href="https://LMDAWN1127.github.io/ja/tags/openstack/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>KVM仮想化 入門から実戦まで：デプロイ、管理とネットワーク構成</title>
-      <link>https://LMDAWN1127.github.io/ja/posts/kvm-virtualization-guide/</link>
-      <pubDate>Sun, 02 Aug 2026 00:00:00 +0000</pubDate>
-      <guid>https://LMDAWN1127.github.io/ja/posts/kvm-virtualization-guide/</guid>
-      <description>KVM仮想化技術を体系的に紹介します。発展の歴史、デプロイ方法、仮想マシン管理、ネットワークモードの構成、コマンドラインによる仮想マシンの自動インストールをカバーします。</description>
+      <title>OpenStack クラウド OS：コアアーキテクチャと自動化デプロイ</title>
+      <link>https://LMDAWN1127.github.io/ja/posts/openstack-core-architecture-deployment/</link>
+      <pubDate>Sat, 03 Oct 2026 22:50:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/ja/posts/openstack-core-architecture-deployment/</guid>
+      <description>コアコンポーネント（Nova/Glance/Neutron/Cinder など）から、Packstack を用いた Victoria リリースの一元自動デプロイ、さらに Rsyslog ログトラブルシューティングまで。</description>
     </item>
   </channel>
 </rss>

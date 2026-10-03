@@ -28,7 +28,7 @@
                 />
   </url><url>
     <loc>https://LMDAWN1127.github.io/ja/categories/</loc>
-    <lastmod>2026-10-03T17:11:00+08:00</lastmod>
+    <lastmod>2026-10-03T22:50:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
@@ -53,7 +53,7 @@
                 />
   </url><url>
     <loc>https://LMDAWN1127.github.io/ja/</loc>
-    <lastmod>2026-10-03T17:11:00+08:00</lastmod>
+    <lastmod>2026-10-03T22:50:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
@@ -76,6 +76,191 @@
                 hreflang="ja"
                 href="https://LMDAWN1127.github.io/ja/"
                 />
+  </url><url>
+    <loc>https://LMDAWN1127.github.io/ja/categories/openstack/</loc>
+    <lastmod>2026-10-03T22:50:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://LMDAWN1127.github.io/categories/openstack/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://LMDAWN1127.github.io/en/categories/openstack/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="ko"
+                href="https://LMDAWN1127.github.io/ko/categories/openstack/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="ja"
+                href="https://LMDAWN1127.github.io/ja/categories/openstack/"
+                />
+  </url><url>
+    <loc>https://LMDAWN1127.github.io/ja/tags/openstack/</loc>
+    <lastmod>2026-10-03T22:50:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://LMDAWN1127.github.io/tags/openstack/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://LMDAWN1127.github.io/en/tags/openstack/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="ko"
+                href="https://LMDAWN1127.github.io/ko/tags/openstack/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="ja"
+                href="https://LMDAWN1127.github.io/ja/tags/openstack/"
+                />
+  </url><url>
+    <loc>https://LMDAWN1127.github.io/ja/posts/openstack-core-architecture-deployment/</loc>
+    <lastmod>2026-10-03T22:50:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://LMDAWN1127.github.io/posts/openstack-core-architecture-deployment/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://LMDAWN1127.github.io/en/posts/openstack-core-architecture-deployment/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="ko"
+                href="https://LMDAWN1127.github.io/ko/posts/openstack-core-architecture-deployment/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="ja"
+                href="https://LMDAWN1127.github.io/ja/posts/openstack-core-architecture-deployment/"
+                />
+  </url><url>
+    <loc>https://LMDAWN1127.github.io/ja/tags/packstack/</loc>
+    <lastmod>2026-10-03T22:50:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://LMDAWN1127.github.io/tags/packstack/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://LMDAWN1127.github.io/en/tags/packstack/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="ko"
+                href="https://LMDAWN1127.github.io/ko/tags/packstack/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="ja"
+                href="https://LMDAWN1127.github.io/ja/tags/packstack/"
+                />
+  </url><url>
+    <loc>https://LMDAWN1127.github.io/ja/posts/</loc>
+    <lastmod>2026-10-03T22:50:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://LMDAWN1127.github.io/posts/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://LMDAWN1127.github.io/en/posts/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="ko"
+                href="https://LMDAWN1127.github.io/ko/posts/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="ja"
+                href="https://LMDAWN1127.github.io/ja/posts/"
+                />
+  </url><url>
+    <loc>https://LMDAWN1127.github.io/ja/tags/</loc>
+    <lastmod>2026-10-03T22:50:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://LMDAWN1127.github.io/tags/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://LMDAWN1127.github.io/en/tags/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="ko"
+                href="https://LMDAWN1127.github.io/ko/tags/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="ja"
+                href="https://LMDAWN1127.github.io/ja/tags/"
+                />
+  </url><url>
+    <loc>https://LMDAWN1127.github.io/ja/tags/victoria/</loc>
+    <lastmod>2026-10-03T22:50:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://LMDAWN1127.github.io/tags/victoria/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://LMDAWN1127.github.io/en/tags/victoria/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="ko"
+                href="https://LMDAWN1127.github.io/ko/tags/victoria/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="ja"
+                href="https://LMDAWN1127.github.io/ja/tags/victoria/"
+                />
+  </url><url>
+    <loc>https://LMDAWN1127.github.io/ja/tags/%E3%82%AF%E3%83%A9%E3%82%A6%E3%83%89%E3%82%B3%E3%83%B3%E3%83%94%E3%83%A5%E3%83%BC%E3%83%86%E3%82%A3%E3%83%B3%E3%82%B0/</loc>
+    <lastmod>2026-10-03T22:50:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url><url>
+    <loc>https://LMDAWN1127.github.io/ja/tags/%E8%87%AA%E5%8B%95%E5%8C%96%E3%83%87%E3%83%97%E3%83%AD%E3%82%A4/</loc>
+    <lastmod>2026-10-03T22:50:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
   </url><url>
     <loc>https://LMDAWN1127.github.io/ja/categories/mysql/</loc>
     <lastmod>2026-10-03T17:11:00+08:00</lastmod>
@@ -127,31 +312,6 @@
                 href="https://LMDAWN1127.github.io/ja/tags/mysql/"
                 />
   </url><url>
-    <loc>https://LMDAWN1127.github.io/ja/posts/</loc>
-    <lastmod>2026-10-03T17:11:00+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-    <xhtml:link
-                rel="alternate"
-                hreflang="zh-cn"
-                href="https://LMDAWN1127.github.io/posts/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="https://LMDAWN1127.github.io/en/posts/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="ko"
-                href="https://LMDAWN1127.github.io/ko/posts/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="ja"
-                href="https://LMDAWN1127.github.io/ja/posts/"
-                />
-  </url><url>
     <loc>https://LMDAWN1127.github.io/ja/tags/systemd/</loc>
     <lastmod>2026-10-03T17:11:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -200,31 +360,6 @@
                 rel="alternate"
                 hreflang="ja"
                 href="https://LMDAWN1127.github.io/ja/posts/systemd-mysql-multiversion/"
-                />
-  </url><url>
-    <loc>https://LMDAWN1127.github.io/ja/tags/</loc>
-    <lastmod>2026-10-03T17:11:00+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-    <xhtml:link
-                rel="alternate"
-                hreflang="zh-cn"
-                href="https://LMDAWN1127.github.io/tags/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="https://LMDAWN1127.github.io/en/tags/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="ko"
-                href="https://LMDAWN1127.github.io/ko/tags/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="ja"
-                href="https://LMDAWN1127.github.io/ja/tags/"
                 />
   </url><url>
     <loc>https://LMDAWN1127.github.io/ja/tags/%E3%83%9E%E3%83%AB%E3%83%81%E3%83%90%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3%E5%B0%8E%E5%85%A5/</loc>
@@ -1190,31 +1325,6 @@
                 rel="alternate"
                 hreflang="ja"
                 href="https://LMDAWN1127.github.io/ja/tags/linux/"
-                />
-  </url><url>
-    <loc>https://LMDAWN1127.github.io/ja/tags/openstack/</loc>
-    <lastmod>2026-08-02T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-    <xhtml:link
-                rel="alternate"
-                hreflang="zh-cn"
-                href="https://LMDAWN1127.github.io/tags/openstack/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="https://LMDAWN1127.github.io/en/tags/openstack/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="ko"
-                href="https://LMDAWN1127.github.io/ko/tags/openstack/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="ja"
-                href="https://LMDAWN1127.github.io/ja/tags/openstack/"
                 />
   </url><url>
     <loc>https://LMDAWN1127.github.io/ja/categories/%E4%BB%AE%E6%83%B3%E5%8C%96/</loc>

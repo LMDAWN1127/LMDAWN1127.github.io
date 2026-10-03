@@ -1,0 +1,1710 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto" data-theme="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>OpenStack Cloud OS: Core Architecture and Automated Deployment | DAWN&#39;s Blog</title>
+<meta name="keywords" content="OpenStack, Cloud Computing, Automated Deployment, Packstack, Victoria">
+<meta name="description" content="From core components (Nova/Glance/Neutron/Cinder, etc.) to one-click Packstack-based automated deployment of the Victoria release, plus Rsyslog log troubleshooting.">
+<meta name="author" content="DAWN">
+<link rel="canonical" href="https://LMDAWN1127.github.io/en/posts/openstack-core-architecture-deployment/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.4bf808bff57bddc46d61c8ae060b00400fc679ab876e37243b11bd3f832f2958.css" integrity="sha256-S/gIv/V73cRtYciuBgsAQA/GeauHbjckOxG9P4MvKVg=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://LMDAWN1127.github.io/images/DAWN.jpg">
+<link rel="icon" type="image/png" sizes="16x16" href="https://LMDAWN1127.github.io/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://LMDAWN1127.github.io/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://LMDAWN1127.github.io/apple-touch-icon.png">
+<link rel="mask-icon" href="https://LMDAWN1127.github.io/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="zh" href="https://LMDAWN1127.github.io/posts/openstack-core-architecture-deployment/">
+<link rel="alternate" hreflang="en" href="https://LMDAWN1127.github.io/en/posts/openstack-core-architecture-deployment/">
+<link rel="alternate" hreflang="ko" href="https://LMDAWN1127.github.io/ko/posts/openstack-core-architecture-deployment/">
+<link rel="alternate" hreflang="ja" href="https://LMDAWN1127.github.io/ja/posts/openstack-core-architecture-deployment/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+                color-scheme: dark;
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .toc {
+                background: var(--entry);
+            }
+        }
+
+    </style>
+</noscript>
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.querySelector("html").dataset.theme = 'dark';
+    } else if (localStorage.getItem("pref-theme") === "light") {
+       document.querySelector("html").dataset.theme = 'light';
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.querySelector("html").dataset.theme = 'dark';
+    } else {
+        document.querySelector("html").dataset.theme = 'light';
+    }
+
+</script><link rel="stylesheet" href='https://LMDAWN1127.github.io/css/custom.css'>
+<meta property="og:url" content="https://LMDAWN1127.github.io/en/posts/openstack-core-architecture-deployment/">
+  <meta property="og:site_name" content="DAWN&#39;s Blog">
+  <meta property="og:title" content="OpenStack Cloud OS: Core Architecture and Automated Deployment">
+  <meta property="og:description" content="From core components (Nova/Glance/Neutron/Cinder, etc.) to one-click Packstack-based automated deployment of the Victoria release, plus Rsyslog log troubleshooting.">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2026-10-03T22:50:00+08:00">
+    <meta property="article:modified_time" content="2026-10-03T22:50:00+08:00">
+    <meta property="article:tag" content="OpenStack">
+    <meta property="article:tag" content="Cloud Computing">
+    <meta property="article:tag" content="Automated Deployment">
+    <meta property="article:tag" content="Packstack">
+    <meta property="article:tag" content="Victoria">
+      <meta property="og:image" content="https://LMDAWN1127.github.io/images/DAWN.jpg">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://LMDAWN1127.github.io/images/DAWN.jpg">
+  <meta name="twitter:title" content="OpenStack Cloud OS: Core Architecture and Automated Deployment">
+  <meta name="twitter:description" content="From core components (Nova/Glance/Neutron/Cinder, etc.) to one-click Packstack-based automated deployment of the Victoria release, plus Rsyslog log troubleshooting.">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://LMDAWN1127.github.io/en/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "OpenStack Cloud OS: Core Architecture and Automated Deployment",
+      "item": "https://LMDAWN1127.github.io/en/posts/openstack-core-architecture-deployment/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "OpenStack Cloud OS: Core Architecture and Automated Deployment",
+  "name": "OpenStack Cloud OS: Core Architecture and Automated Deployment",
+  "description": "From core components (Nova/Glance/Neutron/Cinder, etc.) to one-click Packstack-based automated deployment of the Victoria release, plus Rsyslog log troubleshooting.",
+  "keywords": [
+    "OpenStack", "Cloud Computing", "Automated Deployment", "Packstack", "Victoria"
+  ],
+  "articleBody": "I. OpenStack Core Components and Their Roles 1. HORIZON — Unified Web Dashboard Service Core function: Provides a Web-based Dashboard graphical management console for cloud administrators and tenants to visually allocate and monitor cloud resources. 2. NOVA — Compute Resource Management Service Core function: Manages and configures virtualized compute resources in the cloud environment (nova-compute). Role division: Controller node: Runs scheduling services such as nova-api, nova-scheduler, and nova-conductor. When a user requests a new cloud instance, nova-api receives and parses the request, and nova-scheduler selects the best compute node for load scheduling based on policy. Compute node: The worker node that actually hosts running cloud instances (supports heterogeneous hypervisors such as KVM, VMware ESXi, and Xen). High availability and performance bottlenecks of the controller node: The controller node hosts all API gateways, databases, and message queues, creating HA and performance pressure; 3. GLANCE — Image Service Core function: Responsible for discovery, registration, retrieval, and storage management of OS images. Common disk image formats: Common KVM format: qcow2 (supports thin provisioning and copy-on-write, COW); Common VMware format: vmdk. Deployment recommendation: Usually co-located and integrated on the controller node for high availability. 4. SWIFT — Object Storage Service Core function: Provides a highly available, distributed, eventually-consistent object storage service (Object Storage), purpose-built for static unstructured data, cloud instance system images, and full data backups. 5. NEUTRON — Software-Defined Networking (SDN) Core function: Provides network-as-a-service in the cloud environment, managing virtual routers, switches, security groups, floating IPs, and cross-node traffic connectivity. Network technologies: Fully supports VLAN, VXLAN, Geneve, and distributed virtual routing (DVR); Hardware SDN mode: Production environments typically deploy 2 dedicated network nodes to build an active-active or active-standby cluster. 6. CINDER — Block Storage Service Core function: Provides persistent block storage (cloud disks) for cloud instances, with dynamic attach, detach, snapshot, and resize. Underlying backend integration: Integrates with traditional storage arrays: Huawei OceanStor, IBM, EMC, and other high-end hardware storage; Integrates with open-source distributed storage: Ceph RBD, GlusterFS, etc. Underlying mechanism: When a user requests a cloud disk, Cinder passes the instruction down to the backend storage system—essentially carving and mapping out a LUN within physical or distributed storage. Comparison: Object storage (e.g., Baidu Netdisk, Swift, S3) cannot be formatted and mounted directly as a block device for a cloud instance’s filesystem, whereas a Cinder block device can be formatted and mounted directly. 7. HEAT — Orchestration Service Core function: Based on declarative templates (HOT templates or AWS CloudFormation format), it automates one-click batch deployment of multiple VMs, database clusters, network topologies, and monitoring policies via graphical orchestration or scripts. 8. CEILOMETER — Telemetry \u0026 Monitoring Service Core function: Collects performance metrics, uptime, and usage of physical and virtual resources. Public cloud scenario: Records API call volume, network egress, and compute hours, integrating with the billing system; Private cloud scenario: Monitors tenant quota levels, identifies over-use or idle resources, and supports capacity planning. 9. KEYSTONE — Unified Identity \u0026 Authorization Service Core function: The security cornerstone of OpenStack, responsible for tenant (Project), user (User), role (Role), service catalog, and Token authentication across the platform. Enterprise identity federation: Can seamlessly integrate with the enterprise’s existing Windows Active Directory (AD) or Linux OpenLDAP to deliver enterprise-grade unified-account single sign-on (SSO); Workflow approval and privilege isolation (Huawei Cloud as an example): Supports multi-level cloud instance request and approval workflows (up to 5 approval levels); Enforces the “separation of three powers” security principle (security officer, system administrator, and auditor manage with separated privileges); Supports integration with the customer’s in-house OA/BPM approval-flow systems. Quick Reference Table of Core Components Component Code Name Core Service Function Horizon Dashboard Unified Web Graphical Management Console Nova Compute Compute Resource Lifecycle \u0026 Instance Scheduling Glance Image VM Image Storage \u0026 Version Registration Swift Object Large-Scale Unstructured Object Storage Service Neutron Network Software-Defined Networking (SDN), Routing \u0026 Security Group Management Cinder Block Persistent Block Storage (Cloud Disk) Management for Instances Heat Orchestration Infrastructure-as-Code (IaC) Multi-Resource Stack Orchestration Ceilometer Metering Resource Usage Statistics, Monitoring Metering \u0026 Quota Analysis Keystone Identity Unified Identity Authentication, Token \u0026 Service Catalog Management II. OpenStack Deployment Planning (Victoria Edition) 1. Deployment Method Comparison Open-source manual deployment: Compile and configure each component individually—tedious and complex, usually for deep learning of underlying mechanisms; Tool-based automated deployment: Ansible deployment (e.g., OpenStack-Ansible, Kolla-Ansible); Packstack deployment: Red Hat’s open-source, Puppet-based automated rapid-delivery tool (used in this walkthrough); 2. Cluster Node Specifications and Network Planning (1) Controller Node (1 unit) Hosted components: API services: nova-api, cinder-api, glance-api, neutron-server, etc.; Underlying base services: MariaDB / MySQL, RabbitMQ message queue, Memcached, Keystone; Network and management services: external routing on the network node, local YUM cache, and Chrony NTP server. System requirements: CPU: 4 vCPU minimum Memory: 4GB minimum Disk: 100GB available disk space NICs: 3 network cards (NIC 1 in bridged mode for Internet access; NIC 2 and NIC 3 in host-only mode for internal traffic) IP address planning: Internal management IP: 192.168.100.10 External access IP: 192.168.10.10 (2) Compute Node (1 unit) Hosted components: nova-compute, and the network L2 Agent (Open vSwitch Agent) System requirements: CPU: 4 vCPU minimum Memory: 8GB minimum (4GB at least) Disk: 100GB disk space NICs: 3 network cards (all in host-only mode) IP address planning: Compute: 192.168.100.11 (3) YUM Repository Server + Chrony NTP Server (1 unit) System requirements: CPU: 2 vCPU Memory: 2GB NICs: 2 cards (one bridged to the Internet for public time sync and upstream repos, the other host-only to serve internal nodes) IP address planning: External IP: 192.168.10.11 Internal IP: 192.168.100.20 Environment downgrade note: If your personal computer is short on hardware, you can compress down to a minimum of 2 VMs (the controller node also acts as the YUM source and NTP server, plus 1 compute node). Note: the system clocks of all nodes must stay highly consistent—clock drift must not exceed 5 minutes, otherwise Keystone handshakes and message-queue communication will fail entirely.\nIII. Full Automated Deployment Walkthrough Phase 1: YUM Repository Server and Chrony NTP Server Setup 1. Configure Network Interfaces 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 # 1. Configure the internal communication NIC ens160 [root@Cloud ~]# vim /etc/sysconfig/network-scripts/ifcfg-ens160 TYPE=Ethernet BOOTPROTO=none NAME=ens160 DEVICE=ens160 ONBOOT=yes IPADDR=192.168.100.20 PREFIX=24 # 2. Configure the Internet-facing NIC ens192 (for syncing public NTP) [root@Cloud ~]# vim /etc/sysconfig/network-scripts/ifcfg-ens192 TYPE=Ethernet BOOTPROTO=none NAME=ens192 DEVICE=ens192 ONBOOT=yes PROXY_METHOD=none BROWSER_ONLY=no IPADDR=192.168.10.11 PREFIX=24 GATEWAY=192.168.10.1 DNS1=192.168.10.1 DEFROUTE=yes IPV4_FAILURE_FATAL=no IPV6INIT=no UUID=03da7500-2101-c722-2438-d0d006c28c73 # Restart the NICs to apply the configuration [root@Cloud ~]# nmcli connection down ens160 ; nmcli connection up ens160 Connection 'ens160' successfully deactivated (D-Bus active path: /org/freedesktop/NetworkManager/ActiveConnection/1) Connection successfully activated (D-Bus active path: /org/freedesktop/NetworkManager/ActiveConnection/4) [root@Cloud ~]# nmcli connection down ens192 ; nmcli connection up ens192 Connection 'ens192' successfully deactivated (D-Bus active path: /org/freedesktop/NetworkManager/ActiveConnection/3) Connection successfully activated (D-Bus active path: /org/freedesktop/NetworkManager/ActiveConnection/5) 2. Configure Local CD-ROM YUM Repository 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 [root@Cloud ~]# cd /etc/yum.repos.d/ [root@Cloud yum.repos.d]# mkdir bak [root@Cloud yum.repos.d]# mv CentOS-Linux-* bak/ # Mount the OS installation ISO mount /dev/cdrom /media/ # Write the local CD-ROM repository config file [root@Cloud ~]# cat \u003e /etc/yum.repos.d/dvd.repo \u003c\u003c 'EOF' \u003e [BaseOS] \u003e name=BaseOS \u003e baseurl=file:///media/BaseOS \u003e gpgcheck=0 \u003e \u003e [AppStream] \u003e name=AppStream \u003e baseurl=file:///media/AppStream \u003e gpgcheck=0 \u003e EOF 3. Configure Chrony NTP Server Because OpenStack is extremely strict about inter-node clock synchronization, configure the time source first:\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 # Edit /etc/chrony.conf [root@Cloud ~]# vim /etc/chrony.conf # Use public servers from the pool.ntp.org project. # Please consider joining the pool (http://www.pool.ntp.org/join.html). pool ntp.tencent.com iburst # Allow NTP client access from local network. allow 192.168.100.0/24 # Serve time even if not synchronized to a time source. local stratum 10 # Restart and verify the time sync service [root@Cloud ~]# systemctl restart chronyd.service [root@Cloud ~]# chronyc sources 210 Number of sources = 1 MS Name/IP address Stratum Poll Reach LastRx Last sample =============================================================================== ^* 106.55.184.199 2 6 17 2 -224us[ -144us] +/- 54ms # Disable the firewall and SELinux [root@Cloud ~]# systemctl disable firewalld.service --now [root@Cloud ~]# setenforce 0 [root@Cloud ~]# sed -i 's/^SELINUX=.*/SELINUX=disabled/' /etc/selinux/config 4. Build an httpd-based Local Web YUM Repository Publish the CentOS 8 and OpenStack Victoria software repositories as an HTTP mirror source for all cluster nodes to pull from.\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 # 1. Install and start the Apache web service [root@Cloud ~]# yum -y install httpd [root@Cloud ~]# systemctl enable httpd --now # 2. Create directories and mount the image files [root@Cloud ~]# mkdir /isos [root@Cloud ~]# mkdir -p /var/www/html/centos8 [root@Cloud ~]# mkdir -p /var/www/html/openstack # Mount the base system CD and the OpenStack Victoria installation image [root@Cloud ~]# mount /dev/cdrom /var/www/html/centos8/ [root@Cloud ~]# mount /isos/26-CentOS8-4-OSP-Victoria.iso /var/www/html/openstack/ # 3. Persist the mounts in /etc/fstab [root@Cloud ~]# vim /etc/fstab /dev/cdrom /var/www/html/centos8 iso9660 defaults 0 0 /isos/26-CentOS8-4-OSP-Victoria.iso /var/www/html/openstack iso9660 defaults 0 0 # 4. Configure the HTTP YUM repository files [root@Cloud ~]# vim /etc/yum.repos.d/dvd.repo [BaseOS] name=BaseOS baseurl=http://192.168.100.20/centos8/BaseOS gpgcheck=0 [AppStream] name=AppStream baseurl=http://192.168.100.20/centos8/AppStream gpgcheck=0 [root@Cloud ~]# vim /etc/yum.repos.d/openstack.repo [centos-advanced-virtualization] name=centos-advanced-virtualization baseurl=http://192.168.100.20/openstack/centos-advanced-virtualization gpgcheck=0 [centos-nfv-openvswitch] name=centos-nfv-openvswitch baseurl=http://192.168.100.20/openstack/centos-nfv-openvswitch gpgcheck=0 [centos-rabbitmq-38] name=centos-rabbitmq-38 baseurl=http://192.168.100.20/openstack/centos-rabbitmq-38 gpgcheck=0 [PowerTools] name=PowerTools baseurl=http://192.168.100.20/openstack/PowerTools gpgcheck=0 [centos-ceph-nautilus] name=centos-ceph-nautilus baseurl=http://192.168.100.20/openstack/centos-ceph-nautilus gpgcheck=0 [centos-openstack-victoria] name=centos-openstack-victoria baseurl=http://192.168.100.20/openstack/centos-openstack-victoria gpgcheck=0 [extras] name=extras baseurl=http://192.168.100.20/openstack/extras gpgcheck=0 # 5. Distribute the prepared repo files to each controller and compute node [root@Cloud ~]# scp /etc/yum.repos.d/dvd.repo /etc/yum.repos.d/openstack.repo root@192.168.100.10:/etc/yum.repos.d/ [root@Cloud ~]# scp /etc/yum.repos.d/dvd.repo /etc/yum.repos.d/openstack.repo root@192.168.100.11:/etc/yum.repos.d/ Phase 2: System Environment Initialization for Each Cluster Node 1. Controller Node Initialization (192.168.100.10) 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 # 1. Configure the management network ens160 [root@Controller ~]# nmcli connection modify ens33 ipv4.addresses 192.168.100.10/24 ipv4.method manual autoconnect yes [root@Controller ~]# nmcli connection down ens160 ; nmcli connection up ens160 # 2. Configure the external network NIC ens224 [root@Controller ~]# vim /etc/sysconfig/network-scripts/ifcfg-ens224 TYPE=Ethernet BOOTPROTO=none NAME=ens224 DEVICE=ens224 ONBOOT=yes [root@Controller ~]# nmcli connection reload [root@Controller ~]# nmcli connection modify ens224 ipv4.addresses 192.168.10.10/24 ipv4.gateway 192.168.10.1 ipv4.dns 192.168.10.1 ipv4.method manual autoconnect yes [root@Controller ~]# nmcli connection down ens224 ; nmcli connection up ens224 # 3. Configure the Chrony NTP client [root@Controller ~]# vim /etc/chrony.conf # Use public servers from the pool.ntp.org project. # Please consider joining the pool (http://www.pool.ntp.org/join.html). pool 192.168.100.20 iburst [root@Controller ~]# systemctl restart chronyd.service [root@Controller ~]# chronyc sources 210 Number of sources = 1 MS Name/IP address Stratum Poll Reach LastRx Last sample =============================================================================== ^* 192.168.100.20 3 6 377 24 -22us[ -46us] +/- 43ms # 4. Set the hostname [root@Controller ~]# hostnamectl set-hostname Controller # 5. Disable the firewall and SELinux [root@Controller ~]# systemctl disable firewalld.service --now [root@Controller ~]# setenforce 0 [root@Controller ~]# sed -i 's/^SELINUX=.*/SELINUX=disabled/' /etc/selinux/config # 6. Configure cluster /etc/hosts resolution [root@Controller ~]# vim /etc/hosts 192.168.100.10 Controller 192.168.100.11 Compute # 7. Clean the default system repo cache [root@Controller ~]# cd /etc/yum.repos.d [root@Controller yum.repos.d]# mkdir -p bak \u0026\u0026 mv CentOS-Linux-* bak/ 2. Compute01 Node Initialization (192.168.9.11) 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 # 1. Configure the management network [root@Compute ~]# nmcli connection modify ens160 ipv4.addresses 192.168.100.11/24 ipv4.method manual autoconnect yes [root@Compute ~]# nmcli connection down ens160 ; nmcli connection up ens160 # 2. Configure the Chrony NTP client [root@Compute ~]# vim /etc/chrony.conf # Use public servers from the pool.ntp.org project. # Please consider joining the pool (http://www.pool.ntp.org/join.html). pool 192.168.100.20 iburst [root@Compute ~]# systemctl enable chronyd.service --now # 3. Set the hostname [root@Compute ~]# hostnamectl set-hostname Compute # 4. Disable the firewall and SELinux [root@Compute ~]# systemctl disable firewalld.service --now [root@Compute ~]# setenforce 0 [root@Compute ~]# sed -i 's/^SELINUX=.*/SELINUX=disabled/' /etc/selinux/config # 5. Configure cluster hosts resolution [root@Compute ~]# vim /etc/hosts 192.168.100.10 Controller 192.168.100.11 Compute # 6. Clean the default system repo [root@Compute ~]# cd /etc/yum.repos.d [root@Compute yum.repos.d]# mkdir -p bak \u0026\u0026 mv CentOS-Linux-* bak/ ⚠️ Key checkpoint: It is recommended to shut down all VMs at this point and take a unified snapshot for quick rollback if something goes wrong.\nPhase 3: Packstack Automated Answer-File Deployment 1. Install the Packstack Deployment Tool Run on the controller node (Controller):\n1 [root@Controller ~]# yum -y install openstack-packstack 2. Generate the Default Answer File 1 [root@Controller ~]# packstack --gen-answer-file=/root/answers.txt Networking note: OpenStack Victoria supports both OVN (Open Virtual Network) and the traditional OVS (Open vSwitch).\n3. Customize the Answer File Parameters 1 2 # Replace the auto-detected external IP with the internal management IP 192.168.100.10 [root@Controller ~]# sed -i 's/192.168.10.10/192.168.100.10/g' /root/answers.txt Edit /root/answers.txt and review and modify the following core configuration items:\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 # 1. Specify the compute node cluster IP list (comma-separated) CONFIG_COMPUTE_HOSTS=192.168.100.11 # 2. Set the Keystone admin root initial password CONFIG_KEYSTONE_ADMIN_PW=000000 # 3. Disable the Demo tenant network (production hardening) CONFIG_PROVISION_DEMO=n # 4. Enable Heat orchestration component support CONFIG_HEAT_INSTALL=y # 5. Neutron core driver and network type configuration (ML2 + OVS) CONFIG_NEUTRON_ML2_TYPE_DRIVERS=geneve,flat,vxlan,vlan CONFIG_NEUTRON_ML2_MECHANISM_DRIVERS=openvswitch CONFIG_NEUTRON_ML2_TENANT_NETWORK_TYPES=vxlan CONFIG_NEUTRON_L2_AGENT=openvswitch # 6. OVS external network bridge binding configuration (associates the physical external NIC ens224) CONFIG_NEUTRON_OVS_BRIDGE_MAPPINGS=extnet:br-ex CONFIG_NEUTRON_OVS_BRIDGE_IFACES=br-ex:ens224 # 7. Preset storage quota capacity CONFIG_SWIFT_STORAGE_SIZE=20G CONFIG_CINDER_VOLUMES_SIZE=50G ⚠️ Key checkpoint: After modifying the answer file, it is recommended to shut down all VMs again and take a snapshot.\n4. Execute One-Click Automated Deployment After powering on, run the deployment command on the controller node:\n1 [root@Controller ~]# packstack --answer-file=/root/answers.txt The deployment script uses Puppet to automatically complete software-source configuration, database table creation, message-queue cluster setup, certificate generation, and coordinated integration testing of all components across all nodes. When finished, it prints the Dashboard login URL and the keystonerc_admin environment-variable file path to the terminal.\nIV. Linux System Log Management and OpenStack Troubleshooting 1. Linux Rsyslog Log Levels and Configuration Architecture In Linux systems, logs from the low-level system and most services are centrally managed by the rsyslog daemon.\nView the config file: 1 2 rpm -qc rsyslog # Core main config file: /etc/rsyslog.conf Log Rule Syntax Analysis 1 facility.level(priority) log storage path Common configuration examples:\n1 2 3 4 5 6 7 8 9 # 1. General system messages: # Log all services \u003e=info level, but exclude mail, authpriv, and cron logs *.info;mail.none;authpriv.none;cron.none /var/log/messages # 2. Debug logs: *.debug /var/log/debug # 3. Error-level logs: *.err /var/log/error.log Syntax rule key points: mail: service facility; info: log priority level; .: denotes matching log messages at greater than or equal to (\u003e=) this priority; *.info: means all services’ \u003e= info level logs are aggregated and written to the target file. Real-Time Dynamic Log Monitoring Commands 1 2 3 4 5 # Follow the tail output of the system log tail /var/log/messages # Continuously tail the live log stream tail -f /var/log/messages 2. OpenStack Custom Service Log Troubleshooting Guidelines Troubleshooting principle: Each component usually has its own custom log-file system (under /var/log//). If a component misbehaves, prioritize its dedicated logs; only fall back to the system-wide log /var/log/messages when no custom log exists.\nCase Study: Locating Neutron Network Service Failures During deployment or operation, if virtual network creation fails or an OVS port does not come up, you can directly capture errors and warnings via regex matching:\n1 2 3 4 5 # 1. Regex-filter errors and warnings across all Neutron logs tail -f /var/log/neutron/*.log | grep -iE '(err|warn)' # 2. Deep-troubleshoot the neutron-server core API service log, printing 3 lines of context before and after each match: tail -f /var/log/neutron/server.log | grep -iE -A3 -B3 '(err|warn)' Parameter description:\n-i: ignore case; -E: enable extended regex matching (err|warn); -A 3 (After): print 3 lines after the match; -B 3 (Before): print 3 lines before the match. ",
+  "wordCount" : "2716",
+  "inLanguage": "en",
+  "image": "https://LMDAWN1127.github.io/images/DAWN.jpg","datePublished": "2026-10-03T22:50:00+08:00",
+  "dateModified": "2026-10-03T22:50:00+08:00",
+  "author":{
+    "@type": "Person",
+    "name": "DAWN"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://LMDAWN1127.github.io/en/posts/openstack-core-architecture-deployment/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "DAWN's Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://LMDAWN1127.github.io/images/DAWN.jpg"
+    }
+  }
+}
+</script>
+</head>
+<body id="top">
+    <header class="header">
+    <nav class="header-nav">
+        <div class="logo">
+            <a href="https://LMDAWN1127.github.io/en/" accesskey="h" title="DAWN&#39;s Blog (Alt + H)">
+                <img src="https://LMDAWN1127.github.io/images/DAWN.jpg" alt="" aria-label="logo"
+                    height="38">DAWN&#39;s Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" class="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
+                    <svg class="moon" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg class="sun" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button><span class="nav-sep">|</span>
+                    <ul class="lang-menu">
+                        <li>
+                            <a href="https://LMDAWN1127.github.io/" title="中文"
+                                aria-label="中文">Zh</a>
+                        </li>
+                        <li>
+                            <a href="https://LMDAWN1127.github.io/ko/" title="한국어"
+                                aria-label="한국어">Ko</a>
+                        </li>
+                        <li>
+                            <a href="https://LMDAWN1127.github.io/ja/" title="日本語"
+                                aria-label="日本語">Ja</a>
+                        </li>
+                    </ul>
+            </div>
+        </div>
+        <ul id="menu" class="menu">
+            <li>
+                <a href="https://LMDAWN1127.github.io/en/archives/" title="Archive">
+                    <span>Archive</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <h1 class="post-title entry-hint-parent">
+      OpenStack Cloud OS: Core Architecture and Automated Deployment
+    </h1>
+  </header>
+
+  <div class="post-layout">
+    <div class="post-content-wrapper"> 
+      <div class="post-content md-content"><h2 id="i-openstack-core-components-and-their-roles">I. OpenStack Core Components and Their Roles<a hidden class="anchor" aria-hidden="true" href="#i-openstack-core-components-and-their-roles">#</a></h2>
+<h3 id="1-horizon--unified-web-dashboard-service">1. HORIZON — Unified Web Dashboard Service<a hidden class="anchor" aria-hidden="true" href="#1-horizon--unified-web-dashboard-service">#</a></h3>
+<ul>
+<li><strong>Core function</strong>: Provides a Web-based Dashboard graphical management console for cloud administrators and tenants to visually allocate and monitor cloud resources.</li>
+</ul>
+<h3 id="2-nova--compute-resource-management-service">2. NOVA — Compute Resource Management Service<a hidden class="anchor" aria-hidden="true" href="#2-nova--compute-resource-management-service">#</a></h3>
+<ul>
+<li><strong>Core function</strong>: Manages and configures virtualized compute resources in the cloud environment (<code>nova-compute</code>).</li>
+<li><strong>Role division</strong>:
+<ul>
+<li><strong>Controller node</strong>: Runs scheduling services such as <code>nova-api</code>, <code>nova-scheduler</code>, and <code>nova-conductor</code>. When a user requests a new cloud instance, <code>nova-api</code> receives and parses the request, and <code>nova-scheduler</code> selects the best compute node for load scheduling based on policy.</li>
+<li><strong>Compute node</strong>: The worker node that actually hosts running cloud instances (supports heterogeneous hypervisors such as KVM, VMware ESXi, and Xen).</li>
+</ul>
+</li>
+<li><strong>High availability and performance bottlenecks of the controller node</strong>:
+<ul>
+<li>The controller node hosts all API gateways, databases, and message queues, creating HA and performance pressure;</li>
+</ul>
+</li>
+</ul>
+<h3 id="3-glance--image-service">3. GLANCE — Image Service<a hidden class="anchor" aria-hidden="true" href="#3-glance--image-service">#</a></h3>
+<ul>
+<li><strong>Core function</strong>: Responsible for discovery, registration, retrieval, and storage management of OS images.</li>
+<li><strong>Common disk image formats</strong>:
+<ul>
+<li>Common KVM format: <code>qcow2</code> (supports thin provisioning and copy-on-write, COW);</li>
+<li>Common VMware format: <code>vmdk</code>.</li>
+</ul>
+</li>
+<li><strong>Deployment recommendation</strong>: Usually co-located and integrated on the controller node for high availability.</li>
+</ul>
+<h3 id="4-swift--object-storage-service">4. SWIFT — Object Storage Service<a hidden class="anchor" aria-hidden="true" href="#4-swift--object-storage-service">#</a></h3>
+<ul>
+<li><strong>Core function</strong>: Provides a highly available, distributed, eventually-consistent object storage service (Object Storage), purpose-built for static unstructured data, cloud instance system images, and full data backups.</li>
+</ul>
+<h3 id="5-neutron--software-defined-networking-sdn">5. NEUTRON — Software-Defined Networking (SDN)<a hidden class="anchor" aria-hidden="true" href="#5-neutron--software-defined-networking-sdn">#</a></h3>
+<ul>
+<li><strong>Core function</strong>: Provides network-as-a-service in the cloud environment, managing virtual routers, switches, security groups, floating IPs, and cross-node traffic connectivity.</li>
+<li><strong>Network technologies</strong>: Fully supports VLAN, VXLAN, Geneve, and distributed virtual routing (DVR);</li>
+<li><strong>Hardware SDN mode</strong>: Production environments typically deploy 2 dedicated network nodes to build an active-active or active-standby cluster.</li>
+</ul>
+<h3 id="6-cinder--block-storage-service">6. CINDER — Block Storage Service<a hidden class="anchor" aria-hidden="true" href="#6-cinder--block-storage-service">#</a></h3>
+<ul>
+<li><strong>Core function</strong>: Provides persistent block storage (cloud disks) for cloud instances, with dynamic attach, detach, snapshot, and resize.</li>
+<li><strong>Underlying backend integration</strong>:
+<ul>
+<li>Integrates with traditional storage arrays: Huawei OceanStor, IBM, EMC, and other high-end hardware storage;</li>
+<li>Integrates with open-source distributed storage: Ceph RBD, GlusterFS, etc.</li>
+</ul>
+</li>
+<li><strong>Underlying mechanism</strong>: When a user requests a cloud disk, Cinder passes the instruction down to the backend storage system—essentially carving and mapping out a LUN within physical or distributed storage.</li>
+<li><strong>Comparison</strong>: Object storage (e.g., Baidu Netdisk, Swift, S3) cannot be formatted and mounted directly as a block device for a cloud instance&rsquo;s filesystem, whereas a Cinder block device can be formatted and mounted directly.</li>
+</ul>
+<h3 id="7-heat--orchestration-service">7. HEAT — Orchestration Service<a hidden class="anchor" aria-hidden="true" href="#7-heat--orchestration-service">#</a></h3>
+<ul>
+<li><strong>Core function</strong>: Based on declarative templates (HOT templates or AWS CloudFormation format), it automates one-click batch deployment of multiple VMs, database clusters, network topologies, and monitoring policies via graphical orchestration or scripts.</li>
+</ul>
+<h3 id="8-ceilometer--telemetry--monitoring-service">8. CEILOMETER — Telemetry &amp; Monitoring Service<a hidden class="anchor" aria-hidden="true" href="#8-ceilometer--telemetry--monitoring-service">#</a></h3>
+<ul>
+<li><strong>Core function</strong>: Collects performance metrics, uptime, and usage of physical and virtual resources.
+<ul>
+<li><strong>Public cloud scenario</strong>: Records API call volume, network egress, and compute hours, integrating with the billing system;</li>
+<li><strong>Private cloud scenario</strong>: Monitors tenant quota levels, identifies over-use or idle resources, and supports capacity planning.</li>
+</ul>
+</li>
+</ul>
+<h3 id="9-keystone--unified-identity--authorization-service">9. KEYSTONE — Unified Identity &amp; Authorization Service<a hidden class="anchor" aria-hidden="true" href="#9-keystone--unified-identity--authorization-service">#</a></h3>
+<ul>
+<li><strong>Core function</strong>: The security cornerstone of OpenStack, responsible for tenant (Project), user (User), role (Role), service catalog, and Token authentication across the platform.</li>
+<li><strong>Enterprise identity federation</strong>:
+<ul>
+<li>Can seamlessly integrate with the enterprise&rsquo;s existing Windows Active Directory (AD) or Linux OpenLDAP to deliver enterprise-grade unified-account single sign-on (SSO);</li>
+</ul>
+</li>
+<li><strong>Workflow approval and privilege isolation (Huawei Cloud as an example)</strong>:
+<ul>
+<li>Supports multi-level cloud instance request and approval workflows (up to 5 approval levels);</li>
+<li>Enforces the &ldquo;separation of three powers&rdquo; security principle (security officer, system administrator, and auditor manage with separated privileges);</li>
+<li>Supports integration with the customer&rsquo;s in-house OA/BPM approval-flow systems.</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="quick-reference-table-of-core-components">Quick Reference Table of Core Components<a hidden class="anchor" aria-hidden="true" href="#quick-reference-table-of-core-components">#</a></h3>
+<table>
+	<thead>
+			<tr>
+					<th style="text-align: left">Component</th>
+					<th style="text-align: left">Code Name</th>
+					<th style="text-align: left">Core Service Function</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td style="text-align: left"><strong>Horizon</strong></td>
+					<td style="text-align: left">Dashboard</td>
+					<td style="text-align: left">Unified Web Graphical Management Console</td>
+			</tr>
+			<tr>
+					<td style="text-align: left"><strong>Nova</strong></td>
+					<td style="text-align: left">Compute</td>
+					<td style="text-align: left">Compute Resource Lifecycle &amp; Instance Scheduling</td>
+			</tr>
+			<tr>
+					<td style="text-align: left"><strong>Glance</strong></td>
+					<td style="text-align: left">Image</td>
+					<td style="text-align: left">VM Image Storage &amp; Version Registration</td>
+			</tr>
+			<tr>
+					<td style="text-align: left"><strong>Swift</strong></td>
+					<td style="text-align: left">Object</td>
+					<td style="text-align: left">Large-Scale Unstructured Object Storage Service</td>
+			</tr>
+			<tr>
+					<td style="text-align: left"><strong>Neutron</strong></td>
+					<td style="text-align: left">Network</td>
+					<td style="text-align: left">Software-Defined Networking (SDN), Routing &amp; Security Group Management</td>
+			</tr>
+			<tr>
+					<td style="text-align: left"><strong>Cinder</strong></td>
+					<td style="text-align: left">Block</td>
+					<td style="text-align: left">Persistent Block Storage (Cloud Disk) Management for Instances</td>
+			</tr>
+			<tr>
+					<td style="text-align: left"><strong>Heat</strong></td>
+					<td style="text-align: left">Orchestration</td>
+					<td style="text-align: left">Infrastructure-as-Code (IaC) Multi-Resource Stack Orchestration</td>
+			</tr>
+			<tr>
+					<td style="text-align: left"><strong>Ceilometer</strong></td>
+					<td style="text-align: left">Metering</td>
+					<td style="text-align: left">Resource Usage Statistics, Monitoring Metering &amp; Quota Analysis</td>
+			</tr>
+			<tr>
+					<td style="text-align: left"><strong>Keystone</strong></td>
+					<td style="text-align: left">Identity</td>
+					<td style="text-align: left">Unified Identity Authentication, Token &amp; Service Catalog Management</td>
+			</tr>
+	</tbody>
+</table>
+<hr>
+<h2 id="ii-openstack-deployment-planning-victoria-edition">II. OpenStack Deployment Planning (Victoria Edition)<a hidden class="anchor" aria-hidden="true" href="#ii-openstack-deployment-planning-victoria-edition">#</a></h2>
+<h3 id="1-deployment-method-comparison">1. Deployment Method Comparison<a hidden class="anchor" aria-hidden="true" href="#1-deployment-method-comparison">#</a></h3>
+<ol>
+<li><strong>Open-source manual deployment</strong>: Compile and configure each component individually—tedious and complex, usually for deep learning of underlying mechanisms;</li>
+<li><strong>Tool-based automated deployment</strong>:
+<ul>
+<li><strong>Ansible deployment</strong> (e.g., OpenStack-Ansible, Kolla-Ansible);</li>
+<li><strong>Packstack deployment</strong>: Red Hat&rsquo;s open-source, Puppet-based automated rapid-delivery tool (used in this walkthrough);</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h3 id="2-cluster-node-specifications-and-network-planning">2. Cluster Node Specifications and Network Planning<a hidden class="anchor" aria-hidden="true" href="#2-cluster-node-specifications-and-network-planning">#</a></h3>
+<h4 id="1-controller-node-1-unit">(1) Controller Node (1 unit)<a hidden class="anchor" aria-hidden="true" href="#1-controller-node-1-unit">#</a></h4>
+<ul>
+<li><strong>Hosted components</strong>:
+<ul>
+<li>API services: <code>nova-api</code>, <code>cinder-api</code>, <code>glance-api</code>, <code>neutron-server</code>, etc.;</li>
+<li>Underlying base services: MariaDB / MySQL, RabbitMQ message queue, Memcached, Keystone;</li>
+<li>Network and management services: external routing on the network node, local YUM cache, and Chrony NTP server.</li>
+</ul>
+</li>
+<li><strong>System requirements</strong>:
+<ul>
+<li><strong>CPU</strong>: 4 vCPU minimum</li>
+<li><strong>Memory</strong>: 4GB minimum</li>
+<li><strong>Disk</strong>: 100GB available disk space</li>
+<li><strong>NICs</strong>: 3 network cards (NIC 1 in bridged mode for Internet access; NIC 2 and NIC 3 in host-only mode for internal traffic)</li>
+</ul>
+</li>
+<li><strong>IP address planning</strong>:
+<ul>
+<li>Internal management IP: 192.168.100.10</li>
+<li>External access IP: 192.168.10.10</li>
+</ul>
+</li>
+</ul>
+<h4 id="2-compute-node-1-unit">(2) Compute Node (1 unit)<a hidden class="anchor" aria-hidden="true" href="#2-compute-node-1-unit">#</a></h4>
+<ul>
+<li><strong>Hosted components</strong>: <code>nova-compute</code>, and the network L2 Agent (Open vSwitch Agent)</li>
+<li><strong>System requirements</strong>:
+<ul>
+<li><strong>CPU</strong>: 4 vCPU minimum</li>
+<li><strong>Memory</strong>: 8GB minimum (4GB at least)</li>
+<li><strong>Disk</strong>: 100GB disk space</li>
+<li><strong>NICs</strong>: 3 network cards (all in host-only mode)</li>
+</ul>
+</li>
+<li><strong>IP address planning</strong>:
+<ul>
+<li>Compute: 192.168.100.11</li>
+</ul>
+</li>
+</ul>
+<h4 id="3-yum-repository-server--chrony-ntp-server-1-unit">(3) YUM Repository Server + Chrony NTP Server (1 unit)<a hidden class="anchor" aria-hidden="true" href="#3-yum-repository-server--chrony-ntp-server-1-unit">#</a></h4>
+<ul>
+<li><strong>System requirements</strong>:
+<ul>
+<li><strong>CPU</strong>: 2 vCPU</li>
+<li><strong>Memory</strong>: 2GB</li>
+<li><strong>NICs</strong>: 2 cards (one bridged to the Internet for public time sync and upstream repos, the other host-only to serve internal nodes)</li>
+</ul>
+</li>
+<li><strong>IP address planning</strong>:
+<ul>
+<li>External IP: 192.168.10.11</li>
+<li>Internal IP: 192.168.100.20</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p><strong>Environment downgrade note</strong>: If your personal computer is short on hardware, you can <strong>compress down to a minimum of 2 VMs</strong> (the controller node also acts as the YUM source and NTP server, plus 1 compute node). Note: the system clocks of all nodes must stay highly consistent—<strong>clock drift must not exceed 5 minutes</strong>, otherwise Keystone handshakes and message-queue communication will fail entirely.</p>
+</blockquote>
+<hr>
+<h2 id="iii-full-automated-deployment-walkthrough">III. Full Automated Deployment Walkthrough<a hidden class="anchor" aria-hidden="true" href="#iii-full-automated-deployment-walkthrough">#</a></h2>
+<h3 id="phase-1-yum-repository-server-and-chrony-ntp-server-setup">Phase 1: YUM Repository Server and Chrony NTP Server Setup<a hidden class="anchor" aria-hidden="true" href="#phase-1-yum-repository-server-and-chrony-ntp-server-setup">#</a></h3>
+<h4 id="1-configure-network-interfaces">1. Configure Network Interfaces<a hidden class="anchor" aria-hidden="true" href="#1-configure-network-interfaces">#</a></h4>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">36
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 1. Configure the internal communication NIC ens160</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@Cloud ~<span style="color:#f92672">]</span><span style="color:#75715e"># vim /etc/sysconfig/network-scripts/ifcfg-ens160</span>
+</span></span><span style="display:flex;"><span>TYPE<span style="color:#f92672">=</span>Ethernet
+</span></span><span style="display:flex;"><span>BOOTPROTO<span style="color:#f92672">=</span>none
+</span></span><span style="display:flex;"><span>NAME<span style="color:#f92672">=</span>ens160
+</span></span><span style="display:flex;"><span>DEVICE<span style="color:#f92672">=</span>ens160
+</span></span><span style="display:flex;"><span>ONBOOT<span style="color:#f92672">=</span>yes
+</span></span><span style="display:flex;"><span>IPADDR<span style="color:#f92672">=</span>192.168.100.20
+</span></span><span style="display:flex;"><span>PREFIX<span style="color:#f92672">=</span><span style="color:#ae81ff">24</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 2. Configure the Internet-facing NIC ens192 (for syncing public NTP)</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@Cloud ~<span style="color:#f92672">]</span><span style="color:#75715e"># vim /etc/sysconfig/network-scripts/ifcfg-ens192</span>
+</span></span><span style="display:flex;"><span>TYPE<span style="color:#f92672">=</span>Ethernet
+</span></span><span style="display:flex;"><span>BOOTPROTO<span style="color:#f92672">=</span>none
+</span></span><span style="display:flex;"><span>NAME<span style="color:#f92672">=</span>ens192
+</span></span><span style="display:flex;"><span>DEVICE<span style="color:#f92672">=</span>ens192
+</span></span><span style="display:flex;"><span>ONBOOT<span style="color:#f92672">=</span>yes
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>PROXY_METHOD<span style="color:#f92672">=</span>none
+</span></span><span style="display:flex;"><span>BROWSER_ONLY<span style="color:#f92672">=</span>no
+</span></span><span style="display:flex;"><span>IPADDR<span style="color:#f92672">=</span>192.168.10.11
+</span></span><span style="display:flex;"><span>PREFIX<span style="color:#f92672">=</span><span style="color:#ae81ff">24</span>
+</span></span><span style="display:flex;"><span>GATEWAY<span style="color:#f92672">=</span>192.168.10.1
+</span></span><span style="display:flex;"><span>DNS1<span style="color:#f92672">=</span>192.168.10.1
+</span></span><span style="display:flex;"><span>DEFROUTE<span style="color:#f92672">=</span>yes
+</span></span><span style="display:flex;"><span>IPV4_FAILURE_FATAL<span style="color:#f92672">=</span>no
+</span></span><span style="display:flex;"><span>IPV6INIT<span style="color:#f92672">=</span>no
+</span></span><span style="display:flex;"><span>UUID<span style="color:#f92672">=</span>03da7500-2101-c722-2438-d0d006c28c73
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Restart the NICs to apply the configuration</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@Cloud ~<span style="color:#f92672">]</span><span style="color:#75715e"># nmcli connection down ens160 ; nmcli connection up ens160</span>
+</span></span><span style="display:flex;"><span>Connection <span style="color:#e6db74">&#39;ens160&#39;</span> successfully deactivated <span style="color:#f92672">(</span>D-Bus active path: /org/freedesktop/NetworkManager/ActiveConnection/1<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>Connection successfully activated <span style="color:#f92672">(</span>D-Bus active path: /org/freedesktop/NetworkManager/ActiveConnection/4<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@Cloud ~<span style="color:#f92672">]</span><span style="color:#75715e"># nmcli connection down ens192 ; nmcli connection up ens192</span>
+</span></span><span style="display:flex;"><span>Connection <span style="color:#e6db74">&#39;ens192&#39;</span> successfully deactivated <span style="color:#f92672">(</span>D-Bus active path: /org/freedesktop/NetworkManager/ActiveConnection/3<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>Connection successfully activated <span style="color:#f92672">(</span>D-Bus active path: /org/freedesktop/NetworkManager/ActiveConnection/5<span style="color:#f92672">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="2-configure-local-cd-rom-yum-repository">2. Configure Local CD-ROM YUM Repository<a hidden class="anchor" aria-hidden="true" href="#2-configure-local-cd-rom-yum-repository">#</a></h4>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@Cloud ~<span style="color:#f92672">]</span><span style="color:#75715e"># cd /etc/yum.repos.d/</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@Cloud yum.repos.d<span style="color:#f92672">]</span><span style="color:#75715e"># mkdir bak</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@Cloud yum.repos.d<span style="color:#f92672">]</span><span style="color:#75715e"># mv CentOS-Linux-* bak/</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Mount the OS installation ISO</span>
+</span></span><span style="display:flex;"><span>mount /dev/cdrom /media/
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Write the local CD-ROM repository config file</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@Cloud ~<span style="color:#f92672">]</span><span style="color:#75715e"># cat &gt; /etc/yum.repos.d/dvd.repo &lt;&lt; &#39;EOF&#39;</span>
+</span></span><span style="display:flex;"><span>&gt; <span style="color:#f92672">[</span>BaseOS<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>&gt; name<span style="color:#f92672">=</span>BaseOS
+</span></span><span style="display:flex;"><span>&gt; baseurl<span style="color:#f92672">=</span>file:///media/BaseOS
+</span></span><span style="display:flex;"><span>&gt; gpgcheck<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>&gt;
+</span></span><span style="display:flex;"><span>&gt; <span style="color:#f92672">[</span>AppStream<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>&gt; name<span style="color:#f92672">=</span>AppStream
+</span></span><span style="display:flex;"><span>&gt; baseurl<span style="color:#f92672">=</span>file:///media/AppStream
+</span></span><span style="display:flex;"><span>&gt; gpgcheck<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>&gt; EOF
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="3-configure-chrony-ntp-server">3. Configure Chrony NTP Server<a hidden class="anchor" aria-hidden="true" href="#3-configure-chrony-ntp-server">#</a></h4>
+<p>Because OpenStack is extremely strict about inter-node clock synchronization, configure the time source first:</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># Edit /etc/chrony.conf</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@Cloud ~<span style="color:#f92672">]</span><span style="color:#75715e"># vim /etc/chrony.conf</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Use public servers from the pool.ntp.org project.</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Please consider joining the pool (http://www.pool.ntp.org/join.html).</span>
+</span></span><span style="display:flex;"><span>pool ntp.tencent.com iburst
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Allow NTP client access from local network.</span>
+</span></span><span style="display:flex;"><span>allow 192.168.100.0/24
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Serve time even if not synchronized to a time source.</span>
+</span></span><span style="display:flex;"><span>local stratum <span style="color:#ae81ff">10</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Restart and verify the time sync service</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@Cloud ~<span style="color:#f92672">]</span><span style="color:#75715e"># systemctl restart chronyd.service</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@Cloud ~<span style="color:#f92672">]</span><span style="color:#75715e"># chronyc sources</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">210</span> Number of sources <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>MS Name/IP address         Stratum Poll Reach LastRx Last sample
+</span></span><span style="display:flex;"><span><span style="color:#f92672">===============================================================================</span>
+</span></span><span style="display:flex;"><span>^* 106.55.184.199                <span style="color:#ae81ff">2</span>   <span style="color:#ae81ff">6</span>    <span style="color:#ae81ff">17</span>     <span style="color:#ae81ff">2</span>   -224us<span style="color:#f92672">[</span> -144us<span style="color:#f92672">]</span> +/-   54ms
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Disable the firewall and SELinux</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@Cloud ~<span style="color:#f92672">]</span><span style="color:#75715e"># systemctl disable firewalld.service --now</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@Cloud ~<span style="color:#f92672">]</span><span style="color:#75715e"># setenforce 0</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@Cloud ~<span style="color:#f92672">]</span><span style="color:#75715e"># sed -i &#39;s/^SELINUX=.*/SELINUX=disabled/&#39; /etc/selinux/config</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="4-build-an-httpd-based-local-web-yum-repository">4. Build an httpd-based Local Web YUM Repository<a hidden class="anchor" aria-hidden="true" href="#4-build-an-httpd-based-local-web-yum-repository">#</a></h4>
+<p>Publish the CentOS 8 and OpenStack Victoria software repositories as an HTTP mirror source for all cluster nodes to pull from.</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">36
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">37
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">38
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">39
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">40
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">41
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">42
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">43
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">44
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">45
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">46
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">47
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">48
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">49
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">50
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">51
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">52
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">53
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">54
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">55
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">56
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">57
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">58
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">59
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">60
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">61
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">62
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">63
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">64
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">65
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">66
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">67
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">68
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">69
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">70
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">71
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">72
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">73
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">74
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">75
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 1. Install and start the Apache web service</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@Cloud ~<span style="color:#f92672">]</span><span style="color:#75715e"># yum -y install httpd</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@Cloud ~<span style="color:#f92672">]</span><span style="color:#75715e"># systemctl enable httpd --now</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 2. Create directories and mount the image files</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@Cloud ~<span style="color:#f92672">]</span><span style="color:#75715e"># mkdir /isos</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@Cloud ~<span style="color:#f92672">]</span><span style="color:#75715e"># mkdir -p /var/www/html/centos8</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@Cloud ~<span style="color:#f92672">]</span><span style="color:#75715e"># mkdir -p /var/www/html/openstack</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Mount the base system CD and the OpenStack Victoria installation image</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@Cloud ~<span style="color:#f92672">]</span><span style="color:#75715e"># mount /dev/cdrom /var/www/html/centos8/</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@Cloud ~<span style="color:#f92672">]</span><span style="color:#75715e"># mount /isos/26-CentOS8-4-OSP-Victoria.iso /var/www/html/openstack/</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 3. Persist the mounts in /etc/fstab</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@Cloud ~<span style="color:#f92672">]</span><span style="color:#75715e"># vim /etc/fstab</span>
+</span></span><span style="display:flex;"><span>/dev/cdrom              /var/www/html/centos8   iso9660  defaults  <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>/isos/26-CentOS8-4-OSP-Victoria.iso  /var/www/html/openstack iso9660 defaults <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 4. Configure the HTTP YUM repository files</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@Cloud ~<span style="color:#f92672">]</span><span style="color:#75715e"># vim /etc/yum.repos.d/dvd.repo</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>BaseOS<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>name<span style="color:#f92672">=</span>BaseOS
+</span></span><span style="display:flex;"><span>baseurl<span style="color:#f92672">=</span>http://192.168.100.20/centos8/BaseOS
+</span></span><span style="display:flex;"><span>gpgcheck<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>AppStream<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>name<span style="color:#f92672">=</span>AppStream
+</span></span><span style="display:flex;"><span>baseurl<span style="color:#f92672">=</span>http://192.168.100.20/centos8/AppStream
+</span></span><span style="display:flex;"><span>gpgcheck<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@Cloud ~<span style="color:#f92672">]</span><span style="color:#75715e"># vim /etc/yum.repos.d/openstack.repo</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>centos-advanced-virtualization<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>name<span style="color:#f92672">=</span>centos-advanced-virtualization
+</span></span><span style="display:flex;"><span>baseurl<span style="color:#f92672">=</span>http://192.168.100.20/openstack/centos-advanced-virtualization
+</span></span><span style="display:flex;"><span>gpgcheck<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>centos-nfv-openvswitch<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>name<span style="color:#f92672">=</span>centos-nfv-openvswitch
+</span></span><span style="display:flex;"><span>baseurl<span style="color:#f92672">=</span>http://192.168.100.20/openstack/centos-nfv-openvswitch
+</span></span><span style="display:flex;"><span>gpgcheck<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>centos-rabbitmq-38<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>name<span style="color:#f92672">=</span>centos-rabbitmq-38
+</span></span><span style="display:flex;"><span>baseurl<span style="color:#f92672">=</span>http://192.168.100.20/openstack/centos-rabbitmq-38
+</span></span><span style="display:flex;"><span>gpgcheck<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>PowerTools<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>name<span style="color:#f92672">=</span>PowerTools
+</span></span><span style="display:flex;"><span>baseurl<span style="color:#f92672">=</span>http://192.168.100.20/openstack/PowerTools
+</span></span><span style="display:flex;"><span>gpgcheck<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>centos-ceph-nautilus<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>name<span style="color:#f92672">=</span>centos-ceph-nautilus
+</span></span><span style="display:flex;"><span>baseurl<span style="color:#f92672">=</span>http://192.168.100.20/openstack/centos-ceph-nautilus
+</span></span><span style="display:flex;"><span>gpgcheck<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>centos-openstack-victoria<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>name<span style="color:#f92672">=</span>centos-openstack-victoria
+</span></span><span style="display:flex;"><span>baseurl<span style="color:#f92672">=</span>http://192.168.100.20/openstack/centos-openstack-victoria
+</span></span><span style="display:flex;"><span>gpgcheck<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>extras<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>name<span style="color:#f92672">=</span>extras
+</span></span><span style="display:flex;"><span>baseurl<span style="color:#f92672">=</span>http://192.168.100.20/openstack/extras
+</span></span><span style="display:flex;"><span>gpgcheck<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 5. Distribute the prepared repo files to each controller and compute node</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@Cloud ~<span style="color:#f92672">]</span><span style="color:#75715e"># scp /etc/yum.repos.d/dvd.repo /etc/yum.repos.d/openstack.repo root@192.168.100.10:/etc/yum.repos.d/</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@Cloud ~<span style="color:#f92672">]</span><span style="color:#75715e"># scp /etc/yum.repos.d/dvd.repo /etc/yum.repos.d/openstack.repo root@192.168.100.11:/etc/yum.repos.d/</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><hr>
+<h3 id="phase-2-system-environment-initialization-for-each-cluster-node">Phase 2: System Environment Initialization for Each Cluster Node<a hidden class="anchor" aria-hidden="true" href="#phase-2-system-environment-initialization-for-each-cluster-node">#</a></h3>
+<h4 id="1-controller-node-initialization-19216810010">1. Controller Node Initialization (192.168.100.10)<a hidden class="anchor" aria-hidden="true" href="#1-controller-node-initialization-19216810010">#</a></h4>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">36
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">37
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">38
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">39
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">40
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">41
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">42
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">43
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">44
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">45
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 1. Configure the management network ens160</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@Controller ~<span style="color:#f92672">]</span><span style="color:#75715e"># nmcli connection modify ens33 ipv4.addresses 192.168.100.10/24 ipv4.method manual autoconnect yes</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@Controller ~<span style="color:#f92672">]</span><span style="color:#75715e"># nmcli connection down ens160 ; nmcli connection up ens160</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 2. Configure the external network NIC ens224</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@Controller ~<span style="color:#f92672">]</span><span style="color:#75715e"># vim /etc/sysconfig/network-scripts/ifcfg-ens224</span>
+</span></span><span style="display:flex;"><span>TYPE<span style="color:#f92672">=</span>Ethernet
+</span></span><span style="display:flex;"><span>BOOTPROTO<span style="color:#f92672">=</span>none
+</span></span><span style="display:flex;"><span>NAME<span style="color:#f92672">=</span>ens224
+</span></span><span style="display:flex;"><span>DEVICE<span style="color:#f92672">=</span>ens224
+</span></span><span style="display:flex;"><span>ONBOOT<span style="color:#f92672">=</span>yes
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@Controller ~<span style="color:#f92672">]</span><span style="color:#75715e"># nmcli connection reload</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@Controller ~<span style="color:#f92672">]</span><span style="color:#75715e"># nmcli connection modify ens224  ipv4.addresses 192.168.10.10/24   ipv4.gateway 192.168.10.1   ipv4.dns 192.168.10.1   ipv4.method manual   autoconnect yes</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@Controller ~<span style="color:#f92672">]</span><span style="color:#75715e"># nmcli connection down ens224 ; nmcli connection up ens224</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 3. Configure the Chrony NTP client</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@Controller ~<span style="color:#f92672">]</span><span style="color:#75715e"># vim /etc/chrony.conf</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Use public servers from the pool.ntp.org project.</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Please consider joining the pool (http://www.pool.ntp.org/join.html).</span>
+</span></span><span style="display:flex;"><span>pool 192.168.100.20 iburst
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@Controller ~<span style="color:#f92672">]</span><span style="color:#75715e"># systemctl restart chronyd.service</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@Controller ~<span style="color:#f92672">]</span><span style="color:#75715e"># chronyc sources</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">210</span> Number of sources <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>MS Name/IP address         Stratum Poll Reach LastRx Last sample
+</span></span><span style="display:flex;"><span><span style="color:#f92672">===============================================================================</span>
+</span></span><span style="display:flex;"><span>^* 192.168.100.20                <span style="color:#ae81ff">3</span>   <span style="color:#ae81ff">6</span>   <span style="color:#ae81ff">377</span>    <span style="color:#ae81ff">24</span>    -22us<span style="color:#f92672">[</span>  -46us<span style="color:#f92672">]</span> +/-   43ms
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 4. Set the hostname</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@Controller ~<span style="color:#f92672">]</span><span style="color:#75715e"># hostnamectl set-hostname Controller</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 5. Disable the firewall and SELinux</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@Controller ~<span style="color:#f92672">]</span><span style="color:#75715e"># systemctl disable firewalld.service --now</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@Controller ~<span style="color:#f92672">]</span><span style="color:#75715e"># setenforce 0</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@Controller ~<span style="color:#f92672">]</span><span style="color:#75715e"># sed -i &#39;s/^SELINUX=.*/SELINUX=disabled/&#39; /etc/selinux/config</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 6. Configure cluster /etc/hosts resolution</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@Controller ~<span style="color:#f92672">]</span><span style="color:#75715e"># vim /etc/hosts</span>
+</span></span><span style="display:flex;"><span>192.168.100.10 Controller
+</span></span><span style="display:flex;"><span>192.168.100.11 Compute
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 7. Clean the default system repo cache</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@Controller ~<span style="color:#f92672">]</span><span style="color:#75715e"># cd /etc/yum.repos.d</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@Controller yum.repos.d<span style="color:#f92672">]</span><span style="color:#75715e"># mkdir -p bak &amp;&amp; mv CentOS-Linux-* bak/</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="2-compute01-node-initialization-192168911">2. Compute01 Node Initialization (192.168.9.11)<a hidden class="anchor" aria-hidden="true" href="#2-compute01-node-initialization-192168911">#</a></h4>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 1. Configure the management network</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@Compute ~<span style="color:#f92672">]</span><span style="color:#75715e"># nmcli connection modify ens160 ipv4.addresses 192.168.100.11/24 ipv4.method manual autoconnect yes</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@Compute ~<span style="color:#f92672">]</span><span style="color:#75715e"># nmcli connection down ens160 ; nmcli connection up ens160</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 2. Configure the Chrony NTP client</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@Compute ~<span style="color:#f92672">]</span><span style="color:#75715e"># vim /etc/chrony.conf</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Use public servers from the pool.ntp.org project.</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Please consider joining the pool (http://www.pool.ntp.org/join.html).</span>
+</span></span><span style="display:flex;"><span>pool 192.168.100.20 iburst
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@Compute ~<span style="color:#f92672">]</span><span style="color:#75715e"># systemctl enable chronyd.service --now</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 3. Set the hostname</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@Compute ~<span style="color:#f92672">]</span><span style="color:#75715e"># hostnamectl set-hostname Compute</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 4. Disable the firewall and SELinux</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@Compute ~<span style="color:#f92672">]</span><span style="color:#75715e"># systemctl disable firewalld.service --now</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@Compute ~<span style="color:#f92672">]</span><span style="color:#75715e"># setenforce 0</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@Compute ~<span style="color:#f92672">]</span><span style="color:#75715e"># sed -i &#39;s/^SELINUX=.*/SELINUX=disabled/&#39; /etc/selinux/config</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 5. Configure cluster hosts resolution</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@Compute ~<span style="color:#f92672">]</span><span style="color:#75715e"># vim /etc/hosts</span>
+</span></span><span style="display:flex;"><span>192.168.100.10 Controller
+</span></span><span style="display:flex;"><span>192.168.100.11 Compute
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 6. Clean the default system repo</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@Compute ~<span style="color:#f92672">]</span><span style="color:#75715e"># cd /etc/yum.repos.d</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@Compute yum.repos.d<span style="color:#f92672">]</span><span style="color:#75715e"># mkdir -p bak &amp;&amp; mv CentOS-Linux-* bak/</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>⚠️ <strong>Key checkpoint</strong>: It is recommended to shut down all VMs at this point and <strong>take a unified snapshot for quick rollback if something goes wrong.</strong></p>
+</blockquote>
+<hr>
+<h3 id="phase-3-packstack-automated-answer-file-deployment">Phase 3: Packstack Automated Answer-File Deployment<a hidden class="anchor" aria-hidden="true" href="#phase-3-packstack-automated-answer-file-deployment">#</a></h3>
+<h4 id="1-install-the-packstack-deployment-tool">1. Install the Packstack Deployment Tool<a hidden class="anchor" aria-hidden="true" href="#1-install-the-packstack-deployment-tool">#</a></h4>
+<p>Run on the controller node (Controller):</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@Controller ~<span style="color:#f92672">]</span><span style="color:#75715e"># yum -y install openstack-packstack</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="2-generate-the-default-answer-file">2. Generate the Default Answer File<a hidden class="anchor" aria-hidden="true" href="#2-generate-the-default-answer-file">#</a></h4>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@Controller ~<span style="color:#f92672">]</span><span style="color:#75715e"># packstack --gen-answer-file=/root/answers.txt</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p><strong>Networking note</strong>: OpenStack Victoria supports both OVN (Open Virtual Network) and the traditional OVS (Open vSwitch).</p>
+</blockquote>
+<h4 id="3-customize-the-answer-file-parameters">3. Customize the Answer File Parameters<a hidden class="anchor" aria-hidden="true" href="#3-customize-the-answer-file-parameters">#</a></h4>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># Replace the auto-detected external IP with the internal management IP 192.168.100.10</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@Controller ~<span style="color:#f92672">]</span><span style="color:#75715e"># sed -i &#39;s/192.168.10.10/192.168.100.10/g&#39; /root/answers.txt</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Edit <code>/root/answers.txt</code> and review and modify the following core configuration items:</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-ini" data-lang="ini"><span style="display:flex;"><span><span style="color:#75715e"># 1. Specify the compute node cluster IP list (comma-separated)</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">CONFIG_COMPUTE_HOSTS</span><span style="color:#f92672">=</span><span style="color:#e6db74">192.168.100.11</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 2. Set the Keystone admin root initial password</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">CONFIG_KEYSTONE_ADMIN_PW</span><span style="color:#f92672">=</span><span style="color:#e6db74">000000</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 3. Disable the Demo tenant network (production hardening)</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">CONFIG_PROVISION_DEMO</span><span style="color:#f92672">=</span><span style="color:#e6db74">n</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 4. Enable Heat orchestration component support</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">CONFIG_HEAT_INSTALL</span><span style="color:#f92672">=</span><span style="color:#e6db74">y</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 5. Neutron core driver and network type configuration (ML2 + OVS)</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">CONFIG_NEUTRON_ML2_TYPE_DRIVERS</span><span style="color:#f92672">=</span><span style="color:#e6db74">geneve,flat,vxlan,vlan</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">CONFIG_NEUTRON_ML2_MECHANISM_DRIVERS</span><span style="color:#f92672">=</span><span style="color:#e6db74">openvswitch</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">CONFIG_NEUTRON_ML2_TENANT_NETWORK_TYPES</span><span style="color:#f92672">=</span><span style="color:#e6db74">vxlan</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">CONFIG_NEUTRON_L2_AGENT</span><span style="color:#f92672">=</span><span style="color:#e6db74">openvswitch</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 6. OVS external network bridge binding configuration (associates the physical external NIC ens224)</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">CONFIG_NEUTRON_OVS_BRIDGE_MAPPINGS</span><span style="color:#f92672">=</span><span style="color:#e6db74">extnet:br-ex</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">CONFIG_NEUTRON_OVS_BRIDGE_IFACES</span><span style="color:#f92672">=</span><span style="color:#e6db74">br-ex:ens224</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 7. Preset storage quota capacity</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">CONFIG_SWIFT_STORAGE_SIZE</span><span style="color:#f92672">=</span><span style="color:#e6db74">20G</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">CONFIG_CINDER_VOLUMES_SIZE</span><span style="color:#f92672">=</span><span style="color:#e6db74">50G</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>⚠️ <strong>Key checkpoint</strong>: After modifying the answer file, it is recommended to shut down all VMs again and take a snapshot.</p>
+</blockquote>
+<h4 id="4-execute-one-click-automated-deployment">4. Execute One-Click Automated Deployment<a hidden class="anchor" aria-hidden="true" href="#4-execute-one-click-automated-deployment">#</a></h4>
+<p>After powering on, run the deployment command on the controller node:</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@Controller ~<span style="color:#f92672">]</span><span style="color:#75715e"># packstack --answer-file=/root/answers.txt</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>The deployment script uses Puppet to automatically complete software-source configuration, database table creation, message-queue cluster setup, certificate generation, and coordinated integration testing of all components across all nodes. When finished, it prints the Dashboard login URL and the <code>keystonerc_admin</code> environment-variable file path to the terminal.</p>
+<hr>
+<h2 id="iv-linux-system-log-management-and-openstack-troubleshooting">IV. Linux System Log Management and OpenStack Troubleshooting<a hidden class="anchor" aria-hidden="true" href="#iv-linux-system-log-management-and-openstack-troubleshooting">#</a></h2>
+<h3 id="1-linux-rsyslog-log-levels-and-configuration-architecture">1. Linux Rsyslog Log Levels and Configuration Architecture<a hidden class="anchor" aria-hidden="true" href="#1-linux-rsyslog-log-levels-and-configuration-architecture">#</a></h3>
+<p>In Linux systems, logs from the low-level system and most services are centrally managed by the <code>rsyslog</code> daemon.</p>
+<ul>
+<li><strong>View the config file</strong>:
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>rpm -qc rsyslog
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Core main config file: /etc/rsyslog.conf</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+<h4 id="log-rule-syntax-analysis">Log Rule Syntax Analysis<a hidden class="anchor" aria-hidden="true" href="#log-rule-syntax-analysis">#</a></h4>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>facility.level(priority)    log storage path
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Common configuration examples:</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">9
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-ini" data-lang="ini"><span style="display:flex;"><span><span style="color:#75715e"># 1. General system messages:</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Log all services &gt;=info level, but exclude mail, authpriv, and cron logs</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">*.info;mail.none;authpriv.none;cron.none    /var/log/messages</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 2. Debug logs:</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">*.debug                                     /var/log/debug</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 3. Error-level logs:</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">*.err                                       /var/log/error.log</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li><strong>Syntax rule key points</strong>:
+<ul>
+<li><code>mail</code>: service facility;</li>
+<li><code>info</code>: log priority level;</li>
+<li><code>.</code>: denotes matching log messages at <strong>greater than or equal to (&gt;=)</strong> this priority;</li>
+<li><code>*.info</code>: means all services&rsquo; <code>&gt;= info</code> level logs are aggregated and written to the target file.</li>
+</ul>
+</li>
+</ul>
+<h4 id="real-time-dynamic-log-monitoring-commands">Real-Time Dynamic Log Monitoring Commands<a hidden class="anchor" aria-hidden="true" href="#real-time-dynamic-log-monitoring-commands">#</a></h4>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># Follow the tail output of the system log</span>
+</span></span><span style="display:flex;"><span>tail /var/log/messages
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Continuously tail the live log stream</span>
+</span></span><span style="display:flex;"><span>tail -f /var/log/messages
+</span></span></code></pre></td></tr></table>
+</div>
+</div><hr>
+<h3 id="2-openstack-custom-service-log-troubleshooting-guidelines">2. OpenStack Custom Service Log Troubleshooting Guidelines<a hidden class="anchor" aria-hidden="true" href="#2-openstack-custom-service-log-troubleshooting-guidelines">#</a></h3>
+<blockquote>
+<p><strong>Troubleshooting principle</strong>: Each component usually has its own custom log-file system (under <code>/var/log/&lt;component&gt;/</code>). If a component misbehaves, <strong>prioritize its dedicated logs; only fall back to the system-wide log <code>/var/log/messages</code> when no custom log exists</strong>.</p>
+</blockquote>
+<h4 id="case-study-locating-neutron-network-service-failures">Case Study: Locating Neutron Network Service Failures<a hidden class="anchor" aria-hidden="true" href="#case-study-locating-neutron-network-service-failures">#</a></h4>
+<p>During deployment or operation, if virtual network creation fails or an OVS port does not come up, you can directly capture errors and warnings via regex matching:</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 1. Regex-filter errors and warnings across all Neutron logs</span>
+</span></span><span style="display:flex;"><span>tail -f /var/log/neutron/*.log | grep -iE <span style="color:#e6db74">&#39;(err|warn)&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 2. Deep-troubleshoot the neutron-server core API service log, printing 3 lines of context before and after each match:</span>
+</span></span><span style="display:flex;"><span>tail -f /var/log/neutron/server.log | grep -iE -A3 -B3 <span style="color:#e6db74">&#39;(err|warn)&#39;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><em>Parameter description</em>:</p>
+<ul>
+<li><code>-i</code>: ignore case;</li>
+<li><code>-E</code>: enable extended regex matching <code>(err|warn)</code>;</li>
+<li><code>-A 3</code> (After): print 3 lines after the match;</li>
+<li><code>-B 3</code> (Before): print 3 lines before the match.</li>
+</ul>
+
+
+      </div><div id="giscus-container" style="margin-top: 2rem; padding-top: 1rem; border-top: 1px solid var(--border);">
+  <script src="https://giscus.app/client.js"
+          data-repo="LMDAWN1127/LMDAWN1127.github.io"
+          data-repo-id="R_kgDOTMWmvw"
+          data-category="Announcements"
+          data-category-id="DIC_kwDOTMWmv84DAd3g"
+          data-mapping="pathname"
+          data-strict="0"
+          data-reactions-enabled="1"
+          data-emit-metadata="0"
+          data-input-position="bottom"
+          data-theme="preferred_color_scheme"
+          data-lang="zh-CN"
+          crossorigin="anonymous"
+          async>
+  </script>
+</div>
+
+    </div>
+
+    <aside class="toc-sidebar" id="toc-sidebar">
+    <div class="toc-header">目录</div>
+    <nav class="toc-nav"><ul class="toc-list">
+            <li>
+                <a href="#i-openstack-core-components-and-their-roles" class="toc-link" data-target="i-openstack-core-components-and-their-roles">I. OpenStack Core Components and Their Roles</a><ul>
+            <li>
+                <a href="#1-horizon--unified-web-dashboard-service" class="toc-link" data-target="1-horizon--unified-web-dashboard-service">1. HORIZON — Unified Web Dashboard Service</a></li>
+            <li>
+                <a href="#2-nova--compute-resource-management-service" class="toc-link" data-target="2-nova--compute-resource-management-service">2. NOVA — Compute Resource Management Service</a></li>
+            <li>
+                <a href="#3-glance--image-service" class="toc-link" data-target="3-glance--image-service">3. GLANCE — Image Service</a></li>
+            <li>
+                <a href="#4-swift--object-storage-service" class="toc-link" data-target="4-swift--object-storage-service">4. SWIFT — Object Storage Service</a></li>
+            <li>
+                <a href="#5-neutron--software-defined-networking-sdn" class="toc-link" data-target="5-neutron--software-defined-networking-sdn">5. NEUTRON — Software-Defined Networking (SDN)</a></li>
+            <li>
+                <a href="#6-cinder--block-storage-service" class="toc-link" data-target="6-cinder--block-storage-service">6. CINDER — Block Storage Service</a></li>
+            <li>
+                <a href="#7-heat--orchestration-service" class="toc-link" data-target="7-heat--orchestration-service">7. HEAT — Orchestration Service</a></li>
+            <li>
+                <a href="#8-ceilometer--telemetry--monitoring-service" class="toc-link" data-target="8-ceilometer--telemetry--monitoring-service">8. CEILOMETER — Telemetry &amp; Monitoring Service</a></li>
+            <li>
+                <a href="#9-keystone--unified-identity--authorization-service" class="toc-link" data-target="9-keystone--unified-identity--authorization-service">9. KEYSTONE — Unified Identity &amp; Authorization Service</a></li>
+            <li>
+                <a href="#quick-reference-table-of-core-components" class="toc-link" data-target="quick-reference-table-of-core-components">Quick Reference Table of Core Components</a></li></ul>
+            </li>
+            <li>
+                <a href="#ii-openstack-deployment-planning-victoria-edition" class="toc-link" data-target="ii-openstack-deployment-planning-victoria-edition">II. OpenStack Deployment Planning (Victoria Edition)</a><ul>
+            <li>
+                <a href="#1-deployment-method-comparison" class="toc-link" data-target="1-deployment-method-comparison">1. Deployment Method Comparison</a></li>
+            <li>
+                <a href="#2-cluster-node-specifications-and-network-planning" class="toc-link" data-target="2-cluster-node-specifications-and-network-planning">2. Cluster Node Specifications and Network Planning</a><ul>
+            <li>
+                <a href="#1-controller-node-1-unit" class="toc-link" data-target="1-controller-node-1-unit">(1) Controller Node (1 unit)</a></li>
+            <li>
+                <a href="#2-compute-node-1-unit" class="toc-link" data-target="2-compute-node-1-unit">(2) Compute Node (1 unit)</a></li>
+            <li>
+                <a href="#3-yum-repository-server--chrony-ntp-server-1-unit" class="toc-link" data-target="3-yum-repository-server--chrony-ntp-server-1-unit">(3) YUM Repository Server + Chrony NTP Server (1 unit)</a></li></ul>
+            </li></ul>
+            </li>
+            <li>
+                <a href="#iii-full-automated-deployment-walkthrough" class="toc-link" data-target="iii-full-automated-deployment-walkthrough">III. Full Automated Deployment Walkthrough</a><ul>
+            <li>
+                <a href="#phase-1-yum-repository-server-and-chrony-ntp-server-setup" class="toc-link" data-target="phase-1-yum-repository-server-and-chrony-ntp-server-setup">Phase 1: YUM Repository Server and Chrony NTP Server Setup</a><ul>
+            <li>
+                <a href="#1-configure-network-interfaces" class="toc-link" data-target="1-configure-network-interfaces">1. Configure Network Interfaces</a></li>
+            <li>
+                <a href="#2-configure-local-cd-rom-yum-repository" class="toc-link" data-target="2-configure-local-cd-rom-yum-repository">2. Configure Local CD-ROM YUM Repository</a></li>
+            <li>
+                <a href="#3-configure-chrony-ntp-server" class="toc-link" data-target="3-configure-chrony-ntp-server">3. Configure Chrony NTP Server</a></li>
+            <li>
+                <a href="#4-build-an-httpd-based-local-web-yum-repository" class="toc-link" data-target="4-build-an-httpd-based-local-web-yum-repository">4. Build an httpd-based Local Web YUM Repository</a></li></ul>
+            </li>
+            <li>
+                <a href="#phase-2-system-environment-initialization-for-each-cluster-node" class="toc-link" data-target="phase-2-system-environment-initialization-for-each-cluster-node">Phase 2: System Environment Initialization for Each Cluster Node</a><ul>
+            <li>
+                <a href="#1-controller-node-initialization-19216810010" class="toc-link" data-target="1-controller-node-initialization-19216810010">1. Controller Node Initialization (192.168.100.10)</a></li>
+            <li>
+                <a href="#2-compute01-node-initialization-192168911" class="toc-link" data-target="2-compute01-node-initialization-192168911">2. Compute01 Node Initialization (192.168.9.11)</a></li></ul>
+            </li>
+            <li>
+                <a href="#phase-3-packstack-automated-answer-file-deployment" class="toc-link" data-target="phase-3-packstack-automated-answer-file-deployment">Phase 3: Packstack Automated Answer-File Deployment</a><ul>
+            <li>
+                <a href="#1-install-the-packstack-deployment-tool" class="toc-link" data-target="1-install-the-packstack-deployment-tool">1. Install the Packstack Deployment Tool</a></li>
+            <li>
+                <a href="#2-generate-the-default-answer-file" class="toc-link" data-target="2-generate-the-default-answer-file">2. Generate the Default Answer File</a></li>
+            <li>
+                <a href="#3-customize-the-answer-file-parameters" class="toc-link" data-target="3-customize-the-answer-file-parameters">3. Customize the Answer File Parameters</a></li>
+            <li>
+                <a href="#4-execute-one-click-automated-deployment" class="toc-link" data-target="4-execute-one-click-automated-deployment">4. Execute One-Click Automated Deployment</a></li></ul>
+            </li></ul>
+            </li>
+            <li>
+                <a href="#iv-linux-system-log-management-and-openstack-troubleshooting" class="toc-link" data-target="iv-linux-system-log-management-and-openstack-troubleshooting">IV. Linux System Log Management and OpenStack Troubleshooting</a><ul>
+            <li>
+                <a href="#1-linux-rsyslog-log-levels-and-configuration-architecture" class="toc-link" data-target="1-linux-rsyslog-log-levels-and-configuration-architecture">1. Linux Rsyslog Log Levels and Configuration Architecture</a><ul>
+            <li>
+                <a href="#log-rule-syntax-analysis" class="toc-link" data-target="log-rule-syntax-analysis">Log Rule Syntax Analysis</a></li>
+            <li>
+                <a href="#real-time-dynamic-log-monitoring-commands" class="toc-link" data-target="real-time-dynamic-log-monitoring-commands">Real-Time Dynamic Log Monitoring Commands</a></li></ul>
+            </li>
+            <li>
+                <a href="#2-openstack-custom-service-log-troubleshooting-guidelines" class="toc-link" data-target="2-openstack-custom-service-log-troubleshooting-guidelines">2. OpenStack Custom Service Log Troubleshooting Guidelines</a><ul>
+            <li>
+                <a href="#case-study-locating-neutron-network-service-failures" class="toc-link" data-target="case-study-locating-neutron-network-service-failures">Case Study: Locating Neutron Network Service Failures</a>
+            </li>
+        </ul>
+        </li>
+        </ul>
+        </li>
+        </ul>
+    </nav>
+</aside>
+
+  </div>
+</article>
+    </main>
+    
+<a href="#top" id="top-link" class="top-link hidden" aria-label="go to top" title="Go to Top (Alt + G)" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevrons-up">
+        <polyline points="17 11 12 6 7 11"></polyline>
+        <polyline points="17 18 12 13 7 18"></polyline>
+    </svg>
+</a>
+<script defer src="/js/custom.js"></script>
+<div id="algolia-search-modal" class="algolia-modal" style="display: none;">
+  <div class="algolia-modal-overlay"></div>
+  <div class="algolia-modal-content">
+    <div class="algolia-search-header">
+      <div class="algolia-search-input-wrapper">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <input type="text" id="algolia-search-input" placeholder="搜索文章..." autofocus>
+        <kbd class="algolia-esc">Esc</kbd>
+      </div>
+    </div>
+    <div id="algolia-search-results" class="algolia-search-results">
+      <div class="algolia-empty-state">
+        <p>输入关键词开始搜索</p>
+      </div>
+    </div>
+    <div class="algolia-search-footer">
+      <span class="algolia-footer-text">
+        <kbd>↑</kbd> <kbd>↓</kbd> 导航
+        <kbd>↵</kbd> 打开
+        <kbd>Esc</kbd> 关闭
+      </span>
+      <span class="algolia-footer-logo">
+        搜索由 <a href="https://www.algolia.com/" target="_blank" rel="noopener">Algolia</a> 提供
+      </span>
+    </div>
+  </div>
+</div>
+
+<script>
+(function() {
+  'use strict';
+
+  var APP_ID = 'Y0SCRI4LCW';
+  var SEARCH_KEY = '03dda5e44aec7e0dd93b6a3653250b1f';
+  var INDEX_NAME = 'lmdawn1127-blog';
+  var API_URL = 'https://' + APP_ID + '-dsn.algolia.net/1/indexes/' + INDEX_NAME + '/query';
+  var debounceTimer = null;
+  var selectedIndex = -1;
+
+   
+  function doSearch(query) {
+    if (!query || !query.trim()) {
+      showEmpty();
+      return;
+    }
+
+    var body = JSON.stringify({
+      query: query,
+      hitsPerPage: 10,
+      attributesToRetrieve: ['title', 'content', 'url'],
+      attributesToHighlight: ['title', 'content'],
+      highlightPreTag: '<mark class="algolia-highlight">',
+      highlightPostTag: '</mark>'
+    });
+
+    fetch(API_URL, {
+      method: 'POST',
+      headers: {
+        'X-Algolia-Application-Id': APP_ID,
+        'X-Algolia-API-Key': SEARCH_KEY,
+        'Content-Type': 'application/json'
+      },
+      body: body
+    })
+    .then(function(resp) {
+      if (!resp.ok) throw new Error('HTTP ' + resp.status);
+      return resp.json();
+    })
+    .then(function(data) {
+      renderResults(data.hits || [], query);
+    })
+    .catch(function(err) {
+      console.error('Algolia search error:', err);
+      showError(err.message || '未知错误');
+    });
+  }
+
+   
+  function showEmpty() {
+    document.getElementById('algolia-search-results').innerHTML =
+      '<div class="algolia-empty-state"><p>输入关键词开始搜索</p></div>';
+  }
+
+  function showError(detail) {
+    var msg = '搜索出错，请稍后再试';
+    if (detail) msg += '<br><small style="color:#888">错误详情: ' + escapeHtml(detail) + '</small>';
+    document.getElementById('algolia-search-results').innerHTML =
+      '<div class="algolia-empty-state"><p>' + msg + '</p></div>';
+  }
+
+  function showNoResults(query) {
+    document.getElementById('algolia-search-results').innerHTML =
+      '<div class="algolia-empty-state"><p>未找到与「' + escapeHtml(query) + '」相关的结果</p></div>';
+  }
+
+  function escapeHtml(s) {
+    var d = document.createElement('div');
+    d.appendChild(document.createTextNode(s));
+    return d.innerHTML;
+  }
+
+  function getHL(hit, attr) {
+    if (hit._highlightResult && hit._highlightResult[attr]) return hit._highlightResult[attr].value;
+    return hit[attr] || '';
+  }
+
+  function trunc(s, n) {
+    if (!s) return '';
+    s = s.replace(/<[^>]+>/g, '');
+    return s.length > n ? s.substring(0, n) + '…' : s;
+  }
+
+  function renderResults(hits, query) {
+    var box = document.getElementById('algolia-search-results');
+    if (!hits.length) { showNoResults(query); return; }
+
+    var h = '<div class="algolia-results-count">' + hits.length + ' 个结果</div>';
+    hits.forEach(function(hit, i) {
+      var title = getHL(hit, 'title') || '无标题';
+      var content = getHL(hit, 'content');
+      var url = hit.url || '#';
+
+      h += '<a class="algolia-hit" href="' + url + '" data-index="' + i + '">';
+      h += '<div class="algolia-hit-title">' + title + '</div>';
+      h += '<div class="algolia-hit-content">' + trunc(content, 150) + '</div>';
+
+      h += '</a>';
+    });
+    box.innerHTML = h;
+
+    box.querySelectorAll('.algolia-hit').forEach(function(el) {
+      el.addEventListener('click', closeAlgoliaSearch);
+    });
+  }
+
+   
+  function onInput(e) {
+    var q = e.target.value;
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(function() { doSearch(q); }, 200);
+  }
+
+  function onKeydown(e) {
+    var hits = document.querySelectorAll('.algolia-hit');
+    if (!hits.length) return;
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      selectedIndex = Math.min(selectedIndex + 1, hits.length - 1);
+      sel(hits);
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      selectedIndex = Math.max(selectedIndex - 1, 0);
+      sel(hits);
+    } else if (e.key === 'Enter' && selectedIndex >= 0) {
+      e.preventDefault();
+      window.location.href = hits[selectedIndex].getAttribute('href');
+      closeAlgoliaSearch();
+    }
+  }
+
+  function sel(hits) {
+    hits.forEach(function(el, i) {
+      if (i === selectedIndex) { el.classList.add('selected'); el.scrollIntoView({ block: 'nearest' }); }
+      else el.classList.remove('selected');
+    });
+  }
+
+   
+  document.addEventListener('DOMContentLoaded', function() {
+    var input = document.getElementById('algolia-search-input');
+    if (input) {
+      input.addEventListener('input', onInput);
+      input.addEventListener('keydown', onKeydown);
+    }
+  });
+
+  window.openAlgoliaSearch = function() {
+    var modal = document.getElementById('algolia-search-modal');
+    modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+    setTimeout(function() {
+      var input = document.getElementById('algolia-search-input');
+      if (input) { input.value = ''; input.focus(); showEmpty(); }
+    }, 100);
+  };
+
+  window.closeAlgoliaSearch = function() {
+    document.getElementById('algolia-search-modal').style.display = 'none';
+    document.body.style.overflow = '';
+    selectedIndex = -1;
+  };
+})();
+</script>
+
+<style>
+  .algolia-modal{position:fixed;top:0;left:0;width:100%;height:100%;z-index:1000;display:flex;align-items:flex-start;justify-content:center;padding-top:10vh}
+  .algolia-modal-overlay{position:absolute;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.6);backdrop-filter:blur(4px)}
+  .algolia-modal-content{position:relative;width:90%;max-width:600px;background:#1a1a1a;border-radius:12px;box-shadow:0 20px 60px rgba(0,0,0,.5);overflow:hidden;border:1px solid #333}
+  .algolia-search-header{padding:16px;border-bottom:1px solid #333}
+  .algolia-search-input-wrapper{display:flex;align-items:center;gap:12px;background:#2a2a2a;border-radius:8px;padding:12px 16px;border:1px solid #444}
+  .algolia-search-input-wrapper svg{color:#666;flex-shrink:0}
+  #algolia-search-input{flex:1;background:transparent;border:none;outline:none;color:#fff;font-size:16px;font-family:inherit}
+  #algolia-search-input::placeholder{color:#666}
+  .algolia-esc{background:#444;color:#999;padding:2px 6px;border-radius:4px;font-size:11px;font-family:inherit}
+  .algolia-search-results{max-height:400px;overflow-y:auto;padding:8px}
+  .algolia-empty-state{padding:40px 20px;text-align:center;color:#666}
+  .algolia-results-count{padding:8px 12px;font-size:12px;color:#666}
+  .algolia-search-footer{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;border-top:1px solid #333;background:#222;font-size:12px;color:#666}
+  .algolia-footer-text kbd{background:#444;color:#999;padding:2px 4px;border-radius:3px;font-size:10px;margin:0 2px}
+  .algolia-footer-logo a{color:#5EEAD4;text-decoration:none}
+  .algolia-footer-logo a:hover{text-decoration:underline}
+  .algolia-hit{display:block;padding:12px;border-radius:6px;text-decoration:none;color:#fff;transition:background .2s}
+  .algolia-hit:hover,.algolia-hit.selected{background:#2a2a2a}
+  .algolia-hit-title{font-weight:600;color:#5EEAD4;margin-bottom:4px;font-size:15px}
+  .algolia-hit-title mark,.algolia-highlight{background:rgba(94,234,212,.25);color:#5EEAD4;padding:0 2px;border-radius:2px}
+  .algolia-hit-content{font-size:13px;color:#999;line-height:1.5}
+  .algolia-hit-content mark,.algolia-hit-content .algolia-highlight{background:rgba(94,234,212,.2);color:#ccc;padding:0 2px;border-radius:2px}
+  .algolia-hit-meta{display:flex;align-items:center;gap:10px;margin-top:8px}
+  .algolia-hit-date{font-size:12px;color:#666}
+  .algolia-hit-tags{display:flex;gap:6px}
+  .algolia-hit-tag{background:#333;color:#999;padding:2px 8px;border-radius:4px;font-size:11px}
+</style>
+<script>
+  
+  document.addEventListener('keydown', function(e) {
+    
+    if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+      e.preventDefault();
+      if (typeof openAlgoliaSearch === 'function') openAlgoliaSearch();
+    }
+    
+    if (e.key === 'Escape') {
+      if (typeof closeAlgoliaSearch === 'function') closeAlgoliaSearch();
+    }
+    
+    if (e.altKey && e.key === '/') {
+      e.preventDefault();
+      if (typeof openAlgoliaSearch === 'function') openAlgoliaSearch();
+    }
+  });
+
+  
+  document.addEventListener('DOMContentLoaded', function() {
+    var modal = document.getElementById('algolia-search-modal');
+    if (modal) {
+      var overlay = modal.querySelector('.algolia-modal-overlay');
+      if (overlay) {
+        overlay.addEventListener('click', function() {
+          if (typeof closeAlgoliaSearch === 'function') closeAlgoliaSearch();
+        });
+      }
+    }
+  });
+
+  
+  
+  document.addEventListener('DOMContentLoaded', function() {
+    if (document.getElementById('algolia-search-btn')) return;
+    var btn = document.createElement('button');
+    btn.id = 'algolia-search-btn';
+    btn.className = 'theme-toggle search-toggle';
+    btn.type = 'button';
+    btn.title = '搜索 (Ctrl+K)';
+    btn.setAttribute('aria-label', '搜索');
+    btn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>';
+    btn.addEventListener('click', function() {
+      if (typeof openAlgoliaSearch === 'function') openAlgoliaSearch();
+    });
+    var target = document.querySelector('.logo-switches') || document.querySelector('.header-nav');
+    if (target) target.appendChild(btn);
+  });
+</script><script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var cur = (document.documentElement.lang || 'zh').toLowerCase();
+    
+    
+    
+    var rawPath = location.pathname.replace(/\/+$/, '');
+    var pm = rawPath.match(/^\/(en|ko|ja)(?:\/(.*))?$/);
+    var rest = pm ? (pm[2] ? '/' + pm[2] : '') : rawPath; 
+    function langHref(code) {
+      var base = (code === 'zh') ? '' : '/' + code;
+      if (rest === '' || rest === '/') {
+        return base === '' ? '/' : base + '/';
+      }
+      return base + rest + '/';
+    }
+
+    var langs = [
+      { code: 'zh', label: '中文' },
+      { code: 'en', label: 'English' },
+      { code: 'ko', label: '한국어' },
+      { code: 'ja', label: '日本語' }
+    ];
+    var wrap = document.querySelector('.logo-switches') || document.querySelector('.header-nav');
+    if (!wrap || document.getElementById('lang-dropdown')) return;
+
+    var current = langs.find(function(l) { return l.code === cur; }) || langs[0];
+
+    var dd = document.createElement('div');
+    dd.className = 'lang-dropdown';
+    dd.id = 'lang-dropdown';
+
+    var toggle = document.createElement('button');
+    toggle.type = 'button';
+    toggle.className = 'lang-dropdown-toggle';
+    toggle.setAttribute('aria-label', '选择语言');
+    toggle.innerHTML = '<span class="lang-current">' + current.label + '</span><span class="lang-caret">▾</span>';
+
+    var menu = document.createElement('ul');
+    menu.className = 'lang-dropdown-menu';
+    langs.forEach(function(l) {
+      var li = document.createElement('li');
+      if (l.code === cur) li.className = 'active';
+      var a = document.createElement('a');
+      a.href = langHref(l.code);
+      a.textContent = l.label;
+      li.appendChild(a);
+      menu.appendChild(li);
+    });
+
+    dd.appendChild(toggle);
+    dd.appendChild(menu);
+    wrap.appendChild(dd);
+
+    toggle.addEventListener('click', function(e) {
+      e.stopPropagation();
+      dd.classList.toggle('open');
+    });
+    document.addEventListener('click', function(e) {
+      if (!dd.contains(e.target)) dd.classList.remove('open');
+    });
+  });
+</script>
+
+
+<script>
+    let menu = document.getElementById('menu');
+    if (menu) {
+        const scrollPosition = localStorage.getItem("menu-scroll-position");
+        if (scrollPosition) {
+            menu.scrollLeft = parseInt(scrollPosition, 10);
+        }
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+</script>
+<script>
+    var toplink = document.getElementById("top-link");
+    window.onscroll = function () {
+        const scrollThreshold = window.innerHeight;
+        if (document.body.scrollTop > scrollThreshold || document.documentElement.scrollTop > scrollThreshold) {
+            toplink.classList.remove("hidden");
+        } else {
+            toplink.classList.add("hidden");
+        }
+    };
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        const html = document.querySelector("html");
+        if (html.dataset.theme === "dark") {
+            html.dataset.theme = 'light';
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            html.dataset.theme = 'dark';
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>
