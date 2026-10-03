@@ -11,8 +11,15 @@
     </image>
     <generator>Hugo</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sat, 03 Oct 2026 14:53:00 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 03 Oct 2026 17:11:00 +0800</lastBuildDate>
     <atom:link href="https://LMDAWN1127.github.io/tags/mysql/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>systemd 服务管理与 MySQL 多版本部署</title>
+      <link>https://LMDAWN1127.github.io/posts/systemd-mysql-multiversion/</link>
+      <pubDate>Sat, 03 Oct 2026 17:11:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/posts/systemd-mysql-multiversion/</guid>
+      <description>围绕 systemd Unit 文件管理与 MySQL 5.6/5.7 多版本、多实例部署实战，涵盖两种生产守护进程配置、归档包下载、初始化、专属配置文件编写，以及启动/停止与三服务状态验证。</description>
+    </item>
     <item>
       <title>MySQL 实战：二进制安装部署、启动关闭与密码管理</title>
       <link>https://LMDAWN1127.github.io/posts/mysql-binary-deploy/</link>

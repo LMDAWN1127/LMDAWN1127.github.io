@@ -11,8 +11,29 @@
     </image>
     <generator>Hugo</generator>
     <language>en</language>
-    <lastBuildDate>Sat, 03 Oct 2026 14:53:00 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 03 Oct 2026 17:11:00 +0800</lastBuildDate>
     <atom:link href="https://LMDAWN1127.github.io/en/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Multi-Version Deploy</title>
+      <link>https://LMDAWN1127.github.io/en/tags/multi-version-deploy/</link>
+      <pubDate>Sat, 03 Oct 2026 17:11:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/tags/multi-version-deploy/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>MySQL</title>
+      <link>https://LMDAWN1127.github.io/en/tags/mysql/</link>
+      <pubDate>Sat, 03 Oct 2026 17:11:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/tags/mysql/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Systemd</title>
+      <link>https://LMDAWN1127.github.io/en/tags/systemd/</link>
+      <pubDate>Sat, 03 Oct 2026 17:11:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/tags/systemd/</guid>
+      <description></description>
+    </item>
     <item>
       <title>Binary Install</title>
       <link>https://LMDAWN1127.github.io/en/tags/binary-install/</link>
@@ -25,13 +46,6 @@
       <link>https://LMDAWN1127.github.io/en/tags/database/</link>
       <pubDate>Sat, 03 Oct 2026 14:53:00 +0800</pubDate>
       <guid>https://LMDAWN1127.github.io/en/tags/database/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>MySQL</title>
-      <link>https://LMDAWN1127.github.io/en/tags/mysql/</link>
-      <pubDate>Sat, 03 Oct 2026 14:53:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/en/tags/mysql/</guid>
       <description></description>
     </item>
     <item>

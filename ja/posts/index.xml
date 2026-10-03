@@ -11,7 +11,7 @@
     </image>
     <generator>Hugo</generator>
     <language>ja</language>
-    <lastBuildDate>Sat, 03 Oct 2026 14:53:00 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 03 Oct 2026 17:11:00 +0800</lastBuildDate>
     <atom:link href="https://LMDAWN1127.github.io/ja/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Harbor アクティブスタンバイデプロイ：インストールからHTTPS・レプリケーションまで</title>
@@ -19,6 +19,13 @@
       <pubDate>Tue, 04 Aug 2026 00:00:00 +0000</pubDate>
       <guid>https://LMDAWN1127.github.io/ja/posts/harbor-master-slave/</guid>
       <description>HarborエンタープライズDockerレジストリのアクティブスタンバイアーキテクチャ、HTTP/HTTPSモード、自己署名証明書、クロスホストレプリケーションを完全にカバーするデプロイガイドです。</description>
+    </item>
+    <item>
+      <title>systemd サービス管理と MySQL マルチバージョン導入</title>
+      <link>https://LMDAWN1127.github.io/ja/posts/systemd-mysql-multiversion/</link>
+      <pubDate>Sat, 03 Oct 2026 17:11:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/ja/posts/systemd-mysql-multiversion/</guid>
+      <description>systemd Unit 管理と MySQL 5.6/5.7 のマルチバージョン・マルチインスタンス導入実戦：2 種類の本番デーモン設定、アーカイブ入手、初期化、インスタンス別設定ファイル作成、および起動/停止と 3 サービス状態確認。</description>
     </item>
     <item>
       <title>MySQL 実践：バイナリインストール・起動停止・パスワード管理</title>

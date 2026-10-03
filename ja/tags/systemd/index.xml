@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Systemd on DAWN&#39;s Blog</title>
+    <link>https://LMDAWN1127.github.io/ja/tags/systemd/</link>
+    <description>Recent content in Systemd on DAWN&#39;s Blog</description>
+    <image>
+      <title>DAWN&#39;s Blog</title>
+      <url>https://LMDAWN1127.github.io/images/DAWN.jpg</url>
+      <link>https://LMDAWN1127.github.io/images/DAWN.jpg</link>
+    </image>
+    <generator>Hugo</generator>
+    <language>ja</language>
+    <lastBuildDate>Sat, 03 Oct 2026 17:11:00 +0800</lastBuildDate>
+    <atom:link href="https://LMDAWN1127.github.io/ja/tags/systemd/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>systemd サービス管理と MySQL マルチバージョン導入</title>
+      <link>https://LMDAWN1127.github.io/ja/posts/systemd-mysql-multiversion/</link>
+      <pubDate>Sat, 03 Oct 2026 17:11:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/ja/posts/systemd-mysql-multiversion/</guid>
+      <description>systemd Unit 管理と MySQL 5.6/5.7 のマルチバージョン・マルチインスタンス導入実戦：2 種類の本番デーモン設定、アーカイブ入手、初期化、インスタンス別設定ファイル作成、および起動/停止と 3 サービス状態確認。</description>
+    </item>
+  </channel>
+</rss>

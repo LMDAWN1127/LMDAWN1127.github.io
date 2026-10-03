@@ -11,8 +11,15 @@
     </image>
     <generator>Hugo</generator>
     <language>ko</language>
-    <lastBuildDate>Sat, 03 Oct 2026 14:53:00 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 03 Oct 2026 17:11:00 +0800</lastBuildDate>
     <atom:link href="https://LMDAWN1127.github.io/ko/tags/mysql/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>systemd 서비스 관리와 MySQL 멀티버전 배포</title>
+      <link>https://LMDAWN1127.github.io/ko/posts/systemd-mysql-multiversion/</link>
+      <pubDate>Sat, 03 Oct 2026 17:11:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/ko/posts/systemd-mysql-multiversion/</guid>
+      <description>systemd Unit 관리와 MySQL 5.6/5.7 멀티버전·다중 인스턴스 배포 실전: 두 가지 운영 데몬 구성, 아카이브 다운로드, 초기화, 인스턴스별 설정 파일 작성, 그리고 시작/중지 및 3개 서비스 상태 검증.</description>
+    </item>
     <item>
       <title>MySQL 실전: 바이너리 설치, 시작/중지, 비밀번호 관리</title>
       <link>https://LMDAWN1127.github.io/ko/posts/mysql-binary-deploy/</link>
