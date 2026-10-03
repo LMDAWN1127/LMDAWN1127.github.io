@@ -1,7 +1,7 @@
 ---
 title: "KVM Virtualization from Beginner to Practice: Deployment, Management, and Network Configuration"
 date: 2026-08-02
-tags: ["KVM", "Virtualization", "Linux", "CentOS"]
+tags: ["KVM", "Virtualization", "Linux", "CentOS", "OpenStack"]
 categories: ["Virtualization"]
 summary: "A systematic introduction to KVM virtualization technology, covering development history, deployment methods, virtual machine management, network mode configuration, and automated VM installation using the command line."
 showToc: true

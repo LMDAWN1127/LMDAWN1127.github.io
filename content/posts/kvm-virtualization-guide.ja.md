@@ -1,7 +1,7 @@
 ---
 title: "KVM仮想化 入門から実戦まで：デプロイ、管理とネットワーク構成"
 date: 2026-08-02
-tags: ["KVM", "仮想化", "Linux", "CentOS"]
+tags: ["KVM", "仮想化", "Linux", "CentOS", "OpenStack"]
 categories: ["仮想化"]
 summary: "KVM仮想化技術を体系的に紹介します。発展の歴史、デプロイ方法、仮想マシン管理、ネットワークモードの構成、コマンドラインによる仮想マシンの自動インストールをカバーします。"
 showToc: true
