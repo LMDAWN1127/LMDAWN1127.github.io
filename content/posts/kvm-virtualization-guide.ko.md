@@ -1,7 +1,7 @@
 ---
 title: "KVM 가상화 입문부터 실전까지: 배포, 관리 및 네트워크 구성"
 date: 2026-08-02
-tags: ["KVM", "가상화", "Linux", "CentOS"]
+tags: ["KVM", "가상화", "Linux", "CentOS", "OpenStack"]
 categories: ["가상화"]
 summary: "KVM 가상화 기술을 체계적으로 소개합니다. 발전 역사, 배포 방법, 가상 머신 관리, 네트워크 모드 구성 및 명령줄을 통한 가상 머신 자동 설치를 다룹니다."
 showToc: true
