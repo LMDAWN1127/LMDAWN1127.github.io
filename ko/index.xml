@@ -11,7 +11,7 @@
     </image>
     <generator>Hugo</generator>
     <language>ko</language>
-    <lastBuildDate>Fri, 02 Oct 2026 14:12:00 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 03 Oct 2026 14:53:00 +0800</lastBuildDate>
     <atom:link href="https://LMDAWN1127.github.io/ko/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Harbor 액티브-스탠바이 배포: 설치부터 HTTPS 및 복제까지</title>
@@ -19,6 +19,13 @@
       <pubDate>Tue, 04 Aug 2026 00:00:00 +0000</pubDate>
       <guid>https://LMDAWN1127.github.io/ko/posts/harbor-master-slave/</guid>
       <description>Harbor 엔터프라이즈 Docker 레지스트리의 액티브-스탠바이 아키텍처, HTTP/HTTPS 모드, 자체 서명 인증서, 크로스 호스트 복제를 완전히 다루는 배포 가이드입니다.</description>
+    </item>
+    <item>
+      <title>MySQL 실전: 바이너리 설치, 시작/중지, 비밀번호 관리</title>
+      <link>https://LMDAWN1127.github.io/ko/posts/mysql-binary-deploy/</link>
+      <pubDate>Sat, 03 Oct 2026 14:53:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/ko/posts/mysql-binary-deploy/</guid>
+      <description>MySQL 8.0 운영 실전: 공식 바이너리 패키지 설치, OS 준비, 초기화, 설정 파일, 다양한 시작/중지 방법, 그리고 비밀번호 설정/변경/분실 시 재설정.</description>
     </item>
     <item>
       <title>SonarQube 실전: 사설 배포, 토큰 설정, 코드 품질 스캔</title>

@@ -11,8 +11,15 @@
     </image>
     <generator>Hugo</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Wed, 23 Sep 2026 16:00:00 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 03 Oct 2026 14:53:00 +0800</lastBuildDate>
     <atom:link href="https://LMDAWN1127.github.io/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>MySQL 实战：二进制安装部署、启动关闭与密码管理</title>
+      <link>https://LMDAWN1127.github.io/posts/mysql-binary-deploy/</link>
+      <pubDate>Sat, 03 Oct 2026 14:53:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/posts/mysql-binary-deploy/</guid>
+      <description>从官方二进制包安装 MySQL 8.0，涵盖系统环境准备、初始化、配置文件编写、多种启动/关闭方式，以及密码设置、修改与忘记密码重置的完整运维实战。</description>
+    </item>
     <item>
       <title>拆分数据库</title>
       <link>https://LMDAWN1127.github.io/posts/zabbix-split-database/</link>

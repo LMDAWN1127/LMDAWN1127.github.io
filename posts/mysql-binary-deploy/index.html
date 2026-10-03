@@ -1,0 +1,1513 @@
+<!DOCTYPE html>
+<html lang="zh" dir="auto" data-theme="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>MySQL 实战：二进制安装部署、启动关闭与密码管理 | DAWN&#39;s Blog</title>
+<meta name="keywords" content="MySQL, 数据库, 二进制安装">
+<meta name="description" content="从官方二进制包安装 MySQL 8.0，涵盖系统环境准备、初始化、配置文件编写、多种启动/关闭方式，以及密码设置、修改与忘记密码重置的完整运维实战。">
+<meta name="author" content="DAWN">
+<link rel="canonical" href="https://LMDAWN1127.github.io/posts/mysql-binary-deploy/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.4bf808bff57bddc46d61c8ae060b00400fc679ab876e37243b11bd3f832f2958.css" integrity="sha256-S/gIv/V73cRtYciuBgsAQA/GeauHbjckOxG9P4MvKVg=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://LMDAWN1127.github.io/images/DAWN.jpg">
+<link rel="icon" type="image/png" sizes="16x16" href="https://LMDAWN1127.github.io/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://LMDAWN1127.github.io/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://LMDAWN1127.github.io/apple-touch-icon.png">
+<link rel="mask-icon" href="https://LMDAWN1127.github.io/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="zh" href="https://LMDAWN1127.github.io/posts/mysql-binary-deploy/">
+<link rel="alternate" hreflang="en" href="https://LMDAWN1127.github.io/en/posts/mysql-binary-deploy/">
+<link rel="alternate" hreflang="ko" href="https://LMDAWN1127.github.io/ko/posts/mysql-binary-deploy/">
+<link rel="alternate" hreflang="ja" href="https://LMDAWN1127.github.io/ja/posts/mysql-binary-deploy/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+                color-scheme: dark;
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .toc {
+                background: var(--entry);
+            }
+        }
+
+    </style>
+</noscript>
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.querySelector("html").dataset.theme = 'dark';
+    } else if (localStorage.getItem("pref-theme") === "light") {
+       document.querySelector("html").dataset.theme = 'light';
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.querySelector("html").dataset.theme = 'dark';
+    } else {
+        document.querySelector("html").dataset.theme = 'light';
+    }
+
+</script><link rel="stylesheet" href='https://LMDAWN1127.github.io/css/custom.css'>
+<meta property="og:url" content="https://LMDAWN1127.github.io/posts/mysql-binary-deploy/">
+  <meta property="og:site_name" content="DAWN&#39;s Blog">
+  <meta property="og:title" content="MySQL 实战：二进制安装部署、启动关闭与密码管理">
+  <meta property="og:description" content="从官方二进制包安装 MySQL 8.0，涵盖系统环境准备、初始化、配置文件编写、多种启动/关闭方式，以及密码设置、修改与忘记密码重置的完整运维实战。">
+  <meta property="og:locale" content="zh_cn">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2026-10-03T14:53:00+08:00">
+    <meta property="article:modified_time" content="2026-10-03T14:53:00+08:00">
+    <meta property="article:tag" content="MySQL">
+    <meta property="article:tag" content="数据库">
+    <meta property="article:tag" content="二进制安装">
+      <meta property="og:image" content="https://LMDAWN1127.github.io/images/DAWN.jpg">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://LMDAWN1127.github.io/images/DAWN.jpg">
+  <meta name="twitter:title" content="MySQL 实战：二进制安装部署、启动关闭与密码管理">
+  <meta name="twitter:description" content="从官方二进制包安装 MySQL 8.0，涵盖系统环境准备、初始化、配置文件编写、多种启动/关闭方式，以及密码设置、修改与忘记密码重置的完整运维实战。">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://LMDAWN1127.github.io/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "MySQL 实战：二进制安装部署、启动关闭与密码管理",
+      "item": "https://LMDAWN1127.github.io/posts/mysql-binary-deploy/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "MySQL 实战：二进制安装部署、启动关闭与密码管理",
+  "name": "MySQL 实战：二进制安装部署、启动关闭与密码管理",
+  "description": "从官方二进制包安装 MySQL 8.0，涵盖系统环境准备、初始化、配置文件编写、多种启动/关闭方式，以及密码设置、修改与忘记密码重置的完整运维实战。",
+  "keywords": [
+    "MySQL", "数据库", "二进制安装"
+  ],
+  "articleBody": "01-数据库服务安装部署 1.1 数据库服务程序下载 官方下载地址（历史归档二进制安装包）：\n1 2 3 # 存放目录 [root@master ~]#cd /usr/local/ [root@master local]#wget https://downloads.mysql.com/archives/get/p/23/file/mysql-8.0.26-linux-glibc2.12-x86_64.tar.xz 查看安装包信息\n1 2 [root@master local]#ll mysql-8.0.26-linux-glibc2.12-x86_64.tar.xz -rw-r--r-- 1 root root 914806904 Jul 2 2021 mysql-8.0.26-linux-glibc2.12-x86_64.tar.xz 1.2 二进制方式安装数据库服务 步骤一：操作系统环境准备 1. 确认网络地址 1 2 3 4 5 6 7 [root@master local]#ip addr show eth0 2: eth0: mtu 1500 qdisc pfifo_fast state UP group default qlen 1000 link/ether 00:0c:29:4b:b7:38 brd ff:ff:ff:ff:ff:ff inet 11.0.1.101/24 brd 11.0.1.255 scope global eth0 valid_lft forever preferred_lft forever inet6 fe80::20c:29ff:fe4b:b738/64 scope link valid_lft forever preferred_lft forever 2. 配置主机名解析 1 2 3 4 [root@master local]#vim /etc/hosts 127.0.0.1 localhost localhost.localdomain localhost4 localhost4.localdomain4 ::1 localhost localhost.localdomain localhost6 localhost6.localdomain6 11.0.1.101 master 3. 关闭系统防火墙 1 [root@master local]#systemctl disable firewalld --now 4. 关闭 SELinux 1 2 3 4 5 [root@master local]#sed -i 's/^SELINUX=enforcing/SELINUX=disabled/' /etc/selinux/config # 重启生效 [root@master local]#reboot [root@master local]#getenforce Disabled 5. 避免数据库服务安装产生冲突 1 2 3 4 5 6 # 查看系统中是否存在自带的 mariadb 数据库程序 [root@master local]#rpm -qa | grep mariadb mariadb-libs-5.5.68-1.el7.x86_64 # 将系统自带的数据库程序包卸载 [root@master local]#yum remove -y mariadb-libs 6. 安装数据库程序依赖软件（缺少会导致初始化报错） 1 [root@master local]#yum install -y libaio-devel 步骤二：安装数据库软件程序 1. 解压安装包并创建软链接（便于后续版本管理） 1 2 [root@master local]#tar xf mysql-8.0.26-linux-glibc2.12-x86_64.tar.xz [root@master local]#ln -s mysql-8.0.26-linux-glibc2.12-x86_64 mysql 2. 配置系统全局环境变量 1 2 3 4 5 [root@master local]#vim /etc/profile # 在文件末尾添加 export PATH=$PATH:/usr/local/mysql/bin # 生效配置 [root@master local]#source /etc/profile 3. 验证安装版本 1 2 [root@master local]#mysql -V mysql Ver 8.0.26 for Linux on x86_64 (MySQL Community Server - GPL) 步骤三：进行软件程序初始化操作 MySQL两个核心目录：\n程序目录：/usr/local/mysql 数据目录：/data/3306/data（存储实际数据信息） 1. 创建专用运行用户（无需系统登录权限） 1 [root@master local]#useradd mysql -M -s /sbin/nologin 2. 创建数据存储目录并授权 1 2 [root@master local]#mkdir /data/3306/data -p [root@master local]#chown mysql.mysql /data/3306/data 3. 执行数据目录初始化 1 2 3 4 5 # 清理可能存在的干扰配置文件 [root@master local]#rm -f /etc/my.cnf # 执行无密码初始化（初始化后管理员无密码） [root@master local]#mysqld --initialize-insecure --user=mysql --datadir=/data/3306/data --basedir=/usr/local/mysql 步骤四：编写数据库服务配置文件 创建并编辑 /etc/my.cnf：\n1 2 3 4 5 6 7 8 9 10 [root@master local]#cat \u003e /etc/my.cnf \u003c\u003c 'eof' \u003e [mysql] \u003e socket=/tmp/mysql.sock \u003e \u003e [mysqld] \u003e user=mysql \u003e basedir=/usr/local/mysql \u003e datadir=/data/3306/data \u003e socket=/tmp/mysql.sock \u003e eof 注：配置文件中 basedir 与 datadir 路径需结合自己实际环境进行调整。\n步骤五：启动数据库服务程序 1. 利用官方服务管理脚本启动 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 [root@master local]#cp /usr/local/mysql/support-files/mysql.server /etc/init.d/mysqld [root@master local]#/etc/init.d/mysqld start Starting MySQL.Logging to '/data/3306/data/master.err'. . SUCCESS! # 能够正常进入数据库说明启动成功 [root@master local]#mysql -uroot Welcome to the MySQL monitor. Commands end with ; or \\g. Your MySQL connection id is 8 Server version: 8.0.26 MySQL Community Server - GPL Copyright (c) 2000, 2021, Oracle and/or its affiliates. Oracle is a registered trademark of Oracle Corporation and/or its affiliates. Other names may be trademarks of their respective owners. Type 'help;' or '\\h' for help. Type '\\c' to clear the current input statement. mysql\u003e 2. 利用命令行直接启动 通过 mysqld 命令启动： 1 /usr/local/mysql/bin/mysqld --basedir=/usr/local/mysql --datadir=/data/3306/data --user=mysql --socket=/tmp/mysql.sock \u0026 通过 mysqld_safe 安全守护进程启动： 1 /usr/local/mysql/bin/mysqld_safe --datadir=/data/3306/data \u0026 3. 利用 systemctl / service 启动 方式一：编写专属的 Systemd Unit 文件（/etc/systemd/system/mysqld.service） 方式二：直接激活并调用 /etc/init.d/ 目录下的服务脚本： 1 2 3 4 systemctl enable mysqld service mysqld start # 或 systemctl start mysqld 1.3 补充知识介绍 1. 初始化操作的两种方式对比 方式一：不安全初始化（--initialize-insecure）\n1 mysqld --initialize-insecure --user=mysql --datadir=/data/3306/data --basedir=/usr/local/mysql 特点：数据库管理员没有密码，可以直接免密登录数据库，便于测试或脚本初始化。 方式二：安全初始化（--initialize）\n1 mysqld --initialize --user=mysql --datadir=/data/3306/data --basedir=/usr/local/mysql 特点：数据库管理员会生成随机临时密码，打印在日志中，用于首次登录数据库。 注意事项：临时密码只能用于首次登录数据库；登录成功后必须重新设置新密码，在修改密码前无法执行其他操作： 1 ALTER USER root@'localhost' IDENTIFIED BY '123456'; 2. 数据库启动失败排错标准流程 步骤一：确认系统基础环境 检查 SELinux 是否已彻底关闭； 检查端口 3306 是否被占用，是否存在其他冲突的数据库服务进程。 步骤二：排查与分析错误日志 典型报错：Starting MySQL. ERROR! The server quit without updating PID file (/data/3306/data/master.pid). 查看错误日志明细： 1 2 3 cat /data/3306/data/master.err # 日志错误示例: # 2024-06-14T09:15:36.120048Z 1 [ERROR] [MY-012271] [InnoDB] The innodb_system data file 'ibdata1' must be writable 步骤三：没有错误日志时的排查方法 检查配置文件 /etc/my.cnf： 确认配置文件所在路径与文件命名是否正确； 确认配置文件内部参数语法及路径配置是否正确。 02-数据库服务启动关闭 有多种方式可以启动与关闭数据库服务，常见方式汇总如下：\n序号 启动方式 对应关闭方式 说明与建议 01 mysqld \u0026 kill / pkill / killall 不建议；严禁使用 kill -9 02 mysqld_safe \u0026 kill / pkill / killall 不建议直接 kill 03 mysql.server start mysql.server stop 官方原生控制脚本 04 service mysqld start service mysqld stop 建议使用（经典服务管理） 05 systemctl start mysqld systemctl stop mysqld 建议使用（现代 Linux 标准） 06 客户端/管理命令 mysqladmin -uroot -p密码 shutdown 管理员远程或本地命令行优雅关闭 07 SQL 会话内关闭 进入终端执行 shutdown; 需管理员权限 03-数据库服务密码管理 1. 没有密码时设置密码 方式一：利用命令行操作\n1 2 3 [root@master local]#mysqladmin -uroot password '123456' mysqladmin: [Warning] Using a password on the command line interface can be insecure. Warning: Since password will be sent to server in plain text, use ssl connection to ensure password safety. 方式二：利用 SQL 语句操作\n1 2 mysql\u003e ALTER USER root@'localhost' IDENTIFIED BY '000000'; Query OK, 0 rows affected (0.02 sec) 2. 已有密码时修改密码 方式一：利用命令行操作 1 2 3 [root@master local]#mysqladmin -uroot -p000000 password '123456' mysqladmin: [Warning] Using a password on the command line interface can be insecure. Warning: Since password will be sent to server in plain text, use ssl connection to ensure password safety. 方式二：利用 SQL 语句操作 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 [root@master local]#mysql -uroot -p123456 mysql: [Warning] Using a password on the command line interface can be insecure. Welcome to the MySQL monitor. Commands end with ; or \\g. Your MySQL connection id is 14 Server version: 8.0.26 MySQL Community Server - GPL Copyright (c) 2000, 2021, Oracle and/or its affiliates. Oracle is a registered trademark of Oracle Corporation and/or its affiliates. Other names may be trademarks of their respective owners. Type 'help;' or '\\h' for help. Type '\\c' to clear the current input statement. mysql\u003e ALTER USER root@'localhost' IDENTIFIED BY '123456'; Query OK, 0 rows affected (0.00 sec) mysql\u003e 3. 已有密码但是忘记密码（密码重置） 重置密码实操流程 步骤一：关闭数据库服务\n1 mysql\u003e shutdown; 或在系统终端执行：\n1 2 3 4 [root@master local]#service mysqld stop Shutting down MySQL.. SUCCESS! # 或 pkill mysqld 步骤二：采用安全模式启动数据库（跳过授权表加载，实现免密登录）\n1 2 [root@master local]#/usr/local/mysql/bin/mysqld_safe --datadir=/data/3306/data --skip-grant-tables --skip-networking \u0026 [1] 2658 说明：--skip-networking 用于禁用网络监听，防止在免密期间其他网络客户端介入。\n步骤三：免密登录并重置密码\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 [root@master local]#mysql Welcome to the MySQL monitor. Commands end with ; or \\g. Your MySQL connection id is 7 Server version: 8.0.26 MySQL Community Server - GPL Copyright (c) 2000, 2021, Oracle and/or its affiliates. Oracle is a registered trademark of Oracle Corporation and/or its affiliates. Other names may be trademarks of their respective owners. Type 'help;' or '\\h' for help. Type '\\c' to clear the current input statement. mysql\u003e FLUSH PRIVILEGES; Query OK, 0 rows affected (0.01 sec) mysql\u003e ALTER USER root@'localhost' IDENTIFIED BY '123456'; Query OK, 0 rows affected (0.00 sec) mysql\u003e 在 MySQL 终端中依次执行：\n1 2 3 4 5 6 7 -- 1. 刷新权限表（同步内存与磁盘中的授权表数据） -- 作用一：将内存中授权表信息同步写入磁盘 -- 作用二：将磁盘中授权表信息重新加载到内存 FLUSH PRIVILEGES; -- 2. 重置密码 ALTER USER root@'localhost' IDENTIFIED BY '123456'; 注意：若未执行 FLUSH PRIVILEGES; 直接执行 ALTER USER，系统会抛出报错：\n1 ERROR 1290 (HY000): The MySQL server is running with the --skip-grant-tables option so it cannot execute this statement 步骤四：重新正常启动数据库服务\n1 2 3 4 5 6 7 # 终止临时安全模式进程 [root@master local]#pkill mysqld # 正常启动数据库服务 [root@master local]#/etc/init.d/mysqld start Starting MySQL.. SUCCESS! # 或 service mysqld start 步骤五：使用新密码进行登录访问验证\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 [root@master local]#mysql -uroot -p123456 mysql: [Warning] Using a password on the command line interface can be insecure. Welcome to the MySQL monitor. Commands end with ; or \\g. Your MySQL connection id is 8 Server version: 8.0.26 MySQL Community Server - GPL Copyright (c) 2000, 2021, Oracle and/or its affiliates. Oracle is a registered trademark of Oracle Corporation and/or its affiliates. Other names may be trademarks of their respective owners. Type 'help;' or '\\h' for help. Type '\\c' to clear the current input statement. mysql\u003e ",
+  "wordCount" : "1157",
+  "inLanguage": "zh",
+  "image": "https://LMDAWN1127.github.io/images/DAWN.jpg","datePublished": "2026-10-03T14:53:00+08:00",
+  "dateModified": "2026-10-03T14:53:00+08:00",
+  "author":{
+    "@type": "Person",
+    "name": "DAWN"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://LMDAWN1127.github.io/posts/mysql-binary-deploy/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "DAWN's Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://LMDAWN1127.github.io/images/DAWN.jpg"
+    }
+  }
+}
+</script>
+</head>
+<body id="top">
+    <header class="header">
+    <nav class="header-nav">
+        <div class="logo">
+            <a href="https://LMDAWN1127.github.io/" accesskey="h" title="DAWN&#39;s Blog (Alt + H)">
+                <img src="https://LMDAWN1127.github.io/images/DAWN.jpg" alt="" aria-label="logo"
+                    height="38">DAWN&#39;s Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" class="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
+                    <svg class="moon" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg class="sun" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button><span class="nav-sep">|</span>
+                    <ul class="lang-menu">
+                        <li>
+                            <a href="https://LMDAWN1127.github.io/en/" title="English"
+                                aria-label="English">En</a>
+                        </li>
+                        <li>
+                            <a href="https://LMDAWN1127.github.io/ko/" title="한국어"
+                                aria-label="한국어">Ko</a>
+                        </li>
+                        <li>
+                            <a href="https://LMDAWN1127.github.io/ja/" title="日本語"
+                                aria-label="日本語">Ja</a>
+                        </li>
+                    </ul>
+            </div>
+        </div>
+        <ul id="menu" class="menu">
+            <li>
+                <a href="https://LMDAWN1127.github.io/archives/" title="归档">
+                    <span>归档</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <h1 class="post-title entry-hint-parent">
+      MySQL 实战：二进制安装部署、启动关闭与密码管理
+    </h1>
+  </header>
+
+  <div class="post-layout">
+    <div class="post-content-wrapper"> 
+      <div class="post-content md-content"><h2 id="01-数据库服务安装部署">01-数据库服务安装部署<a hidden class="anchor" aria-hidden="true" href="#01-数据库服务安装部署">#</a></h2>
+<h3 id="11-数据库服务程序下载">1.1 数据库服务程序下载<a hidden class="anchor" aria-hidden="true" href="#11-数据库服务程序下载">#</a></h3>
+<p>官方下载地址（历史归档二进制安装包）：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 存放目录</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master ~<span style="color:#f92672">]</span><span style="color:#75715e">#cd /usr/local/</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master local<span style="color:#f92672">]</span><span style="color:#75715e">#wget https://downloads.mysql.com/archives/get/p/23/file/mysql-8.0.26-linux-glibc2.12-x86_64.tar.xz</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>查看安装包信息</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master local<span style="color:#f92672">]</span><span style="color:#75715e">#ll mysql-8.0.26-linux-glibc2.12-x86_64.tar.xz</span>
+</span></span><span style="display:flex;"><span>-rw-r--r-- <span style="color:#ae81ff">1</span> root root <span style="color:#ae81ff">914806904</span> Jul  <span style="color:#ae81ff">2</span>  <span style="color:#ae81ff">2021</span> mysql-8.0.26-linux-glibc2.12-x86_64.tar.xz
+</span></span></code></pre></td></tr></table>
+</div>
+</div><hr>
+<h3 id="12-二进制方式安装数据库服务">1.2 二进制方式安装数据库服务<a hidden class="anchor" aria-hidden="true" href="#12-二进制方式安装数据库服务">#</a></h3>
+<h4 id="步骤一操作系统环境准备">步骤一：操作系统环境准备<a hidden class="anchor" aria-hidden="true" href="#步骤一操作系统环境准备">#</a></h4>
+<h5 id="1-确认网络地址">1. 确认网络地址<a hidden class="anchor" aria-hidden="true" href="#1-确认网络地址">#</a></h5>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master local<span style="color:#f92672">]</span><span style="color:#75715e">#ip addr show eth0</span>
+</span></span><span style="display:flex;"><span>2: eth0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu <span style="color:#ae81ff">1500</span> qdisc pfifo_fast state UP group default qlen <span style="color:#ae81ff">1000</span>
+</span></span><span style="display:flex;"><span>    link/ether 00:0c:29:4b:b7:38 brd ff:ff:ff:ff:ff:ff
+</span></span><span style="display:flex;"><span>    inet 11.0.1.101/24 brd 11.0.1.255 scope global eth0
+</span></span><span style="display:flex;"><span>       valid_lft forever preferred_lft forever
+</span></span><span style="display:flex;"><span>    inet6 fe80::20c:29ff:fe4b:b738/64 scope link
+</span></span><span style="display:flex;"><span>       valid_lft forever preferred_lft forever
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h5 id="2-配置主机名解析">2. 配置主机名解析<a hidden class="anchor" aria-hidden="true" href="#2-配置主机名解析">#</a></h5>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master local<span style="color:#f92672">]</span><span style="color:#75715e">#vim /etc/hosts</span>
+</span></span><span style="display:flex;"><span>127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
+</span></span><span style="display:flex;"><span>::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
+</span></span><span style="display:flex;"><span>11.0.1.101 master
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h5 id="3-关闭系统防火墙">3. 关闭系统防火墙<a hidden class="anchor" aria-hidden="true" href="#3-关闭系统防火墙">#</a></h5>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master local<span style="color:#f92672">]</span><span style="color:#75715e">#systemctl disable firewalld --now</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h5 id="4-关闭-selinux">4. 关闭 SELinux<a hidden class="anchor" aria-hidden="true" href="#4-关闭-selinux">#</a></h5>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master local<span style="color:#f92672">]</span><span style="color:#75715e">#sed -i &#39;s/^SELINUX=enforcing/SELINUX=disabled/&#39; /etc/selinux/config</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 重启生效</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master local<span style="color:#f92672">]</span><span style="color:#75715e">#reboot</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master local<span style="color:#f92672">]</span><span style="color:#75715e">#getenforce</span>
+</span></span><span style="display:flex;"><span>Disabled
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h5 id="5-避免数据库服务安装产生冲突">5. 避免数据库服务安装产生冲突<a hidden class="anchor" aria-hidden="true" href="#5-避免数据库服务安装产生冲突">#</a></h5>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 查看系统中是否存在自带的 mariadb 数据库程序</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master local<span style="color:#f92672">]</span><span style="color:#75715e">#rpm -qa | grep mariadb</span>
+</span></span><span style="display:flex;"><span>mariadb-libs-5.5.68-1.el7.x86_64
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 将系统自带的数据库程序包卸载</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master local<span style="color:#f92672">]</span><span style="color:#75715e">#yum remove -y mariadb-libs</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h5 id="6-安装数据库程序依赖软件缺少会导致初始化报错">6. 安装数据库程序依赖软件（缺少会导致初始化报错）<a hidden class="anchor" aria-hidden="true" href="#6-安装数据库程序依赖软件缺少会导致初始化报错">#</a></h5>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master local<span style="color:#f92672">]</span><span style="color:#75715e">#yum install -y libaio-devel</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><hr>
+<h4 id="步骤二安装数据库软件程序">步骤二：安装数据库软件程序<a hidden class="anchor" aria-hidden="true" href="#步骤二安装数据库软件程序">#</a></h4>
+<h5 id="1-解压安装包并创建软链接便于后续版本管理">1. 解压安装包并创建软链接（便于后续版本管理）<a hidden class="anchor" aria-hidden="true" href="#1-解压安装包并创建软链接便于后续版本管理">#</a></h5>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master local<span style="color:#f92672">]</span><span style="color:#75715e">#tar xf mysql-8.0.26-linux-glibc2.12-x86_64.tar.xz</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master local<span style="color:#f92672">]</span><span style="color:#75715e">#ln -s mysql-8.0.26-linux-glibc2.12-x86_64 mysql</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h5 id="2-配置系统全局环境变量">2. 配置系统全局环境变量<a hidden class="anchor" aria-hidden="true" href="#2-配置系统全局环境变量">#</a></h5>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master local<span style="color:#f92672">]</span><span style="color:#75715e">#vim /etc/profile</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 在文件末尾添加</span>
+</span></span><span style="display:flex;"><span>export PATH<span style="color:#f92672">=</span>$PATH:/usr/local/mysql/bin
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 生效配置</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master local<span style="color:#f92672">]</span><span style="color:#75715e">#source /etc/profile</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h5 id="3-验证安装版本">3. 验证安装版本<a hidden class="anchor" aria-hidden="true" href="#3-验证安装版本">#</a></h5>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master local<span style="color:#f92672">]</span><span style="color:#75715e">#mysql -V</span>
+</span></span><span style="display:flex;"><span>mysql  Ver 8.0.26 <span style="color:#66d9ef">for</span> Linux on x86_64 <span style="color:#f92672">(</span>MySQL Community Server - GPL<span style="color:#f92672">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><hr>
+<h4 id="步骤三进行软件程序初始化操作">步骤三：进行软件程序初始化操作<a hidden class="anchor" aria-hidden="true" href="#步骤三进行软件程序初始化操作">#</a></h4>
+<p>MySQL两个核心目录：</p>
+<ul>
+<li><strong>程序目录</strong>：<code>/usr/local/mysql</code></li>
+<li><strong>数据目录</strong>：<code>/data/3306/data</code>（存储实际数据信息）</li>
+</ul>
+<h5 id="1-创建专用运行用户无需系统登录权限">1. 创建专用运行用户（无需系统登录权限）<a hidden class="anchor" aria-hidden="true" href="#1-创建专用运行用户无需系统登录权限">#</a></h5>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master local<span style="color:#f92672">]</span><span style="color:#75715e">#useradd mysql -M -s /sbin/nologin</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h5 id="2-创建数据存储目录并授权">2. 创建数据存储目录并授权<a hidden class="anchor" aria-hidden="true" href="#2-创建数据存储目录并授权">#</a></h5>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master local<span style="color:#f92672">]</span><span style="color:#75715e">#mkdir /data/3306/data -p</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master local<span style="color:#f92672">]</span><span style="color:#75715e">#chown mysql.mysql /data/3306/data</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h5 id="3-执行数据目录初始化">3. 执行数据目录初始化<a hidden class="anchor" aria-hidden="true" href="#3-执行数据目录初始化">#</a></h5>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 清理可能存在的干扰配置文件</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master local<span style="color:#f92672">]</span><span style="color:#75715e">#rm -f /etc/my.cnf</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 执行无密码初始化（初始化后管理员无密码）</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master local<span style="color:#f92672">]</span><span style="color:#75715e">#mysqld --initialize-insecure --user=mysql --datadir=/data/3306/data --basedir=/usr/local/mysql</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><hr>
+<h4 id="步骤四编写数据库服务配置文件">步骤四：编写数据库服务配置文件<a hidden class="anchor" aria-hidden="true" href="#步骤四编写数据库服务配置文件">#</a></h4>
+<p>创建并编辑 <code>/etc/my.cnf</code>：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-ini" data-lang="ini"><span style="display:flex;"><span><span style="color:#a6e22e">[root@master local]#cat &gt; /etc/my.cnf &lt;&lt; &#39;eof&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">&gt; [mysql]</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">&gt; socket</span><span style="color:#f92672">=</span><span style="color:#e6db74">/tmp/mysql.sock</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">&gt; [mysqld]</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">&gt; user</span><span style="color:#f92672">=</span><span style="color:#e6db74">mysql</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">&gt; basedir</span><span style="color:#f92672">=</span><span style="color:#e6db74">/usr/local/mysql</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">&gt; datadir</span><span style="color:#f92672">=</span><span style="color:#e6db74">/data/3306/data</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">&gt; socket</span><span style="color:#f92672">=</span><span style="color:#e6db74">/tmp/mysql.sock</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">&gt; eof</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>注：配置文件中 <code>basedir</code> 与 <code>datadir</code> 路径需结合自己实际环境进行调整。</p>
+</blockquote>
+<hr>
+<h4 id="步骤五启动数据库服务程序">步骤五：启动数据库服务程序<a hidden class="anchor" aria-hidden="true" href="#步骤五启动数据库服务程序">#</a></h4>
+<h5 id="1-利用官方服务管理脚本启动">1. 利用官方服务管理脚本启动<a hidden class="anchor" aria-hidden="true" href="#1-利用官方服务管理脚本启动">#</a></h5>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master local<span style="color:#f92672">]</span><span style="color:#75715e">#cp /usr/local/mysql/support-files/mysql.server /etc/init.d/mysqld</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master local<span style="color:#f92672">]</span><span style="color:#75715e">#/etc/init.d/mysqld start</span>
+</span></span><span style="display:flex;"><span>Starting MySQL.Logging to <span style="color:#e6db74">&#39;/data/3306/data/master.err&#39;</span>.
+</span></span><span style="display:flex;"><span>. SUCCESS!
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 能够正常进入数据库说明启动成功</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master local<span style="color:#f92672">]</span><span style="color:#75715e">#mysql -uroot</span>
+</span></span><span style="display:flex;"><span>Welcome to the MySQL monitor.  Commands end with ; or <span style="color:#ae81ff">\g</span>.
+</span></span><span style="display:flex;"><span>Your MySQL connection id is <span style="color:#ae81ff">8</span>
+</span></span><span style="display:flex;"><span>Server version: 8.0.26 MySQL Community Server - GPL
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Copyright <span style="color:#f92672">(</span>c<span style="color:#f92672">)</span> 2000, 2021, Oracle and/or its affiliates.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Oracle is a registered trademark of Oracle Corporation and/or its
+</span></span><span style="display:flex;"><span>affiliates. Other names may be trademarks of their respective
+</span></span><span style="display:flex;"><span>owners.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Type <span style="color:#e6db74">&#39;help;&#39;</span> or <span style="color:#e6db74">&#39;\h&#39;</span> <span style="color:#66d9ef">for</span> help. Type <span style="color:#e6db74">&#39;\c&#39;</span> to clear the current input statement.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>mysql&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h5 id="2-利用命令行直接启动">2. 利用命令行直接启动<a hidden class="anchor" aria-hidden="true" href="#2-利用命令行直接启动">#</a></h5>
+<ul>
+<li><strong>通过 <code>mysqld</code> 命令启动</strong>：
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>/usr/local/mysql/bin/mysqld --basedir<span style="color:#f92672">=</span>/usr/local/mysql --datadir<span style="color:#f92672">=</span>/data/3306/data --user<span style="color:#f92672">=</span>mysql --socket<span style="color:#f92672">=</span>/tmp/mysql.sock &amp;
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li><strong>通过 <code>mysqld_safe</code> 安全守护进程启动</strong>：
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>/usr/local/mysql/bin/mysqld_safe --datadir<span style="color:#f92672">=</span>/data/3306/data &amp;
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+<h5 id="3-利用-systemctl--service-启动">3. 利用 systemctl / service 启动<a hidden class="anchor" aria-hidden="true" href="#3-利用-systemctl--service-启动">#</a></h5>
+<ul>
+<li><strong>方式一</strong>：编写专属的 Systemd Unit 文件（<code>/etc/systemd/system/mysqld.service</code>）</li>
+<li><strong>方式二</strong>：直接激活并调用 <code>/etc/init.d/</code> 目录下的服务脚本：
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>systemctl enable mysqld
+</span></span><span style="display:flex;"><span>service mysqld start
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 或</span>
+</span></span><span style="display:flex;"><span>systemctl start mysqld
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+<hr>
+<h3 id="13-补充知识介绍">1.3 补充知识介绍<a hidden class="anchor" aria-hidden="true" href="#13-补充知识介绍">#</a></h3>
+<h4 id="1-初始化操作的两种方式对比">1. 初始化操作的两种方式对比<a hidden class="anchor" aria-hidden="true" href="#1-初始化操作的两种方式对比">#</a></h4>
+<ul>
+<li>
+<p><strong>方式一：不安全初始化（<code>--initialize-insecure</code>）</strong></p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>mysqld --initialize-insecure --user<span style="color:#f92672">=</span>mysql --datadir<span style="color:#f92672">=</span>/data/3306/data --basedir<span style="color:#f92672">=</span>/usr/local/mysql
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>特点：数据库管理员没有密码，可以直接免密登录数据库，便于测试或脚本初始化。</li>
+</ul>
+</li>
+<li>
+<p><strong>方式二：安全初始化（<code>--initialize</code>）</strong></p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>mysqld --initialize --user<span style="color:#f92672">=</span>mysql --datadir<span style="color:#f92672">=</span>/data/3306/data --basedir<span style="color:#f92672">=</span>/usr/local/mysql
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>特点：数据库管理员会生成随机临时密码，打印在日志中，用于首次登录数据库。</li>
+<li><strong>注意事项</strong>：临时密码只能用于首次登录数据库；登录成功后必须重新设置新密码，在修改密码前无法执行其他操作：
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">ALTER</span> <span style="color:#66d9ef">USER</span> root<span style="color:#f92672">@</span><span style="color:#e6db74">&#39;localhost&#39;</span> IDENTIFIED <span style="color:#66d9ef">BY</span> <span style="color:#e6db74">&#39;123456&#39;</span>;
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+</li>
+</ul>
+<h4 id="2-数据库启动失败排错标准流程">2. 数据库启动失败排错标准流程<a hidden class="anchor" aria-hidden="true" href="#2-数据库启动失败排错标准流程">#</a></h4>
+<ul>
+<li><strong>步骤一：确认系统基础环境</strong>
+<ul>
+<li>检查 SELinux 是否已彻底关闭；</li>
+<li>检查端口 <code>3306</code> 是否被占用，是否存在其他冲突的数据库服务进程。</li>
+</ul>
+</li>
+<li><strong>步骤二：排查与分析错误日志</strong>
+<ul>
+<li>典型报错：<code>Starting MySQL. ERROR! The server quit without updating PID file (/data/3306/data/master.pid).</code></li>
+<li>查看错误日志明细：
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>cat /data/3306/data/master.err
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 日志错误示例:</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 2024-06-14T09:15:36.120048Z 1 [ERROR] [MY-012271] [InnoDB] The innodb_system data file &#39;ibdata1&#39; must be writable</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+</li>
+<li><strong>步骤三：没有错误日志时的排查方法</strong>
+<ul>
+<li>检查配置文件 <code>/etc/my.cnf</code>：
+<ol>
+<li>确认配置文件所在路径与文件命名是否正确；</li>
+<li>确认配置文件内部参数语法及路径配置是否正确。</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="02-数据库服务启动关闭">02-数据库服务启动关闭<a hidden class="anchor" aria-hidden="true" href="#02-数据库服务启动关闭">#</a></h2>
+<p>有多种方式可以启动与关闭数据库服务，常见方式汇总如下：</p>
+<table>
+	<thead>
+			<tr>
+					<th style="text-align: center">序号</th>
+					<th style="text-align: left">启动方式</th>
+					<th style="text-align: left">对应关闭方式</th>
+					<th style="text-align: left">说明与建议</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td style="text-align: center"><strong>01</strong></td>
+					<td style="text-align: left"><code>mysqld &amp;</code></td>
+					<td style="text-align: left"><code>kill</code> / <code>pkill</code> / <code>killall</code></td>
+					<td style="text-align: left">不建议；<strong>严禁使用 <code>kill -9</code></strong></td>
+			</tr>
+			<tr>
+					<td style="text-align: center"><strong>02</strong></td>
+					<td style="text-align: left"><code>mysqld_safe &amp;</code></td>
+					<td style="text-align: left"><code>kill</code> / <code>pkill</code> / <code>killall</code></td>
+					<td style="text-align: left">不建议直接 kill</td>
+			</tr>
+			<tr>
+					<td style="text-align: center"><strong>03</strong></td>
+					<td style="text-align: left"><code>mysql.server start</code></td>
+					<td style="text-align: left"><code>mysql.server stop</code></td>
+					<td style="text-align: left">官方原生控制脚本</td>
+			</tr>
+			<tr>
+					<td style="text-align: center"><strong>04</strong></td>
+					<td style="text-align: left"><code>service mysqld start</code></td>
+					<td style="text-align: left"><code>service mysqld stop</code></td>
+					<td style="text-align: left"><strong>建议使用</strong>（经典服务管理）</td>
+			</tr>
+			<tr>
+					<td style="text-align: center"><strong>05</strong></td>
+					<td style="text-align: left"><code>systemctl start mysqld</code></td>
+					<td style="text-align: left"><code>systemctl stop mysqld</code></td>
+					<td style="text-align: left"><strong>建议使用</strong>（现代 Linux 标准）</td>
+			</tr>
+			<tr>
+					<td style="text-align: center"><strong>06</strong></td>
+					<td style="text-align: left">客户端/管理命令</td>
+					<td style="text-align: left"><code>mysqladmin -uroot -p密码 shutdown</code></td>
+					<td style="text-align: left">管理员远程或本地命令行优雅关闭</td>
+			</tr>
+			<tr>
+					<td style="text-align: center"><strong>07</strong></td>
+					<td style="text-align: left">SQL 会话内关闭</td>
+					<td style="text-align: left">进入终端执行 <code>shutdown;</code></td>
+					<td style="text-align: left">需管理员权限</td>
+			</tr>
+	</tbody>
+</table>
+<hr>
+<h2 id="03-数据库服务密码管理">03-数据库服务密码管理<a hidden class="anchor" aria-hidden="true" href="#03-数据库服务密码管理">#</a></h2>
+<h3 id="1-没有密码时设置密码">1. 没有密码时设置密码<a hidden class="anchor" aria-hidden="true" href="#1-没有密码时设置密码">#</a></h3>
+<ul>
+<li>
+<p><strong>方式一：利用命令行操作</strong></p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master local<span style="color:#f92672">]</span><span style="color:#75715e">#mysqladmin -uroot password &#39;123456&#39;</span>
+</span></span><span style="display:flex;"><span>mysqladmin: <span style="color:#f92672">[</span>Warning<span style="color:#f92672">]</span> Using a password on the command line interface can be insecure.
+</span></span><span style="display:flex;"><span>Warning: Since password will be sent to server in plain text, use ssl connection to ensure password safety.
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p><strong>方式二：利用 SQL 语句操作</strong></p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span>mysql<span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">ALTER</span> <span style="color:#66d9ef">USER</span> root<span style="color:#f92672">@</span><span style="color:#e6db74">&#39;localhost&#39;</span> IDENTIFIED <span style="color:#66d9ef">BY</span> <span style="color:#e6db74">&#39;000000&#39;</span>;
+</span></span><span style="display:flex;"><span>Query OK, <span style="color:#ae81ff">0</span> <span style="color:#66d9ef">rows</span> affected (<span style="color:#ae81ff">0</span>.<span style="color:#ae81ff">02</span> sec)
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+<hr>
+<h3 id="2-已有密码时修改密码">2. 已有密码时修改密码<a hidden class="anchor" aria-hidden="true" href="#2-已有密码时修改密码">#</a></h3>
+<ul>
+<li><strong>方式一：利用命令行操作</strong>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master local<span style="color:#f92672">]</span><span style="color:#75715e">#mysqladmin -uroot -p000000 password &#39;123456&#39;</span>
+</span></span><span style="display:flex;"><span>mysqladmin: <span style="color:#f92672">[</span>Warning<span style="color:#f92672">]</span> Using a password on the command line interface can be insecure.
+</span></span><span style="display:flex;"><span>Warning: Since password will be sent to server in plain text, use ssl connection to ensure password safety.
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li><strong>方式二：利用 SQL 语句操作</strong>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master local<span style="color:#f92672">]</span><span style="color:#75715e">#mysql -uroot -p123456</span>
+</span></span><span style="display:flex;"><span>mysql: <span style="color:#f92672">[</span>Warning<span style="color:#f92672">]</span> Using a password on the command line interface can be insecure.
+</span></span><span style="display:flex;"><span>Welcome to the MySQL monitor.  Commands end with ; or <span style="color:#ae81ff">\g</span>.
+</span></span><span style="display:flex;"><span>Your MySQL connection id is <span style="color:#ae81ff">14</span>
+</span></span><span style="display:flex;"><span>Server version: 8.0.26 MySQL Community Server - GPL
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Copyright <span style="color:#f92672">(</span>c<span style="color:#f92672">)</span> 2000, 2021, Oracle and/or its affiliates.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Oracle is a registered trademark of Oracle Corporation and/or its
+</span></span><span style="display:flex;"><span>affiliates. Other names may be trademarks of their respective
+</span></span><span style="display:flex;"><span>owners.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Type <span style="color:#e6db74">&#39;help;&#39;</span> or <span style="color:#e6db74">&#39;\h&#39;</span> <span style="color:#66d9ef">for</span> help. Type <span style="color:#e6db74">&#39;\c&#39;</span> to clear the current input statement.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>mysql&gt; ALTER USER root@<span style="color:#e6db74">&#39;localhost&#39;</span> IDENTIFIED BY <span style="color:#e6db74">&#39;123456&#39;</span>;
+</span></span><span style="display:flex;"><span>Query OK, <span style="color:#ae81ff">0</span> rows affected <span style="color:#f92672">(</span>0.00 sec<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>mysql&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+<hr>
+<h3 id="3-已有密码但是忘记密码密码重置">3. 已有密码但是忘记密码（密码重置）<a hidden class="anchor" aria-hidden="true" href="#3-已有密码但是忘记密码密码重置">#</a></h3>
+<h4 id="重置密码实操流程">重置密码实操流程<a hidden class="anchor" aria-hidden="true" href="#重置密码实操流程">#</a></h4>
+<ul>
+<li>
+<p><strong>步骤一：关闭数据库服务</strong></p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span>mysql<span style="color:#f92672">&gt;</span> shutdown;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>或在系统终端执行：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master local<span style="color:#f92672">]</span><span style="color:#75715e">#service mysqld stop</span>
+</span></span><span style="display:flex;"><span>Shutting down MySQL.. SUCCESS!
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 或</span>
+</span></span><span style="display:flex;"><span>pkill mysqld
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p><strong>步骤二：采用安全模式启动数据库（跳过授权表加载，实现免密登录）</strong></p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master local<span style="color:#f92672">]</span><span style="color:#75715e">#/usr/local/mysql/bin/mysqld_safe --datadir=/data/3306/data --skip-grant-tables --skip-networking &amp;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>1<span style="color:#f92672">]</span> <span style="color:#ae81ff">2658</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><em>说明</em>：<code>--skip-networking</code> 用于禁用网络监听，防止在免密期间其他网络客户端介入。</p>
+</li>
+<li>
+<p><strong>步骤三：免密登录并重置密码</strong></p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master local<span style="color:#f92672">]</span><span style="color:#75715e">#mysql</span>
+</span></span><span style="display:flex;"><span>Welcome to the MySQL monitor.  Commands end with ; or <span style="color:#ae81ff">\g</span>.
+</span></span><span style="display:flex;"><span>Your MySQL connection id is <span style="color:#ae81ff">7</span>
+</span></span><span style="display:flex;"><span>Server version: 8.0.26 MySQL Community Server - GPL
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Copyright <span style="color:#f92672">(</span>c<span style="color:#f92672">)</span> 2000, 2021, Oracle and/or its affiliates.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Oracle is a registered trademark of Oracle Corporation and/or its
+</span></span><span style="display:flex;"><span>affiliates. Other names may be trademarks of their respective
+</span></span><span style="display:flex;"><span>owners.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Type <span style="color:#e6db74">&#39;help;&#39;</span> or <span style="color:#e6db74">&#39;\h&#39;</span> <span style="color:#66d9ef">for</span> help. Type <span style="color:#e6db74">&#39;\c&#39;</span> to clear the current input statement.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>mysql&gt; FLUSH PRIVILEGES;
+</span></span><span style="display:flex;"><span>Query OK, <span style="color:#ae81ff">0</span> rows affected <span style="color:#f92672">(</span>0.01 sec<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>mysql&gt; ALTER USER root@<span style="color:#e6db74">&#39;localhost&#39;</span> IDENTIFIED BY <span style="color:#e6db74">&#39;123456&#39;</span>;
+</span></span><span style="display:flex;"><span>Query OK, <span style="color:#ae81ff">0</span> rows affected <span style="color:#f92672">(</span>0.00 sec<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>mysql&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>在 MySQL 终端中依次执行：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- 1. 刷新权限表（同步内存与磁盘中的授权表数据）
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">-- 作用一：将内存中授权表信息同步写入磁盘
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">-- 作用二：将磁盘中授权表信息重新加载到内存
+</span></span></span><span style="display:flex;"><span>FLUSH <span style="color:#66d9ef">PRIVILEGES</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">-- 2. 重置密码
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">ALTER</span> <span style="color:#66d9ef">USER</span> root<span style="color:#f92672">@</span><span style="color:#e6db74">&#39;localhost&#39;</span> IDENTIFIED <span style="color:#66d9ef">BY</span> <span style="color:#e6db74">&#39;123456&#39;</span>;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p><strong>注意</strong>：若未执行 <code>FLUSH PRIVILEGES;</code> 直接执行 <code>ALTER USER</code>，系统会抛出报错：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>ERROR 1290 (HY000): The MySQL server is running with the --skip-grant-tables option so it cannot execute this statement
+</span></span></code></pre></td></tr></table>
+</div>
+</div></blockquote>
+</li>
+<li>
+<p><strong>步骤四：重新正常启动数据库服务</strong></p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 终止临时安全模式进程</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master local<span style="color:#f92672">]</span><span style="color:#75715e">#pkill mysqld</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 正常启动数据库服务</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master local<span style="color:#f92672">]</span><span style="color:#75715e">#/etc/init.d/mysqld start</span>
+</span></span><span style="display:flex;"><span>Starting MySQL.. SUCCESS!
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 或 service mysqld start</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p><strong>步骤五：使用新密码进行登录访问验证</strong></p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master local<span style="color:#f92672">]</span><span style="color:#75715e">#mysql -uroot -p123456</span>
+</span></span><span style="display:flex;"><span>mysql: <span style="color:#f92672">[</span>Warning<span style="color:#f92672">]</span> Using a password on the command line interface can be insecure.
+</span></span><span style="display:flex;"><span>Welcome to the MySQL monitor.  Commands end with ; or <span style="color:#ae81ff">\g</span>.
+</span></span><span style="display:flex;"><span>Your MySQL connection id is <span style="color:#ae81ff">8</span>
+</span></span><span style="display:flex;"><span>Server version: 8.0.26 MySQL Community Server - GPL
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Copyright <span style="color:#f92672">(</span>c<span style="color:#f92672">)</span> 2000, 2021, Oracle and/or its affiliates.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Oracle is a registered trademark of Oracle Corporation and/or its
+</span></span><span style="display:flex;"><span>affiliates. Other names may be trademarks of their respective
+</span></span><span style="display:flex;"><span>owners.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Type <span style="color:#e6db74">&#39;help;&#39;</span> or <span style="color:#e6db74">&#39;\h&#39;</span> <span style="color:#66d9ef">for</span> help. Type <span style="color:#e6db74">&#39;\c&#39;</span> to clear the current input statement.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>mysql&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+
+
+      </div><div id="giscus-container" style="margin-top: 2rem; padding-top: 1rem; border-top: 1px solid var(--border);">
+  <script src="https://giscus.app/client.js"
+          data-repo="LMDAWN1127/LMDAWN1127.github.io"
+          data-repo-id="R_kgDOTMWmvw"
+          data-category="Announcements"
+          data-category-id="DIC_kwDOTMWmv84DAd3g"
+          data-mapping="pathname"
+          data-strict="0"
+          data-reactions-enabled="1"
+          data-emit-metadata="0"
+          data-input-position="bottom"
+          data-theme="preferred_color_scheme"
+          data-lang="zh-CN"
+          crossorigin="anonymous"
+          async>
+  </script>
+</div>
+
+    </div>
+
+    <aside class="toc-sidebar" id="toc-sidebar">
+    <div class="toc-header">目录</div>
+    <nav class="toc-nav"><ul class="toc-list">
+            <li>
+                <a href="#01-%e6%95%b0%e6%8d%ae%e5%ba%93%e6%9c%8d%e5%8a%a1%e5%ae%89%e8%a3%85%e9%83%a8%e7%bd%b2" class="toc-link" data-target="01-数据库服务安装部署">01-数据库服务安装部署</a><ul>
+            <li>
+                <a href="#11-%e6%95%b0%e6%8d%ae%e5%ba%93%e6%9c%8d%e5%8a%a1%e7%a8%8b%e5%ba%8f%e4%b8%8b%e8%bd%bd" class="toc-link" data-target="11-数据库服务程序下载">1.1 数据库服务程序下载</a></li>
+            <li>
+                <a href="#12-%e4%ba%8c%e8%bf%9b%e5%88%b6%e6%96%b9%e5%bc%8f%e5%ae%89%e8%a3%85%e6%95%b0%e6%8d%ae%e5%ba%93%e6%9c%8d%e5%8a%a1" class="toc-link" data-target="12-二进制方式安装数据库服务">1.2 二进制方式安装数据库服务</a><ul>
+            <li>
+                <a href="#%e6%ad%a5%e9%aa%a4%e4%b8%80%e6%93%8d%e4%bd%9c%e7%b3%bb%e7%bb%9f%e7%8e%af%e5%a2%83%e5%87%86%e5%a4%87" class="toc-link" data-target="步骤一操作系统环境准备">步骤一：操作系统环境准备</a><ul>
+            <li>
+                <a href="#1-%e7%a1%ae%e8%ae%a4%e7%bd%91%e7%bb%9c%e5%9c%b0%e5%9d%80" class="toc-link" data-target="1-确认网络地址">1. 确认网络地址</a></li>
+            <li>
+                <a href="#2-%e9%85%8d%e7%bd%ae%e4%b8%bb%e6%9c%ba%e5%90%8d%e8%a7%a3%e6%9e%90" class="toc-link" data-target="2-配置主机名解析">2. 配置主机名解析</a></li>
+            <li>
+                <a href="#3-%e5%85%b3%e9%97%ad%e7%b3%bb%e7%bb%9f%e9%98%b2%e7%81%ab%e5%a2%99" class="toc-link" data-target="3-关闭系统防火墙">3. 关闭系统防火墙</a></li>
+            <li>
+                <a href="#4-%e5%85%b3%e9%97%ad-selinux" class="toc-link" data-target="4-关闭-selinux">4. 关闭 SELinux</a></li>
+            <li>
+                <a href="#5-%e9%81%bf%e5%85%8d%e6%95%b0%e6%8d%ae%e5%ba%93%e6%9c%8d%e5%8a%a1%e5%ae%89%e8%a3%85%e4%ba%a7%e7%94%9f%e5%86%b2%e7%aa%81" class="toc-link" data-target="5-避免数据库服务安装产生冲突">5. 避免数据库服务安装产生冲突</a></li>
+            <li>
+                <a href="#6-%e5%ae%89%e8%a3%85%e6%95%b0%e6%8d%ae%e5%ba%93%e7%a8%8b%e5%ba%8f%e4%be%9d%e8%b5%96%e8%bd%af%e4%bb%b6%e7%bc%ba%e5%b0%91%e4%bc%9a%e5%af%bc%e8%87%b4%e5%88%9d%e5%a7%8b%e5%8c%96%e6%8a%a5%e9%94%99" class="toc-link" data-target="6-安装数据库程序依赖软件缺少会导致初始化报错">6. 安装数据库程序依赖软件（缺少会导致初始化报错）</a></li></ul>
+            </li>
+            <li>
+                <a href="#%e6%ad%a5%e9%aa%a4%e4%ba%8c%e5%ae%89%e8%a3%85%e6%95%b0%e6%8d%ae%e5%ba%93%e8%bd%af%e4%bb%b6%e7%a8%8b%e5%ba%8f" class="toc-link" data-target="步骤二安装数据库软件程序">步骤二：安装数据库软件程序</a><ul>
+            <li>
+                <a href="#1-%e8%a7%a3%e5%8e%8b%e5%ae%89%e8%a3%85%e5%8c%85%e5%b9%b6%e5%88%9b%e5%bb%ba%e8%bd%af%e9%93%be%e6%8e%a5%e4%be%bf%e4%ba%8e%e5%90%8e%e7%bb%ad%e7%89%88%e6%9c%ac%e7%ae%a1%e7%90%86" class="toc-link" data-target="1-解压安装包并创建软链接便于后续版本管理">1. 解压安装包并创建软链接（便于后续版本管理）</a></li>
+            <li>
+                <a href="#2-%e9%85%8d%e7%bd%ae%e7%b3%bb%e7%bb%9f%e5%85%a8%e5%b1%80%e7%8e%af%e5%a2%83%e5%8f%98%e9%87%8f" class="toc-link" data-target="2-配置系统全局环境变量">2. 配置系统全局环境变量</a></li>
+            <li>
+                <a href="#3-%e9%aa%8c%e8%af%81%e5%ae%89%e8%a3%85%e7%89%88%e6%9c%ac" class="toc-link" data-target="3-验证安装版本">3. 验证安装版本</a></li></ul>
+            </li>
+            <li>
+                <a href="#%e6%ad%a5%e9%aa%a4%e4%b8%89%e8%bf%9b%e8%a1%8c%e8%bd%af%e4%bb%b6%e7%a8%8b%e5%ba%8f%e5%88%9d%e5%a7%8b%e5%8c%96%e6%93%8d%e4%bd%9c" class="toc-link" data-target="步骤三进行软件程序初始化操作">步骤三：进行软件程序初始化操作</a><ul>
+            <li>
+                <a href="#1-%e5%88%9b%e5%bb%ba%e4%b8%93%e7%94%a8%e8%bf%90%e8%a1%8c%e7%94%a8%e6%88%b7%e6%97%a0%e9%9c%80%e7%b3%bb%e7%bb%9f%e7%99%bb%e5%bd%95%e6%9d%83%e9%99%90" class="toc-link" data-target="1-创建专用运行用户无需系统登录权限">1. 创建专用运行用户（无需系统登录权限）</a></li>
+            <li>
+                <a href="#2-%e5%88%9b%e5%bb%ba%e6%95%b0%e6%8d%ae%e5%ad%98%e5%82%a8%e7%9b%ae%e5%bd%95%e5%b9%b6%e6%8e%88%e6%9d%83" class="toc-link" data-target="2-创建数据存储目录并授权">2. 创建数据存储目录并授权</a></li>
+            <li>
+                <a href="#3-%e6%89%a7%e8%a1%8c%e6%95%b0%e6%8d%ae%e7%9b%ae%e5%bd%95%e5%88%9d%e5%a7%8b%e5%8c%96" class="toc-link" data-target="3-执行数据目录初始化">3. 执行数据目录初始化</a></li></ul>
+            </li>
+            <li>
+                <a href="#%e6%ad%a5%e9%aa%a4%e5%9b%9b%e7%bc%96%e5%86%99%e6%95%b0%e6%8d%ae%e5%ba%93%e6%9c%8d%e5%8a%a1%e9%85%8d%e7%bd%ae%e6%96%87%e4%bb%b6" class="toc-link" data-target="步骤四编写数据库服务配置文件">步骤四：编写数据库服务配置文件</a></li>
+            <li>
+                <a href="#%e6%ad%a5%e9%aa%a4%e4%ba%94%e5%90%af%e5%8a%a8%e6%95%b0%e6%8d%ae%e5%ba%93%e6%9c%8d%e5%8a%a1%e7%a8%8b%e5%ba%8f" class="toc-link" data-target="步骤五启动数据库服务程序">步骤五：启动数据库服务程序</a><ul>
+            <li>
+                <a href="#1-%e5%88%a9%e7%94%a8%e5%ae%98%e6%96%b9%e6%9c%8d%e5%8a%a1%e7%ae%a1%e7%90%86%e8%84%9a%e6%9c%ac%e5%90%af%e5%8a%a8" class="toc-link" data-target="1-利用官方服务管理脚本启动">1. 利用官方服务管理脚本启动</a></li>
+            <li>
+                <a href="#2-%e5%88%a9%e7%94%a8%e5%91%bd%e4%bb%a4%e8%a1%8c%e7%9b%b4%e6%8e%a5%e5%90%af%e5%8a%a8" class="toc-link" data-target="2-利用命令行直接启动">2. 利用命令行直接启动</a></li>
+            <li>
+                <a href="#3-%e5%88%a9%e7%94%a8-systemctl--service-%e5%90%af%e5%8a%a8" class="toc-link" data-target="3-利用-systemctl--service-启动">3. 利用 systemctl / service 启动</a></li></ul>
+            </li></ul>
+            </li>
+            <li>
+                <a href="#13-%e8%a1%a5%e5%85%85%e7%9f%a5%e8%af%86%e4%bb%8b%e7%bb%8d" class="toc-link" data-target="13-补充知识介绍">1.3 补充知识介绍</a><ul>
+            <li>
+                <a href="#1-%e5%88%9d%e5%a7%8b%e5%8c%96%e6%93%8d%e4%bd%9c%e7%9a%84%e4%b8%a4%e7%a7%8d%e6%96%b9%e5%bc%8f%e5%af%b9%e6%af%94" class="toc-link" data-target="1-初始化操作的两种方式对比">1. 初始化操作的两种方式对比</a></li>
+            <li>
+                <a href="#2-%e6%95%b0%e6%8d%ae%e5%ba%93%e5%90%af%e5%8a%a8%e5%a4%b1%e8%b4%a5%e6%8e%92%e9%94%99%e6%a0%87%e5%87%86%e6%b5%81%e7%a8%8b" class="toc-link" data-target="2-数据库启动失败排错标准流程">2. 数据库启动失败排错标准流程</a></li></ul>
+            </li></ul>
+            </li>
+            <li>
+                <a href="#02-%e6%95%b0%e6%8d%ae%e5%ba%93%e6%9c%8d%e5%8a%a1%e5%90%af%e5%8a%a8%e5%85%b3%e9%97%ad" class="toc-link" data-target="02-数据库服务启动关闭">02-数据库服务启动关闭</a></li>
+            <li>
+                <a href="#03-%e6%95%b0%e6%8d%ae%e5%ba%93%e6%9c%8d%e5%8a%a1%e5%af%86%e7%a0%81%e7%ae%a1%e7%90%86" class="toc-link" data-target="03-数据库服务密码管理">03-数据库服务密码管理</a><ul>
+            <li>
+                <a href="#1-%e6%b2%a1%e6%9c%89%e5%af%86%e7%a0%81%e6%97%b6%e8%ae%be%e7%bd%ae%e5%af%86%e7%a0%81" class="toc-link" data-target="1-没有密码时设置密码">1. 没有密码时设置密码</a></li>
+            <li>
+                <a href="#2-%e5%b7%b2%e6%9c%89%e5%af%86%e7%a0%81%e6%97%b6%e4%bf%ae%e6%94%b9%e5%af%86%e7%a0%81" class="toc-link" data-target="2-已有密码时修改密码">2. 已有密码时修改密码</a></li>
+            <li>
+                <a href="#3-%e5%b7%b2%e6%9c%89%e5%af%86%e7%a0%81%e4%bd%86%e6%98%af%e5%bf%98%e8%ae%b0%e5%af%86%e7%a0%81%e5%af%86%e7%a0%81%e9%87%8d%e7%bd%ae" class="toc-link" data-target="3-已有密码但是忘记密码密码重置">3. 已有密码但是忘记密码（密码重置）</a><ul>
+            <li>
+                <a href="#%e9%87%8d%e7%bd%ae%e5%af%86%e7%a0%81%e5%ae%9e%e6%93%8d%e6%b5%81%e7%a8%8b" class="toc-link" data-target="重置密码实操流程">重置密码实操流程</a>
+            </li>
+        </ul>
+        </li>
+        </ul>
+        </li>
+        </ul>
+    </nav>
+</aside>
+
+  </div>
+</article>
+    </main>
+    
+<a href="#top" id="top-link" class="top-link hidden" aria-label="go to top" title="Go to Top (Alt + G)" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevrons-up">
+        <polyline points="17 11 12 6 7 11"></polyline>
+        <polyline points="17 18 12 13 7 18"></polyline>
+    </svg>
+</a>
+<script defer src="/js/custom.js"></script>
+<div id="algolia-search-modal" class="algolia-modal" style="display: none;">
+  <div class="algolia-modal-overlay"></div>
+  <div class="algolia-modal-content">
+    <div class="algolia-search-header">
+      <div class="algolia-search-input-wrapper">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <input type="text" id="algolia-search-input" placeholder="搜索文章..." autofocus>
+        <kbd class="algolia-esc">Esc</kbd>
+      </div>
+    </div>
+    <div id="algolia-search-results" class="algolia-search-results">
+      <div class="algolia-empty-state">
+        <p>输入关键词开始搜索</p>
+      </div>
+    </div>
+    <div class="algolia-search-footer">
+      <span class="algolia-footer-text">
+        <kbd>↑</kbd> <kbd>↓</kbd> 导航
+        <kbd>↵</kbd> 打开
+        <kbd>Esc</kbd> 关闭
+      </span>
+      <span class="algolia-footer-logo">
+        搜索由 <a href="https://www.algolia.com/" target="_blank" rel="noopener">Algolia</a> 提供
+      </span>
+    </div>
+  </div>
+</div>
+
+<script>
+(function() {
+  'use strict';
+
+  var APP_ID = 'Y0SCRI4LCW';
+  var SEARCH_KEY = '03dda5e44aec7e0dd93b6a3653250b1f';
+  var INDEX_NAME = 'lmdawn1127-blog';
+  var API_URL = 'https://' + APP_ID + '-dsn.algolia.net/1/indexes/' + INDEX_NAME + '/query';
+  var debounceTimer = null;
+  var selectedIndex = -1;
+
+   
+  function doSearch(query) {
+    if (!query || !query.trim()) {
+      showEmpty();
+      return;
+    }
+
+    var body = JSON.stringify({
+      query: query,
+      hitsPerPage: 10,
+      attributesToRetrieve: ['title', 'content', 'url'],
+      attributesToHighlight: ['title', 'content'],
+      highlightPreTag: '<mark class="algolia-highlight">',
+      highlightPostTag: '</mark>'
+    });
+
+    fetch(API_URL, {
+      method: 'POST',
+      headers: {
+        'X-Algolia-Application-Id': APP_ID,
+        'X-Algolia-API-Key': SEARCH_KEY,
+        'Content-Type': 'application/json'
+      },
+      body: body
+    })
+    .then(function(resp) {
+      if (!resp.ok) throw new Error('HTTP ' + resp.status);
+      return resp.json();
+    })
+    .then(function(data) {
+      renderResults(data.hits || [], query);
+    })
+    .catch(function(err) {
+      console.error('Algolia search error:', err);
+      showError(err.message || '未知错误');
+    });
+  }
+
+   
+  function showEmpty() {
+    document.getElementById('algolia-search-results').innerHTML =
+      '<div class="algolia-empty-state"><p>输入关键词开始搜索</p></div>';
+  }
+
+  function showError(detail) {
+    var msg = '搜索出错，请稍后再试';
+    if (detail) msg += '<br><small style="color:#888">错误详情: ' + escapeHtml(detail) + '</small>';
+    document.getElementById('algolia-search-results').innerHTML =
+      '<div class="algolia-empty-state"><p>' + msg + '</p></div>';
+  }
+
+  function showNoResults(query) {
+    document.getElementById('algolia-search-results').innerHTML =
+      '<div class="algolia-empty-state"><p>未找到与「' + escapeHtml(query) + '」相关的结果</p></div>';
+  }
+
+  function escapeHtml(s) {
+    var d = document.createElement('div');
+    d.appendChild(document.createTextNode(s));
+    return d.innerHTML;
+  }
+
+  function getHL(hit, attr) {
+    if (hit._highlightResult && hit._highlightResult[attr]) return hit._highlightResult[attr].value;
+    return hit[attr] || '';
+  }
+
+  function trunc(s, n) {
+    if (!s) return '';
+    s = s.replace(/<[^>]+>/g, '');
+    return s.length > n ? s.substring(0, n) + '…' : s;
+  }
+
+  function renderResults(hits, query) {
+    var box = document.getElementById('algolia-search-results');
+    if (!hits.length) { showNoResults(query); return; }
+
+    var h = '<div class="algolia-results-count">' + hits.length + ' 个结果</div>';
+    hits.forEach(function(hit, i) {
+      var title = getHL(hit, 'title') || '无标题';
+      var content = getHL(hit, 'content');
+      var url = hit.url || '#';
+
+      h += '<a class="algolia-hit" href="' + url + '" data-index="' + i + '">';
+      h += '<div class="algolia-hit-title">' + title + '</div>';
+      h += '<div class="algolia-hit-content">' + trunc(content, 150) + '</div>';
+
+      h += '</a>';
+    });
+    box.innerHTML = h;
+
+    box.querySelectorAll('.algolia-hit').forEach(function(el) {
+      el.addEventListener('click', closeAlgoliaSearch);
+    });
+  }
+
+   
+  function onInput(e) {
+    var q = e.target.value;
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(function() { doSearch(q); }, 200);
+  }
+
+  function onKeydown(e) {
+    var hits = document.querySelectorAll('.algolia-hit');
+    if (!hits.length) return;
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      selectedIndex = Math.min(selectedIndex + 1, hits.length - 1);
+      sel(hits);
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      selectedIndex = Math.max(selectedIndex - 1, 0);
+      sel(hits);
+    } else if (e.key === 'Enter' && selectedIndex >= 0) {
+      e.preventDefault();
+      window.location.href = hits[selectedIndex].getAttribute('href');
+      closeAlgoliaSearch();
+    }
+  }
+
+  function sel(hits) {
+    hits.forEach(function(el, i) {
+      if (i === selectedIndex) { el.classList.add('selected'); el.scrollIntoView({ block: 'nearest' }); }
+      else el.classList.remove('selected');
+    });
+  }
+
+   
+  document.addEventListener('DOMContentLoaded', function() {
+    var input = document.getElementById('algolia-search-input');
+    if (input) {
+      input.addEventListener('input', onInput);
+      input.addEventListener('keydown', onKeydown);
+    }
+  });
+
+  window.openAlgoliaSearch = function() {
+    var modal = document.getElementById('algolia-search-modal');
+    modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+    setTimeout(function() {
+      var input = document.getElementById('algolia-search-input');
+      if (input) { input.value = ''; input.focus(); showEmpty(); }
+    }, 100);
+  };
+
+  window.closeAlgoliaSearch = function() {
+    document.getElementById('algolia-search-modal').style.display = 'none';
+    document.body.style.overflow = '';
+    selectedIndex = -1;
+  };
+})();
+</script>
+
+<style>
+  .algolia-modal{position:fixed;top:0;left:0;width:100%;height:100%;z-index:1000;display:flex;align-items:flex-start;justify-content:center;padding-top:10vh}
+  .algolia-modal-overlay{position:absolute;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.6);backdrop-filter:blur(4px)}
+  .algolia-modal-content{position:relative;width:90%;max-width:600px;background:#1a1a1a;border-radius:12px;box-shadow:0 20px 60px rgba(0,0,0,.5);overflow:hidden;border:1px solid #333}
+  .algolia-search-header{padding:16px;border-bottom:1px solid #333}
+  .algolia-search-input-wrapper{display:flex;align-items:center;gap:12px;background:#2a2a2a;border-radius:8px;padding:12px 16px;border:1px solid #444}
+  .algolia-search-input-wrapper svg{color:#666;flex-shrink:0}
+  #algolia-search-input{flex:1;background:transparent;border:none;outline:none;color:#fff;font-size:16px;font-family:inherit}
+  #algolia-search-input::placeholder{color:#666}
+  .algolia-esc{background:#444;color:#999;padding:2px 6px;border-radius:4px;font-size:11px;font-family:inherit}
+  .algolia-search-results{max-height:400px;overflow-y:auto;padding:8px}
+  .algolia-empty-state{padding:40px 20px;text-align:center;color:#666}
+  .algolia-results-count{padding:8px 12px;font-size:12px;color:#666}
+  .algolia-search-footer{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;border-top:1px solid #333;background:#222;font-size:12px;color:#666}
+  .algolia-footer-text kbd{background:#444;color:#999;padding:2px 4px;border-radius:3px;font-size:10px;margin:0 2px}
+  .algolia-footer-logo a{color:#5EEAD4;text-decoration:none}
+  .algolia-footer-logo a:hover{text-decoration:underline}
+  .algolia-hit{display:block;padding:12px;border-radius:6px;text-decoration:none;color:#fff;transition:background .2s}
+  .algolia-hit:hover,.algolia-hit.selected{background:#2a2a2a}
+  .algolia-hit-title{font-weight:600;color:#5EEAD4;margin-bottom:4px;font-size:15px}
+  .algolia-hit-title mark,.algolia-highlight{background:rgba(94,234,212,.25);color:#5EEAD4;padding:0 2px;border-radius:2px}
+  .algolia-hit-content{font-size:13px;color:#999;line-height:1.5}
+  .algolia-hit-content mark,.algolia-hit-content .algolia-highlight{background:rgba(94,234,212,.2);color:#ccc;padding:0 2px;border-radius:2px}
+  .algolia-hit-meta{display:flex;align-items:center;gap:10px;margin-top:8px}
+  .algolia-hit-date{font-size:12px;color:#666}
+  .algolia-hit-tags{display:flex;gap:6px}
+  .algolia-hit-tag{background:#333;color:#999;padding:2px 8px;border-radius:4px;font-size:11px}
+</style>
+<script>
+  
+  document.addEventListener('keydown', function(e) {
+    
+    if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+      e.preventDefault();
+      if (typeof openAlgoliaSearch === 'function') openAlgoliaSearch();
+    }
+    
+    if (e.key === 'Escape') {
+      if (typeof closeAlgoliaSearch === 'function') closeAlgoliaSearch();
+    }
+    
+    if (e.altKey && e.key === '/') {
+      e.preventDefault();
+      if (typeof openAlgoliaSearch === 'function') openAlgoliaSearch();
+    }
+  });
+
+  
+  document.addEventListener('DOMContentLoaded', function() {
+    var modal = document.getElementById('algolia-search-modal');
+    if (modal) {
+      var overlay = modal.querySelector('.algolia-modal-overlay');
+      if (overlay) {
+        overlay.addEventListener('click', function() {
+          if (typeof closeAlgoliaSearch === 'function') closeAlgoliaSearch();
+        });
+      }
+    }
+  });
+
+  
+  
+  document.addEventListener('DOMContentLoaded', function() {
+    if (document.getElementById('algolia-search-btn')) return;
+    var btn = document.createElement('button');
+    btn.id = 'algolia-search-btn';
+    btn.className = 'theme-toggle search-toggle';
+    btn.type = 'button';
+    btn.title = '搜索 (Ctrl+K)';
+    btn.setAttribute('aria-label', '搜索');
+    btn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>';
+    btn.addEventListener('click', function() {
+      if (typeof openAlgoliaSearch === 'function') openAlgoliaSearch();
+    });
+    var target = document.querySelector('.logo-switches') || document.querySelector('.header-nav');
+    if (target) target.appendChild(btn);
+  });
+</script><script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var cur = (document.documentElement.lang || 'zh').toLowerCase();
+    
+    
+    
+    var rawPath = location.pathname.replace(/\/+$/, '');
+    var pm = rawPath.match(/^\/(en|ko|ja)(?:\/(.*))?$/);
+    var rest = pm ? (pm[2] ? '/' + pm[2] : '') : rawPath; 
+    function langHref(code) {
+      var base = (code === 'zh') ? '' : '/' + code;
+      if (rest === '' || rest === '/') {
+        return base === '' ? '/' : base + '/';
+      }
+      return base + rest + '/';
+    }
+
+    var langs = [
+      { code: 'zh', label: '中文' },
+      { code: 'en', label: 'English' },
+      { code: 'ko', label: '한국어' },
+      { code: 'ja', label: '日本語' }
+    ];
+    var wrap = document.querySelector('.logo-switches') || document.querySelector('.header-nav');
+    if (!wrap || document.getElementById('lang-dropdown')) return;
+
+    var current = langs.find(function(l) { return l.code === cur; }) || langs[0];
+
+    var dd = document.createElement('div');
+    dd.className = 'lang-dropdown';
+    dd.id = 'lang-dropdown';
+
+    var toggle = document.createElement('button');
+    toggle.type = 'button';
+    toggle.className = 'lang-dropdown-toggle';
+    toggle.setAttribute('aria-label', '选择语言');
+    toggle.innerHTML = '<span class="lang-current">' + current.label + '</span><span class="lang-caret">▾</span>';
+
+    var menu = document.createElement('ul');
+    menu.className = 'lang-dropdown-menu';
+    langs.forEach(function(l) {
+      var li = document.createElement('li');
+      if (l.code === cur) li.className = 'active';
+      var a = document.createElement('a');
+      a.href = langHref(l.code);
+      a.textContent = l.label;
+      li.appendChild(a);
+      menu.appendChild(li);
+    });
+
+    dd.appendChild(toggle);
+    dd.appendChild(menu);
+    wrap.appendChild(dd);
+
+    toggle.addEventListener('click', function(e) {
+      e.stopPropagation();
+      dd.classList.toggle('open');
+    });
+    document.addEventListener('click', function(e) {
+      if (!dd.contains(e.target)) dd.classList.remove('open');
+    });
+  });
+</script>
+
+
+<script>
+    let menu = document.getElementById('menu');
+    if (menu) {
+        const scrollPosition = localStorage.getItem("menu-scroll-position");
+        if (scrollPosition) {
+            menu.scrollLeft = parseInt(scrollPosition, 10);
+        }
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+</script>
+<script>
+    var toplink = document.getElementById("top-link");
+    window.onscroll = function () {
+        const scrollThreshold = window.innerHeight;
+        if (document.body.scrollTop > scrollThreshold || document.documentElement.scrollTop > scrollThreshold) {
+            toplink.classList.remove("hidden");
+        } else {
+            toplink.classList.add("hidden");
+        }
+    };
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        const html = document.querySelector("html");
+        if (html.dataset.theme === "dark") {
+            html.dataset.theme = 'light';
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            html.dataset.theme = 'dark';
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = '复制';
+
+        function copyingDone() {
+            copybutton.innerHTML = '已复制！';
+            setTimeout(() => {
+                copybutton.innerHTML = '复制';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>
