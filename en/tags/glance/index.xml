@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Glance on DAWN&#39;s Blog</title>
+    <link>https://LMDAWN1127.github.io/en/tags/glance/</link>
+    <description>Recent content in Glance on DAWN&#39;s Blog</description>
+    <image>
+      <title>DAWN&#39;s Blog</title>
+      <url>https://LMDAWN1127.github.io/images/DAWN.jpg</url>
+      <link>https://LMDAWN1127.github.io/images/DAWN.jpg</link>
+    </image>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <lastBuildDate>Mon, 05 Oct 2026 00:21:00 +0800</lastBuildDate>
+    <atom:link href="https://LMDAWN1127.github.io/en/tags/glance/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>OpenStack Core Services: Keystone, Nova and Glance</title>
+      <link>https://LMDAWN1127.github.io/en/posts/openstack-keystone-glance-nova/</link>
+      <pubDate>Mon, 05 Oct 2026 00:21:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/posts/openstack-keystone-glance-nova/</guid>
+      <description>A walkthrough of OpenStack&amp;rsquo;s three core services: Keystone multi-domain support, service/endpoint registration and policy-file authorization; Nova&amp;rsquo;s modules (api/scheduler/conductor/compute/novncproxy), the message queue and the differential disk; and the Glance image service switched to a Swift object-storage backend.</description>
+    </item>
+  </channel>
+</rss>

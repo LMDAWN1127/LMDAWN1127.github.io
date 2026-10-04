@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>镜像服务 on DAWN&#39;s Blog</title>
+    <link>https://LMDAWN1127.github.io/tags/%E9%95%9C%E5%83%8F%E6%9C%8D%E5%8A%A1/</link>
+    <description>Recent content in 镜像服务 on DAWN&#39;s Blog</description>
+    <image>
+      <title>DAWN&#39;s Blog</title>
+      <url>https://LMDAWN1127.github.io/images/DAWN.jpg</url>
+      <link>https://LMDAWN1127.github.io/images/DAWN.jpg</link>
+    </image>
+    <generator>Hugo</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Mon, 05 Oct 2026 00:21:00 +0800</lastBuildDate>
+    <atom:link href="https://LMDAWN1127.github.io/tags/%E9%95%9C%E5%83%8F%E6%9C%8D%E5%8A%A1/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>OpenStack 核心服务：Keystone、Nova 与 Glance</title>
+      <link>https://LMDAWN1127.github.io/posts/openstack-keystone-glance-nova/</link>
+      <pubDate>Mon, 05 Oct 2026 00:21:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/posts/openstack-keystone-glance-nova/</guid>
+      <description>梳理 OpenStack 三大核心服务：Keystone 的多域支持、service/endpoint 注册与策略文件权限控制；Nova 各模块（api/scheduler/conductor/compute/novncproxy）、消息队列与差分盘机制；Glance 镜像服务及改用 Swift 对象存储作为后端。</description>
+    </item>
+  </channel>
+</rss>

@@ -11,8 +11,15 @@
     </image>
     <generator>Hugo</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sun, 04 Oct 2026 21:50:00 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 05 Oct 2026 00:21:00 +0800</lastBuildDate>
     <atom:link href="https://LMDAWN1127.github.io/tags/nova/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>OpenStack 核心服务：Keystone、Nova 与 Glance</title>
+      <link>https://LMDAWN1127.github.io/posts/openstack-keystone-glance-nova/</link>
+      <pubDate>Mon, 05 Oct 2026 00:21:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/posts/openstack-keystone-glance-nova/</guid>
+      <description>梳理 OpenStack 三大核心服务：Keystone 的多域支持、service/endpoint 注册与策略文件权限控制；Nova 各模块（api/scheduler/conductor/compute/novncproxy）、消息队列与差分盘机制；Glance 镜像服务及改用 Swift 对象存储作为后端。</description>
+    </item>
     <item>
       <title>OpenStack发放云主机</title>
       <link>https://LMDAWN1127.github.io/posts/openstack-provision-cloud-server/</link>
