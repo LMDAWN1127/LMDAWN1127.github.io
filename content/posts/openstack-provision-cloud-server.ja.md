@@ -193,7 +193,7 @@ Compute ホストは本質的に KVM ハイパーバイザーです。OpenStack 
 [root@Controller ~(keystone_admin)]# cp keystonerc_admin keystonerc_zlm
 ```
 
-### 要件一：コマンドラインで全リソースを削除
+要件一：コマンドラインで全リソースを削除
 
 ```bash
 [root@Controller ~(keystone_zlm)]# cat keystonerc_zlm
@@ -297,7 +297,7 @@ admin 身份に切り替えて、パブリックネットワーク・イメー�
 [root@Controller ~(keystone_admin)]# source keystonerc_admin
 ```
 
-### 1. プロジェクトとユーザーを作成し紐付け
+1. プロジェクトとユーザーを作成し紐付け
 
 ```bash
 [root@Controller ~(keystone_admin)]# openstack project create LMandMY_HOME

@@ -193,7 +193,7 @@ Compute主机本质上是一台KVM宿主机，在openstack中发放云主机，�
 [root@Controller ~(keystone_admin)]# cp keystonerc_admin keystonerc_zlm
 ```
 
-### 需求一：使用命令行删除所有的资源
+需求一：使用命令行删除所有的资源
 
 ```bash
 [root@Controller ~(keystone_zlm)]# cat keystonerc_zlm
@@ -297,7 +297,7 @@ export OS_IDENTITY_API_VERSION=3
 [root@Controller ~(keystone_admin)]# source keystonerc_admin
 ```
 
-### 1. 创建项目，用户，将用户与项目关联
+1. 创建项目，用户，将用户与项目关联
 
 ```bash
 [root@Controller ~(keystone_admin)]# openstack project create LMandMY_HOME

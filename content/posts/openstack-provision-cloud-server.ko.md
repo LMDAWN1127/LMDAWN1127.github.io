@@ -193,7 +193,7 @@ Compute 호스트는 본질적으로 KVM 하이퍼바이저입니다. OpenStack�
 [root@Controller ~(keystone_admin)]# cp keystonerc_admin keystonerc_zlm
 ```
 
-### 요구사항 1: CLI로 모든 리소스 삭제
+요구사항 1: CLI로 모든 리소스 삭제
 
 ```bash
 [root@Controller ~(keystone_zlm)]# cat keystonerc_zlm
@@ -297,7 +297,7 @@ admin 계정으로 전환하여 퍼블릭 네트워크·이미지·플레이버�
 [root@Controller ~(keystone_admin)]# source keystonerc_admin
 ```
 
-### 1. 프로젝트·사용자를 생성하고 연결
+1. 프로젝트 사용자를 생성하고 연결
 
 ```bash
 [root@Controller ~(keystone_admin)]# openstack project create LMandMY_HOME

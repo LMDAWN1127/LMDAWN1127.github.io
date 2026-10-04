@@ -193,7 +193,7 @@ A Compute host is essentially a KVM hypervisor. When OpenStack provisions a clou
 [root@Controller ~(keystone_admin)]# cp keystonerc_admin keystonerc_zlm
 ```
 
-### Requirement 1: Delete all resources using the CLI
+Requirement 1: Delete all resources using the CLI
 
 ```bash
 [root@Controller ~(keystone_zlm)]# cat keystonerc_zlm
@@ -297,7 +297,7 @@ Requirement 2: Create all resources via the CLI—provision a server, add a floa
 [root@Controller ~(keystone_admin)]# source keystonerc_admin
 ```
 
-### 1. Create a project and user, and associate the user with the project
+1. Create a project and user, and associate the user with the project
 
 ```bash
 [root@Controller ~(keystone_admin)]# openstack project create LMandMY_HOME
