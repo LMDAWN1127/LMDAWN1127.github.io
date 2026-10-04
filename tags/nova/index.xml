@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Nova on DAWN&#39;s Blog</title>
+    <link>https://LMDAWN1127.github.io/tags/nova/</link>
+    <description>Recent content in Nova on DAWN&#39;s Blog</description>
+    <image>
+      <title>DAWN&#39;s Blog</title>
+      <url>https://LMDAWN1127.github.io/images/DAWN.jpg</url>
+      <link>https://LMDAWN1127.github.io/images/DAWN.jpg</link>
+    </image>
+    <generator>Hugo</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sun, 04 Oct 2026 21:50:00 +0800</lastBuildDate>
+    <atom:link href="https://LMDAWN1127.github.io/tags/nova/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>OpenStack发放云主机</title>
+      <link>https://LMDAWN1127.github.io/posts/openstack-provision-cloud-server/</link>
+      <pubDate>Sun, 04 Oct 2026 21:50:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/posts/openstack-provision-cloud-server/</guid>
+      <description>从图形化界面到命令行，完整演示 OpenStack 发放云主机的全流程：租户/用户/镜像/规格/网络/路由器/安全组/密钥对/浮动IP 的创建与删除，并附 iptables SNAT/DNAT 与 Nova cell_v2 discover_hosts 排查要点。</description>
+    </item>
+  </channel>
+</rss>

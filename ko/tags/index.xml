@@ -11,13 +11,48 @@
     </image>
     <generator>Hugo</generator>
     <language>ko</language>
-    <lastBuildDate>Sat, 03 Oct 2026 22:50:00 +0800</lastBuildDate>
+    <lastBuildDate>Sun, 04 Oct 2026 21:50:00 +0800</lastBuildDate>
     <atom:link href="https://LMDAWN1127.github.io/ko/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>CLI</title>
+      <link>https://LMDAWN1127.github.io/ko/tags/cli/</link>
+      <pubDate>Sun, 04 Oct 2026 21:50:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/ko/tags/cli/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Horizon</title>
+      <link>https://LMDAWN1127.github.io/ko/tags/horizon/</link>
+      <pubDate>Sun, 04 Oct 2026 21:50:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/ko/tags/horizon/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Neutron</title>
+      <link>https://LMDAWN1127.github.io/ko/tags/neutron/</link>
+      <pubDate>Sun, 04 Oct 2026 21:50:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/ko/tags/neutron/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Nova</title>
+      <link>https://LMDAWN1127.github.io/ko/tags/nova/</link>
+      <pubDate>Sun, 04 Oct 2026 21:50:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/ko/tags/nova/</guid>
+      <description></description>
+    </item>
     <item>
       <title>OpenStack</title>
       <link>https://LMDAWN1127.github.io/ko/tags/openstack/</link>
-      <pubDate>Sat, 03 Oct 2026 22:50:00 +0800</pubDate>
+      <pubDate>Sun, 04 Oct 2026 21:50:00 +0800</pubDate>
       <guid>https://LMDAWN1127.github.io/ko/tags/openstack/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>클라우드 서버</title>
+      <link>https://LMDAWN1127.github.io/ko/tags/%ED%81%B4%EB%9D%BC%EC%9A%B0%EB%93%9C-%EC%84%9C%EB%B2%84/</link>
+      <pubDate>Sun, 04 Oct 2026 21:50:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/ko/tags/%ED%81%B4%EB%9D%BC%EC%9A%B0%EB%93%9C-%EC%84%9C%EB%B2%84/</guid>
       <description></description>
     </item>
     <item>

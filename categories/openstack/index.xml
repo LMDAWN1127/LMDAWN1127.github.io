@@ -11,8 +11,15 @@
     </image>
     <generator>Hugo</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sat, 03 Oct 2026 22:50:00 +0800</lastBuildDate>
+    <lastBuildDate>Sun, 04 Oct 2026 21:50:00 +0800</lastBuildDate>
     <atom:link href="https://LMDAWN1127.github.io/categories/openstack/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>OpenStack发放云主机</title>
+      <link>https://LMDAWN1127.github.io/posts/openstack-provision-cloud-server/</link>
+      <pubDate>Sun, 04 Oct 2026 21:50:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/posts/openstack-provision-cloud-server/</guid>
+      <description>从图形化界面到命令行，完整演示 OpenStack 发放云主机的全流程：租户/用户/镜像/规格/网络/路由器/安全组/密钥对/浮动IP 的创建与删除，并附 iptables SNAT/DNAT 与 Nova cell_v2 discover_hosts 排查要点。</description>
+    </item>
     <item>
       <title>OpenStack 云操作系统核心架构与自动化部署</title>
       <link>https://LMDAWN1127.github.io/posts/openstack-core-architecture-deployment/</link>
