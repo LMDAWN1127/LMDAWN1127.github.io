@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Cinder on DAWN&#39;s Blog</title>
+    <link>https://LMDAWN1127.github.io/tags/cinder/</link>
+    <description>Recent content in Cinder on DAWN&#39;s Blog</description>
+    <image>
+      <title>DAWN&#39;s Blog</title>
+      <url>https://LMDAWN1127.github.io/images/DAWN.jpg</url>
+      <link>https://LMDAWN1127.github.io/images/DAWN.jpg</link>
+    </image>
+    <generator>Hugo</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Mon, 05 Oct 2026 23:30:00 +0800</lastBuildDate>
+    <atom:link href="https://LMDAWN1127.github.io/tags/cinder/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>OpenStack Cinder 块存储详解：LVM &#43; iSCSI 本地卷与 NFS 后端对接</title>
+      <link>https://LMDAWN1127.github.io/posts/openstack-cinder-block-storage/</link>
+      <pubDate>Mon, 05 Oct 2026 23:30:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/posts/openstack-cinder-block-storage/</guid>
+      <description>梳理 OpenStack Cinder 块存储：卷创建与挂载的架构分工（Cinder 建卷、Nova 挂载）、本地 LVM + iSCSI 把控制节点变成存储端的完整链路（VG/LV/targetcli ISCSI 共享/libvirt 挂载），以及对接 NFS 存储的后端配置与 Web 界面实操。</description>
+    </item>
+  </channel>
+</rss>

@@ -11,8 +11,50 @@
     </image>
     <generator>Hugo</generator>
     <language>ko</language>
-    <lastBuildDate>Mon, 05 Oct 2026 00:21:00 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 05 Oct 2026 23:30:00 +0800</lastBuildDate>
     <atom:link href="https://LMDAWN1127.github.io/ko/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Cinder</title>
+      <link>https://LMDAWN1127.github.io/ko/tags/cinder/</link>
+      <pubDate>Mon, 05 Oct 2026 23:30:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/ko/tags/cinder/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>ISCSI</title>
+      <link>https://LMDAWN1127.github.io/ko/tags/iscsi/</link>
+      <pubDate>Mon, 05 Oct 2026 23:30:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/ko/tags/iscsi/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>LVM</title>
+      <link>https://LMDAWN1127.github.io/ko/tags/lvm/</link>
+      <pubDate>Mon, 05 Oct 2026 23:30:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/ko/tags/lvm/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>NFS</title>
+      <link>https://LMDAWN1127.github.io/ko/tags/nfs/</link>
+      <pubDate>Mon, 05 Oct 2026 23:30:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/ko/tags/nfs/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>OpenStack</title>
+      <link>https://LMDAWN1127.github.io/ko/tags/openstack/</link>
+      <pubDate>Mon, 05 Oct 2026 23:30:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/ko/tags/openstack/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>블록 스토리지</title>
+      <link>https://LMDAWN1127.github.io/ko/tags/%EB%B8%94%EB%A1%9D-%EC%8A%A4%ED%86%A0%EB%A6%AC%EC%A7%80/</link>
+      <pubDate>Mon, 05 Oct 2026 23:30:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/ko/tags/%EB%B8%94%EB%A1%9D-%EC%8A%A4%ED%86%A0%EB%A6%AC%EC%A7%80/</guid>
+      <description></description>
+    </item>
     <item>
       <title>Endpoint</title>
       <link>https://LMDAWN1127.github.io/ko/tags/endpoint/</link>
@@ -39,13 +81,6 @@
       <link>https://LMDAWN1127.github.io/ko/tags/nova/</link>
       <pubDate>Mon, 05 Oct 2026 00:21:00 +0800</pubDate>
       <guid>https://LMDAWN1127.github.io/ko/tags/nova/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>OpenStack</title>
-      <link>https://LMDAWN1127.github.io/ko/tags/openstack/</link>
-      <pubDate>Mon, 05 Oct 2026 00:21:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/ko/tags/openstack/</guid>
       <description></description>
     </item>
     <item>

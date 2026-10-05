@@ -11,8 +11,15 @@
     </image>
     <generator>Hugo</generator>
     <language>en</language>
-    <lastBuildDate>Mon, 05 Oct 2026 00:21:00 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 05 Oct 2026 23:30:00 +0800</lastBuildDate>
     <atom:link href="https://LMDAWN1127.github.io/en/tags/openstack/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>OpenStack Cinder Block Storage Explained: Local LVM &#43; iSCSI Volumes and NFS Backend Integration</title>
+      <link>https://LMDAWN1127.github.io/en/posts/openstack-cinder-block-storage/</link>
+      <pubDate>Mon, 05 Oct 2026 23:30:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/posts/openstack-cinder-block-storage/</guid>
+      <description>A walkthrough of OpenStack Cinder block storage: how volume creation and attachment split between Cinder and Nova, the full local LVM + iSCSI path (VG/LV, turning the controller into an iSCSI target with targetcli, attaching via libvirt), plus NFS backend configuration and dashboard operations.</description>
+    </item>
     <item>
       <title>OpenStack Core Services Explained: Keystone Authentication, Nova Compute, and Glance/Swift Image Storage</title>
       <link>https://LMDAWN1127.github.io/en/posts/openstack-keystone-glance-nova/</link>

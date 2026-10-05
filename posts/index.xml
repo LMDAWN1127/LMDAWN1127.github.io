@@ -11,7 +11,7 @@
     </image>
     <generator>Hugo</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Mon, 05 Oct 2026 00:21:00 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 05 Oct 2026 23:30:00 +0800</lastBuildDate>
     <atom:link href="https://LMDAWN1127.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Harbor 主备部署实战：从安装到 HTTPS 与主备复制</title>
@@ -19,6 +19,13 @@
       <pubDate>Tue, 04 Aug 2026 00:00:00 +0000</pubDate>
       <guid>https://LMDAWN1127.github.io/posts/harbor-master-slave/</guid>
       <description>完整记录 Harbor 企业级镜像仓库的主备部署过程，涵盖 HTTP/HTTPS 双模式安装、自签名证书配置、跨主机主备复制等核心运维技能。</description>
+    </item>
+    <item>
+      <title>OpenStack Cinder 块存储详解：LVM &#43; iSCSI 本地卷与 NFS 后端对接</title>
+      <link>https://LMDAWN1127.github.io/posts/openstack-cinder-block-storage/</link>
+      <pubDate>Mon, 05 Oct 2026 23:30:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/posts/openstack-cinder-block-storage/</guid>
+      <description>梳理 OpenStack Cinder 块存储：卷创建与挂载的架构分工（Cinder 建卷、Nova 挂载）、本地 LVM + iSCSI 把控制节点变成存储端的完整链路（VG/LV/targetcli ISCSI 共享/libvirt 挂载），以及对接 NFS 存储的后端配置与 Web 界面实操。</description>
     </item>
     <item>
       <title>OpenStack 核心服务详解：Keystone 认证、Nova 计算与 Glance/Swift 镜像存储</title>

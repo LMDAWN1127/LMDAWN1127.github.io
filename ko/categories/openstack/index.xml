@@ -11,8 +11,15 @@
     </image>
     <generator>Hugo</generator>
     <language>ko</language>
-    <lastBuildDate>Mon, 05 Oct 2026 00:21:00 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 05 Oct 2026 23:30:00 +0800</lastBuildDate>
     <atom:link href="https://LMDAWN1127.github.io/ko/categories/openstack/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>OpenStack Cinder 블록 스토리지 상세 정리: 로컬 LVM &#43; iSCSI 볼륨과 NFS 백엔드 연동</title>
+      <link>https://LMDAWN1127.github.io/ko/posts/openstack-cinder-block-storage/</link>
+      <pubDate>Mon, 05 Oct 2026 23:30:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/ko/posts/openstack-cinder-block-storage/</guid>
+      <description>OpenStack Cinder 블록 스토리지 정리: 볼륨 생성과 마운트의 역할 분담(Cinder는 생성, Nova는 마운트), 로컬 LVM + iSCSI로 컨트롤러를 스토리지로 만드는 전체 흐름(VG/LV, targetcli 기반 ISCSI 공유, libvirt 마운트), 그리고 NFS 백엔드 연동과 대시보드 실습.</description>
+    </item>
     <item>
       <title>OpenStack 핵심 서비스 상세 정리: Keystone 인증·Nova 컴퓨트·Glance/Swift 이미지 스토리지</title>
       <link>https://LMDAWN1127.github.io/ko/posts/openstack-keystone-glance-nova/</link>
