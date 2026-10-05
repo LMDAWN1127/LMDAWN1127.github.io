@@ -14,7 +14,7 @@
     <lastBuildDate>Mon, 05 Oct 2026 00:21:00 +0800</lastBuildDate>
     <atom:link href="https://LMDAWN1127.github.io/en/tags/image-service/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>OpenStack Core Services: Keystone, Nova and Glance</title>
+      <title>OpenStack Core Services Explained: Keystone Authentication, Nova Compute, and Glance/Swift Image Storage</title>
       <link>https://LMDAWN1127.github.io/en/posts/openstack-keystone-glance-nova/</link>
       <pubDate>Mon, 05 Oct 2026 00:21:00 +0800</pubDate>
       <guid>https://LMDAWN1127.github.io/en/posts/openstack-keystone-glance-nova/</guid>

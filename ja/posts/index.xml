@@ -21,7 +21,7 @@
       <description>HarborエンタープライズDockerレジストリのアクティブスタンバイアーキテクチャ、HTTP/HTTPSモード、自己署名証明書、クロスホストレプリケーションを完全にカバーするデプロイガイドです。</description>
     </item>
     <item>
-      <title>OpenStack 中核サービス：Keystone・Nova・Glance</title>
+      <title>OpenStack 中核サービス詳細解説：Keystone 認証・Nova コンピュート・Glance/Swift イメージストレージ</title>
       <link>https://LMDAWN1127.github.io/ja/posts/openstack-keystone-glance-nova/</link>
       <pubDate>Mon, 05 Oct 2026 00:21:00 +0800</pubDate>
       <guid>https://LMDAWN1127.github.io/ja/posts/openstack-keystone-glance-nova/</guid>

@@ -14,7 +14,7 @@
     <lastBuildDate>Mon, 05 Oct 2026 00:21:00 +0800</lastBuildDate>
     <atom:link href="https://LMDAWN1127.github.io/ko/tags/glance/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>OpenStack 핵심 서비스: Keystone, Nova, Glance</title>
+      <title>OpenStack 핵심 서비스 상세 정리: Keystone 인증·Nova 컴퓨트·Glance/Swift 이미지 스토리지</title>
       <link>https://LMDAWN1127.github.io/ko/posts/openstack-keystone-glance-nova/</link>
       <pubDate>Mon, 05 Oct 2026 00:21:00 +0800</pubDate>
       <guid>https://LMDAWN1127.github.io/ko/posts/openstack-keystone-glance-nova/</guid>

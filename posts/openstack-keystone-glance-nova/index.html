@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="robots" content="index, follow">
-<title>OpenStack 核心服务：Keystone、Nova 与 Glance | DAWN&#39;s Blog</title>
+<title>OpenStack 核心服务详解：Keystone 认证、Nova 计算与 Glance/Swift 镜像存储 | DAWN&#39;s Blog</title>
 <meta name="keywords" content="OpenStack, Keystone, Glance, Nova, Endpoint, 镜像服务">
 <meta name="description" content="梳理 OpenStack 三大核心服务：Keystone 的多域支持、service/endpoint 注册与策略文件权限控制；Nova 各模块（api/scheduler/conductor/compute/novncproxy）、消息队列与差分盘机制；Glance 镜像服务及改用 Swift 对象存储作为后端。">
 <meta name="author" content="DAWN">
@@ -70,7 +70,7 @@
 </script><link rel="stylesheet" href='https://LMDAWN1127.github.io/css/custom.css'>
 <meta property="og:url" content="https://LMDAWN1127.github.io/posts/openstack-keystone-glance-nova/">
   <meta property="og:site_name" content="DAWN&#39;s Blog">
-  <meta property="og:title" content="OpenStack 核心服务：Keystone、Nova 与 Glance">
+  <meta property="og:title" content="OpenStack 核心服务详解：Keystone 认证、Nova 计算与 Glance/Swift 镜像存储">
   <meta property="og:description" content="梳理 OpenStack 三大核心服务：Keystone 的多域支持、service/endpoint 注册与策略文件权限控制；Nova 各模块（api/scheduler/conductor/compute/novncproxy）、消息队列与差分盘机制；Glance 镜像服务及改用 Swift 对象存储作为后端。">
   <meta property="og:locale" content="zh_cn">
   <meta property="og:type" content="article">
@@ -87,7 +87,7 @@
 
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:image" content="https://LMDAWN1127.github.io/images/DAWN.jpg">
-  <meta name="twitter:title" content="OpenStack 核心服务：Keystone、Nova 与 Glance">
+  <meta name="twitter:title" content="OpenStack 核心服务详解：Keystone 认证、Nova 计算与 Glance/Swift 镜像存储">
   <meta name="twitter:description" content="梳理 OpenStack 三大核心服务：Keystone 的多域支持、service/endpoint 注册与策略文件权限控制；Nova 各模块（api/scheduler/conductor/compute/novncproxy）、消息队列与差分盘机制；Glance 镜像服务及改用 Swift 对象存储作为后端。">
 
 
@@ -105,7 +105,7 @@
     {
       "@type": "ListItem",
       "position":  2 ,
-      "name": "OpenStack 核心服务：Keystone、Nova 与 Glance",
+      "name": "OpenStack 核心服务详解：Keystone 认证、Nova 计算与 Glance/Swift 镜像存储",
       "item": "https://LMDAWN1127.github.io/posts/openstack-keystone-glance-nova/"
     }
   ]
@@ -115,8 +115,8 @@
 {
   "@context": "https://schema.org",
   "@type": "BlogPosting",
-  "headline": "OpenStack 核心服务：Keystone、Nova 与 Glance",
-  "name": "OpenStack 核心服务：Keystone、Nova 与 Glance",
+  "headline": "OpenStack 核心服务详解：Keystone 认证、Nova 计算与 Glance/Swift 镜像存储",
+  "name": "OpenStack 核心服务详解：Keystone 认证、Nova 计算与 Glance\/Swift 镜像存储",
   "description": "梳理 OpenStack 三大核心服务：Keystone 的多域支持、service/endpoint 注册与策略文件权限控制；Nova 各模块（api/scheduler/conductor/compute/novncproxy）、消息队列与差分盘机制；Glance 镜像服务及改用 Swift 对象存储作为后端。",
   "keywords": [
     "OpenStack", "Keystone", "Glance", "Nova", "Endpoint", "镜像服务"
@@ -203,7 +203,7 @@
 <article class="post-single">
   <header class="post-header">
     <h1 class="post-title entry-hint-parent">
-      OpenStack 核心服务：Keystone、Nova 与 Glance
+      OpenStack 核心服务详解：Keystone 认证、Nova 计算与 Glance/Swift 镜像存储
     </h1>
   </header>
 
