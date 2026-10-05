@@ -258,7 +258,7 @@ vncviewer — vncviewer
 
 클라이언트에 vncviewer를 설치할 필요는 없으며, 해당 기능은 브라우저 HTML에 통합되어 있습니다(noVNC 프로토콜)
 
-# **Glance 서비스**
+# **Glance 및 Swift 서비스**
 
 I. 클라우드 서버 배포:
 

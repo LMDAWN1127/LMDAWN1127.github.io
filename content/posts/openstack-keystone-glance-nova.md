@@ -258,7 +258,7 @@ vncviewer:  vncviewer
 
 客户端不需要安装vncviewer，而是将该功能集成在浏览器html中，novnc协议
 
-# **glance服务**
+# **glance和swift服务**
 
 一、部署云主机：
 

@@ -258,7 +258,7 @@ vncviewer — vncviewer
 
 クライアントに vncviewer をインストールする必要はなく、その機能はブラウザの HTML に組み込まれています（noVNC プロトコル）
 
-# **Glance サービス**
+# **Glance と Swift サービス**
 
 一、クラウドサーバーのデプロイ：
 

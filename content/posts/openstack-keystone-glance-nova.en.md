@@ -258,7 +258,7 @@ vncviewer — vncviewer
 
 The client does not need to install vncviewer; instead the functionality is integrated into browser HTML via the noVNC protocol
 
-# **Glance Service**
+# **Glance and Swift Service**
 
 I. Deploying a cloud server:
 
