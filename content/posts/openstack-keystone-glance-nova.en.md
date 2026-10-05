@@ -1,5 +1,5 @@
 ---
-title: "OpenStack Core Services: Keystone, Nova and Glance"
+title: "OpenStack Core Services Explained: Keystone Authentication, Nova Compute, and Glance/Swift Image Storage"
 date: 2026-10-05T00:21:00+08:00
 draft: false
 categories: ["OpenStack"]

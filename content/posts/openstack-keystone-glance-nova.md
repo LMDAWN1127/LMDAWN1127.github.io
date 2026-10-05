@@ -1,5 +1,5 @@
 ---
-title: "OpenStack 核心服务：Keystone、Nova 与 Glance"
+title: "OpenStack 核心服务详解：Keystone 认证、Nova 计算与 Glance/Swift 镜像存储"
 date: 2026-10-05T00:21:00+08:00
 draft: false
 categories: ["OpenStack"]

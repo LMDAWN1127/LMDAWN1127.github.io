@@ -1,5 +1,5 @@
 ---
-title: "OpenStack 中核サービス：Keystone・Nova・Glance"
+title: "OpenStack 中核サービス詳細解説：Keystone 認証・Nova コンピュート・Glance/Swift イメージストレージ"
 date: 2026-10-05T00:21:00+08:00
 draft: false
 categories: ["OpenStack"]

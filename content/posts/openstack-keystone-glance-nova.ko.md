@@ -1,5 +1,5 @@
 ---
-title: "OpenStack 핵심 서비스: Keystone, Nova, Glance"
+title: "OpenStack 핵심 서비스 상세 정리: Keystone 인증·Nova 컴퓨트·Glance/Swift 이미지 스토리지"
 date: 2026-10-05T00:21:00+08:00
 draft: false
 categories: ["OpenStack"]
