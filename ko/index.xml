@@ -21,7 +21,7 @@
       <description>Harbor 엔터프라이즈 Docker 레지스트리의 액티브-스탠바이 아키텍처, HTTP/HTTPS 모드, 자체 서명 인증서, 크로스 호스트 복제를 완전히 다루는 배포 가이드입니다.</description>
     </item>
     <item>
-      <title>OpenStack 클라우드 OS: 핵심 아��텍처 및 자동화 배포</title>
+      <title>OpenStack 클라우드 OS: 핵심 아키텍처 및 자동화 배포</title>
       <link>https://LMDAWN1127.github.io/ko/posts/openstack-core-architecture-deployment/</link>
       <pubDate>Tue, 06 Oct 2026 20:35:00 +0800</pubDate>
       <guid>https://LMDAWN1127.github.io/ko/posts/openstack-core-architecture-deployment/</guid>
