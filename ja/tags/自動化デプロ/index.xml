@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>Victoria on DAWN&#39;s Blog</title>
-    <link>https://LMDAWN1127.github.io/ja/tags/victoria/</link>
-    <description>Recent content in Victoria on DAWN&#39;s Blog</description>
+    <title>自動化デプロ�� on DAWN&#39;s Blog</title>
+    <link>https://LMDAWN1127.github.io/ja/tags/%E8%87%AA%E5%8B%95%E5%8C%96%E3%83%87%E3%83%97%E3%83%AD/</link>
+    <description>Recent content in 自動化デプロ�� on DAWN&#39;s Blog</description>
     <image>
       <title>DAWN&#39;s Blog</title>
       <url>https://LMDAWN1127.github.io/images/DAWN.jpg</url>
@@ -12,7 +12,7 @@
     <generator>Hugo</generator>
     <language>ja</language>
     <lastBuildDate>Tue, 06 Oct 2026 20:35:00 +0800</lastBuildDate>
-    <atom:link href="https://LMDAWN1127.github.io/ja/tags/victoria/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://LMDAWN1127.github.io/ja/tags/%E8%87%AA%E5%8B%95%E5%8C%96%E3%83%87%E3%83%97%E3%83%AD/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>OpenStack ��ラ��ド OS：������ー��テ��チャと自動化デプロ��</title>
       <link>https://LMDAWN1127.github.io/ja/posts/openstack-core-architecture-deployment/</link>

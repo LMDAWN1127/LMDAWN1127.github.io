@@ -14,11 +14,11 @@
     <lastBuildDate>Tue, 06 Oct 2026 20:35:00 +0800</lastBuildDate>
     <atom:link href="https://LMDAWN1127.github.io/ja/tags/packstack/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>OpenStack クラウド OS：コアアーキテクチャと自動化デプロイ</title>
+      <title>OpenStack ��ラ��ド OS：������ー��テ��チャと自動化デプロ��</title>
       <link>https://LMDAWN1127.github.io/ja/posts/openstack-core-architecture-deployment/</link>
       <pubDate>Tue, 06 Oct 2026 20:35:00 +0800</pubDate>
       <guid>https://LMDAWN1127.github.io/ja/posts/openstack-core-architecture-deployment/</guid>
-      <description>コアコンポーネント（Nova/Glance/Neutron/Cinder など）から、Packstack を用いた Victoria リリースの一元自動デプロイ、さらに Rsyslog ログトラブルシューティングまで。</description>
+      <description>������ンポーネント（Nova/Glance/Neutron/Cinder など）か��、Packstack ��用いた Victoria リリー��の一元自動デプロ��、さ��に Rsyslog ロ��トラブル��ューテ��ン��まで��</description>
     </item>
   </channel>
 </rss>

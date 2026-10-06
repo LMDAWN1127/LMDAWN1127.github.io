@@ -25,7 +25,7 @@
       <link>https://LMDAWN1127.github.io/posts/openstack-core-architecture-deployment/</link>
       <pubDate>Tue, 06 Oct 2026 20:35:00 +0800</pubDate>
       <guid>https://LMDAWN1127.github.io/posts/openstack-core-architecture-deployment/</guid>
-      <description>从核心组件（Nova/Glance/Neutron/Cinder 等）到基于 Packstack 的 Victoria 版一键自动化部署，并附 Rsyslog 日志排查方法。</description>
+      <description>从核心组件（Nova/Glance/Neutron/Cinder 等）到基于 Packstack 的 Victoria 版一键自动化部署，并附 Rsyslog 日志排查方法��</description>
     </item>
     <item>
       <title>OpenStack Cinder 块存储详解：LVM &#43; iSCSI 本地卷与 NFS 后端对接</title>
