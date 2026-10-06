@@ -11,8 +11,15 @@
     </image>
     <generator>Hugo</generator>
     <language>ja</language>
-    <lastBuildDate>Mon, 05 Oct 2026 23:30:00 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 06 Oct 2026 20:35:00 +0800</lastBuildDate>
     <atom:link href="https://LMDAWN1127.github.io/ja/categories/openstack/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>OpenStack クラウド OS：コアアーキテクチャと自動化デプロイ</title>
+      <link>https://LMDAWN1127.github.io/ja/posts/openstack-core-architecture-deployment/</link>
+      <pubDate>Tue, 06 Oct 2026 20:35:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/ja/posts/openstack-core-architecture-deployment/</guid>
+      <description>コアコンポーネント（Nova/Glance/Neutron/Cinder など）から、Packstack を用いた Victoria リリースの一元自動デプロイ、さらに Rsyslog ログトラブルシューティングまで。</description>
+    </item>
     <item>
       <title>OpenStack Cinder ブロックストレージ詳細解説：ローカル LVM &#43; iSCSI ボリュームと NFS バックエンド連携</title>
       <link>https://LMDAWN1127.github.io/ja/posts/openstack-cinder-block-storage/</link>
@@ -33,13 +40,6 @@
       <pubDate>Sun, 04 Oct 2026 21:50:00 +0800</pubDate>
       <guid>https://LMDAWN1127.github.io/ja/posts/openstack-provision-cloud-server/</guid>
       <description>GUI から CLI まで、OpenStack でのクラウドサーバー提供の全体フローを完全解説：テナント・ユーザー・イメージ・フレーバー・ネットワーク・ルーター・セキュリティグループ・キーペア・浮动 IP の作成と削除、および iptables SNAT/DNAT と Nova cell_v2 discover_hosts のトラブルシューティング。</description>
-    </item>
-    <item>
-      <title>OpenStack クラウド OS：コアアーキテクチャと自動化デプロイ</title>
-      <link>https://LMDAWN1127.github.io/ja/posts/openstack-core-architecture-deployment/</link>
-      <pubDate>Sat, 03 Oct 2026 22:50:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/ja/posts/openstack-core-architecture-deployment/</guid>
-      <description>コアコンポーネント（Nova/Glance/Neutron/Cinder など）から、Packstack を用いた Victoria リリースの一元自動デプロイ、さらに Rsyslog ログトラブルシューティングまで。</description>
     </item>
   </channel>
 </rss>

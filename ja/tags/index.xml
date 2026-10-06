@@ -11,8 +11,43 @@
     </image>
     <generator>Hugo</generator>
     <language>ja</language>
-    <lastBuildDate>Mon, 05 Oct 2026 23:30:00 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 06 Oct 2026 20:35:00 +0800</lastBuildDate>
     <atom:link href="https://LMDAWN1127.github.io/ja/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>OpenStack</title>
+      <link>https://LMDAWN1127.github.io/ja/tags/openstack/</link>
+      <pubDate>Tue, 06 Oct 2026 20:35:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/ja/tags/openstack/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Packstack</title>
+      <link>https://LMDAWN1127.github.io/ja/tags/packstack/</link>
+      <pubDate>Tue, 06 Oct 2026 20:35:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/ja/tags/packstack/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Victoria</title>
+      <link>https://LMDAWN1127.github.io/ja/tags/victoria/</link>
+      <pubDate>Tue, 06 Oct 2026 20:35:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/ja/tags/victoria/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>クラウドコンピューティング</title>
+      <link>https://LMDAWN1127.github.io/ja/tags/%E3%82%AF%E3%83%A9%E3%82%A6%E3%83%89%E3%82%B3%E3%83%B3%E3%83%94%E3%83%A5%E3%83%BC%E3%83%86%E3%82%A3%E3%83%B3%E3%82%B0/</link>
+      <pubDate>Tue, 06 Oct 2026 20:35:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/ja/tags/%E3%82%AF%E3%83%A9%E3%82%A6%E3%83%89%E3%82%B3%E3%83%B3%E3%83%94%E3%83%A5%E3%83%BC%E3%83%86%E3%82%A3%E3%83%B3%E3%82%B0/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>自動化デプロイ</title>
+      <link>https://LMDAWN1127.github.io/ja/tags/%E8%87%AA%E5%8B%95%E5%8C%96%E3%83%87%E3%83%97%E3%83%AD%E3%82%A4/</link>
+      <pubDate>Tue, 06 Oct 2026 20:35:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/ja/tags/%E8%87%AA%E5%8B%95%E5%8C%96%E3%83%87%E3%83%97%E3%83%AD%E3%82%A4/</guid>
+      <description></description>
+    </item>
     <item>
       <title>Cinder</title>
       <link>https://LMDAWN1127.github.io/ja/tags/cinder/</link>
@@ -39,13 +74,6 @@
       <link>https://LMDAWN1127.github.io/ja/tags/nfs/</link>
       <pubDate>Mon, 05 Oct 2026 23:30:00 +0800</pubDate>
       <guid>https://LMDAWN1127.github.io/ja/tags/nfs/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>OpenStack</title>
-      <link>https://LMDAWN1127.github.io/ja/tags/openstack/</link>
-      <pubDate>Mon, 05 Oct 2026 23:30:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/ja/tags/openstack/</guid>
       <description></description>
     </item>
     <item>
@@ -116,34 +144,6 @@
       <link>https://LMDAWN1127.github.io/ja/tags/%E3%82%AF%E3%83%A9%E3%82%A6%E3%83%89%E3%82%B5%E3%83%BC%E3%83%90%E3%83%BC/</link>
       <pubDate>Sun, 04 Oct 2026 21:50:00 +0800</pubDate>
       <guid>https://LMDAWN1127.github.io/ja/tags/%E3%82%AF%E3%83%A9%E3%82%A6%E3%83%89%E3%82%B5%E3%83%BC%E3%83%90%E3%83%BC/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Packstack</title>
-      <link>https://LMDAWN1127.github.io/ja/tags/packstack/</link>
-      <pubDate>Sat, 03 Oct 2026 22:50:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/ja/tags/packstack/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Victoria</title>
-      <link>https://LMDAWN1127.github.io/ja/tags/victoria/</link>
-      <pubDate>Sat, 03 Oct 2026 22:50:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/ja/tags/victoria/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>クラウドコンピューティング</title>
-      <link>https://LMDAWN1127.github.io/ja/tags/%E3%82%AF%E3%83%A9%E3%82%A6%E3%83%89%E3%82%B3%E3%83%B3%E3%83%94%E3%83%A5%E3%83%BC%E3%83%86%E3%82%A3%E3%83%B3%E3%82%B0/</link>
-      <pubDate>Sat, 03 Oct 2026 22:50:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/ja/tags/%E3%82%AF%E3%83%A9%E3%82%A6%E3%83%89%E3%82%B3%E3%83%B3%E3%83%94%E3%83%A5%E3%83%BC%E3%83%86%E3%82%A3%E3%83%B3%E3%82%B0/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>自動化デプロイ</title>
-      <link>https://LMDAWN1127.github.io/ja/tags/%E8%87%AA%E5%8B%95%E5%8C%96%E3%83%87%E3%83%97%E3%83%AD%E3%82%A4/</link>
-      <pubDate>Sat, 03 Oct 2026 22:50:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/ja/tags/%E8%87%AA%E5%8B%95%E5%8C%96%E3%83%87%E3%83%97%E3%83%AD%E3%82%A4/</guid>
       <description></description>
     </item>
     <item>

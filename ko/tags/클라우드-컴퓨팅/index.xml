@@ -11,12 +11,12 @@
     </image>
     <generator>Hugo</generator>
     <language>ko</language>
-    <lastBuildDate>Sat, 03 Oct 2026 22:50:00 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 06 Oct 2026 20:35:00 +0800</lastBuildDate>
     <atom:link href="https://LMDAWN1127.github.io/ko/tags/%ED%81%B4%EB%9D%BC%EC%9A%B0%EB%93%9C-%EC%BB%B4%ED%93%A8%ED%8C%85/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>OpenStack 클라우드 OS: 핵심 아키텍처 및 자동화 배포</title>
       <link>https://LMDAWN1127.github.io/ko/posts/openstack-core-architecture-deployment/</link>
-      <pubDate>Sat, 03 Oct 2026 22:50:00 +0800</pubDate>
+      <pubDate>Tue, 06 Oct 2026 20:35:00 +0800</pubDate>
       <guid>https://LMDAWN1127.github.io/ko/posts/openstack-core-architecture-deployment/</guid>
       <description>Nova/Glance/Neutron/Cinder 등 핵심 컴포넌트부터 Packstack 기반 Victoria 릴리스 원클릭 자동 배포, 그리고 Rsyslog 로그 트러블슈팅까지.</description>
     </item>

@@ -11,8 +11,15 @@
     </image>
     <generator>Hugo</generator>
     <language>ko</language>
-    <lastBuildDate>Mon, 05 Oct 2026 23:30:00 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 06 Oct 2026 20:35:00 +0800</lastBuildDate>
     <atom:link href="https://LMDAWN1127.github.io/ko/tags/openstack/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>OpenStack 클라우드 OS: 핵심 아키텍처 및 자동화 배포</title>
+      <link>https://LMDAWN1127.github.io/ko/posts/openstack-core-architecture-deployment/</link>
+      <pubDate>Tue, 06 Oct 2026 20:35:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/ko/posts/openstack-core-architecture-deployment/</guid>
+      <description>Nova/Glance/Neutron/Cinder 등 핵심 컴포넌트부터 Packstack 기반 Victoria 릴리스 원클릭 자동 배포, 그리고 Rsyslog 로그 트러블슈팅까지.</description>
+    </item>
     <item>
       <title>OpenStack Cinder 블록 스토리지 상세 정리: 로컬 LVM &#43; iSCSI 볼륨과 NFS 백엔드 연동</title>
       <link>https://LMDAWN1127.github.io/ko/posts/openstack-cinder-block-storage/</link>
@@ -33,13 +40,6 @@
       <pubDate>Sun, 04 Oct 2026 21:50:00 +0800</pubDate>
       <guid>https://LMDAWN1127.github.io/ko/posts/openstack-provision-cloud-server/</guid>
       <description>GUI부터 CLI까지 OpenStack 클라우드 서버 제공 전체 흐름을 완전 정리: 테넌트·사용자·이미지·플레이버·네트워크·라우터·보안 그룹·키 페어·플로팅 IP 생성 및 삭제, 그리고 iptables SNAT/DNAT와 Nova cell_v2 discover_hosts 트러블슈팅.</description>
-    </item>
-    <item>
-      <title>OpenStack 클라우드 OS: 핵심 아키텍처 및 자동화 배포</title>
-      <link>https://LMDAWN1127.github.io/ko/posts/openstack-core-architecture-deployment/</link>
-      <pubDate>Sat, 03 Oct 2026 22:50:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/ko/posts/openstack-core-architecture-deployment/</guid>
-      <description>Nova/Glance/Neutron/Cinder 등 핵심 컴포넌트부터 Packstack 기반 Victoria 릴리스 원클릭 자동 배포, 그리고 Rsyslog 로그 트러블슈팅까지.</description>
     </item>
   </channel>
 </rss>

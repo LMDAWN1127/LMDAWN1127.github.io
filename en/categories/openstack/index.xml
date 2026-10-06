@@ -11,8 +11,15 @@
     </image>
     <generator>Hugo</generator>
     <language>en</language>
-    <lastBuildDate>Mon, 05 Oct 2026 23:30:00 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 06 Oct 2026 20:35:00 +0800</lastBuildDate>
     <atom:link href="https://LMDAWN1127.github.io/en/categories/openstack/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>OpenStack Cloud OS: Core Architecture and Automated Deployment</title>
+      <link>https://LMDAWN1127.github.io/en/posts/openstack-core-architecture-deployment/</link>
+      <pubDate>Tue, 06 Oct 2026 20:35:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/posts/openstack-core-architecture-deployment/</guid>
+      <description>From core components (Nova/Glance/Neutron/Cinder, etc.) to one-click Packstack-based automated deployment of the Victoria release, plus Rsyslog log troubleshooting.</description>
+    </item>
     <item>
       <title>OpenStack Cinder Block Storage Explained: Local LVM &#43; iSCSI Volumes and NFS Backend Integration</title>
       <link>https://LMDAWN1127.github.io/en/posts/openstack-cinder-block-storage/</link>
@@ -33,13 +40,6 @@
       <pubDate>Sun, 04 Oct 2026 21:50:00 +0800</pubDate>
       <guid>https://LMDAWN1127.github.io/en/posts/openstack-provision-cloud-server/</guid>
       <description>From the web dashboard to the CLI, a complete walkthrough of provisioning OpenStack cloud servers: creating and deleting tenants/users/images/flavors/networks/routers/security groups/key pairs/floating IPs, plus iptables SNAT/DNAT and Nova cell_v2 discover_hosts troubleshooting.</description>
-    </item>
-    <item>
-      <title>OpenStack Cloud OS: Core Architecture and Automated Deployment</title>
-      <link>https://LMDAWN1127.github.io/en/posts/openstack-core-architecture-deployment/</link>
-      <pubDate>Sat, 03 Oct 2026 22:50:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/en/posts/openstack-core-architecture-deployment/</guid>
-      <description>From core components (Nova/Glance/Neutron/Cinder, etc.) to one-click Packstack-based automated deployment of the Victoria release, plus Rsyslog log troubleshooting.</description>
     </item>
   </channel>
 </rss>

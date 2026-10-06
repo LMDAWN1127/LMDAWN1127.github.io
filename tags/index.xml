@@ -11,8 +11,43 @@
     </image>
     <generator>Hugo</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Mon, 05 Oct 2026 23:30:00 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 06 Oct 2026 20:35:00 +0800</lastBuildDate>
     <atom:link href="https://LMDAWN1127.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>OpenStack</title>
+      <link>https://LMDAWN1127.github.io/tags/openstack/</link>
+      <pubDate>Tue, 06 Oct 2026 20:35:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/tags/openstack/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Packstack</title>
+      <link>https://LMDAWN1127.github.io/tags/packstack/</link>
+      <pubDate>Tue, 06 Oct 2026 20:35:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/tags/packstack/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Victoria</title>
+      <link>https://LMDAWN1127.github.io/tags/victoria/</link>
+      <pubDate>Tue, 06 Oct 2026 20:35:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/tags/victoria/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>云计算</title>
+      <link>https://LMDAWN1127.github.io/tags/%E4%BA%91%E8%AE%A1%E7%AE%97/</link>
+      <pubDate>Tue, 06 Oct 2026 20:35:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/tags/%E4%BA%91%E8%AE%A1%E7%AE%97/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>自动化部署</title>
+      <link>https://LMDAWN1127.github.io/tags/%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2/</link>
+      <pubDate>Tue, 06 Oct 2026 20:35:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/tags/%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2/</guid>
+      <description></description>
+    </item>
     <item>
       <title>Cinder</title>
       <link>https://LMDAWN1127.github.io/tags/cinder/</link>
@@ -39,13 +74,6 @@
       <link>https://LMDAWN1127.github.io/tags/nfs/</link>
       <pubDate>Mon, 05 Oct 2026 23:30:00 +0800</pubDate>
       <guid>https://LMDAWN1127.github.io/tags/nfs/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>OpenStack</title>
-      <link>https://LMDAWN1127.github.io/tags/openstack/</link>
-      <pubDate>Mon, 05 Oct 2026 23:30:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/tags/openstack/</guid>
       <description></description>
     </item>
     <item>
@@ -116,34 +144,6 @@
       <link>https://LMDAWN1127.github.io/tags/%E4%BA%91%E4%B8%BB%E6%9C%BA/</link>
       <pubDate>Sun, 04 Oct 2026 21:50:00 +0800</pubDate>
       <guid>https://LMDAWN1127.github.io/tags/%E4%BA%91%E4%B8%BB%E6%9C%BA/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Packstack</title>
-      <link>https://LMDAWN1127.github.io/tags/packstack/</link>
-      <pubDate>Sat, 03 Oct 2026 22:50:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/tags/packstack/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Victoria</title>
-      <link>https://LMDAWN1127.github.io/tags/victoria/</link>
-      <pubDate>Sat, 03 Oct 2026 22:50:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/tags/victoria/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>云计算</title>
-      <link>https://LMDAWN1127.github.io/tags/%E4%BA%91%E8%AE%A1%E7%AE%97/</link>
-      <pubDate>Sat, 03 Oct 2026 22:50:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/tags/%E4%BA%91%E8%AE%A1%E7%AE%97/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>自动化部署</title>
-      <link>https://LMDAWN1127.github.io/tags/%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2/</link>
-      <pubDate>Sat, 03 Oct 2026 22:50:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/tags/%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2/</guid>
       <description></description>
     </item>
     <item>

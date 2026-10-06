@@ -11,8 +11,43 @@
     </image>
     <generator>Hugo</generator>
     <language>en</language>
-    <lastBuildDate>Mon, 05 Oct 2026 23:30:00 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 06 Oct 2026 20:35:00 +0800</lastBuildDate>
     <atom:link href="https://LMDAWN1127.github.io/en/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Automated Deployment</title>
+      <link>https://LMDAWN1127.github.io/en/tags/automated-deployment/</link>
+      <pubDate>Tue, 06 Oct 2026 20:35:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/tags/automated-deployment/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Cloud Computing</title>
+      <link>https://LMDAWN1127.github.io/en/tags/cloud-computing/</link>
+      <pubDate>Tue, 06 Oct 2026 20:35:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/tags/cloud-computing/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>OpenStack</title>
+      <link>https://LMDAWN1127.github.io/en/tags/openstack/</link>
+      <pubDate>Tue, 06 Oct 2026 20:35:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/tags/openstack/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Packstack</title>
+      <link>https://LMDAWN1127.github.io/en/tags/packstack/</link>
+      <pubDate>Tue, 06 Oct 2026 20:35:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/tags/packstack/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Victoria</title>
+      <link>https://LMDAWN1127.github.io/en/tags/victoria/</link>
+      <pubDate>Tue, 06 Oct 2026 20:35:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/tags/victoria/</guid>
+      <description></description>
+    </item>
     <item>
       <title>Block Storage</title>
       <link>https://LMDAWN1127.github.io/en/tags/block-storage/</link>
@@ -46,13 +81,6 @@
       <link>https://LMDAWN1127.github.io/en/tags/nfs/</link>
       <pubDate>Mon, 05 Oct 2026 23:30:00 +0800</pubDate>
       <guid>https://LMDAWN1127.github.io/en/tags/nfs/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>OpenStack</title>
-      <link>https://LMDAWN1127.github.io/en/tags/openstack/</link>
-      <pubDate>Mon, 05 Oct 2026 23:30:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/en/tags/openstack/</guid>
       <description></description>
     </item>
     <item>
@@ -116,34 +144,6 @@
       <link>https://LMDAWN1127.github.io/en/tags/neutron/</link>
       <pubDate>Sun, 04 Oct 2026 21:50:00 +0800</pubDate>
       <guid>https://LMDAWN1127.github.io/en/tags/neutron/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Automated Deployment</title>
-      <link>https://LMDAWN1127.github.io/en/tags/automated-deployment/</link>
-      <pubDate>Sat, 03 Oct 2026 22:50:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/en/tags/automated-deployment/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Cloud Computing</title>
-      <link>https://LMDAWN1127.github.io/en/tags/cloud-computing/</link>
-      <pubDate>Sat, 03 Oct 2026 22:50:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/en/tags/cloud-computing/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Packstack</title>
-      <link>https://LMDAWN1127.github.io/en/tags/packstack/</link>
-      <pubDate>Sat, 03 Oct 2026 22:50:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/en/tags/packstack/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Victoria</title>
-      <link>https://LMDAWN1127.github.io/en/tags/victoria/</link>
-      <pubDate>Sat, 03 Oct 2026 22:50:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/en/tags/victoria/</guid>
       <description></description>
     </item>
     <item>
