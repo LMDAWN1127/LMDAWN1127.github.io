@@ -1,6 +1,6 @@
 ---
 title: "OpenStack 클라우드 OS: 핵심 아키텍처 및 자동화 배포"
-date: 2026-10-03T22:50:00+08:00
+date: 2026-10-06T20:35:00+08:00
 draft: false
 categories: ["OpenStack"]
 tags: ["OpenStack", "클라우드 컴퓨팅", "자동화 배포", "Packstack", "Victoria"]
@@ -306,10 +306,10 @@ gpgcheck=0
 
 ### 단계 2: 클러스터 각 노드 시스템 환경 초기화
 
-#### 1. Controller 제어 노드 초기화(192.168.100.10)
+#### 1. Controller제어 노드 초기화(192.168.100.10)
 ```bash
 # 1. 관리 네트워크 ens160 설정
-[root@Controller ~]# nmcli connection modify ens33 ipv4.addresses 192.168.100.10/24 ipv4.method manual autoconnect yes
+[root@Controller ~]# nmcli connection modify ens160 ipv4.addresses 192.168.100.10/24 ipv4.method manual autoconnect yes
 [root@Controller ~]# nmcli connection down ens160 ; nmcli connection up ens160
 
 # 2. 외부 네트워크 NIC ens224 설정
@@ -355,7 +355,7 @@ MS Name/IP address         Stratum Poll Reach LastRx Last sample
 [root@Controller yum.repos.d]# mkdir -p bak && mv CentOS-Linux-* bak/
 ```
 
-#### 2. Compute01 컴퓨트 노드 초기화(192.168.9.11)
+#### 2. Compute 컴퓨트 노드 초기화(192.168.100.11)
 ```bash
 # 1. 관리 네트워크 설정
 [root@Compute ~]# nmcli connection modify ens160 ipv4.addresses 192.168.100.11/24 ipv4.method manual autoconnect yes

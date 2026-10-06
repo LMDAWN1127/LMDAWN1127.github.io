@@ -1,6 +1,6 @@
 ---
 title: "OpenStack Cloud OS: Core Architecture and Automated Deployment"
-date: 2026-10-03T22:50:00+08:00
+date: 2026-10-06T20:35:00+08:00
 draft: false
 categories: ["OpenStack"]
 tags: ["OpenStack", "Cloud Computing", "Automated Deployment", "Packstack", "Victoria"]
@@ -309,7 +309,7 @@ gpgcheck=0
 #### 1. Controller Node Initialization (192.168.100.10)
 ```bash
 # 1. Configure the management network ens160
-[root@Controller ~]# nmcli connection modify ens33 ipv4.addresses 192.168.100.10/24 ipv4.method manual autoconnect yes
+[root@Controller ~]# nmcli connection modify ens160 ipv4.addresses 192.168.100.10/24 ipv4.method manual autoconnect yes
 [root@Controller ~]# nmcli connection down ens160 ; nmcli connection up ens160
 
 # 2. Configure the external network NIC ens224
@@ -355,7 +355,7 @@ MS Name/IP address         Stratum Poll Reach LastRx Last sample
 [root@Controller yum.repos.d]# mkdir -p bak && mv CentOS-Linux-* bak/
 ```
 
-#### 2. Compute01 Node Initialization (192.168.9.11)
+#### 2. Compute Node Initialization (192.168.100.11)
 ```bash
 # 1. Configure the management network
 [root@Compute ~]# nmcli connection modify ens160 ipv4.addresses 192.168.100.11/24 ipv4.method manual autoconnect yes

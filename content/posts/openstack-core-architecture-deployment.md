@@ -1,6 +1,6 @@
 ---
 title: "OpenStack 云操作系统核心架构与自动化部署"
-date: 2026-10-03T22:50:00+08:00
+date: 2026-10-06T20:35:00+08:00
 draft: false
 categories: ["OpenStack"]
 tags: ["OpenStack", "云计算", "自动化部署", "Packstack", "Victoria"]
@@ -306,10 +306,10 @@ gpgcheck=0
 
 ### 阶段二：集群各节点系统环境初始化
 
-#### 1. Controller 控制节点初始化（192.168.100.10）
+#### 1. Controller控制节点初始化（192.168.100.10）
 ```bash
 # 1. 配置管理网络 ens160
-[root@Controller ~]# nmcli connection modify ens33 ipv4.addresses 192.168.100.10/24 ipv4.method manual autoconnect yes
+[root@Controller ~]# nmcli connection modify ens160 ipv4.addresses 192.168.100.10/24 ipv4.method manual autoconnect yes
 [root@Controller ~]# nmcli connection down ens160 ; nmcli connection up ens160
 
 # 2. 配置外部网络网卡 ens224
@@ -355,7 +355,7 @@ MS Name/IP address         Stratum Poll Reach LastRx Last sample
 [root@Controller yum.repos.d]# mkdir -p bak && mv CentOS-Linux-* bak/
 ```
 
-#### 2. Compute01 计算节点初始化（192.168.9.11）
+#### 2. Compute计算节点初始化（192.168.100.11）
 ```bash
 # 1. 配置管理网络
 [root@Compute ~]# nmcli connection modify ens160 ipv4.addresses 192.168.100.11/24 ipv4.method manual autoconnect yes

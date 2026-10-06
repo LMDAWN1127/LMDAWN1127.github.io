@@ -1,6 +1,6 @@
 ---
 title: "OpenStack クラウド OS：コアアーキテクチャと自動化デプロイ"
-date: 2026-10-03T22:50:00+08:00
+date: 2026-10-06T20:35:00+08:00
 draft: false
 categories: ["OpenStack"]
 tags: ["OpenStack", "クラウドコンピューティング", "自動化デプロイ", "Packstack", "Victoria"]
@@ -306,10 +306,10 @@ gpgcheck=0
 
 ### フェーズ2：各クラスタノードのシステム環境初期化
 
-#### 1. Controller 制御ノードの初期化（192.168.100.10）
+#### 1. Controller制御ノードの初期化（192.168.100.10）
 ```bash
 # 1. 管理ネットワーク ens160 を設定
-[root@Controller ~]# nmcli connection modify ens33 ipv4.addresses 192.168.100.10/24 ipv4.method manual autoconnect yes
+[root@Controller ~]# nmcli connection modify ens160 ipv4.addresses 192.168.100.10/24 ipv4.method manual autoconnect yes
 [root@Controller ~]# nmcli connection down ens160 ; nmcli connection up ens160
 
 # 2. 外部ネットワーク NIC ens224 を設定
@@ -355,7 +355,7 @@ MS Name/IP address         Stratum Poll Reach LastRx Last sample
 [root@Controller yum.repos.d]# mkdir -p bak && mv CentOS-Linux-* bak/
 ```
 
-#### 2. Compute01 コンピュートノードの初期化（192.168.9.11）
+#### 2. Compute コンピュートノードの初期化（192.168.100.11）
 ```bash
 # 1. 管理ネットワークを設定
 [root@Compute ~]# nmcli connection modify ens160 ipv4.addresses 192.168.100.11/24 ipv4.method manual autoconnect yes
