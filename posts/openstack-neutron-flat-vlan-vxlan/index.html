@@ -1,0 +1,1067 @@
+<!DOCTYPE html>
+<html lang="zh" dir="auto" data-theme="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>OpenStack Neutron 网络类型设计与实现：flat、VLAN 与 VXLAN | DAWN&#39;s Blog</title>
+<meta name="keywords" content="OpenStack, Neutron, VLAN, VXLAN, OVS">
+<meta name="description" content="从 flat 到 VLAN 再到 VXLAN，逐步拆解 Neutron 三种网络类型的 ML2 与 OVS 配置、外部网络与路由器打通方式、OVS 流表转发分析，以及云主机通过 169.254.169.254 获取 metadata 的完整链路。">
+<meta name="author" content="DAWN">
+<link rel="canonical" href="https://LMDAWN1127.github.io/posts/openstack-neutron-flat-vlan-vxlan/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.4bf808bff57bddc46d61c8ae060b00400fc679ab876e37243b11bd3f832f2958.css" integrity="sha256-S/gIv/V73cRtYciuBgsAQA/GeauHbjckOxG9P4MvKVg=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://LMDAWN1127.github.io/images/DAWN.jpg">
+<link rel="icon" type="image/png" sizes="16x16" href="https://LMDAWN1127.github.io/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://LMDAWN1127.github.io/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://LMDAWN1127.github.io/apple-touch-icon.png">
+<link rel="mask-icon" href="https://LMDAWN1127.github.io/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="zh" href="https://LMDAWN1127.github.io/posts/openstack-neutron-flat-vlan-vxlan/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+                color-scheme: dark;
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .toc {
+                background: var(--entry);
+            }
+        }
+
+    </style>
+</noscript>
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.querySelector("html").dataset.theme = 'dark';
+    } else if (localStorage.getItem("pref-theme") === "light") {
+       document.querySelector("html").dataset.theme = 'light';
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.querySelector("html").dataset.theme = 'dark';
+    } else {
+        document.querySelector("html").dataset.theme = 'light';
+    }
+
+</script><link rel="stylesheet" href='https://LMDAWN1127.github.io/css/custom.css'>
+<meta property="og:url" content="https://LMDAWN1127.github.io/posts/openstack-neutron-flat-vlan-vxlan/">
+  <meta property="og:site_name" content="DAWN&#39;s Blog">
+  <meta property="og:title" content="OpenStack Neutron 网络类型设计与实现：flat、VLAN 与 VXLAN">
+  <meta property="og:description" content="从 flat 到 VLAN 再到 VXLAN，逐步拆解 Neutron 三种网络类型的 ML2 与 OVS 配置、外部网络与路由器打通方式、OVS 流表转发分析，以及云主机通过 169.254.169.254 获取 metadata 的完整链路。">
+  <meta property="og:locale" content="zh_cn">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2026-10-07T19:45:00+08:00">
+    <meta property="article:modified_time" content="2026-10-07T19:45:00+08:00">
+    <meta property="article:tag" content="OpenStack">
+    <meta property="article:tag" content="Neutron">
+    <meta property="article:tag" content="VLAN">
+    <meta property="article:tag" content="VXLAN">
+    <meta property="article:tag" content="OVS">
+      <meta property="og:image" content="https://LMDAWN1127.github.io/images/DAWN.jpg">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://LMDAWN1127.github.io/images/DAWN.jpg">
+  <meta name="twitter:title" content="OpenStack Neutron 网络类型设计与实现：flat、VLAN 与 VXLAN">
+  <meta name="twitter:description" content="从 flat 到 VLAN 再到 VXLAN，逐步拆解 Neutron 三种网络类型的 ML2 与 OVS 配置、外部网络与路由器打通方式、OVS 流表转发分析，以及云主机通过 169.254.169.254 获取 metadata 的完整链路。">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://LMDAWN1127.github.io/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "OpenStack Neutron 网络类型设计与实现：flat、VLAN 与 VXLAN",
+      "item": "https://LMDAWN1127.github.io/posts/openstack-neutron-flat-vlan-vxlan/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "OpenStack Neutron 网络类型设计与实现：flat、VLAN 与 VXLAN",
+  "name": "OpenStack Neutron 网络类型设计与实现：flat、VLAN 与 VXLAN",
+  "description": "从 flat 到 VLAN 再到 VXLAN，逐步拆解 Neutron 三种网络类型的 ML2 与 OVS 配置、外部网络与路由器打通方式、OVS 流表转发分析，以及云主机通过 169.254.169.254 获取 metadata 的完整链路。",
+  "keywords": [
+    "OpenStack", "Neutron", "VLAN", "VXLAN", "OVS"
+  ],
+  "articleBody": "一、flat网络设计 1 2 [root@Controller ~]# source keystonerc_admin [root@Controller ~(keystone_admin)]# neutron agent-list 每台云主机每块网卡都有一个qbr，因为安全组是关联到网卡的，每块网卡关联不同的安全组\n1 2 3 4 [root@Compute01 ~]# brctl show bridge name\tbridge id\tSTP enabled\tinterfaces qbr24c7a169-96\t8000.ceb36944e179\tno\tqvb24c7a169-96 tap24c7a169-96 QEMU虚拟化套件 + KVM虚拟化内核\n1 integration_bridge=br-int 1 [root@Compute01 ~]# ovs-vsctl show 让VM1（web01）可以访问Internet，或者与其他网段互通\n在网络节点上配置neutron 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 [root@Controller ~(keystone_admin)]# cd /etc/neutron/plugins/ml2/ [root@Controller ml2(keystone_admin)]# vim ml2_conf.ini [ml2] type_drivers=geneve,flat,vlan,vxlan tenant_network_types=flat mechanism_drivers=openvswitch path_mtu=0 extension_drivers=port_security,qos [securitygroup] enable_security_group=True [ml2_type_geneve] max_header_size=38 vni_ranges=10:100 [ml2_type_flat] flat_networks=default,extent [root@Controller ml2(keystone_admin)]# vim openvswitch_agent.ini [ovs] bridge_mappings=default:br-eth1,extnet:br-ex integration_bridge=br-int tunnel_bridge=br-tun local_ip=192.168.100.10 [root@Controller ~(keystone_admin)]# systemctl restart neutron-* 在openstack web界面上，使用admin身份登录，在管理员菜单上，创建外部网络，选择flat，名称为extnet 使用租户身份登录，创建路由器，关联外部网络和子网 相关问题 问题1： 弹性IP地址是配置在哪里的？在哪里可以找到这个弹性IP地址\n1 2 3 [root@Controller ~(keystone_admin)]# ip netns ls qrouter-8e9ae372-905a-4ded-9ee4-e5d6f487e8f2 (id: 1) qdhcp-7d04c8e1-3ccf-4efe-85c3-9370bfc6a88a (id: 0) namespace 命名空间\n1 2 3 4 5 [root@Controller ~(keystone_admin)]# ip netns exec qdhcp-7d04c8e1-3ccf-4efe-85c3-9370bfc6a88a ip addr list [root@Controller ~(keystone_admin)]# ip netns exec qrouter-8e9ae372-905a-4ded-9ee4-e5d6f487e8f2 ip addr list [root@Controller ~(keystone_admin)]# ip netns exec qrouter-8e9ae372-905a-4ded-9ee4-e5d6f487e8f2 route -n [root@Controller ~(keystone_admin)]# ip netns exec qrouter-8e9ae372-905a-4ded-9ee4-e5d6f487e8f2 ping www.baidu.com [root@Controller ~(keystone_admin)]# ip netns exec qrouter-8e9ae372-905a-4ded-9ee4-e5d6f487e8f2 ping 192.168.31.1 问题2： 弹性IP绑定在路由器上，那是如何通过弹性IP访问云主机的\n1 2 [root@Controller ~(keystone_admin)]# ip netns exec qrouter-8e9ae372-905a-4ded-9ee4-e5d6f487e8f2 iptables -t nat -nL #iptables -t nat -A PREROUTING -d 192.168.31.17 -j DNAT --to-dest 192.168.33.254 问题3： 如果云主机绑定了弹性IP地址，会优先通过弹性IP地址出去，如果没有绑定，会通过路由器开启SNAT出去访问\nVLAN 静态路由 NAT TCP三层握手\n弹性IP地址不一定是为访问Internet而准备的，而是为了访问服务，也可以把弹性IP地址绑定给ELB负载均衡\nflat网络拓扑图\n二、VLAN网络设计和实现 配置网络节点和计算节点 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 [root@Controller ~]# cd /etc/neutron/plugins/ml2/ [root@Controller ml2]# vim ml2_conf.ini [ml2] type_drivers=geneve,flat,vlan,vxlan tenant_network_types=vlan mechanism_drivers=openvswitch path_mtu=0 extension_drivers=port_security,qos [ml2_type_flat] flat_networks=default,extent [ml2_type_vlan] network_vlan_ranges=mynetwork:100:1000 [root@Controller ml2]# vim openvswitch_agent.ini [ovs] bridge_mappings=mynetwork:br-eth1,extnet:br-ex integration_bridge=br-int tunnel_bridge=br-tun local_ip=192.168.100.10 [root@Controller ~]# systemctl restart neutron-* 计算节点\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 [root@Compute01 ~]# cd /etc/neutron/plugins/ml2/ [root@Compute01 ml2]# vim openvswitch_agent.ini [ovs] bridge_mappings=mynetwork:br-eth1 integration_bridge=br-int tunnel_bridge=br-tun local_ip=192.168.100.11 [root@Compute01 ~]# systemctl restart neutron-openvswitch-agent.service [root@Compute02 ~]# cd /etc/neutron/plugins/ml2/ [root@Compute02 ml2]# vim openvswitch_agent.ini [ovs] bridge_mappings=mynetwork:br-eth1 integration_bridge=br-int tunnel_bridge=br-tun local_ip=192.168.100.12 [root@Compute02 ~]# systemctl restart neutron-openvswitch-agent.service 在openstack web界面上，使用admin身份创建网络 使用zlm身份创建两个云主机 查看\nopenstack neutron流表\nVLAN网络的流表分析\n1 [root@Compute01 ~]# ovs-ofctl dump-flows br-eth1 priority=4 数字越大，优先级越高\n1 2 3 cookie=0x28f07cbfb122feff, duration=1736.064s, table=0, n_packets=267, n_bytes=39412, priority=4,in_port=\"phy-br-eth1\",dl_vlan=1 actions=mod_vlan_vid:100,NORMAL [root@Compute01 ~]# ovs-ofctl dump-flows br-int cookie=0xffd369a083b424eb, duration=2050.913s, table=0, n_packets=1241, n_bytes=236428, priority=3,in_port=\"int-br-eth1\",dl_vlan=100 actions=mod_vlan_vid:1,resubmit(,60) flat网络流表分析\n1 2 [root@Compute01 ~]# ovs-ofctl dump-flows br-eth1 cookie=0x632acfea08b01b9d, duration=311.151s, table=0, n_packets=81, n_bytes=4210, priority=4,in_port=\"phy-br-eth1\",dl_vlan=1 actions=strip_vlan,NORMAL cookie=0x632acfea08b01b9d, duration=326.012s, table=0, n_packets=4, n_bytes=352, priority=2,in_port=\"phy-br-eth1\" actions=drop cookie=0x632acfea08b01b9d, duration=326.023s, table=0, n_packets=13485, n_bytes=6729360, priority=0 actions=NORMAL 三、VXLAN的网络设计和实现 解决：大二层问题，跨数据中心云主机热迁移问题，热迁移只能在二层网络中\nVXLAN实现将二层网络封装在三层中进行传输，到了对方解封装，实现二层通讯\n修改网络节点配置 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 [root@Controller ~]# vim /etc/neutron/plugins/ml2/ml2_conf.ini [ml2] type_drivers=geneve,flat,vlan,vxlan tenant_network_types=vxlan mechanism_drivers=openvswitch path_mtu=0 extension_drivers=port_security,qos [ml2_type_vxlan] vxlan_group=224.0.0.1 vni_ranges=10:100 [root@Controller ~]# vim /etc/neutron/plugins/ml2/openvswitch_agent.ini [ovs] bridge_mappings=mynetwork:br-eth1,extnet:br-ex integration_bridge=br-int tunnel_bridge=br-tun local_ip=192.168.100.10 [root@Controller ~]# systemctl restart neutron-server.service 相关问题 Compute01： web111云主机 192.168.99.140\nCompute02： web222云主机 192.168.99.14\n问题1： web111可以ping通web222吗？\n可以\n问题2： 192.168.88.126可以ping通192.168.99.0/24主机？\n可以\n**问题3：**云主机是如何获得metadata信息的？\nmetadata元数据\nnova-metadata\nneutron-metadata\n当云主机开机时，会运行cloud-init程序，cloud-init会通知云主机去访问http://169.254.169.254 因为在云主机中有一条默认路由，route -n 169.254.169.254 192.168.99.254 255.255.255.255 UGH 100 0 0 ens3\n从而将请求转发给网关，即VRouter，这个请求将进入网络节点\n网络节点收到这个请求后，将该请求转发给neutron-ns-proxy进程，这个进程通过内部接口转发给neutron-metadata-agent 1 2 3 4 5 6 [root@Controller ~]# ip netns ls [root@Controller ~]# ip netns exec qrouter-d88a6264-ff05-498c-ab98-f56a261da0e0 iptables -t nat -nL REDIRECT tcp -- 0.0.0.0/0 169.254.169.254 tcp dpt:80 redir ports 9697 [root@Controller ~]# ip netns exec qrouter-d88a6264-ff05-498c-ab98-f56a261da0e0 netstat -tulnp [root@Controller ~]# ps aux |grep proxy |grep neutron neutron 52920 0.0 0.0 156032 2700 ? Ss 14:37 0:00 haproxy -f /var/lib/neutron/ns-metadata-proxy/d88a6264-ff05-498c-ab98-f56a261da0e0.conf 因为neutron网络节点与控制节点管理网络互通，当用户申请云主机时，会填写云主机名称，root密码，秘钥等信息，当用户输入这些信息时，将这些请求发送给controller节点nova-api，nova-api会转发给nova-metadata-api，因为网络节点和控制节点管理网络互通，所以neutron-metadata服务向nova-metadata-api服务请求用户自定义信息，从而让云主机得到这些信息。 云主机先得到IP地址，IP地址是从DHCP中获取的，跟metadata无关，当云主机得到IP地址时，才触发了以上流程\n当用户申请云主机时，会输入云主机metadata数据（计算机名，root密码，ssh秘钥等），这个请求会发送nova-api，nova-api会将这些信息转发给nova-api-metadata进行存储\n云主机创建完成后，开机，通过DHCP获取到IP地址，运行cloud-init，cloud-init根据配置文件，去请求http://169.254.169.254\n当用户没有创建路由器时，无法得到用户的metadata信息\n",
+  "wordCount" : "518",
+  "inLanguage": "zh",
+  "image": "https://LMDAWN1127.github.io/images/DAWN.jpg","datePublished": "2026-10-07T19:45:00+08:00",
+  "dateModified": "2026-10-07T19:45:00+08:00",
+  "author":{
+    "@type": "Person",
+    "name": "DAWN"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://LMDAWN1127.github.io/posts/openstack-neutron-flat-vlan-vxlan/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "DAWN's Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://LMDAWN1127.github.io/images/DAWN.jpg"
+    }
+  }
+}
+</script>
+</head>
+<body id="top">
+    <header class="header">
+    <nav class="header-nav">
+        <div class="logo">
+            <a href="https://LMDAWN1127.github.io/" accesskey="h" title="DAWN&#39;s Blog (Alt + H)">
+                <img src="https://LMDAWN1127.github.io/images/DAWN.jpg" alt="" aria-label="logo"
+                    height="38">DAWN&#39;s Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" class="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
+                    <svg class="moon" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg class="sun" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button><span class="nav-sep">|</span>
+                    <ul class="lang-menu">
+                        <li>
+                            <a href="https://LMDAWN1127.github.io/en/" title="English"
+                                aria-label="English">En</a>
+                        </li>
+                        <li>
+                            <a href="https://LMDAWN1127.github.io/ko/" title="한국어"
+                                aria-label="한국어">Ko</a>
+                        </li>
+                        <li>
+                            <a href="https://LMDAWN1127.github.io/ja/" title="日本語"
+                                aria-label="日本語">Ja</a>
+                        </li>
+                    </ul>
+            </div>
+        </div>
+        <ul id="menu" class="menu">
+            <li>
+                <a href="https://LMDAWN1127.github.io/archives/" title="归档">
+                    <span>归档</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <h1 class="post-title entry-hint-parent">
+      OpenStack Neutron 网络类型设计与实现：flat、VLAN 与 VXLAN
+    </h1>
+  </header>
+
+  <div class="post-layout">
+    <div class="post-content-wrapper"> 
+      <div class="post-content md-content"><h2 id="一flat网络设计">一、flat网络设计<a hidden class="anchor" aria-hidden="true" href="#一flat网络设计">#</a></h2>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@Controller ~<span style="color:#f92672">]</span><span style="color:#75715e"># source keystonerc_admin</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@Controller ~<span style="color:#f92672">(</span>keystone_admin<span style="color:#f92672">)]</span><span style="color:#75715e"># neutron agent-list</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>每台云主机每块网卡都有一个qbr，因为安全组是关联到网卡的，每块网卡关联不同的安全组</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@Compute01 ~<span style="color:#f92672">]</span><span style="color:#75715e"># brctl show</span>
+</span></span><span style="display:flex;"><span>bridge name	bridge id		STP enabled	interfaces
+</span></span><span style="display:flex;"><span>qbr24c7a169-96		8000.ceb36944e179	no		qvb24c7a169-96
+</span></span><span style="display:flex;"><span>tap24c7a169-96
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>QEMU虚拟化套件 + KVM虚拟化内核</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>integration_bridge=br-int
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img loading="lazy" src="/images/neutron-net-img-02.png"></p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@Compute01 ~<span style="color:#f92672">]</span><span style="color:#75715e"># ovs-vsctl show</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>让VM1（web01）可以访问Internet，或者与其他网段互通</p>
+<ol>
+<li>在网络节点上配置neutron</li>
+</ol>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@Controller ~<span style="color:#f92672">(</span>keystone_admin<span style="color:#f92672">)]</span><span style="color:#75715e"># cd /etc/neutron/plugins/ml2/</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@Controller ml2<span style="color:#f92672">(</span>keystone_admin<span style="color:#f92672">)]</span><span style="color:#75715e"># vim ml2_conf.ini</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>ml2<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>type_drivers<span style="color:#f92672">=</span>geneve,flat,vlan,vxlan
+</span></span><span style="display:flex;"><span>tenant_network_types<span style="color:#f92672">=</span>flat
+</span></span><span style="display:flex;"><span>mechanism_drivers<span style="color:#f92672">=</span>openvswitch
+</span></span><span style="display:flex;"><span>path_mtu<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>extension_drivers<span style="color:#f92672">=</span>port_security,qos
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>securitygroup<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>enable_security_group<span style="color:#f92672">=</span>True
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>ml2_type_geneve<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>max_header_size<span style="color:#f92672">=</span><span style="color:#ae81ff">38</span>
+</span></span><span style="display:flex;"><span>vni_ranges<span style="color:#f92672">=</span>10:100
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>ml2_type_flat<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>flat_networks<span style="color:#f92672">=</span>default,extent
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@Controller ml2<span style="color:#f92672">(</span>keystone_admin<span style="color:#f92672">)]</span><span style="color:#75715e"># vim openvswitch_agent.ini</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>ovs<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>bridge_mappings<span style="color:#f92672">=</span>default:br-eth1,extnet:br-ex
+</span></span><span style="display:flex;"><span>integration_bridge<span style="color:#f92672">=</span>br-int
+</span></span><span style="display:flex;"><span>tunnel_bridge<span style="color:#f92672">=</span>br-tun
+</span></span><span style="display:flex;"><span>local_ip<span style="color:#f92672">=</span>192.168.100.10
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@Controller ~<span style="color:#f92672">(</span>keystone_admin<span style="color:#f92672">)]</span><span style="color:#75715e"># systemctl restart neutron-*</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ol start="2">
+<li>在openstack web界面上，使用admin身份登录，在管理员菜单上，创建外部网络，选择flat，名称为extnet</li>
+<li>使用租户身份登录，创建路由器，关联外部网络和子网</li>
+<li>相关问题</li>
+</ol>
+<p><strong>问题1：</strong> 弹性IP地址是配置在哪里的？在哪里可以找到这个弹性IP地址</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@Controller ~<span style="color:#f92672">(</span>keystone_admin<span style="color:#f92672">)]</span><span style="color:#75715e"># ip netns ls</span>
+</span></span><span style="display:flex;"><span>qrouter-8e9ae372-905a-4ded-9ee4-e5d6f487e8f2 <span style="color:#f92672">(</span>id: 1<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>qdhcp-7d04c8e1-3ccf-4efe-85c3-9370bfc6a88a <span style="color:#f92672">(</span>id: 0<span style="color:#f92672">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>namespace 命名空间</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@Controller ~<span style="color:#f92672">(</span>keystone_admin<span style="color:#f92672">)]</span><span style="color:#75715e"># ip netns exec qdhcp-7d04c8e1-3ccf-4efe-85c3-9370bfc6a88a ip addr list</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@Controller ~<span style="color:#f92672">(</span>keystone_admin<span style="color:#f92672">)]</span><span style="color:#75715e"># ip netns exec qrouter-8e9ae372-905a-4ded-9ee4-e5d6f487e8f2 ip addr list</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@Controller ~<span style="color:#f92672">(</span>keystone_admin<span style="color:#f92672">)]</span><span style="color:#75715e"># ip netns exec qrouter-8e9ae372-905a-4ded-9ee4-e5d6f487e8f2 route -n</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@Controller ~<span style="color:#f92672">(</span>keystone_admin<span style="color:#f92672">)]</span><span style="color:#75715e"># ip netns exec qrouter-8e9ae372-905a-4ded-9ee4-e5d6f487e8f2 ping www.baidu.com</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@Controller ~<span style="color:#f92672">(</span>keystone_admin<span style="color:#f92672">)]</span><span style="color:#75715e"># ip netns exec qrouter-8e9ae372-905a-4ded-9ee4-e5d6f487e8f2 ping 192.168.31.1</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>问题2：</strong> 弹性IP绑定在路由器上，那是如何通过弹性IP访问云主机的</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@Controller ~<span style="color:#f92672">(</span>keystone_admin<span style="color:#f92672">)]</span><span style="color:#75715e"># ip netns exec qrouter-8e9ae372-905a-4ded-9ee4-e5d6f487e8f2 iptables -t nat -nL</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#iptables -t nat -A PREROUTING -d 192.168.31.17 -j DNAT --to-dest 192.168.33.254</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>问题3：</strong> 如果云主机绑定了弹性IP地址，会优先通过弹性IP地址出去，如果没有绑定，会通过路由器开启SNAT出去访问</p>
+<p><strong>VLAN 静态路由  NAT TCP三层握手</strong></p>
+<p>弹性IP地址不一定是为访问Internet而准备的，而是为了访问服务，也可以把弹性IP地址绑定给ELB负载均衡</p>
+<p><img alt="image-20261007181923684" loading="lazy" src="/images/neutron-net-image-20261007181923684.png"></p>
+<p>flat网络拓扑图</p>
+<p><img alt="image-20261007182836070" loading="lazy" src="/images/neutron-net-image-20261007182836070.png"></p>
+<h2 id="二vlan网络设计和实现">二、VLAN网络设计和实现<a hidden class="anchor" aria-hidden="true" href="#二vlan网络设计和实现">#</a></h2>
+<ol>
+<li>配置网络节点和计算节点</li>
+</ol>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@Controller ~<span style="color:#f92672">]</span><span style="color:#75715e"># cd /etc/neutron/plugins/ml2/</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@Controller ml2<span style="color:#f92672">]</span><span style="color:#75715e"># vim ml2_conf.ini</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>ml2<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>type_drivers<span style="color:#f92672">=</span>geneve,flat,vlan,vxlan
+</span></span><span style="display:flex;"><span>tenant_network_types<span style="color:#f92672">=</span>vlan
+</span></span><span style="display:flex;"><span>mechanism_drivers<span style="color:#f92672">=</span>openvswitch
+</span></span><span style="display:flex;"><span>path_mtu<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>extension_drivers<span style="color:#f92672">=</span>port_security,qos
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>ml2_type_flat<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>flat_networks<span style="color:#f92672">=</span>default,extent
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>ml2_type_vlan<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>network_vlan_ranges<span style="color:#f92672">=</span>mynetwork:100:1000
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@Controller ml2<span style="color:#f92672">]</span><span style="color:#75715e"># vim openvswitch_agent.ini</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>ovs<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>bridge_mappings<span style="color:#f92672">=</span>mynetwork:br-eth1,extnet:br-ex
+</span></span><span style="display:flex;"><span>integration_bridge<span style="color:#f92672">=</span>br-int
+</span></span><span style="display:flex;"><span>tunnel_bridge<span style="color:#f92672">=</span>br-tun
+</span></span><span style="display:flex;"><span>local_ip<span style="color:#f92672">=</span>192.168.100.10
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@Controller ~<span style="color:#f92672">]</span><span style="color:#75715e"># systemctl restart neutron-*</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>计算节点</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@Compute01 ~<span style="color:#f92672">]</span><span style="color:#75715e"># cd /etc/neutron/plugins/ml2/</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@Compute01 ml2<span style="color:#f92672">]</span><span style="color:#75715e"># vim openvswitch_agent.ini</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>ovs<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>bridge_mappings<span style="color:#f92672">=</span>mynetwork:br-eth1
+</span></span><span style="display:flex;"><span>integration_bridge<span style="color:#f92672">=</span>br-int
+</span></span><span style="display:flex;"><span>tunnel_bridge<span style="color:#f92672">=</span>br-tun
+</span></span><span style="display:flex;"><span>local_ip<span style="color:#f92672">=</span>192.168.100.11
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@Compute01 ~<span style="color:#f92672">]</span><span style="color:#75715e"># systemctl restart neutron-openvswitch-agent.service</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@Compute02 ~<span style="color:#f92672">]</span><span style="color:#75715e"># cd /etc/neutron/plugins/ml2/</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@Compute02 ml2<span style="color:#f92672">]</span><span style="color:#75715e"># vim openvswitch_agent.ini</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>ovs<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>bridge_mappings<span style="color:#f92672">=</span>mynetwork:br-eth1
+</span></span><span style="display:flex;"><span>integration_bridge<span style="color:#f92672">=</span>br-int
+</span></span><span style="display:flex;"><span>tunnel_bridge<span style="color:#f92672">=</span>br-tun
+</span></span><span style="display:flex;"><span>local_ip<span style="color:#f92672">=</span>192.168.100.12
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@Compute02 ~<span style="color:#f92672">]</span><span style="color:#75715e"># systemctl restart neutron-openvswitch-agent.service</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ol start="2">
+<li>在openstack web界面上，使用admin身份创建网络</li>
+<li>使用zlm身份创建两个云主机</li>
+</ol>
+<p>查看</p>
+<p>openstack  neutron流表</p>
+<p>VLAN网络的流表分析</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@Compute01 ~<span style="color:#f92672">]</span><span style="color:#75715e"># ovs-ofctl dump-flows br-eth1</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>priority=4  数字越大，优先级越高</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>cookie<span style="color:#f92672">=</span>0x28f07cbfb122feff, duration<span style="color:#f92672">=</span>1736.064s, table<span style="color:#f92672">=</span>0, n_packets<span style="color:#f92672">=</span>267, n_bytes<span style="color:#f92672">=</span>39412, priority<span style="color:#f92672">=</span>4,in_port<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;phy-br-eth1&#34;</span>,dl_vlan<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span> actions<span style="color:#f92672">=</span>mod_vlan_vid:100,NORMAL
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@Compute01 ~<span style="color:#f92672">]</span><span style="color:#75715e"># ovs-ofctl dump-flows br-int</span>
+</span></span><span style="display:flex;"><span>cookie<span style="color:#f92672">=</span>0xffd369a083b424eb, duration<span style="color:#f92672">=</span>2050.913s, table<span style="color:#f92672">=</span>0, n_packets<span style="color:#f92672">=</span>1241, n_bytes<span style="color:#f92672">=</span>236428, priority<span style="color:#f92672">=</span>3,in_port<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;int-br-eth1&#34;</span>,dl_vlan<span style="color:#f92672">=</span><span style="color:#ae81ff">100</span> actions<span style="color:#f92672">=</span>mod_vlan_vid:1,resubmit<span style="color:#f92672">(</span>,60<span style="color:#f92672">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>flat网络流表分析</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@Compute01 ~<span style="color:#f92672">]</span><span style="color:#75715e"># ovs-ofctl dump-flows br-eth1</span>
+</span></span><span style="display:flex;"><span>cookie<span style="color:#f92672">=</span>0x632acfea08b01b9d, duration<span style="color:#f92672">=</span>311.151s, table<span style="color:#f92672">=</span>0, n_packets<span style="color:#f92672">=</span>81, n_bytes<span style="color:#f92672">=</span>4210, priority<span style="color:#f92672">=</span>4,in_port<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;phy-br-eth1&#34;</span>,dl_vlan<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span> actions<span style="color:#f92672">=</span>strip_vlan,NORMAL cookie<span style="color:#f92672">=</span>0x632acfea08b01b9d, duration<span style="color:#f92672">=</span>326.012s, table<span style="color:#f92672">=</span>0, n_packets<span style="color:#f92672">=</span>4, n_bytes<span style="color:#f92672">=</span>352, priority<span style="color:#f92672">=</span>2,in_port<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;phy-br-eth1&#34;</span> actions<span style="color:#f92672">=</span>drop cookie<span style="color:#f92672">=</span>0x632acfea08b01b9d, duration<span style="color:#f92672">=</span>326.023s, table<span style="color:#f92672">=</span>0, n_packets<span style="color:#f92672">=</span>13485, n_bytes<span style="color:#f92672">=</span>6729360, priority<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span> actions<span style="color:#f92672">=</span>NORMAL
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img alt="image-20261007182948942" loading="lazy" src="/images/neutron-net-image-20261007182948942.png"></p>
+<h2 id="三vxlan的网络设计和实现">三、VXLAN的网络设计和实现<a hidden class="anchor" aria-hidden="true" href="#三vxlan的网络设计和实现">#</a></h2>
+<p>解决：<strong>大二层问题</strong>，跨数据中心云主机热迁移问题，热迁移只能在二层网络中</p>
+<p>VXLAN实现将二层网络封装在三层中进行传输，到了对方解封装，实现二层通讯</p>
+<ol>
+<li>修改网络节点配置</li>
+</ol>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@Controller ~<span style="color:#f92672">]</span><span style="color:#75715e"># vim /etc/neutron/plugins/ml2/ml2_conf.ini</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>ml2<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>type_drivers<span style="color:#f92672">=</span>geneve,flat,vlan,vxlan
+</span></span><span style="display:flex;"><span>tenant_network_types<span style="color:#f92672">=</span>vxlan
+</span></span><span style="display:flex;"><span>mechanism_drivers<span style="color:#f92672">=</span>openvswitch
+</span></span><span style="display:flex;"><span>path_mtu<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>extension_drivers<span style="color:#f92672">=</span>port_security,qos
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>ml2_type_vxlan<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>vxlan_group<span style="color:#f92672">=</span>224.0.0.1
+</span></span><span style="display:flex;"><span>vni_ranges<span style="color:#f92672">=</span>10:100
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@Controller ~<span style="color:#f92672">]</span><span style="color:#75715e"># vim /etc/neutron/plugins/ml2/openvswitch_agent.ini</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>ovs<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>bridge_mappings<span style="color:#f92672">=</span>mynetwork:br-eth1,extnet:br-ex
+</span></span><span style="display:flex;"><span>integration_bridge<span style="color:#f92672">=</span>br-int
+</span></span><span style="display:flex;"><span>tunnel_bridge<span style="color:#f92672">=</span>br-tun
+</span></span><span style="display:flex;"><span>local_ip<span style="color:#f92672">=</span>192.168.100.10
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@Controller ~<span style="color:#f92672">]</span><span style="color:#75715e"># systemctl restart neutron-server.service</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ol start="2">
+<li>相关问题</li>
+</ol>
+<p>Compute01： web111云主机  192.168.99.140</p>
+<p>Compute02： web222云主机  192.168.99.14</p>
+<p><strong>问题1：</strong> web111可以ping通web222吗？</p>
+<p>可以</p>
+<p><img alt="image-20261007183338288" loading="lazy" src="/images/neutron-net-image-20261007183338288.png"></p>
+<p><strong>问题2：</strong> 192.168.88.126可以ping通192.168.99.0/24主机？</p>
+<p>可以</p>
+<p>**问题3：**云主机是如何获得metadata信息的？</p>
+<p>metadata元数据</p>
+<p>nova-metadata</p>
+<p>neutron-metadata</p>
+<ol>
+<li>当云主机开机时，会运行cloud-init程序，cloud-init会通知云主机去访问http://169.254.169.254</li>
+<li>因为在云主机中有一条默认路由，route -n</li>
+</ol>
+<p>169.254.169.254 192.168.99.254  255.255.255.255 UGH   100    0        0 ens3</p>
+<p>从而将请求转发给网关，即VRouter，这个请求将进入网络节点</p>
+<ol start="3">
+<li>网络节点收到这个请求后，将该请求转发给neutron-ns-proxy进程，这个进程通过内部接口转发给neutron-metadata-agent</li>
+</ol>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@Controller ~<span style="color:#f92672">]</span><span style="color:#75715e"># ip netns ls</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@Controller ~<span style="color:#f92672">]</span><span style="color:#75715e"># ip netns exec qrouter-d88a6264-ff05-498c-ab98-f56a261da0e0  iptables -t nat -nL</span>
+</span></span><span style="display:flex;"><span>REDIRECT   tcp  --  0.0.0.0/0            169.254.169.254      tcp dpt:80 redir ports <span style="color:#ae81ff">9697</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@Controller ~<span style="color:#f92672">]</span><span style="color:#75715e"># ip netns exec qrouter-d88a6264-ff05-498c-ab98-f56a261da0e0  netstat -tulnp</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@Controller ~<span style="color:#f92672">]</span><span style="color:#75715e"># ps aux |grep proxy |grep neutron</span>
+</span></span><span style="display:flex;"><span>neutron    <span style="color:#ae81ff">52920</span>  0.0  0.0 <span style="color:#ae81ff">156032</span>  <span style="color:#ae81ff">2700</span> ?        Ss   14:37   0:00 haproxy -f /var/lib/neutron/ns-metadata-proxy/d88a6264-ff05-498c-ab98-f56a261da0e0.conf
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ol start="4">
+<li>因为neutron网络节点与控制节点管理网络互通，当用户申请云主机时，会填写云主机名称，root密码，秘钥等信息，当用户输入这些信息时，将这些请求发送给controller节点nova-api，nova-api会转发给nova-metadata-api，因为网络节点和控制节点管理网络互通，所以neutron-metadata服务向nova-metadata-api服务请求用户自定义信息，从而让云主机得到这些信息。</li>
+</ol>
+<p>云主机先得到IP地址，IP地址是从DHCP中获取的，跟metadata无关，当云主机得到IP地址时，才触发了以上流程</p>
+<p>当用户申请云主机时，会输入云主机metadata数据（计算机名，root密码，ssh秘钥等），这个请求会发送nova-api，nova-api会将这些信息转发给nova-api-metadata进行存储</p>
+<p>云主机创建完成后，开机，通过DHCP获取到IP地址，运行cloud-init，cloud-init根据配置文件，去请求http://169.254.169.254</p>
+<p>当用户没有创建路由器时，无法得到用户的metadata信息</p>
+
+
+      </div><div id="giscus-container" style="margin-top: 2rem; padding-top: 1rem; border-top: 1px solid var(--border);">
+  <script src="https://giscus.app/client.js"
+          data-repo="LMDAWN1127/LMDAWN1127.github.io"
+          data-repo-id="R_kgDOTMWmvw"
+          data-category="Announcements"
+          data-category-id="DIC_kwDOTMWmv84DAd3g"
+          data-mapping="pathname"
+          data-strict="0"
+          data-reactions-enabled="1"
+          data-emit-metadata="0"
+          data-input-position="bottom"
+          data-theme="preferred_color_scheme"
+          data-lang="zh-CN"
+          crossorigin="anonymous"
+          async>
+  </script>
+</div>
+
+    </div>
+
+    <aside class="toc-sidebar" id="toc-sidebar">
+    <div class="toc-header">目录</div>
+    <nav class="toc-nav"><ul class="toc-list">
+            <li>
+                <a href="#%e4%b8%80flat%e7%bd%91%e7%bb%9c%e8%ae%be%e8%ae%a1" class="toc-link" data-target="一flat网络设计">一、flat网络设计</a></li>
+            <li>
+                <a href="#%e4%ba%8cvlan%e7%bd%91%e7%bb%9c%e8%ae%be%e8%ae%a1%e5%92%8c%e5%ae%9e%e7%8e%b0" class="toc-link" data-target="二vlan网络设计和实现">二、VLAN网络设计和实现</a></li>
+            <li>
+                <a href="#%e4%b8%89vxlan%e7%9a%84%e7%bd%91%e7%bb%9c%e8%ae%be%e8%ae%a1%e5%92%8c%e5%ae%9e%e7%8e%b0" class="toc-link" data-target="三vxlan的网络设计和实现">三、VXLAN的网络设计和实现</a>
+            </li>
+        </ul>
+    </nav>
+</aside>
+
+  </div>
+</article>
+    </main>
+    
+<a href="#top" id="top-link" class="top-link hidden" aria-label="go to top" title="Go to Top (Alt + G)" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevrons-up">
+        <polyline points="17 11 12 6 7 11"></polyline>
+        <polyline points="17 18 12 13 7 18"></polyline>
+    </svg>
+</a>
+<script defer src="/js/custom.js"></script>
+<div id="algolia-search-modal" class="algolia-modal" style="display: none;">
+  <div class="algolia-modal-overlay"></div>
+  <div class="algolia-modal-content">
+    <div class="algolia-search-header">
+      <div class="algolia-search-input-wrapper">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <input type="text" id="algolia-search-input" placeholder="搜索文章..." autofocus>
+        <kbd class="algolia-esc">Esc</kbd>
+      </div>
+    </div>
+    <div id="algolia-search-results" class="algolia-search-results">
+      <div class="algolia-empty-state">
+        <p>输入关键词开始搜索</p>
+      </div>
+    </div>
+    <div class="algolia-search-footer">
+      <span class="algolia-footer-text">
+        <kbd>↑</kbd> <kbd>↓</kbd> 导航
+        <kbd>↵</kbd> 打开
+        <kbd>Esc</kbd> 关闭
+      </span>
+      <span class="algolia-footer-logo">
+        搜索由 <a href="https://www.algolia.com/" target="_blank" rel="noopener">Algolia</a> 提供
+      </span>
+    </div>
+  </div>
+</div>
+
+<script>
+(function() {
+  'use strict';
+
+  var APP_ID = 'Y0SCRI4LCW';
+  var SEARCH_KEY = '03dda5e44aec7e0dd93b6a3653250b1f';
+  var INDEX_NAME = 'lmdawn1127-blog';
+  var API_URL = 'https://' + APP_ID + '-dsn.algolia.net/1/indexes/' + INDEX_NAME + '/query';
+  var debounceTimer = null;
+  var selectedIndex = -1;
+
+   
+  function doSearch(query) {
+    if (!query || !query.trim()) {
+      showEmpty();
+      return;
+    }
+
+    var body = JSON.stringify({
+      query: query,
+      hitsPerPage: 10,
+      attributesToRetrieve: ['title', 'content', 'url'],
+      attributesToHighlight: ['title', 'content'],
+      highlightPreTag: '<mark class="algolia-highlight">',
+      highlightPostTag: '</mark>'
+    });
+
+    fetch(API_URL, {
+      method: 'POST',
+      headers: {
+        'X-Algolia-Application-Id': APP_ID,
+        'X-Algolia-API-Key': SEARCH_KEY,
+        'Content-Type': 'application/json'
+      },
+      body: body
+    })
+    .then(function(resp) {
+      if (!resp.ok) throw new Error('HTTP ' + resp.status);
+      return resp.json();
+    })
+    .then(function(data) {
+      renderResults(data.hits || [], query);
+    })
+    .catch(function(err) {
+      console.error('Algolia search error:', err);
+      showError(err.message || '未知错误');
+    });
+  }
+
+   
+  function showEmpty() {
+    document.getElementById('algolia-search-results').innerHTML =
+      '<div class="algolia-empty-state"><p>输入关键词开始搜索</p></div>';
+  }
+
+  function showError(detail) {
+    var msg = '搜索出错，请稍后再试';
+    if (detail) msg += '<br><small style="color:#888">错误详情: ' + escapeHtml(detail) + '</small>';
+    document.getElementById('algolia-search-results').innerHTML =
+      '<div class="algolia-empty-state"><p>' + msg + '</p></div>';
+  }
+
+  function showNoResults(query) {
+    document.getElementById('algolia-search-results').innerHTML =
+      '<div class="algolia-empty-state"><p>未找到与「' + escapeHtml(query) + '」相关的结果</p></div>';
+  }
+
+  function escapeHtml(s) {
+    var d = document.createElement('div');
+    d.appendChild(document.createTextNode(s));
+    return d.innerHTML;
+  }
+
+  function getHL(hit, attr) {
+    if (hit._highlightResult && hit._highlightResult[attr]) return hit._highlightResult[attr].value;
+    return hit[attr] || '';
+  }
+
+  function trunc(s, n) {
+    if (!s) return '';
+    s = s.replace(/<[^>]+>/g, '');
+    return s.length > n ? s.substring(0, n) + '…' : s;
+  }
+
+  function renderResults(hits, query) {
+    var box = document.getElementById('algolia-search-results');
+    if (!hits.length) { showNoResults(query); return; }
+
+    var h = '<div class="algolia-results-count">' + hits.length + ' 个结果</div>';
+    hits.forEach(function(hit, i) {
+      var title = getHL(hit, 'title') || '无标题';
+      var content = getHL(hit, 'content');
+      var url = hit.url || '#';
+
+      h += '<a class="algolia-hit" href="' + url + '" data-index="' + i + '">';
+      h += '<div class="algolia-hit-title">' + title + '</div>';
+      h += '<div class="algolia-hit-content">' + trunc(content, 150) + '</div>';
+
+      h += '</a>';
+    });
+    box.innerHTML = h;
+
+    box.querySelectorAll('.algolia-hit').forEach(function(el) {
+      el.addEventListener('click', closeAlgoliaSearch);
+    });
+  }
+
+   
+  function onInput(e) {
+    var q = e.target.value;
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(function() { doSearch(q); }, 200);
+  }
+
+  function onKeydown(e) {
+    var hits = document.querySelectorAll('.algolia-hit');
+    if (!hits.length) return;
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      selectedIndex = Math.min(selectedIndex + 1, hits.length - 1);
+      sel(hits);
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      selectedIndex = Math.max(selectedIndex - 1, 0);
+      sel(hits);
+    } else if (e.key === 'Enter' && selectedIndex >= 0) {
+      e.preventDefault();
+      window.location.href = hits[selectedIndex].getAttribute('href');
+      closeAlgoliaSearch();
+    }
+  }
+
+  function sel(hits) {
+    hits.forEach(function(el, i) {
+      if (i === selectedIndex) { el.classList.add('selected'); el.scrollIntoView({ block: 'nearest' }); }
+      else el.classList.remove('selected');
+    });
+  }
+
+   
+  document.addEventListener('DOMContentLoaded', function() {
+    var input = document.getElementById('algolia-search-input');
+    if (input) {
+      input.addEventListener('input', onInput);
+      input.addEventListener('keydown', onKeydown);
+    }
+  });
+
+  window.openAlgoliaSearch = function() {
+    var modal = document.getElementById('algolia-search-modal');
+    modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+    setTimeout(function() {
+      var input = document.getElementById('algolia-search-input');
+      if (input) { input.value = ''; input.focus(); showEmpty(); }
+    }, 100);
+  };
+
+  window.closeAlgoliaSearch = function() {
+    document.getElementById('algolia-search-modal').style.display = 'none';
+    document.body.style.overflow = '';
+    selectedIndex = -1;
+  };
+})();
+</script>
+
+<style>
+  .algolia-modal{position:fixed;top:0;left:0;width:100%;height:100%;z-index:1000;display:flex;align-items:flex-start;justify-content:center;padding-top:10vh}
+  .algolia-modal-overlay{position:absolute;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.6);backdrop-filter:blur(4px)}
+  .algolia-modal-content{position:relative;width:90%;max-width:600px;background:#1a1a1a;border-radius:12px;box-shadow:0 20px 60px rgba(0,0,0,.5);overflow:hidden;border:1px solid #333}
+  .algolia-search-header{padding:16px;border-bottom:1px solid #333}
+  .algolia-search-input-wrapper{display:flex;align-items:center;gap:12px;background:#2a2a2a;border-radius:8px;padding:12px 16px;border:1px solid #444}
+  .algolia-search-input-wrapper svg{color:#666;flex-shrink:0}
+  #algolia-search-input{flex:1;background:transparent;border:none;outline:none;color:#fff;font-size:16px;font-family:inherit}
+  #algolia-search-input::placeholder{color:#666}
+  .algolia-esc{background:#444;color:#999;padding:2px 6px;border-radius:4px;font-size:11px;font-family:inherit}
+  .algolia-search-results{max-height:400px;overflow-y:auto;padding:8px}
+  .algolia-empty-state{padding:40px 20px;text-align:center;color:#666}
+  .algolia-results-count{padding:8px 12px;font-size:12px;color:#666}
+  .algolia-search-footer{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;border-top:1px solid #333;background:#222;font-size:12px;color:#666}
+  .algolia-footer-text kbd{background:#444;color:#999;padding:2px 4px;border-radius:3px;font-size:10px;margin:0 2px}
+  .algolia-footer-logo a{color:#5EEAD4;text-decoration:none}
+  .algolia-footer-logo a:hover{text-decoration:underline}
+  .algolia-hit{display:block;padding:12px;border-radius:6px;text-decoration:none;color:#fff;transition:background .2s}
+  .algolia-hit:hover,.algolia-hit.selected{background:#2a2a2a}
+  .algolia-hit-title{font-weight:600;color:#5EEAD4;margin-bottom:4px;font-size:15px}
+  .algolia-hit-title mark,.algolia-highlight{background:rgba(94,234,212,.25);color:#5EEAD4;padding:0 2px;border-radius:2px}
+  .algolia-hit-content{font-size:13px;color:#999;line-height:1.5}
+  .algolia-hit-content mark,.algolia-hit-content .algolia-highlight{background:rgba(94,234,212,.2);color:#ccc;padding:0 2px;border-radius:2px}
+  .algolia-hit-meta{display:flex;align-items:center;gap:10px;margin-top:8px}
+  .algolia-hit-date{font-size:12px;color:#666}
+  .algolia-hit-tags{display:flex;gap:6px}
+  .algolia-hit-tag{background:#333;color:#999;padding:2px 8px;border-radius:4px;font-size:11px}
+</style>
+<script>
+  
+  document.addEventListener('keydown', function(e) {
+    
+    if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+      e.preventDefault();
+      if (typeof openAlgoliaSearch === 'function') openAlgoliaSearch();
+    }
+    
+    if (e.key === 'Escape') {
+      if (typeof closeAlgoliaSearch === 'function') closeAlgoliaSearch();
+    }
+    
+    if (e.altKey && e.key === '/') {
+      e.preventDefault();
+      if (typeof openAlgoliaSearch === 'function') openAlgoliaSearch();
+    }
+  });
+
+  
+  document.addEventListener('DOMContentLoaded', function() {
+    var modal = document.getElementById('algolia-search-modal');
+    if (modal) {
+      var overlay = modal.querySelector('.algolia-modal-overlay');
+      if (overlay) {
+        overlay.addEventListener('click', function() {
+          if (typeof closeAlgoliaSearch === 'function') closeAlgoliaSearch();
+        });
+      }
+    }
+  });
+
+  
+  
+  document.addEventListener('DOMContentLoaded', function() {
+    if (document.getElementById('algolia-search-btn')) return;
+    var btn = document.createElement('button');
+    btn.id = 'algolia-search-btn';
+    btn.className = 'theme-toggle search-toggle';
+    btn.type = 'button';
+    btn.title = '搜索 (Ctrl+K)';
+    btn.setAttribute('aria-label', '搜索');
+    btn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>';
+    btn.addEventListener('click', function() {
+      if (typeof openAlgoliaSearch === 'function') openAlgoliaSearch();
+    });
+    var target = document.querySelector('.logo-switches') || document.querySelector('.header-nav');
+    if (target) target.appendChild(btn);
+  });
+</script><script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var cur = (document.documentElement.lang || 'zh').toLowerCase();
+    
+    
+    
+    var rawPath = location.pathname.replace(/\/+$/, '');
+    var pm = rawPath.match(/^\/(en|ko|ja)(?:\/(.*))?$/);
+    var rest = pm ? (pm[2] ? '/' + pm[2] : '') : rawPath; 
+    function langHref(code) {
+      var base = (code === 'zh') ? '' : '/' + code;
+      if (rest === '' || rest === '/') {
+        return base === '' ? '/' : base + '/';
+      }
+      return base + rest + '/';
+    }
+
+    var langs = [
+      { code: 'zh', label: '中文' },
+      { code: 'en', label: 'English' },
+      { code: 'ko', label: '한국어' },
+      { code: 'ja', label: '日本語' }
+    ];
+    var wrap = document.querySelector('.logo-switches') || document.querySelector('.header-nav');
+    if (!wrap || document.getElementById('lang-dropdown')) return;
+
+    var current = langs.find(function(l) { return l.code === cur; }) || langs[0];
+
+    var dd = document.createElement('div');
+    dd.className = 'lang-dropdown';
+    dd.id = 'lang-dropdown';
+
+    var toggle = document.createElement('button');
+    toggle.type = 'button';
+    toggle.className = 'lang-dropdown-toggle';
+    toggle.setAttribute('aria-label', '选择语言');
+    toggle.innerHTML = '<span class="lang-current">' + current.label + '</span><span class="lang-caret">▾</span>';
+
+    var menu = document.createElement('ul');
+    menu.className = 'lang-dropdown-menu';
+    langs.forEach(function(l) {
+      var li = document.createElement('li');
+      if (l.code === cur) li.className = 'active';
+      var a = document.createElement('a');
+      a.href = langHref(l.code);
+      a.textContent = l.label;
+      li.appendChild(a);
+      menu.appendChild(li);
+    });
+
+    dd.appendChild(toggle);
+    dd.appendChild(menu);
+    wrap.appendChild(dd);
+
+    toggle.addEventListener('click', function(e) {
+      e.stopPropagation();
+      dd.classList.toggle('open');
+    });
+    document.addEventListener('click', function(e) {
+      if (!dd.contains(e.target)) dd.classList.remove('open');
+    });
+  });
+</script>
+
+
+<script>
+    let menu = document.getElementById('menu');
+    if (menu) {
+        const scrollPosition = localStorage.getItem("menu-scroll-position");
+        if (scrollPosition) {
+            menu.scrollLeft = parseInt(scrollPosition, 10);
+        }
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+</script>
+<script>
+    var toplink = document.getElementById("top-link");
+    window.onscroll = function () {
+        const scrollThreshold = window.innerHeight;
+        if (document.body.scrollTop > scrollThreshold || document.documentElement.scrollTop > scrollThreshold) {
+            toplink.classList.remove("hidden");
+        } else {
+            toplink.classList.add("hidden");
+        }
+    };
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        const html = document.querySelector("html");
+        if (html.dataset.theme === "dark") {
+            html.dataset.theme = 'light';
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            html.dataset.theme = 'dark';
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = '复制';
+
+        function copyingDone() {
+            copybutton.innerHTML = '已复制！';
+            setTimeout(() => {
+                copybutton.innerHTML = '复制';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>

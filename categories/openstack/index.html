@@ -163,11 +163,33 @@
 <article class="post-entry tag-entry"> 
   <header class="entry-header">
     <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/posts/neutron/">Neutron</a>
+      <a href="https://LMDAWN1127.github.io/posts/openstack-neutron-flat-vlan-vxlan/">OpenStack Neutron 网络类型设计与实现：flat、VLAN 与 VXLAN</a>
     </h2>
   </header>
   <div class="entry-content">
-    <p>Neutron 是 OpenStack 的网络服务组件，负责虚拟交换机（OVS/OVN）、命名空间、安全组，以及 tap/qbr/qvb/qvo/br-int 等网络虚拟化机制。</p>
+    <p>从 flat 到 VLAN 再到 VXLAN，逐步拆解 Neutron 三种网络类型的 ML2 与 OVS 配置、外部网络与路由器打通方式、OVS 流表转发分析，以及云主机通过 169.254.169.254 获取 metadata 的完整链路。</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-07">
+  2026年10月7日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 3 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to OpenStack Neutron 网络类型设计与实现：flat、VLAN 与 VXLAN" href="https://LMDAWN1127.github.io/posts/openstack-neutron-flat-vlan-vxlan/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/posts/openstack-neutron-network-service/">OpenStack Neutron 网络服务详解：虚拟交换组件与跨主机数据流分析</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>梳理 Neutron 的网络虚拟化机制：OVS/OVN 虚拟交换机、namespace 租户隔离，以及 tap/qbr/qvb/qvo/br-int 各设备的作用，并逐层拆解同主机、跨主机、跨网络与访问 Internet 四类数据流。</p>
   </div>
   <footer class="entry-footer">
 
@@ -179,7 +201,7 @@
   阅读需 5 分钟
 </span>
 </footer>
-  <a class="entry-link" aria-label="post link to Neutron" href="https://LMDAWN1127.github.io/posts/neutron/"></a>
+  <a class="entry-link" aria-label="post link to OpenStack Neutron 网络服务详解：虚拟交换组件与跨主机数据流分析" href="https://LMDAWN1127.github.io/posts/openstack-neutron-network-service/"></a>
 </article>
 
 <article class="post-entry tag-entry"> 
@@ -247,28 +269,12 @@
 </footer>
   <a class="entry-link" aria-label="post link to OpenStack 核心服务详解：Keystone 认证、Nova 计算与 Glance/Swift 镜像存储" href="https://LMDAWN1127.github.io/posts/openstack-keystone-glance-nova/"></a>
 </article>
-
-<article class="post-entry tag-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/posts/openstack-provision-cloud-server/">OpenStack发放云主机</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>从图形化界面到命令行，完整演示 OpenStack 发放云主机的全流程：租户/用户/镜像/规格/网络/路由器/安全组/密钥对/浮动IP 的创建与删除，并附 iptables SNAT/DNAT 与 Nova cell_v2 discover_hosts 排查要点。</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-04">
-  2026年10月4日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 6 分钟
-</span>
+<footer class="page-footer">
+  <nav class="pagination">
+    <a class="next" href="https://LMDAWN1127.github.io/categories/openstack/page/2/">下一页&nbsp;&nbsp;»
+    </a>
+  </nav>
 </footer>
-  <a class="entry-link" aria-label="post link to OpenStack发放云主机" href="https://LMDAWN1127.github.io/posts/openstack-provision-cloud-server/"></a>
-</article>
     </main>
     
 <a href="#top" id="top-link" class="top-link hidden" aria-label="go to top" title="Go to Top (Alt + G)" accesskey="g">

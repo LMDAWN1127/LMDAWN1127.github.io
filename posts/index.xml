@@ -11,7 +11,7 @@
     </image>
     <generator>Hugo</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Wed, 07 Oct 2026 17:42:00 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 07 Oct 2026 19:45:00 +0800</lastBuildDate>
     <atom:link href="https://LMDAWN1127.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Harbor 主备部署实战：从安装到 HTTPS 与主备复制</title>
@@ -21,11 +21,18 @@
       <description>完整记录 Harbor 企业级镜像仓库的主备部署过程，涵盖 HTTP/HTTPS 双模式安装、自签名证书配置、跨主机主备复制等核心运维技能。</description>
     </item>
     <item>
-      <title>Neutron</title>
-      <link>https://LMDAWN1127.github.io/posts/neutron/</link>
+      <title>OpenStack Neutron 网络类型设计与实现：flat、VLAN 与 VXLAN</title>
+      <link>https://LMDAWN1127.github.io/posts/openstack-neutron-flat-vlan-vxlan/</link>
+      <pubDate>Wed, 07 Oct 2026 19:45:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/posts/openstack-neutron-flat-vlan-vxlan/</guid>
+      <description>从 flat 到 VLAN 再到 VXLAN，逐步拆解 Neutron 三种网络类型的 ML2 与 OVS 配置、外部网络与路由器打通方式、OVS 流表转发分析，以及云主机通过 169.254.169.254 获取 metadata 的完整链路。</description>
+    </item>
+    <item>
+      <title>OpenStack Neutron 网络服务详解：虚拟交换组件与跨主机数据流分析</title>
+      <link>https://LMDAWN1127.github.io/posts/openstack-neutron-network-service/</link>
       <pubDate>Wed, 07 Oct 2026 17:42:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/posts/neutron/</guid>
-      <description>Neutron 是 OpenStack 的网络服务组件，负责虚拟交换机（OVS/OVN）、命名空间、安全组，以及 tap/qbr/qvb/qvo/br-int 等网络虚拟化机制。</description>
+      <guid>https://LMDAWN1127.github.io/posts/openstack-neutron-network-service/</guid>
+      <description>梳理 Neutron 的网络虚拟化机制：OVS/OVN 虚拟交换机、namespace 租户隔离，以及 tap/qbr/qvb/qvo/br-int 各设备的作用，并逐层拆解同主机、跨主机、跨网络与访问 Internet 四类数据流。</description>
     </item>
     <item>
       <title>OpenStack 云操作系统核心架构与自动化部署</title>
