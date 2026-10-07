@@ -11,7 +11,7 @@
     </image>
     <generator>Hugo</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Tue, 06 Oct 2026 20:35:00 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 07 Oct 2026 17:42:00 +0800</lastBuildDate>
     <atom:link href="https://LMDAWN1127.github.io/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Harbor 主备部署实战：从安装到 HTTPS 与主备复制</title>
@@ -19,6 +19,13 @@
       <pubDate>Tue, 04 Aug 2026 00:00:00 +0000</pubDate>
       <guid>https://LMDAWN1127.github.io/posts/harbor-master-slave/</guid>
       <description>完整记录 Harbor 企业级镜像仓库的主备部署过程，涵盖 HTTP/HTTPS 双模式安装、自签名证书配置、跨主机主备复制等核心运维技能。</description>
+    </item>
+    <item>
+      <title>Neutron</title>
+      <link>https://LMDAWN1127.github.io/posts/neutron/</link>
+      <pubDate>Wed, 07 Oct 2026 17:42:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/posts/neutron/</guid>
+      <description>Neutron 是 OpenStack 的网络服务组件，负责虚拟交换机（OVS/OVN）、命名空间、安全组，以及 tap/qbr/qvb/qvo/br-int 等网络虚拟化机制。</description>
     </item>
     <item>
       <title>OpenStack 云操作系统核心架构与自动化部署</title>
