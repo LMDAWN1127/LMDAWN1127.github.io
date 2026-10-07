@@ -1,10 +1,11 @@
 ---
-title: "Neutron"
+title: "OpenStack Neutron 网络服务详解：虚拟交换组件与跨主机数据流分析"
 date: 2026-10-07T17:42:00+08:00
 draft: false
 categories: ["OpenStack"]
-tags: ["OpenStack", "Neutron"]
-summary: "Neutron 是 OpenStack 的网络服务组件，负责虚拟交换机（OVS/OVN）、命名空间、安全组，以及 tap/qbr/qvb/qvo/br-int 等网络虚拟化机制。"
+tags: ["OpenStack", "Neutron", "OVS", "namespace"]
+summary: "梳理 Neutron 的网络虚拟化机制：OVS/OVN 虚拟交换机、namespace 租户隔离，以及 tap/qbr/qvb/qvo/br-int 各设备的作用，并逐层拆解同主机、跨主机、跨网络与访问 Internet 四类数据流。"
+aliases: ["/posts/neutron/"]
 ---
 
 ## 一、Neutron网络服务
