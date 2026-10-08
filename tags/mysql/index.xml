@@ -11,8 +11,15 @@
     </image>
     <generator>Hugo</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Thu, 08 Oct 2026 14:15:00 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 08 Oct 2026 21:40:00 +0800</lastBuildDate>
     <atom:link href="https://LMDAWN1127.github.io/tags/mysql/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>MySQL 版本升级实战与回退：5.6→5.7→8.0 就地升级、mysql-shell 检测与回退方案</title>
+      <link>https://LMDAWN1127.github.io/posts/mysql-version-upgrade-rollback/</link>
+      <pubDate>Thu, 08 Oct 2026 21:40:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/posts/mysql-version-upgrade-rollback/</guid>
+      <description>从升级方法（本地 Inplace / 迁移 Mergeing）、升级规范与流程讲起，实战 5.6→5.7→8.0 就地升级：冷备、安全模式挂库启动、mysql_upgrade 升级授权表、正常重启验证；并用 mysql-shell 的 util.checkForServerUpgrade() 做 8.0 升级前检测；最后给出升级失败时的程序与数据回退步骤。</description>
+    </item>
     <item>
       <title>MySQL 多实例部署实战：单主机三实例规划、初始化与 systemd 托管</title>
       <link>https://LMDAWN1127.github.io/posts/mysql-multi-instance-deployment/</link>

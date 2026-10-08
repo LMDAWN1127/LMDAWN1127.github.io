@@ -11,13 +11,34 @@
     </image>
     <generator>Hugo</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Thu, 08 Oct 2026 14:15:00 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 08 Oct 2026 21:40:00 +0800</lastBuildDate>
     <atom:link href="https://LMDAWN1127.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>MySQL</title>
       <link>https://LMDAWN1127.github.io/tags/mysql/</link>
-      <pubDate>Thu, 08 Oct 2026 14:15:00 +0800</pubDate>
+      <pubDate>Thu, 08 Oct 2026 21:40:00 +0800</pubDate>
       <guid>https://LMDAWN1127.github.io/tags/mysql/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Mysql-Shell</title>
+      <link>https://LMDAWN1127.github.io/tags/mysql-shell/</link>
+      <pubDate>Thu, 08 Oct 2026 21:40:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/tags/mysql-shell/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>版本升级</title>
+      <link>https://LMDAWN1127.github.io/tags/%E7%89%88%E6%9C%AC%E5%8D%87%E7%BA%A7/</link>
+      <pubDate>Thu, 08 Oct 2026 21:40:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/tags/%E7%89%88%E6%9C%AC%E5%8D%87%E7%BA%A7/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>回退</title>
+      <link>https://LMDAWN1127.github.io/tags/%E5%9B%9E%E9%80%80/</link>
+      <pubDate>Thu, 08 Oct 2026 21:40:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/tags/%E5%9B%9E%E9%80%80/</guid>
       <description></description>
     </item>
     <item>
