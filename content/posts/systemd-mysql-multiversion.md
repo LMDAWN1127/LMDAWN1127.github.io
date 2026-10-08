@@ -8,7 +8,7 @@ summary: "围绕 systemd Unit 文件管理与 MySQL 5.6/5.7 多版本、多实�
 showToc: true
 ---
 
-#### 01 整理 systemctl 数据库 Service 文件
+#### 1.整理 systemctl 数据库 Service 文件
 
 ##### 方案一：标准生产守护进程配置
 
@@ -59,7 +59,7 @@ WantedBy=multi-user.target
 
 
 
-#### 02 多版本 MySQL（5.6 / 5.7）安装与升级准备实战
+#### 2.多版本 MySQL（5.6 / 5.7）安装与升级准备
 
 ##### 步骤一：下载软件归档包
 
@@ -85,35 +85,7 @@ WantedBy=multi-user.target
 # 注意：暂不配置全局环境变量
 ```
 
-##### 步骤三：初始化数据库软件
-
-* **MySQL 5.7 初始化（数据目录 3357）**：
-
-  ```bash
-  [root@master local]#mkdir -p /data/3357/data
-  [root@master local]#chown -R mysql.mysql /data/3357/data
-  [root@master local]#/usr/local/mysql57/bin/mysqld --initialize-insecure --user=mysql --datadir=/data/3357/data --basedir=/usr/local/mysql57
-  [root@master local]#echo $?
-  0
-  ```
-
-* **MySQL 5.6 初始化（数据目录 3356）**：
-
-  ```bash
-  [root@master local]#mkdir -p /data/3356/data
-  [root@master local]#chown -R mysql.mysql /data/3356/data
-  [root@master local]#/usr/local/mysql56/scripts/mysql_install_db --user=mysql --datadir=/data/3356/data --basedir=/usr/local/mysql56
-  FATAL ERROR: please install the following Perl modules before executing /usr/local/mysql56/scripts/mysql_install_db:
-  Data::Dumper
-  # 缺少Perl模块
-  [root@master local]#yum install -y perl-Data-Dumper
-  [root@master local]#/usr/local/mysql56/scripts/mysql_install_db --user=mysql --datadir=/data/3356/data --basedir=/usr/local/mysql56
-  # 观察输出信息中是否包含两个 OK，并确认退出状态码：
-  [root@master local]#echo $?
-  0
-  ```
-
-##### 步骤四：编写多实例专属配置文件
+##### 步骤三：编写多实例专属配置文件
 
 * **MySQL 5.7（3357 实例）配置**：
 
@@ -179,7 +151,35 @@ WantedBy=multi-user.target
   WantedBy=multi-user.target
   ```
 
-##### 步骤五：运行启动与管理验证
+##### 步骤四：初始化数据库软件
+
+* **MySQL 5.6 初始化（数据目录 3356）**：
+
+  ```bash
+  [root@master local]#mkdir -p /data/3356/data
+  [root@master local]#chown -R mysql.mysql /data/3356/data
+  [root@master ~]#/usr/local/mysql56/scripts/mysql_install_db   --defaults-file=/etc/my3356.cnf   --user=mysql --basedir=/usr/local/mysql56 --datadir=/data/3356/data
+  FATAL ERROR: please install the following Perl modules before executing /usr/local/mysql56/scripts/mysql_install_db:
+  Data::Dumper
+  # 缺少Perl模块
+  [root@master local]#yum install -y perl-Data-Dumper
+  [root@master local]#/usr/local/mysql56/scripts/mysql_install_db --user=mysql --datadir=/data/3356/data --basedir=/usr/local/mysql56
+  # 观察输出信息中是否包含两个 OK，并确认退出状态码：
+  [root@master local]#echo $?
+  0
+  ```
+
+* **MySQL 5.7 初始化（数据目录 3357）**：
+
+  ```bash
+  [root@master local]#mkdir -p /data/3357/data
+  [root@master local]#chown -R mysql.mysql /data/3357/data
+  [root@master ~]#/usr/local/mysql57/bin/mysqld --defaults-file=/etc/my3357.cnf   --initialize-insecure --user=mysql --basedir=/usr/local/mysql57 --datadir=/data/3357/data
+  [root@master local]#echo $?
+  0
+  ```
+
+##### 步骤五：运行启动数据库服务
 
 * **启动/停止 MySQL 5.7 服务**：
 
@@ -225,3 +225,4 @@ mysqld: active (running)
 mysqld3356: active (running)
 mysqld3357: active (running)
 ```
+
