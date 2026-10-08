@@ -11,20 +11,20 @@
     </image>
     <generator>Hugo</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Wed, 07 Oct 2026 19:45:00 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 08 Oct 2026 14:15:00 +0800</lastBuildDate>
     <atom:link href="https://LMDAWN1127.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>MySQL</title>
+      <link>https://LMDAWN1127.github.io/categories/mysql/</link>
+      <pubDate>Thu, 08 Oct 2026 14:15:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/categories/mysql/</guid>
+      <description></description>
+    </item>
     <item>
       <title>OpenStack</title>
       <link>https://LMDAWN1127.github.io/categories/openstack/</link>
       <pubDate>Wed, 07 Oct 2026 19:45:00 +0800</pubDate>
       <guid>https://LMDAWN1127.github.io/categories/openstack/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>MySQL</title>
-      <link>https://LMDAWN1127.github.io/categories/mysql/</link>
-      <pubDate>Sat, 03 Oct 2026 17:11:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/categories/mysql/</guid>
       <description></description>
     </item>
     <item>

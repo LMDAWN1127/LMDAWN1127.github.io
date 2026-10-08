@@ -11,8 +11,15 @@
     </image>
     <generator>Hugo</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sat, 04 Jul 2026 05:00:00 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 08 Oct 2026 14:15:00 +0800</lastBuildDate>
     <atom:link href="https://LMDAWN1127.github.io/tags/%E9%83%A8%E7%BD%B2/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>MySQL 多实例部署实战：单主机三实例规划、初始化与 systemd 托管</title>
+      <link>https://LMDAWN1127.github.io/posts/mysql-multi-instance-deployment/</link>
+      <pubDate>Thu, 08 Oct 2026 14:15:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/posts/mysql-multi-instance-deployment/</guid>
+      <description>在同一台 master 主机上规划并部署 3 个 MySQL 8.0.26 实例（3307/3308/3309）：独立 my.cnf 与数据目录、initialize-insecure 初始化，命令启动与 systemd 服务托管两种方式，并用 ps / netstat / select @@port 完成验证。</description>
+    </item>
     <item>
       <title>CentOS 部署 Claude Code 全流程指南</title>
       <link>https://LMDAWN1127.github.io/posts/centos-deploy-claude-code/</link>
