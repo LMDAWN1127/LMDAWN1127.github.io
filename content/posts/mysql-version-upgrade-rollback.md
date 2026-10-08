@@ -1,6 +1,6 @@
 ---
 title: "MySQL 版本升级实战与回退：5.6→5.7→8.0 就地升级、mysql-shell 检测与回退方案"
-date: 2026-10-08T21:50:00+08:00
+date: 2026-10-08T21:40:00+08:00
 draft: false
 categories: ["MySQL"]
 tags: ["MySQL", "版本升级", "回退", "mysql-shell"]
