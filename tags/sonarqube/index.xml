@@ -11,8 +11,15 @@
     </image>
     <generator>Hugo</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Fri, 02 Oct 2026 14:12:00 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 09 Oct 2026 16:30:00 +0800</lastBuildDate>
     <atom:link href="https://LMDAWN1127.github.io/tags/sonarqube/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Jenkins 集成 SonarQube 质量门禁与企业微信通知</title>
+      <link>https://LMDAWN1127.github.io/posts/jenkins-sonarqube-wecom-notification/</link>
+      <pubDate>Fri, 09 Oct 2026 16:30:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/posts/jenkins-sonarqube-wecom-notification/</guid>
+      <description>在 Jenkins 中集成 SonarQube 质量门禁做代码扫描，并配合企业微信(WeCom)实现构建结果与变更日志的自动通知，打通质量卡点与团队触达。</description>
+    </item>
     <item>
       <title>SonarQube 实战：私有化部署、Token 配置与代码质量扫描</title>
       <link>https://LMDAWN1127.github.io/posts/sonarqube-practice/</link>
