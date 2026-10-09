@@ -11,8 +11,15 @@
     </image>
     <generator>Hugo</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Fri, 02 Oct 2026 14:12:00 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 09 Oct 2026 16:00:00 +0800</lastBuildDate>
     <atom:link href="https://LMDAWN1127.github.io/tags/devops/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Jenkins &#43; GitLab 打通实现 CI/CD 自动部署</title>
+      <link>https://LMDAWN1127.github.io/posts/jenkins-gitlab-cicd-auto-deploy/</link>
+      <pubDate>Fri, 09 Oct 2026 16:00:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/posts/jenkins-gitlab-cicd-auto-deploy/</guid>
+      <description>手把手实现 Jenkins 拉取 GitLab 代码、经 SSH 推送至 Web 服务器、并配置 GitLab Webhook 触发全自动部署的完整 CI/CD 流程。</description>
+    </item>
     <item>
       <title>SonarQube 实战：私有化部署、Token 配置与代码质量扫描</title>
       <link>https://LMDAWN1127.github.io/posts/sonarqube-practice/</link>
