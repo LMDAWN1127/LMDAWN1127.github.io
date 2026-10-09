@@ -5,11 +5,11 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="robots" content="index, follow">
-<title>Posts | DAWN&#39;s Blog</title>
+<title>Jenkinsfile | DAWN&#39;s Blog</title>
 <meta name="keywords" content="">
-<meta name="description" content="Posts - DAWN&#39;s Blog">
+<meta name="description" content="">
 <meta name="author" content="DAWN">
-<link rel="canonical" href="https://LMDAWN1127.github.io/posts/">
+<link rel="canonical" href="https://LMDAWN1127.github.io/tags/jenkinsfile/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.4bf808bff57bddc46d61c8ae060b00400fc679ab876e37243b11bd3f832f2958.css" integrity="sha256-S/gIv/V73cRtYciuBgsAQA/GeauHbjckOxG9P4MvKVg=" rel="preload stylesheet" as="style">
 <link rel="icon" href="https://LMDAWN1127.github.io/images/DAWN.jpg">
 <link rel="icon" type="image/png" sizes="16x16" href="https://LMDAWN1127.github.io/favicon-16x16.png">
@@ -18,11 +18,8 @@
 <link rel="mask-icon" href="https://LMDAWN1127.github.io/safari-pinned-tab.svg">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
-<link rel="alternate" type="application/rss+xml" href="https://LMDAWN1127.github.io/posts/index.xml" title="rss">
-<link rel="alternate" hreflang="zh" href="https://LMDAWN1127.github.io/posts/">
-<link rel="alternate" hreflang="en" href="https://LMDAWN1127.github.io/en/posts/">
-<link rel="alternate" hreflang="ko" href="https://LMDAWN1127.github.io/ko/posts/">
-<link rel="alternate" hreflang="ja" href="https://LMDAWN1127.github.io/ja/posts/">
+<link rel="alternate" type="application/rss+xml" href="https://LMDAWN1127.github.io/tags/jenkinsfile/index.xml" title="rss">
+<link rel="alternate" hreflang="zh" href="https://LMDAWN1127.github.io/tags/jenkinsfile/">
 <noscript>
     <style>
         #theme-toggle,
@@ -69,32 +66,17 @@
     }
 
 </script><link rel="stylesheet" href='https://LMDAWN1127.github.io/css/custom.css'>
-<meta property="og:url" content="https://LMDAWN1127.github.io/posts/">
+<meta property="og:url" content="https://LMDAWN1127.github.io/tags/jenkinsfile/">
   <meta property="og:site_name" content="DAWN&#39;s Blog">
-  <meta property="og:title" content="Posts">
+  <meta property="og:title" content="Jenkinsfile">
   <meta property="og:locale" content="zh_cn">
   <meta property="og:type" content="website">
       <meta property="og:image" content="https://LMDAWN1127.github.io/images/DAWN.jpg">
 
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:image" content="https://LMDAWN1127.github.io/images/DAWN.jpg">
-  <meta name="twitter:title" content="Posts">
+  <meta name="twitter:title" content="Jenkinsfile">
 
-
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  "itemListElement": [
-    {
-      "@type": "ListItem",
-      "position":  1 ,
-      "name": "Posts",
-      "item": "https://LMDAWN1127.github.io/posts/"
-    }
-  ]
-}
-</script>
 </head>
 <body class="list" id="top">
     <header class="header">
@@ -152,14 +134,19 @@
 <main class="main"> 
 <header class="page-header"><nav class="breadcrumbs" role="navigation" aria-label="Breadcrumb">
             <a href="/">主页</a>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right">
+                <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+            <a href="/tags/">Tags</a>
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
         stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right">
         <polyline points="9 18 15 12 9 6"></polyline>
     </svg>
 </nav>
   <h1>
-    Posts
-    <a href="/posts/index.xml" title="RSS" aria-label="RSS">
+    Jenkinsfile
+    <a href="/tags/jenkinsfile/index.xml" title="RSS" aria-label="RSS">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
         stroke-linecap="round" stroke-linejoin="round" height="23">
         <path d="M4 11a9 9 0 0 1 9 9" />
@@ -170,124 +157,27 @@
   </h1>
 </header>
 
-<article class="post-entry"> 
+<article class="post-entry tag-entry"> 
   <header class="entry-header">
     <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/posts/mysql-multi-instance-deployment/">MySQL 多实例部署实战：单主机三实例规划、初始化与 systemd 托管</a>
+      <a href="https://LMDAWN1127.github.io/posts/jenkins-pipeline/">Jenkins Pipeline 流水线</a>
     </h2>
   </header>
   <div class="entry-content">
-    <p>在同一台 master 主机上规划并部署 3 个 MySQL 8.0.26 实例（3307/3308/3309）：独立 my.cnf 与数据目录、initialize-insecure 初始化，命令启动与 systemd 服务托管两种方式，并用 ps / netstat / select @@port 完成验证。</p>
+    <p>从 CI/CD 与 Pipeline as Code 概念讲起，拆解 Node/Stage/Step，并用一份 Jenkinsfile 把「拉取代码 → SonarQube 扫描 → 打包 → 部署」的发布流程落地为可维护的流水线。</p>
   </div>
   <footer class="entry-footer">
 
-<time class="meta-date" datetime="2026-10-08">
-  2026年10月8日
+<time class="meta-date" datetime="2026-10-09">
+  2026年10月9日
 </time>
 <span class="meta-separator">·</span>
 <span class="meta-reading-time">
-  阅读需 4 分钟
+  阅读需 2 分钟
 </span>
 </footer>
-  <a class="entry-link" aria-label="post link to MySQL 多实例部署实战：单主机三实例规划、初始化与 systemd 托管" href="https://LMDAWN1127.github.io/posts/mysql-multi-instance-deployment/"></a>
+  <a class="entry-link" aria-label="post link to Jenkins Pipeline 流水线" href="https://LMDAWN1127.github.io/posts/jenkins-pipeline/"></a>
 </article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/posts/openstack-neutron-flat-vlan-vxlan/">OpenStack Neutron 网络类型设计与实现：flat、VLAN 与 VXLAN</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>从 flat 到 VLAN 再到 VXLAN，逐步拆解 Neutron 三种网络类型的 ML2 与 OVS 配置、外部网络与路由器打通方式、OVS 流表转发分析，以及云主机通过 169.254.169.254 获取 metadata 的完整链路。</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-07">
-  2026年10月7日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 3 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to OpenStack Neutron 网络类型设计与实现：flat、VLAN 与 VXLAN" href="https://LMDAWN1127.github.io/posts/openstack-neutron-flat-vlan-vxlan/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/posts/openstack-neutron-network-service/">OpenStack Neutron 网络服务详解：虚拟交换组件与跨主机数据流分析</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>梳理 Neutron 的网络虚拟化机制：OVS/OVN 虚拟交换机、namespace 租户隔离，以及 tap/qbr/qvb/qvo/br-int 各设备的作用，并逐层拆解同主机、跨主机、跨网络与访问 Internet 四类数据流。</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-07">
-  2026年10月7日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 5 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to OpenStack Neutron 网络服务详解：虚拟交换组件与跨主机数据流分析" href="https://LMDAWN1127.github.io/posts/openstack-neutron-network-service/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/posts/openstack-core-architecture-deployment/">OpenStack 云操作系统核心架构与自动化部署</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>从核心组件（Nova/Glance/Neutron/Cinder 等）到基于 Packstack 的 Victoria 版一键自动化部署，并附 Rsyslog 日志排查方法。</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-06">
-  2026年10月6日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 8 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to OpenStack 云操作系统核心架构与自动化部署" href="https://LMDAWN1127.github.io/posts/openstack-core-architecture-deployment/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/posts/openstack-cinder-block-storage/">OpenStack Cinder 块存储详解：LVM &#43; iSCSI 本地卷与 NFS 后端对接</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>梳理 OpenStack Cinder 块存储：卷创建与挂载的架构分工（Cinder 建卷、Nova 挂载）、本地 LVM &#43; iSCSI 把控制节点变成存储端的完整链路（VG/LV/targetcli ISCSI 共享/libvirt 挂载），以及对接 NFS 存储的后端配置与 Web 界面实操。</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-05">
-  2026年10月5日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 6 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to OpenStack Cinder 块存储详解：LVM &#43; iSCSI 本地卷与 NFS 后端对接" href="https://LMDAWN1127.github.io/posts/openstack-cinder-block-storage/"></a>
-</article>
-<footer class="page-footer">
-  <nav class="pagination">
-    <a class="prev" href="https://LMDAWN1127.github.io/posts/">
-      «&nbsp;上一页&nbsp;
-    </a>
-    <a class="next" href="https://LMDAWN1127.github.io/posts/page/3/">下一页&nbsp;&nbsp;»
-    </a>
-  </nav>
-</footer>
     </main>
     
 <a href="#top" id="top-link" class="top-link hidden" aria-label="go to top" title="Go to Top (Alt + G)" accesskey="g">

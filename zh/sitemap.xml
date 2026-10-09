@@ -28,7 +28,7 @@
                 />
   </url><url>
     <loc>https://LMDAWN1127.github.io/categories/</loc>
-    <lastmod>2026-10-09T16:30:00+08:00</lastmod>
+    <lastmod>2026-10-09T19:00:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
@@ -53,7 +53,7 @@
                 />
   </url><url>
     <loc>https://LMDAWN1127.github.io/tags/ci/cd/</loc>
-    <lastmod>2026-10-09T16:30:00+08:00</lastmod>
+    <lastmod>2026-10-09T19:00:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
@@ -78,7 +78,7 @@
                 />
   </url><url>
     <loc>https://LMDAWN1127.github.io/categories/devops/</loc>
-    <lastmod>2026-10-09T16:30:00+08:00</lastmod>
+    <lastmod>2026-10-09T19:00:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
@@ -103,7 +103,7 @@
                 />
   </url><url>
     <loc>https://LMDAWN1127.github.io/tags/devops/</loc>
-    <lastmod>2026-10-09T16:30:00+08:00</lastmod>
+    <lastmod>2026-10-09T19:00:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
@@ -128,7 +128,7 @@
                 />
   </url><url>
     <loc>https://LMDAWN1127.github.io/tags/jenkins/</loc>
-    <lastmod>2026-10-09T16:30:00+08:00</lastmod>
+    <lastmod>2026-10-09T19:00:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
@@ -152,13 +152,23 @@
                 href="https://LMDAWN1127.github.io/ja/tags/jenkins/"
                 />
   </url><url>
-    <loc>https://LMDAWN1127.github.io/posts/jenkins-sonarqube-wecom-notification/</loc>
-    <lastmod>2026-10-09T16:30:00+08:00</lastmod>
+    <loc>https://LMDAWN1127.github.io/posts/jenkins-pipeline/</loc>
+    <lastmod>2026-10-09T19:00:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url><url>
+    <loc>https://LMDAWN1127.github.io/tags/jenkinsfile/</loc>
+    <lastmod>2026-10-09T19:00:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url><url>
+    <loc>https://LMDAWN1127.github.io/tags/pipeline/</loc>
+    <lastmod>2026-10-09T19:00:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url><url>
     <loc>https://LMDAWN1127.github.io/posts/</loc>
-    <lastmod>2026-10-09T16:30:00+08:00</lastmod>
+    <lastmod>2026-10-09T19:00:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
@@ -181,6 +191,36 @@
                 hreflang="ja"
                 href="https://LMDAWN1127.github.io/ja/posts/"
                 />
+  </url><url>
+    <loc>https://LMDAWN1127.github.io/tags/</loc>
+    <lastmod>2026-10-09T19:00:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://LMDAWN1127.github.io/tags/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://LMDAWN1127.github.io/en/tags/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="ko"
+                href="https://LMDAWN1127.github.io/ko/tags/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="ja"
+                href="https://LMDAWN1127.github.io/ja/tags/"
+                />
+  </url><url>
+    <loc>https://LMDAWN1127.github.io/posts/jenkins-sonarqube-wecom-notification/</loc>
+    <lastmod>2026-10-09T16:30:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
   </url><url>
     <loc>https://LMDAWN1127.github.io/tags/sonarqube/</loc>
     <lastmod>2026-10-09T16:30:00+08:00</lastmod>
@@ -205,31 +245,6 @@
                 rel="alternate"
                 hreflang="ja"
                 href="https://LMDAWN1127.github.io/ja/tags/sonarqube/"
-                />
-  </url><url>
-    <loc>https://LMDAWN1127.github.io/tags/</loc>
-    <lastmod>2026-10-09T16:30:00+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-    <xhtml:link
-                rel="alternate"
-                hreflang="zh-cn"
-                href="https://LMDAWN1127.github.io/tags/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="https://LMDAWN1127.github.io/en/tags/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="ko"
-                href="https://LMDAWN1127.github.io/ko/tags/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="ja"
-                href="https://LMDAWN1127.github.io/ja/tags/"
                 />
   </url><url>
     <loc>https://LMDAWN1127.github.io/tags/%E4%BC%81%E4%B8%9A%E5%BE%AE%E4%BF%A1/</loc>
