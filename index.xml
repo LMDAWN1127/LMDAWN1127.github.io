@@ -11,7 +11,7 @@
     </image>
     <generator>Hugo</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Fri, 09 Oct 2026 19:00:00 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 10 Oct 2026 17:30:00 +0800</lastBuildDate>
     <atom:link href="https://LMDAWN1127.github.io/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Harbor 主备部署实战：从安装到 HTTPS 与主备复制</title>
@@ -19,6 +19,13 @@
       <pubDate>Tue, 04 Aug 2026 00:00:00 +0000</pubDate>
       <guid>https://LMDAWN1127.github.io/posts/harbor-master-slave/</guid>
       <description>完整记录 Harbor 企业级镜像仓库的主备部署过程，涵盖 HTTP/HTTPS 双模式安装、自签名证书配置、跨主机主备复制等核心运维技能。</description>
+    </item>
+    <item>
+      <title>Jenkins 代码发布与回滚</title>
+      <link>https://LMDAWN1127.github.io/posts/jenkins-code-deploy-rollback/</link>
+      <pubDate>Sat, 10 Oct 2026 17:30:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/posts/jenkins-code-deploy-rollback/</guid>
+      <description>基于 GitLab 打 tag 标记稳定版本，配合 Jenkins Git Parameter 插件做参数化构建，用一份 deploy/rollback 脚本实现按版本号发布与一键回滚。</description>
     </item>
     <item>
       <title>Jenkins Pipeline 流水线</title>
