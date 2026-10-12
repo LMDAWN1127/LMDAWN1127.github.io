@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh" dir="auto" data-theme="auto">
 
-<head><meta charset="utf-8">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="robots" content="index, follow">
@@ -9,16 +9,16 @@
 <meta name="keywords" content="DevOps, Jenkins, SonarQube, 企业微信, CI/CD">
 <meta name="description" content="在 Jenkins 中集成 SonarQube 质量门禁做代码扫描，并配合企业微信(WeCom)实现构建结果与变更日志的自动通知，打通质量卡点与团队触达。">
 <meta name="author" content="DAWN">
-<link rel="canonical" href="https://LMDAWN1127.github.io/posts/jenkins-sonarqube-wecom-notification/">
+<link rel="canonical" href="http://192.168.100.30:1313/posts/jenkins-sonarqube-wecom-notification/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.4bf808bff57bddc46d61c8ae060b00400fc679ab876e37243b11bd3f832f2958.css" integrity="sha256-S/gIv/V73cRtYciuBgsAQA/GeauHbjckOxG9P4MvKVg=" rel="preload stylesheet" as="style">
-<link rel="icon" href="https://LMDAWN1127.github.io/images/DAWN.jpg">
-<link rel="icon" type="image/png" sizes="16x16" href="https://LMDAWN1127.github.io/favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="https://LMDAWN1127.github.io/favicon-32x32.png">
-<link rel="apple-touch-icon" href="https://LMDAWN1127.github.io/apple-touch-icon.png">
-<link rel="mask-icon" href="https://LMDAWN1127.github.io/safari-pinned-tab.svg">
+<link rel="icon" href="http://192.168.100.30:1313/images/DAWN.jpg">
+<link rel="icon" type="image/png" sizes="16x16" href="http://192.168.100.30:1313/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://192.168.100.30:1313/favicon-32x32.png">
+<link rel="apple-touch-icon" href="http://192.168.100.30:1313/apple-touch-icon.png">
+<link rel="mask-icon" href="http://192.168.100.30:1313/safari-pinned-tab.svg">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
-<link rel="alternate" hreflang="zh" href="https://LMDAWN1127.github.io/posts/jenkins-sonarqube-wecom-notification/">
+<link rel="alternate" hreflang="zh" href="http://192.168.100.30:1313/posts/jenkins-sonarqube-wecom-notification/">
 <noscript>
     <style>
         #theme-toggle,
@@ -64,8 +64,8 @@
         document.querySelector("html").dataset.theme = 'light';
     }
 
-</script><link rel="stylesheet" href='https://LMDAWN1127.github.io/css/custom.css'>
-<meta property="og:url" content="https://LMDAWN1127.github.io/posts/jenkins-sonarqube-wecom-notification/">
+</script><link rel="stylesheet" href='http://192.168.100.30:1313/css/custom.css'>
+<meta property="og:url" content="http://192.168.100.30:1313/posts/jenkins-sonarqube-wecom-notification/">
   <meta property="og:site_name" content="DAWN&#39;s Blog">
   <meta property="og:title" content="Jenkins 集成 SonarQube 质量门禁与企业微信通知">
   <meta property="og:description" content="在 Jenkins 中集成 SonarQube 质量门禁做代码扫描，并配合企业微信(WeCom)实现构建结果与变更日志的自动通知，打通质量卡点与团队触达。">
@@ -79,10 +79,10 @@
     <meta property="article:tag" content="SonarQube">
     <meta property="article:tag" content="企业微信">
     <meta property="article:tag" content="CI/CD">
-      <meta property="og:image" content="https://LMDAWN1127.github.io/images/DAWN.jpg">
+      <meta property="og:image" content="http://192.168.100.30:1313/images/DAWN.jpg">
 
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:image" content="https://LMDAWN1127.github.io/images/DAWN.jpg">
+  <meta name="twitter:image" content="http://192.168.100.30:1313/images/DAWN.jpg">
   <meta name="twitter:title" content="Jenkins 集成 SonarQube 质量门禁与企业微信通知">
   <meta name="twitter:description" content="在 Jenkins 中集成 SonarQube 质量门禁做代码扫描，并配合企业微信(WeCom)实现构建结果与变更日志的自动通知，打通质量卡点与团队触达。">
 
@@ -96,13 +96,13 @@
       "@type": "ListItem",
       "position":  1 ,
       "name": "Posts",
-      "item": "https://LMDAWN1127.github.io/posts/"
+      "item": "http://192.168.100.30:1313/posts/"
     }, 
     {
       "@type": "ListItem",
       "position":  2 ,
       "name": "Jenkins 集成 SonarQube 质量门禁与企业微信通知",
-      "item": "https://LMDAWN1127.github.io/posts/jenkins-sonarqube-wecom-notification/"
+      "item": "http://192.168.100.30:1313/posts/jenkins-sonarqube-wecom-notification/"
     }
   ]
 }
@@ -120,7 +120,7 @@
   "articleBody": "01 .Jenkins集成SonarQube 一. jenkins上配置SonarQube服务端 将Build Steps和执行shell调换位置，Build Steps在上面，执行shell在下面\n1.Name定义\n2.URL添加SonarQube的地址 token添加一个secret text 填写之前安装SonarQube的Token\n二. Jekins配置sonar客户端的位置 jenkins配置执行sonar-scanner命令的家目录，让jenkins能找到该命令 系统管理-\u003e全局工具配置\n三. 项目中集成SonarQube 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 [root@gitlab game]#vim index.html .... ['魂斗罗v5', 'roms/Contra1(U)30.nes'], ... [root@gitlab game]#git commit -am \"v5\" [main c03f21c] v5 1 file changed, 1 insertion(+), 1 deletion(-) [root@gitlab game]#git push -u origin main Counting objects: 5, done. Delta compression using up to 2 threads. Compressing objects: 100% (3/3), done. Writing objects: 100% (3/3), 273 bytes | 0 bytes/s, done. Total 3 (delta 2), reused 0 (delta 0) To git@11.0.1.200:dawn/game.git d0cef87..c03f21c main -\u003e main Branch main set up to track remote branch main from origin. 自动推送成功\n02. Jenkins集成微信 一. 集成微信介绍 jenkins集成微信，测试环境流程，开发写完代码直接提交到gitlab，自动触发Jenkins执行构建，运行结果可以直接展示在测试平台，每次发版的测试版本信息可以通过Jenkins发送到企业微信通知相关项目人员。\n二. 注册企业微信公众号 网址: https://mp.weixin.qq.com/\n选择完成后把下面信息进行完善-\u003e使用自己微信扫描二维码进行管理后-点注册\n注册成功登陆后点击应用管理-\u003e创建应用\n上传一张log-\u003e填写应用名称-可见范围-\u003e创建应用-保存好agentld和secret写入py脚本\n三. 修改py脚本信息 1 2 3 4 5 6 #1. 上传脚本到/server/scripts [root@jenkins ~]# mkdir -p /server/scripts [root@jenkins ~]# cd /server/scripts [root@jenkins scripts]#ll total 4 -rw-r--r-- 1 root root 2008 Oct 2 18:59 jenkins_notify.py 四. 本地执行脚本测试 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 [root@jenkins ~]#yum -y install python-pip [root@jenkins ~]#wget https://bootstrap.pypa.io/pip/2.7/get-pip.py [root@jenkins ~]#python get-pip.py [root@jenkins ~]#pip2.7 install requests [root@jenkins scripts]#python jenkins_notify.py 11 /etc/hosts game [变更日志] : 127.0.0.1 localhost localhost.localdomain localhost4 localhost4.localdomain4 [变更日志] : 127.0.0.1 localhost localhost.localdomain localhost4 localhost4.localdomain4 ::1 localhost localhost.localdomain localhost6 localhost6.localdomain6 {\"errcode\":0,\"errmsg\":\"ok\",\"msgid\":\"cpB2NxqCi8uaKeFHyR1iukyQoHK88hteL3ZQ36qc1J-s6dxwr9nVl5U1rnbiYNHHMEhpIkDaLTfEWfIwu7JVlRs_bPedgINU2lOaYHsoih9vWaXL-BAMnxRfc6wD5f19\"} [root@jenkins scripts]#python jenkins_notify.py 11.0.1.201 /etc/hosts game [变更日志] : 127.0.0.1 localhost localhost.localdomain localhost4 localhost4.localdomain4 [变更日志] : 127.0.0.1 localhost localhost.localdomain localhost4 localhost4.localdomain4 ::1 localhost localhost.localdomain localhost6 localhost6.localdomain6 {\"errcode\":0,\"errmsg\":\"ok\",\"msgid\":\"cpB2NxqCi8uaKeFHyR1iukyQoHK88hteL3ZQ36qc1J_hJhqCw0rb1QjAxDrJIwd1leNF0jHEWgispRPFbstm-I_VCKgfsRHM266lQO-Mvzg0XD0JGP2Vi-cc9yPN98Fd\"} 五. 集成到Jenkins 安装第三方插件:\n1.由于jenkins没有官网的插件来完成此功能，所以我们只能用网络上一些开源的插件\ngithub下载代码 https://github.com/daniel-beck/changelog-environment-plugin 解压到某个目录-\u003e 进入目录执行以下操作 cd 到 changelog-environment-plugin-master 下，执行 mvn verify 时间较长，会在changelog-environment-plugin-master/target/下有个changelog-environment.hpi文件，上传到jenkins即可使用\n2.安装插件\n3.重启Jenkins服务\n1 [root@jenkins scripts]#systemctl restart jenkins 4.集成到jenkins\n进入到项目:\n1 2 Entry Format中添加 %3$s(at %4$s via %1$s)，参数分别为ChangeLog内容，时间，提交人。 Date Format中添加 yyyy-MM-dd HH:mm:ss 就是时间格式。 1 2 3 4 5 复制执行命令 echo \"==========Start Notify==============\" echo ${SCM_CHANGELOG} \u003e /tmp/${JOB_NAME}_change.log python /server/scripts/jenkins_notify.py ${BUILD_URL} /tmp/${JOB_NAME}_change.log ${JOB_NAME} rm -fv /tmp/${JOB_NAME}_change.log 5.测试效果\n1 2 3 4 5 6 7 8 9 10 11 12 13 [root@gitlab game]#git add . [root@gitlab game]#git commit -am \"v8\" [main 77d13e2] v8 1 file changed, 1 insertion(+), 1 deletion(-) [root@gitlab game]#git push -u origin main Counting objects: 5, done. Delta compression using up to 2 threads. Compressing objects: 100% (3/3), done. Writing objects: 100% (3/3), 270 bytes | 0 bytes/s, done. Total 3 (delta 2), reused 0 (delta 0) To git@11.0.1.200:dawn/game.git bb52c00..77d13e2 main -\u003e main Branch main set up to track remote branch main from origin. ",
   "wordCount" : "393",
   "inLanguage": "zh",
-  "image": "https://LMDAWN1127.github.io/images/DAWN.jpg","datePublished": "2026-10-09T16:30:00+08:00",
+  "image": "http://192.168.100.30:1313/images/DAWN.jpg","datePublished": "2026-10-09T16:30:00+08:00",
   "dateModified": "2026-10-09T16:30:00+08:00",
   "author":{
     "@type": "Person",
@@ -128,14 +128,14 @@
   },
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "https://LMDAWN1127.github.io/posts/jenkins-sonarqube-wecom-notification/"
+    "@id": "http://192.168.100.30:1313/posts/jenkins-sonarqube-wecom-notification/"
   },
   "publisher": {
     "@type": "Organization",
     "name": "DAWN's Blog",
     "logo": {
       "@type": "ImageObject",
-      "url": "https://LMDAWN1127.github.io/images/DAWN.jpg"
+      "url": "http://192.168.100.30:1313/images/DAWN.jpg"
     }
   }
 }
@@ -145,8 +145,8 @@
     <header class="header">
     <nav class="header-nav">
         <div class="logo">
-            <a href="https://LMDAWN1127.github.io/" accesskey="h" title="DAWN&#39;s Blog (Alt + H)">
-                <img src="https://LMDAWN1127.github.io/images/DAWN.jpg" alt="" aria-label="logo"
+            <a href="http://192.168.100.30:1313/" accesskey="h" title="DAWN&#39;s Blog (Alt + H)">
+                <img src="http://192.168.100.30:1313/images/DAWN.jpg" alt="" aria-label="logo"
                     height="38">DAWN&#39;s Blog</a>
             <div class="logo-switches">
                 <button id="theme-toggle" class="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
@@ -171,15 +171,15 @@
                 </button><span class="nav-sep">|</span>
                     <ul class="lang-menu">
                         <li>
-                            <a href="https://LMDAWN1127.github.io/en/" title="English"
+                            <a href="http://192.168.100.30:1313/en/" title="English"
                                 aria-label="English">En</a>
                         </li>
                         <li>
-                            <a href="https://LMDAWN1127.github.io/ko/" title="한국어"
+                            <a href="http://192.168.100.30:1313/ko/" title="한국어"
                                 aria-label="한국어">Ko</a>
                         </li>
                         <li>
-                            <a href="https://LMDAWN1127.github.io/ja/" title="日本語"
+                            <a href="http://192.168.100.30:1313/ja/" title="日本語"
                                 aria-label="日本語">Ja</a>
                         </li>
                     </ul>
@@ -187,7 +187,7 @@
         </div>
         <ul id="menu" class="menu">
             <li>
-                <a href="https://LMDAWN1127.github.io/archives/" title="归档">
+                <a href="http://192.168.100.30:1313/archives/" title="归档">
                     <span>归档</span>
                 </a>
             </li>

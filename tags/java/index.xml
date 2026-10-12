@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Java on DAWN&#39;s Blog</title>
+    <link>http://192.168.100.30:1313/tags/java/</link>
+    <description>Recent content in Java on DAWN&#39;s Blog</description>
+    <image>
+      <title>DAWN&#39;s Blog</title>
+      <url>http://192.168.100.30:1313/images/DAWN.jpg</url>
+      <link>http://192.168.100.30:1313/images/DAWN.jpg</link>
+    </image>
+    <generator>Hugo</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Mon, 12 Oct 2026 18:00:00 +0800</lastBuildDate>
+    <atom:link href="http://192.168.100.30:1313/tags/java/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Java 项目 CI/CD 流水线：Maven&#43;GitLab&#43;Jenkins&#43;SonarQube&#43;Nexus</title>
+      <link>http://192.168.100.30:1313/posts/java-project-deploy/</link>
+      <pubDate>Mon, 12 Oct 2026 18:00:00 +0800</pubDate>
+      <guid>http://192.168.100.30:1313/posts/java-project-deploy/</guid>
+      <description>从 Maven 构建、GitLab 托管、Jenkins 拉取与自动部署，到 SonarQube 质量门禁与 Nexus 私服，梳理一条完整的 Java 项目 CI/CD 流水线落地过程。</description>
+    </item>
+  </channel>
+</rss>

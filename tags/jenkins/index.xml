@@ -2,50 +2,57 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>Jenkins on DAWN&#39;s Blog</title>
-    <link>https://LMDAWN1127.github.io/tags/jenkins/</link>
+    <link>http://192.168.100.30:1313/tags/jenkins/</link>
     <description>Recent content in Jenkins on DAWN&#39;s Blog</description>
     <image>
       <title>DAWN&#39;s Blog</title>
-      <url>https://LMDAWN1127.github.io/images/DAWN.jpg</url>
-      <link>https://LMDAWN1127.github.io/images/DAWN.jpg</link>
+      <url>http://192.168.100.30:1313/images/DAWN.jpg</url>
+      <link>http://192.168.100.30:1313/images/DAWN.jpg</link>
     </image>
     <generator>Hugo</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sat, 10 Oct 2026 17:30:00 +0800</lastBuildDate>
-    <atom:link href="https://LMDAWN1127.github.io/tags/jenkins/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 12 Oct 2026 18:00:00 +0800</lastBuildDate>
+    <atom:link href="http://192.168.100.30:1313/tags/jenkins/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Java 项目 CI/CD 流水线：Maven&#43;GitLab&#43;Jenkins&#43;SonarQube&#43;Nexus</title>
+      <link>http://192.168.100.30:1313/posts/java-project-deploy/</link>
+      <pubDate>Mon, 12 Oct 2026 18:00:00 +0800</pubDate>
+      <guid>http://192.168.100.30:1313/posts/java-project-deploy/</guid>
+      <description>从 Maven 构建、GitLab 托管、Jenkins 拉取与自动部署，到 SonarQube 质量门禁与 Nexus 私服，梳理一条完整的 Java 项目 CI/CD 流水线落地过程。</description>
+    </item>
     <item>
       <title>Jenkins 代码发布与回滚</title>
-      <link>https://LMDAWN1127.github.io/posts/jenkins-code-deploy-rollback/</link>
+      <link>http://192.168.100.30:1313/posts/jenkins-code-deploy-rollback/</link>
       <pubDate>Sat, 10 Oct 2026 17:30:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/posts/jenkins-code-deploy-rollback/</guid>
+      <guid>http://192.168.100.30:1313/posts/jenkins-code-deploy-rollback/</guid>
       <description>基于 GitLab 打 tag 标记稳定版本，配合 Jenkins Git Parameter 插件做参数化构建，用一份 deploy/rollback 脚本实现按版本号发布与一键回滚。</description>
     </item>
     <item>
       <title>Jenkins Pipeline 流水线</title>
-      <link>https://LMDAWN1127.github.io/posts/jenkins-pipeline/</link>
+      <link>http://192.168.100.30:1313/posts/jenkins-pipeline/</link>
       <pubDate>Fri, 09 Oct 2026 19:00:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/posts/jenkins-pipeline/</guid>
+      <guid>http://192.168.100.30:1313/posts/jenkins-pipeline/</guid>
       <description>从 CI/CD 与 Pipeline as Code 概念讲起，拆解 Node/Stage/Step，并用一份 Jenkinsfile 把「拉取代码 → SonarQube 扫描 → 打包 → 部署」的发布流程落地为可维护的流水线。</description>
     </item>
     <item>
       <title>Jenkins 集成 SonarQube 质量门禁与企业微信通知</title>
-      <link>https://LMDAWN1127.github.io/posts/jenkins-sonarqube-wecom-notification/</link>
+      <link>http://192.168.100.30:1313/posts/jenkins-sonarqube-wecom-notification/</link>
       <pubDate>Fri, 09 Oct 2026 16:30:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/posts/jenkins-sonarqube-wecom-notification/</guid>
+      <guid>http://192.168.100.30:1313/posts/jenkins-sonarqube-wecom-notification/</guid>
       <description>在 Jenkins 中集成 SonarQube 质量门禁做代码扫描，并配合企业微信(WeCom)实现构建结果与变更日志的自动通知，打通质量卡点与团队触达。</description>
     </item>
     <item>
       <title>Jenkins &#43; GitLab 打通实现 CI/CD 自动部署</title>
-      <link>https://LMDAWN1127.github.io/posts/jenkins-gitlab-cicd-auto-deploy/</link>
+      <link>http://192.168.100.30:1313/posts/jenkins-gitlab-cicd-auto-deploy/</link>
       <pubDate>Fri, 09 Oct 2026 16:00:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/posts/jenkins-gitlab-cicd-auto-deploy/</guid>
+      <guid>http://192.168.100.30:1313/posts/jenkins-gitlab-cicd-auto-deploy/</guid>
       <description>手把手实现 Jenkins 拉取 GitLab 代码、经 SSH 推送至 Web 服务器、并配置 GitLab Webhook 触发全自动部署的完整 CI/CD 流程。</description>
     </item>
     <item>
       <title>Jenkins 实战：私有化部署、插件安装与 GitLab 联动 CI</title>
-      <link>https://LMDAWN1127.github.io/posts/jenkins-practice/</link>
+      <link>http://192.168.100.30:1313/posts/jenkins-practice/</link>
       <pubDate>Thu, 01 Oct 2026 21:28:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/posts/jenkins-practice/</guid>
+      <guid>http://192.168.100.30:1313/posts/jenkins-practice/</guid>
       <description>从 RPM 安装 JDK 与 Jenkins、改为 root 启动、插件离线安装，到打通 GitLab SSH 免密与 webhook 自动构建的完整 Jenkins 私有化实战。</description>
     </item>
   </channel>

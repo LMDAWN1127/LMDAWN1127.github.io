@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko" dir="auto" data-theme="auto">
 
-<head><meta charset="utf-8">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="robots" content="index, follow">
@@ -9,19 +9,19 @@
 <meta name="keywords" content="Zabbix, 커스텀모니터링, UserParameter, 트리거, 값매핑">
 <meta name="description" content="Zabbix 커스텀 모니터링 실전 — UserParameter로 로그인 사용자 수·메모리 가용률 등 사용자 정의 메트릭을 수집하고 zabbix_get으로 검증한 뒤, 웹 UI에서 모니터링 항목·값 매핑·트리거(다중 조건 트리거 포함)를 추가해 커스텀 알림을 구성합니다.">
 <meta name="author" content="DAWN">
-<link rel="canonical" href="https://LMDAWN1127.github.io/ko/posts/zabbix-custom-monitor/">
+<link rel="canonical" href="http://192.168.100.30:1313/ko/posts/zabbix-custom-monitor/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.4bf808bff57bddc46d61c8ae060b00400fc679ab876e37243b11bd3f832f2958.css" integrity="sha256-S/gIv/V73cRtYciuBgsAQA/GeauHbjckOxG9P4MvKVg=" rel="preload stylesheet" as="style">
-<link rel="icon" href="https://LMDAWN1127.github.io/images/DAWN.jpg">
-<link rel="icon" type="image/png" sizes="16x16" href="https://LMDAWN1127.github.io/favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="https://LMDAWN1127.github.io/favicon-32x32.png">
-<link rel="apple-touch-icon" href="https://LMDAWN1127.github.io/apple-touch-icon.png">
-<link rel="mask-icon" href="https://LMDAWN1127.github.io/safari-pinned-tab.svg">
+<link rel="icon" href="http://192.168.100.30:1313/images/DAWN.jpg">
+<link rel="icon" type="image/png" sizes="16x16" href="http://192.168.100.30:1313/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://192.168.100.30:1313/favicon-32x32.png">
+<link rel="apple-touch-icon" href="http://192.168.100.30:1313/apple-touch-icon.png">
+<link rel="mask-icon" href="http://192.168.100.30:1313/safari-pinned-tab.svg">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
-<link rel="alternate" hreflang="zh" href="https://LMDAWN1127.github.io/posts/zabbix-custom-monitor/">
-<link rel="alternate" hreflang="en" href="https://LMDAWN1127.github.io/en/posts/zabbix-custom-monitor/">
-<link rel="alternate" hreflang="ko" href="https://LMDAWN1127.github.io/ko/posts/zabbix-custom-monitor/">
-<link rel="alternate" hreflang="ja" href="https://LMDAWN1127.github.io/ja/posts/zabbix-custom-monitor/">
+<link rel="alternate" hreflang="zh" href="http://192.168.100.30:1313/posts/zabbix-custom-monitor/">
+<link rel="alternate" hreflang="en" href="http://192.168.100.30:1313/en/posts/zabbix-custom-monitor/">
+<link rel="alternate" hreflang="ko" href="http://192.168.100.30:1313/ko/posts/zabbix-custom-monitor/">
+<link rel="alternate" hreflang="ja" href="http://192.168.100.30:1313/ja/posts/zabbix-custom-monitor/">
 <noscript>
     <style>
         #theme-toggle,
@@ -67,8 +67,8 @@
         document.querySelector("html").dataset.theme = 'light';
     }
 
-</script><link rel="stylesheet" href='https://LMDAWN1127.github.io/css/custom.css'>
-<meta property="og:url" content="https://LMDAWN1127.github.io/ko/posts/zabbix-custom-monitor/">
+</script><link rel="stylesheet" href='http://192.168.100.30:1313/css/custom.css'>
+<meta property="og:url" content="http://192.168.100.30:1313/ko/posts/zabbix-custom-monitor/">
   <meta property="og:site_name" content="DAWN&#39;s Blog">
   <meta property="og:title" content="Zabbix 커스텀 모니터링">
   <meta property="og:description" content="Zabbix 커스텀 모니터링 실전 — UserParameter로 로그인 사용자 수·메모리 가용률 등 사용자 정의 메트릭을 수집하고 zabbix_get으로 검증한 뒤, 웹 UI에서 모니터링 항목·값 매핑·트리거(다중 조건 트리거 포함)를 추가해 커스텀 알림을 구성합니다.">
@@ -82,10 +82,10 @@
     <meta property="article:tag" content="UserParameter">
     <meta property="article:tag" content="트리거">
     <meta property="article:tag" content="값매핑">
-      <meta property="og:image" content="https://LMDAWN1127.github.io/images/DAWN.jpg">
+      <meta property="og:image" content="http://192.168.100.30:1313/images/DAWN.jpg">
 
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:image" content="https://LMDAWN1127.github.io/images/DAWN.jpg">
+  <meta name="twitter:image" content="http://192.168.100.30:1313/images/DAWN.jpg">
   <meta name="twitter:title" content="Zabbix 커스텀 모니터링">
   <meta name="twitter:description" content="Zabbix 커스텀 모니터링 실전 — UserParameter로 로그인 사용자 수·메모리 가용률 등 사용자 정의 메트릭을 수집하고 zabbix_get으로 검증한 뒤, 웹 UI에서 모니터링 항목·값 매핑·트리거(다중 조건 트리거 포함)를 추가해 커스텀 알림을 구성합니다.">
 
@@ -99,13 +99,13 @@
       "@type": "ListItem",
       "position":  1 ,
       "name": "Posts",
-      "item": "https://LMDAWN1127.github.io/ko/posts/"
+      "item": "http://192.168.100.30:1313/ko/posts/"
     }, 
     {
       "@type": "ListItem",
       "position":  2 ,
       "name": "Zabbix 커스텀 모니터링",
-      "item": "https://LMDAWN1127.github.io/ko/posts/zabbix-custom-monitor/"
+      "item": "http://192.168.100.30:1313/ko/posts/zabbix-custom-monitor/"
     }
   ]
 }
@@ -123,7 +123,7 @@
   "articleBody": "1. 로그인 사용자 수 확인하기 1 2 3 4 5 6 7 [root@web02 ~]#w 17:44:18 up 1:17, 2 users, load average: 0.01, 0.02, 0.05 USER TTY FROM LOGIN@ IDLE JCPU PCPU WHAT root pts/0 11.0.1.1 16:31 11:46 0.07s 0.07s -bash root pts/1 11.0.1.52 17:07 2.00s 0.04s 0.00s w [root@web02 ~]#w|awk 'NR==1{print $4}' 2 2. Zabbix 모니터링 항목으로 정의하기 1 2 3 4 5 6 7 [root@web02 ~]# cat /etc/zabbix/zabbix_agentd.d/system.conf UserParameter=login_number,w|awk 'NR==1{print $4}' # zabbix_agentd -p 로 항목 문법 검사가 가능합니다 [root@web02 ~]#zabbix_agentd -p|grep login_number login_number [t|2] # 에이전트 재시작 [root@web02 ~]# systemctl restart zabbix-agent.service 3. Zabbix 서버 측에서 수집·모니터링하기 서버에서 명령줄로 모니터링 항목을 통해 사용자 정의 값을 가져올 수 있는지 테스트합니다.\n1 2 3 4 # zabbix-get 명령 설치 [root@zabbix ~]# yum -y install zabbix-get [root@zabbix ~]#zabbix_get -s 172.16.1.8 -k login_number 2 웹 페이지에서 모니터링 항목 추가\n모니터링 항목 확인\n4. TCP 22 포트 생존 여부 모니터링 모니터링하려는 정보에 맞는 키 값을 선택합니다.\nTCP 포트가 LISTEN 상태인지 확인합니다. 반환값: 0 - 대기 안 함; 1 - 대기 중.\nweb02의 sshd 서비스 중지\n1 [root@web02 ~]# systemctl stop sshd 5. 표시용 커스텀 값 매핑 구성 값 매핑 적용\n6. 서버 메모리 비율 커스텀 모니터링 1단계: 커스텀 항목을 정의하여 가용률 가져오기\n1 2 3 4 5 6 [root@web02 ~]# cat /etc/zabbix/zabbix_agentd.d/system.conf UserParameter=login_number,w|awk 'NR==1{print $4}' UserParameter=mem_free,free|awk 'NR==2{print $NF/$2*100}' [root@web02 ~]# systemctl restart zabbix-agent.service [root@web02 ~]#zabbix_agentd -p|grep mem_free mem_free [t|79.8753] 2단계: 서버에서 키 값 가져오기를 테스트하고 항목 추가\n1 2 [root@zabbix ~]#zabbix_get -s 172.16.1.8 -k mem_free 79.9775 7. 가용 메모리에 트리거 설정 가용 메모리 비율이 20% 미만이면 알림을 발보합니다.\n테스트: swap 파티션 끄기\n1 [root@web02 ~]# swapoff -a dd로 부하 테스트를 실행해 메모리 소비\n1 [root@web02 ~]# dd if=/dev/zero of=/dev/null bs=1200M count=2048 8. 다중 조건 트리거 구성 두 조건이 동시에 만족할 때만 알림을 발보합니다.\nswap 가용률 추가\n1 2 3 4 [root@web02 ~]# cat /etc/zabbix/zabbix_agentd.d/system.conf UserParameter=login_number,w|awk 'NR==1{print $4}' UserParameter=mem_free,free|awk 'NR==2{print $NF/$2*100}' UserParameter=swap_free,free -m|awk 'NR==3{print $3/$2*100}' 트리거 설정 수정\n이후 dd 부하 테스트를 다시 실행해 결과를 확인합니다.\n",
   "wordCount" : "322",
   "inLanguage": "ko",
-  "image": "https://LMDAWN1127.github.io/images/DAWN.jpg","datePublished": "2026-09-23T18:30:00+08:00",
+  "image": "http://192.168.100.30:1313/images/DAWN.jpg","datePublished": "2026-09-23T18:30:00+08:00",
   "dateModified": "2026-09-23T18:30:00+08:00",
   "author":{
     "@type": "Person",
@@ -131,14 +131,14 @@
   },
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "https://LMDAWN1127.github.io/ko/posts/zabbix-custom-monitor/"
+    "@id": "http://192.168.100.30:1313/ko/posts/zabbix-custom-monitor/"
   },
   "publisher": {
     "@type": "Organization",
     "name": "DAWN's Blog",
     "logo": {
       "@type": "ImageObject",
-      "url": "https://LMDAWN1127.github.io/images/DAWN.jpg"
+      "url": "http://192.168.100.30:1313/images/DAWN.jpg"
     }
   }
 }
@@ -148,8 +148,8 @@
     <header class="header">
     <nav class="header-nav">
         <div class="logo">
-            <a href="https://LMDAWN1127.github.io/ko/" accesskey="h" title="DAWN&#39;s Blog (Alt + H)">
-                <img src="https://LMDAWN1127.github.io/images/DAWN.jpg" alt="" aria-label="logo"
+            <a href="http://192.168.100.30:1313/ko/" accesskey="h" title="DAWN&#39;s Blog (Alt + H)">
+                <img src="http://192.168.100.30:1313/images/DAWN.jpg" alt="" aria-label="logo"
                     height="38">DAWN&#39;s Blog</a>
             <div class="logo-switches">
                 <button id="theme-toggle" class="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
@@ -174,15 +174,15 @@
                 </button><span class="nav-sep">|</span>
                     <ul class="lang-menu">
                         <li>
-                            <a href="https://LMDAWN1127.github.io/" title="中文"
+                            <a href="http://192.168.100.30:1313/" title="中文"
                                 aria-label="中文">Zh</a>
                         </li>
                         <li>
-                            <a href="https://LMDAWN1127.github.io/en/" title="English"
+                            <a href="http://192.168.100.30:1313/en/" title="English"
                                 aria-label="English">En</a>
                         </li>
                         <li>
-                            <a href="https://LMDAWN1127.github.io/ja/" title="日本語"
+                            <a href="http://192.168.100.30:1313/ja/" title="日本語"
                                 aria-label="日本語">Ja</a>
                         </li>
                     </ul>
@@ -190,7 +190,7 @@
         </div>
         <ul id="menu" class="menu">
             <li>
-                <a href="https://LMDAWN1127.github.io/ko/archives/" title="아카이브">
+                <a href="http://192.168.100.30:1313/ko/archives/" title="아카이브">
                     <span>아카이브</span>
                 </a>
             </li>

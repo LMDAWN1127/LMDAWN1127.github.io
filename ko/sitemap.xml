@@ -2,2022 +2,2022 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://LMDAWN1127.github.io/ko/posts/harbor-master-slave/</loc>
+    <loc>http://192.168.100.30:1313/ko/posts/harbor-master-slave/</loc>
     <lastmod>2026-08-04T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
-                href="https://LMDAWN1127.github.io/posts/harbor-master-slave/"
+                href="http://192.168.100.30:1313/posts/harbor-master-slave/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="https://LMDAWN1127.github.io/en/posts/harbor-master-slave/"
+                href="http://192.168.100.30:1313/en/posts/harbor-master-slave/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ko"
-                href="https://LMDAWN1127.github.io/ko/posts/harbor-master-slave/"
+                href="http://192.168.100.30:1313/ko/posts/harbor-master-slave/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ja"
-                href="https://LMDAWN1127.github.io/ja/posts/harbor-master-slave/"
+                href="http://192.168.100.30:1313/ja/posts/harbor-master-slave/"
                 />
   </url><url>
-    <loc>https://LMDAWN1127.github.io/ko/categories/</loc>
+    <loc>http://192.168.100.30:1313/ko/categories/</loc>
     <lastmod>2026-10-06T20:35:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
-                href="https://LMDAWN1127.github.io/categories/"
+                href="http://192.168.100.30:1313/categories/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="https://LMDAWN1127.github.io/en/categories/"
+                href="http://192.168.100.30:1313/en/categories/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ko"
-                href="https://LMDAWN1127.github.io/ko/categories/"
+                href="http://192.168.100.30:1313/ko/categories/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ja"
-                href="https://LMDAWN1127.github.io/ja/categories/"
+                href="http://192.168.100.30:1313/ja/categories/"
                 />
   </url><url>
-    <loc>https://LMDAWN1127.github.io/ko/</loc>
+    <loc>http://192.168.100.30:1313/ko/</loc>
     <lastmod>2026-10-06T20:35:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
-                href="https://LMDAWN1127.github.io/"
+                href="http://192.168.100.30:1313/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="https://LMDAWN1127.github.io/en/"
+                href="http://192.168.100.30:1313/en/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ko"
-                href="https://LMDAWN1127.github.io/ko/"
+                href="http://192.168.100.30:1313/ko/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ja"
-                href="https://LMDAWN1127.github.io/ja/"
+                href="http://192.168.100.30:1313/ja/"
                 />
   </url><url>
-    <loc>https://LMDAWN1127.github.io/ko/categories/openstack/</loc>
+    <loc>http://192.168.100.30:1313/ko/categories/openstack/</loc>
     <lastmod>2026-10-06T20:35:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
-                href="https://LMDAWN1127.github.io/categories/openstack/"
+                href="http://192.168.100.30:1313/categories/openstack/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="https://LMDAWN1127.github.io/en/categories/openstack/"
+                href="http://192.168.100.30:1313/en/categories/openstack/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ko"
-                href="https://LMDAWN1127.github.io/ko/categories/openstack/"
+                href="http://192.168.100.30:1313/ko/categories/openstack/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ja"
-                href="https://LMDAWN1127.github.io/ja/categories/openstack/"
+                href="http://192.168.100.30:1313/ja/categories/openstack/"
                 />
   </url><url>
-    <loc>https://LMDAWN1127.github.io/ko/tags/openstack/</loc>
+    <loc>http://192.168.100.30:1313/ko/tags/openstack/</loc>
     <lastmod>2026-10-06T20:35:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
-                href="https://LMDAWN1127.github.io/tags/openstack/"
+                href="http://192.168.100.30:1313/tags/openstack/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="https://LMDAWN1127.github.io/en/tags/openstack/"
+                href="http://192.168.100.30:1313/en/tags/openstack/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ko"
-                href="https://LMDAWN1127.github.io/ko/tags/openstack/"
+                href="http://192.168.100.30:1313/ko/tags/openstack/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ja"
-                href="https://LMDAWN1127.github.io/ja/tags/openstack/"
+                href="http://192.168.100.30:1313/ja/tags/openstack/"
                 />
   </url><url>
-    <loc>https://LMDAWN1127.github.io/ko/posts/openstack-core-architecture-deployment/</loc>
+    <loc>http://192.168.100.30:1313/ko/posts/openstack-core-architecture-deployment/</loc>
     <lastmod>2026-10-06T20:35:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
-                href="https://LMDAWN1127.github.io/posts/openstack-core-architecture-deployment/"
+                href="http://192.168.100.30:1313/posts/openstack-core-architecture-deployment/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="https://LMDAWN1127.github.io/en/posts/openstack-core-architecture-deployment/"
+                href="http://192.168.100.30:1313/en/posts/openstack-core-architecture-deployment/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ko"
-                href="https://LMDAWN1127.github.io/ko/posts/openstack-core-architecture-deployment/"
+                href="http://192.168.100.30:1313/ko/posts/openstack-core-architecture-deployment/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ja"
-                href="https://LMDAWN1127.github.io/ja/posts/openstack-core-architecture-deployment/"
+                href="http://192.168.100.30:1313/ja/posts/openstack-core-architecture-deployment/"
                 />
   </url><url>
-    <loc>https://LMDAWN1127.github.io/ko/tags/packstack/</loc>
+    <loc>http://192.168.100.30:1313/ko/tags/packstack/</loc>
     <lastmod>2026-10-06T20:35:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
-                href="https://LMDAWN1127.github.io/tags/packstack/"
+                href="http://192.168.100.30:1313/tags/packstack/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="https://LMDAWN1127.github.io/en/tags/packstack/"
+                href="http://192.168.100.30:1313/en/tags/packstack/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ko"
-                href="https://LMDAWN1127.github.io/ko/tags/packstack/"
+                href="http://192.168.100.30:1313/ko/tags/packstack/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ja"
-                href="https://LMDAWN1127.github.io/ja/tags/packstack/"
+                href="http://192.168.100.30:1313/ja/tags/packstack/"
                 />
   </url><url>
-    <loc>https://LMDAWN1127.github.io/ko/posts/</loc>
+    <loc>http://192.168.100.30:1313/ko/posts/</loc>
     <lastmod>2026-10-06T20:35:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
-                href="https://LMDAWN1127.github.io/posts/"
+                href="http://192.168.100.30:1313/posts/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="https://LMDAWN1127.github.io/en/posts/"
+                href="http://192.168.100.30:1313/en/posts/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ko"
-                href="https://LMDAWN1127.github.io/ko/posts/"
+                href="http://192.168.100.30:1313/ko/posts/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ja"
-                href="https://LMDAWN1127.github.io/ja/posts/"
+                href="http://192.168.100.30:1313/ja/posts/"
                 />
   </url><url>
-    <loc>https://LMDAWN1127.github.io/ko/tags/</loc>
+    <loc>http://192.168.100.30:1313/ko/tags/</loc>
     <lastmod>2026-10-06T20:35:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
-                href="https://LMDAWN1127.github.io/tags/"
+                href="http://192.168.100.30:1313/tags/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="https://LMDAWN1127.github.io/en/tags/"
+                href="http://192.168.100.30:1313/en/tags/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ko"
-                href="https://LMDAWN1127.github.io/ko/tags/"
+                href="http://192.168.100.30:1313/ko/tags/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ja"
-                href="https://LMDAWN1127.github.io/ja/tags/"
+                href="http://192.168.100.30:1313/ja/tags/"
                 />
   </url><url>
-    <loc>https://LMDAWN1127.github.io/ko/tags/victoria/</loc>
+    <loc>http://192.168.100.30:1313/ko/tags/victoria/</loc>
     <lastmod>2026-10-06T20:35:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
-                href="https://LMDAWN1127.github.io/tags/victoria/"
+                href="http://192.168.100.30:1313/tags/victoria/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="https://LMDAWN1127.github.io/en/tags/victoria/"
+                href="http://192.168.100.30:1313/en/tags/victoria/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ko"
-                href="https://LMDAWN1127.github.io/ko/tags/victoria/"
+                href="http://192.168.100.30:1313/ko/tags/victoria/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ja"
-                href="https://LMDAWN1127.github.io/ja/tags/victoria/"
+                href="http://192.168.100.30:1313/ja/tags/victoria/"
                 />
   </url><url>
-    <loc>https://LMDAWN1127.github.io/ko/tags/%EC%9E%90%EB%8F%99%ED%99%94-%EB%B0%B0%ED%8F%AC/</loc>
+    <loc>http://192.168.100.30:1313/ko/tags/%EC%9E%90%EB%8F%99%ED%99%94-%EB%B0%B0%ED%8F%AC/</loc>
     <lastmod>2026-10-06T20:35:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url><url>
-    <loc>https://LMDAWN1127.github.io/ko/tags/%ED%81%B4%EB%9D%BC%EC%9A%B0%EB%93%9C-%EC%BB%B4%ED%93%A8%ED%8C%85/</loc>
+    <loc>http://192.168.100.30:1313/ko/tags/%ED%81%B4%EB%9D%BC%EC%9A%B0%EB%93%9C-%EC%BB%B4%ED%93%A8%ED%8C%85/</loc>
     <lastmod>2026-10-06T20:35:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url><url>
-    <loc>https://LMDAWN1127.github.io/ko/tags/cinder/</loc>
+    <loc>http://192.168.100.30:1313/ko/tags/cinder/</loc>
     <lastmod>2026-10-05T23:30:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
-                href="https://LMDAWN1127.github.io/tags/cinder/"
+                href="http://192.168.100.30:1313/tags/cinder/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="https://LMDAWN1127.github.io/en/tags/cinder/"
+                href="http://192.168.100.30:1313/en/tags/cinder/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ko"
-                href="https://LMDAWN1127.github.io/ko/tags/cinder/"
+                href="http://192.168.100.30:1313/ko/tags/cinder/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ja"
-                href="https://LMDAWN1127.github.io/ja/tags/cinder/"
+                href="http://192.168.100.30:1313/ja/tags/cinder/"
                 />
   </url><url>
-    <loc>https://LMDAWN1127.github.io/ko/tags/iscsi/</loc>
+    <loc>http://192.168.100.30:1313/ko/tags/iscsi/</loc>
     <lastmod>2026-10-05T23:30:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
-                href="https://LMDAWN1127.github.io/tags/iscsi/"
+                href="http://192.168.100.30:1313/tags/iscsi/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="https://LMDAWN1127.github.io/en/tags/iscsi/"
+                href="http://192.168.100.30:1313/en/tags/iscsi/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ko"
-                href="https://LMDAWN1127.github.io/ko/tags/iscsi/"
+                href="http://192.168.100.30:1313/ko/tags/iscsi/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ja"
-                href="https://LMDAWN1127.github.io/ja/tags/iscsi/"
+                href="http://192.168.100.30:1313/ja/tags/iscsi/"
                 />
   </url><url>
-    <loc>https://LMDAWN1127.github.io/ko/tags/lvm/</loc>
+    <loc>http://192.168.100.30:1313/ko/tags/lvm/</loc>
     <lastmod>2026-10-05T23:30:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
-                href="https://LMDAWN1127.github.io/tags/lvm/"
+                href="http://192.168.100.30:1313/tags/lvm/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="https://LMDAWN1127.github.io/en/tags/lvm/"
+                href="http://192.168.100.30:1313/en/tags/lvm/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ko"
-                href="https://LMDAWN1127.github.io/ko/tags/lvm/"
+                href="http://192.168.100.30:1313/ko/tags/lvm/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ja"
-                href="https://LMDAWN1127.github.io/ja/tags/lvm/"
+                href="http://192.168.100.30:1313/ja/tags/lvm/"
                 />
   </url><url>
-    <loc>https://LMDAWN1127.github.io/ko/tags/nfs/</loc>
+    <loc>http://192.168.100.30:1313/ko/tags/nfs/</loc>
     <lastmod>2026-10-05T23:30:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
-                href="https://LMDAWN1127.github.io/tags/nfs/"
+                href="http://192.168.100.30:1313/tags/nfs/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="https://LMDAWN1127.github.io/en/tags/nfs/"
+                href="http://192.168.100.30:1313/en/tags/nfs/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ko"
-                href="https://LMDAWN1127.github.io/ko/tags/nfs/"
+                href="http://192.168.100.30:1313/ko/tags/nfs/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ja"
-                href="https://LMDAWN1127.github.io/ja/tags/nfs/"
+                href="http://192.168.100.30:1313/ja/tags/nfs/"
                 />
   </url><url>
-    <loc>https://LMDAWN1127.github.io/ko/posts/openstack-cinder-block-storage/</loc>
+    <loc>http://192.168.100.30:1313/ko/posts/openstack-cinder-block-storage/</loc>
     <lastmod>2026-10-05T23:30:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
-                href="https://LMDAWN1127.github.io/posts/openstack-cinder-block-storage/"
+                href="http://192.168.100.30:1313/posts/openstack-cinder-block-storage/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="https://LMDAWN1127.github.io/en/posts/openstack-cinder-block-storage/"
+                href="http://192.168.100.30:1313/en/posts/openstack-cinder-block-storage/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ko"
-                href="https://LMDAWN1127.github.io/ko/posts/openstack-cinder-block-storage/"
+                href="http://192.168.100.30:1313/ko/posts/openstack-cinder-block-storage/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ja"
-                href="https://LMDAWN1127.github.io/ja/posts/openstack-cinder-block-storage/"
+                href="http://192.168.100.30:1313/ja/posts/openstack-cinder-block-storage/"
                 />
   </url><url>
-    <loc>https://LMDAWN1127.github.io/ko/tags/%EB%B8%94%EB%A1%9D-%EC%8A%A4%ED%86%A0%EB%A6%AC%EC%A7%80/</loc>
+    <loc>http://192.168.100.30:1313/ko/tags/%EB%B8%94%EB%A1%9D-%EC%8A%A4%ED%86%A0%EB%A6%AC%EC%A7%80/</loc>
     <lastmod>2026-10-05T23:30:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url><url>
-    <loc>https://LMDAWN1127.github.io/ko/tags/endpoint/</loc>
+    <loc>http://192.168.100.30:1313/ko/tags/endpoint/</loc>
     <lastmod>2026-10-05T00:21:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
-                href="https://LMDAWN1127.github.io/tags/endpoint/"
+                href="http://192.168.100.30:1313/tags/endpoint/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="https://LMDAWN1127.github.io/en/tags/endpoint/"
+                href="http://192.168.100.30:1313/en/tags/endpoint/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ko"
-                href="https://LMDAWN1127.github.io/ko/tags/endpoint/"
+                href="http://192.168.100.30:1313/ko/tags/endpoint/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ja"
-                href="https://LMDAWN1127.github.io/ja/tags/endpoint/"
+                href="http://192.168.100.30:1313/ja/tags/endpoint/"
                 />
   </url><url>
-    <loc>https://LMDAWN1127.github.io/ko/tags/glance/</loc>
+    <loc>http://192.168.100.30:1313/ko/tags/glance/</loc>
     <lastmod>2026-10-05T00:21:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
-                href="https://LMDAWN1127.github.io/tags/glance/"
+                href="http://192.168.100.30:1313/tags/glance/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="https://LMDAWN1127.github.io/en/tags/glance/"
+                href="http://192.168.100.30:1313/en/tags/glance/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ko"
-                href="https://LMDAWN1127.github.io/ko/tags/glance/"
+                href="http://192.168.100.30:1313/ko/tags/glance/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ja"
-                href="https://LMDAWN1127.github.io/ja/tags/glance/"
+                href="http://192.168.100.30:1313/ja/tags/glance/"
                 />
   </url><url>
-    <loc>https://LMDAWN1127.github.io/ko/tags/keystone/</loc>
+    <loc>http://192.168.100.30:1313/ko/tags/keystone/</loc>
     <lastmod>2026-10-05T00:21:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
-                href="https://LMDAWN1127.github.io/tags/keystone/"
+                href="http://192.168.100.30:1313/tags/keystone/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="https://LMDAWN1127.github.io/en/tags/keystone/"
+                href="http://192.168.100.30:1313/en/tags/keystone/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ko"
-                href="https://LMDAWN1127.github.io/ko/tags/keystone/"
+                href="http://192.168.100.30:1313/ko/tags/keystone/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ja"
-                href="https://LMDAWN1127.github.io/ja/tags/keystone/"
+                href="http://192.168.100.30:1313/ja/tags/keystone/"
                 />
   </url><url>
-    <loc>https://LMDAWN1127.github.io/ko/tags/nova/</loc>
+    <loc>http://192.168.100.30:1313/ko/tags/nova/</loc>
     <lastmod>2026-10-05T00:21:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
-                href="https://LMDAWN1127.github.io/tags/nova/"
+                href="http://192.168.100.30:1313/tags/nova/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="https://LMDAWN1127.github.io/en/tags/nova/"
+                href="http://192.168.100.30:1313/en/tags/nova/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ko"
-                href="https://LMDAWN1127.github.io/ko/tags/nova/"
+                href="http://192.168.100.30:1313/ko/tags/nova/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ja"
-                href="https://LMDAWN1127.github.io/ja/tags/nova/"
+                href="http://192.168.100.30:1313/ja/tags/nova/"
                 />
   </url><url>
-    <loc>https://LMDAWN1127.github.io/ko/posts/openstack-keystone-glance-nova/</loc>
+    <loc>http://192.168.100.30:1313/ko/posts/openstack-keystone-glance-nova/</loc>
     <lastmod>2026-10-05T00:21:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
-                href="https://LMDAWN1127.github.io/posts/openstack-keystone-glance-nova/"
+                href="http://192.168.100.30:1313/posts/openstack-keystone-glance-nova/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="https://LMDAWN1127.github.io/en/posts/openstack-keystone-glance-nova/"
+                href="http://192.168.100.30:1313/en/posts/openstack-keystone-glance-nova/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ko"
-                href="https://LMDAWN1127.github.io/ko/posts/openstack-keystone-glance-nova/"
+                href="http://192.168.100.30:1313/ko/posts/openstack-keystone-glance-nova/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ja"
-                href="https://LMDAWN1127.github.io/ja/posts/openstack-keystone-glance-nova/"
+                href="http://192.168.100.30:1313/ja/posts/openstack-keystone-glance-nova/"
                 />
   </url><url>
-    <loc>https://LMDAWN1127.github.io/ko/tags/%EC%9D%B4%EB%AF%B8%EC%A7%80-%EC%84%9C%EB%B9%84%EC%8A%A4/</loc>
+    <loc>http://192.168.100.30:1313/ko/tags/%EC%9D%B4%EB%AF%B8%EC%A7%80-%EC%84%9C%EB%B9%84%EC%8A%A4/</loc>
     <lastmod>2026-10-05T00:21:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url><url>
-    <loc>https://LMDAWN1127.github.io/ko/tags/cli/</loc>
+    <loc>http://192.168.100.30:1313/ko/tags/cli/</loc>
     <lastmod>2026-10-04T21:50:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="https://LMDAWN1127.github.io/en/tags/cli/"
+                href="http://192.168.100.30:1313/en/tags/cli/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ko"
-                href="https://LMDAWN1127.github.io/ko/tags/cli/"
+                href="http://192.168.100.30:1313/ko/tags/cli/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ja"
-                href="https://LMDAWN1127.github.io/ja/tags/cli/"
+                href="http://192.168.100.30:1313/ja/tags/cli/"
                 />
   </url><url>
-    <loc>https://LMDAWN1127.github.io/ko/tags/horizon/</loc>
+    <loc>http://192.168.100.30:1313/ko/tags/horizon/</loc>
     <lastmod>2026-10-04T21:50:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
-                href="https://LMDAWN1127.github.io/tags/horizon/"
+                href="http://192.168.100.30:1313/tags/horizon/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="https://LMDAWN1127.github.io/en/tags/horizon/"
+                href="http://192.168.100.30:1313/en/tags/horizon/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ko"
-                href="https://LMDAWN1127.github.io/ko/tags/horizon/"
+                href="http://192.168.100.30:1313/ko/tags/horizon/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ja"
-                href="https://LMDAWN1127.github.io/ja/tags/horizon/"
+                href="http://192.168.100.30:1313/ja/tags/horizon/"
                 />
   </url><url>
-    <loc>https://LMDAWN1127.github.io/ko/tags/neutron/</loc>
+    <loc>http://192.168.100.30:1313/ko/tags/neutron/</loc>
     <lastmod>2026-10-04T21:50:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
-                href="https://LMDAWN1127.github.io/tags/neutron/"
+                href="http://192.168.100.30:1313/tags/neutron/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="https://LMDAWN1127.github.io/en/tags/neutron/"
+                href="http://192.168.100.30:1313/en/tags/neutron/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ko"
-                href="https://LMDAWN1127.github.io/ko/tags/neutron/"
+                href="http://192.168.100.30:1313/ko/tags/neutron/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ja"
-                href="https://LMDAWN1127.github.io/ja/tags/neutron/"
+                href="http://192.168.100.30:1313/ja/tags/neutron/"
                 />
   </url><url>
-    <loc>https://LMDAWN1127.github.io/ko/posts/openstack-provision-cloud-server/</loc>
+    <loc>http://192.168.100.30:1313/ko/posts/openstack-provision-cloud-server/</loc>
     <lastmod>2026-10-04T21:50:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
-                href="https://LMDAWN1127.github.io/posts/openstack-provision-cloud-server/"
+                href="http://192.168.100.30:1313/posts/openstack-provision-cloud-server/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="https://LMDAWN1127.github.io/en/posts/openstack-provision-cloud-server/"
+                href="http://192.168.100.30:1313/en/posts/openstack-provision-cloud-server/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ko"
-                href="https://LMDAWN1127.github.io/ko/posts/openstack-provision-cloud-server/"
+                href="http://192.168.100.30:1313/ko/posts/openstack-provision-cloud-server/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ja"
-                href="https://LMDAWN1127.github.io/ja/posts/openstack-provision-cloud-server/"
+                href="http://192.168.100.30:1313/ja/posts/openstack-provision-cloud-server/"
                 />
   </url><url>
-    <loc>https://LMDAWN1127.github.io/ko/tags/%ED%81%B4%EB%9D%BC%EC%9A%B0%EB%93%9C-%EC%84%9C%EB%B2%84/</loc>
+    <loc>http://192.168.100.30:1313/ko/tags/%ED%81%B4%EB%9D%BC%EC%9A%B0%EB%93%9C-%EC%84%9C%EB%B2%84/</loc>
     <lastmod>2026-10-04T21:50:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url><url>
-    <loc>https://LMDAWN1127.github.io/ko/categories/mysql/</loc>
+    <loc>http://192.168.100.30:1313/ko/categories/mysql/</loc>
     <lastmod>2026-10-03T17:11:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
-                href="https://LMDAWN1127.github.io/categories/mysql/"
+                href="http://192.168.100.30:1313/categories/mysql/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="https://LMDAWN1127.github.io/en/categories/mysql/"
+                href="http://192.168.100.30:1313/en/categories/mysql/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ko"
-                href="https://LMDAWN1127.github.io/ko/categories/mysql/"
+                href="http://192.168.100.30:1313/ko/categories/mysql/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ja"
-                href="https://LMDAWN1127.github.io/ja/categories/mysql/"
+                href="http://192.168.100.30:1313/ja/categories/mysql/"
                 />
   </url><url>
-    <loc>https://LMDAWN1127.github.io/ko/tags/mysql/</loc>
+    <loc>http://192.168.100.30:1313/ko/tags/mysql/</loc>
     <lastmod>2026-10-03T17:11:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
-                href="https://LMDAWN1127.github.io/tags/mysql/"
+                href="http://192.168.100.30:1313/tags/mysql/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="https://LMDAWN1127.github.io/en/tags/mysql/"
+                href="http://192.168.100.30:1313/en/tags/mysql/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ko"
-                href="https://LMDAWN1127.github.io/ko/tags/mysql/"
+                href="http://192.168.100.30:1313/ko/tags/mysql/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ja"
-                href="https://LMDAWN1127.github.io/ja/tags/mysql/"
+                href="http://192.168.100.30:1313/ja/tags/mysql/"
                 />
   </url><url>
-    <loc>https://LMDAWN1127.github.io/ko/tags/systemd/</loc>
+    <loc>http://192.168.100.30:1313/ko/tags/systemd/</loc>
     <lastmod>2026-10-03T17:11:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
-                href="https://LMDAWN1127.github.io/tags/systemd/"
+                href="http://192.168.100.30:1313/tags/systemd/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="https://LMDAWN1127.github.io/en/tags/systemd/"
+                href="http://192.168.100.30:1313/en/tags/systemd/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ko"
-                href="https://LMDAWN1127.github.io/ko/tags/systemd/"
+                href="http://192.168.100.30:1313/ko/tags/systemd/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ja"
-                href="https://LMDAWN1127.github.io/ja/tags/systemd/"
+                href="http://192.168.100.30:1313/ja/tags/systemd/"
                 />
   </url><url>
-    <loc>https://LMDAWN1127.github.io/ko/posts/systemd-mysql-multiversion/</loc>
+    <loc>http://192.168.100.30:1313/ko/posts/systemd-mysql-multiversion/</loc>
     <lastmod>2026-10-03T17:11:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
-                href="https://LMDAWN1127.github.io/posts/systemd-mysql-multiversion/"
+                href="http://192.168.100.30:1313/posts/systemd-mysql-multiversion/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="https://LMDAWN1127.github.io/en/posts/systemd-mysql-multiversion/"
+                href="http://192.168.100.30:1313/en/posts/systemd-mysql-multiversion/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ko"
-                href="https://LMDAWN1127.github.io/ko/posts/systemd-mysql-multiversion/"
+                href="http://192.168.100.30:1313/ko/posts/systemd-mysql-multiversion/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ja"
-                href="https://LMDAWN1127.github.io/ja/posts/systemd-mysql-multiversion/"
+                href="http://192.168.100.30:1313/ja/posts/systemd-mysql-multiversion/"
                 />
   </url><url>
-    <loc>https://LMDAWN1127.github.io/ko/tags/%EB%A9%80%ED%8B%B0%EB%B2%84%EC%A0%84-%EB%B0%B0%ED%8F%AC/</loc>
+    <loc>http://192.168.100.30:1313/ko/tags/%EB%A9%80%ED%8B%B0%EB%B2%84%EC%A0%84-%EB%B0%B0%ED%8F%AC/</loc>
     <lastmod>2026-10-03T17:11:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url><url>
-    <loc>https://LMDAWN1127.github.io/ko/posts/mysql-binary-deploy/</loc>
+    <loc>http://192.168.100.30:1313/ko/posts/mysql-binary-deploy/</loc>
     <lastmod>2026-10-03T14:53:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
-                href="https://LMDAWN1127.github.io/posts/mysql-binary-deploy/"
+                href="http://192.168.100.30:1313/posts/mysql-binary-deploy/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="https://LMDAWN1127.github.io/en/posts/mysql-binary-deploy/"
+                href="http://192.168.100.30:1313/en/posts/mysql-binary-deploy/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ko"
-                href="https://LMDAWN1127.github.io/ko/posts/mysql-binary-deploy/"
+                href="http://192.168.100.30:1313/ko/posts/mysql-binary-deploy/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ja"
-                href="https://LMDAWN1127.github.io/ja/posts/mysql-binary-deploy/"
+                href="http://192.168.100.30:1313/ja/posts/mysql-binary-deploy/"
                 />
   </url><url>
-    <loc>https://LMDAWN1127.github.io/ko/tags/%EB%8D%B0%EC%9D%B4%ED%84%B0%EB%B2%A0%EC%9D%B4%EC%8A%A4/</loc>
+    <loc>http://192.168.100.30:1313/ko/tags/%EB%8D%B0%EC%9D%B4%ED%84%B0%EB%B2%A0%EC%9D%B4%EC%8A%A4/</loc>
     <lastmod>2026-10-03T14:53:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url><url>
-    <loc>https://LMDAWN1127.github.io/ko/tags/%EB%B0%94%EC%9D%B4%EB%84%88%EB%A6%AC-%EC%84%A4%EC%B9%98/</loc>
+    <loc>http://192.168.100.30:1313/ko/tags/%EB%B0%94%EC%9D%B4%EB%84%88%EB%A6%AC-%EC%84%A4%EC%B9%98/</loc>
     <lastmod>2026-10-03T14:53:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url><url>
-    <loc>https://LMDAWN1127.github.io/ko/tags/ci/cd/</loc>
+    <loc>http://192.168.100.30:1313/ko/tags/ci/cd/</loc>
     <lastmod>2026-10-02T14:12:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
-                href="https://LMDAWN1127.github.io/tags/ci/cd/"
+                href="http://192.168.100.30:1313/tags/ci/cd/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="https://LMDAWN1127.github.io/en/tags/ci/cd/"
+                href="http://192.168.100.30:1313/en/tags/ci/cd/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ko"
-                href="https://LMDAWN1127.github.io/ko/tags/ci/cd/"
+                href="http://192.168.100.30:1313/ko/tags/ci/cd/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ja"
-                href="https://LMDAWN1127.github.io/ja/tags/ci/cd/"
+                href="http://192.168.100.30:1313/ja/tags/ci/cd/"
                 />
   </url><url>
-    <loc>https://LMDAWN1127.github.io/ko/categories/devops/</loc>
+    <loc>http://192.168.100.30:1313/ko/categories/devops/</loc>
     <lastmod>2026-10-02T14:12:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
-                href="https://LMDAWN1127.github.io/categories/devops/"
+                href="http://192.168.100.30:1313/categories/devops/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="https://LMDAWN1127.github.io/en/categories/devops/"
+                href="http://192.168.100.30:1313/en/categories/devops/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ko"
-                href="https://LMDAWN1127.github.io/ko/categories/devops/"
+                href="http://192.168.100.30:1313/ko/categories/devops/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ja"
-                href="https://LMDAWN1127.github.io/ja/categories/devops/"
+                href="http://192.168.100.30:1313/ja/categories/devops/"
                 />
   </url><url>
-    <loc>https://LMDAWN1127.github.io/ko/tags/devops/</loc>
+    <loc>http://192.168.100.30:1313/ko/tags/devops/</loc>
     <lastmod>2026-10-02T14:12:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
-                href="https://LMDAWN1127.github.io/tags/devops/"
+                href="http://192.168.100.30:1313/tags/devops/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="https://LMDAWN1127.github.io/en/tags/devops/"
+                href="http://192.168.100.30:1313/en/tags/devops/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ko"
-                href="https://LMDAWN1127.github.io/ko/tags/devops/"
+                href="http://192.168.100.30:1313/ko/tags/devops/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ja"
-                href="https://LMDAWN1127.github.io/ja/tags/devops/"
+                href="http://192.168.100.30:1313/ja/tags/devops/"
                 />
   </url><url>
-    <loc>https://LMDAWN1127.github.io/ko/tags/sonarqube/</loc>
+    <loc>http://192.168.100.30:1313/ko/tags/sonarqube/</loc>
     <lastmod>2026-10-02T14:12:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
-                href="https://LMDAWN1127.github.io/tags/sonarqube/"
+                href="http://192.168.100.30:1313/tags/sonarqube/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="https://LMDAWN1127.github.io/en/tags/sonarqube/"
+                href="http://192.168.100.30:1313/en/tags/sonarqube/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ko"
-                href="https://LMDAWN1127.github.io/ko/tags/sonarqube/"
+                href="http://192.168.100.30:1313/ko/tags/sonarqube/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ja"
-                href="https://LMDAWN1127.github.io/ja/tags/sonarqube/"
+                href="http://192.168.100.30:1313/ja/tags/sonarqube/"
                 />
   </url><url>
-    <loc>https://LMDAWN1127.github.io/ko/posts/sonarqube-practice/</loc>
+    <loc>http://192.168.100.30:1313/ko/posts/sonarqube-practice/</loc>
     <lastmod>2026-10-02T14:12:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
-                href="https://LMDAWN1127.github.io/posts/sonarqube-practice/"
+                href="http://192.168.100.30:1313/posts/sonarqube-practice/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="https://LMDAWN1127.github.io/en/posts/sonarqube-practice/"
+                href="http://192.168.100.30:1313/en/posts/sonarqube-practice/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ko"
-                href="https://LMDAWN1127.github.io/ko/posts/sonarqube-practice/"
+                href="http://192.168.100.30:1313/ko/posts/sonarqube-practice/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ja"
-                href="https://LMDAWN1127.github.io/ja/posts/sonarqube-practice/"
+                href="http://192.168.100.30:1313/ja/posts/sonarqube-practice/"
                 />
   </url><url>
-    <loc>https://LMDAWN1127.github.io/ko/tags/jenkins/</loc>
+    <loc>http://192.168.100.30:1313/ko/tags/jenkins/</loc>
     <lastmod>2026-10-01T21:28:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
-                href="https://LMDAWN1127.github.io/tags/jenkins/"
+                href="http://192.168.100.30:1313/tags/jenkins/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="https://LMDAWN1127.github.io/en/tags/jenkins/"
+                href="http://192.168.100.30:1313/en/tags/jenkins/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ko"
-                href="https://LMDAWN1127.github.io/ko/tags/jenkins/"
+                href="http://192.168.100.30:1313/ko/tags/jenkins/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ja"
-                href="https://LMDAWN1127.github.io/ja/tags/jenkins/"
+                href="http://192.168.100.30:1313/ja/tags/jenkins/"
                 />
   </url><url>
-    <loc>https://LMDAWN1127.github.io/ko/posts/jenkins-practice/</loc>
+    <loc>http://192.168.100.30:1313/ko/posts/jenkins-practice/</loc>
     <lastmod>2026-10-01T21:28:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
-                href="https://LMDAWN1127.github.io/posts/jenkins-practice/"
+                href="http://192.168.100.30:1313/posts/jenkins-practice/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="https://LMDAWN1127.github.io/en/posts/jenkins-practice/"
+                href="http://192.168.100.30:1313/en/posts/jenkins-practice/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ko"
-                href="https://LMDAWN1127.github.io/ko/posts/jenkins-practice/"
+                href="http://192.168.100.30:1313/ko/posts/jenkins-practice/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ja"
-                href="https://LMDAWN1127.github.io/ja/posts/jenkins-practice/"
+                href="http://192.168.100.30:1313/ja/posts/jenkins-practice/"
                 />
   </url><url>
-    <loc>https://LMDAWN1127.github.io/ko/tags/gitlab/</loc>
+    <loc>http://192.168.100.30:1313/ko/tags/gitlab/</loc>
     <lastmod>2026-10-01T17:50:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
-                href="https://LMDAWN1127.github.io/tags/gitlab/"
+                href="http://192.168.100.30:1313/tags/gitlab/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="https://LMDAWN1127.github.io/en/tags/gitlab/"
+                href="http://192.168.100.30:1313/en/tags/gitlab/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ko"
-                href="https://LMDAWN1127.github.io/ko/tags/gitlab/"
+                href="http://192.168.100.30:1313/ko/tags/gitlab/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ja"
-                href="https://LMDAWN1127.github.io/ja/tags/gitlab/"
+                href="http://192.168.100.30:1313/ja/tags/gitlab/"
                 />
   </url><url>
-    <loc>https://LMDAWN1127.github.io/ko/posts/gitlab-practice/</loc>
+    <loc>http://192.168.100.30:1313/ko/posts/gitlab-practice/</loc>
     <lastmod>2026-10-01T17:50:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
-                href="https://LMDAWN1127.github.io/posts/gitlab-practice/"
+                href="http://192.168.100.30:1313/posts/gitlab-practice/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="https://LMDAWN1127.github.io/en/posts/gitlab-practice/"
+                href="http://192.168.100.30:1313/en/posts/gitlab-practice/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ko"
-                href="https://LMDAWN1127.github.io/ko/posts/gitlab-practice/"
+                href="http://192.168.100.30:1313/ko/posts/gitlab-practice/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ja"
-                href="https://LMDAWN1127.github.io/ja/posts/gitlab-practice/"
+                href="http://192.168.100.30:1313/ja/posts/gitlab-practice/"
                 />
   </url><url>
-    <loc>https://LMDAWN1127.github.io/ko/tags/git/</loc>
+    <loc>http://192.168.100.30:1313/ko/tags/git/</loc>
     <lastmod>2026-10-01T01:20:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
-                href="https://LMDAWN1127.github.io/tags/git/"
+                href="http://192.168.100.30:1313/tags/git/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="https://LMDAWN1127.github.io/en/tags/git/"
+                href="http://192.168.100.30:1313/en/tags/git/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ko"
-                href="https://LMDAWN1127.github.io/ko/tags/git/"
+                href="http://192.168.100.30:1313/ko/tags/git/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ja"
-                href="https://LMDAWN1127.github.io/ja/tags/git/"
+                href="http://192.168.100.30:1313/ja/tags/git/"
                 />
   </url><url>
-    <loc>https://LMDAWN1127.github.io/ko/posts/git-practice-notes/</loc>
+    <loc>http://192.168.100.30:1313/ko/posts/git-practice-notes/</loc>
     <lastmod>2026-10-01T01:20:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
-                href="https://LMDAWN1127.github.io/posts/git-practice-notes/"
+                href="http://192.168.100.30:1313/posts/git-practice-notes/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="https://LMDAWN1127.github.io/en/posts/git-practice-notes/"
+                href="http://192.168.100.30:1313/en/posts/git-practice-notes/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ko"
-                href="https://LMDAWN1127.github.io/ko/posts/git-practice-notes/"
+                href="http://192.168.100.30:1313/ko/posts/git-practice-notes/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ja"
-                href="https://LMDAWN1127.github.io/ja/posts/git-practice-notes/"
+                href="http://192.168.100.30:1313/ja/posts/git-practice-notes/"
                 />
   </url><url>
-    <loc>https://LMDAWN1127.github.io/ko/tags/%EB%B2%84%EC%A0%84-%EA%B4%80%EB%A6%AC/</loc>
+    <loc>http://192.168.100.30:1313/ko/tags/%EB%B2%84%EC%A0%84-%EA%B4%80%EB%A6%AC/</loc>
     <lastmod>2026-10-01T01:20:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url><url>
-    <loc>https://LMDAWN1127.github.io/ko/tags/userparameter/</loc>
+    <loc>http://192.168.100.30:1313/ko/tags/userparameter/</loc>
     <lastmod>2026-09-23T18:30:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
-                href="https://LMDAWN1127.github.io/tags/userparameter/"
+                href="http://192.168.100.30:1313/tags/userparameter/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="https://LMDAWN1127.github.io/en/tags/userparameter/"
+                href="http://192.168.100.30:1313/en/tags/userparameter/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ko"
-                href="https://LMDAWN1127.github.io/ko/tags/userparameter/"
+                href="http://192.168.100.30:1313/ko/tags/userparameter/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ja"
-                href="https://LMDAWN1127.github.io/ja/tags/userparameter/"
+                href="http://192.168.100.30:1313/ja/tags/userparameter/"
                 />
   </url><url>
-    <loc>https://LMDAWN1127.github.io/ko/categories/zabbix/</loc>
+    <loc>http://192.168.100.30:1313/ko/categories/zabbix/</loc>
     <lastmod>2026-09-23T18:30:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
-                href="https://LMDAWN1127.github.io/categories/zabbix/"
+                href="http://192.168.100.30:1313/categories/zabbix/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="https://LMDAWN1127.github.io/en/categories/zabbix/"
+                href="http://192.168.100.30:1313/en/categories/zabbix/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ko"
-                href="https://LMDAWN1127.github.io/ko/categories/zabbix/"
+                href="http://192.168.100.30:1313/ko/categories/zabbix/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ja"
-                href="https://LMDAWN1127.github.io/ja/categories/zabbix/"
+                href="http://192.168.100.30:1313/ja/categories/zabbix/"
                 />
   </url><url>
-    <loc>https://LMDAWN1127.github.io/ko/tags/zabbix/</loc>
+    <loc>http://192.168.100.30:1313/ko/tags/zabbix/</loc>
     <lastmod>2026-09-23T18:30:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
-                href="https://LMDAWN1127.github.io/tags/zabbix/"
+                href="http://192.168.100.30:1313/tags/zabbix/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="https://LMDAWN1127.github.io/en/tags/zabbix/"
+                href="http://192.168.100.30:1313/en/tags/zabbix/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ko"
-                href="https://LMDAWN1127.github.io/ko/tags/zabbix/"
+                href="http://192.168.100.30:1313/ko/tags/zabbix/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ja"
-                href="https://LMDAWN1127.github.io/ja/tags/zabbix/"
+                href="http://192.168.100.30:1313/ja/tags/zabbix/"
                 />
   </url><url>
-    <loc>https://LMDAWN1127.github.io/ko/posts/zabbix-custom-monitor/</loc>
+    <loc>http://192.168.100.30:1313/ko/posts/zabbix-custom-monitor/</loc>
     <lastmod>2026-09-23T18:30:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
-                href="https://LMDAWN1127.github.io/posts/zabbix-custom-monitor/"
+                href="http://192.168.100.30:1313/posts/zabbix-custom-monitor/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="https://LMDAWN1127.github.io/en/posts/zabbix-custom-monitor/"
+                href="http://192.168.100.30:1313/en/posts/zabbix-custom-monitor/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ko"
-                href="https://LMDAWN1127.github.io/ko/posts/zabbix-custom-monitor/"
+                href="http://192.168.100.30:1313/ko/posts/zabbix-custom-monitor/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ja"
-                href="https://LMDAWN1127.github.io/ja/posts/zabbix-custom-monitor/"
+                href="http://192.168.100.30:1313/ja/posts/zabbix-custom-monitor/"
                 />
   </url><url>
-    <loc>https://LMDAWN1127.github.io/ko/tags/%EA%B0%92%EB%A7%A4%ED%95%91/</loc>
+    <loc>http://192.168.100.30:1313/ko/tags/%EA%B0%92%EB%A7%A4%ED%95%91/</loc>
     <lastmod>2026-09-23T18:30:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url><url>
-    <loc>https://LMDAWN1127.github.io/ko/categories/%EB%AA%A8%EB%8B%88%ED%84%B0%EB%A7%81%EC%9A%B4%EC%98%81/</loc>
+    <loc>http://192.168.100.30:1313/ko/categories/%EB%AA%A8%EB%8B%88%ED%84%B0%EB%A7%81%EC%9A%B4%EC%98%81/</loc>
     <lastmod>2026-09-23T18:30:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url><url>
-    <loc>https://LMDAWN1127.github.io/ko/tags/%EC%BB%A4%EC%8A%A4%ED%85%80%EB%AA%A8%EB%8B%88%ED%84%B0%EB%A7%81/</loc>
+    <loc>http://192.168.100.30:1313/ko/tags/%EC%BB%A4%EC%8A%A4%ED%85%80%EB%AA%A8%EB%8B%88%ED%84%B0%EB%A7%81/</loc>
     <lastmod>2026-09-23T18:30:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url><url>
-    <loc>https://LMDAWN1127.github.io/ko/tags/%ED%8A%B8%EB%A6%AC%EA%B1%B0/</loc>
+    <loc>http://192.168.100.30:1313/ko/tags/%ED%8A%B8%EB%A6%AC%EA%B1%B0/</loc>
     <lastmod>2026-09-23T18:30:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url><url>
-    <loc>https://LMDAWN1127.github.io/ko/posts/zabbix-split-database/</loc>
+    <loc>http://192.168.100.30:1313/ko/posts/zabbix-split-database/</loc>
     <lastmod>2026-09-23T16:00:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
-                href="https://LMDAWN1127.github.io/posts/zabbix-split-database/"
+                href="http://192.168.100.30:1313/posts/zabbix-split-database/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="https://LMDAWN1127.github.io/en/posts/zabbix-split-database/"
+                href="http://192.168.100.30:1313/en/posts/zabbix-split-database/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ko"
-                href="https://LMDAWN1127.github.io/ko/posts/zabbix-split-database/"
+                href="http://192.168.100.30:1313/ko/posts/zabbix-split-database/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ja"
-                href="https://LMDAWN1127.github.io/ja/posts/zabbix-split-database/"
+                href="http://192.168.100.30:1313/ja/posts/zabbix-split-database/"
                 />
   </url><url>
-    <loc>https://LMDAWN1127.github.io/ko/tags/%EA%B3%A0%EB%B6%80%ED%95%98/</loc>
+    <loc>http://192.168.100.30:1313/ko/tags/%EA%B3%A0%EB%B6%80%ED%95%98/</loc>
     <lastmod>2026-09-23T16:00:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url><url>
-    <loc>https://LMDAWN1127.github.io/ko/tags/%EB%B6%84%EB%A6%AC/</loc>
+    <loc>http://192.168.100.30:1313/ko/tags/%EB%B6%84%EB%A6%AC/</loc>
     <lastmod>2026-09-23T16:00:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url><url>
-    <loc>https://LMDAWN1127.github.io/ko/tags/zabbix-agent/</loc>
+    <loc>http://192.168.100.30:1313/ko/tags/zabbix-agent/</loc>
     <lastmod>2026-09-23T13:21:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
-                href="https://LMDAWN1127.github.io/tags/zabbix-agent/"
+                href="http://192.168.100.30:1313/tags/zabbix-agent/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="https://LMDAWN1127.github.io/en/tags/zabbix-agent/"
+                href="http://192.168.100.30:1313/en/tags/zabbix-agent/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ko"
-                href="https://LMDAWN1127.github.io/ko/tags/zabbix-agent/"
+                href="http://192.168.100.30:1313/ko/tags/zabbix-agent/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ja"
-                href="https://LMDAWN1127.github.io/ja/tags/zabbix-agent/"
+                href="http://192.168.100.30:1313/ja/tags/zabbix-agent/"
                 />
   </url><url>
-    <loc>https://LMDAWN1127.github.io/ko/posts/zabbix-monitor-server/</loc>
+    <loc>http://192.168.100.30:1313/ko/posts/zabbix-monitor-server/</loc>
     <lastmod>2026-09-23T13:21:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
-                href="https://LMDAWN1127.github.io/posts/zabbix-monitor-server/"
+                href="http://192.168.100.30:1313/posts/zabbix-monitor-server/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="https://LMDAWN1127.github.io/en/posts/zabbix-monitor-server/"
+                href="http://192.168.100.30:1313/en/posts/zabbix-monitor-server/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ko"
-                href="https://LMDAWN1127.github.io/ko/posts/zabbix-monitor-server/"
+                href="http://192.168.100.30:1313/ko/posts/zabbix-monitor-server/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ja"
-                href="https://LMDAWN1127.github.io/ja/posts/zabbix-monitor-server/"
+                href="http://192.168.100.30:1313/ja/posts/zabbix-monitor-server/"
                 />
   </url><url>
-    <loc>https://LMDAWN1127.github.io/ko/tags/%EB%AA%A8%EB%8B%88%ED%84%B0%EB%A7%81/</loc>
+    <loc>http://192.168.100.30:1313/ko/tags/%EB%AA%A8%EB%8B%88%ED%84%B0%EB%A7%81/</loc>
     <lastmod>2026-09-23T13:21:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url><url>
-    <loc>https://LMDAWN1127.github.io/ko/tags/%EB%AA%A8%EB%8B%88%ED%84%B0%EB%A7%81%EC%84%A4%EC%A0%95/</loc>
+    <loc>http://192.168.100.30:1313/ko/tags/%EB%AA%A8%EB%8B%88%ED%84%B0%EB%A7%81%EC%84%A4%EC%A0%95/</loc>
     <lastmod>2026-09-23T13:21:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url><url>
-    <loc>https://LMDAWN1127.github.io/ko/tags/centos7/</loc>
+    <loc>http://192.168.100.30:1313/ko/tags/centos7/</loc>
     <lastmod>2026-09-23T01:52:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
-                href="https://LMDAWN1127.github.io/tags/centos7/"
+                href="http://192.168.100.30:1313/tags/centos7/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="https://LMDAWN1127.github.io/en/tags/centos7/"
+                href="http://192.168.100.30:1313/en/tags/centos7/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ko"
-                href="https://LMDAWN1127.github.io/ko/tags/centos7/"
+                href="http://192.168.100.30:1313/ko/tags/centos7/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ja"
-                href="https://LMDAWN1127.github.io/ja/tags/centos7/"
+                href="http://192.168.100.30:1313/ja/tags/centos7/"
                 />
   </url><url>
-    <loc>https://LMDAWN1127.github.io/ko/posts/zabbix-install/</loc>
+    <loc>http://192.168.100.30:1313/ko/posts/zabbix-install/</loc>
     <lastmod>2026-09-23T01:52:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
-                href="https://LMDAWN1127.github.io/posts/zabbix-install/"
+                href="http://192.168.100.30:1313/posts/zabbix-install/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="https://LMDAWN1127.github.io/en/posts/zabbix-install/"
+                href="http://192.168.100.30:1313/en/posts/zabbix-install/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ko"
-                href="https://LMDAWN1127.github.io/ko/posts/zabbix-install/"
+                href="http://192.168.100.30:1313/ko/posts/zabbix-install/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ja"
-                href="https://LMDAWN1127.github.io/ja/posts/zabbix-install/"
+                href="http://192.168.100.30:1313/ja/posts/zabbix-install/"
                 />
   </url><url>
-    <loc>https://LMDAWN1127.github.io/ko/tags/%EC%84%A4%EC%B9%98/</loc>
+    <loc>http://192.168.100.30:1313/ko/tags/%EC%84%A4%EC%B9%98/</loc>
     <lastmod>2026-09-23T01:52:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url><url>
-    <loc>https://LMDAWN1127.github.io/ko/tags/calico/</loc>
+    <loc>http://192.168.100.30:1313/ko/tags/calico/</loc>
     <lastmod>2026-08-07T13:52:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
-                href="https://LMDAWN1127.github.io/tags/calico/"
+                href="http://192.168.100.30:1313/tags/calico/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="https://LMDAWN1127.github.io/en/tags/calico/"
+                href="http://192.168.100.30:1313/en/tags/calico/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ko"
-                href="https://LMDAWN1127.github.io/ko/tags/calico/"
+                href="http://192.168.100.30:1313/ko/tags/calico/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ja"
-                href="https://LMDAWN1127.github.io/ja/tags/calico/"
+                href="http://192.168.100.30:1313/ja/tags/calico/"
                 />
   </url><url>
-    <loc>https://LMDAWN1127.github.io/ko/tags/containerd/</loc>
+    <loc>http://192.168.100.30:1313/ko/tags/containerd/</loc>
     <lastmod>2026-08-07T13:52:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
-                href="https://LMDAWN1127.github.io/tags/containerd/"
+                href="http://192.168.100.30:1313/tags/containerd/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="https://LMDAWN1127.github.io/en/tags/containerd/"
+                href="http://192.168.100.30:1313/en/tags/containerd/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ko"
-                href="https://LMDAWN1127.github.io/ko/tags/containerd/"
+                href="http://192.168.100.30:1313/ko/tags/containerd/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ja"
-                href="https://LMDAWN1127.github.io/ja/tags/containerd/"
+                href="http://192.168.100.30:1313/ja/tags/containerd/"
                 />
   </url><url>
-    <loc>https://LMDAWN1127.github.io/ko/tags/kubeadm/</loc>
+    <loc>http://192.168.100.30:1313/ko/tags/kubeadm/</loc>
     <lastmod>2026-08-07T13:52:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
-                href="https://LMDAWN1127.github.io/tags/kubeadm/"
+                href="http://192.168.100.30:1313/tags/kubeadm/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="https://LMDAWN1127.github.io/en/tags/kubeadm/"
+                href="http://192.168.100.30:1313/en/tags/kubeadm/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ko"
-                href="https://LMDAWN1127.github.io/ko/tags/kubeadm/"
+                href="http://192.168.100.30:1313/ko/tags/kubeadm/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ja"
-                href="https://LMDAWN1127.github.io/ja/tags/kubeadm/"
+                href="http://192.168.100.30:1313/ja/tags/kubeadm/"
                 />
   </url><url>
-    <loc>https://LMDAWN1127.github.io/ko/categories/kubernetes/</loc>
+    <loc>http://192.168.100.30:1313/ko/categories/kubernetes/</loc>
     <lastmod>2026-08-07T13:52:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
-                href="https://LMDAWN1127.github.io/categories/kubernetes/"
+                href="http://192.168.100.30:1313/categories/kubernetes/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="https://LMDAWN1127.github.io/en/categories/kubernetes/"
+                href="http://192.168.100.30:1313/en/categories/kubernetes/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ko"
-                href="https://LMDAWN1127.github.io/ko/categories/kubernetes/"
+                href="http://192.168.100.30:1313/ko/categories/kubernetes/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ja"
-                href="https://LMDAWN1127.github.io/ja/categories/kubernetes/"
+                href="http://192.168.100.30:1313/ja/categories/kubernetes/"
                 />
   </url><url>
-    <loc>https://LMDAWN1127.github.io/ko/tags/kubernetes/</loc>
+    <loc>http://192.168.100.30:1313/ko/tags/kubernetes/</loc>
     <lastmod>2026-08-07T13:52:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
-                href="https://LMDAWN1127.github.io/tags/kubernetes/"
+                href="http://192.168.100.30:1313/tags/kubernetes/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="https://LMDAWN1127.github.io/en/tags/kubernetes/"
+                href="http://192.168.100.30:1313/en/tags/kubernetes/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ko"
-                href="https://LMDAWN1127.github.io/ko/tags/kubernetes/"
+                href="http://192.168.100.30:1313/ko/tags/kubernetes/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ja"
-                href="https://LMDAWN1127.github.io/ja/tags/kubernetes/"
+                href="http://192.168.100.30:1313/ja/tags/kubernetes/"
                 />
   </url><url>
-    <loc>https://LMDAWN1127.github.io/ko/posts/k8s-v1.30-manual-deploy/</loc>
+    <loc>http://192.168.100.30:1313/ko/posts/k8s-v1.30-manual-deploy/</loc>
     <lastmod>2026-08-07T13:52:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
-                href="https://LMDAWN1127.github.io/posts/k8s-v1.30-manual-deploy/"
+                href="http://192.168.100.30:1313/posts/k8s-v1.30-manual-deploy/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="https://LMDAWN1127.github.io/en/posts/k8s-v1.30-manual-deploy/"
+                href="http://192.168.100.30:1313/en/posts/k8s-v1.30-manual-deploy/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ko"
-                href="https://LMDAWN1127.github.io/ko/posts/k8s-v1.30-manual-deploy/"
+                href="http://192.168.100.30:1313/ko/posts/k8s-v1.30-manual-deploy/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ja"
-                href="https://LMDAWN1127.github.io/ja/posts/k8s-v1.30-manual-deploy/"
+                href="http://192.168.100.30:1313/ja/posts/k8s-v1.30-manual-deploy/"
                 />
   </url><url>
-    <loc>https://LMDAWN1127.github.io/ko/tags/v1.30/</loc>
+    <loc>http://192.168.100.30:1313/ko/tags/v1.30/</loc>
     <lastmod>2026-08-07T13:52:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
-                href="https://LMDAWN1127.github.io/tags/v1.30/"
+                href="http://192.168.100.30:1313/tags/v1.30/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="https://LMDAWN1127.github.io/en/tags/v1.30/"
+                href="http://192.168.100.30:1313/en/tags/v1.30/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ko"
-                href="https://LMDAWN1127.github.io/ko/tags/v1.30/"
+                href="http://192.168.100.30:1313/ko/tags/v1.30/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ja"
-                href="https://LMDAWN1127.github.io/ja/tags/v1.30/"
+                href="http://192.168.100.30:1313/ja/tags/v1.30/"
                 />
   </url><url>
-    <loc>https://LMDAWN1127.github.io/ko/categories/%EC%9A%B4%EC%98%81%EB%B0%B0%ED%8F%AC/</loc>
+    <loc>http://192.168.100.30:1313/ko/categories/%EC%9A%B4%EC%98%81%EB%B0%B0%ED%8F%AC/</loc>
     <lastmod>2026-08-07T13:52:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url><url>
-    <loc>https://LMDAWN1127.github.io/ko/tags/%ED%81%B4%EB%9F%AC%EC%8A%A4%ED%84%B0%EB%B0%B0%ED%8F%AC/</loc>
+    <loc>http://192.168.100.30:1313/ko/tags/%ED%81%B4%EB%9F%AC%EC%8A%A4%ED%84%B0%EB%B0%B0%ED%8F%AC/</loc>
     <lastmod>2026-08-07T13:52:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url><url>
-    <loc>https://LMDAWN1127.github.io/ko/tags/docker/</loc>
+    <loc>http://192.168.100.30:1313/ko/tags/docker/</loc>
     <lastmod>2026-08-04T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
-                href="https://LMDAWN1127.github.io/tags/docker/"
+                href="http://192.168.100.30:1313/tags/docker/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="https://LMDAWN1127.github.io/en/tags/docker/"
+                href="http://192.168.100.30:1313/en/tags/docker/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ko"
-                href="https://LMDAWN1127.github.io/ko/tags/docker/"
+                href="http://192.168.100.30:1313/ko/tags/docker/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ja"
-                href="https://LMDAWN1127.github.io/ja/tags/docker/"
+                href="http://192.168.100.30:1313/ja/tags/docker/"
                 />
   </url><url>
-    <loc>https://LMDAWN1127.github.io/ko/tags/harbor/</loc>
+    <loc>http://192.168.100.30:1313/ko/tags/harbor/</loc>
     <lastmod>2026-08-04T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
-                href="https://LMDAWN1127.github.io/tags/harbor/"
+                href="http://192.168.100.30:1313/tags/harbor/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="https://LMDAWN1127.github.io/en/tags/harbor/"
+                href="http://192.168.100.30:1313/en/tags/harbor/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ko"
-                href="https://LMDAWN1127.github.io/ko/tags/harbor/"
+                href="http://192.168.100.30:1313/ko/tags/harbor/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ja"
-                href="https://LMDAWN1127.github.io/ja/tags/harbor/"
+                href="http://192.168.100.30:1313/ja/tags/harbor/"
                 />
   </url><url>
-    <loc>https://LMDAWN1127.github.io/ko/tags/https/</loc>
+    <loc>http://192.168.100.30:1313/ko/tags/https/</loc>
     <lastmod>2026-08-04T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
-                href="https://LMDAWN1127.github.io/tags/https/"
+                href="http://192.168.100.30:1313/tags/https/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="https://LMDAWN1127.github.io/en/tags/https/"
+                href="http://192.168.100.30:1313/en/tags/https/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ko"
-                href="https://LMDAWN1127.github.io/ko/tags/https/"
+                href="http://192.168.100.30:1313/ko/tags/https/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ja"
-                href="https://LMDAWN1127.github.io/ja/tags/https/"
+                href="http://192.168.100.30:1313/ja/tags/https/"
                 />
   </url><url>
-    <loc>https://LMDAWN1127.github.io/ko/tags/%EB%B3%B5%EC%A0%9C/</loc>
+    <loc>http://192.168.100.30:1313/ko/tags/%EB%B3%B5%EC%A0%9C/</loc>
     <lastmod>2026-08-04T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url><url>
-    <loc>https://LMDAWN1127.github.io/ko/tags/%EC%9D%B4%EB%AF%B8%EC%A7%80-%EB%A0%88%EC%A7%80%EC%8A%A4%ED%8A%B8%EB%A6%AC/</loc>
+    <loc>http://192.168.100.30:1313/ko/tags/%EC%9D%B4%EB%AF%B8%EC%A7%80-%EB%A0%88%EC%A7%80%EC%8A%A4%ED%8A%B8%EB%A6%AC/</loc>
     <lastmod>2026-08-04T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url><url>
-    <loc>https://LMDAWN1127.github.io/ko/categories/%EC%BB%A8%ED%85%8C%EC%9D%B4%EB%84%88-%EA%B8%B0%EC%88%A0/</loc>
+    <loc>http://192.168.100.30:1313/ko/categories/%EC%BB%A8%ED%85%8C%EC%9D%B4%EB%84%88-%EA%B8%B0%EC%88%A0/</loc>
     <lastmod>2026-08-04T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url><url>
-    <loc>https://LMDAWN1127.github.io/ko/tags/centos/</loc>
+    <loc>http://192.168.100.30:1313/ko/tags/centos/</loc>
     <lastmod>2026-08-02T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
-                href="https://LMDAWN1127.github.io/tags/centos/"
+                href="http://192.168.100.30:1313/tags/centos/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="https://LMDAWN1127.github.io/en/tags/centos/"
+                href="http://192.168.100.30:1313/en/tags/centos/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ko"
-                href="https://LMDAWN1127.github.io/ko/tags/centos/"
+                href="http://192.168.100.30:1313/ko/tags/centos/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ja"
-                href="https://LMDAWN1127.github.io/ja/tags/centos/"
+                href="http://192.168.100.30:1313/ja/tags/centos/"
                 />
   </url><url>
-    <loc>https://LMDAWN1127.github.io/ko/tags/kvm/</loc>
+    <loc>http://192.168.100.30:1313/ko/tags/kvm/</loc>
     <lastmod>2026-08-02T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
-                href="https://LMDAWN1127.github.io/tags/kvm/"
+                href="http://192.168.100.30:1313/tags/kvm/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="https://LMDAWN1127.github.io/en/tags/kvm/"
+                href="http://192.168.100.30:1313/en/tags/kvm/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ko"
-                href="https://LMDAWN1127.github.io/ko/tags/kvm/"
+                href="http://192.168.100.30:1313/ko/tags/kvm/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ja"
-                href="https://LMDAWN1127.github.io/ja/tags/kvm/"
+                href="http://192.168.100.30:1313/ja/tags/kvm/"
                 />
   </url><url>
-    <loc>https://LMDAWN1127.github.io/ko/posts/kvm-virtualization-guide/</loc>
+    <loc>http://192.168.100.30:1313/ko/posts/kvm-virtualization-guide/</loc>
     <lastmod>2026-08-02T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
-                href="https://LMDAWN1127.github.io/posts/kvm-virtualization-guide/"
+                href="http://192.168.100.30:1313/posts/kvm-virtualization-guide/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="https://LMDAWN1127.github.io/en/posts/kvm-virtualization-guide/"
+                href="http://192.168.100.30:1313/en/posts/kvm-virtualization-guide/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ko"
-                href="https://LMDAWN1127.github.io/ko/posts/kvm-virtualization-guide/"
+                href="http://192.168.100.30:1313/ko/posts/kvm-virtualization-guide/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ja"
-                href="https://LMDAWN1127.github.io/ja/posts/kvm-virtualization-guide/"
+                href="http://192.168.100.30:1313/ja/posts/kvm-virtualization-guide/"
                 />
   </url><url>
-    <loc>https://LMDAWN1127.github.io/ko/tags/linux/</loc>
+    <loc>http://192.168.100.30:1313/ko/tags/linux/</loc>
     <lastmod>2026-08-02T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
-                href="https://LMDAWN1127.github.io/tags/linux/"
+                href="http://192.168.100.30:1313/tags/linux/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="https://LMDAWN1127.github.io/en/tags/linux/"
+                href="http://192.168.100.30:1313/en/tags/linux/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ko"
-                href="https://LMDAWN1127.github.io/ko/tags/linux/"
+                href="http://192.168.100.30:1313/ko/tags/linux/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ja"
-                href="https://LMDAWN1127.github.io/ja/tags/linux/"
+                href="http://192.168.100.30:1313/ja/tags/linux/"
                 />
   </url><url>
-    <loc>https://LMDAWN1127.github.io/ko/categories/%EA%B0%80%EC%83%81%ED%99%94/</loc>
+    <loc>http://192.168.100.30:1313/ko/categories/%EA%B0%80%EC%83%81%ED%99%94/</loc>
     <lastmod>2026-08-02T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url><url>
-    <loc>https://LMDAWN1127.github.io/ko/tags/%EA%B0%80%EC%83%81%ED%99%94/</loc>
+    <loc>http://192.168.100.30:1313/ko/tags/%EA%B0%80%EC%83%81%ED%99%94/</loc>
     <lastmod>2026-08-02T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url><url>
-    <loc>https://LMDAWN1127.github.io/ko/tags/dockerfile/</loc>
+    <loc>http://192.168.100.30:1313/ko/tags/dockerfile/</loc>
     <lastmod>2026-07-30T12:00:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
-                href="https://LMDAWN1127.github.io/tags/dockerfile/"
+                href="http://192.168.100.30:1313/tags/dockerfile/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="https://LMDAWN1127.github.io/en/tags/dockerfile/"
+                href="http://192.168.100.30:1313/en/tags/dockerfile/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ko"
-                href="https://LMDAWN1127.github.io/ko/tags/dockerfile/"
+                href="http://192.168.100.30:1313/ko/tags/dockerfile/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ja"
-                href="https://LMDAWN1127.github.io/ja/tags/dockerfile/"
+                href="http://192.168.100.30:1313/ja/tags/dockerfile/"
                 />
   </url><url>
-    <loc>https://LMDAWN1127.github.io/ko/posts/dockerfile-smaller-image/</loc>
+    <loc>http://192.168.100.30:1313/ko/posts/dockerfile-smaller-image/</loc>
     <lastmod>2026-07-30T12:00:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
-                href="https://LMDAWN1127.github.io/posts/dockerfile-smaller-image/"
+                href="http://192.168.100.30:1313/posts/dockerfile-smaller-image/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="https://LMDAWN1127.github.io/en/posts/dockerfile-smaller-image/"
+                href="http://192.168.100.30:1313/en/posts/dockerfile-smaller-image/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ko"
-                href="https://LMDAWN1127.github.io/ko/posts/dockerfile-smaller-image/"
+                href="http://192.168.100.30:1313/ko/posts/dockerfile-smaller-image/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ja"
-                href="https://LMDAWN1127.github.io/ja/posts/dockerfile-smaller-image/"
+                href="http://192.168.100.30:1313/ja/posts/dockerfile-smaller-image/"
                 />
   </url><url>
-    <loc>https://LMDAWN1127.github.io/ko/tags/%EC%9D%B4%EB%AF%B8%EC%A7%80-%EC%B5%9C%EC%A0%81%ED%99%94/</loc>
+    <loc>http://192.168.100.30:1313/ko/tags/%EC%9D%B4%EB%AF%B8%EC%A7%80-%EC%B5%9C%EC%A0%81%ED%99%94/</loc>
     <lastmod>2026-07-30T12:00:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url><url>
-    <loc>https://LMDAWN1127.github.io/ko/tags/%EC%BB%A8%ED%85%8C%EC%9D%B4%EB%84%88%ED%99%94/</loc>
+    <loc>http://192.168.100.30:1313/ko/tags/%EC%BB%A8%ED%85%8C%EC%9D%B4%EB%84%88%ED%99%94/</loc>
     <lastmod>2026-07-30T12:00:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url><url>
-    <loc>https://LMDAWN1127.github.io/ko/posts/dockerfile-faster-build/</loc>
+    <loc>http://192.168.100.30:1313/ko/posts/dockerfile-faster-build/</loc>
     <lastmod>2026-07-30T11:00:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
-                href="https://LMDAWN1127.github.io/posts/dockerfile-faster-build/"
+                href="http://192.168.100.30:1313/posts/dockerfile-faster-build/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="https://LMDAWN1127.github.io/en/posts/dockerfile-faster-build/"
+                href="http://192.168.100.30:1313/en/posts/dockerfile-faster-build/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ko"
-                href="https://LMDAWN1127.github.io/ko/posts/dockerfile-faster-build/"
+                href="http://192.168.100.30:1313/ko/posts/dockerfile-faster-build/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ja"
-                href="https://LMDAWN1127.github.io/ja/posts/dockerfile-faster-build/"
+                href="http://192.168.100.30:1313/ja/posts/dockerfile-faster-build/"
                 />
   </url><url>
-    <loc>https://LMDAWN1127.github.io/ko/tags/%EC%84%B1%EB%8A%A5-%EC%B5%9C%EC%A0%81%ED%99%94/</loc>
+    <loc>http://192.168.100.30:1313/ko/tags/%EC%84%B1%EB%8A%A5-%EC%B5%9C%EC%A0%81%ED%99%94/</loc>
     <lastmod>2026-07-30T11:00:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url><url>
-    <loc>https://LMDAWN1127.github.io/ko/posts/dockerfile-copy-vs-add/</loc>
+    <loc>http://192.168.100.30:1313/ko/posts/dockerfile-copy-vs-add/</loc>
     <lastmod>2026-07-30T10:00:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
-                href="https://LMDAWN1127.github.io/posts/dockerfile-copy-vs-add/"
+                href="http://192.168.100.30:1313/posts/dockerfile-copy-vs-add/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="https://LMDAWN1127.github.io/en/posts/dockerfile-copy-vs-add/"
+                href="http://192.168.100.30:1313/en/posts/dockerfile-copy-vs-add/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ko"
-                href="https://LMDAWN1127.github.io/ko/posts/dockerfile-copy-vs-add/"
+                href="http://192.168.100.30:1313/ko/posts/dockerfile-copy-vs-add/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ja"
-                href="https://LMDAWN1127.github.io/ja/posts/dockerfile-copy-vs-add/"
+                href="http://192.168.100.30:1313/ja/posts/dockerfile-copy-vs-add/"
                 />
   </url><url>
-    <loc>https://LMDAWN1127.github.io/ko/tags/ai/</loc>
+    <loc>http://192.168.100.30:1313/ko/tags/ai/</loc>
     <lastmod>2026-07-04T05:00:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
-                href="https://LMDAWN1127.github.io/tags/ai/"
+                href="http://192.168.100.30:1313/tags/ai/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="https://LMDAWN1127.github.io/en/tags/ai/"
+                href="http://192.168.100.30:1313/en/tags/ai/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ko"
-                href="https://LMDAWN1127.github.io/ko/tags/ai/"
+                href="http://192.168.100.30:1313/ko/tags/ai/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ja"
-                href="https://LMDAWN1127.github.io/ja/tags/ai/"
+                href="http://192.168.100.30:1313/ja/tags/ai/"
                 />
   </url><url>
-    <loc>https://LMDAWN1127.github.io/ko/posts/centos-deploy-claude-code/</loc>
+    <loc>http://192.168.100.30:1313/ko/posts/centos-deploy-claude-code/</loc>
     <lastmod>2026-07-04T05:00:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
-                href="https://LMDAWN1127.github.io/posts/centos-deploy-claude-code/"
+                href="http://192.168.100.30:1313/posts/centos-deploy-claude-code/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="https://LMDAWN1127.github.io/en/posts/centos-deploy-claude-code/"
+                href="http://192.168.100.30:1313/en/posts/centos-deploy-claude-code/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ko"
-                href="https://LMDAWN1127.github.io/ko/posts/centos-deploy-claude-code/"
+                href="http://192.168.100.30:1313/ko/posts/centos-deploy-claude-code/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ja"
-                href="https://LMDAWN1127.github.io/ja/posts/centos-deploy-claude-code/"
+                href="http://192.168.100.30:1313/ja/posts/centos-deploy-claude-code/"
                 />
   </url><url>
-    <loc>https://LMDAWN1127.github.io/ko/tags/claude-code/</loc>
+    <loc>http://192.168.100.30:1313/ko/tags/claude-code/</loc>
     <lastmod>2026-07-04T05:00:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
-                href="https://LMDAWN1127.github.io/tags/claude-code/"
+                href="http://192.168.100.30:1313/tags/claude-code/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="https://LMDAWN1127.github.io/en/tags/claude-code/"
+                href="http://192.168.100.30:1313/en/tags/claude-code/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ko"
-                href="https://LMDAWN1127.github.io/ko/tags/claude-code/"
+                href="http://192.168.100.30:1313/ko/tags/claude-code/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ja"
-                href="https://LMDAWN1127.github.io/ja/tags/claude-code/"
+                href="http://192.168.100.30:1313/ja/tags/claude-code/"
                 />
   </url><url>
-    <loc>https://LMDAWN1127.github.io/ko/categories/%EA%B8%B0%EC%88%A0-%ED%8A%9C%ED%86%A0%EB%A6%AC%EC%96%BC/</loc>
+    <loc>http://192.168.100.30:1313/ko/categories/%EA%B8%B0%EC%88%A0-%ED%8A%9C%ED%86%A0%EB%A6%AC%EC%96%BC/</loc>
     <lastmod>2026-07-04T05:00:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url><url>
-    <loc>https://LMDAWN1127.github.io/ko/tags/%EB%B0%B0%ED%8F%AC/</loc>
+    <loc>http://192.168.100.30:1313/ko/tags/%EB%B0%B0%ED%8F%AC/</loc>
     <lastmod>2026-07-04T05:00:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url><url>
-    <loc>https://LMDAWN1127.github.io/ko/tags/etcd/</loc>
+    <loc>http://192.168.100.30:1313/ko/tags/etcd/</loc>
     <lastmod>2025-05-21T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
-                href="https://LMDAWN1127.github.io/tags/etcd/"
+                href="http://192.168.100.30:1313/tags/etcd/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="https://LMDAWN1127.github.io/en/tags/etcd/"
+                href="http://192.168.100.30:1313/en/tags/etcd/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ko"
-                href="https://LMDAWN1127.github.io/ko/tags/etcd/"
+                href="http://192.168.100.30:1313/ko/tags/etcd/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ja"
-                href="https://LMDAWN1127.github.io/ja/tags/etcd/"
+                href="http://192.168.100.30:1313/ja/tags/etcd/"
                 />
   </url><url>
-    <loc>https://LMDAWN1127.github.io/ko/tags/flannel/</loc>
+    <loc>http://192.168.100.30:1313/ko/tags/flannel/</loc>
     <lastmod>2025-05-21T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
-                href="https://LMDAWN1127.github.io/tags/flannel/"
+                href="http://192.168.100.30:1313/tags/flannel/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="https://LMDAWN1127.github.io/en/tags/flannel/"
+                href="http://192.168.100.30:1313/en/tags/flannel/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ko"
-                href="https://LMDAWN1127.github.io/ko/tags/flannel/"
+                href="http://192.168.100.30:1313/ko/tags/flannel/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ja"
-                href="https://LMDAWN1127.github.io/ja/tags/flannel/"
+                href="http://192.168.100.30:1313/ja/tags/flannel/"
                 />
   </url><url>
-    <loc>https://LMDAWN1127.github.io/ko/posts/flannel-network-lab/</loc>
+    <loc>http://192.168.100.30:1313/ko/posts/flannel-network-lab/</loc>
     <lastmod>2025-05-21T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
-                href="https://LMDAWN1127.github.io/posts/flannel-network-lab/"
+                href="http://192.168.100.30:1313/posts/flannel-network-lab/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="https://LMDAWN1127.github.io/en/posts/flannel-network-lab/"
+                href="http://192.168.100.30:1313/en/posts/flannel-network-lab/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ko"
-                href="https://LMDAWN1127.github.io/ko/posts/flannel-network-lab/"
+                href="http://192.168.100.30:1313/ko/posts/flannel-network-lab/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ja"
-                href="https://LMDAWN1127.github.io/ja/posts/flannel-network-lab/"
+                href="http://192.168.100.30:1313/ja/posts/flannel-network-lab/"
                 />
   </url><url>
-    <loc>https://LMDAWN1127.github.io/ko/tags/%EB%84%A4%ED%8A%B8%EC%9B%8C%ED%81%AC/</loc>
+    <loc>http://192.168.100.30:1313/ko/tags/%EB%84%A4%ED%8A%B8%EC%9B%8C%ED%81%AC/</loc>
     <lastmod>2025-05-21T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url><url>
-    <loc>https://LMDAWN1127.github.io/ko/search/</loc>
+    <loc>http://192.168.100.30:1313/ko/search/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="https://LMDAWN1127.github.io/en/search/"
+                href="http://192.168.100.30:1313/en/search/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ko"
-                href="https://LMDAWN1127.github.io/ko/search/"
+                href="http://192.168.100.30:1313/ko/search/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ja"
-                href="https://LMDAWN1127.github.io/ja/search/"
+                href="http://192.168.100.30:1313/ja/search/"
                 />
   </url><url>
-    <loc>https://LMDAWN1127.github.io/ko/archives/</loc>
+    <loc>http://192.168.100.30:1313/ko/archives/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
-                href="https://LMDAWN1127.github.io/archives/"
+                href="http://192.168.100.30:1313/archives/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="https://LMDAWN1127.github.io/en/archives/"
+                href="http://192.168.100.30:1313/en/archives/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ko"
-                href="https://LMDAWN1127.github.io/ko/archives/"
+                href="http://192.168.100.30:1313/ko/archives/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="ja"
-                href="https://LMDAWN1127.github.io/ja/archives/"
+                href="http://192.168.100.30:1313/ja/archives/"
                 />
   </url>
 </urlset>

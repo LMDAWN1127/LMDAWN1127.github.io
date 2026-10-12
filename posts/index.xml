@@ -2,169 +2,176 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>Posts on DAWN&#39;s Blog</title>
-    <link>https://LMDAWN1127.github.io/posts/</link>
+    <link>http://192.168.100.30:1313/posts/</link>
     <description>Recent content in Posts on DAWN&#39;s Blog</description>
     <image>
       <title>DAWN&#39;s Blog</title>
-      <url>https://LMDAWN1127.github.io/images/DAWN.jpg</url>
-      <link>https://LMDAWN1127.github.io/images/DAWN.jpg</link>
+      <url>http://192.168.100.30:1313/images/DAWN.jpg</url>
+      <link>http://192.168.100.30:1313/images/DAWN.jpg</link>
     </image>
     <generator>Hugo</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sat, 10 Oct 2026 17:30:00 +0800</lastBuildDate>
-    <atom:link href="https://LMDAWN1127.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 12 Oct 2026 18:00:00 +0800</lastBuildDate>
+    <atom:link href="http://192.168.100.30:1313/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Harbor 主备部署实战：从安装到 HTTPS 与主备复制</title>
-      <link>https://LMDAWN1127.github.io/posts/harbor-master-slave/</link>
+      <link>http://192.168.100.30:1313/posts/harbor-master-slave/</link>
       <pubDate>Tue, 04 Aug 2026 00:00:00 +0000</pubDate>
-      <guid>https://LMDAWN1127.github.io/posts/harbor-master-slave/</guid>
+      <guid>http://192.168.100.30:1313/posts/harbor-master-slave/</guid>
       <description>完整记录 Harbor 企业级镜像仓库的主备部署过程，涵盖 HTTP/HTTPS 双模式安装、自签名证书配置、跨主机主备复制等核心运维技能。</description>
     </item>
     <item>
+      <title>Java 项目 CI/CD 流水线：Maven&#43;GitLab&#43;Jenkins&#43;SonarQube&#43;Nexus</title>
+      <link>http://192.168.100.30:1313/posts/java-project-deploy/</link>
+      <pubDate>Mon, 12 Oct 2026 18:00:00 +0800</pubDate>
+      <guid>http://192.168.100.30:1313/posts/java-project-deploy/</guid>
+      <description>从 Maven 构建、GitLab 托管、Jenkins 拉取与自动部署，到 SonarQube 质量门禁与 Nexus 私服，梳理一条完整的 Java 项目 CI/CD 流水线落地过程。</description>
+    </item>
+    <item>
       <title>Jenkins 代码发布与回滚</title>
-      <link>https://LMDAWN1127.github.io/posts/jenkins-code-deploy-rollback/</link>
+      <link>http://192.168.100.30:1313/posts/jenkins-code-deploy-rollback/</link>
       <pubDate>Sat, 10 Oct 2026 17:30:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/posts/jenkins-code-deploy-rollback/</guid>
+      <guid>http://192.168.100.30:1313/posts/jenkins-code-deploy-rollback/</guid>
       <description>基于 GitLab 打 tag 标记稳定版本，配合 Jenkins Git Parameter 插件做参数化构建，用一份 deploy/rollback 脚本实现按版本号发布与一键回滚。</description>
     </item>
     <item>
       <title>Jenkins Pipeline 流水线</title>
-      <link>https://LMDAWN1127.github.io/posts/jenkins-pipeline/</link>
+      <link>http://192.168.100.30:1313/posts/jenkins-pipeline/</link>
       <pubDate>Fri, 09 Oct 2026 19:00:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/posts/jenkins-pipeline/</guid>
+      <guid>http://192.168.100.30:1313/posts/jenkins-pipeline/</guid>
       <description>从 CI/CD 与 Pipeline as Code 概念讲起，拆解 Node/Stage/Step，并用一份 Jenkinsfile 把「拉取代码 → SonarQube 扫描 → 打包 → 部署」的发布流程落地为可维护的流水线。</description>
     </item>
     <item>
       <title>Jenkins 集成 SonarQube 质量门禁与企业微信通知</title>
-      <link>https://LMDAWN1127.github.io/posts/jenkins-sonarqube-wecom-notification/</link>
+      <link>http://192.168.100.30:1313/posts/jenkins-sonarqube-wecom-notification/</link>
       <pubDate>Fri, 09 Oct 2026 16:30:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/posts/jenkins-sonarqube-wecom-notification/</guid>
+      <guid>http://192.168.100.30:1313/posts/jenkins-sonarqube-wecom-notification/</guid>
       <description>在 Jenkins 中集成 SonarQube 质量门禁做代码扫描，并配合企业微信(WeCom)实现构建结果与变更日志的自动通知，打通质量卡点与团队触达。</description>
     </item>
     <item>
       <title>Jenkins &#43; GitLab 打通实现 CI/CD 自动部署</title>
-      <link>https://LMDAWN1127.github.io/posts/jenkins-gitlab-cicd-auto-deploy/</link>
+      <link>http://192.168.100.30:1313/posts/jenkins-gitlab-cicd-auto-deploy/</link>
       <pubDate>Fri, 09 Oct 2026 16:00:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/posts/jenkins-gitlab-cicd-auto-deploy/</guid>
+      <guid>http://192.168.100.30:1313/posts/jenkins-gitlab-cicd-auto-deploy/</guid>
       <description>手把手实现 Jenkins 拉取 GitLab 代码、经 SSH 推送至 Web 服务器、并配置 GitLab Webhook 触发全自动部署的完整 CI/CD 流程。</description>
     </item>
     <item>
       <title>MySQL 版本升级实战与回退：5.6→5.7→8.0 就地升级、mysql-shell 检测与回退方案</title>
-      <link>https://LMDAWN1127.github.io/posts/mysql-version-upgrade-rollback/</link>
+      <link>http://192.168.100.30:1313/posts/mysql-version-upgrade-rollback/</link>
       <pubDate>Thu, 08 Oct 2026 21:40:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/posts/mysql-version-upgrade-rollback/</guid>
+      <guid>http://192.168.100.30:1313/posts/mysql-version-upgrade-rollback/</guid>
       <description>从升级方法（本地 Inplace / 迁移 Mergeing）、升级规范与流程讲起，实战 5.6→5.7→8.0 就地升级：冷备、安全模式挂库启动、mysql_upgrade 升级授权表、正常重启验证；并用 mysql-shell 的 util.checkForServerUpgrade() 做 8.0 升级前检测；最后给出升级失败时的程序与数据回退步骤。</description>
     </item>
     <item>
       <title>MySQL 多实例部署实战：单主机三实例规划、初始化与 systemd 托管</title>
-      <link>https://LMDAWN1127.github.io/posts/mysql-multi-instance-deployment/</link>
+      <link>http://192.168.100.30:1313/posts/mysql-multi-instance-deployment/</link>
       <pubDate>Thu, 08 Oct 2026 14:15:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/posts/mysql-multi-instance-deployment/</guid>
+      <guid>http://192.168.100.30:1313/posts/mysql-multi-instance-deployment/</guid>
       <description>在同一台 master 主机上规划并部署 3 个 MySQL 8.0.26 实例（3307/3308/3309）：独立 my.cnf 与数据目录、initialize-insecure 初始化，命令启动与 systemd 服务托管两种方式，并用 ps / netstat / select @@port 完成验证。</description>
     </item>
     <item>
       <title>OpenStack Neutron 网络类型设计与实现：flat、VLAN 与 VXLAN</title>
-      <link>https://LMDAWN1127.github.io/posts/openstack-neutron-flat-vlan-vxlan/</link>
+      <link>http://192.168.100.30:1313/posts/openstack-neutron-flat-vlan-vxlan/</link>
       <pubDate>Wed, 07 Oct 2026 19:45:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/posts/openstack-neutron-flat-vlan-vxlan/</guid>
+      <guid>http://192.168.100.30:1313/posts/openstack-neutron-flat-vlan-vxlan/</guid>
       <description>从 flat 到 VLAN 再到 VXLAN，逐步拆解 Neutron 三种网络类型的 ML2 与 OVS 配置、外部网络与路由器打通方式、OVS 流表转发分析，以及云主机通过 169.254.169.254 获取 metadata 的完整链路。</description>
     </item>
     <item>
       <title>OpenStack Neutron 网络服务详解：虚拟交换组件与跨主机数据流分析</title>
-      <link>https://LMDAWN1127.github.io/posts/openstack-neutron-network-service/</link>
+      <link>http://192.168.100.30:1313/posts/openstack-neutron-network-service/</link>
       <pubDate>Wed, 07 Oct 2026 17:42:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/posts/openstack-neutron-network-service/</guid>
+      <guid>http://192.168.100.30:1313/posts/openstack-neutron-network-service/</guid>
       <description>梳理 Neutron 的网络虚拟化机制：OVS/OVN 虚拟交换机、namespace 租户隔离，以及 tap/qbr/qvb/qvo/br-int 各设备的作用，并逐层拆解同主机、跨主机、跨网络与访问 Internet 四类数据流。</description>
     </item>
     <item>
       <title>OpenStack 云操作系统核心架构与自动化部署</title>
-      <link>https://LMDAWN1127.github.io/posts/openstack-core-architecture-deployment/</link>
+      <link>http://192.168.100.30:1313/posts/openstack-core-architecture-deployment/</link>
       <pubDate>Tue, 06 Oct 2026 20:35:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/posts/openstack-core-architecture-deployment/</guid>
+      <guid>http://192.168.100.30:1313/posts/openstack-core-architecture-deployment/</guid>
       <description>从核心组件（Nova/Glance/Neutron/Cinder 等）到基于 Packstack 的 Victoria 版一键自动化部署，并附 Rsyslog 日志排查方法。</description>
     </item>
     <item>
       <title>OpenStack Cinder 块存储详解：LVM &#43; iSCSI 本地卷与 NFS 后端对接</title>
-      <link>https://LMDAWN1127.github.io/posts/openstack-cinder-block-storage/</link>
+      <link>http://192.168.100.30:1313/posts/openstack-cinder-block-storage/</link>
       <pubDate>Mon, 05 Oct 2026 23:30:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/posts/openstack-cinder-block-storage/</guid>
+      <guid>http://192.168.100.30:1313/posts/openstack-cinder-block-storage/</guid>
       <description>梳理 OpenStack Cinder 块存储：卷创建与挂载的架构分工（Cinder 建卷、Nova 挂载）、本地 LVM + iSCSI 把控制节点变成存储端的完整链路（VG/LV/targetcli ISCSI 共享/libvirt 挂载），以及对接 NFS 存储的后端配置与 Web 界面实操。</description>
     </item>
     <item>
       <title>OpenStack 核心服务详解：Keystone 认证、Nova 计算与 Glance/Swift 镜像存储</title>
-      <link>https://LMDAWN1127.github.io/posts/openstack-keystone-glance-nova/</link>
+      <link>http://192.168.100.30:1313/posts/openstack-keystone-glance-nova/</link>
       <pubDate>Mon, 05 Oct 2026 00:21:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/posts/openstack-keystone-glance-nova/</guid>
+      <guid>http://192.168.100.30:1313/posts/openstack-keystone-glance-nova/</guid>
       <description>梳理 OpenStack 三大核心服务：Keystone 的多域支持、service/endpoint 注册与策略文件权限控制；Nova 各模块（api/scheduler/conductor/compute/novncproxy）、消息队列与差分盘机制；Glance 镜像服务及改用 Swift 对象存储作为后端。</description>
     </item>
     <item>
       <title>OpenStack发放云主机</title>
-      <link>https://LMDAWN1127.github.io/posts/openstack-provision-cloud-server/</link>
+      <link>http://192.168.100.30:1313/posts/openstack-provision-cloud-server/</link>
       <pubDate>Sun, 04 Oct 2026 21:50:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/posts/openstack-provision-cloud-server/</guid>
+      <guid>http://192.168.100.30:1313/posts/openstack-provision-cloud-server/</guid>
       <description>从图形化界面到命令行，完整演示 OpenStack 发放云主机的全流程：租户/用户/镜像/规格/网络/路由器/安全组/密钥对/浮动IP 的创建与删除，并附 iptables SNAT/DNAT 与 Nova cell_v2 discover_hosts 排查要点。</description>
     </item>
     <item>
       <title>systemd 服务管理与 MySQL 多版本部署</title>
-      <link>https://LMDAWN1127.github.io/posts/systemd-mysql-multiversion/</link>
+      <link>http://192.168.100.30:1313/posts/systemd-mysql-multiversion/</link>
       <pubDate>Sat, 03 Oct 2026 17:11:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/posts/systemd-mysql-multiversion/</guid>
+      <guid>http://192.168.100.30:1313/posts/systemd-mysql-multiversion/</guid>
       <description>围绕 systemd Unit 文件管理与 MySQL 5.6/5.7 多版本、多实例部署实战，涵盖两种生产守护进程配置、归档包下载、初始化、专属配置文件编写，以及启动/停止与三服务状态验证。</description>
     </item>
     <item>
       <title>MySQL 实战：二进制安装部署、启动关闭与密码管理</title>
-      <link>https://LMDAWN1127.github.io/posts/mysql-binary-deploy/</link>
+      <link>http://192.168.100.30:1313/posts/mysql-binary-deploy/</link>
       <pubDate>Sat, 03 Oct 2026 14:53:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/posts/mysql-binary-deploy/</guid>
+      <guid>http://192.168.100.30:1313/posts/mysql-binary-deploy/</guid>
       <description>从官方二进制包安装 MySQL 8.0，涵盖系统环境准备、初始化、配置文件编写、多种启动/关闭方式，以及密码设置、修改与忘记密码重置的完整运维实战。</description>
     </item>
     <item>
       <title>SonarQube 实战：私有化部署、Token 配置与代码质量扫描</title>
-      <link>https://LMDAWN1127.github.io/posts/sonarqube-practice/</link>
+      <link>http://192.168.100.30:1313/posts/sonarqube-practice/</link>
       <pubDate>Fri, 02 Oct 2026 14:12:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/posts/sonarqube-practice/</guid>
+      <guid>http://192.168.100.30:1313/posts/sonarqube-practice/</guid>
       <description>从 JDK8 + MySQL5.6 安装、SonarQube 解压与插件部署、普通用户启动，到 Web Token 配置与 sonar-scanner 客户端代码扫描的完整私有化实战。</description>
     </item>
     <item>
       <title>Jenkins 实战：私有化部署、插件安装与 GitLab 联动 CI</title>
-      <link>https://LMDAWN1127.github.io/posts/jenkins-practice/</link>
+      <link>http://192.168.100.30:1313/posts/jenkins-practice/</link>
       <pubDate>Thu, 01 Oct 2026 21:28:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/posts/jenkins-practice/</guid>
+      <guid>http://192.168.100.30:1313/posts/jenkins-practice/</guid>
       <description>从 RPM 安装 JDK 与 Jenkins、改为 root 启动、插件离线安装，到打通 GitLab SSH 免密与 webhook 自动构建的完整 Jenkins 私有化实战。</description>
     </item>
     <item>
       <title>GitLab 实战：私有化部署、SSH 免密与代码仓库管理</title>
-      <link>https://LMDAWN1127.github.io/posts/gitlab-practice/</link>
+      <link>http://192.168.100.30:1313/posts/gitlab-practice/</link>
       <pubDate>Thu, 01 Oct 2026 17:50:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/posts/gitlab-practice/</guid>
+      <guid>http://192.168.100.30:1313/posts/gitlab-practice/</guid>
       <description>从 RPM 安装、组件构成、常用命令到 Web 配置、SSH 免密与多账号协作的完整 GitLab 私有化部署实战。</description>
     </item>
     <item>
       <title>Git 实战笔记：安装配置、常用命令与分支管理</title>
-      <link>https://LMDAWN1127.github.io/posts/git-practice-notes/</link>
+      <link>http://192.168.100.30:1313/posts/git-practice-notes/</link>
       <pubDate>Thu, 01 Oct 2026 01:20:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/posts/git-practice-notes/</guid>
+      <guid>http://192.168.100.30:1313/posts/git-practice-notes/</guid>
       <description>从安装配置到常用命令，再到分支管理与冲突合并，一份完整的 Git 实操记录。</description>
     </item>
     <item>
       <title>Zabbix 自定义监控</title>
-      <link>https://LMDAWN1127.github.io/posts/zabbix-custom-monitor/</link>
+      <link>http://192.168.100.30:1313/posts/zabbix-custom-monitor/</link>
       <pubDate>Wed, 23 Sep 2026 18:30:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/posts/zabbix-custom-monitor/</guid>
+      <guid>http://192.168.100.30:1313/posts/zabbix-custom-monitor/</guid>
       <description>Zabbix 自定义监控实战：用 UserParameter 采集登录用户数/内存可用百分比等自定义指标，通过 zabbix_get 验证，在 Web 页面添加监控项、值映射、触发器（含多条件触发器）实现自定义告警。</description>
     </item>
     <item>
       <title>拆分数据库</title>
-      <link>https://LMDAWN1127.github.io/posts/zabbix-split-database/</link>
+      <link>http://192.168.100.30:1313/posts/zabbix-split-database/</link>
       <pubDate>Wed, 23 Sep 2026 16:00:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/posts/zabbix-split-database/</guid>
+      <guid>http://192.168.100.30:1313/posts/zabbix-split-database/</guid>
       <description>面向 Zabbix 高并发场景，将数据库从 Zabbix 服务器拆分到独立 MariaDB 服务器（11.0.1.52）的操作步骤：建库授权、导出导入数据、修改 Web 与 Server 的数据库连接配置、重启服务。</description>
     </item>
     <item>
       <title>Zabbix 监控服务器信息</title>
-      <link>https://LMDAWN1127.github.io/posts/zabbix-monitor-server/</link>
+      <link>http://192.168.100.30:1313/posts/zabbix-monitor-server/</link>
       <pubDate>Wed, 23 Sep 2026 13:21:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/posts/zabbix-monitor-server/</guid>
+      <guid>http://192.168.100.30:1313/posts/zabbix-monitor-server/</guid>
       <description>&lt;h2 id=&#34;1安装zabbix-agent客户端-准备一台服务器11018&#34;&gt;1.安装zabbix-agent客户端 准备一台服务器11.0.1.8&lt;/h2&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;
 &lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
@@ -208,13 +215,13 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;h2 id=&#34;3zabbix监控web02&#34;&gt;3.zabbix监控web02&lt;/h2&gt;
-&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;https://LMDAWN1127.github.io/images/p9_img63.png&#34;&gt;&lt;/p&gt;</description>
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;http://192.168.100.30:1313/images/p9_img63.png&#34;&gt;&lt;/p&gt;</description>
     </item>
     <item>
       <title>Zabbix 安装部署</title>
-      <link>https://LMDAWN1127.github.io/posts/zabbix-install/</link>
+      <link>http://192.168.100.30:1313/posts/zabbix-install/</link>
       <pubDate>Wed, 23 Sep 2026 01:52:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/posts/zabbix-install/</guid>
+      <guid>http://192.168.100.30:1313/posts/zabbix-install/</guid>
       <description>&lt;h2 id=&#34;1配置仓库&#34;&gt;1.配置仓库&lt;/h2&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;
 &lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
@@ -414,13 +421,13 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;h2 id=&#34;13访问zabbix页面-110171zabbix&#34;&gt;13.访问zabbix页面 11.0.1.71/zabbix&lt;/h2&gt;
-&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;https://LMDAWN1127.github.io/images/p4_img29.png&#34;&gt;&lt;/p&gt;</description>
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;http://192.168.100.30:1313/images/p4_img29.png&#34;&gt;&lt;/p&gt;</description>
     </item>
     <item>
       <title>手动部署 Kubernetes v1.30 集群（kubeadm 方式）</title>
-      <link>https://LMDAWN1127.github.io/posts/k8s-v1.30-manual-deploy/</link>
+      <link>http://192.168.100.30:1313/posts/k8s-v1.30-manual-deploy/</link>
       <pubDate>Fri, 07 Aug 2026 13:52:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/posts/k8s-v1.30-manual-deploy/</guid>
+      <guid>http://192.168.100.30:1313/posts/k8s-v1.30-manual-deploy/</guid>
       <description>&lt;p&gt;规划如下：&lt;/p&gt;
 &lt;p&gt;master节点：   计算机名： master   IP地址：192.168.8.30&lt;/p&gt;
 &lt;p&gt;worker01节点： 计算机名： node1   IP地址： 192.168.8.31&lt;/p&gt;
@@ -488,9 +495,9 @@
     </item>
     <item>
       <title>KVM 虚拟化入门到实战：部署、管理与网络配置</title>
-      <link>https://LMDAWN1127.github.io/posts/kvm-virtualization-guide/</link>
+      <link>http://192.168.100.30:1313/posts/kvm-virtualization-guide/</link>
       <pubDate>Sun, 02 Aug 2026 00:00:00 +0000</pubDate>
-      <guid>https://LMDAWN1127.github.io/posts/kvm-virtualization-guide/</guid>
+      <guid>http://192.168.100.30:1313/posts/kvm-virtualization-guide/</guid>
       <description>&lt;h1 id=&#34;kvm-虚拟化入门到实战部署管理与网络配置&#34;&gt;KVM 虚拟化入门到实战：部署、管理与网络配置&lt;/h1&gt;
 &lt;blockquote&gt;
 &lt;p&gt;本文系统介绍 KVM 虚拟化技术，涵盖发展历史、部署方法、虚拟机管理、网络模式配置，以及使用命令行自动化安装虚拟机。所有命令均在 CentOS/RHEL 环境下验证。&lt;/p&gt;
@@ -510,37 +517,37 @@
     </item>
     <item>
       <title>Dockerfile 构建镜像太大？10 个技巧让镜像瘦身 90%</title>
-      <link>https://LMDAWN1127.github.io/posts/dockerfile-smaller-image/</link>
+      <link>http://192.168.100.30:1313/posts/dockerfile-smaller-image/</link>
       <pubDate>Thu, 30 Jul 2026 12:00:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/posts/dockerfile-smaller-image/</guid>
+      <guid>http://192.168.100.30:1313/posts/dockerfile-smaller-image/</guid>
       <description>10 个经过验证的技巧，把 Docker 镜像体积缩小 90% 以上。</description>
     </item>
     <item>
       <title>Dockerfile 构建镜像如何更快？10 个实用优化技巧</title>
-      <link>https://LMDAWN1127.github.io/posts/dockerfile-faster-build/</link>
+      <link>http://192.168.100.30:1313/posts/dockerfile-faster-build/</link>
       <pubDate>Thu, 30 Jul 2026 11:00:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/posts/dockerfile-faster-build/</guid>
+      <guid>http://192.168.100.30:1313/posts/dockerfile-faster-build/</guid>
       <description>10 个经过验证的技巧，从缓存策略到多阶段构建，大幅缩短 Docker 构建时间。</description>
     </item>
     <item>
       <title>Dockerfile 中 COPY 与 ADD 的区别详解</title>
-      <link>https://LMDAWN1127.github.io/posts/dockerfile-copy-vs-add/</link>
+      <link>http://192.168.100.30:1313/posts/dockerfile-copy-vs-add/</link>
       <pubDate>Thu, 30 Jul 2026 10:00:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/posts/dockerfile-copy-vs-add/</guid>
+      <guid>http://192.168.100.30:1313/posts/dockerfile-copy-vs-add/</guid>
       <description>COPY 和 ADD 都能复制文件，但行为差异很大。本文通过对比和示例讲清两者区别。</description>
     </item>
     <item>
       <title>CentOS 部署 Claude Code 全流程指南</title>
-      <link>https://LMDAWN1127.github.io/posts/centos-deploy-claude-code/</link>
+      <link>http://192.168.100.30:1313/posts/centos-deploy-claude-code/</link>
       <pubDate>Sat, 04 Jul 2026 05:00:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/posts/centos-deploy-claude-code/</guid>
+      <guid>http://192.168.100.30:1313/posts/centos-deploy-claude-code/</guid>
       <description>在 CentOS 上从零部署 Claude Code，涵盖 Node.js 安装、API Key 配置、常见问题排查。</description>
     </item>
     <item>
       <title>flannel 实战：从零搭建 Docker 跨主机容器网络</title>
-      <link>https://LMDAWN1127.github.io/posts/flannel-network-lab/</link>
+      <link>http://192.168.100.30:1313/posts/flannel-network-lab/</link>
       <pubDate>Wed, 21 May 2025 00:00:00 +0000</pubDate>
-      <guid>https://LMDAWN1127.github.io/posts/flannel-network-lab/</guid>
+      <guid>http://192.168.100.30:1313/posts/flannel-network-lab/</guid>
       <description>&lt;h1 id=&#34;flannel-实战从零搭建-docker-跨主机容器网络&#34;&gt;flannel 实战：从零搭建 Docker 跨主机容器网络&lt;/h1&gt;
 &lt;h2 id=&#34;一网络环境规划&#34;&gt;一、网络环境规划&lt;/h2&gt;
 &lt;ol&gt;

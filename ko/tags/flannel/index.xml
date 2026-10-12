@@ -2,22 +2,22 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>Flannel on DAWN&#39;s Blog</title>
-    <link>https://LMDAWN1127.github.io/ko/tags/flannel/</link>
+    <link>http://192.168.100.30:1313/ko/tags/flannel/</link>
     <description>Recent content in Flannel on DAWN&#39;s Blog</description>
     <image>
       <title>DAWN&#39;s Blog</title>
-      <url>https://LMDAWN1127.github.io/images/DAWN.jpg</url>
-      <link>https://LMDAWN1127.github.io/images/DAWN.jpg</link>
+      <url>http://192.168.100.30:1313/images/DAWN.jpg</url>
+      <link>http://192.168.100.30:1313/images/DAWN.jpg</link>
     </image>
     <generator>Hugo</generator>
     <language>ko</language>
     <lastBuildDate>Wed, 21 May 2025 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://LMDAWN1127.github.io/ko/tags/flannel/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://192.168.100.30:1313/ko/tags/flannel/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>flannel 실전: Docker 크로스 호스트 컨테이너 네트워크 구축</title>
-      <link>https://LMDAWN1127.github.io/ko/posts/flannel-network-lab/</link>
+      <link>http://192.168.100.30:1313/ko/posts/flannel-network-lab/</link>
       <pubDate>Wed, 21 May 2025 00:00:00 +0000</pubDate>
-      <guid>https://LMDAWN1127.github.io/ko/posts/flannel-network-lab/</guid>
+      <guid>http://192.168.100.30:1313/ko/posts/flannel-network-lab/</guid>
       <description>&lt;h1 id=&#34;flannel-실전-docker-크로스-호스트-컨테이너-네트워크-구축&#34;&gt;flannel 실전: Docker 크로스 호스트 컨테이너 네트워크 구축&lt;/h1&gt;
 &lt;h2 id=&#34;1-네트워크-환경-계획&#34;&gt;1. 네트워크 환경 계획&lt;/h2&gt;
 &lt;ol&gt;

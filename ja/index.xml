@@ -2,169 +2,169 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>DAWN&#39;s Blog</title>
-    <link>https://LMDAWN1127.github.io/ja/</link>
+    <link>http://192.168.100.30:1313/ja/</link>
     <description>Recent content on DAWN&#39;s Blog</description>
     <image>
       <title>DAWN&#39;s Blog</title>
-      <url>https://LMDAWN1127.github.io/images/DAWN.jpg</url>
-      <link>https://LMDAWN1127.github.io/images/DAWN.jpg</link>
+      <url>http://192.168.100.30:1313/images/DAWN.jpg</url>
+      <link>http://192.168.100.30:1313/images/DAWN.jpg</link>
     </image>
     <generator>Hugo</generator>
     <language>ja</language>
     <lastBuildDate>Tue, 06 Oct 2026 20:35:00 +0800</lastBuildDate>
-    <atom:link href="https://LMDAWN1127.github.io/ja/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://192.168.100.30:1313/ja/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Harbor アクティブスタンバイデプロイ：インストールからHTTPS・レプリケーションまで</title>
-      <link>https://LMDAWN1127.github.io/ja/posts/harbor-master-slave/</link>
+      <link>http://192.168.100.30:1313/ja/posts/harbor-master-slave/</link>
       <pubDate>Tue, 04 Aug 2026 00:00:00 +0000</pubDate>
-      <guid>https://LMDAWN1127.github.io/ja/posts/harbor-master-slave/</guid>
+      <guid>http://192.168.100.30:1313/ja/posts/harbor-master-slave/</guid>
       <description>HarborエンタープライズDockerレジストリのアクティブスタンバイアーキテクチャ、HTTP/HTTPSモード、自己署名証明書、クロスホストレプリケーションを完全にカバーするデプロイガイドです。</description>
     </item>
     <item>
       <title>OpenStack クラウド OS：コアアーキテクチャと自動化デプロイ</title>
-      <link>https://LMDAWN1127.github.io/ja/posts/openstack-core-architecture-deployment/</link>
+      <link>http://192.168.100.30:1313/ja/posts/openstack-core-architecture-deployment/</link>
       <pubDate>Tue, 06 Oct 2026 20:35:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/ja/posts/openstack-core-architecture-deployment/</guid>
+      <guid>http://192.168.100.30:1313/ja/posts/openstack-core-architecture-deployment/</guid>
       <description>コアコンポーネント（Nova/Glance/Neutron/Cinder など）から、Packstack を用いた Victoria リリースの一元自動デプロイ、さらに Rsyslog ログトラブルシューティングまで。</description>
     </item>
     <item>
       <title>OpenStack Cinder ブロックストレージ詳細解説：ローカル LVM &#43; iSCSI ボリュームと NFS バックエンド連携</title>
-      <link>https://LMDAWN1127.github.io/ja/posts/openstack-cinder-block-storage/</link>
+      <link>http://192.168.100.30:1313/ja/posts/openstack-cinder-block-storage/</link>
       <pubDate>Mon, 05 Oct 2026 23:30:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/ja/posts/openstack-cinder-block-storage/</guid>
+      <guid>http://192.168.100.30:1313/ja/posts/openstack-cinder-block-storage/</guid>
       <description>OpenStack Cinder ブロックストレージを整理：ボリューム作成とマウントの役割分担（Cinder が作成、Nova がマウント）、ローカル LVM + iSCSI でコントローラをストレージ化する一連の流れ（VG/LV、targetcli による ISCSI 共有、libvirt でのマウント）、および NFS バックエンド連携とダッシュボード操作。</description>
     </item>
     <item>
       <title>OpenStack 中核サービス詳細解説：Keystone 認証・Nova コンピュート・Glance/Swift イメージストレージ</title>
-      <link>https://LMDAWN1127.github.io/ja/posts/openstack-keystone-glance-nova/</link>
+      <link>http://192.168.100.30:1313/ja/posts/openstack-keystone-glance-nova/</link>
       <pubDate>Mon, 05 Oct 2026 00:21:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/ja/posts/openstack-keystone-glance-nova/</guid>
+      <guid>http://192.168.100.30:1313/ja/posts/openstack-keystone-glance-nova/</guid>
       <description>OpenStack の 3 大中核サービスを整理：Keystone のマルチドメイン対応・service/endpoint 登録・ポリシーファイルによる権限制御、Nova の各モジュール（api/scheduler/conductor/compute/novncproxy）とメッセージキュー・差分ディスク、そして Glance イメージサービスの Swift オブジェクトストレージ化。</description>
     </item>
     <item>
       <title>OpenStack でのクラウドサーバー提供</title>
-      <link>https://LMDAWN1127.github.io/ja/posts/openstack-provision-cloud-server/</link>
+      <link>http://192.168.100.30:1313/ja/posts/openstack-provision-cloud-server/</link>
       <pubDate>Sun, 04 Oct 2026 21:50:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/ja/posts/openstack-provision-cloud-server/</guid>
+      <guid>http://192.168.100.30:1313/ja/posts/openstack-provision-cloud-server/</guid>
       <description>GUI から CLI まで、OpenStack でのクラウドサーバー提供の全体フローを完全解説：テナント・ユーザー・イメージ・フレーバー・ネットワーク・ルーター・セキュリティグループ・キーペア・浮动 IP の作成と削除、および iptables SNAT/DNAT と Nova cell_v2 discover_hosts のトラブルシューティング。</description>
     </item>
     <item>
       <title>systemd サービス管理と MySQL マルチバージョン導入</title>
-      <link>https://LMDAWN1127.github.io/ja/posts/systemd-mysql-multiversion/</link>
+      <link>http://192.168.100.30:1313/ja/posts/systemd-mysql-multiversion/</link>
       <pubDate>Sat, 03 Oct 2026 17:11:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/ja/posts/systemd-mysql-multiversion/</guid>
+      <guid>http://192.168.100.30:1313/ja/posts/systemd-mysql-multiversion/</guid>
       <description>systemd Unit 管理と MySQL 5.6/5.7 のマルチバージョン・マルチインスタンス導入実戦：2 種類の本番デーモン設定、アーカイブ入手、初期化、インスタンス別設定ファイル作成、および起動/停止と 3 サービス状態確認。</description>
     </item>
     <item>
       <title>MySQL 実践：バイナリインストール・起動停止・パスワード管理</title>
-      <link>https://LMDAWN1127.github.io/ja/posts/mysql-binary-deploy/</link>
+      <link>http://192.168.100.30:1313/ja/posts/mysql-binary-deploy/</link>
       <pubDate>Sat, 03 Oct 2026 14:53:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/ja/posts/mysql-binary-deploy/</guid>
+      <guid>http://192.168.100.30:1313/ja/posts/mysql-binary-deploy/</guid>
       <description>MySQL 8.0 の運用実戦：公式バイナリパッケージからのインストール、OS 準備、初期化、設定ファイル、複数の起動/停止方法、およびパスワード設定・変更・リセット。</description>
     </item>
     <item>
       <title>SonarQube 実践：プライベート導入・トークン設定・コード品質スキャン</title>
-      <link>https://LMDAWN1127.github.io/ja/posts/sonarqube-practice/</link>
+      <link>http://192.168.100.30:1313/ja/posts/sonarqube-practice/</link>
       <pubDate>Fri, 02 Oct 2026 14:12:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/ja/posts/sonarqube-practice/</guid>
+      <guid>http://192.168.100.30:1313/ja/posts/sonarqube-practice/</guid>
       <description>SonarQube を自前で導入する実践手順：JDK8/MySQL5.6 の導入、プラグイン込みの展開、非 root ユーザーでの起動、Web トークン設定、sonar-scanner クライアントによるコードスキャン。</description>
     </item>
     <item>
       <title>Jenkins 実践：プライベート導入・プラグイン導入・GitLab 連携 CI</title>
-      <link>https://LMDAWN1127.github.io/ja/posts/jenkins-practice/</link>
+      <link>http://192.168.100.30:1313/ja/posts/jenkins-practice/</link>
       <pubDate>Thu, 01 Oct 2026 21:28:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/ja/posts/jenkins-practice/</guid>
+      <guid>http://192.168.100.30:1313/ja/posts/jenkins-practice/</guid>
       <description>Jenkins を自前で導入する実践手順：JDK/Jenkins の RPM インストール、root 起動、プラグインのオフライン導入、GitLab の SSH 鍵認証と webhook 自動ビルドの連携。</description>
     </item>
     <item>
       <title>GitLab 実践：プライベート導入・SSH 鍵認証・リポジトリ管理</title>
-      <link>https://LMDAWN1127.github.io/ja/posts/gitlab-practice/</link>
+      <link>http://192.168.100.30:1313/ja/posts/gitlab-practice/</link>
       <pubDate>Thu, 01 Oct 2026 17:50:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/ja/posts/gitlab-practice/</guid>
+      <guid>http://192.168.100.30:1313/ja/posts/gitlab-practice/</guid>
       <description>GitLab を自前で導入する実践手順：RPM インストール、コンポーネント、よく使うコマンド、Web UI 設定、SSH 鍵認証、マルチユーザー連携。</description>
     </item>
     <item>
       <title>Git 実践ノート：インストール・基本コマンド・ブランチ管理</title>
-      <link>https://LMDAWN1127.github.io/ja/posts/git-practice-notes/</link>
+      <link>http://192.168.100.30:1313/ja/posts/git-practice-notes/</link>
       <pubDate>Thu, 01 Oct 2026 01:20:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/ja/posts/git-practice-notes/</guid>
+      <guid>http://192.168.100.30:1313/ja/posts/git-practice-notes/</guid>
       <description>インストールから基本コマンド、ブランチ運用、コンフリクト解決までを網羅した Git 実践メモ。</description>
     </item>
     <item>
       <title>Zabbix カスタム監視</title>
-      <link>https://LMDAWN1127.github.io/ja/posts/zabbix-custom-monitor/</link>
+      <link>http://192.168.100.30:1313/ja/posts/zabbix-custom-monitor/</link>
       <pubDate>Wed, 23 Sep 2026 18:30:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/ja/posts/zabbix-custom-monitor/</guid>
+      <guid>http://192.168.100.30:1313/ja/posts/zabbix-custom-monitor/</guid>
       <description>Zabbix カスタム監視の実践 — UserParameter でログインユーザー数やメモリ空き率などの独自メトリクスを収集し、zabbix_get で検証、Web UI で監視項目・値マッピング・トリガー（複数条件トリガー含む）を追加してカスタムアラートを実現します。</description>
     </item>
     <item>
       <title>Zabbix データベースの分割</title>
-      <link>https://LMDAWN1127.github.io/ja/posts/zabbix-split-database/</link>
+      <link>http://192.168.100.30:1313/ja/posts/zabbix-split-database/</link>
       <pubDate>Wed, 23 Sep 2026 16:00:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/ja/posts/zabbix-split-database/</guid>
+      <guid>http://192.168.100.30:1313/ja/posts/zabbix-split-database/</guid>
       <description>企業の Zabbix 高負荷シナリオ向け — Zabbix サーバーから専用の MariaDB サーバー (11.0.1.52) へデータベースを分割します。データベース作成と権限付与、データのエクスポート/インポート、Web UI と Server のデータベース接続設定の変更、そしてサービスの再起動まで。</description>
     </item>
     <item>
       <title>Zabbix でサーバー情報を監視する</title>
-      <link>https://LMDAWN1127.github.io/ja/posts/zabbix-monitor-server/</link>
+      <link>http://192.168.100.30:1313/ja/posts/zabbix-monitor-server/</link>
       <pubDate>Wed, 23 Sep 2026 13:21:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/ja/posts/zabbix-monitor-server/</guid>
+      <guid>http://192.168.100.30:1313/ja/posts/zabbix-monitor-server/</guid>
       <description>対象サーバー (web02, 11.0.1.8) に Zabbix エージェントを導入し、Zabbix サーバーへ紐づけて、Web UI から監視を開始する手順です。</description>
     </item>
     <item>
       <title>Zabbix のインストールとデプロイ</title>
-      <link>https://LMDAWN1127.github.io/ja/posts/zabbix-install/</link>
+      <link>http://192.168.100.30:1313/ja/posts/zabbix-install/</link>
       <pubDate>Wed, 23 Sep 2026 01:52:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/ja/posts/zabbix-install/</guid>
+      <guid>http://192.168.100.30:1313/ja/posts/zabbix-install/</guid>
       <description>CentOS 7 に Zabbix 5.0 をインストールする手順を解説。リポジトリ設定、サーバー/エージェント/フロントエンドの導入、MariaDB 構築、スキーマのインポート、Web UI の中国語化とフォント設定まで。</description>
     </item>
     <item>
       <title>Kubernetes v1.30 クラスタを手動デプロイする（kubeadm 方式）</title>
-      <link>https://LMDAWN1127.github.io/ja/posts/k8s-v1.30-manual-deploy/</link>
+      <link>http://192.168.100.30:1313/ja/posts/k8s-v1.30-manual-deploy/</link>
       <pubDate>Fri, 07 Aug 2026 13:52:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/ja/posts/k8s-v1.30-manual-deploy/</guid>
+      <guid>http://192.168.100.30:1313/ja/posts/k8s-v1.30-manual-deploy/</guid>
       <description>kubeadm を用いて Kubernetes v1.30 クラスタを手動でデプロイする手順を解説します。ファイアウォール/SELinux、スワップ、カーネルモジュール、Containerd、kubeadm init、ワーカー参加、Calico、IPVS 追加まで網羅。</description>
     </item>
     <item>
       <title>KVM仮想化 入門から実戦まで：デプロイ、管理とネットワーク構成</title>
-      <link>https://LMDAWN1127.github.io/ja/posts/kvm-virtualization-guide/</link>
+      <link>http://192.168.100.30:1313/ja/posts/kvm-virtualization-guide/</link>
       <pubDate>Sun, 02 Aug 2026 00:00:00 +0000</pubDate>
-      <guid>https://LMDAWN1127.github.io/ja/posts/kvm-virtualization-guide/</guid>
+      <guid>http://192.168.100.30:1313/ja/posts/kvm-virtualization-guide/</guid>
       <description>KVM仮想化技術を体系的に紹介します。発展の歴史、デプロイ方法、仮想マシン管理、ネットワークモードの構成、コマンドラインによる仮想マシンの自動インストールをカバーします。</description>
     </item>
     <item>
       <title>Dockerfile のビルドイメージが大きすぎる？10 のテクニックでイメージを 90% スリム化</title>
-      <link>https://LMDAWN1127.github.io/ja/posts/dockerfile-smaller-image/</link>
+      <link>http://192.168.100.30:1313/ja/posts/dockerfile-smaller-image/</link>
       <pubDate>Thu, 30 Jul 2026 12:00:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/ja/posts/dockerfile-smaller-image/</guid>
+      <guid>http://192.168.100.30:1313/ja/posts/dockerfile-smaller-image/</guid>
       <description>10 の実証済みテクニックで、Docker イメージサイズを 90% 以上削減します。</description>
     </item>
     <item>
       <title>Dockerfile のビルドをより速くするには？10 の実用的な最適化テクニック</title>
-      <link>https://LMDAWN1127.github.io/ja/posts/dockerfile-faster-build/</link>
+      <link>http://192.168.100.30:1313/ja/posts/dockerfile-faster-build/</link>
       <pubDate>Thu, 30 Jul 2026 11:00:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/ja/posts/dockerfile-faster-build/</guid>
+      <guid>http://192.168.100.30:1313/ja/posts/dockerfile-faster-build/</guid>
       <description>10 の実証済みテクニックで、キャッシュ戦略からマルチステージビルドまで、Docker のビルド時間を大幅に短縮します。</description>
     </item>
     <item>
       <title>Dockerfile における COPY と ADD の違いを詳しく解説</title>
-      <link>https://LMDAWN1127.github.io/ja/posts/dockerfile-copy-vs-add/</link>
+      <link>http://192.168.100.30:1313/ja/posts/dockerfile-copy-vs-add/</link>
       <pubDate>Thu, 30 Jul 2026 10:00:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/ja/posts/dockerfile-copy-vs-add/</guid>
+      <guid>http://192.168.100.30:1313/ja/posts/dockerfile-copy-vs-add/</guid>
       <description>COPY と ADD はどちらもファイルをコピーできますが、動作に大きな違いがあります。本記事では比較とサンプルを通じて両者の違いを明確に解説します。</description>
     </item>
     <item>
       <title>CentOS に Claude Code をデプロイする完全ガイド</title>
-      <link>https://LMDAWN1127.github.io/ja/posts/centos-deploy-claude-code/</link>
+      <link>http://192.168.100.30:1313/ja/posts/centos-deploy-claude-code/</link>
       <pubDate>Sat, 04 Jul 2026 05:00:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/ja/posts/centos-deploy-claude-code/</guid>
+      <guid>http://192.168.100.30:1313/ja/posts/centos-deploy-claude-code/</guid>
       <description>CentOS 上でゼロから Claude Code をデプロイし、Node.js のインストール、API Key の設定、よくある問題のトラブルシューティングまでカバーします。</description>
     </item>
     <item>
       <title>flannel 実践：Docker クロスホストコンテナネットワークをゼロから構築</title>
-      <link>https://LMDAWN1127.github.io/ja/posts/flannel-network-lab/</link>
+      <link>http://192.168.100.30:1313/ja/posts/flannel-network-lab/</link>
       <pubDate>Wed, 21 May 2025 00:00:00 +0000</pubDate>
-      <guid>https://LMDAWN1127.github.io/ja/posts/flannel-network-lab/</guid>
+      <guid>http://192.168.100.30:1313/ja/posts/flannel-network-lab/</guid>
       <description>&lt;h1 id=&#34;flannel-実践docker-クロスホストコンテナネットワークをゼロから構築&#34;&gt;flannel 実践：Docker クロスホストコンテナネットワークをゼロから構築&lt;/h1&gt;
 &lt;h2 id=&#34;一ネットワーク環境の計画&#34;&gt;一、ネットワーク環境の計画&lt;/h2&gt;
 &lt;ol&gt;

@@ -2,29 +2,29 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>GitLab on DAWN&#39;s Blog</title>
-    <link>https://LMDAWN1127.github.io/tags/gitlab/</link>
+    <link>http://192.168.100.30:1313/tags/gitlab/</link>
     <description>Recent content in GitLab on DAWN&#39;s Blog</description>
     <image>
       <title>DAWN&#39;s Blog</title>
-      <url>https://LMDAWN1127.github.io/images/DAWN.jpg</url>
-      <link>https://LMDAWN1127.github.io/images/DAWN.jpg</link>
+      <url>http://192.168.100.30:1313/images/DAWN.jpg</url>
+      <link>http://192.168.100.30:1313/images/DAWN.jpg</link>
     </image>
     <generator>Hugo</generator>
     <language>zh-cn</language>
     <lastBuildDate>Fri, 09 Oct 2026 16:00:00 +0800</lastBuildDate>
-    <atom:link href="https://LMDAWN1127.github.io/tags/gitlab/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://192.168.100.30:1313/tags/gitlab/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Jenkins &#43; GitLab 打通实现 CI/CD 自动部署</title>
-      <link>https://LMDAWN1127.github.io/posts/jenkins-gitlab-cicd-auto-deploy/</link>
+      <link>http://192.168.100.30:1313/posts/jenkins-gitlab-cicd-auto-deploy/</link>
       <pubDate>Fri, 09 Oct 2026 16:00:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/posts/jenkins-gitlab-cicd-auto-deploy/</guid>
+      <guid>http://192.168.100.30:1313/posts/jenkins-gitlab-cicd-auto-deploy/</guid>
       <description>手把手实现 Jenkins 拉取 GitLab 代码、经 SSH 推送至 Web 服务器、并配置 GitLab Webhook 触发全自动部署的完整 CI/CD 流程。</description>
     </item>
     <item>
       <title>GitLab 实战：私有化部署、SSH 免密与代码仓库管理</title>
-      <link>https://LMDAWN1127.github.io/posts/gitlab-practice/</link>
+      <link>http://192.168.100.30:1313/posts/gitlab-practice/</link>
       <pubDate>Thu, 01 Oct 2026 17:50:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/posts/gitlab-practice/</guid>
+      <guid>http://192.168.100.30:1313/posts/gitlab-practice/</guid>
       <description>从 RPM 安装、组件构成、常用命令到 Web 配置、SSH 免密与多账号协作的完整 GitLab 私有化部署实战。</description>
     </item>
   </channel>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ja" dir="auto" data-theme="auto">
 
-<head><meta charset="utf-8">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="robots" content="index, follow">
@@ -9,19 +9,19 @@
 <meta name="keywords" content="DevOps, Jenkins, CI/CD">
 <meta name="description" content="Jenkins を自前で導入する実践手順：JDK/Jenkins の RPM インストール、root 起動、プラグインのオフライン導入、GitLab の SSH 鍵認証と webhook 自動ビルドの連携。">
 <meta name="author" content="DAWN">
-<link rel="canonical" href="https://LMDAWN1127.github.io/ja/posts/jenkins-practice/">
+<link rel="canonical" href="http://192.168.100.30:1313/ja/posts/jenkins-practice/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.4bf808bff57bddc46d61c8ae060b00400fc679ab876e37243b11bd3f832f2958.css" integrity="sha256-S/gIv/V73cRtYciuBgsAQA/GeauHbjckOxG9P4MvKVg=" rel="preload stylesheet" as="style">
-<link rel="icon" href="https://LMDAWN1127.github.io/images/DAWN.jpg">
-<link rel="icon" type="image/png" sizes="16x16" href="https://LMDAWN1127.github.io/favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="https://LMDAWN1127.github.io/favicon-32x32.png">
-<link rel="apple-touch-icon" href="https://LMDAWN1127.github.io/apple-touch-icon.png">
-<link rel="mask-icon" href="https://LMDAWN1127.github.io/safari-pinned-tab.svg">
+<link rel="icon" href="http://192.168.100.30:1313/images/DAWN.jpg">
+<link rel="icon" type="image/png" sizes="16x16" href="http://192.168.100.30:1313/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://192.168.100.30:1313/favicon-32x32.png">
+<link rel="apple-touch-icon" href="http://192.168.100.30:1313/apple-touch-icon.png">
+<link rel="mask-icon" href="http://192.168.100.30:1313/safari-pinned-tab.svg">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
-<link rel="alternate" hreflang="zh" href="https://LMDAWN1127.github.io/posts/jenkins-practice/">
-<link rel="alternate" hreflang="en" href="https://LMDAWN1127.github.io/en/posts/jenkins-practice/">
-<link rel="alternate" hreflang="ko" href="https://LMDAWN1127.github.io/ko/posts/jenkins-practice/">
-<link rel="alternate" hreflang="ja" href="https://LMDAWN1127.github.io/ja/posts/jenkins-practice/">
+<link rel="alternate" hreflang="zh" href="http://192.168.100.30:1313/posts/jenkins-practice/">
+<link rel="alternate" hreflang="en" href="http://192.168.100.30:1313/en/posts/jenkins-practice/">
+<link rel="alternate" hreflang="ko" href="http://192.168.100.30:1313/ko/posts/jenkins-practice/">
+<link rel="alternate" hreflang="ja" href="http://192.168.100.30:1313/ja/posts/jenkins-practice/">
 <noscript>
     <style>
         #theme-toggle,
@@ -67,8 +67,8 @@
         document.querySelector("html").dataset.theme = 'light';
     }
 
-</script><link rel="stylesheet" href='https://LMDAWN1127.github.io/css/custom.css'>
-<meta property="og:url" content="https://LMDAWN1127.github.io/ja/posts/jenkins-practice/">
+</script><link rel="stylesheet" href='http://192.168.100.30:1313/css/custom.css'>
+<meta property="og:url" content="http://192.168.100.30:1313/ja/posts/jenkins-practice/">
   <meta property="og:site_name" content="DAWN&#39;s Blog">
   <meta property="og:title" content="Jenkins 実践：プライベート導入・プラグイン導入・GitLab 連携 CI">
   <meta property="og:description" content="Jenkins を自前で導入する実践手順：JDK/Jenkins の RPM インストール、root 起動、プラグインのオフライン導入、GitLab の SSH 鍵認証と webhook 自動ビルドの連携。">
@@ -80,10 +80,10 @@
     <meta property="article:tag" content="DevOps">
     <meta property="article:tag" content="Jenkins">
     <meta property="article:tag" content="CI/CD">
-      <meta property="og:image" content="https://LMDAWN1127.github.io/images/DAWN.jpg">
+      <meta property="og:image" content="http://192.168.100.30:1313/images/DAWN.jpg">
 
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:image" content="https://LMDAWN1127.github.io/images/DAWN.jpg">
+  <meta name="twitter:image" content="http://192.168.100.30:1313/images/DAWN.jpg">
   <meta name="twitter:title" content="Jenkins 実践：プライベート導入・プラグイン導入・GitLab 連携 CI">
   <meta name="twitter:description" content="Jenkins を自前で導入する実践手順：JDK/Jenkins の RPM インストール、root 起動、プラグインのオフライン導入、GitLab の SSH 鍵認証と webhook 自動ビルドの連携。">
 
@@ -97,13 +97,13 @@
       "@type": "ListItem",
       "position":  1 ,
       "name": "Posts",
-      "item": "https://LMDAWN1127.github.io/ja/posts/"
+      "item": "http://192.168.100.30:1313/ja/posts/"
     }, 
     {
       "@type": "ListItem",
       "position":  2 ,
       "name": "Jenkins 実践：プライベート導入・プラグイン導入・GitLab 連携 CI",
-      "item": "https://LMDAWN1127.github.io/ja/posts/jenkins-practice/"
+      "item": "http://192.168.100.30:1313/ja/posts/jenkins-practice/"
     }
   ]
 }
@@ -121,7 +121,7 @@
   "articleBody": "01. Jenkins 概要 公式サイト：jenkins.io\nJenkins はオープンソースのプロジェクトで、Java ベースの継続的インテグレーション（CI）ツールである。繰り返しの作業を監視し、オープンで使いやすいソフトウェアプラットフォームを提供し、ソフトウェアの CI を可能にする。\n02. Jenkins のデプロイ 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 I. 環境準備 1、OS：CentOS 7.9 2、メモリ：実験用 2G、本番用 6G 以上 3、ファイアウォールを無効化し、SELinux を無効にする 4、JDK17 II. JDK をインストール RPM パッケージをアップロード [root@jenkins ~]#ll total 178212 -rw-r--r-- 1 root root 182486159 Oct 1 19:04 jdk-17_linux-x64_bin.rpm [root@jenkins ~]#rpm -ivh jdk-17_linux-x64_bin.rpm warning: jdk-17_linux-x64_bin.rpm: Header V3 RSA/SHA256 Signature, key ID ad986da3: NOKEY Preparing... ################################# [100%] Updating / installing... 1:jdk-17-2000:17.0.11-7 ################################# [100%] インストールが成功したか確認： [root@jenkins ~]# rpm -qa|grep jdk jdk-17-17.0.11-7.x86_64 II. Jenkins をインストール Jenkins パッケージをアップロード [root@jenkins ~]#ll total 269432 -rw-r--r-- 1 root root 182486159 Oct 1 19:04 jdk-17_linux-x64_bin.rpm -rw-r--r-- 1 root root 93405530 Oct 1 19:06 jenkins-2.405-1.1.noarch.rpm [root@jenkins ~]#rpm -ivh jenkins-2.405-1.1.noarch.rpm warning: jenkins-2.405-1.1.noarch.rpm: Header V4 RSA/SHA512 Signature, key ID ef5975ca: NOKEY Preparing... ################################# [100%] Updating / installing... 1:jenkins-2.405-1.1 ################################# [100%] III. Jenkins の実行ユーザーを root に変更 1) 設定ファイルの実行ユーザーを変更 [root@jenkins ~]# vim /etc/sysconfig/jenkins ... JENKINS_USER=\"root\" ... 2) 起動設定のユーザーを変更 [root@jenkins ~]# vim /usr/lib/systemd/system/jenkins.service ... User=root Group=root ... [root@jenkins ~]# systemctl daemon-reload 3) フォント設定をインストール [root@jenkins ~]# yum -y install fontconfig IV. Jenkins を起動し、起動時に有効化 [root@jenkins ~]# systemctl start jenkins [root@jenkins ~]# systemctl enable jenkins 03. Jenkins へログイン 04. パスワードを変更 パスワード変更後は再ログイン（ユーザー名は admin）\n05. プラグインのインストール 1 2 3 4 5 6 7 8 9 10 11 12 13 14 1. プラグインを Jenkins のホームディレクトリにアップロード [root@jenkins ~]# cd /var/lib/jenkins/ [root@jenkins ~]#ll total 576228 -rw-r--r-- 1 root root 182486159 Oct 1 19:04 jdk-17_linux-x64_bin.rpm -rw-r--r-- 1 root root 93405530 Oct 1 19:06 jenkins-2.405-1.1.noarch.rpm -rw-r--r-- 1 root root 314156543 Oct 1 19:30 jenkins_plu.tar.gz 2. プラグインを plugins ディレクトリに展開 [root@jenkins jenkins]#tar xf /root/jenkins_plu.tar.gz -C plugins/ 3. Jenkins を再起動して反映 [root@jenkins ~]# systemctl restart jenkins 06. プロジェクトを作成 フリープロジェクトを作成し、pwd を実行して Jenkins が使用する既定の作業ディレクトリを確認\n補足：Jenkins がプロジェクトを作成すると、ホーム /var/lib/jenkins/ 配下に workspace ディレクトリを自動作成し、その中にプロジェクト名のディレクトリを作成する。\n以降、Jenkins が GitLab からプルしたコードはこのプロジェクトディレクトリ配下に格納される。\n1 2 [root@jenkins ~]#ls /var/lib/jenkins/workspace/ test_job GitLab と Jenkins を連携させる\n連携前は接続できない旨が表示される：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 # 鍵認証（非対話）を設定 [root@jenkins ~]#ssh-keygen Generating public/private rsa key pair. Enter file in which to save the key (/root/.ssh/id_rsa): Created directory '/root/.ssh'. Enter passphrase (empty for no passphrase): Enter same passphrase again: Your identification has been saved in /root/.ssh/id_rsa. Your public key has been saved in /root/.ssh/id_rsa.pub. The key fingerprint is: SHA256:Rr4ouinx/cPqVxJsxju2Cjd1mhWmWSuKGOKG532uTvk root@jenkins The key's randomart image is: +---[RSA 2048]----+ | | | | | o = | | *B o | |o o=oS | |=o . +=O.. | |o=+.Bo+=. | |oo.B.+* | | .=+BOE. | +----[SHA256]-----+ [root@jenkins ~]#cat .ssh/id_rsa.pub ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC+kaj/NEwHKaIErMEClVYuG3JuWr9CD7XpuO5YZ6JftMmNdAPMrvS0mWqP4SDyT6/le0j1RGkA48GsirESfMqXKvzSSd5AuhIPmUADtGPNK6VSeiMKyoWgiNBFLn6RIOAcXI0MuZrYQMLJz+kOYr6kF9em/6MfFQrLkt9DzIlnR9b7CMLyDnPOZ8FG640DqqX0sZ8G+i2v41VX/c7RGIWAgEhJY+kiMS5cDxWlTf2k8hoZmh0VIa/G9AwnvbklyUiE4ACd9GtEJG5xXJzedn7q0/Ygfr26T29t+KST3SlyrXIaEbEC5WwIMymCEJDCPPCGzqLjsWa+4dbJhoEM1afV root@jenkins # Jenkins に git をインストール [root@jenkins ~]#yum install -y git GitLab に Jenkins が生成した鍵を追加：\nJenkins 上で一度 git clone し、初回の yes 入力を完了させる\n1 2 3 4 5 6 7 8 9 10 11 12 13 [root@jenkins ~]#git clone git@11.0.1.200:dawn/blog.git Cloning into 'blog'... The authenticity of host '11.0.1.200 (11.0.1.200)' can't be established. ECDSA key fingerprint is SHA256:Ldn1vBzBEFxynXs0qBNr0XzJ2lTx/0caMuK5yJtb+Zo. ECDSA key fingerprint is MD5:3d:1d:28:3f:33:ec:ee:c1:69:83:af:14:a3:7f:79:ac. Are you sure you want to continue connecting (yes/no)? yes Warning: Permanently added '11.0.1.200' (ECDSA) to the list of known hosts. remote: Enumerating objects: 20, done. remote: Counting objects: 100% (9/9), done. remote: Compressing objects: 100% (8/8), done. remote: Total 20 (delta 0), reused 0 (delta 0), pack-reused 11 Receiving objects: 100% (20/20), done. Resolving deltas: 100% (2/2), done. これで接続できるようになる\n再度ビルドしてプルをテスト\nプル成功\nWebhook を設定\nWebhook を設定し、GitLab のコードを Jenkins が自動的にプルしてビルドするよう構成\n両方保存してテスト\nプロジェクトを修正して再度プッシュしてテスト\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 [root@gitlab blog]#git branch * master [root@gitlab blog]#touch c.txt [root@gitlab blog]#git add . [root@gitlab blog]#git commit -m \"test_v2\" [master 7b1f29e] test_v2 1 file changed, 0 insertions(+), 0 deletions(-) create mode 100644 c.txt [root@gitlab blog]#git pull origin master remote: Enumerating objects: 17, done. remote: Counting objects: 100% (9/9), done. remote: Compressing objects: 100% (8/8), done. remote: Total 17 (delta 0), reused 0 (delta 0), pack-reused 8 Unpacking objects: 100% (17/17), done. From 11.0.1.200:dawn/blog * branch master -\u003e FETCH_HEAD Merge made by the 'recursive' strategy. a.txt | 1 + 1 file changed, 1 insertion(+) create mode 100644 a.txt [root@gitlab blog]#git push -u origin master Counting objects: 7, done. Delta compression using up to 2 threads. Compressing objects: 100% (4/4), done. Writing objects: 100% (5/5), 469 bytes | 0 bytes/s, done. Total 5 (delta 2), reused 0 (delta 0) To git@11.0.1.200:dawn/blog.git 47f606c..91e80a5 master -\u003e master Branch master set up to track remote branch master from origin. 自動ビルド成功\n",
   "wordCount" : "764",
   "inLanguage": "ja",
-  "image": "https://LMDAWN1127.github.io/images/DAWN.jpg","datePublished": "2026-10-01T21:28:00+08:00",
+  "image": "http://192.168.100.30:1313/images/DAWN.jpg","datePublished": "2026-10-01T21:28:00+08:00",
   "dateModified": "2026-10-01T21:28:00+08:00",
   "author":{
     "@type": "Person",
@@ -129,14 +129,14 @@
   },
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "https://LMDAWN1127.github.io/ja/posts/jenkins-practice/"
+    "@id": "http://192.168.100.30:1313/ja/posts/jenkins-practice/"
   },
   "publisher": {
     "@type": "Organization",
     "name": "DAWN's Blog",
     "logo": {
       "@type": "ImageObject",
-      "url": "https://LMDAWN1127.github.io/images/DAWN.jpg"
+      "url": "http://192.168.100.30:1313/images/DAWN.jpg"
     }
   }
 }
@@ -146,8 +146,8 @@
     <header class="header">
     <nav class="header-nav">
         <div class="logo">
-            <a href="https://LMDAWN1127.github.io/ja/" accesskey="h" title="DAWN&#39;s Blog (Alt + H)">
-                <img src="https://LMDAWN1127.github.io/images/DAWN.jpg" alt="" aria-label="logo"
+            <a href="http://192.168.100.30:1313/ja/" accesskey="h" title="DAWN&#39;s Blog (Alt + H)">
+                <img src="http://192.168.100.30:1313/images/DAWN.jpg" alt="" aria-label="logo"
                     height="38">DAWN&#39;s Blog</a>
             <div class="logo-switches">
                 <button id="theme-toggle" class="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
@@ -172,15 +172,15 @@
                 </button><span class="nav-sep">|</span>
                     <ul class="lang-menu">
                         <li>
-                            <a href="https://LMDAWN1127.github.io/" title="中文"
+                            <a href="http://192.168.100.30:1313/" title="中文"
                                 aria-label="中文">Zh</a>
                         </li>
                         <li>
-                            <a href="https://LMDAWN1127.github.io/en/" title="English"
+                            <a href="http://192.168.100.30:1313/en/" title="English"
                                 aria-label="English">En</a>
                         </li>
                         <li>
-                            <a href="https://LMDAWN1127.github.io/ko/" title="한국어"
+                            <a href="http://192.168.100.30:1313/ko/" title="한국어"
                                 aria-label="한국어">Ko</a>
                         </li>
                     </ul>
@@ -188,7 +188,7 @@
         </div>
         <ul id="menu" class="menu">
             <li>
-                <a href="https://LMDAWN1127.github.io/ja/archives/" title="アーカイブ">
+                <a href="http://192.168.100.30:1313/ja/archives/" title="アーカイブ">
                     <span>アーカイブ</span>
                 </a>
             </li>
