@@ -2,29 +2,29 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>Nova on DAWN&#39;s Blog</title>
-    <link>http://192.168.100.30:1313/ja/tags/nova/</link>
+    <link>https://LMDAWN1127.github.io/ja/tags/nova/</link>
     <description>Recent content in Nova on DAWN&#39;s Blog</description>
     <image>
       <title>DAWN&#39;s Blog</title>
-      <url>http://192.168.100.30:1313/images/DAWN.jpg</url>
-      <link>http://192.168.100.30:1313/images/DAWN.jpg</link>
+      <url>https://LMDAWN1127.github.io/images/DAWN.jpg</url>
+      <link>https://LMDAWN1127.github.io/images/DAWN.jpg</link>
     </image>
     <generator>Hugo</generator>
     <language>ja</language>
     <lastBuildDate>Mon, 05 Oct 2026 00:21:00 +0800</lastBuildDate>
-    <atom:link href="http://192.168.100.30:1313/ja/tags/nova/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://LMDAWN1127.github.io/ja/tags/nova/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>OpenStack 中核サービス詳細解説：Keystone 認証・Nova コンピュート・Glance/Swift イメージストレージ</title>
-      <link>http://192.168.100.30:1313/ja/posts/openstack-keystone-glance-nova/</link>
+      <link>https://LMDAWN1127.github.io/ja/posts/openstack-keystone-glance-nova/</link>
       <pubDate>Mon, 05 Oct 2026 00:21:00 +0800</pubDate>
-      <guid>http://192.168.100.30:1313/ja/posts/openstack-keystone-glance-nova/</guid>
+      <guid>https://LMDAWN1127.github.io/ja/posts/openstack-keystone-glance-nova/</guid>
       <description>OpenStack の 3 大中核サービスを整理：Keystone のマルチドメイン対応・service/endpoint 登録・ポリシーファイルによる権限制御、Nova の各モジュール（api/scheduler/conductor/compute/novncproxy）とメッセージキュー・差分ディスク、そして Glance イメージサービスの Swift オブジェクトストレージ化。</description>
     </item>
     <item>
       <title>OpenStack でのクラウドサーバー提供</title>
-      <link>http://192.168.100.30:1313/ja/posts/openstack-provision-cloud-server/</link>
+      <link>https://LMDAWN1127.github.io/ja/posts/openstack-provision-cloud-server/</link>
       <pubDate>Sun, 04 Oct 2026 21:50:00 +0800</pubDate>
-      <guid>http://192.168.100.30:1313/ja/posts/openstack-provision-cloud-server/</guid>
+      <guid>https://LMDAWN1127.github.io/ja/posts/openstack-provision-cloud-server/</guid>
       <description>GUI から CLI まで、OpenStack でのクラウドサーバー提供の全体フローを完全解説：テナント・ユーザー・イメージ・フレーバー・ネットワーク・ルーター・セキュリティグループ・キーペア・浮动 IP の作成と削除、および iptables SNAT/DNAT と Nova cell_v2 discover_hosts のトラブルシューティング。</description>
     </item>
   </channel>

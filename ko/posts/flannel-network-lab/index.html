@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko" dir="auto" data-theme="auto">
 
-<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
+<head><meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="robots" content="index, follow">
@@ -127,19 +127,19 @@ etcdctl --endpoints http://192.168.8.88:2379 get /coreos.com/network/config
 
 구성 설명:">
 <meta name="author" content="DAWN">
-<link rel="canonical" href="http://192.168.100.30:1313/ko/posts/flannel-network-lab/">
+<link rel="canonical" href="https://LMDAWN1127.github.io/ko/posts/flannel-network-lab/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.4bf808bff57bddc46d61c8ae060b00400fc679ab876e37243b11bd3f832f2958.css" integrity="sha256-S/gIv/V73cRtYciuBgsAQA/GeauHbjckOxG9P4MvKVg=" rel="preload stylesheet" as="style">
-<link rel="icon" href="http://192.168.100.30:1313/images/DAWN.jpg">
-<link rel="icon" type="image/png" sizes="16x16" href="http://192.168.100.30:1313/favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="http://192.168.100.30:1313/favicon-32x32.png">
-<link rel="apple-touch-icon" href="http://192.168.100.30:1313/apple-touch-icon.png">
-<link rel="mask-icon" href="http://192.168.100.30:1313/safari-pinned-tab.svg">
+<link rel="icon" href="https://LMDAWN1127.github.io/images/DAWN.jpg">
+<link rel="icon" type="image/png" sizes="16x16" href="https://LMDAWN1127.github.io/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://LMDAWN1127.github.io/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://LMDAWN1127.github.io/apple-touch-icon.png">
+<link rel="mask-icon" href="https://LMDAWN1127.github.io/safari-pinned-tab.svg">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
-<link rel="alternate" hreflang="zh" href="http://192.168.100.30:1313/posts/flannel-network-lab/">
-<link rel="alternate" hreflang="en" href="http://192.168.100.30:1313/en/posts/flannel-network-lab/">
-<link rel="alternate" hreflang="ko" href="http://192.168.100.30:1313/ko/posts/flannel-network-lab/">
-<link rel="alternate" hreflang="ja" href="http://192.168.100.30:1313/ja/posts/flannel-network-lab/">
+<link rel="alternate" hreflang="zh" href="https://LMDAWN1127.github.io/posts/flannel-network-lab/">
+<link rel="alternate" hreflang="en" href="https://LMDAWN1127.github.io/en/posts/flannel-network-lab/">
+<link rel="alternate" hreflang="ko" href="https://LMDAWN1127.github.io/ko/posts/flannel-network-lab/">
+<link rel="alternate" hreflang="ja" href="https://LMDAWN1127.github.io/ja/posts/flannel-network-lab/">
 <noscript>
     <style>
         #theme-toggle,
@@ -185,8 +185,8 @@ etcdctl --endpoints http://192.168.8.88:2379 get /coreos.com/network/config
         document.querySelector("html").dataset.theme = 'light';
     }
 
-</script><link rel="stylesheet" href='http://192.168.100.30:1313/css/custom.css'>
-<meta property="og:url" content="http://192.168.100.30:1313/ko/posts/flannel-network-lab/">
+</script><link rel="stylesheet" href='https://LMDAWN1127.github.io/css/custom.css'>
+<meta property="og:url" content="https://LMDAWN1127.github.io/ko/posts/flannel-network-lab/">
   <meta property="og:site_name" content="DAWN&#39;s Blog">
   <meta property="og:title" content="flannel 실전: Docker 크로스 호스트 컨테이너 네트워크 구축">
   <meta property="og:description" content="flannel 실전: Docker 크로스 호스트 컨테이너 네트워크 구축 1. 네트워크 환경 계획 etcd 호스트 IP: 192.168.8.88 호스트명: docker-network Host1 IP: 192.168.8.188 호스트명: web01 Host2 IP: 192.168.8.99 호스트명: web02 2. etcd 호스트 구성 단계 1: etcd 다운로드 및 압축 해제 github.com에서 etcd-v3.6.0-linux-amd64.tar.gz 소프트웨어 패키지를 다운로드합니다 소프트웨어 패키지를 etcd 호스트의 /root 디렉토리에 복사하고 압축을 해제합니다: 1 [root@docker-network ~]# tar -zxvf etcd-v3.6.0-linux-amd64.tar.gz 단계 2: etcd 실행 파일 설치 1 2 [root@docker-network ~]# cd etcd-v3.6.0-linux-amd64 [root@docker-network etcd-v3.6.0-linux-amd64]# cp etcd* /usr/local/bin/ 단계 3: 데이터 디렉토리 생성 1 [root@docker-network ~]# mkdir /var/lib/etcd 단계 4: etcd 서비스 구성 및 시작 etcd.service 파일을 생성합니다: 1 [root@docker-network ~]# vim /usr/lib/systemd/system/etcd.service 1 2 3 4 5 6 [Unit] Description=etcd_service [Service] ExecStart=/usr/local/bin/etcd --name etcd1 --data-dir /var/lib/etcd --listen-client-urls http://192.168.8.88:2379,http://127.0.0.1:2379 --advertise-client-urls http://192.168.8.88:2379,http://127.0.0.1:2379 [Install] WantedBy=multi-user.target 시스템 서비스 구성을 다시 로드하고 etcd를 시작합니다: 1 2 3 [root@docker-network ~]# systemctl daemon-reload [root@docker-network ~]# systemctl enable etcd.service [root@docker-network ~]# systemctl restart etcd.service etcd 리스닝 상태를 확인합니다: 1 2 3 [root@docker-network ~]# netstat -tulnp |grep :2379 tcp 0 0 192.168.8.88:2379 0.0.0.0:* LISTEN 1912/etcd tcp 0 0 127.0.0.1:2379 0.0.0.0:* LISTEN 1912/etcd 단계 5: etcd에 flannel 네트워크 구성 추가 1 etcdctl --endpoints http://127.0.0.1:2379 put /coreos.com/network/config &#39;{&#34;Network&#34;: &#34;172.16.0.0/16&#34;, &#34;SubnetLen&#34;: 24, &#34;SubnetMin&#34;: &#34;172.16.1.0&#34;,&#34;SubnetMax&#34;: &#34;172.16.10.0&#34;, &#34;Backend&#34;: {&#34;Type&#34;: &#34;vxlan&#34;}}&#39; 1 etcdctl --endpoints http://192.168.8.88:2379 get /coreos.com/network/config 구성 설명:">
@@ -199,10 +199,10 @@ etcdctl --endpoints http://192.168.8.88:2379 get /coreos.com/network/config
     <meta property="article:tag" content="Docker">
     <meta property="article:tag" content="네트워크">
     <meta property="article:tag" content="Etcd">
-      <meta property="og:image" content="http://192.168.100.30:1313/images/DAWN.jpg">
+      <meta property="og:image" content="https://LMDAWN1127.github.io/images/DAWN.jpg">
 
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:image" content="http://192.168.100.30:1313/images/DAWN.jpg">
+  <meta name="twitter:image" content="https://LMDAWN1127.github.io/images/DAWN.jpg">
   <meta name="twitter:title" content="flannel 실전: Docker 크로스 호스트 컨테이너 네트워크 구축">
   <meta name="twitter:description" content="flannel 실전: Docker 크로스 호스트 컨테이너 네트워크 구축 1. 네트워크 환경 계획 etcd 호스트 IP: 192.168.8.88 호스트명: docker-network Host1 IP: 192.168.8.188 호스트명: web01 Host2 IP: 192.168.8.99 호스트명: web02 2. etcd 호스트 구성 단계 1: etcd 다운로드 및 압축 해제 github.com에서 etcd-v3.6.0-linux-amd64.tar.gz 소프트웨어 패키지를 다운로드합니다 소프트웨어 패키지를 etcd 호스트의 /root 디렉토리에 복사하고 압축을 해제합니다: 1 [root@docker-network ~]# tar -zxvf etcd-v3.6.0-linux-amd64.tar.gz 단계 2: etcd 실행 파일 설치 1 2 [root@docker-network ~]# cd etcd-v3.6.0-linux-amd64 [root@docker-network etcd-v3.6.0-linux-amd64]# cp etcd* /usr/local/bin/ 단계 3: 데이터 디렉토리 생성 1 [root@docker-network ~]# mkdir /var/lib/etcd 단계 4: etcd 서비스 구성 및 시작 etcd.service 파일을 생성합니다: 1 [root@docker-network ~]# vim /usr/lib/systemd/system/etcd.service 1 2 3 4 5 6 [Unit] Description=etcd_service [Service] ExecStart=/usr/local/bin/etcd --name etcd1 --data-dir /var/lib/etcd --listen-client-urls http://192.168.8.88:2379,http://127.0.0.1:2379 --advertise-client-urls http://192.168.8.88:2379,http://127.0.0.1:2379 [Install] WantedBy=multi-user.target 시스템 서비스 구성을 다시 로드하고 etcd를 시작합니다: 1 2 3 [root@docker-network ~]# systemctl daemon-reload [root@docker-network ~]# systemctl enable etcd.service [root@docker-network ~]# systemctl restart etcd.service etcd 리스닝 상태를 확인합니다: 1 2 3 [root@docker-network ~]# netstat -tulnp |grep :2379 tcp 0 0 192.168.8.88:2379 0.0.0.0:* LISTEN 1912/etcd tcp 0 0 127.0.0.1:2379 0.0.0.0:* LISTEN 1912/etcd 단계 5: etcd에 flannel 네트워크 구성 추가 1 etcdctl --endpoints http://127.0.0.1:2379 put /coreos.com/network/config &#39;{&#34;Network&#34;: &#34;172.16.0.0/16&#34;, &#34;SubnetLen&#34;: 24, &#34;SubnetMin&#34;: &#34;172.16.1.0&#34;,&#34;SubnetMax&#34;: &#34;172.16.10.0&#34;, &#34;Backend&#34;: {&#34;Type&#34;: &#34;vxlan&#34;}}&#39; 1 etcdctl --endpoints http://192.168.8.88:2379 get /coreos.com/network/config 구성 설명:">
 
@@ -216,13 +216,13 @@ etcdctl --endpoints http://192.168.8.88:2379 get /coreos.com/network/config
       "@type": "ListItem",
       "position":  1 ,
       "name": "Posts",
-      "item": "http://192.168.100.30:1313/ko/posts/"
+      "item": "https://LMDAWN1127.github.io/ko/posts/"
     }, 
     {
       "@type": "ListItem",
       "position":  2 ,
       "name": "flannel 실전: Docker 크로스 호스트 컨테이너 네트워크 구축",
-      "item": "http://192.168.100.30:1313/ko/posts/flannel-network-lab/"
+      "item": "https://LMDAWN1127.github.io/ko/posts/flannel-network-lab/"
     }
   ]
 }
@@ -240,7 +240,7 @@ etcdctl --endpoints http://192.168.8.88:2379 get /coreos.com/network/config
   "articleBody": "flannel 실전: Docker 크로스 호스트 컨테이너 네트워크 구축 1. 네트워크 환경 계획 etcd 호스트 IP: 192.168.8.88 호스트명: docker-network Host1 IP: 192.168.8.188 호스트명: web01 Host2 IP: 192.168.8.99 호스트명: web02 2. etcd 호스트 구성 단계 1: etcd 다운로드 및 압축 해제 github.com에서 etcd-v3.6.0-linux-amd64.tar.gz 소프트웨어 패키지를 다운로드합니다 소프트웨어 패키지를 etcd 호스트의 /root 디렉토리에 복사하고 압축을 해제합니다: 1 [root@docker-network ~]# tar -zxvf etcd-v3.6.0-linux-amd64.tar.gz 단계 2: etcd 실행 파일 설치 1 2 [root@docker-network ~]# cd etcd-v3.6.0-linux-amd64 [root@docker-network etcd-v3.6.0-linux-amd64]# cp etcd* /usr/local/bin/ 단계 3: 데이터 디렉토리 생성 1 [root@docker-network ~]# mkdir /var/lib/etcd 단계 4: etcd 서비스 구성 및 시작 etcd.service 파일을 생성합니다: 1 [root@docker-network ~]# vim /usr/lib/systemd/system/etcd.service 1 2 3 4 5 6 [Unit] Description=etcd_service [Service] ExecStart=/usr/local/bin/etcd --name etcd1 --data-dir /var/lib/etcd --listen-client-urls http://192.168.8.88:2379,http://127.0.0.1:2379 --advertise-client-urls http://192.168.8.88:2379,http://127.0.0.1:2379 [Install] WantedBy=multi-user.target 시스템 서비스 구성을 다시 로드하고 etcd를 시작합니다: 1 2 3 [root@docker-network ~]# systemctl daemon-reload [root@docker-network ~]# systemctl enable etcd.service [root@docker-network ~]# systemctl restart etcd.service etcd 리스닝 상태를 확인합니다: 1 2 3 [root@docker-network ~]# netstat -tulnp |grep :2379 tcp 0 0 192.168.8.88:2379 0.0.0.0:* LISTEN 1912/etcd tcp 0 0 127.0.0.1:2379 0.0.0.0:* LISTEN 1912/etcd 단계 5: etcd에 flannel 네트워크 구성 추가 1 etcdctl --endpoints http://127.0.0.1:2379 put /coreos.com/network/config '{\"Network\": \"172.16.0.0/16\", \"SubnetLen\": 24, \"SubnetMin\": \"172.16.1.0\",\"SubnetMax\": \"172.16.10.0\", \"Backend\": {\"Type\": \"vxlan\"}}' 1 etcdctl --endpoints http://192.168.8.88:2379 get /coreos.com/network/config 구성 설명:\nNetwork: flannel 주소 풀 SubnetLen: 단일 호스트에 할당되는 docker0 서브넷 마스크 길이 (24비트는 255.255.255.0) SubnetMin/SubnetMax: 할당 가능한 서브넷 범위 (예: 172.16.1.0/24 ~ 172.16.10.0/24) Backend: 데이터 전달 모드 (vxlan은 호스트 간 통신 지원) 단계 6: 방화벽 비활성화 1 2 [root@docker-network ~]# systemctl disable firewalld [root@docker-network ~]# systemctl stop firewalld 3. web01 호스트 구성 (Host1: 192.168.8.188) 단계 1: flannel 다운로드 및 압축 해제 flannel-v0.26.7-linux-amd64.tar.gz를 호스트에 다운로드합니다 파일의 압축을 해제합니다: 1 [root@web01 ~]# tar -zxvf flannel-v0.26.7-linux-amd64.tar.gz 단계 2: flannel 실행 파일 설치 1 [root@web01 ~]# cp -p flanneld mk-docker-opts.sh /usr/local/bin/ 단계 3: flannel 서비스 구성 및 시작 flanneld.service 파일을 생성합니다: 1 [root@web01 ~]# vim /usr/lib/systemd/system/flanneld.service 1 2 3 4 5 6 7 8 9 10 11 12 13 14 [Unit] Description=Flanneld Documentation=https://github.com/coreos/flannel After=network.target Before=docker.service [Service] User=root ExecStartPost=/usr/local/bin/mk-docker-opts.sh ExecStart=/usr/local/bin/flanneld --etcd-endpoints=http://192.168.8.88:2379 --iface=192.168.8.188 --ip-masq=true --etcd-prefix=/coreos.com/network Restart=on-failure Type=notify LimitNOFILE=65536 [Install] WantedBy=multi-user.target 매개변수 설명:\n--iface=192.168.8.188: etcd에 연결하는 로컬 IP를 지정합니다 --etcd-endpoints: etcd 서버 주소 서비스 구성을 다시 로드하고 flannel을 시작합니다:\n1 2 3 [root@web01 ~]# systemctl daemon-reload [root@web01 ~]# systemctl enable flanneld.service [root@web01 ~]# systemctl restart flanneld.service 단계 4: flannel 네트워크 인터페이스 확인 1 [root@web01 ~]# ifconfig flannel.1 인터페이스가 표시되어야 합니다 (예시 출력):\n1 2 3 4 5 6 7 8 flannel.1: flags=4163 mtu 1450 inet 172.16.5.0 netmask 255.255.255.255 broadcast 0.0.0.0 inet6 fe80::f06c:96ff:fefe:b7ab prefixlen 64 scopeid 0x20 ether f2:6c:96:fe:b7:ab txqueuelen 0 (Ethernet) RX packets 315 bytes 26460 (25.8 KiB) RX errors 0 dropped 0 overruns 0 frame 0 TX packets 314 bytes 34636 (33.8 KiB) TX errors 0 dropped 29 overruns 0 carrier 0 collisions 0 단계 5: docker 구성 파일 수정 flannel이 생성한 서브넷 환경 변수를 확인합니다: 1 [root@web01 ~]# cat /run/flannel/subnet.env 출력 예시:\n1 2 3 4 FLANNEL_NETWORK=172.16.0.0/16 FLANNEL_SUBNET=172.16.5.1/24 FLANNEL_MTU=1450 FLANNEL_IPMASQ=true 1 [root@web01 ~]# cat /run/docker_opts.env 출력 예시:\n1 2 3 4 DOCKER_OPT_BIP=\"--bip=172.16.5.1/24\" DOCKER_OPT_IPMASQ=\"--ip-masq=false\" DOCKER_OPT_MTU=\"--mtu=1450\" DOCKER_OPTS=\" --bip=172.16.5.1/24 --ip-masq=false --mtu=1450\" docker 서비스 구성을 수정합니다: 1 [root@web01 ~]# vim /usr/lib/systemd/system/docker.service [Service] 섹션에 다음을 추가합니다:\n1 2 3 ExecStart=/usr/bin/dockerd $DOCKER_OPTS -H fd:// --containerd=/run/containerd/containerd.sock ExecReload=/bin/kill -s HUP $MAINPID EnvironmentFile=-/run/docker_opts.env docker 서비스를 재시작합니다: 1 2 [root@web01 ~]# systemctl daemon-reload [root@web01 ~]# systemctl restart docker.service 단계 6: docker 네트워크 확인 nginx 컨테이너를 생성하고 접속합니다: 1 2 3 4 5 6 7 8 9 [root@web01 ~]# ifconfig docker0: flags=4163 mtu 1450 inet 172.16.5.1 netmask 255.255.255.0 broadcast 172.16.5.255 inet6 fe80::42:f6ff:fe5d:5423 prefixlen 64 scopeid 0x20 ether 02:42:f6:5d:54:23 txqueuelen 0 (Ethernet) RX packets 10073 bytes 407167 (397.6 KiB) RX errors 0 dropped 0 overruns 0 frame 0 TX packets 48185 bytes 38083646 (36.3 MiB) TX errors 0 dropped 0 overruns 0 carrier 0 collisions 0 1 2 [root@web01 ~]# docker run -d -p 8800:80 nginx [root@web01 ~]# docker exec -it \u003c컨테이너 ID\u003e /bin/bash 컨테이너 IP를 확인합니다 (예시: 172.16.5.3): 1 2 root@컨테이너 ID:/# ifconfig eth0: inet 172.16.5.3 netmask 255.255.255.0 4. web02 호스트 구성 (Host2: 192.168.0.208) 단계 설명 구성 단계는 web01과 완전히 동일하며, 다음 매개변수만 수정하면 됩니다: --iface=192.168.8.99 (로컬 IP) docker 컨테이너 IP 예시: 172.16.5.2 (flannel에 의해 자동 할당) 5. 실험 확인 web01 컨테이너에서 web02 컨테이너 IP (예시: 172.16.9.2)로 ping을 수행합니다:\nweb02에서 컨테이너를 생성하고 컨테이너 IP 주소를 확인합니다.\n결과: 컨테이너 간 통신이 성공하고, flannel 네트워크 구성이 완료되었습니다.\n부록: etcd 네트워크 구성 조회 1 2 3 [root@docker-network ~]# etcdctl --endpoints=http://127.0.0.1:2379 get /coreos.com/network/config /coreos.com/network/config {\"Network\": \"172.16.0.0/16\", \"SubnetLen\": 24, \"SubnetMin\": \"172.16.1.0\",\"SubnetMax\": \"172.16.10.0\", \"Backend\": {\"Type\": \"vxlan\"}} 1 2 3 [root@docker-network ~]# etcdctl --endpoints=http://127.0.0.1:2379 get /coreos.com/network/subnets --prefix --keys-only /coreos.com/network/subnets/172.16.5.0-24 /coreos.com/network/subnets/172.16.9.0-24 1 2 3 [root@docker-network ~]# etcdctl --endpoints=http://127.0.0.1:2379 get /coreos.com/network/subnets/172.16.5.0-24 /coreos.com/network/subnets/172.16.5.0-24 {\"PublicIP\":\"192.168.8.188\",\"PublicIPv6\":null,\"BackendType\":\"vxlan\",\"BackendData\":{\"VNI\":1,\"VtepMAC\":\"5a:67:18:61:6a:5d\"}} ",
   "wordCount" : "751",
   "inLanguage": "ko",
-  "image": "http://192.168.100.30:1313/images/DAWN.jpg","datePublished": "2025-05-21T00:00:00Z",
+  "image": "https://LMDAWN1127.github.io/images/DAWN.jpg","datePublished": "2025-05-21T00:00:00Z",
   "dateModified": "2025-05-21T00:00:00Z",
   "author":{
     "@type": "Person",
@@ -248,14 +248,14 @@ etcdctl --endpoints http://192.168.8.88:2379 get /coreos.com/network/config
   },
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "http://192.168.100.30:1313/ko/posts/flannel-network-lab/"
+    "@id": "https://LMDAWN1127.github.io/ko/posts/flannel-network-lab/"
   },
   "publisher": {
     "@type": "Organization",
     "name": "DAWN's Blog",
     "logo": {
       "@type": "ImageObject",
-      "url": "http://192.168.100.30:1313/images/DAWN.jpg"
+      "url": "https://LMDAWN1127.github.io/images/DAWN.jpg"
     }
   }
 }
@@ -265,8 +265,8 @@ etcdctl --endpoints http://192.168.8.88:2379 get /coreos.com/network/config
     <header class="header">
     <nav class="header-nav">
         <div class="logo">
-            <a href="http://192.168.100.30:1313/ko/" accesskey="h" title="DAWN&#39;s Blog (Alt + H)">
-                <img src="http://192.168.100.30:1313/images/DAWN.jpg" alt="" aria-label="logo"
+            <a href="https://LMDAWN1127.github.io/ko/" accesskey="h" title="DAWN&#39;s Blog (Alt + H)">
+                <img src="https://LMDAWN1127.github.io/images/DAWN.jpg" alt="" aria-label="logo"
                     height="38">DAWN&#39;s Blog</a>
             <div class="logo-switches">
                 <button id="theme-toggle" class="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
@@ -291,15 +291,15 @@ etcdctl --endpoints http://192.168.8.88:2379 get /coreos.com/network/config
                 </button><span class="nav-sep">|</span>
                     <ul class="lang-menu">
                         <li>
-                            <a href="http://192.168.100.30:1313/" title="中文"
+                            <a href="https://LMDAWN1127.github.io/" title="中文"
                                 aria-label="中文">Zh</a>
                         </li>
                         <li>
-                            <a href="http://192.168.100.30:1313/en/" title="English"
+                            <a href="https://LMDAWN1127.github.io/en/" title="English"
                                 aria-label="English">En</a>
                         </li>
                         <li>
-                            <a href="http://192.168.100.30:1313/ja/" title="日本語"
+                            <a href="https://LMDAWN1127.github.io/ja/" title="日本語"
                                 aria-label="日本語">Ja</a>
                         </li>
                     </ul>
@@ -307,7 +307,7 @@ etcdctl --endpoints http://192.168.8.88:2379 get /coreos.com/network/config
         </div>
         <ul id="menu" class="menu">
             <li>
-                <a href="http://192.168.100.30:1313/ko/archives/" title="아카이브">
+                <a href="https://LMDAWN1127.github.io/ko/archives/" title="아카이브">
                     <span>아카이브</span>
                 </a>
             </li>
