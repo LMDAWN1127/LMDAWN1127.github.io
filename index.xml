@@ -11,7 +11,7 @@
     </image>
     <generator>Hugo</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Wed, 14 Oct 2026 10:00:00 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 14 Oct 2026 15:00:00 +0800</lastBuildDate>
     <atom:link href="https://LMDAWN1127.github.io/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Harbor 主备部署实战：从安装到 HTTPS 与主备复制</title>
@@ -19,6 +19,13 @@
       <pubDate>Tue, 04 Aug 2026 00:00:00 +0000</pubDate>
       <guid>https://LMDAWN1127.github.io/posts/harbor-master-slave/</guid>
       <description>完整记录 Harbor 企业级镜像仓库的主备部署过程，涵盖 HTTP/HTTPS 双模式安装、自签名证书配置、跨主机主备复制等核心运维技能。</description>
+    </item>
+    <item>
+      <title>ElasticStack 架构设计与 Elasticsearch 集群部署</title>
+      <link>https://LMDAWN1127.github.io/posts/elastic-stack/</link>
+      <pubDate>Wed, 14 Oct 2026 15:00:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/posts/elastic-stack/</guid>
+      <description>从 ElasticStack 组件（Elasticsearch / Logstash / Kibana / Beats）入手，重点记录 Elasticsearch 单点部署与集群搭建：软件包下载、服务安装、elasticsearch.yml 关键配置（集群名、数据与日志路径、监听地址端口、单点/集群模式）、节点时区统一、配置分发与集群启动、端口与节点状态验证。</description>
     </item>
     <item>
       <title>MySQL 数据库基础管理：用户·权限·连接与初始化配置</title>
