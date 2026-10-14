@@ -490,9 +490,9 @@ mysql> SELECT user, host FROM mysql.user WHERE user='root';
 
 > 驱动官方下载地址：https://dev.mysql.com/downloads/
 
-![程序代码连接数据库驱动程序架构](Day01-数据库课程教案_images/page_23_30.png)
+![程序代码连接数据库驱动程序架构](/images/mysql-database-basic-management-page_23_30.png)
 
-![数据库服务连接管理方式逻辑图](Day01-数据库课程教案_images/page_23_31.png)
+![数据库服务连接管理方式逻辑图](/images/mysql-database-basic-management-page_23_31.png)
 
 ---
 
