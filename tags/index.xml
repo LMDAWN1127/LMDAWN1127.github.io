@@ -11,20 +11,48 @@
     </image>
     <generator>Hugo</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Tue, 13 Oct 2026 09:30:00 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 14 Oct 2026 10:00:00 +0800</lastBuildDate>
     <atom:link href="https://LMDAWN1127.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>DevOps</title>
+      <link>https://LMDAWN1127.github.io/tags/devops/</link>
+      <pubDate>Wed, 14 Oct 2026 10:00:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/tags/devops/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>MySQL</title>
+      <link>https://LMDAWN1127.github.io/tags/mysql/</link>
+      <pubDate>Wed, 14 Oct 2026 10:00:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/tags/mysql/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>权限管理</title>
+      <link>https://LMDAWN1127.github.io/tags/%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86/</link>
+      <pubDate>Wed, 14 Oct 2026 10:00:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/tags/%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>数据库</title>
+      <link>https://LMDAWN1127.github.io/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/</link>
+      <pubDate>Wed, 14 Oct 2026 10:00:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>用户管理</title>
+      <link>https://LMDAWN1127.github.io/tags/%E7%94%A8%E6%88%B7%E7%AE%A1%E7%90%86/</link>
+      <pubDate>Wed, 14 Oct 2026 10:00:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/tags/%E7%94%A8%E6%88%B7%E7%AE%A1%E7%90%86/</guid>
+      <description></description>
+    </item>
     <item>
       <title>CI/CD</title>
       <link>https://LMDAWN1127.github.io/tags/ci/cd/</link>
       <pubDate>Tue, 13 Oct 2026 09:30:00 +0800</pubDate>
       <guid>https://LMDAWN1127.github.io/tags/ci/cd/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>DevOps</title>
-      <link>https://LMDAWN1127.github.io/tags/devops/</link>
-      <pubDate>Tue, 13 Oct 2026 09:30:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/tags/devops/</guid>
       <description></description>
     </item>
     <item>
@@ -123,13 +151,6 @@
       <link>https://LMDAWN1127.github.io/tags/%E8%87%AA%E5%8A%A8%E9%83%A8%E7%BD%B2/</link>
       <pubDate>Fri, 09 Oct 2026 16:00:00 +0800</pubDate>
       <guid>https://LMDAWN1127.github.io/tags/%E8%87%AA%E5%8A%A8%E9%83%A8%E7%BD%B2/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>MySQL</title>
-      <link>https://LMDAWN1127.github.io/tags/mysql/</link>
-      <pubDate>Thu, 08 Oct 2026 21:40:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/tags/mysql/</guid>
       <description></description>
     </item>
     <item>
@@ -347,13 +368,6 @@
       <link>https://LMDAWN1127.github.io/tags/%E4%BA%8C%E8%BF%9B%E5%88%B6%E5%AE%89%E8%A3%85/</link>
       <pubDate>Sat, 03 Oct 2026 14:53:00 +0800</pubDate>
       <guid>https://LMDAWN1127.github.io/tags/%E4%BA%8C%E8%BF%9B%E5%88%B6%E5%AE%89%E8%A3%85/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>数据库</title>
-      <link>https://LMDAWN1127.github.io/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/</link>
-      <pubDate>Sat, 03 Oct 2026 14:53:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/</guid>
       <description></description>
     </item>
     <item>

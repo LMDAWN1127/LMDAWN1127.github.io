@@ -28,7 +28,7 @@
                 />
   </url><url>
     <loc>https://LMDAWN1127.github.io/categories/</loc>
-    <lastmod>2026-10-13T09:30:00+08:00</lastmod>
+    <lastmod>2026-10-14T10:00:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
@@ -52,33 +52,8 @@
                 href="https://LMDAWN1127.github.io/ja/categories/"
                 />
   </url><url>
-    <loc>https://LMDAWN1127.github.io/tags/ci/cd/</loc>
-    <lastmod>2026-10-13T09:30:00+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-    <xhtml:link
-                rel="alternate"
-                hreflang="zh-cn"
-                href="https://LMDAWN1127.github.io/tags/ci/cd/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="https://LMDAWN1127.github.io/en/tags/ci/cd/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="ko"
-                href="https://LMDAWN1127.github.io/ko/tags/ci/cd/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="ja"
-                href="https://LMDAWN1127.github.io/ja/tags/ci/cd/"
-                />
-  </url><url>
     <loc>https://LMDAWN1127.github.io/categories/devops/</loc>
-    <lastmod>2026-10-13T09:30:00+08:00</lastmod>
+    <lastmod>2026-10-14T10:00:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
@@ -103,7 +78,7 @@
                 />
   </url><url>
     <loc>https://LMDAWN1127.github.io/tags/devops/</loc>
-    <lastmod>2026-10-13T09:30:00+08:00</lastmod>
+    <lastmod>2026-10-14T10:00:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
@@ -125,6 +100,126 @@
                 rel="alternate"
                 hreflang="ja"
                 href="https://LMDAWN1127.github.io/ja/tags/devops/"
+                />
+  </url><url>
+    <loc>https://LMDAWN1127.github.io/tags/mysql/</loc>
+    <lastmod>2026-10-14T10:00:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://LMDAWN1127.github.io/tags/mysql/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://LMDAWN1127.github.io/en/tags/mysql/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="ko"
+                href="https://LMDAWN1127.github.io/ko/tags/mysql/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="ja"
+                href="https://LMDAWN1127.github.io/ja/tags/mysql/"
+                />
+  </url><url>
+    <loc>https://LMDAWN1127.github.io/posts/mysql-database-basic-management/</loc>
+    <lastmod>2026-10-14T10:00:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url><url>
+    <loc>https://LMDAWN1127.github.io/posts/</loc>
+    <lastmod>2026-10-14T10:00:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://LMDAWN1127.github.io/posts/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://LMDAWN1127.github.io/en/posts/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="ko"
+                href="https://LMDAWN1127.github.io/ko/posts/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="ja"
+                href="https://LMDAWN1127.github.io/ja/posts/"
+                />
+  </url><url>
+    <loc>https://LMDAWN1127.github.io/tags/</loc>
+    <lastmod>2026-10-14T10:00:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://LMDAWN1127.github.io/tags/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://LMDAWN1127.github.io/en/tags/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="ko"
+                href="https://LMDAWN1127.github.io/ko/tags/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="ja"
+                href="https://LMDAWN1127.github.io/ja/tags/"
+                />
+  </url><url>
+    <loc>https://LMDAWN1127.github.io/tags/%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86/</loc>
+    <lastmod>2026-10-14T10:00:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url><url>
+    <loc>https://LMDAWN1127.github.io/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/</loc>
+    <lastmod>2026-10-14T10:00:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url><url>
+    <loc>https://LMDAWN1127.github.io/tags/%E7%94%A8%E6%88%B7%E7%AE%A1%E7%90%86/</loc>
+    <lastmod>2026-10-14T10:00:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url><url>
+    <loc>https://LMDAWN1127.github.io/tags/ci/cd/</loc>
+    <lastmod>2026-10-13T09:30:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://LMDAWN1127.github.io/tags/ci/cd/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://LMDAWN1127.github.io/en/tags/ci/cd/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="ko"
+                href="https://LMDAWN1127.github.io/ko/tags/ci/cd/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="ja"
+                href="https://LMDAWN1127.github.io/ja/tags/ci/cd/"
                 />
   </url><url>
     <loc>https://LMDAWN1127.github.io/tags/jenkins/</loc>
@@ -157,60 +252,10 @@
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url><url>
-    <loc>https://LMDAWN1127.github.io/posts/</loc>
-    <lastmod>2026-10-13T09:30:00+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-    <xhtml:link
-                rel="alternate"
-                hreflang="zh-cn"
-                href="https://LMDAWN1127.github.io/posts/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="https://LMDAWN1127.github.io/en/posts/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="ko"
-                href="https://LMDAWN1127.github.io/ko/posts/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="ja"
-                href="https://LMDAWN1127.github.io/ja/posts/"
-                />
-  </url><url>
     <loc>https://LMDAWN1127.github.io/tags/slave/</loc>
     <lastmod>2026-10-13T09:30:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
-  </url><url>
-    <loc>https://LMDAWN1127.github.io/tags/</loc>
-    <lastmod>2026-10-13T09:30:00+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-    <xhtml:link
-                rel="alternate"
-                hreflang="zh-cn"
-                href="https://LMDAWN1127.github.io/tags/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="https://LMDAWN1127.github.io/en/tags/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="ko"
-                href="https://LMDAWN1127.github.io/ko/tags/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="ja"
-                href="https://LMDAWN1127.github.io/ja/tags/"
-                />
   </url><url>
     <loc>https://LMDAWN1127.github.io/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E6%9E%84%E5%BB%BA/</loc>
     <lastmod>2026-10-13T09:30:00+08:00</lastmod>
@@ -360,31 +405,6 @@
                 rel="alternate"
                 hreflang="ja"
                 href="https://LMDAWN1127.github.io/ja/categories/mysql/"
-                />
-  </url><url>
-    <loc>https://LMDAWN1127.github.io/tags/mysql/</loc>
-    <lastmod>2026-10-08T21:40:00+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-    <xhtml:link
-                rel="alternate"
-                hreflang="zh-cn"
-                href="https://LMDAWN1127.github.io/tags/mysql/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="https://LMDAWN1127.github.io/en/tags/mysql/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="ko"
-                href="https://LMDAWN1127.github.io/ko/tags/mysql/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="ja"
-                href="https://LMDAWN1127.github.io/ja/tags/mysql/"
                 />
   </url><url>
     <loc>https://LMDAWN1127.github.io/posts/mysql-version-upgrade-rollback/</loc>
@@ -1013,11 +1033,6 @@
                 />
   </url><url>
     <loc>https://LMDAWN1127.github.io/tags/%E4%BA%8C%E8%BF%9B%E5%88%B6%E5%AE%89%E8%A3%85/</loc>
-    <lastmod>2026-10-03T14:53:00+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url><url>
-    <loc>https://LMDAWN1127.github.io/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/</loc>
     <lastmod>2026-10-03T14:53:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
