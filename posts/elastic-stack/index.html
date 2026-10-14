@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh" dir="auto" data-theme="auto">
 
-<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
+<head><meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="robots" content="index, follow">
@@ -9,16 +9,16 @@
 <meta name="keywords" content="ElasticStack, Elasticsearch, 集群">
 <meta name="description" content="从 ElasticStack 组件（Elasticsearch / Logstash / Kibana / Beats）入手，重点记录 Elasticsearch 单点部署与集群搭建：软件包下载、服务安装、elasticsearch.yml 关键配置（集群名、数据与日志路径、监听地址端口、单点/集群模式）、节点时区统一、配置分发与集群启动、端口与节点状态验证。">
 <meta name="author" content="DAWN">
-<link rel="canonical" href="http://192.168.100.30:1313/posts/elastic-stack/">
+<link rel="canonical" href="https://LMDAWN1127.github.io/posts/elastic-stack/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.4bf808bff57bddc46d61c8ae060b00400fc679ab876e37243b11bd3f832f2958.css" integrity="sha256-S/gIv/V73cRtYciuBgsAQA/GeauHbjckOxG9P4MvKVg=" rel="preload stylesheet" as="style">
-<link rel="icon" href="http://192.168.100.30:1313/images/DAWN.jpg">
-<link rel="icon" type="image/png" sizes="16x16" href="http://192.168.100.30:1313/favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="http://192.168.100.30:1313/favicon-32x32.png">
-<link rel="apple-touch-icon" href="http://192.168.100.30:1313/apple-touch-icon.png">
-<link rel="mask-icon" href="http://192.168.100.30:1313/safari-pinned-tab.svg">
+<link rel="icon" href="https://LMDAWN1127.github.io/images/DAWN.jpg">
+<link rel="icon" type="image/png" sizes="16x16" href="https://LMDAWN1127.github.io/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://LMDAWN1127.github.io/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://LMDAWN1127.github.io/apple-touch-icon.png">
+<link rel="mask-icon" href="https://LMDAWN1127.github.io/safari-pinned-tab.svg">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
-<link rel="alternate" hreflang="zh" href="http://192.168.100.30:1313/posts/elastic-stack/">
+<link rel="alternate" hreflang="zh" href="https://LMDAWN1127.github.io/posts/elastic-stack/">
 <noscript>
     <style>
         #theme-toggle,
@@ -64,8 +64,8 @@
         document.querySelector("html").dataset.theme = 'light';
     }
 
-</script><link rel="stylesheet" href='http://192.168.100.30:1313/css/custom.css'>
-<meta property="og:url" content="http://192.168.100.30:1313/posts/elastic-stack/">
+</script><link rel="stylesheet" href='https://LMDAWN1127.github.io/css/custom.css'>
+<meta property="og:url" content="https://LMDAWN1127.github.io/posts/elastic-stack/">
   <meta property="og:site_name" content="DAWN&#39;s Blog">
   <meta property="og:title" content="ElasticStack 架构设计与 Elasticsearch 集群部署">
   <meta property="og:description" content="从 ElasticStack 组件（Elasticsearch / Logstash / Kibana / Beats）入手，重点记录 Elasticsearch 单点部署与集群搭建：软件包下载、服务安装、elasticsearch.yml 关键配置（集群名、数据与日志路径、监听地址端口、单点/集群模式）、节点时区统一、配置分发与集群启动、端口与节点状态验证。">
@@ -77,10 +77,10 @@
     <meta property="article:tag" content="ElasticStack">
     <meta property="article:tag" content="Elasticsearch">
     <meta property="article:tag" content="集群">
-      <meta property="og:image" content="http://192.168.100.30:1313/images/DAWN.jpg">
+      <meta property="og:image" content="https://LMDAWN1127.github.io/images/DAWN.jpg">
 
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:image" content="http://192.168.100.30:1313/images/DAWN.jpg">
+  <meta name="twitter:image" content="https://LMDAWN1127.github.io/images/DAWN.jpg">
   <meta name="twitter:title" content="ElasticStack 架构设计与 Elasticsearch 集群部署">
   <meta name="twitter:description" content="从 ElasticStack 组件（Elasticsearch / Logstash / Kibana / Beats）入手，重点记录 Elasticsearch 单点部署与集群搭建：软件包下载、服务安装、elasticsearch.yml 关键配置（集群名、数据与日志路径、监听地址端口、单点/集群模式）、节点时区统一、配置分发与集群启动、端口与节点状态验证。">
 
@@ -94,13 +94,13 @@
       "@type": "ListItem",
       "position":  1 ,
       "name": "Posts",
-      "item": "http://192.168.100.30:1313/posts/"
+      "item": "https://LMDAWN1127.github.io/posts/"
     }, 
     {
       "@type": "ListItem",
       "position":  2 ,
       "name": "ElasticStack 架构设计与 Elasticsearch 集群部署",
-      "item": "http://192.168.100.30:1313/posts/elastic-stack/"
+      "item": "https://LMDAWN1127.github.io/posts/elastic-stack/"
     }
   ]
 }
@@ -118,7 +118,7 @@
   "articleBody": "ElasticStack ElasticSearch，简称:“es”\n数据存储 数据查询 filebeat:\n采集数据 kibana:\n用于出图展示 logstash:\n日志分析处理。 zookeeper:\n分布式协调服务，用于协调其他服务组件。 kafka:\n分布式消息队列，可以缓存数据。依赖zk实现元数据管理。 ElasticSearch单点部署 1. 下载软件包 1 root@elk01:~# wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.17.22-amd64.deb 2. 安装ES服务 1 root@elk01:~# dpkg -i elasticsearch-7.17.22-amd64.deb 3. 修改配置文件 1 root@elk01:~# vim /etc/elasticsearch/elasticsearch.yml 1 2 3 4 5 6 7 8 9 10 11 12 13 14 # 指定集群的名称，每个ES集群的名称要唯一 cluster.name: dawn # 数据的存储路径 path.data: /var/lib/elasticsearch # 日志的存储路径 path.logs: /var/log/elasticsearch # 指定监听的地址 network.host: 0.0.0.0 # 指定ES集群监听的端口号 http.port: 9200 # 数据传输端口 transport.port: 9300 # 部署集群为单点类型 discovery.type: \"single-node\" 4. 启动ES服务 1 root@elk01:~# systemctl enable --now elasticsearch.service 5. 验证ES服务是否启动成功 1 2 3 root@elk01:~# ss -ntl | grep \"9[2|3]00\" LISTEN 0 4096 *:9200 *:* LISTEN 0 4096 *:9300 *:* 6. 访问ES的WebUI 7. 查看集群的节点信息 1 2 3 root@elk01:~# curl 11.0.1.111:9200/_cat/nodes?v ip heap.percent ram.percent cpu load_1m load_5m load_15m node.role master name 11.0.1.111 58 65 0 2.94 1.36 0.53 cdfhilmrstw * elk01 ElasticSearch单点卸载 1. 停止es服务 1 root@elk01:~# systemctl stop elasticsearch.service 2. 卸载软件 1 2 3 4 5 root@elk01:~# dpkg -r elasticsearch (Reading database ... 76508 files and directories currently installed.) Removing elasticsearch (7.17.22) ... Stopping elasticsearch service... OK Deleting log directory... OK 此步骤只会清理日志文件，卸载脚本，删除ES软件等操作，并不会删除ES的数据。\n3. 清理数据(生产环境不建议做，谨慎，数据需要备份或者迁移) 1 root@elk01:~# rm -rf /var/lib/elasticsearch/* /tmp/* Elasticsearch集群搭建 1. 下载ES软件包 将下载好的软件包拷贝到其他两个节点\n1 2 root@elk01:~# scp elasticsearch-7.17.22-amd64.deb 11.0.1.112:~ root@elk01:~# scp elasticsearch-7.17.22-amd64.deb 11.0.1.113:~ 2. 修改各节点的时区 1 2 3 4 5 6 root@elk01:~# ln -svf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime '/etc/localtime' -\u003e '/usr/share/zoneinfo/Asia/Shanghai' root@elk02:~# ln -svf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime '/etc/localtime' -\u003e '/usr/share/zoneinfo/Asia/Shanghai' root@elk03:~# ln -svf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime '/etc/localtime' -\u003e '/usr/share/zoneinfo/Asia/Shanghai' 3. 安装ES服务 1 2 3 root@elk01:~# dpkg -i elasticsearch-7.17.22-amd64.deb root@elk02:~# dpkg -i elasticsearch-7.17.22-amd64.deb root@elk03:~# dpkg -i elasticsearch-7.17.22-amd64.deb 4. 修改ES集群的配置文件 1 2 3 4 5 6 7 8 9 10 11 [root@elk91 ~]# vim /etc/elasticsearch/elasticsearch.yml cluster.name: dawn path.data: /var/lib/elasticsearch path.logs: /var/log/elasticsearch network.host: 0.0.0.0 http.port: 9200 transport.port: 9300 # 配置ES集群的服务发现列表主机 discovery.seed_hosts: [\"11.0.1.111\",\"11.0.1.112\",\"11.0.1.113\"] # 配置ES集群启动时参与master选举的节点 cluster.initial_master_nodes: [\"11.0.1.111\",\"11.0.1.112\",\"11.0.1.113\"] 5. 将配置文件拷贝到其他节点 1 2 3 4 5 6 root@elk01:~# scp /etc/elasticsearch/elasticsearch.yml 11.0.1.112:/etc/elasticsearch/elasticsearch.yml root@11.0.1.112's password: elasticsearch.yml 100% 3641 4.1MB/s 00:00 root@elk01:~# scp /etc/elasticsearch/elasticsearch.yml 11.0.1.113:/etc/elasticsearch/elasticsearch.yml root@11.0.1.113's password: elasticsearch.yml 100% 3641 5.0MB/s 00:00 6. 启动ES集群 1 2 3 root@elk01:~# systemctl enable --now elasticsearch.service root@elk02:~# systemctl enable --now elasticsearch.service root@elk03:~# systemctl enable --now elasticsearch.service 7. 检查ES服务端口是否存在 1 2 3 4 5 6 7 8 9 root@elk01:~# ss -ntl | grep \"9[2|3]00\" LISTEN 0 4096 *:9200 *:* LISTEN 0 4096 *:9300 *:* root@elk02:~# ss -ntl | grep \"9[2|3]00\" LISTEN 0 4096 *:9200 *:* LISTEN 0 4096 *:9300 *:* root@elk03:~# ss -ntl | grep \"9[2|3]00\" LISTEN 0 4096 *:9200 *:* LISTEN 0 4096 *:9300 *:* 8. 查看集群的节点信息 1 2 3 4 5 6 7 8 9 10 11 root@elk01:~# curl -s 11.0.1.111:9200 | grep cluster_uuid \"cluster_uuid\" : \"JwoG2sV0RuOGHqWYzSWVvw\", root@elk01:~# curl -s 11.0.1.112:9200 | grep cluster_uuid \"cluster_uuid\" : \"JwoG2sV0RuOGHqWYzSWVvw\", root@elk01:~# curl -s 11.0.1.113:9200 | grep cluster_uuid \"cluster_uuid\" : \"JwoG2sV0RuOGHqWYzSWVvw\", root@elk01:~# curl -s 11.0.1.111:9200/_cat/nodes 11.0.1.112 25 96 3 0.00 0.10 0.07 cdfhilmrstw * elk02 11.0.1.113 34 96 2 0.00 0.08 0.06 cdfhilmrstw - elk03 11.0.1.111 36 97 3 0.01 0.04 0.17 cdfhilmrstw - elk01 ",
   "wordCount" : "470",
   "inLanguage": "zh",
-  "image": "http://192.168.100.30:1313/images/DAWN.jpg","datePublished": "2026-10-14T15:00:00+08:00",
+  "image": "https://LMDAWN1127.github.io/images/DAWN.jpg","datePublished": "2026-10-14T15:00:00+08:00",
   "dateModified": "2026-10-14T15:00:00+08:00",
   "author":{
     "@type": "Person",
@@ -126,14 +126,14 @@
   },
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "http://192.168.100.30:1313/posts/elastic-stack/"
+    "@id": "https://LMDAWN1127.github.io/posts/elastic-stack/"
   },
   "publisher": {
     "@type": "Organization",
     "name": "DAWN's Blog",
     "logo": {
       "@type": "ImageObject",
-      "url": "http://192.168.100.30:1313/images/DAWN.jpg"
+      "url": "https://LMDAWN1127.github.io/images/DAWN.jpg"
     }
   }
 }
@@ -143,8 +143,8 @@
     <header class="header">
     <nav class="header-nav">
         <div class="logo">
-            <a href="http://192.168.100.30:1313/" accesskey="h" title="DAWN&#39;s Blog (Alt + H)">
-                <img src="http://192.168.100.30:1313/images/DAWN.jpg" alt="" aria-label="logo"
+            <a href="https://LMDAWN1127.github.io/" accesskey="h" title="DAWN&#39;s Blog (Alt + H)">
+                <img src="https://LMDAWN1127.github.io/images/DAWN.jpg" alt="" aria-label="logo"
                     height="38">DAWN&#39;s Blog</a>
             <div class="logo-switches">
                 <button id="theme-toggle" class="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
@@ -169,15 +169,15 @@
                 </button><span class="nav-sep">|</span>
                     <ul class="lang-menu">
                         <li>
-                            <a href="http://192.168.100.30:1313/en/" title="English"
+                            <a href="https://LMDAWN1127.github.io/en/" title="English"
                                 aria-label="English">En</a>
                         </li>
                         <li>
-                            <a href="http://192.168.100.30:1313/ko/" title="한국어"
+                            <a href="https://LMDAWN1127.github.io/ko/" title="한국어"
                                 aria-label="한국어">Ko</a>
                         </li>
                         <li>
-                            <a href="http://192.168.100.30:1313/ja/" title="日本語"
+                            <a href="https://LMDAWN1127.github.io/ja/" title="日本語"
                                 aria-label="日本語">Ja</a>
                         </li>
                     </ul>
@@ -185,7 +185,7 @@
         </div>
         <ul id="menu" class="menu">
             <li>
-                <a href="http://192.168.100.30:1313/archives/" title="归档">
+                <a href="https://LMDAWN1127.github.io/archives/" title="归档">
                     <span>归档</span>
                 </a>
             </li>
