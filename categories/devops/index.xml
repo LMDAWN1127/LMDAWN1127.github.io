@@ -11,7 +11,7 @@
     </image>
     <generator>Hugo</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Wed, 14 Oct 2026 21:00:00 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 14 Oct 2026 22:00:00 +0800</lastBuildDate>
     <atom:link href="https://LMDAWN1127.github.io/categories/devops/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Harbor 主备部署实战：从安装到 HTTPS 与主备复制</title>
@@ -19,6 +19,13 @@
       <pubDate>Tue, 04 Aug 2026 00:00:00 +0000</pubDate>
       <guid>https://LMDAWN1127.github.io/posts/harbor-master-slave/</guid>
       <description>完整记录 Harbor 企业级镜像仓库的主备部署过程，涵盖 HTTP/HTTPS 双模式安装、自签名证书配置、跨主机主备复制等核心运维技能。</description>
+    </item>
+    <item>
+      <title>Kibana 环境搭建与配置：从 deb 安装到接入 Elasticsearch 集群</title>
+      <link>https://LMDAWN1127.github.io/posts/kibana-setup/</link>
+      <pubDate>Wed, 14 Oct 2026 22:00:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/posts/kibana-setup/</guid>
+      <description>记录 Kibana 7.17.22 的离线环境搭建全流程：通过 deb 包下载与 dpkg 安装，修改 kibana.yml 接入 Elasticsearch 集群（配置 server.port/host、elasticsearch.hosts、i18n.locale 中文），使用 systemctl 启动并验证 5601 端口监听，最后通过 WebUI 访问。</description>
     </item>
     <item>
       <title>Elasticsearch 集群安全配置：action.destructive_requires_name 防误删保护</title>
