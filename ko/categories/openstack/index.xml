@@ -2,43 +2,43 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>OpenStack on DAWN&#39;s Blog</title>
-    <link>http://192.168.100.30:1313/ko/categories/openstack/</link>
+    <link>https://LMDAWN1127.github.io/ko/categories/openstack/</link>
     <description>Recent content in OpenStack on DAWN&#39;s Blog</description>
     <image>
       <title>DAWN&#39;s Blog</title>
-      <url>http://192.168.100.30:1313/images/DAWN.jpg</url>
-      <link>http://192.168.100.30:1313/images/DAWN.jpg</link>
+      <url>https://LMDAWN1127.github.io/images/DAWN.jpg</url>
+      <link>https://LMDAWN1127.github.io/images/DAWN.jpg</link>
     </image>
     <generator>Hugo</generator>
     <language>ko</language>
     <lastBuildDate>Tue, 06 Oct 2026 20:35:00 +0800</lastBuildDate>
-    <atom:link href="http://192.168.100.30:1313/ko/categories/openstack/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://LMDAWN1127.github.io/ko/categories/openstack/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>OpenStack 클라우드 OS: 핵심 아키텍처 및 자동화 배포</title>
-      <link>http://192.168.100.30:1313/ko/posts/openstack-core-architecture-deployment/</link>
+      <link>https://LMDAWN1127.github.io/ko/posts/openstack-core-architecture-deployment/</link>
       <pubDate>Tue, 06 Oct 2026 20:35:00 +0800</pubDate>
-      <guid>http://192.168.100.30:1313/ko/posts/openstack-core-architecture-deployment/</guid>
+      <guid>https://LMDAWN1127.github.io/ko/posts/openstack-core-architecture-deployment/</guid>
       <description>Nova/Glance/Neutron/Cinder 등 핵심 컴포넌트부터 Packstack 기반 Victoria 릴리스 원클릭 자동 배포, 그리고 Rsyslog 로그 트러블슈팅까지.</description>
     </item>
     <item>
       <title>OpenStack Cinder 블록 스토리지 상세 정리: 로컬 LVM &#43; iSCSI 볼륨과 NFS 백엔드 연동</title>
-      <link>http://192.168.100.30:1313/ko/posts/openstack-cinder-block-storage/</link>
+      <link>https://LMDAWN1127.github.io/ko/posts/openstack-cinder-block-storage/</link>
       <pubDate>Mon, 05 Oct 2026 23:30:00 +0800</pubDate>
-      <guid>http://192.168.100.30:1313/ko/posts/openstack-cinder-block-storage/</guid>
+      <guid>https://LMDAWN1127.github.io/ko/posts/openstack-cinder-block-storage/</guid>
       <description>OpenStack Cinder 블록 스토리지 정리: 볼륨 생성과 마운트의 역할 분담(Cinder는 생성, Nova는 마운트), 로컬 LVM + iSCSI로 컨트롤러를 스토리지로 만드는 전체 흐름(VG/LV, targetcli 기반 ISCSI 공유, libvirt 마운트), 그리고 NFS 백엔드 연동과 대시보드 실습.</description>
     </item>
     <item>
       <title>OpenStack 핵심 서비스 상세 정리: Keystone 인증·Nova 컴퓨트·Glance/Swift 이미지 스토리지</title>
-      <link>http://192.168.100.30:1313/ko/posts/openstack-keystone-glance-nova/</link>
+      <link>https://LMDAWN1127.github.io/ko/posts/openstack-keystone-glance-nova/</link>
       <pubDate>Mon, 05 Oct 2026 00:21:00 +0800</pubDate>
-      <guid>http://192.168.100.30:1313/ko/posts/openstack-keystone-glance-nova/</guid>
+      <guid>https://LMDAWN1127.github.io/ko/posts/openstack-keystone-glance-nova/</guid>
       <description>OpenStack 3대 핵심 서비스 정리: Keystone 다중 도메인 지원, service/endpoint 등록과 정책 파일 기반 권한 제어, Nova 모듈(api/scheduler/conductor/compute/novncproxy)과 메시지 큐·차분 디스크, 그리고 Swift 오브젝트 스토리지를 백엔드로 쓰는 Glance 이미지 서비스.</description>
     </item>
     <item>
       <title>OpenStack 클라우드 서버 프로비저닝</title>
-      <link>http://192.168.100.30:1313/ko/posts/openstack-provision-cloud-server/</link>
+      <link>https://LMDAWN1127.github.io/ko/posts/openstack-provision-cloud-server/</link>
       <pubDate>Sun, 04 Oct 2026 21:50:00 +0800</pubDate>
-      <guid>http://192.168.100.30:1313/ko/posts/openstack-provision-cloud-server/</guid>
+      <guid>https://LMDAWN1127.github.io/ko/posts/openstack-provision-cloud-server/</guid>
       <description>GUI부터 CLI까지 OpenStack 클라우드 서버 제공 전체 흐름을 완전 정리: 테넌트·사용자·이미지·플레이버·네트워크·라우터·보안 그룹·키 페어·플로팅 IP 생성 및 삭제, 그리고 iptables SNAT/DNAT와 Nova cell_v2 discover_hosts 트러블슈팅.</description>
     </item>
   </channel>

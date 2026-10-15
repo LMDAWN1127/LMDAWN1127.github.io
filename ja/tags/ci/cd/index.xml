@@ -2,43 +2,43 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>CI/CD on DAWN&#39;s Blog</title>
-    <link>http://192.168.100.30:1313/ja/tags/ci/cd/</link>
+    <link>https://LMDAWN1127.github.io/ja/tags/ci/cd/</link>
     <description>Recent content in CI/CD on DAWN&#39;s Blog</description>
     <image>
       <title>DAWN&#39;s Blog</title>
-      <url>http://192.168.100.30:1313/images/DAWN.jpg</url>
-      <link>http://192.168.100.30:1313/images/DAWN.jpg</link>
+      <url>https://LMDAWN1127.github.io/images/DAWN.jpg</url>
+      <link>https://LMDAWN1127.github.io/images/DAWN.jpg</link>
     </image>
     <generator>Hugo</generator>
     <language>ja</language>
     <lastBuildDate>Fri, 02 Oct 2026 14:12:00 +0800</lastBuildDate>
-    <atom:link href="http://192.168.100.30:1313/ja/tags/ci/cd/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://LMDAWN1127.github.io/ja/tags/ci/cd/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>SonarQube 実践：プライベート導入・トークン設定・コード品質スキャン</title>
-      <link>http://192.168.100.30:1313/ja/posts/sonarqube-practice/</link>
+      <link>https://LMDAWN1127.github.io/ja/posts/sonarqube-practice/</link>
       <pubDate>Fri, 02 Oct 2026 14:12:00 +0800</pubDate>
-      <guid>http://192.168.100.30:1313/ja/posts/sonarqube-practice/</guid>
+      <guid>https://LMDAWN1127.github.io/ja/posts/sonarqube-practice/</guid>
       <description>SonarQube を自前で導入する実践手順：JDK8/MySQL5.6 の導入、プラグイン込みの展開、非 root ユーザーでの起動、Web トークン設定、sonar-scanner クライアントによるコードスキャン。</description>
     </item>
     <item>
       <title>Jenkins 実践：プライベート導入・プラグイン導入・GitLab 連携 CI</title>
-      <link>http://192.168.100.30:1313/ja/posts/jenkins-practice/</link>
+      <link>https://LMDAWN1127.github.io/ja/posts/jenkins-practice/</link>
       <pubDate>Thu, 01 Oct 2026 21:28:00 +0800</pubDate>
-      <guid>http://192.168.100.30:1313/ja/posts/jenkins-practice/</guid>
+      <guid>https://LMDAWN1127.github.io/ja/posts/jenkins-practice/</guid>
       <description>Jenkins を自前で導入する実践手順：JDK/Jenkins の RPM インストール、root 起動、プラグインのオフライン導入、GitLab の SSH 鍵認証と webhook 自動ビルドの連携。</description>
     </item>
     <item>
       <title>GitLab 実践：プライベート導入・SSH 鍵認証・リポジトリ管理</title>
-      <link>http://192.168.100.30:1313/ja/posts/gitlab-practice/</link>
+      <link>https://LMDAWN1127.github.io/ja/posts/gitlab-practice/</link>
       <pubDate>Thu, 01 Oct 2026 17:50:00 +0800</pubDate>
-      <guid>http://192.168.100.30:1313/ja/posts/gitlab-practice/</guid>
+      <guid>https://LMDAWN1127.github.io/ja/posts/gitlab-practice/</guid>
       <description>GitLab を自前で導入する実践手順：RPM インストール、コンポーネント、よく使うコマンド、Web UI 設定、SSH 鍵認証、マルチユーザー連携。</description>
     </item>
     <item>
       <title>Dockerfile のビルドをより速くするには？10 の実用的な最適化テクニック</title>
-      <link>http://192.168.100.30:1313/ja/posts/dockerfile-faster-build/</link>
+      <link>https://LMDAWN1127.github.io/ja/posts/dockerfile-faster-build/</link>
       <pubDate>Thu, 30 Jul 2026 11:00:00 +0800</pubDate>
-      <guid>http://192.168.100.30:1313/ja/posts/dockerfile-faster-build/</guid>
+      <guid>https://LMDAWN1127.github.io/ja/posts/dockerfile-faster-build/</guid>
       <description>10 の実証済みテクニックで、キャッシュ戦略からマルチステージビルドまで、Docker のビルド時間を大幅に短縮します。</description>
     </item>
   </channel>

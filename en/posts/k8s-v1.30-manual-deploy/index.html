@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" dir="auto" data-theme="auto">
 
-<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
+<head><meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="robots" content="index, follow">
@@ -9,19 +9,19 @@
 <meta name="keywords" content="Kubernetes, kubeadm, containerd, calico, v1.30, cluster-deployment">
 <meta name="description" content="A step-by-step guide to manually deploying a Kubernetes v1.30 cluster with kubeadm — covering firewall/SELinux, swap, kernel modules, Containerd, kubeadm init, worker join, Calico, and an IPVS add-on.">
 <meta name="author" content="DAWN">
-<link rel="canonical" href="http://192.168.100.30:1313/en/posts/k8s-v1.30-manual-deploy/">
+<link rel="canonical" href="https://LMDAWN1127.github.io/en/posts/k8s-v1.30-manual-deploy/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.4bf808bff57bddc46d61c8ae060b00400fc679ab876e37243b11bd3f832f2958.css" integrity="sha256-S/gIv/V73cRtYciuBgsAQA/GeauHbjckOxG9P4MvKVg=" rel="preload stylesheet" as="style">
-<link rel="icon" href="http://192.168.100.30:1313/images/DAWN.jpg">
-<link rel="icon" type="image/png" sizes="16x16" href="http://192.168.100.30:1313/favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="http://192.168.100.30:1313/favicon-32x32.png">
-<link rel="apple-touch-icon" href="http://192.168.100.30:1313/apple-touch-icon.png">
-<link rel="mask-icon" href="http://192.168.100.30:1313/safari-pinned-tab.svg">
+<link rel="icon" href="https://LMDAWN1127.github.io/images/DAWN.jpg">
+<link rel="icon" type="image/png" sizes="16x16" href="https://LMDAWN1127.github.io/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://LMDAWN1127.github.io/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://LMDAWN1127.github.io/apple-touch-icon.png">
+<link rel="mask-icon" href="https://LMDAWN1127.github.io/safari-pinned-tab.svg">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
-<link rel="alternate" hreflang="zh" href="http://192.168.100.30:1313/posts/k8s-v1.30-manual-deploy/">
-<link rel="alternate" hreflang="en" href="http://192.168.100.30:1313/en/posts/k8s-v1.30-manual-deploy/">
-<link rel="alternate" hreflang="ko" href="http://192.168.100.30:1313/ko/posts/k8s-v1.30-manual-deploy/">
-<link rel="alternate" hreflang="ja" href="http://192.168.100.30:1313/ja/posts/k8s-v1.30-manual-deploy/">
+<link rel="alternate" hreflang="zh" href="https://LMDAWN1127.github.io/posts/k8s-v1.30-manual-deploy/">
+<link rel="alternate" hreflang="en" href="https://LMDAWN1127.github.io/en/posts/k8s-v1.30-manual-deploy/">
+<link rel="alternate" hreflang="ko" href="https://LMDAWN1127.github.io/ko/posts/k8s-v1.30-manual-deploy/">
+<link rel="alternate" hreflang="ja" href="https://LMDAWN1127.github.io/ja/posts/k8s-v1.30-manual-deploy/">
 <noscript>
     <style>
         #theme-toggle,
@@ -67,8 +67,8 @@
         document.querySelector("html").dataset.theme = 'light';
     }
 
-</script><link rel="stylesheet" href='http://192.168.100.30:1313/css/custom.css'>
-<meta property="og:url" content="http://192.168.100.30:1313/en/posts/k8s-v1.30-manual-deploy/">
+</script><link rel="stylesheet" href='https://LMDAWN1127.github.io/css/custom.css'>
+<meta property="og:url" content="https://LMDAWN1127.github.io/en/posts/k8s-v1.30-manual-deploy/">
   <meta property="og:site_name" content="DAWN&#39;s Blog">
   <meta property="og:title" content="Manually Deploying a Kubernetes v1.30 Cluster (via kubeadm)">
   <meta property="og:description" content="A step-by-step guide to manually deploying a Kubernetes v1.30 cluster with kubeadm — covering firewall/SELinux, swap, kernel modules, Containerd, kubeadm init, worker join, Calico, and an IPVS add-on.">
@@ -83,10 +83,10 @@
     <meta property="article:tag" content="Calico">
     <meta property="article:tag" content="V1.30">
     <meta property="article:tag" content="Cluster-Deployment">
-      <meta property="og:image" content="http://192.168.100.30:1313/images/DAWN.jpg">
+      <meta property="og:image" content="https://LMDAWN1127.github.io/images/DAWN.jpg">
 
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:image" content="http://192.168.100.30:1313/images/DAWN.jpg">
+  <meta name="twitter:image" content="https://LMDAWN1127.github.io/images/DAWN.jpg">
   <meta name="twitter:title" content="Manually Deploying a Kubernetes v1.30 Cluster (via kubeadm)">
   <meta name="twitter:description" content="A step-by-step guide to manually deploying a Kubernetes v1.30 cluster with kubeadm — covering firewall/SELinux, swap, kernel modules, Containerd, kubeadm init, worker join, Calico, and an IPVS add-on.">
 
@@ -100,13 +100,13 @@
       "@type": "ListItem",
       "position":  1 ,
       "name": "Posts",
-      "item": "http://192.168.100.30:1313/en/posts/"
+      "item": "https://LMDAWN1127.github.io/en/posts/"
     }, 
     {
       "@type": "ListItem",
       "position":  2 ,
       "name": "Manually Deploying a Kubernetes v1.30 Cluster (via kubeadm)",
-      "item": "http://192.168.100.30:1313/en/posts/k8s-v1.30-manual-deploy/"
+      "item": "https://LMDAWN1127.github.io/en/posts/k8s-v1.30-manual-deploy/"
     }
   ]
 }
@@ -124,7 +124,7 @@
   "articleBody": "Planning is as follows:\nMaster node: Hostname: master IP address: 192.168.8.30\nWorker01 node: Hostname: node1 IP address: 192.168.8.31\nWorker02 node: Hostname: node2 IP address: 192.168.8.32\nComplete the following steps on all three nodes, and make sure the clocks of all three nodes are synchronized.\n1. Disable Firewall and SELinux 1 2 3 4 [root@master ~]# systemctl disable firewalld.service --now [root@master ~]# vim /etc/selinux/config SELINUX=disabled [root@master ~]# setenforce 0 2. Disable Swap 1 2 [root@master ~]# sed -i '/swap/s/^/#/' /etc/fstab [root@master ~]# swapoff -a 3. Configure System Parameters and Load Kernel Modules 1 2 3 4 5 6 7 8 9 10 11 12 [root@master ~]# cat \u003e /etc/modules-load.d/k8s.conf \u003c\u003c EOF overlay br_netfilter EOF [root@master ~]# modprobe overlay [root@master ~]# modprobe br_netfilter [root@master ~]# cat \u003e /etc/sysctl.d/k8s.conf \u003c\u003c EOF net.bridge.bridge-nf-call-iptables = 1 net.bridge.bridge-nf-call-ip6tables = 1 net.ipv4.ip_forward = 1 EOF [root@master ~]# sysctl --system 4. Install the Container Runtime (Containerd) Kubernetes v1.30 recommends using Containerd as the container runtime:\n1 [root@master ~]# yum -y remove runc Remove the OS-bundled yum repository files:\n1 [root@master ~]# rm -rf /etc/yum.repos.d/Cent*.repo Configure the local yum repository:\n1 2 3 4 5 6 7 8 9 10 11 12 [root@master ~]# mount /dev/cdrom /media/ [root@master ~]# cat /etc/fstab | grep iso9660 /dev/cdrom\t/media\tiso9660 defaults 0 0 [root@master ~]# cat /etc/yum.repos.d/dvd.repo [BaseOS] name=BaseOS baseurl=file:///media/BaseOS gpgcheck=0 [AppStream] name=AppStream baseurl=file:///media/AppStream gpgcheck=0 Configure Containerd:\n1 2 [root@master ~]# yum install -y yum-utils [root@master ~]# yum-config-manager --add-repo https://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo Install containerd.io:\n1 2 3 4 5 6 7 8 9 10 [root@master ~]# yum install -y containerd.io # Generate and edit the configuration file [root@master ~]# mkdir -p /etc/containerd [root@master ~]# containerd config default \u003e /etc/containerd/config.toml # Edit the config to use the systemd cgroup driver #sed -i 's/SystemdCgroup = false/SystemdCgroup = true/g' /etc/containerd/config.toml # Configure image acceleration (optional) #sed -i 's|registry.k8s.io|registry.aliyuncs.com/google_containers|g' /etc/containerd/config.toml # Start and enable on boot #systemctl enable --now containerd 5. Install and Configure Kubernetes 1 2 3 4 5 6 7 [root@master yum.repos.d]# cat kubernetes.repo [kubernetes] name=Kubernetes baseurl=https://mirrors.aliyun.com/kubernetes-new/core/stable/v1.30/rpm/ enabled=1 gpgcheck=1 gpgkey=https://mirrors.aliyun.com/kubernetes-new/core/stable/v1.30/rpm/repodata/repomd.xml.key Install the specified version of the Kubernetes components:\n1 2 3 [root@master ~]# yum install -y kubelet-1.30.0 kubeadm-1.30.0 kubectl-1.30.0 --disableexcludes=kubernetes # Start kubelet [root@master ~]# systemctl enable --now kubelet 6. Initialize Kubernetes Note: Once all nodes have completed the configuration above, run the following steps only on the master node.\n1 2 3 4 5 [root@master ~]# kubeadm init --pod-network-cidr=10.244.0.0/16 --service-cidr=172.16.0.0/16 --image-repository registry.aliyuncs.com/google_containers --kubernetes-version v1.30.0 --control-plane-endpoint=\"192.168.8.30:6443\" --upload-certs # Configure kubectl [root@master ~]# mkdir -p $HOME/.kube [root@master ~]# cp -i /etc/kubernetes/admin.conf $HOME/.kube/config [root@master ~]# chown $(id -u):$(id -g) $HOME/.kube/config 7. Join Worker Nodes to the Kubernetes Cluster Run the following commands on the worker nodes. Note: the token and CA certificate hash differ per node — follow the prompt from your own system. The certificate may also expire; if it has, regenerate the join command with kubeadm token create --print-join-command.\n1 2 [root@node1 ~]# kubeadm join 192.168.8.30:6443 --token yfjrsi.60lmqgzobp0b8al3 --discovery-token-ca-cert-hash sha256:f4e3c924918545abfd8148e71a377e086d591c6a59856a496b4b33e0987d9c18 [root@node2 ~]# kubeadm join 192.168.8.30:6443 --token yfjrsi.60lmqgzobp0b8al3 --discovery-token-ca-cert-hash sha256:f4e3c924918545abfd8148e71a377e086d591c6a59856a496b4b33e0987d9c18 8. Install the Calico Network Plugin on the Master Node 1 2 # Install the Calico network plugin [root@master ~]# kubectl apply -f https://raw.githubusercontent.com/projectcalico/calico/v3.26.1/manifests/calico.yaml Note: For well-known reasons, you may encounter issues downloading the Calico image.\nI have revised that manifest file — download it to the master node and apply it:\nThe file is on Baidu Netdisk. Download link: https://pan.baidu.com/s/1BPCFxv0kE0KWb04Qsgy71g (extraction code: s44k)\n1 [root@master ~]# kubectl apply -f /root/calico-ucloud.yaml After installation, run:\n1 2 3 4 5 [root@master ~]# kubectl get nodes NAME STATUS ROLES AGE VERSION master Ready control-plane 65m v1.30.13 node1 Ready 62m v1.30.0 node2 Ready 62m v1.30.0 If you see the output above, Kubernetes has been installed successfully.\n9. Additional Content Run the following commands on every node:\n1 2 3 4 5 kubectl completion bash \u003e /etc/bash_completion.d/kubectl source /etc/bash_completion.d/kubectl vim /root/.bashrc alias docker='crictl' source /root/.bashrc Note:\nkubectl shell completion: The first two lines write kubectl’s completion script into /etc/bash_completion.d/. This only works if the bash-completion package is installed on the system first (e.g. yum install -y bash-completion or apt install -y bash-completion); otherwise that directory does not exist and completion will not work. kubectl itself also requires these two commands to actually enable completion (Kubernetes needs this extra configuration). docker alias: After Kubernetes switches to the containerd runtime, container management uses crictl instead of docker. Aliasing docker to crictl here is for users accustomed to the docker command, so they can keep their familiar workflow. If you run # docker images and encounter the following error:\nKubernetes shows the following warning — here is how to resolve it.\nWARN[0000] image connect using default endpoints: [unix:///run/containerd/containerd.sock unix:///run/crio/crio.sock unix:///var/run/cri-dockerd.sock]. As the default settings are now deprecated, you should set the endpoint instead.\nThis warning indicates that the container runtime client you are using (such as crictl or kubelet) is using the default endpoint configuration, which is now deprecated and must be set explicitly. The detailed steps to fix it are as follows:\n1 2 3 4 5 6 7 cat \u003e /etc/crictl.yaml \u003c\u003c EOF runtime-endpoint: unix:///run/containerd/containerd.sock # Choose according to your container runtime image-endpoint: unix:///run/containerd/containerd.sock timeout: 10 debug: false pull-image-on-create: false EOF Notes:\nIf you use Containerd, the endpoint is unix:///run/containerd/containerd.sock.\nIf you use CRI-O, the endpoint is unix:///run/crio/crio.sock.\nRemark: Optional.\nIf you installed Kubernetes manually, it uses iptables for data forwarding by default. For large-scale scenarios, it is recommended to switch to IPVS mode. The steps to switch to IPVS mode after installation are as follows:\n1. Install the ipvsadm package on all nodes 2. Load the modules on all nodes 1 2 3 4 5 6 7 cat \u003e /etc/modules-load.d/ipvs.conf \u003c\u003c EOF ip_vs ip_vs_rr ip_vs_wrr ip_vs_sh nf_conntrack EOF 3. Edit the kube-proxy ConfigMap 1 kubectl edit cm kube-proxy -n kube-system In the editor that opens, find and modify the following section:\n1 2 3 4 5 6 7 apiVersion: kubeproxy.config.k8s.io/v1alpha1 kind: KubeProxyConfiguration mode: \"ipvs\" # change from \"iptables\" to \"ipvs\" ipvs: scheduler: \"rr\" # load balancing algorithm: rr|wrr|lc 4. Force a restart of the kube-proxy Pods Delete all kube-proxy Pods to trigger recreation:\n1 #kubectl delete pods -n kube-system -l k8s-app=kube-proxy 5. Verify the new Pods are running normally 1 2 #kubectl get pods -n kube-system -l k8s-app=kube-proxy # All Pods should be in Running state 6. Verify the IPVS configuration is effective 1 2 3 4 5 [root@master ~]# ipvsadm -L -n TCP 192.168.8.30:30080 rr -\u003e 10.244.104.3:80 Masq 1 0 0 -\u003e 10.244.104.4:80 Masq 1 0 0 -\u003e 10.244.166.132:80 Masq 1 0 0 ",
   "wordCount" : "1075",
   "inLanguage": "en",
-  "image": "http://192.168.100.30:1313/images/DAWN.jpg","datePublished": "2026-08-07T13:52:00+08:00",
+  "image": "https://LMDAWN1127.github.io/images/DAWN.jpg","datePublished": "2026-08-07T13:52:00+08:00",
   "dateModified": "2026-08-07T13:52:00+08:00",
   "author":{
     "@type": "Person",
@@ -132,14 +132,14 @@
   },
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "http://192.168.100.30:1313/en/posts/k8s-v1.30-manual-deploy/"
+    "@id": "https://LMDAWN1127.github.io/en/posts/k8s-v1.30-manual-deploy/"
   },
   "publisher": {
     "@type": "Organization",
     "name": "DAWN's Blog",
     "logo": {
       "@type": "ImageObject",
-      "url": "http://192.168.100.30:1313/images/DAWN.jpg"
+      "url": "https://LMDAWN1127.github.io/images/DAWN.jpg"
     }
   }
 }
@@ -149,8 +149,8 @@
     <header class="header">
     <nav class="header-nav">
         <div class="logo">
-            <a href="http://192.168.100.30:1313/en/" accesskey="h" title="DAWN&#39;s Blog (Alt + H)">
-                <img src="http://192.168.100.30:1313/images/DAWN.jpg" alt="" aria-label="logo"
+            <a href="https://LMDAWN1127.github.io/en/" accesskey="h" title="DAWN&#39;s Blog (Alt + H)">
+                <img src="https://LMDAWN1127.github.io/images/DAWN.jpg" alt="" aria-label="logo"
                     height="38">DAWN&#39;s Blog</a>
             <div class="logo-switches">
                 <button id="theme-toggle" class="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
@@ -175,15 +175,15 @@
                 </button><span class="nav-sep">|</span>
                     <ul class="lang-menu">
                         <li>
-                            <a href="http://192.168.100.30:1313/" title="中文"
+                            <a href="https://LMDAWN1127.github.io/" title="中文"
                                 aria-label="中文">Zh</a>
                         </li>
                         <li>
-                            <a href="http://192.168.100.30:1313/ko/" title="한국어"
+                            <a href="https://LMDAWN1127.github.io/ko/" title="한국어"
                                 aria-label="한국어">Ko</a>
                         </li>
                         <li>
-                            <a href="http://192.168.100.30:1313/ja/" title="日本語"
+                            <a href="https://LMDAWN1127.github.io/ja/" title="日本語"
                                 aria-label="日本語">Ja</a>
                         </li>
                     </ul>
@@ -191,7 +191,7 @@
         </div>
         <ul id="menu" class="menu">
             <li>
-                <a href="http://192.168.100.30:1313/en/archives/" title="Archive">
+                <a href="https://LMDAWN1127.github.io/en/archives/" title="Archive">
                     <span>Archive</span>
                 </a>
             </li>
