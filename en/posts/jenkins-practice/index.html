@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" dir="auto" data-theme="auto">
 
-<head><meta charset="utf-8">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="robots" content="index, follow">
@@ -9,19 +9,19 @@
 <meta name="keywords" content="DevOps, Jenkins, CI/CD">
 <meta name="description" content="A complete hands-on Jenkins self-hosting guide: RPM install of JDK and Jenkins, running as root, offline plugin install, and wiring GitLab SSH keyless access with webhook-triggered CI builds.">
 <meta name="author" content="DAWN">
-<link rel="canonical" href="https://LMDAWN1127.github.io/en/posts/jenkins-practice/">
+<link rel="canonical" href="http://192.168.100.30:1313/en/posts/jenkins-practice/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.4bf808bff57bddc46d61c8ae060b00400fc679ab876e37243b11bd3f832f2958.css" integrity="sha256-S/gIv/V73cRtYciuBgsAQA/GeauHbjckOxG9P4MvKVg=" rel="preload stylesheet" as="style">
-<link rel="icon" href="https://LMDAWN1127.github.io/images/DAWN.jpg">
-<link rel="icon" type="image/png" sizes="16x16" href="https://LMDAWN1127.github.io/favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="https://LMDAWN1127.github.io/favicon-32x32.png">
-<link rel="apple-touch-icon" href="https://LMDAWN1127.github.io/apple-touch-icon.png">
-<link rel="mask-icon" href="https://LMDAWN1127.github.io/safari-pinned-tab.svg">
+<link rel="icon" href="http://192.168.100.30:1313/images/DAWN.jpg">
+<link rel="icon" type="image/png" sizes="16x16" href="http://192.168.100.30:1313/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://192.168.100.30:1313/favicon-32x32.png">
+<link rel="apple-touch-icon" href="http://192.168.100.30:1313/apple-touch-icon.png">
+<link rel="mask-icon" href="http://192.168.100.30:1313/safari-pinned-tab.svg">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
-<link rel="alternate" hreflang="zh" href="https://LMDAWN1127.github.io/posts/jenkins-practice/">
-<link rel="alternate" hreflang="en" href="https://LMDAWN1127.github.io/en/posts/jenkins-practice/">
-<link rel="alternate" hreflang="ko" href="https://LMDAWN1127.github.io/ko/posts/jenkins-practice/">
-<link rel="alternate" hreflang="ja" href="https://LMDAWN1127.github.io/ja/posts/jenkins-practice/">
+<link rel="alternate" hreflang="zh" href="http://192.168.100.30:1313/posts/jenkins-practice/">
+<link rel="alternate" hreflang="en" href="http://192.168.100.30:1313/en/posts/jenkins-practice/">
+<link rel="alternate" hreflang="ko" href="http://192.168.100.30:1313/ko/posts/jenkins-practice/">
+<link rel="alternate" hreflang="ja" href="http://192.168.100.30:1313/ja/posts/jenkins-practice/">
 <noscript>
     <style>
         #theme-toggle,
@@ -67,8 +67,8 @@
         document.querySelector("html").dataset.theme = 'light';
     }
 
-</script><link rel="stylesheet" href='https://LMDAWN1127.github.io/css/custom.css'>
-<meta property="og:url" content="https://LMDAWN1127.github.io/en/posts/jenkins-practice/">
+</script><link rel="stylesheet" href='http://192.168.100.30:1313/css/custom.css'>
+<meta property="og:url" content="http://192.168.100.30:1313/en/posts/jenkins-practice/">
   <meta property="og:site_name" content="DAWN&#39;s Blog">
   <meta property="og:title" content="Jenkins in Practice: Self-hosted Deployment, Plugin Setup, and GitLab-Driven CI">
   <meta property="og:description" content="A complete hands-on Jenkins self-hosting guide: RPM install of JDK and Jenkins, running as root, offline plugin install, and wiring GitLab SSH keyless access with webhook-triggered CI builds.">
@@ -80,10 +80,10 @@
     <meta property="article:tag" content="DevOps">
     <meta property="article:tag" content="Jenkins">
     <meta property="article:tag" content="CI/CD">
-      <meta property="og:image" content="https://LMDAWN1127.github.io/images/DAWN.jpg">
+      <meta property="og:image" content="http://192.168.100.30:1313/images/DAWN.jpg">
 
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:image" content="https://LMDAWN1127.github.io/images/DAWN.jpg">
+  <meta name="twitter:image" content="http://192.168.100.30:1313/images/DAWN.jpg">
   <meta name="twitter:title" content="Jenkins in Practice: Self-hosted Deployment, Plugin Setup, and GitLab-Driven CI">
   <meta name="twitter:description" content="A complete hands-on Jenkins self-hosting guide: RPM install of JDK and Jenkins, running as root, offline plugin install, and wiring GitLab SSH keyless access with webhook-triggered CI builds.">
 
@@ -97,13 +97,13 @@
       "@type": "ListItem",
       "position":  1 ,
       "name": "Posts",
-      "item": "https://LMDAWN1127.github.io/en/posts/"
+      "item": "http://192.168.100.30:1313/en/posts/"
     }, 
     {
       "@type": "ListItem",
       "position":  2 ,
       "name": "Jenkins in Practice: Self-hosted Deployment, Plugin Setup, and GitLab-Driven CI",
-      "item": "https://LMDAWN1127.github.io/en/posts/jenkins-practice/"
+      "item": "http://192.168.100.30:1313/en/posts/jenkins-practice/"
     }
   ]
 }
@@ -121,7 +121,7 @@
   "articleBody": "01. Jenkins Introduction Official site: jenkins.io\nJenkins is an open-source project — a Java-based continuous integration tool that monitors repetitive tasks and provides an open, easy-to-use platform to make software CI possible.\n02. Jenkins Deployment 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 I. Environment preparation 1. OS: CentOS 7.9 2. Memory: 2G for lab, at least 6G for production 3. Disable the firewall and turn off SELinux 4、JDK17 II. Install the JDK Upload the RPM package [root@jenkins ~]#ll total 178212 -rw-r--r-- 1 root root 182486159 Oct 1 19:04 jdk-17_linux-x64_bin.rpm [root@jenkins ~]#rpm -ivh jdk-17_linux-x64_bin.rpm warning: jdk-17_linux-x64_bin.rpm: Header V3 RSA/SHA256 Signature, key ID ad986da3: NOKEY Preparing... ################################# [100%] Updating / installing... 1:jdk-17-2000:17.0.11-7 ################################# [100%] Check whether the installation succeeded: [root@jenkins ~]# rpm -qa|grep jdk jdk-17-17.0.11-7.x86_64 II. Install Jenkins Upload the Jenkins package [root@jenkins ~]#ll total 269432 -rw-r--r-- 1 root root 182486159 Oct 1 19:04 jdk-17_linux-x64_bin.rpm -rw-r--r-- 1 root root 93405530 Oct 1 19:06 jenkins-2.405-1.1.noarch.rpm [root@jenkins ~]#rpm -ivh jenkins-2.405-1.1.noarch.rpm warning: jenkins-2.405-1.1.noarch.rpm: Header V4 RSA/SHA512 Signature, key ID ef5975ca: NOKEY Preparing... ################################# [100%] Updating / installing... 1:jenkins-2.405-1.1 ################################# [100%] III. Change the Jenkins run user to root 1) Change the run user in the config file [root@jenkins ~]# vim /etc/sysconfig/jenkins ... JENKINS_USER=\"root\" ... 2) Change the run user in the service config [root@jenkins ~]# vim /usr/lib/systemd/system/jenkins.service ... User=root Group=root ... [root@jenkins ~]# systemctl daemon-reload 3) Install font configuration [root@jenkins ~]# yum -y install fontconfig IV. Start Jenkins and enable it on boot [root@jenkins ~]# systemctl start jenkins [root@jenkins ~]# systemctl enable jenkins 03. Log in to Jenkins 04. Change the password After changing the password you are logged out; log back in as admin\n05. Plugin installation 1 2 3 4 5 6 7 8 9 10 11 12 13 14 1. Upload plugins to the Jenkins home directory [root@jenkins ~]# cd /var/lib/jenkins/ [root@jenkins ~]#ll total 576228 -rw-r--r-- 1 root root 182486159 Oct 1 19:04 jdk-17_linux-x64_bin.rpm -rw-r--r-- 1 root root 93405530 Oct 1 19:06 jenkins-2.405-1.1.noarch.rpm -rw-r--r-- 1 root root 314156543 Oct 1 19:30 jenkins_plu.tar.gz 2. Extract the plugins into the plugins directory [root@jenkins jenkins]#tar xf /root/jenkins_plu.tar.gz -C plugins/ 3. Restart Jenkins to apply [root@jenkins ~]# systemctl restart jenkins 06. Create a project Create a freestyle project and run pwd to see the default working directory Jenkins uses\nNote: after Jenkins creates a project, it automatically creates a workspace directory under its home /var/lib/jenkins/, and inside it a directory named after the project.\nSubsequently, the code Jenkins pulls from GitLab is stored under this project directory.\n1 2 [root@jenkins ~]#ls /var/lib/jenkins/workspace/ test_job Connect GitLab with Jenkins\nBefore it is connected, a “cannot connect” error is shown:\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 # configure keyless (SSH) access [root@jenkins ~]#ssh-keygen Generating public/private rsa key pair. Enter file in which to save the key (/root/.ssh/id_rsa): Created directory '/root/.ssh'. Enter passphrase (empty for no passphrase): Enter same passphrase again: Your identification has been saved in /root/.ssh/id_rsa. Your public key has been saved in /root/.ssh/id_rsa.pub. The key fingerprint is: SHA256:Rr4ouinx/cPqVxJsxju2Cjd1mhWmWSuKGOKG532uTvk root@jenkins The key's randomart image is: +---[RSA 2048]----+ | | | | | o = | | *B o | |o o=oS | |=o . +=O.. | |o=+.Bo+=. | |oo.B.+* | | .=+BOE. | +----[SHA256]-----+ [root@jenkins ~]#cat .ssh/id_rsa.pub ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC+kaj/NEwHKaIErMEClVYuG3JuWr9CD7XpuO5YZ6JftMmNdAPMrvS0mWqP4SDyT6/le0j1RGkA48GsirESfMqXKvzSSd5AuhIPmUADtGPNK6VSeiMKyoWgiNBFLn6RIOAcXI0MuZrYQMLJz+kOYr6kF9em/6MfFQrLkt9DzIlnR9b7CMLyDnPOZ8FG640DqqX0sZ8G+i2v41VX/c7RGIWAgEhJY+kiMS5cDxWlTf2k8hoZmh0VIa/G9AwnvbklyUiE4ACd9GtEJG5xXJzedn7q0/Ygfr26T29t+KST3SlyrXIaEbEC5WwIMymCEJDCPPCGzqLjsWa+4dbJhoEM1afV root@jenkins # install git on Jenkins [root@jenkins ~]#yum install -y git Add the key generated by Jenkins into GitLab:\nRun git clone once on Jenkins to complete the initial yes prompt\n1 2 3 4 5 6 7 8 9 10 11 12 13 [root@jenkins ~]#git clone git@11.0.1.200:dawn/blog.git Cloning into 'blog'... The authenticity of host '11.0.1.200 (11.0.1.200)' can't be established. ECDSA key fingerprint is SHA256:Ldn1vBzBEFxynXs0qBNr0XzJ2lTx/0caMuK5yJtb+Zo. ECDSA key fingerprint is MD5:3d:1d:28:3f:33:ec:ee:c1:69:83:af:14:a3:7f:79:ac. Are you sure you want to continue connecting (yes/no)? yes Warning: Permanently added '11.0.1.200' (ECDSA) to the list of known hosts. remote: Enumerating objects: 20, done. remote: Counting objects: 100% (9/9), done. remote: Compressing objects: 100% (8/8), done. remote: Total 20 (delta 0), reused 0 (delta 0), pack-reused 11 Receiving objects: 100% (20/20), done. Resolving deltas: 100% (2/2), done. Then the connection works\nTrigger another build to test the pull\nPull succeeded\nConfigure the webhook\nConfigure a webhook so Jenkins automatically pulls GitLab code and builds on each push\nSave both sides, then test\nAfter modifying the project, push again to test\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 [root@gitlab blog]#git branch * master [root@gitlab blog]#touch c.txt [root@gitlab blog]#git add . [root@gitlab blog]#git commit -m \"test_v2\" [master 7b1f29e] test_v2 1 file changed, 0 insertions(+), 0 deletions(-) create mode 100644 c.txt [root@gitlab blog]#git pull origin master remote: Enumerating objects: 17, done. remote: Counting objects: 100% (9/9), done. remote: Compressing objects: 100% (8/8), done. remote: Total 17 (delta 0), reused 0 (delta 0), pack-reused 8 Unpacking objects: 100% (17/17), done. From 11.0.1.200:dawn/blog * branch master -\u003e FETCH_HEAD Merge made by the 'recursive' strategy. a.txt | 1 + 1 file changed, 1 insertion(+) create mode 100644 a.txt [root@gitlab blog]#git push -u origin master Counting objects: 7, done. Delta compression using up to 2 threads. Compressing objects: 100% (4/4), done. Writing objects: 100% (5/5), 469 bytes | 0 bytes/s, done. Total 5 (delta 2), reused 0 (delta 0) To git@11.0.1.200:dawn/blog.git 47f606c..91e80a5 master -\u003e master Branch master set up to track remote branch master from origin. Automatic build succeeded\n",
   "wordCount" : "956",
   "inLanguage": "en",
-  "image": "https://LMDAWN1127.github.io/images/DAWN.jpg","datePublished": "2026-10-01T21:28:00+08:00",
+  "image": "http://192.168.100.30:1313/images/DAWN.jpg","datePublished": "2026-10-01T21:28:00+08:00",
   "dateModified": "2026-10-01T21:28:00+08:00",
   "author":{
     "@type": "Person",
@@ -129,14 +129,14 @@
   },
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "https://LMDAWN1127.github.io/en/posts/jenkins-practice/"
+    "@id": "http://192.168.100.30:1313/en/posts/jenkins-practice/"
   },
   "publisher": {
     "@type": "Organization",
     "name": "DAWN's Blog",
     "logo": {
       "@type": "ImageObject",
-      "url": "https://LMDAWN1127.github.io/images/DAWN.jpg"
+      "url": "http://192.168.100.30:1313/images/DAWN.jpg"
     }
   }
 }
@@ -146,8 +146,8 @@
     <header class="header">
     <nav class="header-nav">
         <div class="logo">
-            <a href="https://LMDAWN1127.github.io/en/" accesskey="h" title="DAWN&#39;s Blog (Alt + H)">
-                <img src="https://LMDAWN1127.github.io/images/DAWN.jpg" alt="" aria-label="logo"
+            <a href="http://192.168.100.30:1313/en/" accesskey="h" title="DAWN&#39;s Blog (Alt + H)">
+                <img src="http://192.168.100.30:1313/images/DAWN.jpg" alt="" aria-label="logo"
                     height="38">DAWN&#39;s Blog</a>
             <div class="logo-switches">
                 <button id="theme-toggle" class="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
@@ -172,15 +172,15 @@
                 </button><span class="nav-sep">|</span>
                     <ul class="lang-menu">
                         <li>
-                            <a href="https://LMDAWN1127.github.io/" title="中文"
+                            <a href="http://192.168.100.30:1313/" title="中文"
                                 aria-label="中文">Zh</a>
                         </li>
                         <li>
-                            <a href="https://LMDAWN1127.github.io/ko/" title="한국어"
+                            <a href="http://192.168.100.30:1313/ko/" title="한국어"
                                 aria-label="한국어">Ko</a>
                         </li>
                         <li>
-                            <a href="https://LMDAWN1127.github.io/ja/" title="日本語"
+                            <a href="http://192.168.100.30:1313/ja/" title="日本語"
                                 aria-label="日本語">Ja</a>
                         </li>
                     </ul>
@@ -188,7 +188,7 @@
         </div>
         <ul id="menu" class="menu">
             <li>
-                <a href="https://LMDAWN1127.github.io/en/archives/" title="Archive">
+                <a href="http://192.168.100.30:1313/en/archives/" title="Archive">
                     <span>Archive</span>
                 </a>
             </li>

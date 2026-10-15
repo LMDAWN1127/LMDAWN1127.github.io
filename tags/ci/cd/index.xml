@@ -2,78 +2,78 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>CI/CD on DAWN&#39;s Blog</title>
-    <link>https://LMDAWN1127.github.io/tags/ci/cd/</link>
+    <link>http://192.168.100.30:1313/tags/ci/cd/</link>
     <description>Recent content in CI/CD on DAWN&#39;s Blog</description>
     <image>
       <title>DAWN&#39;s Blog</title>
-      <url>https://LMDAWN1127.github.io/images/DAWN.jpg</url>
-      <link>https://LMDAWN1127.github.io/images/DAWN.jpg</link>
+      <url>http://192.168.100.30:1313/images/DAWN.jpg</url>
+      <link>http://192.168.100.30:1313/images/DAWN.jpg</link>
     </image>
     <generator>Hugo</generator>
     <language>zh-cn</language>
     <lastBuildDate>Tue, 13 Oct 2026 09:30:00 +0800</lastBuildDate>
-    <atom:link href="https://LMDAWN1127.github.io/tags/ci/cd/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://192.168.100.30:1313/tags/ci/cd/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Jenkins 分布式构建与 Slave 节点配置</title>
-      <link>https://LMDAWN1127.github.io/posts/jenkins-distributed-build/</link>
+      <link>http://192.168.100.30:1313/posts/jenkins-distributed-build/</link>
       <pubDate>Tue, 13 Oct 2026 09:30:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/posts/jenkins-distributed-build/</guid>
+      <guid>http://192.168.100.30:1313/posts/jenkins-distributed-build/</guid>
       <description>记录将 nexus 服务器配置为 Jenkins Slave 节点的完整过程：拷贝 sonar/maven 工具链、建立 SSH 信任、处理 agent 端 Java 版本过旧导致启动失败的坑，以及在 Jenkins UI 指定 JavaPath、调整 master 并发调度实现 master/slave 并行构建。</description>
     </item>
     <item>
       <title>Java 项目 CI/CD 流水线：Maven&#43;GitLab&#43;Jenkins&#43;SonarQube&#43;Nexus</title>
-      <link>https://LMDAWN1127.github.io/posts/java-project-deploy/</link>
+      <link>http://192.168.100.30:1313/posts/java-project-deploy/</link>
       <pubDate>Mon, 12 Oct 2026 18:00:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/posts/java-project-deploy/</guid>
+      <guid>http://192.168.100.30:1313/posts/java-project-deploy/</guid>
       <description>从 Maven 构建、GitLab 托管、Jenkins 拉取与自动部署，到 SonarQube 质量门禁与 Nexus 私服，梳理一条完整的 Java 项目 CI/CD 流水线落地过程。</description>
     </item>
     <item>
       <title>Jenkins Pipeline 流水线</title>
-      <link>https://LMDAWN1127.github.io/posts/jenkins-pipeline/</link>
+      <link>http://192.168.100.30:1313/posts/jenkins-pipeline/</link>
       <pubDate>Fri, 09 Oct 2026 19:00:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/posts/jenkins-pipeline/</guid>
+      <guid>http://192.168.100.30:1313/posts/jenkins-pipeline/</guid>
       <description>从 CI/CD 与 Pipeline as Code 概念讲起，拆解 Node/Stage/Step，并用一份 Jenkinsfile 把「拉取代码 → SonarQube 扫描 → 打包 → 部署」的发布流程落地为可维护的流水线。</description>
     </item>
     <item>
       <title>Jenkins 集成 SonarQube 质量门禁与企业微信通知</title>
-      <link>https://LMDAWN1127.github.io/posts/jenkins-sonarqube-wecom-notification/</link>
+      <link>http://192.168.100.30:1313/posts/jenkins-sonarqube-wecom-notification/</link>
       <pubDate>Fri, 09 Oct 2026 16:30:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/posts/jenkins-sonarqube-wecom-notification/</guid>
+      <guid>http://192.168.100.30:1313/posts/jenkins-sonarqube-wecom-notification/</guid>
       <description>在 Jenkins 中集成 SonarQube 质量门禁做代码扫描，并配合企业微信(WeCom)实现构建结果与变更日志的自动通知，打通质量卡点与团队触达。</description>
     </item>
     <item>
       <title>Jenkins &#43; GitLab 打通实现 CI/CD 自动部署</title>
-      <link>https://LMDAWN1127.github.io/posts/jenkins-gitlab-cicd-auto-deploy/</link>
+      <link>http://192.168.100.30:1313/posts/jenkins-gitlab-cicd-auto-deploy/</link>
       <pubDate>Fri, 09 Oct 2026 16:00:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/posts/jenkins-gitlab-cicd-auto-deploy/</guid>
+      <guid>http://192.168.100.30:1313/posts/jenkins-gitlab-cicd-auto-deploy/</guid>
       <description>手把手实现 Jenkins 拉取 GitLab 代码、经 SSH 推送至 Web 服务器、并配置 GitLab Webhook 触发全自动部署的完整 CI/CD 流程。</description>
     </item>
     <item>
       <title>SonarQube 实战：私有化部署、Token 配置与代码质量扫描</title>
-      <link>https://LMDAWN1127.github.io/posts/sonarqube-practice/</link>
+      <link>http://192.168.100.30:1313/posts/sonarqube-practice/</link>
       <pubDate>Fri, 02 Oct 2026 14:12:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/posts/sonarqube-practice/</guid>
+      <guid>http://192.168.100.30:1313/posts/sonarqube-practice/</guid>
       <description>从 JDK8 + MySQL5.6 安装、SonarQube 解压与插件部署、普通用户启动，到 Web Token 配置与 sonar-scanner 客户端代码扫描的完整私有化实战。</description>
     </item>
     <item>
       <title>Jenkins 实战：私有化部署、插件安装与 GitLab 联动 CI</title>
-      <link>https://LMDAWN1127.github.io/posts/jenkins-practice/</link>
+      <link>http://192.168.100.30:1313/posts/jenkins-practice/</link>
       <pubDate>Thu, 01 Oct 2026 21:28:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/posts/jenkins-practice/</guid>
+      <guid>http://192.168.100.30:1313/posts/jenkins-practice/</guid>
       <description>从 RPM 安装 JDK 与 Jenkins、改为 root 启动、插件离线安装，到打通 GitLab SSH 免密与 webhook 自动构建的完整 Jenkins 私有化实战。</description>
     </item>
     <item>
       <title>GitLab 实战：私有化部署、SSH 免密与代码仓库管理</title>
-      <link>https://LMDAWN1127.github.io/posts/gitlab-practice/</link>
+      <link>http://192.168.100.30:1313/posts/gitlab-practice/</link>
       <pubDate>Thu, 01 Oct 2026 17:50:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/posts/gitlab-practice/</guid>
+      <guid>http://192.168.100.30:1313/posts/gitlab-practice/</guid>
       <description>从 RPM 安装、组件构成、常用命令到 Web 配置、SSH 免密与多账号协作的完整 GitLab 私有化部署实战。</description>
     </item>
     <item>
       <title>Dockerfile 构建镜像如何更快？10 个实用优化技巧</title>
-      <link>https://LMDAWN1127.github.io/posts/dockerfile-faster-build/</link>
+      <link>http://192.168.100.30:1313/posts/dockerfile-faster-build/</link>
       <pubDate>Thu, 30 Jul 2026 11:00:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/posts/dockerfile-faster-build/</guid>
+      <guid>http://192.168.100.30:1313/posts/dockerfile-faster-build/</guid>
       <description>10 个经过验证的技巧，从缓存策略到多阶段构建，大幅缩短 Docker 构建时间。</description>
     </item>
   </channel>

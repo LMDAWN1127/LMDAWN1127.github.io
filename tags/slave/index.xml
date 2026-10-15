@@ -2,22 +2,22 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>Slave on DAWN&#39;s Blog</title>
-    <link>https://LMDAWN1127.github.io/tags/slave/</link>
+    <link>http://192.168.100.30:1313/tags/slave/</link>
     <description>Recent content in Slave on DAWN&#39;s Blog</description>
     <image>
       <title>DAWN&#39;s Blog</title>
-      <url>https://LMDAWN1127.github.io/images/DAWN.jpg</url>
-      <link>https://LMDAWN1127.github.io/images/DAWN.jpg</link>
+      <url>http://192.168.100.30:1313/images/DAWN.jpg</url>
+      <link>http://192.168.100.30:1313/images/DAWN.jpg</link>
     </image>
     <generator>Hugo</generator>
     <language>zh-cn</language>
     <lastBuildDate>Tue, 13 Oct 2026 09:30:00 +0800</lastBuildDate>
-    <atom:link href="https://LMDAWN1127.github.io/tags/slave/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://192.168.100.30:1313/tags/slave/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Jenkins 分布式构建与 Slave 节点配置</title>
-      <link>https://LMDAWN1127.github.io/posts/jenkins-distributed-build/</link>
+      <link>http://192.168.100.30:1313/posts/jenkins-distributed-build/</link>
       <pubDate>Tue, 13 Oct 2026 09:30:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/posts/jenkins-distributed-build/</guid>
+      <guid>http://192.168.100.30:1313/posts/jenkins-distributed-build/</guid>
       <description>记录将 nexus 服务器配置为 Jenkins Slave 节点的完整过程：拷贝 sonar/maven 工具链、建立 SSH 信任、处理 agent 端 Java 版本过旧导致启动失败的坑，以及在 Jenkins UI 指定 JavaPath、调整 master 并发调度实现 master/slave 并行构建。</description>
     </item>
   </channel>
