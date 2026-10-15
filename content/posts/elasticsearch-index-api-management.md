@@ -236,7 +236,7 @@ GET 11.0.1.111:9200/_component_template/dark
 ### 4. 创建索引模板指定组件模板
 
 ```http
-GET 11.0.1.111:9200/_index_template/dawn
+POST 11.0.1.111:9200/_index_template/dawn
 {
     "index_patterns": [
         "dawn*"
