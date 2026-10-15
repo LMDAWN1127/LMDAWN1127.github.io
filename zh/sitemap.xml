@@ -28,7 +28,7 @@
                 />
   </url><url>
     <loc>https://LMDAWN1127.github.io/categories/</loc>
-    <lastmod>2026-10-14T18:00:00+08:00</lastmod>
+    <lastmod>2026-10-14T20:00:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
@@ -53,7 +53,7 @@
                 />
   </url><url>
     <loc>https://LMDAWN1127.github.io/categories/devops/</loc>
-    <lastmod>2026-10-14T18:00:00+08:00</lastmod>
+    <lastmod>2026-10-14T20:00:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
@@ -78,22 +78,22 @@
                 />
   </url><url>
     <loc>https://LMDAWN1127.github.io/tags/elasticsearch/</loc>
-    <lastmod>2026-10-14T18:00:00+08:00</lastmod>
+    <lastmod>2026-10-14T20:00:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url><url>
-    <loc>https://LMDAWN1127.github.io/posts/elasticsearch-index-api-management/</loc>
-    <lastmod>2026-10-14T18:00:00+08:00</lastmod>
+    <loc>https://LMDAWN1127.github.io/posts/elasticsearch-document-api-management/</loc>
+    <lastmod>2026-10-14T20:00:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url><url>
     <loc>https://LMDAWN1127.github.io/tags/elasticstack/</loc>
-    <lastmod>2026-10-14T18:00:00+08:00</lastmod>
+    <lastmod>2026-10-14T20:00:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url><url>
     <loc>https://LMDAWN1127.github.io/posts/</loc>
-    <lastmod>2026-10-14T18:00:00+08:00</lastmod>
+    <lastmod>2026-10-14T20:00:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
@@ -118,7 +118,7 @@
                 />
   </url><url>
     <loc>https://LMDAWN1127.github.io/tags/</loc>
-    <lastmod>2026-10-14T18:00:00+08:00</lastmod>
+    <lastmod>2026-10-14T20:00:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
@@ -141,6 +141,16 @@
                 hreflang="ja"
                 href="https://LMDAWN1127.github.io/ja/tags/"
                 />
+  </url><url>
+    <loc>https://LMDAWN1127.github.io/tags/%E6%96%87%E6%A1%A3%E7%AE%A1%E7%90%86/</loc>
+    <lastmod>2026-10-14T20:00:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url><url>
+    <loc>https://LMDAWN1127.github.io/posts/elasticsearch-index-api-management/</loc>
+    <lastmod>2026-10-14T18:00:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
   </url><url>
     <loc>https://LMDAWN1127.github.io/tags/%E7%B4%A2%E5%BC%95%E7%AE%A1%E7%90%86/</loc>
     <lastmod>2026-10-14T18:00:00+08:00</lastmod>
