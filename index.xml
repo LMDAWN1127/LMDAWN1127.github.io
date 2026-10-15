@@ -11,7 +11,7 @@
     </image>
     <generator>Hugo</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Wed, 14 Oct 2026 20:00:00 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 14 Oct 2026 21:00:00 +0800</lastBuildDate>
     <atom:link href="https://LMDAWN1127.github.io/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Harbor 主备部署实战：从安装到 HTTPS 与主备复制</title>
@@ -19,6 +19,13 @@
       <pubDate>Tue, 04 Aug 2026 00:00:00 +0000</pubDate>
       <guid>https://LMDAWN1127.github.io/posts/harbor-master-slave/</guid>
       <description>完整记录 Harbor 企业级镜像仓库的主备部署过程，涵盖 HTTP/HTTPS 双模式安装、自签名证书配置、跨主机主备复制等核心运维技能。</description>
+    </item>
+    <item>
+      <title>Elasticsearch 集群安全配置：action.destructive_requires_name 防误删保护</title>
+      <link>https://LMDAWN1127.github.io/posts/elasticsearch-destructive-requires-name/</link>
+      <pubDate>Wed, 14 Oct 2026 21:00:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/posts/elasticsearch-destructive-requires-name/</guid>
+      <description>围绕 Elasticsearch 集群级安全设置 action.destructive_requires_name 展开：该配置决定删除索引时是否必须指定明确名称（禁用通配符与 _all）。涵盖动态 API（_cluster/settings，persistent/transient）与静态 elasticsearch.yml 两种配置方式，以及如何验证通配符删除被拦截、明确名称删除成功。</description>
     </item>
     <item>
       <title>Elasticsearch 文档 API 管理：单文档与批量操作</title>
