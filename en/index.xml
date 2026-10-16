@@ -1,17 +1,282 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>Home on DAWN&#39;s Blog</title>
-    <link>http://192.168.100.30:1313/en/</link>
-    <description>Recent content in Home on DAWN&#39;s Blog</description>
+    <title>DAWN&#39;s Blog</title>
+    <link>https://LMDAWN1127.github.io/en/</link>
+    <description>Recent content on DAWN&#39;s Blog</description>
     <image>
       <title>DAWN&#39;s Blog</title>
-      <url>http://192.168.100.30:1313/images/DAWN.jpg</url>
-      <link>http://192.168.100.30:1313/images/DAWN.jpg</link>
+      <url>https://LMDAWN1127.github.io/images/DAWN.jpg</url>
+      <link>https://LMDAWN1127.github.io/images/DAWN.jpg</link>
     </image>
     <generator>Hugo</generator>
-    <language>zh-cn</language>
-    <lastBuildDate></lastBuildDate>
-    <atom:link href="http://192.168.100.30:1313/en/index.xml" rel="self" type="application/rss+xml" />
+    <language>en</language>
+    <lastBuildDate>Tue, 06 Oct 2026 20:35:00 +0800</lastBuildDate>
+    <atom:link href="https://LMDAWN1127.github.io/en/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Harbor Active-Standby Deployment: From Installation to HTTPS and Replication</title>
+      <link>https://LMDAWN1127.github.io/en/posts/harbor-master-slave/</link>
+      <pubDate>Tue, 04 Aug 2026 00:00:00 +0000</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/posts/harbor-master-slave/</guid>
+      <description>Complete guide to deploying Harbor enterprise Docker registry with active-standby architecture, HTTP/HTTPS modes, self-signed certificates, and cross-host replication.</description>
+    </item>
+    <item>
+      <title>OpenStack Cloud OS: Core Architecture and Automated Deployment</title>
+      <link>https://LMDAWN1127.github.io/en/posts/openstack-core-architecture-deployment/</link>
+      <pubDate>Tue, 06 Oct 2026 20:35:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/posts/openstack-core-architecture-deployment/</guid>
+      <description>From core components (Nova/Glance/Neutron/Cinder, etc.) to one-click Packstack-based automated deployment of the Victoria release, plus Rsyslog log troubleshooting.</description>
+    </item>
+    <item>
+      <title>OpenStack Cinder Block Storage Explained: Local LVM &#43; iSCSI Volumes and NFS Backend Integration</title>
+      <link>https://LMDAWN1127.github.io/en/posts/openstack-cinder-block-storage/</link>
+      <pubDate>Mon, 05 Oct 2026 23:30:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/posts/openstack-cinder-block-storage/</guid>
+      <description>A walkthrough of OpenStack Cinder block storage: how volume creation and attachment split between Cinder and Nova, the full local LVM + iSCSI path (VG/LV, turning the controller into an iSCSI target with targetcli, attaching via libvirt), plus NFS backend configuration and dashboard operations.</description>
+    </item>
+    <item>
+      <title>OpenStack Core Services Explained: Keystone Authentication, Nova Compute, and Glance/Swift Image Storage</title>
+      <link>https://LMDAWN1127.github.io/en/posts/openstack-keystone-glance-nova/</link>
+      <pubDate>Mon, 05 Oct 2026 00:21:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/posts/openstack-keystone-glance-nova/</guid>
+      <description>A walkthrough of OpenStack&amp;rsquo;s three core services: Keystone multi-domain support, service/endpoint registration and policy-file authorization; Nova&amp;rsquo;s modules (api/scheduler/conductor/compute/novncproxy), the message queue and the differential disk; and the Glance image service switched to a Swift object-storage backend.</description>
+    </item>
+    <item>
+      <title>OpenStack Cloud Server Provisioning</title>
+      <link>https://LMDAWN1127.github.io/en/posts/openstack-provision-cloud-server/</link>
+      <pubDate>Sun, 04 Oct 2026 21:50:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/posts/openstack-provision-cloud-server/</guid>
+      <description>From the web dashboard to the CLI, a complete walkthrough of provisioning OpenStack cloud servers: creating and deleting tenants/users/images/flavors/networks/routers/security groups/key pairs/floating IPs, plus iptables SNAT/DNAT and Nova cell_v2 discover_hosts troubleshooting.</description>
+    </item>
+    <item>
+      <title>systemd Service Management &amp; Multi-version MySQL Deployment</title>
+      <link>https://LMDAWN1127.github.io/en/posts/systemd-mysql-multiversion/</link>
+      <pubDate>Sat, 03 Oct 2026 17:11:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/posts/systemd-mysql-multiversion/</guid>
+      <description>A hands-on guide to systemd Unit management and multi-version (5.6/5.7), multi-instance MySQL deployment: two production daemon configs, archive download, initialization, per-instance config files, and start/stop plus three-service status verification.</description>
+    </item>
+    <item>
+      <title>MySQL in Practice: Binary Installation, Start/Stop, and Password Management</title>
+      <link>https://LMDAWN1127.github.io/en/posts/mysql-binary-deploy/</link>
+      <pubDate>Sat, 03 Oct 2026 14:53:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/posts/mysql-binary-deploy/</guid>
+      <description>A complete MySQL 8.0 operations guide: installing from the official binary package, OS prep, initialization, config file, multiple start/stop methods, plus password set/change and forgot-password reset.</description>
+    </item>
+    <item>
+      <title>SonarQube in Practice: Self-hosted Deployment, Token Setup, and Code Quality Scanning</title>
+      <link>https://LMDAWN1127.github.io/en/posts/sonarqube-practice/</link>
+      <pubDate>Fri, 02 Oct 2026 14:12:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/posts/sonarqube-practice/</guid>
+      <description>A complete hands-on SonarQube self-hosting guide: JDK 8 and MySQL 5.6 setup, extracting SonarQube with plugins, running as a non-root user, web token configuration, and scanning code with the sonar-scanner client.</description>
+    </item>
+    <item>
+      <title>Jenkins in Practice: Self-hosted Deployment, Plugin Setup, and GitLab-Driven CI</title>
+      <link>https://LMDAWN1127.github.io/en/posts/jenkins-practice/</link>
+      <pubDate>Thu, 01 Oct 2026 21:28:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/posts/jenkins-practice/</guid>
+      <description>A complete hands-on Jenkins self-hosting guide: RPM install of JDK and Jenkins, running as root, offline plugin install, and wiring GitLab SSH keyless access with webhook-triggered CI builds.</description>
+    </item>
+    <item>
+      <title>GitLab in Practice: Self-hosted Deployment, SSH Keyless Access, and Repository Management</title>
+      <link>https://LMDAWN1127.github.io/en/posts/gitlab-practice/</link>
+      <pubDate>Thu, 01 Oct 2026 17:50:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/posts/gitlab-practice/</guid>
+      <description>A complete hands-on guide to self-hosting GitLab: RPM install, components, common commands, web UI setup, SSH keyless access, and multi-user collaboration.</description>
+    </item>
+    <item>
+      <title>Git in Practice: Installation, Essential Commands, and Branch Management</title>
+      <link>https://LMDAWN1127.github.io/en/posts/git-practice-notes/</link>
+      <pubDate>Thu, 01 Oct 2026 01:20:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/posts/git-practice-notes/</guid>
+      <description>A hands-on Git walkthrough covering installation, everyday commands, branch workflows, and conflict resolution.</description>
+    </item>
+    <item>
+      <title>Custom Monitoring in Zabbix</title>
+      <link>https://LMDAWN1127.github.io/en/posts/zabbix-custom-monitor/</link>
+      <pubDate>Wed, 23 Sep 2026 18:30:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/posts/zabbix-custom-monitor/</guid>
+      <description>A hands-on Zabbix custom monitoring guide — collect custom metrics such as login user count and free-memory percentage with UserParameter, verify them via zabbix_get, then add items, value mappings, and triggers (including a multi-condition trigger) on the web UI for custom alerting.</description>
+    </item>
+    <item>
+      <title>Splitting the Zabbix Database</title>
+      <link>https://LMDAWN1127.github.io/en/posts/zabbix-split-database/</link>
+      <pubDate>Wed, 23 Sep 2026 16:00:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/posts/zabbix-split-database/</guid>
+      <description>For high-concurrency enterprise Zabbix scenarios — move the database off the Zabbix server onto a dedicated MariaDB server (11.0.1.52): create the database and grant privileges, export and import the data, update the Web UI and Server database connection settings, then restart the services.</description>
+    </item>
+    <item>
+      <title>Monitoring Server Information with Zabbix</title>
+      <link>https://LMDAWN1127.github.io/en/posts/zabbix-monitor-server/</link>
+      <pubDate>Wed, 23 Sep 2026 13:21:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/posts/zabbix-monitor-server/</guid>
+      <description>How to deploy the Zabbix agent on a target server (web02, 11.0.1.8), point it at the Zabbix server, and start monitoring it from the Zabbix web UI.</description>
+    </item>
+    <item>
+      <title>Installing and Deploying Zabbix</title>
+      <link>https://LMDAWN1127.github.io/en/posts/zabbix-install/</link>
+      <pubDate>Wed, 23 Sep 2026 01:52:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/posts/zabbix-install/</guid>
+      <description>Step-by-step guide to installing Zabbix 5.0 on CentOS 7 — configuring repositories, installing the server/agent/frontend, setting up MariaDB, importing the schema, and switching the web UI to Chinese with a custom font.</description>
+    </item>
+    <item>
+      <title>Manually Deploying a Kubernetes v1.30 Cluster (via kubeadm)</title>
+      <link>https://LMDAWN1127.github.io/en/posts/k8s-v1.30-manual-deploy/</link>
+      <pubDate>Fri, 07 Aug 2026 13:52:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/posts/k8s-v1.30-manual-deploy/</guid>
+      <description>A step-by-step guide to manually deploying a Kubernetes v1.30 cluster with kubeadm — covering firewall/SELinux, swap, kernel modules, Containerd, kubeadm init, worker join, Calico, and an IPVS add-on.</description>
+    </item>
+    <item>
+      <title>KVM Virtualization from Beginner to Practice: Deployment, Management, and Network Configuration</title>
+      <link>https://LMDAWN1127.github.io/en/posts/kvm-virtualization-guide/</link>
+      <pubDate>Sun, 02 Aug 2026 00:00:00 +0000</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/posts/kvm-virtualization-guide/</guid>
+      <description>A systematic introduction to KVM virtualization technology, covering development history, deployment methods, virtual machine management, network mode configuration, and automated VM installation using the command line.</description>
+    </item>
+    <item>
+      <title>Docker Image Too Large? 10 Tips to Shrink It by 90%</title>
+      <link>https://LMDAWN1127.github.io/en/posts/dockerfile-smaller-image/</link>
+      <pubDate>Thu, 30 Jul 2026 12:00:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/posts/dockerfile-smaller-image/</guid>
+      <description>10 proven techniques to reduce Docker image size by over 90%.</description>
+    </item>
+    <item>
+      <title>How to Make Dockerfile Builds Faster: 10 Practical Optimization Tips</title>
+      <link>https://LMDAWN1127.github.io/en/posts/dockerfile-faster-build/</link>
+      <pubDate>Thu, 30 Jul 2026 11:00:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/posts/dockerfile-faster-build/</guid>
+      <description>10 proven tips — from cache strategy to multi-stage builds — to dramatically cut Docker build time.</description>
+    </item>
+    <item>
+      <title>COPY vs ADD in Dockerfile: A Detailed Comparison</title>
+      <link>https://LMDAWN1127.github.io/en/posts/dockerfile-copy-vs-add/</link>
+      <pubDate>Thu, 30 Jul 2026 10:00:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/posts/dockerfile-copy-vs-add/</guid>
+      <description>COPY and ADD can both copy files, but their behaviors differ greatly. This article explains the difference through side-by-side comparisons and examples.</description>
+    </item>
+    <item>
+      <title>CentOS Deployment Guide for Claude Code: Full Walkthrough</title>
+      <link>https://LMDAWN1127.github.io/en/posts/centos-deploy-claude-code/</link>
+      <pubDate>Sat, 04 Jul 2026 05:00:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/posts/centos-deploy-claude-code/</guid>
+      <description>Deploy Claude Code on CentOS from scratch — covers Node.js installation, API key configuration, and common troubleshooting.</description>
+    </item>
+    <item>
+      <title>flannel in Action: Building Docker Cross-Host Container Networks from Scratch</title>
+      <link>https://LMDAWN1127.github.io/en/posts/flannel-network-lab/</link>
+      <pubDate>Wed, 21 May 2025 00:00:00 +0000</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/posts/flannel-network-lab/</guid>
+      <description>&lt;h1 id=&#34;flannel-in-action-building-docker-cross-host-container-networks-from-scratch&#34;&gt;flannel in Action: Building Docker Cross-Host Container Networks from Scratch&lt;/h1&gt;
+&lt;h2 id=&#34;i-network-environment-planning&#34;&gt;I. Network Environment Planning&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;etcd host IP: 192.168.8.88 hostname: docker-network&lt;/li&gt;
+&lt;li&gt;Host1 IP: 192.168.8.188 hostname: web01&lt;/li&gt;
+&lt;li&gt;Host2 IP: 192.168.8.99 hostname: web02&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;ii-etcd-host-configuration&#34;&gt;II. etcd Host Configuration&lt;/h2&gt;
+&lt;h3 id=&#34;step-1-download-and-extract-etcd&#34;&gt;Step 1: Download and Extract etcd&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;Download etcd-v3.6.0-linux-amd64.tar.gz package from github.com&lt;/li&gt;
+&lt;li&gt;Copy the package to the etcd host /root directory and extract:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;
+&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;root@docker-network ~&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# tar -zxvf etcd-v3.6.0-linux-amd64.tar.gz&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id=&#34;step-2-install-etcd-executable-files&#34;&gt;Step 2: Install etcd Executable Files&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;
+&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;1
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;root@docker-network ~&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# cd etcd-v3.6.0-linux-amd64&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;root@docker-network etcd-v3.6.0-linux-amd64&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# cp etcd* /usr/local/bin/&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id=&#34;step-3-create-data-directory&#34;&gt;Step 3: Create Data Directory&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;
+&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;root@docker-network ~&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# mkdir /var/lib/etcd&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id=&#34;step-4-configure-and-start-etcd-service&#34;&gt;Step 4: Configure and Start etcd Service&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;Create etcd.service file:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;
+&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;root@docker-network ~&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# vim /usr/lib/systemd/system/etcd.service&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;
+&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;1
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;2
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;3
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;4
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;5
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;6
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-ini&#34; data-lang=&#34;ini&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;[Unit]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;Description&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;etcd_service&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;[Service]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;ExecStart&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;/usr/local/bin/etcd --name etcd1 --data-dir /var/lib/etcd --listen-client-urls http://192.168.8.88:2379,http://127.0.0.1:2379 --advertise-client-urls http://192.168.8.88:2379,http://127.0.0.1:2379&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;[Install]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;WantedBy&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;multi-user.target&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;ol start=&#34;2&#34;&gt;
+&lt;li&gt;Reload system service configuration and start etcd:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;
+&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;1
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;2
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;root@docker-network ~&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# systemctl daemon-reload&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;root@docker-network ~&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# systemctl enable etcd.service&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;root@docker-network ~&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# systemctl restart etcd.service&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;ol start=&#34;3&#34;&gt;
+&lt;li&gt;Verify etcd listening status:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;
+&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;1
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;2
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;root@docker-network ~&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# netstat -tulnp |grep :2379&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;tcp        &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;      &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt; 192.168.8.88:2379       0.0.0.0:*               LISTEN      1912/etcd
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;tcp        &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;      &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt; 127.0.0.1:2379          0.0.0.0:*               LISTEN      1912/etcd
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id=&#34;step-5-add-flannel-network-configuration-to-etcd&#34;&gt;Step 5: Add flannel Network Configuration to etcd&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;
+&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;etcdctl --endpoints http://127.0.0.1:2379 put /coreos.com/network/config &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;{&amp;#34;Network&amp;#34;: &amp;#34;172.16.0.0/16&amp;#34;, &amp;#34;SubnetLen&amp;#34;: 24, &amp;#34;SubnetMin&amp;#34;: &amp;#34;172.16.1.0&amp;#34;,&amp;#34;SubnetMax&amp;#34;: &amp;#34;172.16.10.0&amp;#34;, &amp;#34;Backend&amp;#34;: {&amp;#34;Type&amp;#34;: &amp;#34;vxlan&amp;#34;}}&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;blockquote&gt;
+&lt;p&gt;The above content is all on one line. Verify that the configuration was written successfully&lt;/p&gt;</description>
+    </item>
   </channel>
 </rss>

@@ -2,36 +2,36 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>数据库 on DAWN&#39;s Blog</title>
-    <link>http://192.168.100.30:1313/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/</link>
+    <link>https://LMDAWN1127.github.io/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/</link>
     <description>Recent content in 数据库 on DAWN&#39;s Blog</description>
     <image>
       <title>DAWN&#39;s Blog</title>
-      <url>http://192.168.100.30:1313/images/DAWN.jpg</url>
-      <link>http://192.168.100.30:1313/images/DAWN.jpg</link>
+      <url>https://LMDAWN1127.github.io/images/DAWN.jpg</url>
+      <link>https://LMDAWN1127.github.io/images/DAWN.jpg</link>
     </image>
     <generator>Hugo</generator>
     <language>zh-cn</language>
     <lastBuildDate>Wed, 14 Oct 2026 10:00:00 +0800</lastBuildDate>
-    <atom:link href="http://192.168.100.30:1313/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://LMDAWN1127.github.io/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>MySQL 数据库基础管理：用户·权限·连接与初始化配置</title>
-      <link>http://192.168.100.30:1313/posts/mysql-database-basic-management/</link>
+      <link>https://LMDAWN1127.github.io/posts/mysql-database-basic-management/</link>
       <pubDate>Wed, 14 Oct 2026 10:00:00 +0800</pubDate>
-      <guid>http://192.168.100.30:1313/posts/mysql-database-basic-management/</guid>
+      <guid>https://LMDAWN1127.github.io/posts/mysql-database-basic-management/</guid>
       <description>围绕 MySQL 数据库服务的基础管理展开：用户的创建/查询/改密/删除/锁定，权限的授予与回收及 Role 角色，内置客户端/DBeaver/程序三种连接方式，以及源码编译、my.cnf、启动传参三种初始化配置，并对比 MySQL 5.7 与 8.0 的用户管理差异。</description>
     </item>
     <item>
       <title>MySQL 实战：二进制安装部署、启动关闭与密码管理</title>
-      <link>http://192.168.100.30:1313/posts/mysql-binary-deploy/</link>
+      <link>https://LMDAWN1127.github.io/posts/mysql-binary-deploy/</link>
       <pubDate>Sat, 03 Oct 2026 14:53:00 +0800</pubDate>
-      <guid>http://192.168.100.30:1313/posts/mysql-binary-deploy/</guid>
+      <guid>https://LMDAWN1127.github.io/posts/mysql-binary-deploy/</guid>
       <description>从官方二进制包安装 MySQL 8.0，涵盖系统环境准备、初始化、配置文件编写、多种启动/关闭方式，以及密码设置、修改与忘记密码重置的完整运维实战。</description>
     </item>
     <item>
       <title>拆分数据库</title>
-      <link>http://192.168.100.30:1313/posts/zabbix-split-database/</link>
+      <link>https://LMDAWN1127.github.io/posts/zabbix-split-database/</link>
       <pubDate>Wed, 23 Sep 2026 16:00:00 +0800</pubDate>
-      <guid>http://192.168.100.30:1313/posts/zabbix-split-database/</guid>
+      <guid>https://LMDAWN1127.github.io/posts/zabbix-split-database/</guid>
       <description>面向 Zabbix 高并发场景，将数据库从 Zabbix 服务器拆分到独立 MariaDB 服务器（11.0.1.52）的操作步骤：建库授权、导出导入数据、修改 Web 与 Server 的数据库连接配置、重启服务。</description>
     </item>
   </channel>

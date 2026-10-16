@@ -2,29 +2,29 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>部署 on DAWN&#39;s Blog</title>
-    <link>http://192.168.100.30:1313/tags/%E9%83%A8%E7%BD%B2/</link>
+    <link>https://LMDAWN1127.github.io/tags/%E9%83%A8%E7%BD%B2/</link>
     <description>Recent content in 部署 on DAWN&#39;s Blog</description>
     <image>
       <title>DAWN&#39;s Blog</title>
-      <url>http://192.168.100.30:1313/images/DAWN.jpg</url>
-      <link>http://192.168.100.30:1313/images/DAWN.jpg</link>
+      <url>https://LMDAWN1127.github.io/images/DAWN.jpg</url>
+      <link>https://LMDAWN1127.github.io/images/DAWN.jpg</link>
     </image>
     <generator>Hugo</generator>
     <language>zh-cn</language>
     <lastBuildDate>Thu, 08 Oct 2026 14:15:00 +0800</lastBuildDate>
-    <atom:link href="http://192.168.100.30:1313/tags/%E9%83%A8%E7%BD%B2/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://LMDAWN1127.github.io/tags/%E9%83%A8%E7%BD%B2/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>MySQL 多实例部署实战：单主机三实例规划、初始化与 systemd 托管</title>
-      <link>http://192.168.100.30:1313/posts/mysql-multi-instance-deployment/</link>
+      <link>https://LMDAWN1127.github.io/posts/mysql-multi-instance-deployment/</link>
       <pubDate>Thu, 08 Oct 2026 14:15:00 +0800</pubDate>
-      <guid>http://192.168.100.30:1313/posts/mysql-multi-instance-deployment/</guid>
+      <guid>https://LMDAWN1127.github.io/posts/mysql-multi-instance-deployment/</guid>
       <description>在同一台 master 主机上规划并部署 3 个 MySQL 8.0.26 实例（3307/3308/3309）：独立 my.cnf 与数据目录、initialize-insecure 初始化，命令启动与 systemd 服务托管两种方式，并用 ps / netstat / select @@port 完成验证。</description>
     </item>
     <item>
       <title>CentOS 部署 Claude Code 全流程指南</title>
-      <link>http://192.168.100.30:1313/posts/centos-deploy-claude-code/</link>
+      <link>https://LMDAWN1127.github.io/posts/centos-deploy-claude-code/</link>
       <pubDate>Sat, 04 Jul 2026 05:00:00 +0800</pubDate>
-      <guid>http://192.168.100.30:1313/posts/centos-deploy-claude-code/</guid>
+      <guid>https://LMDAWN1127.github.io/posts/centos-deploy-claude-code/</guid>
       <description>在 CentOS 上从零部署 Claude Code，涵盖 Node.js 安装、API Key 配置、常见问题排查。</description>
     </item>
   </channel>
