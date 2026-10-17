@@ -1,6 +1,6 @@
 ---
 title: "Filebeat 多 Input 写入不同 ES 索引与多实例部署实战"
-date: 2026-10-18T23:00:00+08:00
+date: 2026-10-17T22:00:00+08:00
 draft: false
 categories: ["DevOps"]
 tags: ["ElasticStack", "Filebeat", "多实例部署"]
