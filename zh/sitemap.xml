@@ -147,6 +147,16 @@
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url><url>
+    <loc>https://LMDAWN1127.github.io/posts/filebeat-multi-input-multi-instance/</loc>
+    <lastmod>2026-10-17T22:00:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url><url>
+    <loc>https://LMDAWN1127.github.io/tags/%E5%A4%9A%E5%AE%9E%E4%BE%8B%E9%83%A8%E7%BD%B2/</loc>
+    <lastmod>2026-10-17T22:00:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url><url>
     <loc>https://LMDAWN1127.github.io/tags/kibana/</loc>
     <lastmod>2026-10-17T19:00:00+08:00</lastmod>
     <changefreq>weekly</changefreq>

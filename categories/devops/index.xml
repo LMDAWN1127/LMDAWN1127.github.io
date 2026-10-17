@@ -28,6 +28,13 @@
       <description>围绕 EFK 采集 Tomcat 日志展开：部署 Tomcat 并自定义 JSON 格式访问日志（server.xml AccessLogValve），用 Filebeat 采集 JSON 访问日志写入 Elasticsearch（索引 dawn-log-tomcat，json.keys_under_root 关键配置），以及用 multiline 多行匹配采集 catalina.out 启动/错误日志（索引 dawn-log-tomcat-errorlog），最后在 Kibana 查看数据。</description>
     </item>
     <item>
+      <title>Filebeat 多 Input 写入不同 ES 索引与多实例部署实战</title>
+      <link>https://LMDAWN1127.github.io/posts/filebeat-multi-input-multi-instance/</link>
+      <pubDate>Sat, 17 Oct 2026 22:00:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/posts/filebeat-multi-input-multi-instance/</guid>
+      <description>实战演示 Filebeat 两个核心进阶用法：一是配置多个 input 按 tags 将事件分流写入不同 Elasticsearch 索引（dawn-log-zlm、dawn-log-lmy），含 multiline 多行合并与关闭 ILM、自定义 dawn-log* 模板；二是 Filebeat 多实例部署，通过 &amp;ndash;path.data 隔离数据目录实现同一主机并行运行多个采集进程。</description>
+    </item>
+    <item>
       <title>Kibana 查询与 Dashboard 制作实战：PV、IP、带宽、状态码统计与可视化面板</title>
       <link>https://LMDAWN1127.github.io/posts/kibana-query-dashboard/</link>
       <pubDate>Sat, 17 Oct 2026 19:00:00 +0800</pubDate>
