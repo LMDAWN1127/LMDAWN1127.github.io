@@ -11,8 +11,15 @@
     </image>
     <generator>Hugo</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Thu, 15 Oct 2026 23:00:00 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 16 Oct 2026 23:00:00 +0800</lastBuildDate>
     <atom:link href="https://LMDAWN1127.github.io/tags/filebeat/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Filebeat 采集 Nginx 日志实战：自定义 JSON 日志格式、NFS 配置共享与七层 Web 集群</title>
+      <link>https://LMDAWN1127.github.io/posts/filebeat-nginx-log-collection/</link>
+      <pubDate>Fri, 16 Oct 2026 23:00:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/posts/filebeat-nginx-log-collection/</guid>
+      <description>围绕 ELK/EFK 日志采集实验展开：自定义 Nginx JSON 日志格式（dawn_nginx_json），基于 NFS 实现三节点 Filebeat 配置共享，EFK 架构采集 Nginx 日志至 Elasticsearch（索引 dawn-log-nginx），Filebeat 解析 JSON 格式日志（json.keys_under_root 关键配置），以及基于 Nginx 七层分流的 Web 集群部署与 Filebeat 日志采集实战。</description>
+    </item>
     <item>
       <title>Filebeat 部署与日志采集实战：安装、架构与 stdin/tcp/log 输入</title>
       <link>https://LMDAWN1127.github.io/posts/filebeat-deployment/</link>
