@@ -11,8 +11,15 @@
     </image>
     <generator>Hugo</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sun, 18 Oct 2026 22:00:00 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 19 Oct 2026 14:00:00 +0800</lastBuildDate>
     <atom:link href="https://LMDAWN1127.github.io/tags/elasticstack/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>ElasticStack 实战：ES JVM 优化与 Logstash 环境搭建及日志处理</title>
+      <link>https://LMDAWN1127.github.io/posts/es-jvm-logstash/</link>
+      <pubDate>Mon, 19 Oct 2026 14:00:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/posts/es-jvm-logstash/</guid>
+      <description>围绕 ElasticStack 中 ES 与 Logstash 两个组件展开实战：一是 ES 的 JVM 基础环境优化，调整堆内存（-Xms/-Xmx，生产建议物理内存一半且不超 32GB），将 jvm.options 经 scp 分发至 11.0.1.112/113 并三节点重启生效；二是 Logstash 环境搭建，下载安装 logstash-7.17.22、加入 PATH、用 stdin-to-stdout 配置跑通管道；三是用 Logstash 处理自定义业务日志，编写 generate_log.py 造数，借助 mutate 过滤器（split 切分、add_field 加字段、convert 类型转换）将文本日志结构化后写入 Elasticsearch。</description>
+    </item>
     <item>
       <title>Filebeat 模块（modules）使用实战：启用与 nginx 日志采集</title>
       <link>https://LMDAWN1127.github.io/posts/filebeat-modules/</link>

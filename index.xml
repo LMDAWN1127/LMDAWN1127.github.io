@@ -11,7 +11,7 @@
     </image>
     <generator>Hugo</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sun, 18 Oct 2026 22:00:00 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 19 Oct 2026 14:00:00 +0800</lastBuildDate>
     <atom:link href="https://LMDAWN1127.github.io/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Harbor 主备部署实战：从安装到 HTTPS 与主备复制</title>
@@ -19,6 +19,13 @@
       <pubDate>Tue, 04 Aug 2026 00:00:00 +0000</pubDate>
       <guid>https://LMDAWN1127.github.io/posts/harbor-master-slave/</guid>
       <description>完整记录 Harbor 企业级镜像仓库的主备部署过程，涵盖 HTTP/HTTPS 双模式安装、自签名证书配置、跨主机主备复制等核心运维技能。</description>
+    </item>
+    <item>
+      <title>ElasticStack 实战：ES JVM 优化与 Logstash 环境搭建及日志处理</title>
+      <link>https://LMDAWN1127.github.io/posts/es-jvm-logstash/</link>
+      <pubDate>Mon, 19 Oct 2026 14:00:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/posts/es-jvm-logstash/</guid>
+      <description>围绕 ElasticStack 中 ES 与 Logstash 两个组件展开实战：一是 ES 的 JVM 基础环境优化，调整堆内存（-Xms/-Xmx，生产建议物理内存一半且不超 32GB），将 jvm.options 经 scp 分发至 11.0.1.112/113 并三节点重启生效；二是 Logstash 环境搭建，下载安装 logstash-7.17.22、加入 PATH、用 stdin-to-stdout 配置跑通管道；三是用 Logstash 处理自定义业务日志，编写 generate_log.py 造数，借助 mutate 过滤器（split 切分、add_field 加字段、convert 类型转换）将文本日志结构化后写入 Elasticsearch。</description>
     </item>
     <item>
       <title>Filebeat 模块（modules）使用实战：启用与 nginx 日志采集</title>
