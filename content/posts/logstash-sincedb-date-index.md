@@ -135,6 +135,8 @@ output {
 }
 ```
 
+> **注意**：date 插件不指定 `timezone` 时默认按 UTC 解析，本地时间（+08:00）解析后在 Kibana 里查会差 8 小时；需要与本地时间一致时加上 `timezone => "Asia/Shanghai"`。
+
 ### 2.3 启动 logstash 实例
 
 ```bash
