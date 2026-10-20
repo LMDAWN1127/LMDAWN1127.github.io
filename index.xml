@@ -11,7 +11,7 @@
     </image>
     <generator>Hugo</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Tue, 20 Oct 2026 14:00:00 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 20 Oct 2026 19:00:00 +0800</lastBuildDate>
     <atom:link href="https://LMDAWN1127.github.io/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Harbor 主备部署实战：从安装到 HTTPS 与主备复制</title>
@@ -19,6 +19,13 @@
       <pubDate>Tue, 04 Aug 2026 00:00:00 +0000</pubDate>
       <guid>https://LMDAWN1127.github.io/posts/harbor-master-slave/</guid>
       <description>完整记录 Harbor 企业级镜像仓库的主备部署过程，涵盖 HTTP/HTTPS 双模式安装、自签名证书配置、跨主机主备复制等核心运维技能。</description>
+    </item>
+    <item>
+      <title>Logstash 进阶实战：sincedb 重新采集、date 时间处理与自定义索引</title>
+      <link>https://LMDAWN1127.github.io/posts/logstash-sincedb-date-index/</link>
+      <pubDate>Tue, 20 Oct 2026 19:00:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/posts/logstash-sincedb-date-index/</guid>
+      <description>记录 Logstash 四段进阶实践：file 输入 sincedb 的 offset 机制与旧数据重新采集、date 插件处理日志时间、ES 自定义索引名，以及 grok 自定义正则配合 geoip/useragent/translate 等 filter 的完整案例。</description>
     </item>
     <item>
       <title>ELFK 架构分析 Nginx 访问日志实战：Filebeat &#43; Logstash &#43; Kibana 全流程</title>
