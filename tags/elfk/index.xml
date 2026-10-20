@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>ELFK on DAWN&#39;s Blog</title>
+    <link>https://LMDAWN1127.github.io/tags/elfk/</link>
+    <description>Recent content in ELFK on DAWN&#39;s Blog</description>
+    <image>
+      <title>DAWN&#39;s Blog</title>
+      <url>https://LMDAWN1127.github.io/images/DAWN.jpg</url>
+      <link>https://LMDAWN1127.github.io/images/DAWN.jpg</link>
+    </image>
+    <generator>Hugo</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Tue, 20 Oct 2026 14:00:00 +0800</lastBuildDate>
+    <atom:link href="https://LMDAWN1127.github.io/tags/elfk/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>ELFK 架构分析 Nginx 访问日志实战：Filebeat &#43; Logstash &#43; Kibana 全流程</title>
+      <link>https://LMDAWN1127.github.io/posts/elfk-nginx-access-log/</link>
+      <pubDate>Tue, 20 Oct 2026 14:00:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/posts/elfk-nginx-access-log/</guid>
+      <description>完整演示基于 ELFK 架构分析 Nginx 访问日志的全流程：Logstash 编写 05-beats-filter-es.conf（beats 输入 9999、grok 用 HTTPD_COMBINEDLOG 解析 combined 格式、geoip 指定本地 GeoLite2-City.mmdb、ruby 将经纬度拼成 dawn-geo 的 [lon,lat] 数组、useragent 解析 dawn-device、rename 规避字段冲突、date 对齐 @timestamp），输出到 Elasticsearch 的 dawn-logstash-nginx 索引；Filebeat 启用 nginx 模块并将数据推送至 Logstash；最后在 Kibana 建立索引模式，制作访客地理分布 Maps、设备类型/操作系统饼图、响应状态码柱状图，并整合进统一 Dashboard。</description>
+    </item>
+  </channel>
+</rss>

@@ -160,6 +160,28 @@
 <article class="post-entry tag-entry"> 
   <header class="entry-header">
     <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/posts/elfk-nginx-access-log/">ELFK 架构分析 Nginx 访问日志实战：Filebeat &#43; Logstash &#43; Kibana 全流程</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>完整演示基于 ELFK 架构分析 Nginx 访问日志的全流程：Logstash 编写 05-beats-filter-es.conf（beats 输入 9999、grok 用 HTTPD_COMBINEDLOG 解析 combined 格式、geoip 指定本地 GeoLite2-City.mmdb、ruby 将经纬度拼成 dawn-geo 的 [lon,lat] 数组、useragent 解析 dawn-device、rename 规避字段冲突、date 对齐 @timestamp），输出到 Elasticsearch 的 dawn-logstash-nginx 索引；Filebeat 启用 nginx 模块并将数据推送至 Logstash；最后在 Kibana 建立索引模式，制作访客地理分布 Maps、设备类型/操作系统饼图、响应状态码柱状图，并整合进统一 Dashboard。</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-20">
+  2026年10月20日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 2 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to ELFK 架构分析 Nginx 访问日志实战：Filebeat &#43; Logstash &#43; Kibana 全流程" href="https://LMDAWN1127.github.io/posts/elfk-nginx-access-log/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
       <a href="https://LMDAWN1127.github.io/posts/filebeat-nginx-log-collection/">Filebeat 采集 Nginx 日志实战：自定义 JSON 日志格式、NFS 配置共享与七层 Web 集群</a>
     </h2>
   </header>
