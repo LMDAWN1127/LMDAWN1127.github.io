@@ -11,7 +11,7 @@
     </image>
     <generator>Hugo</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Tue, 20 Oct 2026 19:00:00 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 21 Oct 2026 13:00:00 +0800</lastBuildDate>
     <atom:link href="https://LMDAWN1127.github.io/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Harbor 主备部署实战：从安装到 HTTPS 与主备复制</title>
@@ -19,6 +19,13 @@
       <pubDate>Tue, 04 Aug 2026 00:00:00 +0000</pubDate>
       <guid>https://LMDAWN1127.github.io/posts/harbor-master-slave/</guid>
       <description>完整记录 Harbor 企业级镜像仓库的主备部署过程，涵盖 HTTP/HTTPS 双模式安装、自签名证书配置、跨主机主备复制等核心运维技能。</description>
+    </item>
+    <item>
+      <title>Logstash 进阶实战：多分支语句、多实例与 pipeline 语法</title>
+      <link>https://LMDAWN1127.github.io/posts/logstash-multi-branch-instance-pipeline/</link>
+      <pubDate>Wed, 21 Oct 2026 13:00:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/posts/logstash-multi-branch-instance-pipeline/</guid>
+      <description>Logstash 进阶第二篇：if 多分支语句（file/beats/tcp 三种输入分别走 grok+geoip+useragent）、多实例部署（多进程各加载一个配置）与 pipelines.yml 多 pipeline 语法，以及三者的关系与 sincedb 注意事项。</description>
     </item>
     <item>
       <title>Logstash 进阶实战：sincedb 重新采集、date 时间处理与自定义索引</title>
