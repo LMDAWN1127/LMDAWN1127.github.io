@@ -28,7 +28,7 @@
                 />
   </url><url>
     <loc>https://LMDAWN1127.github.io/categories/</loc>
-    <lastmod>2026-10-21T14:30:00+08:00</lastmod>
+    <lastmod>2026-10-21T19:30:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
@@ -53,7 +53,7 @@
                 />
   </url><url>
     <loc>https://LMDAWN1127.github.io/categories/devops/</loc>
-    <lastmod>2026-10-21T14:30:00+08:00</lastmod>
+    <lastmod>2026-10-21T19:30:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
@@ -78,17 +78,17 @@
                 />
   </url><url>
     <loc>https://LMDAWN1127.github.io/tags/elasticstack/</loc>
-    <lastmod>2026-10-21T14:30:00+08:00</lastmod>
+    <lastmod>2026-10-21T19:30:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url><url>
-    <loc>https://LMDAWN1127.github.io/posts/es-cluster-encryption-auth/</loc>
-    <lastmod>2026-10-21T14:30:00+08:00</lastmod>
+    <loc>https://LMDAWN1127.github.io/posts/kibana-rbac/</loc>
+    <lastmod>2026-10-21T19:30:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url><url>
     <loc>https://LMDAWN1127.github.io/posts/</loc>
-    <lastmod>2026-10-21T14:30:00+08:00</lastmod>
+    <lastmod>2026-10-21T19:30:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
@@ -113,7 +113,7 @@
                 />
   </url><url>
     <loc>https://LMDAWN1127.github.io/tags/</loc>
-    <lastmod>2026-10-21T14:30:00+08:00</lastmod>
+    <lastmod>2026-10-21T19:30:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
@@ -136,6 +136,11 @@
                 hreflang="ja"
                 href="https://LMDAWN1127.github.io/ja/tags/"
                 />
+  </url><url>
+    <loc>https://LMDAWN1127.github.io/posts/es-cluster-encryption-auth/</loc>
+    <lastmod>2026-10-21T14:30:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
   </url><url>
     <loc>https://LMDAWN1127.github.io/tags/logstash/</loc>
     <lastmod>2026-10-21T13:00:00+08:00</lastmod>
