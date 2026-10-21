@@ -11,8 +11,15 @@
     </image>
     <generator>Hugo</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Wed, 21 Oct 2026 19:30:00 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 21 Oct 2026 19:45:00 +0800</lastBuildDate>
     <atom:link href="https://LMDAWN1127.github.io/tags/elasticstack/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>ES 集群健康状态查看实战：_cluster/health 全参数解析</title>
+      <link>https://LMDAWN1127.github.io/posts/es-cluster-health/</link>
+      <pubDate>Wed, 21 Oct 2026 19:45:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/posts/es-cluster-health/</guid>
+      <description>通过 _cluster/health API 查看 ES 集群健康状态：curl + jq 的两种查询姿势（整包 JSON 与单字段提取），以及 status/timed_out/active_shards 等全部返回参数的逐项解读。</description>
+    </item>
     <item>
       <title>Kibana RBAC 实战：角色创建、用户授权与空间隔离</title>
       <link>https://LMDAWN1127.github.io/posts/kibana-rbac/</link>
