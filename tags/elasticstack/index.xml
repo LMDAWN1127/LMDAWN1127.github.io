@@ -11,8 +11,15 @@
     </image>
     <generator>Hugo</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Wed, 21 Oct 2026 13:00:00 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 21 Oct 2026 14:30:00 +0800</lastBuildDate>
     <atom:link href="https://LMDAWN1127.github.io/tags/elasticstack/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>ES 集群加密认证实战：TLS 证书、密码登录与客户端接入</title>
+      <link>https://LMDAWN1127.github.io/posts/es-cluster-encryption-auth/</link>
+      <pubDate>Wed, 21 Oct 2026 14:30:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/posts/es-cluster-encryption-auth/</guid>
+      <description>ES 集群安全实战：生成 TLS 证书并同步各节点、修改 elasticsearch.yml 启用传输加密与认证、Kibana 登录认证与 elastic 密码修改，以及 postman/es-head/filebeat/logstash 四类客户端如何访问加密集群。</description>
+    </item>
     <item>
       <title>Logstash 进阶实战：多分支语句、多实例与 pipeline 语法</title>
       <link>https://LMDAWN1127.github.io/posts/logstash-multi-branch-instance-pipeline/</link>
