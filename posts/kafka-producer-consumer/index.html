@@ -1,0 +1,1081 @@
+<!DOCTYPE html>
+<html lang="zh" dir="auto" data-theme="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Kafka 生产者与消费者实战：消息收发、offset 与消费者组 | DAWN&#39;s Blog</title>
+<meta name="keywords" content="Kafka">
+<meta name="description" content="Kafka console 生产者与消费者实操：从最新/从头两种消费位置对比、__consumer_offsets 原理，以及消费者组配置、offset 与 LAG 查看、多消费者分区分配观察。">
+<meta name="author" content="DAWN">
+<link rel="canonical" href="https://LMDAWN1127.github.io/posts/kafka-producer-consumer/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.4bf808bff57bddc46d61c8ae060b00400fc679ab876e37243b11bd3f832f2958.css" integrity="sha256-S/gIv/V73cRtYciuBgsAQA/GeauHbjckOxG9P4MvKVg=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://LMDAWN1127.github.io/images/DAWN.jpg">
+<link rel="icon" type="image/png" sizes="16x16" href="https://LMDAWN1127.github.io/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://LMDAWN1127.github.io/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://LMDAWN1127.github.io/apple-touch-icon.png">
+<link rel="mask-icon" href="https://LMDAWN1127.github.io/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="zh" href="https://LMDAWN1127.github.io/posts/kafka-producer-consumer/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+                color-scheme: dark;
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .toc {
+                background: var(--entry);
+            }
+        }
+
+    </style>
+</noscript>
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.querySelector("html").dataset.theme = 'dark';
+    } else if (localStorage.getItem("pref-theme") === "light") {
+       document.querySelector("html").dataset.theme = 'light';
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.querySelector("html").dataset.theme = 'dark';
+    } else {
+        document.querySelector("html").dataset.theme = 'light';
+    }
+
+</script><link rel="stylesheet" href='https://LMDAWN1127.github.io/css/custom.css'>
+<meta property="og:url" content="https://LMDAWN1127.github.io/posts/kafka-producer-consumer/">
+  <meta property="og:site_name" content="DAWN&#39;s Blog">
+  <meta property="og:title" content="Kafka 生产者与消费者实战：消息收发、offset 与消费者组">
+  <meta property="og:description" content="Kafka console 生产者与消费者实操：从最新/从头两种消费位置对比、__consumer_offsets 原理，以及消费者组配置、offset 与 LAG 查看、多消费者分区分配观察。">
+  <meta property="og:locale" content="zh_cn">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2026-10-22T17:10:00+08:00">
+    <meta property="article:modified_time" content="2026-10-22T17:10:00+08:00">
+    <meta property="article:tag" content="Kafka">
+      <meta property="og:image" content="https://LMDAWN1127.github.io/images/DAWN.jpg">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://LMDAWN1127.github.io/images/DAWN.jpg">
+  <meta name="twitter:title" content="Kafka 生产者与消费者实战：消息收发、offset 与消费者组">
+  <meta name="twitter:description" content="Kafka console 生产者与消费者实操：从最新/从头两种消费位置对比、__consumer_offsets 原理，以及消费者组配置、offset 与 LAG 查看、多消费者分区分配观察。">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://LMDAWN1127.github.io/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Kafka 生产者与消费者实战：消息收发、offset 与消费者组",
+      "item": "https://LMDAWN1127.github.io/posts/kafka-producer-consumer/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Kafka 生产者与消费者实战：消息收发、offset 与消费者组",
+  "name": "Kafka 生产者与消费者实战：消息收发、offset 与消费者组",
+  "description": "Kafka console 生产者与消费者实操：从最新/从头两种消费位置对比、__consumer_offsets 原理，以及消费者组配置、offset 与 LAG 查看、多消费者分区分配观察。",
+  "keywords": [
+    "Kafka"
+  ],
+  "articleBody": "kafka的生产者和消费者 1. 启动生产者 1 root@elk01:~# kafka-console-producer.sh --bootstrap-server 11.0.1.112:9092 --topic dawn-devops-001 2. 启动消费者 2.1 启动消费者从最新(最后的流位置)的位置拉取数据\n1 [root@elk02 ~]# kafka-console-consumer.sh --bootstrap-server 11.0.1.112:9092 --topic dawn-devops-001 2.2 在生产者终端输入数据\n1 2 3 4 root@elk01:~# kafka-console-producer.sh --bootstrap-server 11.0.1.112:9092 --topic dawn-devops-001 \u003eaaaaa \u003ebbbbb \u003eccccc 2.3 消费者能出现数据，但无法将消费者启动前的数据拿到手\n2.4 启动消费者时从头拉取数据\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 root@elk02:~# kafka-console-consumer.sh --bootstrap-server 11.0.1.111:9092 --topic dawn-devops-001 --from-beginning aaaaa bbbbb ccccc aaaaa bbbbb ccccc wb-test-msg-1 aaaaa bbbbb ccccc 111111 222222 333333 aaaaa bbbbbb ccccc 当我们启动了一个消费者时，会自动产生一个新的topic，名称为\"__consumer_offsets\"，该topic存储的是消费者的消费数据记录，也就是offset\nkafka的消费者组 offset： 记录消费者组在partition中消费的偏移量。\nconsumer group： 消费者组，任何一个消费者都隶属于一个消费者组。\n1 2 3 4 5 6 7 注： 同一个分区不能“同时”被同一个消费者组的两个消费者进行消费; 重平衡，指的是分区分配给消费者组的消费者的过程。 当一个消费者组的数量发生变化时会触发重平衡; 当topic的分区数量发生变化时，也会触发重平衡; 消费者组的消费者过多时，可能会有部分消费者无法消费，因为其无法分配到分区。 1. 基于配置文件指定消费者组 1.1 修改配置文件\n1 2 [root@elk03 ~]# grep \"^group.id\" ${KAFKA_HOME}/config/consumer.properties group.id=devops 1.2 启动消费者加载配置文件\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 root@elk03:~# kafka-console-consumer.sh --bootstrap-server 11.0.1.111:9092 --topic dawn-devops-001 --from-beginning --consumer.config ${KAFKA_HOME}/config/consumer.properties aaaaa bbbbb ccccc aaaaa bbbbb ccccc wb-test-msg-1 aaaaa bbbbb ccccc 111111 222222 333333 aaaaa bbbbbb ccccc 2. 查看消费者消费的列表 1 2 root@elk01:~# kafka-consumer-groups.sh --bootstrap-server 11.0.1.111:9092 --list devops 3. 查看指定消费者组消费分区的offset 1 2 3 4 5 6 root@elk01:~# kafka-consumer-groups.sh --bootstrap-server 11.0.1.111:9092 --describe --group devops GROUP TOPIC PARTITION CURRENT-OFFSET LOG-END-OFFSET LAG CONSUMER-ID HOST CLIENT-ID devops dawn-devops-001 0 0 0 0 console-consumer-9f18be93-095b-4b46-a260-49b2b2c7e937 /11.0.1.113 console-consumer devops dawn-devops-001 1 0 0 0 console-consumer-9f18be93-095b-4b46-a260-49b2b2c7e937 /11.0.1.113 console-consumer devops dawn-devops-001 2 16 16 0 console-consumer-9f18be93-095b-4b46-a260-49b2b2c7e937 /11.0.1.113 console-consumer 4. 启动一个生产者 1 2 3 4 root@elk01:~# kafka-console-producer.sh --bootstrap-server 11.0.1.111:9092 --topic dawn-devops-001 \u003e1111111111 \u003e2222222222 \u003e3333333333 5. 观察消费者的界面 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 root@elk03:~# kafka-console-consumer.sh --bootstrap-server 11.0.1.111:9092 --topic dawn-devops-001 --from-beginning --consumer.config ${KAFKA_HOME}/config/consumer.properties aaaaa bbbbb ccccc aaaaa bbbbb ccccc wb-test-msg-1 aaaaa bbbbb ccccc 111111 222222 333333 aaaaa bbbbbb ccccc 1111111111 2222222222 3333333333 此时终止消费者的界面。\n6. 再次使用生产者写入测试数据 1 2 3 root@elk01:~# kafka-console-producer.sh --bootstrap-server 11.0.1.111:9092 --topic dawn-devops-001 \u003eAAAAAAAAAAAAAAA \u003eBBBBBBBBBBBBBBBB 7. 再次查看消费者组的信息数据是有延迟的 1 2 3 4 5 6 7 8 root@elk01:~# kafka-consumer-groups.sh --bootstrap-server 11.0.1.111:9092 --describe --group devops Consumer group 'devops' has no active members. GROUP TOPIC PARTITION CURRENT-OFFSET LOG-END-OFFSET LAG CONSUMER-ID HOST CLIENT-ID devops dawn-devops-001 0 0 0 0 - - - devops dawn-devops-001 1 0 0 0 - - - devops dawn-devops-001 2 19 22 3 - - - 8. 同时启动多个消费者 8.1 基于配置文件指定消费者组\n1 root@elk03:~# kafka-console-consumer.sh --bootstrap-server 11.0.1.111:9092 --topic dawn-devops-001 --from-beginning --consumer.config ${KAFKA_HOME}/config/consumer.properties 8.2 基于命令行方式启动消费者组\n1 2 3 4 root@elk02:~# kafka-console-consumer.sh --bootstrap-server 11.0.1.111:9092 --topic dawn-devops-001 --consumer-property group.id=devops 888888 999999 1111111 8.3 观察消费者信息\n1 2 3 4 5 6 root@elk01:~# kafka-consumer-groups.sh --bootstrap-server 11.0.1.111:9092 --describe --group devops GROUP TOPIC PARTITION CURRENT-OFFSET LOG-END-OFFSET LAG CONSUMER-ID HOST CLIENT-ID devops dawn-devops-001 0 3 3 0 console-consumer-1c6a753c-01df-4ff8-85a3-f00e0f75fec2 /11.0.1.112 console-consumer devops dawn-devops-001 1 3 3 0 console-consumer-1c6a753c-01df-4ff8-85a3-f00e0f75fec2 /11.0.1.112 console-consumer devops dawn-devops-001 2 22 22 0 console-consumer-77188145-1121-4048-bd30-82fd2ee6060c /11.0.1.113 console-consumer 8.4 生产者继续生产数据\n1 2 3 4 5 6 root@elk01:~# kafka-console-producer.sh --bootstrap-server 11.0.1.111:9092 --topic dawn-devops-001 \u003e888888 \u003e999999 \u003e1111111 \u003e666666 \u003e777777 8.5 观察输出\n1 2 3 4 5 6 root@elk01:~# kafka-consumer-groups.sh --bootstrap-server 11.0.1.111:9092 --describe --group devops GROUP TOPIC PARTITION CURRENT-OFFSET LOG-END-OFFSET LAG CONSUMER-ID HOST CLIENT-ID devops dawn-devops-001 0 5 5 0 console-consumer-1c6a753c-01df-4ff8-85a3-f00e0f75fec2 /11.0.1.112 console-consumer devops dawn-devops-001 1 3 3 0 console-consumer-1c6a753c-01df-4ff8-85a3-f00e0f75fec2 /11.0.1.112 console-consumer devops dawn-devops-001 2 22 22 0 console-consumer-77188145-1121-4048-bd30-82fd2ee6060c /11.0.1.113 console-consumer ",
+  "wordCount" : "509",
+  "inLanguage": "zh",
+  "image": "https://LMDAWN1127.github.io/images/DAWN.jpg","datePublished": "2026-10-22T17:10:00+08:00",
+  "dateModified": "2026-10-22T17:10:00+08:00",
+  "author":{
+    "@type": "Person",
+    "name": "DAWN"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://LMDAWN1127.github.io/posts/kafka-producer-consumer/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "DAWN's Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://LMDAWN1127.github.io/images/DAWN.jpg"
+    }
+  }
+}
+</script>
+</head>
+<body id="top">
+    <header class="header">
+    <nav class="header-nav">
+        <div class="logo">
+            <a href="https://LMDAWN1127.github.io/" accesskey="h" title="DAWN&#39;s Blog (Alt + H)">
+                <img src="https://LMDAWN1127.github.io/images/DAWN.jpg" alt="" aria-label="logo"
+                    height="38">DAWN&#39;s Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" class="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
+                    <svg class="moon" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg class="sun" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button><span class="nav-sep">|</span>
+                    <ul class="lang-menu">
+                        <li>
+                            <a href="https://LMDAWN1127.github.io/en/" title="English"
+                                aria-label="English">En</a>
+                        </li>
+                        <li>
+                            <a href="https://LMDAWN1127.github.io/ko/" title="한국어"
+                                aria-label="한국어">Ko</a>
+                        </li>
+                        <li>
+                            <a href="https://LMDAWN1127.github.io/ja/" title="日本語"
+                                aria-label="日本語">Ja</a>
+                        </li>
+                    </ul>
+            </div>
+        </div>
+        <ul id="menu" class="menu">
+            <li>
+                <a href="https://LMDAWN1127.github.io/archives/" title="归档">
+                    <span>归档</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <h1 class="post-title entry-hint-parent">
+      Kafka 生产者与消费者实战：消息收发、offset 与消费者组
+    </h1>
+  </header>
+
+  <div class="post-layout">
+    <div class="post-content-wrapper"> 
+      <div class="post-content md-content"><h2 id="kafka的生产者和消费者">kafka的生产者和消费者<a hidden class="anchor" aria-hidden="true" href="#kafka的生产者和消费者">#</a></h2>
+<h3 id="1-启动生产者">1. 启动生产者<a hidden class="anchor" aria-hidden="true" href="#1-启动生产者">#</a></h3>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>root@elk01:~# kafka-console-producer.sh --bootstrap-server 11.0.1.112:9092 --topic dawn-devops-001
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="2-启动消费者">2. 启动消费者<a hidden class="anchor" aria-hidden="true" href="#2-启动消费者">#</a></h3>
+<p>2.1 启动消费者从最新(最后的流位置)的位置拉取数据</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@elk02 ~<span style="color:#f92672">]</span><span style="color:#75715e"># kafka-console-consumer.sh --bootstrap-server 11.0.1.112:9092 --topic dawn-devops-001</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>2.2 在生产者终端输入数据</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>root@elk01:~# kafka-console-producer.sh --bootstrap-server 11.0.1.112:9092 --topic dawn-devops-001
+</span></span><span style="display:flex;"><span>&gt;aaaaa
+</span></span><span style="display:flex;"><span>&gt;bbbbb
+</span></span><span style="display:flex;"><span>&gt;ccccc
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>2.3 消费者能出现数据，但无法将消费者启动前的数据拿到手</p>
+<p>2.4 启动消费者时从头拉取数据</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>root@elk02:~# kafka-console-consumer.sh --bootstrap-server 11.0.1.111:9092 --topic dawn-devops-001 --from-beginning
+</span></span><span style="display:flex;"><span>aaaaa
+</span></span><span style="display:flex;"><span>bbbbb
+</span></span><span style="display:flex;"><span>ccccc
+</span></span><span style="display:flex;"><span>aaaaa
+</span></span><span style="display:flex;"><span>bbbbb
+</span></span><span style="display:flex;"><span>ccccc
+</span></span><span style="display:flex;"><span>wb-test-msg-1
+</span></span><span style="display:flex;"><span>aaaaa
+</span></span><span style="display:flex;"><span>bbbbb
+</span></span><span style="display:flex;"><span>ccccc
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">111111</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">222222</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">333333</span>
+</span></span><span style="display:flex;"><span>aaaaa
+</span></span><span style="display:flex;"><span>bbbbbb
+</span></span><span style="display:flex;"><span>ccccc
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>当我们启动了一个消费者时，会自动产生一个新的topic，名称为&quot;__consumer_offsets&quot;，该topic存储的是消费者的消费数据记录，也就是offset</p>
+<p><img alt="image-20261022160657188" loading="lazy" src="/images/kafka-producer-consumer-image-20261022160657188.png"></p>
+<h2 id="kafka的消费者组">kafka的消费者组<a hidden class="anchor" aria-hidden="true" href="#kafka的消费者组">#</a></h2>
+<p>offset：
+记录消费者组在partition中消费的偏移量。</p>
+<p>consumer group：
+消费者组，任何一个消费者都隶属于一个消费者组。</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>注：
+</span></span><span style="display:flex;"><span>   同一个分区不能“同时”被同一个消费者组的两个消费者进行消费;
+</span></span><span style="display:flex;"><span>   重平衡，指的是分区分配给消费者组的消费者的过程。
+</span></span><span style="display:flex;"><span>   
+</span></span><span style="display:flex;"><span>   当一个消费者组的数量发生变化时会触发重平衡;
+</span></span><span style="display:flex;"><span>   当topic的分区数量发生变化时，也会触发重平衡;
+</span></span><span style="display:flex;"><span>   消费者组的消费者过多时，可能会有部分消费者无法消费，因为其无法分配到分区。
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="1-基于配置文件指定消费者组">1. 基于配置文件指定消费者组<a hidden class="anchor" aria-hidden="true" href="#1-基于配置文件指定消费者组">#</a></h3>
+<p>1.1 修改配置文件</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@elk03 ~<span style="color:#f92672">]</span><span style="color:#75715e"># grep &#34;^group.id&#34; ${KAFKA_HOME}/config/consumer.properties </span>
+</span></span><span style="display:flex;"><span>group.id<span style="color:#f92672">=</span>devops
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>1.2 启动消费者加载配置文件</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>root@elk03:~# kafka-console-consumer.sh --bootstrap-server 11.0.1.111:9092 --topic dawn-devops-001 --from-beginning   --consumer.config  <span style="color:#e6db74">${</span>KAFKA_HOME<span style="color:#e6db74">}</span>/config/consumer.properties
+</span></span><span style="display:flex;"><span>aaaaa
+</span></span><span style="display:flex;"><span>bbbbb
+</span></span><span style="display:flex;"><span>ccccc
+</span></span><span style="display:flex;"><span>aaaaa
+</span></span><span style="display:flex;"><span>bbbbb
+</span></span><span style="display:flex;"><span>ccccc
+</span></span><span style="display:flex;"><span>wb-test-msg-1
+</span></span><span style="display:flex;"><span>aaaaa
+</span></span><span style="display:flex;"><span>bbbbb
+</span></span><span style="display:flex;"><span>ccccc
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">111111</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">222222</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">333333</span>
+</span></span><span style="display:flex;"><span>aaaaa
+</span></span><span style="display:flex;"><span>bbbbbb
+</span></span><span style="display:flex;"><span>ccccc
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="2-查看消费者消费的列表">2. 查看消费者消费的列表<a hidden class="anchor" aria-hidden="true" href="#2-查看消费者消费的列表">#</a></h3>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>root@elk01:~# kafka-consumer-groups.sh --bootstrap-server 11.0.1.111:9092 --list
+</span></span><span style="display:flex;"><span>devops
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="3-查看指定消费者组消费分区的offset">3. 查看指定消费者组消费分区的offset<a hidden class="anchor" aria-hidden="true" href="#3-查看指定消费者组消费分区的offset">#</a></h3>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>root@elk01:~# kafka-consumer-groups.sh --bootstrap-server 11.0.1.111:9092 --describe --group devops
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>GROUP           TOPIC           PARTITION  CURRENT-OFFSET  LOG-END-OFFSET  LAG             CONSUMER-ID                                           HOST            CLIENT-ID
+</span></span><span style="display:flex;"><span>devops          dawn-devops-001 <span style="color:#ae81ff">0</span>          <span style="color:#ae81ff">0</span>               <span style="color:#ae81ff">0</span>               <span style="color:#ae81ff">0</span>               console-consumer-9f18be93-095b-4b46-a260-49b2b2c7e937 /11.0.1.113     console-consumer
+</span></span><span style="display:flex;"><span>devops          dawn-devops-001 <span style="color:#ae81ff">1</span>          <span style="color:#ae81ff">0</span>               <span style="color:#ae81ff">0</span>               <span style="color:#ae81ff">0</span>               console-consumer-9f18be93-095b-4b46-a260-49b2b2c7e937 /11.0.1.113     console-consumer
+</span></span><span style="display:flex;"><span>devops          dawn-devops-001 <span style="color:#ae81ff">2</span>          <span style="color:#ae81ff">16</span>              <span style="color:#ae81ff">16</span>              <span style="color:#ae81ff">0</span>               console-consumer-9f18be93-095b-4b46-a260-49b2b2c7e937 /11.0.1.113     console-consumer
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="4-启动一个生产者">4. 启动一个生产者<a hidden class="anchor" aria-hidden="true" href="#4-启动一个生产者">#</a></h3>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>root@elk01:~# kafka-console-producer.sh --bootstrap-server 11.0.1.111:9092 --topic dawn-devops-001
+</span></span><span style="display:flex;"><span>&gt;1111111111
+</span></span><span style="display:flex;"><span>&gt;2222222222
+</span></span><span style="display:flex;"><span>&gt;3333333333
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="5-观察消费者的界面">5. 观察消费者的界面<a hidden class="anchor" aria-hidden="true" href="#5-观察消费者的界面">#</a></h3>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>root@elk03:~# kafka-console-consumer.sh --bootstrap-server 11.0.1.111:9092 --topic dawn-devops-001 --from-beginning   --consumer.config  <span style="color:#e6db74">${</span>KAFKA_HOME<span style="color:#e6db74">}</span>/config/consumer.properties
+</span></span><span style="display:flex;"><span>aaaaa
+</span></span><span style="display:flex;"><span>bbbbb
+</span></span><span style="display:flex;"><span>ccccc
+</span></span><span style="display:flex;"><span>aaaaa
+</span></span><span style="display:flex;"><span>bbbbb
+</span></span><span style="display:flex;"><span>ccccc
+</span></span><span style="display:flex;"><span>wb-test-msg-1
+</span></span><span style="display:flex;"><span>aaaaa
+</span></span><span style="display:flex;"><span>bbbbb
+</span></span><span style="display:flex;"><span>ccccc
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">111111</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">222222</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">333333</span>
+</span></span><span style="display:flex;"><span>aaaaa
+</span></span><span style="display:flex;"><span>bbbbbb
+</span></span><span style="display:flex;"><span>ccccc
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">1111111111</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">2222222222</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">3333333333</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>此时终止消费者的界面。</p>
+<h3 id="6-再次使用生产者写入测试数据">6. 再次使用生产者写入测试数据<a hidden class="anchor" aria-hidden="true" href="#6-再次使用生产者写入测试数据">#</a></h3>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>root@elk01:~# kafka-console-producer.sh --bootstrap-server 11.0.1.111:9092 --topic dawn-devops-001
+</span></span><span style="display:flex;"><span>&gt;AAAAAAAAAAAAAAA
+</span></span><span style="display:flex;"><span>&gt;BBBBBBBBBBBBBBBB
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="7-再次查看消费者组的信息数据是有延迟的">7. 再次查看消费者组的信息数据是有延迟的<a hidden class="anchor" aria-hidden="true" href="#7-再次查看消费者组的信息数据是有延迟的">#</a></h3>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>root@elk01:~# kafka-consumer-groups.sh --bootstrap-server 11.0.1.111:9092 --describe --group devops
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Consumer group <span style="color:#e6db74">&#39;devops&#39;</span> has no active members.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>GROUP           TOPIC           PARTITION  CURRENT-OFFSET  LOG-END-OFFSET  LAG             CONSUMER-ID     HOST            CLIENT-ID
+</span></span><span style="display:flex;"><span>devops          dawn-devops-001 <span style="color:#ae81ff">0</span>          <span style="color:#ae81ff">0</span>               <span style="color:#ae81ff">0</span>               <span style="color:#ae81ff">0</span>               -               -               -
+</span></span><span style="display:flex;"><span>devops          dawn-devops-001 <span style="color:#ae81ff">1</span>          <span style="color:#ae81ff">0</span>               <span style="color:#ae81ff">0</span>               <span style="color:#ae81ff">0</span>               -               -               -
+</span></span><span style="display:flex;"><span>devops          dawn-devops-001 <span style="color:#ae81ff">2</span>          <span style="color:#ae81ff">19</span>              <span style="color:#ae81ff">22</span>              <span style="color:#ae81ff">3</span>               -               -               -
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="8-同时启动多个消费者">8. 同时启动多个消费者<a hidden class="anchor" aria-hidden="true" href="#8-同时启动多个消费者">#</a></h3>
+<p>8.1 基于配置文件指定消费者组</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>root@elk03:~# kafka-console-consumer.sh --bootstrap-server 11.0.1.111:9092 --topic dawn-devops-001 --from-beginning   --consumer.config  <span style="color:#e6db74">${</span>KAFKA_HOME<span style="color:#e6db74">}</span>/config/consumer.properties
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>8.2 基于命令行方式启动消费者组</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>root@elk02:~# kafka-console-consumer.sh --bootstrap-server 11.0.1.111:9092 --topic dawn-devops-001 --consumer-property group.id<span style="color:#f92672">=</span>devops
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">888888</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">999999</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">1111111</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>8.3 观察消费者信息</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>root@elk01:~# kafka-consumer-groups.sh --bootstrap-server 11.0.1.111:9092 --describe --group devops
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>GROUP           TOPIC           PARTITION  CURRENT-OFFSET  LOG-END-OFFSET  LAG             CONSUMER-ID                                           HOST            CLIENT-ID
+</span></span><span style="display:flex;"><span>devops          dawn-devops-001 <span style="color:#ae81ff">0</span>          <span style="color:#ae81ff">3</span>               <span style="color:#ae81ff">3</span>               <span style="color:#ae81ff">0</span>               console-consumer-1c6a753c-01df-4ff8-85a3-f00e0f75fec2 /11.0.1.112     console-consumer
+</span></span><span style="display:flex;"><span>devops          dawn-devops-001 <span style="color:#ae81ff">1</span>          <span style="color:#ae81ff">3</span>               <span style="color:#ae81ff">3</span>               <span style="color:#ae81ff">0</span>               console-consumer-1c6a753c-01df-4ff8-85a3-f00e0f75fec2 /11.0.1.112     console-consumer
+</span></span><span style="display:flex;"><span>devops          dawn-devops-001 <span style="color:#ae81ff">2</span>          <span style="color:#ae81ff">22</span>              <span style="color:#ae81ff">22</span>              <span style="color:#ae81ff">0</span>               console-consumer-77188145-1121-4048-bd30-82fd2ee6060c /11.0.1.113     console-consumer
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>8.4 生产者继续生产数据</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>root@elk01:~# kafka-console-producer.sh --bootstrap-server 11.0.1.111:9092 --topic dawn-devops-001
+</span></span><span style="display:flex;"><span>&gt;888888
+</span></span><span style="display:flex;"><span>&gt;999999
+</span></span><span style="display:flex;"><span>&gt;1111111
+</span></span><span style="display:flex;"><span>&gt;666666
+</span></span><span style="display:flex;"><span>&gt;777777
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>8.5 观察输出</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>root@elk01:~# kafka-consumer-groups.sh --bootstrap-server 11.0.1.111:9092 --describe --group devops
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>GROUP           TOPIC           PARTITION  CURRENT-OFFSET  LOG-END-OFFSET  LAG             CONSUMER-ID                                           HOST            CLIENT-ID
+</span></span><span style="display:flex;"><span>devops          dawn-devops-001 <span style="color:#ae81ff">0</span>          <span style="color:#ae81ff">5</span>               <span style="color:#ae81ff">5</span>               <span style="color:#ae81ff">0</span>               console-consumer-1c6a753c-01df-4ff8-85a3-f00e0f75fec2 /11.0.1.112     console-consumer
+</span></span><span style="display:flex;"><span>devops          dawn-devops-001 <span style="color:#ae81ff">1</span>          <span style="color:#ae81ff">3</span>               <span style="color:#ae81ff">3</span>               <span style="color:#ae81ff">0</span>               console-consumer-1c6a753c-01df-4ff8-85a3-f00e0f75fec2 /11.0.1.112     console-consumer
+</span></span><span style="display:flex;"><span>devops          dawn-devops-001 <span style="color:#ae81ff">2</span>          <span style="color:#ae81ff">22</span>              <span style="color:#ae81ff">22</span>              <span style="color:#ae81ff">0</span>               console-consumer-77188145-1121-4048-bd30-82fd2ee6060c /11.0.1.113     console-consumer
+</span></span></code></pre></td></tr></table>
+</div>
+</div>
+
+      </div><div id="giscus-container" style="margin-top: 2rem; padding-top: 1rem; border-top: 1px solid var(--border);">
+  <script src="https://giscus.app/client.js"
+          data-repo="LMDAWN1127/LMDAWN1127.github.io"
+          data-repo-id="R_kgDOTMWmvw"
+          data-category="Announcements"
+          data-category-id="DIC_kwDOTMWmv84DAd3g"
+          data-mapping="pathname"
+          data-strict="0"
+          data-reactions-enabled="1"
+          data-emit-metadata="0"
+          data-input-position="bottom"
+          data-theme="preferred_color_scheme"
+          data-lang="zh-CN"
+          crossorigin="anonymous"
+          async>
+  </script>
+</div>
+
+    </div>
+
+    <aside class="toc-sidebar" id="toc-sidebar">
+    <div class="toc-header">目录</div>
+    <nav class="toc-nav"><ul class="toc-list">
+            <li>
+                <a href="#kafka%e7%9a%84%e7%94%9f%e4%ba%a7%e8%80%85%e5%92%8c%e6%b6%88%e8%b4%b9%e8%80%85" class="toc-link" data-target="kafka的生产者和消费者">kafka的生产者和消费者</a><ul>
+            <li>
+                <a href="#1-%e5%90%af%e5%8a%a8%e7%94%9f%e4%ba%a7%e8%80%85" class="toc-link" data-target="1-启动生产者">1. 启动生产者</a></li>
+            <li>
+                <a href="#2-%e5%90%af%e5%8a%a8%e6%b6%88%e8%b4%b9%e8%80%85" class="toc-link" data-target="2-启动消费者">2. 启动消费者</a></li></ul>
+            </li>
+            <li>
+                <a href="#kafka%e7%9a%84%e6%b6%88%e8%b4%b9%e8%80%85%e7%bb%84" class="toc-link" data-target="kafka的消费者组">kafka的消费者组</a><ul>
+            <li>
+                <a href="#1-%e5%9f%ba%e4%ba%8e%e9%85%8d%e7%bd%ae%e6%96%87%e4%bb%b6%e6%8c%87%e5%ae%9a%e6%b6%88%e8%b4%b9%e8%80%85%e7%bb%84" class="toc-link" data-target="1-基于配置文件指定消费者组">1. 基于配置文件指定消费者组</a></li>
+            <li>
+                <a href="#2-%e6%9f%a5%e7%9c%8b%e6%b6%88%e8%b4%b9%e8%80%85%e6%b6%88%e8%b4%b9%e7%9a%84%e5%88%97%e8%a1%a8" class="toc-link" data-target="2-查看消费者消费的列表">2. 查看消费者消费的列表</a></li>
+            <li>
+                <a href="#3-%e6%9f%a5%e7%9c%8b%e6%8c%87%e5%ae%9a%e6%b6%88%e8%b4%b9%e8%80%85%e7%bb%84%e6%b6%88%e8%b4%b9%e5%88%86%e5%8c%ba%e7%9a%84offset" class="toc-link" data-target="3-查看指定消费者组消费分区的offset">3. 查看指定消费者组消费分区的offset</a></li>
+            <li>
+                <a href="#4-%e5%90%af%e5%8a%a8%e4%b8%80%e4%b8%aa%e7%94%9f%e4%ba%a7%e8%80%85" class="toc-link" data-target="4-启动一个生产者">4. 启动一个生产者</a></li>
+            <li>
+                <a href="#5-%e8%a7%82%e5%af%9f%e6%b6%88%e8%b4%b9%e8%80%85%e7%9a%84%e7%95%8c%e9%9d%a2" class="toc-link" data-target="5-观察消费者的界面">5. 观察消费者的界面</a></li>
+            <li>
+                <a href="#6-%e5%86%8d%e6%ac%a1%e4%bd%bf%e7%94%a8%e7%94%9f%e4%ba%a7%e8%80%85%e5%86%99%e5%85%a5%e6%b5%8b%e8%af%95%e6%95%b0%e6%8d%ae" class="toc-link" data-target="6-再次使用生产者写入测试数据">6. 再次使用生产者写入测试数据</a></li>
+            <li>
+                <a href="#7-%e5%86%8d%e6%ac%a1%e6%9f%a5%e7%9c%8b%e6%b6%88%e8%b4%b9%e8%80%85%e7%bb%84%e7%9a%84%e4%bf%a1%e6%81%af%e6%95%b0%e6%8d%ae%e6%98%af%e6%9c%89%e5%bb%b6%e8%bf%9f%e7%9a%84" class="toc-link" data-target="7-再次查看消费者组的信息数据是有延迟的">7. 再次查看消费者组的信息数据是有延迟的</a></li>
+            <li>
+                <a href="#8-%e5%90%8c%e6%97%b6%e5%90%af%e5%8a%a8%e5%a4%9a%e4%b8%aa%e6%b6%88%e8%b4%b9%e8%80%85" class="toc-link" data-target="8-同时启动多个消费者">8. 同时启动多个消费者</a>
+            </li>
+        </ul>
+        </li>
+        </ul>
+    </nav>
+</aside>
+
+  </div>
+</article>
+    </main>
+    
+<a href="#top" id="top-link" class="top-link hidden" aria-label="go to top" title="Go to Top (Alt + G)" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevrons-up">
+        <polyline points="17 11 12 6 7 11"></polyline>
+        <polyline points="17 18 12 13 7 18"></polyline>
+    </svg>
+</a>
+<script defer src="/js/custom.js"></script>
+<div id="algolia-search-modal" class="algolia-modal" style="display: none;">
+  <div class="algolia-modal-overlay"></div>
+  <div class="algolia-modal-content">
+    <div class="algolia-search-header">
+      <div class="algolia-search-input-wrapper">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <input type="text" id="algolia-search-input" placeholder="搜索文章..." autofocus>
+        <kbd class="algolia-esc">Esc</kbd>
+      </div>
+    </div>
+    <div id="algolia-search-results" class="algolia-search-results">
+      <div class="algolia-empty-state">
+        <p>输入关键词开始搜索</p>
+      </div>
+    </div>
+    <div class="algolia-search-footer">
+      <span class="algolia-footer-text">
+        <kbd>↑</kbd> <kbd>↓</kbd> 导航
+        <kbd>↵</kbd> 打开
+        <kbd>Esc</kbd> 关闭
+      </span>
+      <span class="algolia-footer-logo">
+        搜索由 <a href="https://www.algolia.com/" target="_blank" rel="noopener">Algolia</a> 提供
+      </span>
+    </div>
+  </div>
+</div>
+
+<script>
+(function() {
+  'use strict';
+
+  var APP_ID = 'Y0SCRI4LCW';
+  var SEARCH_KEY = '03dda5e44aec7e0dd93b6a3653250b1f';
+  var INDEX_NAME = 'lmdawn1127-blog';
+  var API_URL = 'https://' + APP_ID + '-dsn.algolia.net/1/indexes/' + INDEX_NAME + '/query';
+  var debounceTimer = null;
+  var selectedIndex = -1;
+
+   
+  function doSearch(query) {
+    if (!query || !query.trim()) {
+      showEmpty();
+      return;
+    }
+
+    var body = JSON.stringify({
+      query: query,
+      hitsPerPage: 10,
+      attributesToRetrieve: ['title', 'content', 'url'],
+      attributesToHighlight: ['title', 'content'],
+      highlightPreTag: '<mark class="algolia-highlight">',
+      highlightPostTag: '</mark>'
+    });
+
+    fetch(API_URL, {
+      method: 'POST',
+      headers: {
+        'X-Algolia-Application-Id': APP_ID,
+        'X-Algolia-API-Key': SEARCH_KEY,
+        'Content-Type': 'application/json'
+      },
+      body: body
+    })
+    .then(function(resp) {
+      if (!resp.ok) throw new Error('HTTP ' + resp.status);
+      return resp.json();
+    })
+    .then(function(data) {
+      renderResults(data.hits || [], query);
+    })
+    .catch(function(err) {
+      console.error('Algolia search error:', err);
+      showError(err.message || '未知错误');
+    });
+  }
+
+   
+  function showEmpty() {
+    document.getElementById('algolia-search-results').innerHTML =
+      '<div class="algolia-empty-state"><p>输入关键词开始搜索</p></div>';
+  }
+
+  function showError(detail) {
+    var msg = '搜索出错，请稍后再试';
+    if (detail) msg += '<br><small style="color:#888">错误详情: ' + escapeHtml(detail) + '</small>';
+    document.getElementById('algolia-search-results').innerHTML =
+      '<div class="algolia-empty-state"><p>' + msg + '</p></div>';
+  }
+
+  function showNoResults(query) {
+    document.getElementById('algolia-search-results').innerHTML =
+      '<div class="algolia-empty-state"><p>未找到与「' + escapeHtml(query) + '」相关的结果</p></div>';
+  }
+
+  function escapeHtml(s) {
+    var d = document.createElement('div');
+    d.appendChild(document.createTextNode(s));
+    return d.innerHTML;
+  }
+
+  function getHL(hit, attr) {
+    if (hit._highlightResult && hit._highlightResult[attr]) return hit._highlightResult[attr].value;
+    return hit[attr] || '';
+  }
+
+  function trunc(s, n) {
+    if (!s) return '';
+    s = s.replace(/<[^>]+>/g, '');
+    return s.length > n ? s.substring(0, n) + '…' : s;
+  }
+
+  function renderResults(hits, query) {
+    var box = document.getElementById('algolia-search-results');
+    if (!hits.length) { showNoResults(query); return; }
+
+    var h = '<div class="algolia-results-count">' + hits.length + ' 个结果</div>';
+    hits.forEach(function(hit, i) {
+      var title = getHL(hit, 'title') || '无标题';
+      var content = getHL(hit, 'content');
+      var url = hit.url || '#';
+
+      h += '<a class="algolia-hit" href="' + url + '" data-index="' + i + '">';
+      h += '<div class="algolia-hit-title">' + title + '</div>';
+      h += '<div class="algolia-hit-content">' + trunc(content, 150) + '</div>';
+
+      h += '</a>';
+    });
+    box.innerHTML = h;
+
+    box.querySelectorAll('.algolia-hit').forEach(function(el) {
+      el.addEventListener('click', closeAlgoliaSearch);
+    });
+  }
+
+   
+  function onInput(e) {
+    var q = e.target.value;
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(function() { doSearch(q); }, 200);
+  }
+
+  function onKeydown(e) {
+    var hits = document.querySelectorAll('.algolia-hit');
+    if (!hits.length) return;
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      selectedIndex = Math.min(selectedIndex + 1, hits.length - 1);
+      sel(hits);
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      selectedIndex = Math.max(selectedIndex - 1, 0);
+      sel(hits);
+    } else if (e.key === 'Enter' && selectedIndex >= 0) {
+      e.preventDefault();
+      window.location.href = hits[selectedIndex].getAttribute('href');
+      closeAlgoliaSearch();
+    }
+  }
+
+  function sel(hits) {
+    hits.forEach(function(el, i) {
+      if (i === selectedIndex) { el.classList.add('selected'); el.scrollIntoView({ block: 'nearest' }); }
+      else el.classList.remove('selected');
+    });
+  }
+
+   
+  document.addEventListener('DOMContentLoaded', function() {
+    var input = document.getElementById('algolia-search-input');
+    if (input) {
+      input.addEventListener('input', onInput);
+      input.addEventListener('keydown', onKeydown);
+    }
+  });
+
+  window.openAlgoliaSearch = function() {
+    var modal = document.getElementById('algolia-search-modal');
+    modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+    setTimeout(function() {
+      var input = document.getElementById('algolia-search-input');
+      if (input) { input.value = ''; input.focus(); showEmpty(); }
+    }, 100);
+  };
+
+  window.closeAlgoliaSearch = function() {
+    document.getElementById('algolia-search-modal').style.display = 'none';
+    document.body.style.overflow = '';
+    selectedIndex = -1;
+  };
+})();
+</script>
+
+<style>
+  .algolia-modal{position:fixed;top:0;left:0;width:100%;height:100%;z-index:1000;display:flex;align-items:flex-start;justify-content:center;padding-top:10vh}
+  .algolia-modal-overlay{position:absolute;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.6);backdrop-filter:blur(4px)}
+  .algolia-modal-content{position:relative;width:90%;max-width:600px;background:#1a1a1a;border-radius:12px;box-shadow:0 20px 60px rgba(0,0,0,.5);overflow:hidden;border:1px solid #333}
+  .algolia-search-header{padding:16px;border-bottom:1px solid #333}
+  .algolia-search-input-wrapper{display:flex;align-items:center;gap:12px;background:#2a2a2a;border-radius:8px;padding:12px 16px;border:1px solid #444}
+  .algolia-search-input-wrapper svg{color:#666;flex-shrink:0}
+  #algolia-search-input{flex:1;background:transparent;border:none;outline:none;color:#fff;font-size:16px;font-family:inherit}
+  #algolia-search-input::placeholder{color:#666}
+  .algolia-esc{background:#444;color:#999;padding:2px 6px;border-radius:4px;font-size:11px;font-family:inherit}
+  .algolia-search-results{max-height:400px;overflow-y:auto;padding:8px}
+  .algolia-empty-state{padding:40px 20px;text-align:center;color:#666}
+  .algolia-results-count{padding:8px 12px;font-size:12px;color:#666}
+  .algolia-search-footer{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;border-top:1px solid #333;background:#222;font-size:12px;color:#666}
+  .algolia-footer-text kbd{background:#444;color:#999;padding:2px 4px;border-radius:3px;font-size:10px;margin:0 2px}
+  .algolia-footer-logo a{color:#5EEAD4;text-decoration:none}
+  .algolia-footer-logo a:hover{text-decoration:underline}
+  .algolia-hit{display:block;padding:12px;border-radius:6px;text-decoration:none;color:#fff;transition:background .2s}
+  .algolia-hit:hover,.algolia-hit.selected{background:#2a2a2a}
+  .algolia-hit-title{font-weight:600;color:#5EEAD4;margin-bottom:4px;font-size:15px}
+  .algolia-hit-title mark,.algolia-highlight{background:rgba(94,234,212,.25);color:#5EEAD4;padding:0 2px;border-radius:2px}
+  .algolia-hit-content{font-size:13px;color:#999;line-height:1.5}
+  .algolia-hit-content mark,.algolia-hit-content .algolia-highlight{background:rgba(94,234,212,.2);color:#ccc;padding:0 2px;border-radius:2px}
+  .algolia-hit-meta{display:flex;align-items:center;gap:10px;margin-top:8px}
+  .algolia-hit-date{font-size:12px;color:#666}
+  .algolia-hit-tags{display:flex;gap:6px}
+  .algolia-hit-tag{background:#333;color:#999;padding:2px 8px;border-radius:4px;font-size:11px}
+</style>
+<script>
+  
+  document.addEventListener('keydown', function(e) {
+    
+    if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+      e.preventDefault();
+      if (typeof openAlgoliaSearch === 'function') openAlgoliaSearch();
+    }
+    
+    if (e.key === 'Escape') {
+      if (typeof closeAlgoliaSearch === 'function') closeAlgoliaSearch();
+    }
+    
+    if (e.altKey && e.key === '/') {
+      e.preventDefault();
+      if (typeof openAlgoliaSearch === 'function') openAlgoliaSearch();
+    }
+  });
+
+  
+  document.addEventListener('DOMContentLoaded', function() {
+    var modal = document.getElementById('algolia-search-modal');
+    if (modal) {
+      var overlay = modal.querySelector('.algolia-modal-overlay');
+      if (overlay) {
+        overlay.addEventListener('click', function() {
+          if (typeof closeAlgoliaSearch === 'function') closeAlgoliaSearch();
+        });
+      }
+    }
+  });
+
+  
+  
+  document.addEventListener('DOMContentLoaded', function() {
+    if (document.getElementById('algolia-search-btn')) return;
+    var btn = document.createElement('button');
+    btn.id = 'algolia-search-btn';
+    btn.className = 'theme-toggle search-toggle';
+    btn.type = 'button';
+    btn.title = '搜索 (Ctrl+K)';
+    btn.setAttribute('aria-label', '搜索');
+    btn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>';
+    btn.addEventListener('click', function() {
+      if (typeof openAlgoliaSearch === 'function') openAlgoliaSearch();
+    });
+    var target = document.querySelector('.logo-switches') || document.querySelector('.header-nav');
+    if (target) target.appendChild(btn);
+  });
+</script><script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var cur = (document.documentElement.lang || 'zh').toLowerCase();
+    
+    
+    
+    var rawPath = location.pathname.replace(/\/+$/, '');
+    var pm = rawPath.match(/^\/(en|ko|ja)(?:\/(.*))?$/);
+    var rest = pm ? (pm[2] ? '/' + pm[2] : '') : rawPath; 
+    function langHref(code) {
+      var base = (code === 'zh') ? '' : '/' + code;
+      if (rest === '' || rest === '/') {
+        return base === '' ? '/' : base + '/';
+      }
+      return base + rest + '/';
+    }
+
+    var langs = [
+      { code: 'zh', label: '中文' },
+      { code: 'en', label: 'English' },
+      { code: 'ko', label: '한국어' },
+      { code: 'ja', label: '日本語' }
+    ];
+    var wrap = document.querySelector('.logo-switches') || document.querySelector('.header-nav');
+    if (!wrap || document.getElementById('lang-dropdown')) return;
+
+    var current = langs.find(function(l) { return l.code === cur; }) || langs[0];
+
+    var dd = document.createElement('div');
+    dd.className = 'lang-dropdown';
+    dd.id = 'lang-dropdown';
+
+    var toggle = document.createElement('button');
+    toggle.type = 'button';
+    toggle.className = 'lang-dropdown-toggle';
+    toggle.setAttribute('aria-label', '选择语言');
+    toggle.innerHTML = '<span class="lang-current">' + current.label + '</span><span class="lang-caret">▾</span>';
+
+    var menu = document.createElement('ul');
+    menu.className = 'lang-dropdown-menu';
+    langs.forEach(function(l) {
+      var li = document.createElement('li');
+      if (l.code === cur) li.className = 'active';
+      var a = document.createElement('a');
+      a.href = langHref(l.code);
+      a.textContent = l.label;
+      li.appendChild(a);
+      menu.appendChild(li);
+    });
+
+    dd.appendChild(toggle);
+    dd.appendChild(menu);
+    wrap.appendChild(dd);
+
+    toggle.addEventListener('click', function(e) {
+      e.stopPropagation();
+      dd.classList.toggle('open');
+    });
+    document.addEventListener('click', function(e) {
+      if (!dd.contains(e.target)) dd.classList.remove('open');
+    });
+  });
+</script>
+
+
+<script>
+    let menu = document.getElementById('menu');
+    if (menu) {
+        const scrollPosition = localStorage.getItem("menu-scroll-position");
+        if (scrollPosition) {
+            menu.scrollLeft = parseInt(scrollPosition, 10);
+        }
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+</script>
+<script>
+    var toplink = document.getElementById("top-link");
+    window.onscroll = function () {
+        const scrollThreshold = window.innerHeight;
+        if (document.body.scrollTop > scrollThreshold || document.documentElement.scrollTop > scrollThreshold) {
+            toplink.classList.remove("hidden");
+        } else {
+            toplink.classList.add("hidden");
+        }
+    };
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        const html = document.querySelector("html");
+        if (html.dataset.theme === "dark") {
+            html.dataset.theme = 'light';
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            html.dataset.theme = 'dark';
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = '复制';
+
+        function copyingDone() {
+            copybutton.innerHTML = '已复制！';
+            setTimeout(() => {
+                copybutton.innerHTML = '复制';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>
