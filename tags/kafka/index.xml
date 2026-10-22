@@ -11,8 +11,15 @@
     </image>
     <generator>Hugo</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Thu, 22 Oct 2026 14:45:00 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 22 Oct 2026 15:50:00 +0800</lastBuildDate>
     <atom:link href="https://LMDAWN1127.github.io/tags/kafka/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Kafka 故障排查实战：集群起不来的五步排查法</title>
+      <link>https://LMDAWN1127.github.io/posts/kafka-cluster-troubleshooting/</link>
+      <pubDate>Thu, 22 Oct 2026 15:50:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/posts/kafka-cluster-troubleshooting/</guid>
+      <description>Kafka 集群启动故障五步排查：JDK 环境检查、ZooKeeper 集群状态确认、server.properties 配置核对、前台启动捕获报错，以及清理 ZK 元数据与 Kafka 数据后的重启重试。</description>
+    </item>
     <item>
       <title>Kafka topic 操作实战：增删改查与副本分区约束</title>
       <link>https://LMDAWN1127.github.io/posts/kafka-topic-operations/</link>
