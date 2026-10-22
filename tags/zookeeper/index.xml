@@ -11,8 +11,15 @@
     </image>
     <generator>Hugo</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Thu, 22 Oct 2026 11:00:00 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 22 Oct 2026 12:00:00 +0800</lastBuildDate>
     <atom:link href="https://LMDAWN1127.github.io/tags/zookeeper/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>ZooKeeper 节点操作实战：常用命令、znode 类型与 watch 机制</title>
+      <link>https://LMDAWN1127.github.io/posts/zookeeper-node-operations/</link>
+      <pubDate>Thu, 22 Oct 2026 12:00:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/posts/zookeeper-node-operations/</guid>
+      <description>ZooKeeper 客户端实战：ls/create/get/set/delete/deleteall 增删改查命令、持久/临时/顺序三种 znode 类型辨析（含 stat 字段解读），以及 watch 一次性事件机制。</description>
+    </item>
     <item>
       <title>ZooKeeper 集群搭建与高可用验证实战</title>
       <link>https://LMDAWN1127.github.io/posts/zookeeper-cluster-ha/</link>
