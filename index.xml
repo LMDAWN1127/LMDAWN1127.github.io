@@ -11,7 +11,7 @@
     </image>
     <generator>Hugo</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Thu, 22 Oct 2026 14:20:00 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 22 Oct 2026 14:45:00 +0800</lastBuildDate>
     <atom:link href="https://LMDAWN1127.github.io/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Harbor 主备部署实战：从安装到 HTTPS 与主备复制</title>
@@ -19,6 +19,13 @@
       <pubDate>Tue, 04 Aug 2026 00:00:00 +0000</pubDate>
       <guid>https://LMDAWN1127.github.io/posts/harbor-master-slave/</guid>
       <description>完整记录 Harbor 企业级镜像仓库的主备部署过程，涵盖 HTTP/HTTPS 双模式安装、自签名证书配置、跨主机主备复制等核心运维技能。</description>
+    </item>
+    <item>
+      <title>Kafka topic 操作实战：增删改查与副本分区约束</title>
+      <link>https://LMDAWN1127.github.io/posts/kafka-topic-operations/</link>
+      <pubDate>Thu, 22 Oct 2026 14:45:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/posts/kafka-topic-operations/</guid>
+      <description>kafka-topics.sh 实战：topic 创建（副本因子不能超过存活 broker 数）、查看详情（Leader/Replicas/ISR 解读）、分区扩容（只能调大不能调小）与删除（延迟约一分钟清理数据）。</description>
     </item>
     <item>
       <title>Kafka 实战：单点与集群部署及核心术语</title>

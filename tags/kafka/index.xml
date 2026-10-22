@@ -11,8 +11,15 @@
     </image>
     <generator>Hugo</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Thu, 22 Oct 2026 14:20:00 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 22 Oct 2026 14:45:00 +0800</lastBuildDate>
     <atom:link href="https://LMDAWN1127.github.io/tags/kafka/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Kafka topic 操作实战：增删改查与副本分区约束</title>
+      <link>https://LMDAWN1127.github.io/posts/kafka-topic-operations/</link>
+      <pubDate>Thu, 22 Oct 2026 14:45:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/posts/kafka-topic-operations/</guid>
+      <description>kafka-topics.sh 实战：topic 创建（副本因子不能超过存活 broker 数）、查看详情（Leader/Replicas/ISR 解读）、分区扩容（只能调大不能调小）与删除（延迟约一分钟清理数据）。</description>
+    </item>
     <item>
       <title>Kafka 实战：单点与集群部署及核心术语</title>
       <link>https://LMDAWN1127.github.io/posts/kafka-deployment-terminology/</link>
