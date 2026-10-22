@@ -11,7 +11,7 @@
     </image>
     <generator>Hugo</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Thu, 22 Oct 2026 12:00:00 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 22 Oct 2026 13:15:00 +0800</lastBuildDate>
     <atom:link href="https://LMDAWN1127.github.io/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Harbor 主备部署实战：从安装到 HTTPS 与主备复制</title>
@@ -19,6 +19,13 @@
       <pubDate>Tue, 04 Aug 2026 00:00:00 +0000</pubDate>
       <guid>https://LMDAWN1127.github.io/posts/harbor-master-slave/</guid>
       <description>完整记录 Harbor 企业级镜像仓库的主备部署过程，涵盖 HTTP/HTTPS 双模式安装、自签名证书配置、跨主机主备复制等核心运维技能。</description>
+    </item>
+    <item>
+      <title>ZooKeeper 图形化管理实战：zkWeb 部署与基本使用</title>
+      <link>https://LMDAWN1127.github.io/posts/zookeeper-gui-management/</link>
+      <pubDate>Thu, 22 Oct 2026 13:15:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/posts/zookeeper-gui-management/</guid>
+      <description>借助 zkWeb 图形化工具管理 ZooKeeper 集群：JDK 8 准备、jar 方式启动、连接集群配置，以及节点写入/增删、连接与集群状态查看。</description>
     </item>
     <item>
       <title>ZooKeeper 节点操作实战：常用命令、znode 类型与 watch 机制</title>
