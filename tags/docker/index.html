@@ -185,6 +185,28 @@
 <article class="post-entry tag-entry"> 
   <header class="entry-header">
     <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/posts/docker-env-var-passing/">Docker 实战：容器环境变量传递与查看</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>Docker 实战：容器环境变量传递与查看 容器传递环境变量 启动容器 1 2 3 4 5 root@docker02:~# docker run -d --name c1 -e SCHOOL=dawn -e CLASS=docker uhub.service.ucloud.cn/dawn/nginx:1.30.4 aa3538d29cc8ea72d6058d48b4c038b4f3234e6bf3ff970432c66b80f935d6a4 root@docker02:~# docker ps -l CONTAINER ID IMAGE COMMAND CREATED STATUS PORTS NAMES aa3538d29cc8 uhub.service.ucloud.cn/dawn/nginx:1.30.4 &#34;/docker-entrypoint.…&#34; 13 seconds ago Up 12 seconds 80/tcp c1 查看环境变量 1 2 3 4 5 6 7 8 9 10 11 12 root@docker02:~# docker exec c1 env PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin HOSTNAME=aa3538d29cc8 SCHOOL=dawn CLASS=docker NGINX_VERSION=1.30.4 NJS_VERSION=1.0.0 NJS_RELEASE=1~trixie ACME_VERSION=0.4.1 PKG_RELEASE=1~trixie DYNPKG_RELEASE=1~trixie HOME=/root </p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-23">
+  2026年10月23日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 1 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to Docker 实战：容器环境变量传递与查看" href="https://LMDAWN1127.github.io/posts/docker-env-var-passing/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
       <a href="https://LMDAWN1127.github.io/posts/docker-image-migration-tag/">Docker 镜像迁移实战：save/load 离线传输与打标签</a>
     </h2>
   </header>
@@ -251,29 +273,6 @@
 </span>
 </footer>
   <a class="entry-link" aria-label="post link to Docker 实战：容器常用命令与 exec 操作" href="https://LMDAWN1127.github.io/posts/docker-common-commands-exec/"></a>
-</article>
-
-<article class="post-entry tag-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/posts/docker-image-container-flow/">Docker 实战：镜像拉取与容器启动全流程</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>Docker 实战：镜像拉取与容器启动全流程 镜像仓库、镜像和容器 查看本地镜像仓库列表 1 2 root@docker02:~# docker image ls REPOSITORY TAG IMAGE ID CREATED SIZE 从远程仓库下载镜像 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 root@docker02:~# docker pull uhub.service.ucloud.cn/dawn/nginx:1.30.4 1.30.4: Pulling from dawn/nginx 26c307b5e35a: Pull complete 7be390ba6238: Pull complete d84ae7b21412: Pull complete c0df8d325117: Pull complete b8b80b9bc028: Pull complete f5de6e85ac74: Pull complete 5a4222b844e8: Pull complete Digest: sha256:9e4b33ead4c69e9845e53a1f175d0aa70a6cea62425b5d08957ba7eee5dc9b1d Status: Downloaded newer image for uhub.service.ucloud.cn/dawn/nginx:1.30.4 uhub.service.ucloud.cn/dawn/nginx:1.30.4 root@docker02:~# docker image ls REPOSITORY TAG IMAGE ID CREATED SIZE uhub.service.ucloud.cn/dawn/nginx 1.30.4 886dbea595a1 2 months ago 161MB 相关字段说明:
-...</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-23">
-  2026年10月23日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 2 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to Docker 实战：镜像拉取与容器启动全流程" href="https://LMDAWN1127.github.io/posts/docker-image-container-flow/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">
