@@ -185,6 +185,30 @@
 <article class="post-entry tag-entry"> 
   <header class="entry-header">
     <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/posts/docker-app-deployments/">Docker 应用部署实战：Tomcat/MySQL/WordPress/ELK</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>Docker 应用部署实战：Tomcat/MySQL/WordPress/ELK 1. Docker部署Tomcat 创建容器 1 2 root@docker02:~# docker run -d -p 8080:8080 tomcat:9.0-jdk17 root@docker02:~# docker exec goofy_ramanujan sh -c &#39;mv webapps.dist/* webapps/&#39; 访问测试 http://11.0.1.122:8080/
+2. Docker部署MySQL 下载官方的镜像 1 root@docker02:~# docker pull mysql:8.4.1-oracle 启动MySQL 1 2 3 4 5 6 7 8 root@docker02:~# docker images REPOSITORY TAG IMAGE ID CREATED SIZE tomcat 9.0-jdk17 e726f39ab438 6 days ago 471MB uhub.service.ucloud.cn/dawn/nginx 1.30.4 886dbea595a1 2 months ago 161MB uhub.service.ucloud.cn/dawn/nginx latest 4e5db4761e0f 3 months ago 161MB mysql 8.4.1-oracle da8f2a99cf39 2 years ago 583MB root@docker02:~# docker run --name mysql-server -e MYSQL_ROOT_PASSWORD=123456 -d mysql:8.4.1-oracle 3bfde430e3ba58d6589d38014f616847f21c5801723ec48f5f30a0b20bb8ed8c 查看容器 1 2 3 root@docker02:~# docker ps -l CONTAINER ID IMAGE COMMAND CREATED STATUS PORTS NAMES 3bfde430e3ba mysql:8.4.1-oracle &#34;docker-entrypoint.s…&#34; 43 seconds ago Up 43 seconds 3306/tcp, 33060/tcp mysql-server 连接MySQL数据库 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 root@docker02:~# docker exec -it mysql-server mysql -p123456 mysql: [Warning] Using a password on the command line interface can be insecure. Welcome to the MySQL monitor. Commands end with ; or \g. Your MySQL connection id is 8 Server version: 8.4.1 MySQL Community Server - GPL Copyright (c) 2000, 2024, Oracle and/or its affiliates. Oracle is a registered trademark of Oracle Corporation and/or its affiliates. Other names may be trademarks of their respective owners. Type &#39;help;&#39; or &#39;\h&#39; for help. Type &#39;\c&#39; to clear the current input statement. mysql&gt; SHOW DATABASES; &#43;--------------------&#43; | Database | &#43;--------------------&#43; | information_schema | | mysql | | performance_schema | | sys | &#43;--------------------&#43; 4 rows in set (0.00 sec) mysql&gt; 部署数据库指定数据库和用户 1 root@docker02:~# docker run --name mysql-server02 -e MYSQL_ALLOW_EMPTY_PASSWORD=yes -e MYSQL_DATABASE=docker -e MYSQL_USER=dawn -e MYSQL_PASSWORD=123456 -d mysql:8.4.1-oracle 验证测试 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 root@docker02:~# docker exec -it mysql-server02 mysql Welcome to the MySQL monitor. Commands end with ; or \g. Your MySQL connection id is 8 Server version: 8.4.1 MySQL Community Server - GPL Copyright (c) 2000, 2024, Oracle and/or its affiliates. Oracle is a registered trademark of Oracle Corporation and/or its affiliates. Other names may be trademarks of their respective owners. Type &#39;help;&#39; or &#39;\h&#39; for help. Type &#39;\c&#39; to clear the current input statement. mysql&gt; SHOW DATABASES; &#43;--------------------&#43; | Database | &#43;--------------------&#43; | docker | | information_schema | | mysql | | performance_schema | | sys | &#43;--------------------&#43; 5 rows in set (0.00 sec) mysql&gt; SELECT user,host,plugin FROM mysql.user; &#43;------------------&#43;-----------&#43;-----------------------&#43; | user | host | plugin | &#43;------------------&#43;-----------&#43;-----------------------&#43; | dawn | % | caching_sha2_password | | root | % | caching_sha2_password | | mysql.infoschema | localhost | caching_sha2_password | | mysql.session | localhost | caching_sha2_password | | mysql.sys | localhost | caching_sha2_password | | root | localhost | caching_sha2_password | &#43;------------------&#43;-----------&#43;-----------------------&#43; 6 rows in set (0.00 sec) mysql&gt; 批量启动20个数据库实例
+...</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-23">
+  2026年10月23日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 5 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to Docker 应用部署实战：Tomcat/MySQL/WordPress/ELK" href="https://LMDAWN1127.github.io/posts/docker-app-deployments/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
       <a href="https://LMDAWN1127.github.io/posts/docker-env-var-passing/">Docker 实战：容器环境变量传递与查看</a>
     </h2>
   </header>
@@ -249,30 +273,6 @@
 </span>
 </footer>
   <a class="entry-link" aria-label="post link to Docker 端口映射原理：从 veth 网卡到 iptables DNAT" href="https://LMDAWN1127.github.io/posts/docker-port-mapping-principle/"></a>
-</article>
-
-<article class="post-entry tag-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/posts/docker-common-commands-exec/">Docker 实战：容器常用命令与 exec 操作</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>Docker 实战：容器常用命令与 exec 操作 1. docker常用命令 查看正在运行的容器列表
-1 2 3 4 5 6 7 8 root@docker02:~# docker container ps CONTAINER ID IMAGE COMMAND CREATED STATUS PORTS NAMES ff10508a36b1 uhub.service.ucloud.cn/dawn/nginx:latest &#34;/docker-entrypoint.…&#34; 8 minutes ago Up 8 minutes 0.0.0.0:82-&gt;80/tcp, :::82-&gt;80/tcp c2 53efc7e7cfcb uhub.service.ucloud.cn/dawn/nginx:1.30.4 &#34;/docker-entrypoint.…&#34; 8 minutes ago Up 8 minutes 0.0.0.0:81-&gt;80/tcp, :::81-&gt;80/tcp c1 root@docker02:~# docker ps CONTAINER ID IMAGE COMMAND CREATED STATUS PORTS NAMES ff10508a36b1 uhub.service.ucloud.cn/dawn/nginx:latest &#34;/docker-entrypoint.…&#34; 8 minutes ago Up 8 minutes 0.0.0.0:82-&gt;80/tcp, :::82-&gt;80/tcp c2 53efc7e7cfcb uhub.service.ucloud.cn/dawn/nginx:1.30.4 &#34;/docker-entrypoint.…&#34; 8 minutes ago Up 8 minutes 0.0.0.0:81-&gt;80/tcp, :::81-&gt;80/tcp c1 查看所有容器列表
-...</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-23">
-  2026年10月23日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 2 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to Docker 实战：容器常用命令与 exec 操作" href="https://LMDAWN1127.github.io/posts/docker-common-commands-exec/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">
