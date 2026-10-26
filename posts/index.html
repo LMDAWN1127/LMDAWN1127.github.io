@@ -195,6 +195,31 @@
 <article class="post-entry"> 
   <header class="entry-header">
     <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/posts/docker-container-lifecycle/">Docker 实战：容器生命周期管理——启动、停止与重启策略</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>Docker 实战：容器生命周期管理——启动、停止与重启策略 1. 容器启动和停止 1. 停止容器 1 2 3 root@docker02:~# docker stop -t 0 es01 # 可以指定容器的名称停止，-t表示指定等待多久后开始发送kill指令。如果停止服务较长，默认等待10s es01 root@docker02:~# docker stop 31198819a488 2. 启动容器 1 2 3 root@docker02:~# docker start es01 es01 root@docker02:~# docker start 31198819a488 3. 重启容器 先停止，在启动。只要停止容器就会重新对STATUS进行重新计数
+1 root@docker02:~# docker restart es01 docker stop命令本质是调用的是docker kill表示杀死容器的进程ID
+1 2 3 4 root@docker02:~# docker start kibana es01 kibana es01 root@docker02:~# docker kill kibana 容器启动本质上是在宿主机上启动了一个进程ID
+...</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-26">
+  2026年10月26日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 6 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to Docker 实战：容器生命周期管理——启动、停止与重启策略" href="https://LMDAWN1127.github.io/posts/docker-container-lifecycle/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
       <a href="https://LMDAWN1127.github.io/posts/docker-inspect-pid-id-network/">Docker 实战：用 inspect 查看容器 PID、ID 与网络信息</a>
     </h2>
   </header>
@@ -258,28 +283,6 @@
 </span>
 </footer>
   <a class="entry-link" aria-label="post link to Docker 应用部署实战：Tomcat/MySQL/WordPress/ELK" href="https://LMDAWN1127.github.io/posts/docker-app-deployments/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/posts/docker-env-var-passing/">Docker 实战：容器环境变量传递与查看</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>Docker 实战：容器环境变量传递与查看 容器传递环境变量 启动容器 1 2 3 4 5 root@docker02:~# docker run -d --name c1 -e SCHOOL=dawn -e CLASS=docker uhub.service.ucloud.cn/dawn/nginx:1.30.4 aa3538d29cc8ea72d6058d48b4c038b4f3234e6bf3ff970432c66b80f935d6a4 root@docker02:~# docker ps -l CONTAINER ID IMAGE COMMAND CREATED STATUS PORTS NAMES aa3538d29cc8 uhub.service.ucloud.cn/dawn/nginx:1.30.4 &#34;/docker-entrypoint.…&#34; 13 seconds ago Up 12 seconds 80/tcp c1 查看环境变量 1 2 3 4 5 6 7 8 9 10 11 12 root@docker02:~# docker exec c1 env PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin HOSTNAME=aa3538d29cc8 SCHOOL=dawn CLASS=docker NGINX_VERSION=1.30.4 NJS_VERSION=1.0.0 NJS_RELEASE=1~trixie ACME_VERSION=0.4.1 PKG_RELEASE=1~trixie DYNPKG_RELEASE=1~trixie HOME=/root </p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-23">
-  2026年10月23日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 1 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to Docker 实战：容器环境变量传递与查看" href="https://LMDAWN1127.github.io/posts/docker-env-var-passing/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">
