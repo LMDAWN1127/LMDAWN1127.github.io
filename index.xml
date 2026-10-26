@@ -11,7 +11,7 @@
     </image>
     <generator>Hugo</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Mon, 26 Oct 2026 16:30:00 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 26 Oct 2026 19:50:00 +0800</lastBuildDate>
     <atom:link href="https://LMDAWN1127.github.io/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Harbor 主备部署实战：从安装到 HTTPS 与主备复制</title>
@@ -19,6 +19,13 @@
       <pubDate>Tue, 04 Aug 2026 00:00:00 +0000</pubDate>
       <guid>https://LMDAWN1127.github.io/posts/harbor-master-slave/</guid>
       <description>完整记录 Harbor 企业级镜像仓库的主备部署过程，涵盖 HTTP/HTTPS 双模式安装、自签名证书配置、跨主机主备复制等核心运维技能。</description>
+    </item>
+    <item>
+      <title>Docker 实战：从 chroot 手搓最小容器根，理解容器本质</title>
+      <link>https://LMDAWN1127.github.io/posts/docker-chroot-minimal-root/</link>
+      <pubDate>Mon, 26 Oct 2026 19:50:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/posts/docker-chroot-minimal-root/</guid>
+      <description>不用 Docker 命令，用 chroot 从零手搓最小容器根（拷贝 bash 与动态库依赖），直观理解文件系统隔离的容器本质；并演示双根目录隔离与 chroot 进真实容器 overlay2 文件系统。</description>
     </item>
     <item>
       <title>Docker 实战：WordPress 跨节点部署与持久化验证</title>
