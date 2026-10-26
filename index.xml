@@ -21,11 +21,11 @@
       <description>完整记录 Harbor 企业级镜像仓库的主备部署过程，涵盖 HTTP/HTTPS 双模式安装、自签名证书配置、跨主机主备复制等核心运维技能。</description>
     </item>
     <item>
-      <title>Docker 实战：容器数据持久化——bind 挂载与存储卷（Volume）详解</title>
+      <title>Docker 实战：容器数据持久化——bind 挂载与存储卷（Volume）</title>
       <link>https://LMDAWN1127.github.io/posts/docker-bind-mount-volume/</link>
       <pubDate>Mon, 26 Oct 2026 15:00:00 +0800</pubDate>
       <guid>https://LMDAWN1127.github.io/posts/docker-bind-mount-volume/</guid>
-      <description>&lt;h1 id=&#34;docker-实战容器数据持久化bind-挂载与存储卷volume详解&#34;&gt;Docker 实战：容器数据持久化——bind 挂载与存储卷（Volume）详解&lt;/h1&gt;
+      <description>&lt;h1 id=&#34;docker-实战容器数据持久化bind-挂载与存储卷volume&#34;&gt;Docker 实战：容器数据持久化——bind 挂载与存储卷（Volume）&lt;/h1&gt;
 &lt;h2 id=&#34;将宿主机的路径挂载到容器的指定路径&#34;&gt;将宿主机的路径挂载到容器的指定路径&lt;/h2&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;
 &lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
