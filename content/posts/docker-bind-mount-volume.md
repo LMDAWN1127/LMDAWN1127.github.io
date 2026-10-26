@@ -1,5 +1,5 @@
 ---
-title: "Docker 实战：容器数据持久化——bind 挂载与存储卷（Volume）详解"
+title: "Docker 实战：容器数据持久化——bind 挂载与存储卷（Volume）"
 date: 2026-10-26T15:00:00+08:00
 slug: docker-bind-mount-volume
 tags: ["Docker"]
@@ -7,7 +7,7 @@ categories: ["Docker"]
 draft: false
 ---
 
-# Docker 实战：容器数据持久化——bind 挂载与存储卷（Volume）详解
+# Docker 实战：容器数据持久化——bind 挂载与存储卷（Volume）
 
 ## 将宿主机的路径挂载到容器的指定路径
 
