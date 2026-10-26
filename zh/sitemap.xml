@@ -27,8 +27,38 @@
                 href="https://LMDAWN1127.github.io/ja/posts/harbor-master-slave/"
                 />
   </url><url>
+    <loc>https://LMDAWN1127.github.io/categories/</loc>
+    <lastmod>2026-10-26T11:50:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://LMDAWN1127.github.io/categories/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://LMDAWN1127.github.io/en/categories/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="ko"
+                href="https://LMDAWN1127.github.io/ko/categories/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="ja"
+                href="https://LMDAWN1127.github.io/ja/categories/"
+                />
+  </url><url>
+    <loc>https://LMDAWN1127.github.io/categories/docker/</loc>
+    <lastmod>2026-10-26T11:50:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url><url>
     <loc>https://LMDAWN1127.github.io/tags/docker/</loc>
-    <lastmod>2026-10-23T17:28:00+08:00</lastmod>
+    <lastmod>2026-10-26T11:50:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
@@ -52,13 +82,13 @@
                 href="https://LMDAWN1127.github.io/ja/tags/docker/"
                 />
   </url><url>
-    <loc>https://LMDAWN1127.github.io/posts/docker-app-deployments/</loc>
-    <lastmod>2026-10-23T17:28:00+08:00</lastmod>
+    <loc>https://LMDAWN1127.github.io/posts/docker-nginx-load-balancing/</loc>
+    <lastmod>2026-10-26T11:50:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url><url>
     <loc>https://LMDAWN1127.github.io/posts/</loc>
-    <lastmod>2026-10-23T17:28:00+08:00</lastmod>
+    <lastmod>2026-10-26T11:50:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
@@ -83,7 +113,7 @@
                 />
   </url><url>
     <loc>https://LMDAWN1127.github.io/tags/</loc>
-    <lastmod>2026-10-23T17:28:00+08:00</lastmod>
+    <lastmod>2026-10-26T11:50:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
@@ -106,6 +136,11 @@
                 hreflang="ja"
                 href="https://LMDAWN1127.github.io/ja/tags/"
                 />
+  </url><url>
+    <loc>https://LMDAWN1127.github.io/posts/docker-app-deployments/</loc>
+    <lastmod>2026-10-23T17:28:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
   </url><url>
     <loc>https://LMDAWN1127.github.io/posts/docker-env-var-passing/</loc>
     <lastmod>2026-10-23T17:26:00+08:00</lastmod>
@@ -136,31 +171,6 @@
     <lastmod>2026-10-23T12:30:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
-  </url><url>
-    <loc>https://LMDAWN1127.github.io/categories/</loc>
-    <lastmod>2026-10-22T17:55:00+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-    <xhtml:link
-                rel="alternate"
-                hreflang="zh-cn"
-                href="https://LMDAWN1127.github.io/categories/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="https://LMDAWN1127.github.io/en/categories/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="ko"
-                href="https://LMDAWN1127.github.io/ko/categories/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="ja"
-                href="https://LMDAWN1127.github.io/ja/categories/"
-                />
   </url><url>
     <loc>https://LMDAWN1127.github.io/categories/devops/</loc>
     <lastmod>2026-10-22T17:55:00+08:00</lastmod>
