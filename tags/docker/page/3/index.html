@@ -163,6 +163,30 @@
 <article class="post-entry tag-entry"> 
   <header class="entry-header">
     <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/posts/docker-image-migration-tag/">Docker 镜像迁移实战：save/load 离线传输与打标签</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>Docker 镜像迁移实战：save/load 离线传输与打标签 docker的镜像本地迁移及打标签 导出镜像（docker02） 1 2 3 4 5 6 # docker save两种写法等价：-o 文件名 与 &gt; 重定向 root@docker02:~# docker save -o /tmp/nginx-1304.tar uhub.service.ucloud.cn/dawn/nginx:1.30.4 root@docker02:~# ls -lh /tmp/nginx-1304.tar -rw------- 1 root root 158M Oct 23 06:20 nginx-1304.tar root@docker02:~# md5sum /tmp/nginx-1304.tar 43e327d0a216069d3931a2c498fe2e3f nginx-1304.tar 本地迁移（docker02 → docker01） 先配置 SSH 密钥互信
+1 2 root@docker02:~# ssh-keygen root@docker02:~# ssh-copy-id 11.0.1.121 docker02 上 scp 迁移
+...</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-23">
+  2026年10月23日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 2 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to Docker 镜像迁移实战：save/load 离线传输与打标签" href="https://LMDAWN1127.github.io/posts/docker-image-migration-tag/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
       <a href="https://LMDAWN1127.github.io/posts/docker-port-mapping-principle/">Docker 端口映射原理：从 veth 网卡到 iptables DNAT</a>
     </h2>
   </header>
@@ -255,28 +279,6 @@ https://docs.docker.com/engine/install/ubuntu/
 </span>
 </footer>
   <a class="entry-link" aria-label="post link to Docker 安装实战：二进制部署与一键脚本部署" href="https://LMDAWN1127.github.io/posts/docker-binary-script-install/"></a>
-</article>
-
-<article class="post-entry tag-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/posts/dockerfile-smaller-image/">Dockerfile 构建镜像太大？10 个技巧让镜像瘦身 90%</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>Docker 镜像太大导致部署慢、存储成本高？本文分享 10 个经过验证的优化技巧，帮你把镜像缩小 90% 以上。</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-07-30">
-  2026年7月30日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 3 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to Dockerfile 构建镜像太大？10 个技巧让镜像瘦身 90%" href="https://LMDAWN1127.github.io/posts/dockerfile-smaller-image/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">
