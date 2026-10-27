@@ -2,14 +2,17 @@
 {{- .Inner | htmlEscape | safeHTML -}}
 </div>
 <script>
-/* 渲染钩子自带加载：每个页面只注入一次 mermaid（多个图也只加载一次） */
+/* 渲染钩子自带加载：每页只注入一次 mermaid；主源国内可达优先，失败自动回落备用源 */
 (function () {
   if (window.__mermaidInjected) { return; }
   window.__mermaidInjected = true;
-  var s = document.createElement('script');
-  s.src = 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js';
-  s.async = true;
-  s.onload = function () {
+
+  var SOURCES = [
+    'https://cdn.staticfile.org/mermaid/10.9.1/mermaid.min.js',
+    'https://unpkg.com/mermaid@10/dist/mermaid.min.js'
+  ];
+
+  function init() {
     try {
       window.mermaid.initialize({
         startOnLoad: true,
@@ -17,7 +20,17 @@
         theme: 'default'
       });
     } catch (e) { console.error('mermaid init failed:', e); }
-  };
-  document.head.appendChild(s);
+  }
+
+  function load(i) {
+    if (i >= SOURCES.length) { console.error('mermaid: all CDN sources failed'); return; }
+    var s = document.createElement('script');
+    s.src = SOURCES[i];
+    s.async = true;
+    s.onload = init;
+    s.onerror = function () { load(i + 1); };
+    document.head.appendChild(s);
+  }
+  load(0);
 })();
 </script>
