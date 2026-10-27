@@ -1,0 +1,23 @@
+<div class="mermaid" role="img" aria-label="拓扑图">
+{{- .Inner | htmlEscape | safeHTML -}}
+</div>
+<script>
+/* 渲染钩子自带加载：每个页面只注入一次 mermaid（多个图也只加载一次） */
+(function () {
+  if (window.__mermaidInjected) { return; }
+  window.__mermaidInjected = true;
+  var s = document.createElement('script');
+  s.src = 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js';
+  s.async = true;
+  s.onload = function () {
+    try {
+      window.mermaid.initialize({
+        startOnLoad: true,
+        securityLevel: 'loose',
+        theme: 'default'
+      });
+    } catch (e) { console.error('mermaid init failed:', e); }
+  };
+  document.head.appendChild(s);
+})();
+</script>

@@ -16,21 +16,22 @@ summary: "通过 xixi 与 haha 两个自定义 Bridge 网络，演示 Docker 默
 
 ## 实验拓扑
 
-```text
-实验拓扑（文本示意）
+```mermaid
+graph TD
+    subgraph Network_xixi["网络: xixi (172.21.0.0/16)"]
+        GW1["网关: 172.21.0.254"]
+        C1_eth0["c1: eth0 (172.21.100.0)"]
+    end
 
-  网络 xixi  (172.21.0.0/16, 网关 172.21.0.254)
-   └── c1.eth0 = 172.21.100.0
+    subgraph Network_haha["网络: haha (172.22.0.0/16)"]
+        GW2["网关: 172.22.0.254"]
+        C2_eth0["c2: eth0 (172.22.100.0)"]
+        C1_eth1["c1: eth1 (172.22.100.1)<br><i>(动态加入后分配)</i>"]
+    end
 
-  网络 haha  (172.22.0.0/16, 网关 172.22.0.254)
-   └── c2.eth0 = 172.22.100.0
-
-  初始状态：c1 与 c2 分属不同 Bridge 网络 -> 默认隔离(iptables)，无法互通
-  操作    ：docker network connect haha c1
-  结果    ：c1 新增 eth1 = 172.22.100.1 -> 跨网络互通 OK
-  回退    ：docker network disconnect haha c1 -> c1 移除 eth1，恢复隔离
+    C1_eth0 -. "初始状态无法通信" .-x C2_eth0
+    C1_eth1 == "连接 haha 网络后互通" ==> C2_eth0
 ```
-
 
 ---
 
