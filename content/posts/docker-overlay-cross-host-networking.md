@@ -1,14 +1,14 @@
 ---
-title: "Docker 实战：Overlay 实现容器跨主机网络互联"
+title: "Docker 实战：Overlay 实现容器跨主机网络互联与 WordPress 实战"
 date: 2026-10-27T18:30:00+08:00
 draft: false
 categories: ["DevOps"]
 tags: ["Docker"]
 showToc: true
-summary: "在两台 Docker 主机上初始化 Swarm 集群，创建 attachable overlay 网络 dawn-overlay，演示容器跨主机通过 IP 与容器名通信，并验证外网经 docker_gwbridge 出口、最终通过 VXLAN（UDP 4789）抓包观察 overlay 数据封装过程。"
+summary: "在两台 Docker 主机上初始化 Swarm 集群，创建 attachable overlay 网络 dawn-overlay，演示容器跨主机通过 IP 与容器名通信，验证外网经 docker_gwbridge 出口，通过 VXLAN（UDP 4789）抓包观察数据封装，最后以 WordPress 跨主机部署实战收尾。"
 ---
 
-# Docker 实战：Overlay 实现容器跨主机网络互联
+# Docker 实战：Overlay 实现容器跨主机网络互联与 WordPress 实战与 WordPress 实战
 
 ## 1. 实验目标
 
@@ -387,7 +387,58 @@ IP 172.30.0.1 > 172.30.0.3: ICMP echo reply
 
 跨主机容器是把容器原始报文封装进 VXLAN，再通过两台宿主机的 `ens33` 网络传输。
 
-## 11. 实验环境清理
+## 11. 实战案例：用 overlay 部署 WordPress
+
+用自定义 overlay 网络部署 wordpress，网段 `172.23.0.0/16`。
+
+### 11.1 创建网络
+
+```bash
+# docker01
+docker network create -d overlay --attachable \
+  --subnet 172.23.0.0/16 --gateway 172.23.0.254 wp-overlay
+```
+
+### 11.2 在 docker02 部署 MySQL
+
+```bash
+# docker02
+docker run -d --name wp-db --network wp-overlay --restart unless-stopped \
+  -e MYSQL_DATABASE=wordpress \
+  -e MYSQL_USER=wordpress \
+  -e MYSQL_PASSWORD=123456 \
+  -e MYSQL_ROOT_PASSWORD=123456 \
+  -v wp-db-data:/var/lib/mysql \
+  mysql:8.4.1-oracle
+```
+
+### 11.3 在 docker01 部署 WordPress
+
+```bash
+# docker01
+docker run -d --name wp-web --network wp-overlay --restart unless-stopped \
+  -p 8080:80 \
+  -e WORDPRESS_DB_HOST=wp-db:3306 \
+  -e WORDPRESS_DB_NAME=wordpress \
+  -e WORDPRESS_DB_USER=wordpress \
+  -e WORDPRESS_DB_PASSWORD=123456 \
+  uhub.service.ucloud.cn/dawn/wordpress:6.8
+```
+
+`WORDPRESS_DB_HOST=wp-db:3306` 直接使用容器名。两个容器虽在不同宿主机，但同处 `wp-overlay` 网络，Docker 内置 DNS 会将 `wp-db` 解析为 docker02 上的 MySQL 容器 IP，实现跨主机数据库访问。
+
+验证跨主机 DNS 解析：
+
+```bash
+docker exec wp-web getent hosts wp-db
+172.23.0.1  wp-db
+```
+
+### 11.4 验证安装页
+
+![image-20261027210610539](/images/docker-overlay-cross-host-networking-image-20261027210610539.png)
+
+## 12. 实验环境清理
 
 删除容器：
 
