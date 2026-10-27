@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>VLAN on DAWN&#39;s Blog</title>
+    <link>https://LMDAWN1127.github.io/tags/vlan/</link>
+    <description>Recent content in VLAN on DAWN&#39;s Blog</description>
+    <image>
+      <title>DAWN&#39;s Blog</title>
+      <url>https://LMDAWN1127.github.io/images/DAWN.jpg</url>
+      <link>https://LMDAWN1127.github.io/images/DAWN.jpg</link>
+    </image>
+    <generator>Hugo</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Wed, 07 Oct 2026 19:45:00 +0800</lastBuildDate>
+    <atom:link href="https://LMDAWN1127.github.io/tags/vlan/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>OpenStack Neutron 网络类型设计与实现：flat、VLAN 与 VXLAN</title>
+      <link>https://LMDAWN1127.github.io/posts/openstack-neutron-flat-vlan-vxlan/</link>
+      <pubDate>Wed, 07 Oct 2026 19:45:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/posts/openstack-neutron-flat-vlan-vxlan/</guid>
+      <description>从 flat 到 VLAN 再到 VXLAN，逐步拆解 Neutron 三种网络类型的 ML2 与 OVS 配置、外部网络与路由器打通方式、OVS 流表转发分析，以及云主机通过 169.254.169.254 获取 metadata 的完整链路。</description>
+    </item>
+  </channel>
+</rss>

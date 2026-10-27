@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>멀티버전 배포 on DAWN&#39;s Blog</title>
+    <link>https://LMDAWN1127.github.io/ko/tags/%EB%A9%80%ED%8B%B0%EB%B2%84%EC%A0%84-%EB%B0%B0%ED%8F%AC/</link>
+    <description>Recent content in 멀티버전 배포 on DAWN&#39;s Blog</description>
+    <image>
+      <title>DAWN&#39;s Blog</title>
+      <url>https://LMDAWN1127.github.io/images/DAWN.jpg</url>
+      <link>https://LMDAWN1127.github.io/images/DAWN.jpg</link>
+    </image>
+    <generator>Hugo</generator>
+    <language>ko</language>
+    <lastBuildDate>Sat, 03 Oct 2026 17:11:00 +0800</lastBuildDate>
+    <atom:link href="https://LMDAWN1127.github.io/ko/tags/%EB%A9%80%ED%8B%B0%EB%B2%84%EC%A0%84-%EB%B0%B0%ED%8F%AC/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>systemd 서비스 관리와 MySQL 멀티버전 배포</title>
+      <link>https://LMDAWN1127.github.io/ko/posts/systemd-mysql-multiversion/</link>
+      <pubDate>Sat, 03 Oct 2026 17:11:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/ko/posts/systemd-mysql-multiversion/</guid>
+      <description>systemd Unit 관리와 MySQL 5.6/5.7 멀티버전·다중 인스턴스 배포 실전: 두 가지 운영 데몬 구성, 아카이브 다운로드, 초기화, 인스턴스별 설정 파일 작성, 그리고 시작/중지 및 3개 서비스 상태 검증.</description>
+    </item>
+  </channel>
+</rss>

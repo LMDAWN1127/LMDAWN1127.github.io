@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>SonarQube on DAWN&#39;s Blog</title>
+    <link>https://LMDAWN1127.github.io/ja/tags/sonarqube/</link>
+    <description>Recent content in SonarQube on DAWN&#39;s Blog</description>
+    <image>
+      <title>DAWN&#39;s Blog</title>
+      <url>https://LMDAWN1127.github.io/images/DAWN.jpg</url>
+      <link>https://LMDAWN1127.github.io/images/DAWN.jpg</link>
+    </image>
+    <generator>Hugo</generator>
+    <language>ja</language>
+    <lastBuildDate>Fri, 02 Oct 2026 14:12:00 +0800</lastBuildDate>
+    <atom:link href="https://LMDAWN1127.github.io/ja/tags/sonarqube/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>SonarQube 実践：プライベート導入・トークン設定・コード品質スキャン</title>
+      <link>https://LMDAWN1127.github.io/ja/posts/sonarqube-practice/</link>
+      <pubDate>Fri, 02 Oct 2026 14:12:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/ja/posts/sonarqube-practice/</guid>
+      <description>SonarQube を自前で導入する実践手順：JDK8/MySQL5.6 の導入、プラグイン込みの展開、非 root ユーザーでの起動、Web トークン設定、sonar-scanner クライアントによるコードスキャン。</description>
+    </item>
+  </channel>
+</rss>

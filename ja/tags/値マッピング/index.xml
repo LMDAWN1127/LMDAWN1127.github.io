@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>値マッピング on DAWN&#39;s Blog</title>
+    <link>https://LMDAWN1127.github.io/ja/tags/%E5%80%A4%E3%83%9E%E3%83%83%E3%83%94%E3%83%B3%E3%82%B0/</link>
+    <description>Recent content in 値マッピング on DAWN&#39;s Blog</description>
+    <image>
+      <title>DAWN&#39;s Blog</title>
+      <url>https://LMDAWN1127.github.io/images/DAWN.jpg</url>
+      <link>https://LMDAWN1127.github.io/images/DAWN.jpg</link>
+    </image>
+    <generator>Hugo</generator>
+    <language>ja</language>
+    <lastBuildDate>Wed, 23 Sep 2026 18:30:00 +0800</lastBuildDate>
+    <atom:link href="https://LMDAWN1127.github.io/ja/tags/%E5%80%A4%E3%83%9E%E3%83%83%E3%83%94%E3%83%B3%E3%82%B0/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Zabbix カスタム監視</title>
+      <link>https://LMDAWN1127.github.io/ja/posts/zabbix-custom-monitor/</link>
+      <pubDate>Wed, 23 Sep 2026 18:30:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/ja/posts/zabbix-custom-monitor/</guid>
+      <description>Zabbix カスタム監視の実践 — UserParameter でログインユーザー数やメモリ空き率などの独自メトリクスを収集し、zabbix_get で検証、Web UI で監視項目・値マッピング・トリガー（複数条件トリガー含む）を追加してカスタムアラートを実現します。</description>
+    </item>
+  </channel>
+</rss>

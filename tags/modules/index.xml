@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Modules on DAWN&#39;s Blog</title>
+    <link>https://LMDAWN1127.github.io/tags/modules/</link>
+    <description>Recent content in Modules on DAWN&#39;s Blog</description>
+    <image>
+      <title>DAWN&#39;s Blog</title>
+      <url>https://LMDAWN1127.github.io/images/DAWN.jpg</url>
+      <link>https://LMDAWN1127.github.io/images/DAWN.jpg</link>
+    </image>
+    <generator>Hugo</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sun, 18 Oct 2026 22:00:00 +0800</lastBuildDate>
+    <atom:link href="https://LMDAWN1127.github.io/tags/modules/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Filebeat 模块（modules）使用实战：启用与 nginx 日志采集</title>
+      <link>https://LMDAWN1127.github.io/posts/filebeat-modules/</link>
+      <pubDate>Sun, 18 Oct 2026 22:00:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/posts/filebeat-modules/</guid>
+      <description>围绕 Filebeat 官方 modules 模块展开实战：先介绍模块概念，演示还原 Nginx 访问日志格式并热加载生效；再通过 filebeat modules enable/disable/list 启用 nginx、tomcat 模块（本质是 modules.d 下 *.yml.disabled 重命名为 *.yml）；最后用 nginx 模块采集访问/错误日志写入 Elasticsearch（索引 dawn-log-modules-nginx，模板名 dawn-modules），并在 Kibana 查看数据。</description>
+    </item>
+  </channel>
+</rss>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Jenkinsfile on DAWN&#39;s Blog</title>
+    <link>https://LMDAWN1127.github.io/tags/jenkinsfile/</link>
+    <description>Recent content in Jenkinsfile on DAWN&#39;s Blog</description>
+    <image>
+      <title>DAWN&#39;s Blog</title>
+      <url>https://LMDAWN1127.github.io/images/DAWN.jpg</url>
+      <link>https://LMDAWN1127.github.io/images/DAWN.jpg</link>
+    </image>
+    <generator>Hugo</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Fri, 09 Oct 2026 19:00:00 +0800</lastBuildDate>
+    <atom:link href="https://LMDAWN1127.github.io/tags/jenkinsfile/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Jenkins Pipeline 流水线</title>
+      <link>https://LMDAWN1127.github.io/posts/jenkins-pipeline/</link>
+      <pubDate>Fri, 09 Oct 2026 19:00:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/posts/jenkins-pipeline/</guid>
+      <description>从 CI/CD 与 Pipeline as Code 概念讲起，拆解 Node/Stage/Step，并用一份 Jenkinsfile 把「拉取代码 → SonarQube 扫描 → 打包 → 部署」的发布流程落地为可维护的流水线。</description>
+    </item>
+  </channel>
+</rss>

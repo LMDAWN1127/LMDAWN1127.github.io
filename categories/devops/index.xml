@@ -1,1 +1,346 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>DevOps on DAWN's Blog</title><link>https://LMDAWN1127.github.io/categories/devops/</link><description>Recent content in DevOps on DAWN's Blog</description><image><title>DAWN's Blog</title><url>https://LMDAWN1127.github.io/images/DAWN.jpg</url><link>https://LMDAWN1127.github.io/images/DAWN.jpg</link></image><generator>Hugo</generator><language>zh-cn</language><lastBuildDate>Tue, 04 Aug 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://LMDAWN1127.github.io/categories/devops/index.xml" rel="self" type="application/rss+xml"/><item><title>Harbor 主备部署实战：从安装到 HTTPS 与主备复制</title><link>https://LMDAWN1127.github.io/posts/harbor-master-slave/</link><pubDate>Tue, 04 Aug 2026 00:00:00 +0000</pubDate><guid>https://LMDAWN1127.github.io/posts/harbor-master-slave/</guid><description>完整记录 Harbor 企业级镜像仓库的主备部署过程，涵盖 HTTP/HTTPS 双模式安装、自签名证书配置、跨主机主备复制等核心运维技能。</description></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>DevOps on DAWN&#39;s Blog</title>
+    <link>https://LMDAWN1127.github.io/categories/devops/</link>
+    <description>Recent content in DevOps on DAWN&#39;s Blog</description>
+    <image>
+      <title>DAWN&#39;s Blog</title>
+      <url>https://LMDAWN1127.github.io/images/DAWN.jpg</url>
+      <link>https://LMDAWN1127.github.io/images/DAWN.jpg</link>
+    </image>
+    <generator>Hugo</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Tue, 27 Oct 2026 12:19:00 +0800</lastBuildDate>
+    <atom:link href="https://LMDAWN1127.github.io/categories/devops/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Harbor 主备部署实战：从安装到 HTTPS 与主备复制</title>
+      <link>https://LMDAWN1127.github.io/posts/harbor-master-slave/</link>
+      <pubDate>Tue, 04 Aug 2026 00:00:00 +0000</pubDate>
+      <guid>https://LMDAWN1127.github.io/posts/harbor-master-slave/</guid>
+      <description>完整记录 Harbor 企业级镜像仓库的主备部署过程，涵盖 HTTP/HTTPS 双模式安装、自签名证书配置、跨主机主备复制等核心运维技能。</description>
+    </item>
+    <item>
+      <title>Docker 实战：Docker 部署 Zabbix 监控与 WordPress 应用</title>
+      <link>https://LMDAWN1127.github.io/posts/docker-zabbix-wordpress-deployment/</link>
+      <pubDate>Tue, 27 Oct 2026 12:19:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/posts/docker-zabbix-wordpress-deployment/</guid>
+      <description>Docker 实战：基于自定义网络，用 docker run 单机部署 Zabbix 监控（MySQL + Java gateway + Server + Web）与 WordPress 应用，含端口映射与持久化卷。</description>
+    </item>
+    <item>
+      <title>Docker 实战：单机网络类型与容器间通信方案详解</title>
+      <link>https://LMDAWN1127.github.io/posts/docker-single-host-network/</link>
+      <pubDate>Tue, 27 Oct 2026 09:50:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/posts/docker-single-host-network/</guid>
+      <description>Docker 单机网络：none/bridge/host/container/custom 五种类型与案例，以及容器间通信三方案——/etc/hosts 解析、&amp;ndash;link 关联、自定义网络（含创建/inspect/prune/自定义子网与手动 IP）。</description>
+    </item>
+    <item>
+      <title>Docker 实战：基于多 Bridge 网络的容器隔离与跨网络通信</title>
+      <link>https://LMDAWN1127.github.io/posts/docker-multi-bridge-network-isolation/</link>
+      <pubDate>Tue, 27 Oct 2026 08:00:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/posts/docker-multi-bridge-network-isolation/</guid>
+      <description>通过 xixi 与 haha 两个自定义 Bridge 网络，演示 Docker 默认网络隔离机制，以及 docker network connect/disconnect 在运行时动态加入/退出网络、实现跨网络容器互通的轻量组网手段。</description>
+    </item>
+    <item>
+      <title>Docker 实战：OverlayFS 联合挂载与存储驱动解析</title>
+      <link>https://LMDAWN1127.github.io/posts/docker-overlayfs-storage-driver/</link>
+      <pubDate>Mon, 26 Oct 2026 21:00:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/posts/docker-overlayfs-storage-driver/</guid>
+      <description>Docker 存储驱动 OverlayFS 原理：lower/upper/work 与 LowerDir/Upperdir/MergedDir 三层（含 init 层）、写时复制到读写层；并手动 mount -t overlay 演示分层与只读，最后用 docker run 印证容器底层即 overlay2。</description>
+    </item>
+    <item>
+      <title>Docker 实战：从 chroot 手搓最小容器根，理解容器本质</title>
+      <link>https://LMDAWN1127.github.io/posts/docker-chroot-minimal-root/</link>
+      <pubDate>Mon, 26 Oct 2026 19:50:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/posts/docker-chroot-minimal-root/</guid>
+      <description>不用 Docker 命令，用 chroot 从零手搓最小容器根（拷贝 bash 与动态库依赖），直观理解文件系统隔离的容器本质；并演示双根目录隔离与 chroot 进真实容器 overlay2 文件系统。</description>
+    </item>
+    <item>
+      <title>Docker 实战：WordPress 跨节点部署与持久化验证</title>
+      <link>https://LMDAWN1127.github.io/posts/docker-wordpress-multinode/</link>
+      <pubDate>Mon, 26 Oct 2026 16:30:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/posts/docker-wordpress-multinode/</guid>
+      <description>Docker 实战：将 WordPress 与 MySQL 跨两个节点部署（数据库与 Web 分离），使用命名卷持久化数据，验证删除并重建容器后已发表的博客不丢失。</description>
+    </item>
+    <item>
+      <title>ELFK 实战：Filebeat 经 Kafka 到 Logstash 再到 ES 的数据管道</title>
+      <link>https://LMDAWN1127.github.io/posts/elfk-kafka-pipeline/</link>
+      <pubDate>Thu, 22 Oct 2026 17:55:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/posts/elfk-kafka-pipeline/</guid>
+      <description>打通 ELFK 与 Kafka 的数据管道：Filebeat tcp 输入经 output.kafka 写入集群，Logstash 以 kafka input + json filter 消费并按天写入 ES 索引，Kibana 端到端验证。</description>
+    </item>
+    <item>
+      <title>Kafka 生产者与消费者实战：消息收发、offset 与消费者组</title>
+      <link>https://LMDAWN1127.github.io/posts/kafka-producer-consumer/</link>
+      <pubDate>Thu, 22 Oct 2026 17:10:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/posts/kafka-producer-consumer/</guid>
+      <description>Kafka console 生产者与消费者实操：从最新/从头两种消费位置对比、__consumer_offsets 原理，以及消费者组配置、offset 与 LAG 查看、多消费者分区分配观察。</description>
+    </item>
+    <item>
+      <title>Kafka 故障排查实战：集群起不来的五步排查法</title>
+      <link>https://LMDAWN1127.github.io/posts/kafka-cluster-troubleshooting/</link>
+      <pubDate>Thu, 22 Oct 2026 15:50:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/posts/kafka-cluster-troubleshooting/</guid>
+      <description>Kafka 集群启动故障五步排查：JDK 环境检查、ZooKeeper 集群状态确认、server.properties 配置核对、前台启动捕获报错，以及清理 ZK 元数据与 Kafka 数据后的重启重试。</description>
+    </item>
+    <item>
+      <title>Kafka topic 操作实战：增删改查与副本分区约束</title>
+      <link>https://LMDAWN1127.github.io/posts/kafka-topic-operations/</link>
+      <pubDate>Thu, 22 Oct 2026 14:45:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/posts/kafka-topic-operations/</guid>
+      <description>kafka-topics.sh 实战：topic 创建（副本因子不能超过存活 broker 数）、查看详情（Leader/Replicas/ISR 解读）、分区扩容（只能调大不能调小）与删除（延迟约一分钟清理数据）。</description>
+    </item>
+    <item>
+      <title>Kafka 实战：单点与集群部署及核心术语</title>
+      <link>https://LMDAWN1127.github.io/posts/kafka-deployment-terminology/</link>
+      <pubDate>Thu, 22 Oct 2026 14:20:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/posts/kafka-deployment-terminology/</guid>
+      <description>Kafka 3.7.1 实战：单点部署（对接已有 ZooKeeper 集群）、三节点集群搭建（broker.id 差异化配置与启动验证）、临时 znode 注册关系印证，以及 cluster/broker/producer/consumer/topic/partition/replica 核心术语梳理。</description>
+    </item>
+    <item>
+      <title>ZooKeeper 四字命令与 JVM 调优实战</title>
+      <link>https://LMDAWN1127.github.io/posts/zookeeper-four-letter-jvm-tuning/</link>
+      <pubDate>Thu, 22 Oct 2026 13:40:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/posts/zookeeper-four-letter-jvm-tuning/</guid>
+      <description>ZooKeeper 四字命令实战：srvr/ruok/conf 查看运行时状态与集群配置，以及 JVM 堆内存调优（ZK_SERVER_HEAP）全流程验证与生产容量建议。</description>
+    </item>
+    <item>
+      <title>ZooKeeper 图形化管理实战：zkWeb 部署与基本使用</title>
+      <link>https://LMDAWN1127.github.io/posts/zookeeper-gui-management/</link>
+      <pubDate>Thu, 22 Oct 2026 13:15:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/posts/zookeeper-gui-management/</guid>
+      <description>借助 zkWeb 图形化工具管理 ZooKeeper 集群：JDK 8 准备、jar 方式启动、连接集群配置，以及节点写入/增删、连接与集群状态查看。</description>
+    </item>
+    <item>
+      <title>ZooKeeper 节点操作实战：常用命令、znode 类型与 watch 机制</title>
+      <link>https://LMDAWN1127.github.io/posts/zookeeper-node-operations/</link>
+      <pubDate>Thu, 22 Oct 2026 12:00:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/posts/zookeeper-node-operations/</guid>
+      <description>ZooKeeper 客户端实战：ls/create/get/set/delete/deleteall 增删改查命令、持久/临时/顺序三种 znode 类型辨析（含 stat 字段解读），以及 watch 一次性事件机制。</description>
+    </item>
+    <item>
+      <title>ZooKeeper 集群搭建与高可用验证实战</title>
+      <link>https://LMDAWN1127.github.io/posts/zookeeper-cluster-ha/</link>
+      <pubDate>Thu, 22 Oct 2026 11:00:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/posts/zookeeper-cluster-ha/</guid>
+      <description>ZooKeeper 三节点集群实战：集群规模选择依据、13+1 步搭建流程（zoo.cfg/myid/systemd/免密登录），以及停 leader、停 follower 的故障演练，解读过半存活（quorum）机制。</description>
+    </item>
+    <item>
+      <title>ES 集群健康状态查看实战：_cluster/health 全参数解析</title>
+      <link>https://LMDAWN1127.github.io/posts/es-cluster-health/</link>
+      <pubDate>Wed, 21 Oct 2026 19:45:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/posts/es-cluster-health/</guid>
+      <description>通过 _cluster/health API 查看 ES 集群健康状态：curl + jq 的两种查询姿势（整包 JSON 与单字段提取），以及 status/timed_out/active_shards 等全部返回参数的逐项解读。</description>
+    </item>
+    <item>
+      <title>Kibana RBAC 实战：角色创建、用户授权与空间隔离</title>
+      <link>https://LMDAWN1127.github.io/posts/kibana-rbac/</link>
+      <pubDate>Wed, 21 Oct 2026 19:30:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/posts/kibana-rbac/</guid>
+      <description>Kibana RBAC 实操：内置五大系统用户、创建 dawn_log_reader 只读角色（cluster/indices/applications 三段权限）、创建 elk_viewer 用户并五项登录验证（空间隔离、索引授权边界、只读界面、禁 Dev Tools、禁建索引模式），以及 Kibana 空间管理。</description>
+    </item>
+    <item>
+      <title>ES 集群加密认证实战：TLS 证书、密码登录与客户端接入</title>
+      <link>https://LMDAWN1127.github.io/posts/es-cluster-encryption-auth/</link>
+      <pubDate>Wed, 21 Oct 2026 14:30:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/posts/es-cluster-encryption-auth/</guid>
+      <description>ES 集群安全实战：生成 TLS 证书并同步各节点、修改 elasticsearch.yml 启用传输加密与认证、Kibana 登录认证与 elastic 密码修改，以及 postman/es-head/filebeat/logstash 四类客户端如何访问加密集群。</description>
+    </item>
+    <item>
+      <title>Logstash 进阶实战：多分支语句、多实例与 pipeline 语法</title>
+      <link>https://LMDAWN1127.github.io/posts/logstash-multi-branch-instance-pipeline/</link>
+      <pubDate>Wed, 21 Oct 2026 13:00:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/posts/logstash-multi-branch-instance-pipeline/</guid>
+      <description>Logstash 进阶第二篇：if 多分支语句（file/beats/tcp 三种输入分别走 grok+geoip+useragent）、多实例部署（多进程各加载一个配置）与 pipelines.yml 多 pipeline 语法，以及三者的关系与 sincedb 注意事项。</description>
+    </item>
+    <item>
+      <title>Logstash 进阶实战：sincedb 重新采集、date 时间处理与自定义索引</title>
+      <link>https://LMDAWN1127.github.io/posts/logstash-sincedb-date-index/</link>
+      <pubDate>Tue, 20 Oct 2026 19:00:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/posts/logstash-sincedb-date-index/</guid>
+      <description>记录 Logstash 四段进阶实践：file 输入 sincedb 的 offset 机制与旧数据重新采集、date 插件处理日志时间、ES 自定义索引名，以及 grok 自定义正则配合 geoip/useragent/translate 等 filter 的完整案例。</description>
+    </item>
+    <item>
+      <title>ELFK 架构分析 Nginx 访问日志实战：Filebeat &#43; Logstash &#43; Kibana 全流程</title>
+      <link>https://LMDAWN1127.github.io/posts/elfk-nginx-access-log/</link>
+      <pubDate>Tue, 20 Oct 2026 14:00:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/posts/elfk-nginx-access-log/</guid>
+      <description>完整演示基于 ELFK 架构分析 Nginx 访问日志的全流程：Logstash 编写 05-beats-filter-es.conf（beats 输入 9999、grok 用 HTTPD_COMBINEDLOG 解析 combined 格式、geoip 指定本地 GeoLite2-City.mmdb、ruby 将经纬度拼成 dawn-geo 的 [lon,lat] 数组、useragent 解析 dawn-device、rename 规避字段冲突、date 对齐 @timestamp），输出到 Elasticsearch 的 dawn-logstash-nginx 索引；Filebeat 启用 nginx 模块并将数据推送至 Logstash；最后在 Kibana 建立索引模式，制作访客地理分布 Maps、设备类型/操作系统饼图、响应状态码柱状图，并整合进统一 Dashboard。</description>
+    </item>
+    <item>
+      <title>ElasticStack 实战：ES JVM 优化与 Logstash 环境搭建及日志处理</title>
+      <link>https://LMDAWN1127.github.io/posts/es-jvm-logstash/</link>
+      <pubDate>Mon, 19 Oct 2026 14:00:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/posts/es-jvm-logstash/</guid>
+      <description>围绕 ElasticStack 中 ES 与 Logstash 两个组件展开实战：一是 ES 的 JVM 基础环境优化，调整堆内存（-Xms/-Xmx，生产建议物理内存一半且不超 32GB），将 jvm.options 经 scp 分发至 11.0.1.112/113 并三节点重启生效；二是 Logstash 环境搭建，下载安装 logstash-7.17.22、加入 PATH、用 stdin-to-stdout 配置跑通管道；三是用 Logstash 处理自定义业务日志，编写 generate_log.py 造数，借助 mutate 过滤器（split 切分、add_field 加字段、convert 类型转换）将文本日志结构化后写入 Elasticsearch。</description>
+    </item>
+    <item>
+      <title>Filebeat 模块（modules）使用实战：启用与 nginx 日志采集</title>
+      <link>https://LMDAWN1127.github.io/posts/filebeat-modules/</link>
+      <pubDate>Sun, 18 Oct 2026 22:00:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/posts/filebeat-modules/</guid>
+      <description>围绕 Filebeat 官方 modules 模块展开实战：先介绍模块概念，演示还原 Nginx 访问日志格式并热加载生效；再通过 filebeat modules enable/disable/list 启用 nginx、tomcat 模块（本质是 modules.d 下 *.yml.disabled 重命名为 *.yml）；最后用 nginx 模块采集访问/错误日志写入 Elasticsearch（索引 dawn-log-modules-nginx，模板名 dawn-modules），并在 Kibana 查看数据。</description>
+    </item>
+    <item>
+      <title>Filebeat filestream 采集实战：ndjson 解析、multiline 多行匹配与综合案例</title>
+      <link>https://LMDAWN1127.github.io/posts/filebeat-filestream/</link>
+      <pubDate>Sun, 18 Oct 2026 18:00:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/posts/filebeat-filestream/</guid>
+      <description>围绕 Filebeat 新版 filestream 输入类型展开实战：一是用 ndjson parser 解析 JSON 格式日志并写入 Elasticsearch（索引 dawn-log-filestream-nginx）；二是用 multiline pattern 正则实现多行错误日志匹配（索引 dawn-log-filestream-tomcat-errorlog）；三是综合案例，组合 multiline count_lines 与 ndjson 解析一段多行 JSON 日志（索引 dawn-log-filestream-case-demo）。</description>
+    </item>
+    <item>
+      <title>Filebeat 采集 Tomcat 日志实战：自定义 JSON 访问日志与多行错误日志匹配</title>
+      <link>https://LMDAWN1127.github.io/posts/filebeat-tomcat-log-collection/</link>
+      <pubDate>Sat, 17 Oct 2026 23:00:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/posts/filebeat-tomcat-log-collection/</guid>
+      <description>围绕 EFK 采集 Tomcat 日志展开：部署 Tomcat 并自定义 JSON 格式访问日志（server.xml AccessLogValve），用 Filebeat 采集 JSON 访问日志写入 Elasticsearch（索引 dawn-log-tomcat，json.keys_under_root 关键配置），以及用 multiline 多行匹配采集 catalina.out 启动/错误日志（索引 dawn-log-tomcat-errorlog），最后在 Kibana 查看数据。</description>
+    </item>
+    <item>
+      <title>Filebeat 多 Input 写入不同 ES 索引与多实例部署实战</title>
+      <link>https://LMDAWN1127.github.io/posts/filebeat-multi-input-multi-instance/</link>
+      <pubDate>Sat, 17 Oct 2026 22:00:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/posts/filebeat-multi-input-multi-instance/</guid>
+      <description>实战演示 Filebeat 两个核心进阶用法：一是配置多个 input 按 tags 将事件分流写入不同 Elasticsearch 索引（dawn-log-zlm、dawn-log-lmy），含 multiline 多行合并与关闭 ILM、自定义 dawn-log* 模板；二是 Filebeat 多实例部署，通过 &amp;ndash;path.data 隔离数据目录实现同一主机并行运行多个采集进程。</description>
+    </item>
+    <item>
+      <title>Kibana 查询与 Dashboard 制作实战：PV、IP、带宽、状态码统计与可视化面板</title>
+      <link>https://LMDAWN1127.github.io/posts/kibana-query-dashboard/</link>
+      <pubDate>Sat, 17 Oct 2026 19:00:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/posts/kibana-query-dashboard/</guid>
+      <description>基于已采集进 Elasticsearch 的 Nginx 日志，手把手演示 Kibana 可视化：PV 统计、IP 统计、带宽统计、网站状态码统计、站点访问统计多维查询，以及如何将多个可视化拖拽组合成一张 Dashboard 面板并保存。</description>
+    </item>
+    <item>
+      <title>Filebeat 采集 Nginx 日志实战：自定义 JSON 日志格式、NFS 配置共享与七层 Web 集群</title>
+      <link>https://LMDAWN1127.github.io/posts/filebeat-nginx-log-collection/</link>
+      <pubDate>Fri, 16 Oct 2026 23:00:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/posts/filebeat-nginx-log-collection/</guid>
+      <description>围绕 ELK/EFK 日志采集实验展开：自定义 Nginx JSON 日志格式（dawn_nginx_json），基于 NFS 实现三节点 Filebeat 配置共享，EFK 架构采集 Nginx 日志至 Elasticsearch（索引 dawn-log-nginx），Filebeat 解析 JSON 格式日志（json.keys_under_root 关键配置），以及基于 Nginx 七层分流的 Web 集群部署与 Filebeat 日志采集实战。</description>
+    </item>
+    <item>
+      <title>Filebeat 部署与日志采集实战：安装、架构与 stdin/tcp/log 输入</title>
+      <link>https://LMDAWN1127.github.io/posts/filebeat-deployment/</link>
+      <pubDate>Thu, 15 Oct 2026 23:00:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/posts/filebeat-deployment/</guid>
+      <description>围绕 Filebeat 日志采集器展开：环境搭建（deb 下载安装）、架构组成，以及 stdin→ES、tcp→ES、log→ES 三类输入实战，并涵盖自定义索引名称、关闭 ILM、自定义分片/副本，以及采集 Ubuntu 系统日志写入 ES 集群的完整操作。</description>
+    </item>
+    <item>
+      <title>Elasticsearch 数据映射（ip/date/geo_point）</title>
+      <link>https://LMDAWN1127.github.io/posts/elasticsearch-data-mapping/</link>
+      <pubDate>Thu, 15 Oct 2026 22:00:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/posts/elasticsearch-data-mapping/</guid>
+      <description>围绕 Elasticsearch 字段映射（mapping）展开三个实战案例：ip 类型字段配合 CIDR 网段查询、date 类型字段按生日排序、geo_point 类型字段写入经纬度并经 Kibana Maps 在地图上可视化展示。</description>
+    </item>
+    <item>
+      <title>Kibana 环境搭建与配置：从 deb 安装到接入 Elasticsearch 集群</title>
+      <link>https://LMDAWN1127.github.io/posts/kibana-setup/</link>
+      <pubDate>Wed, 14 Oct 2026 22:00:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/posts/kibana-setup/</guid>
+      <description>记录 Kibana 7.17.22 的离线环境搭建全流程：通过 deb 包下载与 dpkg 安装，修改 kibana.yml 接入 Elasticsearch 集群（配置 server.port/host、elasticsearch.hosts、i18n.locale 中文），使用 systemctl 启动并验证 5601 端口监听，最后通过 WebUI 访问。</description>
+    </item>
+    <item>
+      <title>Elasticsearch 集群安全配置：action.destructive_requires_name 防误删保护</title>
+      <link>https://LMDAWN1127.github.io/posts/elasticsearch-destructive-requires-name/</link>
+      <pubDate>Wed, 14 Oct 2026 21:00:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/posts/elasticsearch-destructive-requires-name/</guid>
+      <description>围绕 Elasticsearch 集群级安全设置 action.destructive_requires_name 展开：该配置决定删除索引时是否必须指定明确名称（禁用通配符与 _all）。涵盖动态 API（_cluster/settings，persistent/transient）与静态 elasticsearch.yml 两种配置方式，以及如何验证通配符删除被拦截、明确名称删除成功。</description>
+    </item>
+    <item>
+      <title>Elasticsearch 文档 API 管理：单文档与批量操作</title>
+      <link>https://LMDAWN1127.github.io/posts/elasticsearch-document-api-management/</link>
+      <pubDate>Wed, 14 Oct 2026 20:00:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/posts/elasticsearch-document-api-management/</guid>
+      <description>围绕 Elasticsearch 文档的 REST API 展开：单文档的创建（指定/不指定 id）、查看（全量/指定/DSL 查询）、修改与删除，以及批量写入（_bulk）与批量读取（_mget）等常见文档级运维操作。</description>
+    </item>
+    <item>
+      <title>Elasticsearch 索引 API 管理</title>
+      <link>https://LMDAWN1127.github.io/posts/elasticsearch-index-api-management/</link>
+      <pubDate>Wed, 14 Oct 2026 18:00:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/posts/elasticsearch-index-api-management/</guid>
+      <description>围绕 Elasticsearch 索引的 REST API 管理展开：索引的创建、查看、自定义分片与副本数量，修改副本数量、删除指定/批量删除索引数据，索引开启与关闭，索引模板与组件模板的创建/查看/修改/删除，以及索引别名的增删改查与实际查询应用。</description>
+    </item>
+    <item>
+      <title>ElasticStack 架构设计与 Elasticsearch 集群部署</title>
+      <link>https://LMDAWN1127.github.io/posts/elastic-stack/</link>
+      <pubDate>Wed, 14 Oct 2026 15:00:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/posts/elastic-stack/</guid>
+      <description>从 ElasticStack 组件（Elasticsearch / Logstash / Kibana / Beats）入手，重点记录 Elasticsearch 单点部署与集群搭建：软件包下载、服务安装、elasticsearch.yml 关键配置（集群名、数据与日志路径、监听地址端口、单点/集群模式）、节点时区统一、配置分发与集群启动、端口与节点状态验证。</description>
+    </item>
+    <item>
+      <title>MySQL 数据库基础管理：用户·权限·连接与初始化配置</title>
+      <link>https://LMDAWN1127.github.io/posts/mysql-database-basic-management/</link>
+      <pubDate>Wed, 14 Oct 2026 10:00:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/posts/mysql-database-basic-management/</guid>
+      <description>围绕 MySQL 数据库服务的基础管理展开：用户的创建/查询/改密/删除/锁定，权限的授予与回收及 Role 角色，内置客户端/DBeaver/程序三种连接方式，以及源码编译、my.cnf、启动传参三种初始化配置，并对比 MySQL 5.7 与 8.0 的用户管理差异。</description>
+    </item>
+    <item>
+      <title>Jenkins 分布式构建与 Slave 节点配置</title>
+      <link>https://LMDAWN1127.github.io/posts/jenkins-distributed-build/</link>
+      <pubDate>Tue, 13 Oct 2026 09:30:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/posts/jenkins-distributed-build/</guid>
+      <description>记录将 nexus 服务器配置为 Jenkins Slave 节点的完整过程：拷贝 sonar/maven 工具链、建立 SSH 信任、处理 agent 端 Java 版本过旧导致启动失败的坑，以及在 Jenkins UI 指定 JavaPath、调整 master 并发调度实现 master/slave 并行构建。</description>
+    </item>
+    <item>
+      <title>Java 项目 CI/CD 流水线：Maven&#43;GitLab&#43;Jenkins&#43;SonarQube&#43;Nexus</title>
+      <link>https://LMDAWN1127.github.io/posts/java-project-deploy/</link>
+      <pubDate>Mon, 12 Oct 2026 18:00:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/posts/java-project-deploy/</guid>
+      <description>从 Maven 构建、GitLab 托管、Jenkins 拉取与自动部署，到 SonarQube 质量门禁与 Nexus 私服，梳理一条完整的 Java 项目 CI/CD 流水线落地过程。</description>
+    </item>
+    <item>
+      <title>Jenkins 代码发布与回滚</title>
+      <link>https://LMDAWN1127.github.io/posts/jenkins-code-deploy-rollback/</link>
+      <pubDate>Sat, 10 Oct 2026 17:30:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/posts/jenkins-code-deploy-rollback/</guid>
+      <description>基于 GitLab 打 tag 标记稳定版本，配合 Jenkins Git Parameter 插件做参数化构建，用一份 deploy/rollback 脚本实现按版本号发布与一键回滚。</description>
+    </item>
+    <item>
+      <title>Jenkins Pipeline 流水线</title>
+      <link>https://LMDAWN1127.github.io/posts/jenkins-pipeline/</link>
+      <pubDate>Fri, 09 Oct 2026 19:00:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/posts/jenkins-pipeline/</guid>
+      <description>从 CI/CD 与 Pipeline as Code 概念讲起，拆解 Node/Stage/Step，并用一份 Jenkinsfile 把「拉取代码 → SonarQube 扫描 → 打包 → 部署」的发布流程落地为可维护的流水线。</description>
+    </item>
+    <item>
+      <title>Jenkins 集成 SonarQube 质量门禁与企业微信通知</title>
+      <link>https://LMDAWN1127.github.io/posts/jenkins-sonarqube-wecom-notification/</link>
+      <pubDate>Fri, 09 Oct 2026 16:30:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/posts/jenkins-sonarqube-wecom-notification/</guid>
+      <description>在 Jenkins 中集成 SonarQube 质量门禁做代码扫描，并配合企业微信(WeCom)实现构建结果与变更日志的自动通知，打通质量卡点与团队触达。</description>
+    </item>
+    <item>
+      <title>Jenkins &#43; GitLab 打通实现 CI/CD 自动部署</title>
+      <link>https://LMDAWN1127.github.io/posts/jenkins-gitlab-cicd-auto-deploy/</link>
+      <pubDate>Fri, 09 Oct 2026 16:00:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/posts/jenkins-gitlab-cicd-auto-deploy/</guid>
+      <description>手把手实现 Jenkins 拉取 GitLab 代码、经 SSH 推送至 Web 服务器、并配置 GitLab Webhook 触发全自动部署的完整 CI/CD 流程。</description>
+    </item>
+    <item>
+      <title>SonarQube 实战：私有化部署、Token 配置与代码质量扫描</title>
+      <link>https://LMDAWN1127.github.io/posts/sonarqube-practice/</link>
+      <pubDate>Fri, 02 Oct 2026 14:12:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/posts/sonarqube-practice/</guid>
+      <description>从 JDK8 + MySQL5.6 安装、SonarQube 解压与插件部署、普通用户启动，到 Web Token 配置与 sonar-scanner 客户端代码扫描的完整私有化实战。</description>
+    </item>
+    <item>
+      <title>Jenkins 实战：私有化部署、插件安装与 GitLab 联动 CI</title>
+      <link>https://LMDAWN1127.github.io/posts/jenkins-practice/</link>
+      <pubDate>Thu, 01 Oct 2026 21:28:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/posts/jenkins-practice/</guid>
+      <description>从 RPM 安装 JDK 与 Jenkins、改为 root 启动、插件离线安装，到打通 GitLab SSH 免密与 webhook 自动构建的完整 Jenkins 私有化实战。</description>
+    </item>
+    <item>
+      <title>GitLab 实战：私有化部署、SSH 免密与代码仓库管理</title>
+      <link>https://LMDAWN1127.github.io/posts/gitlab-practice/</link>
+      <pubDate>Thu, 01 Oct 2026 17:50:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/posts/gitlab-practice/</guid>
+      <description>从 RPM 安装、组件构成、常用命令到 Web 配置、SSH 免密与多账号协作的完整 GitLab 私有化部署实战。</description>
+    </item>
+    <item>
+      <title>Git 实战笔记：安装配置、常用命令与分支管理</title>
+      <link>https://LMDAWN1127.github.io/posts/git-practice-notes/</link>
+      <pubDate>Thu, 01 Oct 2026 01:20:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/posts/git-practice-notes/</guid>
+      <description>从安装配置到常用命令，再到分支管理与冲突合并，一份完整的 Git 实操记录。</description>
+    </item>
+  </channel>
+</rss>

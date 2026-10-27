@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Filebeat on DAWN&#39;s Blog</title>
+    <link>https://LMDAWN1127.github.io/tags/filebeat/</link>
+    <description>Recent content in Filebeat on DAWN&#39;s Blog</description>
+    <image>
+      <title>DAWN&#39;s Blog</title>
+      <url>https://LMDAWN1127.github.io/images/DAWN.jpg</url>
+      <link>https://LMDAWN1127.github.io/images/DAWN.jpg</link>
+    </image>
+    <generator>Hugo</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sun, 18 Oct 2026 22:00:00 +0800</lastBuildDate>
+    <atom:link href="https://LMDAWN1127.github.io/tags/filebeat/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Filebeat 模块（modules）使用实战：启用与 nginx 日志采集</title>
+      <link>https://LMDAWN1127.github.io/posts/filebeat-modules/</link>
+      <pubDate>Sun, 18 Oct 2026 22:00:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/posts/filebeat-modules/</guid>
+      <description>围绕 Filebeat 官方 modules 模块展开实战：先介绍模块概念，演示还原 Nginx 访问日志格式并热加载生效；再通过 filebeat modules enable/disable/list 启用 nginx、tomcat 模块（本质是 modules.d 下 *.yml.disabled 重命名为 *.yml）；最后用 nginx 模块采集访问/错误日志写入 Elasticsearch（索引 dawn-log-modules-nginx，模板名 dawn-modules），并在 Kibana 查看数据。</description>
+    </item>
+    <item>
+      <title>Filebeat filestream 采集实战：ndjson 解析、multiline 多行匹配与综合案例</title>
+      <link>https://LMDAWN1127.github.io/posts/filebeat-filestream/</link>
+      <pubDate>Sun, 18 Oct 2026 18:00:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/posts/filebeat-filestream/</guid>
+      <description>围绕 Filebeat 新版 filestream 输入类型展开实战：一是用 ndjson parser 解析 JSON 格式日志并写入 Elasticsearch（索引 dawn-log-filestream-nginx）；二是用 multiline pattern 正则实现多行错误日志匹配（索引 dawn-log-filestream-tomcat-errorlog）；三是综合案例，组合 multiline count_lines 与 ndjson 解析一段多行 JSON 日志（索引 dawn-log-filestream-case-demo）。</description>
+    </item>
+    <item>
+      <title>Filebeat 采集 Tomcat 日志实战：自定义 JSON 访问日志与多行错误日志匹配</title>
+      <link>https://LMDAWN1127.github.io/posts/filebeat-tomcat-log-collection/</link>
+      <pubDate>Sat, 17 Oct 2026 23:00:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/posts/filebeat-tomcat-log-collection/</guid>
+      <description>围绕 EFK 采集 Tomcat 日志展开：部署 Tomcat 并自定义 JSON 格式访问日志（server.xml AccessLogValve），用 Filebeat 采集 JSON 访问日志写入 Elasticsearch（索引 dawn-log-tomcat，json.keys_under_root 关键配置），以及用 multiline 多行匹配采集 catalina.out 启动/错误日志（索引 dawn-log-tomcat-errorlog），最后在 Kibana 查看数据。</description>
+    </item>
+    <item>
+      <title>Filebeat 多 Input 写入不同 ES 索引与多实例部署实战</title>
+      <link>https://LMDAWN1127.github.io/posts/filebeat-multi-input-multi-instance/</link>
+      <pubDate>Sat, 17 Oct 2026 22:00:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/posts/filebeat-multi-input-multi-instance/</guid>
+      <description>实战演示 Filebeat 两个核心进阶用法：一是配置多个 input 按 tags 将事件分流写入不同 Elasticsearch 索引（dawn-log-zlm、dawn-log-lmy），含 multiline 多行合并与关闭 ILM、自定义 dawn-log* 模板；二是 Filebeat 多实例部署，通过 &amp;ndash;path.data 隔离数据目录实现同一主机并行运行多个采集进程。</description>
+    </item>
+    <item>
+      <title>Filebeat 采集 Nginx 日志实战：自定义 JSON 日志格式、NFS 配置共享与七层 Web 集群</title>
+      <link>https://LMDAWN1127.github.io/posts/filebeat-nginx-log-collection/</link>
+      <pubDate>Fri, 16 Oct 2026 23:00:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/posts/filebeat-nginx-log-collection/</guid>
+      <description>围绕 ELK/EFK 日志采集实验展开：自定义 Nginx JSON 日志格式（dawn_nginx_json），基于 NFS 实现三节点 Filebeat 配置共享，EFK 架构采集 Nginx 日志至 Elasticsearch（索引 dawn-log-nginx），Filebeat 解析 JSON 格式日志（json.keys_under_root 关键配置），以及基于 Nginx 七层分流的 Web 集群部署与 Filebeat 日志采集实战。</description>
+    </item>
+    <item>
+      <title>Filebeat 部署与日志采集实战：安装、架构与 stdin/tcp/log 输入</title>
+      <link>https://LMDAWN1127.github.io/posts/filebeat-deployment/</link>
+      <pubDate>Thu, 15 Oct 2026 23:00:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/posts/filebeat-deployment/</guid>
+      <description>围绕 Filebeat 日志采集器展开：环境搭建（deb 下载安装）、架构组成，以及 stdin→ES、tcp→ES、log→ES 三类输入实战，并涵盖自定义索引名称、关闭 ILM、自定义分片/副本，以及采集 Ubuntu 系统日志写入 ES 集群的完整操作。</description>
+    </item>
+  </channel>
+</rss>

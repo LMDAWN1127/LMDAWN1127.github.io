@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Jenkins on DAWN&#39;s Blog</title>
+    <link>https://LMDAWN1127.github.io/en/tags/jenkins/</link>
+    <description>Recent content in Jenkins on DAWN&#39;s Blog</description>
+    <image>
+      <title>DAWN&#39;s Blog</title>
+      <url>https://LMDAWN1127.github.io/images/DAWN.jpg</url>
+      <link>https://LMDAWN1127.github.io/images/DAWN.jpg</link>
+    </image>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <lastBuildDate>Thu, 01 Oct 2026 21:28:00 +0800</lastBuildDate>
+    <atom:link href="https://LMDAWN1127.github.io/en/tags/jenkins/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Jenkins in Practice: Self-hosted Deployment, Plugin Setup, and GitLab-Driven CI</title>
+      <link>https://LMDAWN1127.github.io/en/posts/jenkins-practice/</link>
+      <pubDate>Thu, 01 Oct 2026 21:28:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/posts/jenkins-practice/</guid>
+      <description>A complete hands-on Jenkins self-hosting guide: RPM install of JDK and Jenkins, running as root, offline plugin install, and wiring GitLab SSH keyless access with webhook-triggered CI builds.</description>
+    </item>
+  </channel>
+</rss>

@@ -1,1 +1,493 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Tags on DAWN's Blog</title><link>https://LMDAWN1127.github.io/en/tags/</link><description>Recent content in Tags on DAWN's Blog</description><image><title>DAWN's Blog</title><url>https://LMDAWN1127.github.io/images/DAWN.jpg</url><link>https://LMDAWN1127.github.io/images/DAWN.jpg</link></image><generator>Hugo</generator><language>en</language><lastBuildDate>Tue, 04 Aug 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://LMDAWN1127.github.io/en/tags/index.xml" rel="self" type="application/rss+xml"/><item><title>Docker</title><link>https://LMDAWN1127.github.io/en/tags/docker/</link><pubDate>Tue, 04 Aug 2026 00:00:00 +0000</pubDate><guid>https://LMDAWN1127.github.io/en/tags/docker/</guid><description/></item><item><title>Harbor</title><link>https://LMDAWN1127.github.io/en/tags/harbor/</link><pubDate>Tue, 04 Aug 2026 00:00:00 +0000</pubDate><guid>https://LMDAWN1127.github.io/en/tags/harbor/</guid><description/></item><item><title>HTTPS</title><link>https://LMDAWN1127.github.io/en/tags/https/</link><pubDate>Tue, 04 Aug 2026 00:00:00 +0000</pubDate><guid>https://LMDAWN1127.github.io/en/tags/https/</guid><description/></item><item><title>Image Registry</title><link>https://LMDAWN1127.github.io/en/tags/image-registry/</link><pubDate>Tue, 04 Aug 2026 00:00:00 +0000</pubDate><guid>https://LMDAWN1127.github.io/en/tags/image-registry/</guid><description/></item><item><title>Replication</title><link>https://LMDAWN1127.github.io/en/tags/replication/</link><pubDate>Tue, 04 Aug 2026 00:00:00 +0000</pubDate><guid>https://LMDAWN1127.github.io/en/tags/replication/</guid><description/></item><item><title>CentOS</title><link>https://LMDAWN1127.github.io/en/tags/centos/</link><pubDate>Sun, 02 Aug 2026 00:00:00 +0000</pubDate><guid>https://LMDAWN1127.github.io/en/tags/centos/</guid><description/></item><item><title>KVM</title><link>https://LMDAWN1127.github.io/en/tags/kvm/</link><pubDate>Sun, 02 Aug 2026 00:00:00 +0000</pubDate><guid>https://LMDAWN1127.github.io/en/tags/kvm/</guid><description/></item><item><title>Linux</title><link>https://LMDAWN1127.github.io/en/tags/linux/</link><pubDate>Sun, 02 Aug 2026 00:00:00 +0000</pubDate><guid>https://LMDAWN1127.github.io/en/tags/linux/</guid><description/></item><item><title>Virtualization</title><link>https://LMDAWN1127.github.io/en/tags/virtualization/</link><pubDate>Sun, 02 Aug 2026 00:00:00 +0000</pubDate><guid>https://LMDAWN1127.github.io/en/tags/virtualization/</guid><description/></item><item><title>Containerization</title><link>https://LMDAWN1127.github.io/en/tags/containerization/</link><pubDate>Thu, 30 Jul 2026 12:00:00 +0800</pubDate><guid>https://LMDAWN1127.github.io/en/tags/containerization/</guid><description/></item><item><title>DevOps</title><link>https://LMDAWN1127.github.io/en/tags/devops/</link><pubDate>Thu, 30 Jul 2026 12:00:00 +0800</pubDate><guid>https://LMDAWN1127.github.io/en/tags/devops/</guid><description/></item><item><title>Dockerfile</title><link>https://LMDAWN1127.github.io/en/tags/dockerfile/</link><pubDate>Thu, 30 Jul 2026 12:00:00 +0800</pubDate><guid>https://LMDAWN1127.github.io/en/tags/dockerfile/</guid><description/></item><item><title>Image Optimization</title><link>https://LMDAWN1127.github.io/en/tags/image-optimization/</link><pubDate>Thu, 30 Jul 2026 12:00:00 +0800</pubDate><guid>https://LMDAWN1127.github.io/en/tags/image-optimization/</guid><description/></item><item><title>CI/CD</title><link>https://LMDAWN1127.github.io/en/tags/ci/cd/</link><pubDate>Thu, 30 Jul 2026 11:00:00 +0800</pubDate><guid>https://LMDAWN1127.github.io/en/tags/ci/cd/</guid><description/></item><item><title>Performance</title><link>https://LMDAWN1127.github.io/en/tags/performance/</link><pubDate>Thu, 30 Jul 2026 11:00:00 +0800</pubDate><guid>https://LMDAWN1127.github.io/en/tags/performance/</guid><description/></item><item><title>AI</title><link>https://LMDAWN1127.github.io/en/tags/ai/</link><pubDate>Sat, 04 Jul 2026 05:00:00 +0800</pubDate><guid>https://LMDAWN1127.github.io/en/tags/ai/</guid><description/></item><item><title>Claude Code</title><link>https://LMDAWN1127.github.io/en/tags/claude-code/</link><pubDate>Sat, 04 Jul 2026 05:00:00 +0800</pubDate><guid>https://LMDAWN1127.github.io/en/tags/claude-code/</guid><description/></item><item><title>Deployment</title><link>https://LMDAWN1127.github.io/en/tags/deployment/</link><pubDate>Sat, 04 Jul 2026 05:00:00 +0800</pubDate><guid>https://LMDAWN1127.github.io/en/tags/deployment/</guid><description/></item><item><title>Etcd</title><link>https://LMDAWN1127.github.io/en/tags/etcd/</link><pubDate>Wed, 21 May 2025 00:00:00 +0000</pubDate><guid>https://LMDAWN1127.github.io/en/tags/etcd/</guid><description/></item><item><title>Flannel</title><link>https://LMDAWN1127.github.io/en/tags/flannel/</link><pubDate>Wed, 21 May 2025 00:00:00 +0000</pubDate><guid>https://LMDAWN1127.github.io/en/tags/flannel/</guid><description/></item><item><title>Networking</title><link>https://LMDAWN1127.github.io/en/tags/networking/</link><pubDate>Wed, 21 May 2025 00:00:00 +0000</pubDate><guid>https://LMDAWN1127.github.io/en/tags/networking/</guid><description/></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Tags on DAWN&#39;s Blog</title>
+    <link>https://LMDAWN1127.github.io/en/tags/</link>
+    <description>Recent content in Tags on DAWN&#39;s Blog</description>
+    <image>
+      <title>DAWN&#39;s Blog</title>
+      <url>https://LMDAWN1127.github.io/images/DAWN.jpg</url>
+      <link>https://LMDAWN1127.github.io/images/DAWN.jpg</link>
+    </image>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <lastBuildDate>Tue, 06 Oct 2026 20:35:00 +0800</lastBuildDate>
+    <atom:link href="https://LMDAWN1127.github.io/en/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Automated Deployment</title>
+      <link>https://LMDAWN1127.github.io/en/tags/automated-deployment/</link>
+      <pubDate>Tue, 06 Oct 2026 20:35:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/tags/automated-deployment/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Cloud Computing</title>
+      <link>https://LMDAWN1127.github.io/en/tags/cloud-computing/</link>
+      <pubDate>Tue, 06 Oct 2026 20:35:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/tags/cloud-computing/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>OpenStack</title>
+      <link>https://LMDAWN1127.github.io/en/tags/openstack/</link>
+      <pubDate>Tue, 06 Oct 2026 20:35:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/tags/openstack/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Packstack</title>
+      <link>https://LMDAWN1127.github.io/en/tags/packstack/</link>
+      <pubDate>Tue, 06 Oct 2026 20:35:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/tags/packstack/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Victoria</title>
+      <link>https://LMDAWN1127.github.io/en/tags/victoria/</link>
+      <pubDate>Tue, 06 Oct 2026 20:35:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/tags/victoria/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Block Storage</title>
+      <link>https://LMDAWN1127.github.io/en/tags/block-storage/</link>
+      <pubDate>Mon, 05 Oct 2026 23:30:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/tags/block-storage/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Cinder</title>
+      <link>https://LMDAWN1127.github.io/en/tags/cinder/</link>
+      <pubDate>Mon, 05 Oct 2026 23:30:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/tags/cinder/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>ISCSI</title>
+      <link>https://LMDAWN1127.github.io/en/tags/iscsi/</link>
+      <pubDate>Mon, 05 Oct 2026 23:30:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/tags/iscsi/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>LVM</title>
+      <link>https://LMDAWN1127.github.io/en/tags/lvm/</link>
+      <pubDate>Mon, 05 Oct 2026 23:30:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/tags/lvm/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>NFS</title>
+      <link>https://LMDAWN1127.github.io/en/tags/nfs/</link>
+      <pubDate>Mon, 05 Oct 2026 23:30:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/tags/nfs/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Endpoint</title>
+      <link>https://LMDAWN1127.github.io/en/tags/endpoint/</link>
+      <pubDate>Mon, 05 Oct 2026 00:21:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/tags/endpoint/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Glance</title>
+      <link>https://LMDAWN1127.github.io/en/tags/glance/</link>
+      <pubDate>Mon, 05 Oct 2026 00:21:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/tags/glance/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Image Service</title>
+      <link>https://LMDAWN1127.github.io/en/tags/image-service/</link>
+      <pubDate>Mon, 05 Oct 2026 00:21:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/tags/image-service/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Keystone</title>
+      <link>https://LMDAWN1127.github.io/en/tags/keystone/</link>
+      <pubDate>Mon, 05 Oct 2026 00:21:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/tags/keystone/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Nova</title>
+      <link>https://LMDAWN1127.github.io/en/tags/nova/</link>
+      <pubDate>Mon, 05 Oct 2026 00:21:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/tags/nova/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>CLI</title>
+      <link>https://LMDAWN1127.github.io/en/tags/cli/</link>
+      <pubDate>Sun, 04 Oct 2026 21:50:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/tags/cli/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Cloud Server</title>
+      <link>https://LMDAWN1127.github.io/en/tags/cloud-server/</link>
+      <pubDate>Sun, 04 Oct 2026 21:50:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/tags/cloud-server/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Horizon</title>
+      <link>https://LMDAWN1127.github.io/en/tags/horizon/</link>
+      <pubDate>Sun, 04 Oct 2026 21:50:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/tags/horizon/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Neutron</title>
+      <link>https://LMDAWN1127.github.io/en/tags/neutron/</link>
+      <pubDate>Sun, 04 Oct 2026 21:50:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/tags/neutron/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Multi-Version Deploy</title>
+      <link>https://LMDAWN1127.github.io/en/tags/multi-version-deploy/</link>
+      <pubDate>Sat, 03 Oct 2026 17:11:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/tags/multi-version-deploy/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>MySQL</title>
+      <link>https://LMDAWN1127.github.io/en/tags/mysql/</link>
+      <pubDate>Sat, 03 Oct 2026 17:11:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/tags/mysql/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Systemd</title>
+      <link>https://LMDAWN1127.github.io/en/tags/systemd/</link>
+      <pubDate>Sat, 03 Oct 2026 17:11:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/tags/systemd/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Binary Install</title>
+      <link>https://LMDAWN1127.github.io/en/tags/binary-install/</link>
+      <pubDate>Sat, 03 Oct 2026 14:53:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/tags/binary-install/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Database</title>
+      <link>https://LMDAWN1127.github.io/en/tags/database/</link>
+      <pubDate>Sat, 03 Oct 2026 14:53:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/tags/database/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>CI/CD</title>
+      <link>https://LMDAWN1127.github.io/en/tags/ci/cd/</link>
+      <pubDate>Fri, 02 Oct 2026 14:12:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/tags/ci/cd/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>DevOps</title>
+      <link>https://LMDAWN1127.github.io/en/tags/devops/</link>
+      <pubDate>Fri, 02 Oct 2026 14:12:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/tags/devops/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>SonarQube</title>
+      <link>https://LMDAWN1127.github.io/en/tags/sonarqube/</link>
+      <pubDate>Fri, 02 Oct 2026 14:12:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/tags/sonarqube/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Jenkins</title>
+      <link>https://LMDAWN1127.github.io/en/tags/jenkins/</link>
+      <pubDate>Thu, 01 Oct 2026 21:28:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/tags/jenkins/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>GitLab</title>
+      <link>https://LMDAWN1127.github.io/en/tags/gitlab/</link>
+      <pubDate>Thu, 01 Oct 2026 17:50:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/tags/gitlab/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Git</title>
+      <link>https://LMDAWN1127.github.io/en/tags/git/</link>
+      <pubDate>Thu, 01 Oct 2026 01:20:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/tags/git/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Version Control</title>
+      <link>https://LMDAWN1127.github.io/en/tags/version-control/</link>
+      <pubDate>Thu, 01 Oct 2026 01:20:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/tags/version-control/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Custom-Monitoring</title>
+      <link>https://LMDAWN1127.github.io/en/tags/custom-monitoring/</link>
+      <pubDate>Wed, 23 Sep 2026 18:30:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/tags/custom-monitoring/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Trigger</title>
+      <link>https://LMDAWN1127.github.io/en/tags/trigger/</link>
+      <pubDate>Wed, 23 Sep 2026 18:30:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/tags/trigger/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>UserParameter</title>
+      <link>https://LMDAWN1127.github.io/en/tags/userparameter/</link>
+      <pubDate>Wed, 23 Sep 2026 18:30:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/tags/userparameter/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Value-Mapping</title>
+      <link>https://LMDAWN1127.github.io/en/tags/value-mapping/</link>
+      <pubDate>Wed, 23 Sep 2026 18:30:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/tags/value-mapping/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Zabbix</title>
+      <link>https://LMDAWN1127.github.io/en/tags/zabbix/</link>
+      <pubDate>Wed, 23 Sep 2026 18:30:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/tags/zabbix/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>High-Concurrency</title>
+      <link>https://LMDAWN1127.github.io/en/tags/high-concurrency/</link>
+      <pubDate>Wed, 23 Sep 2026 16:00:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/tags/high-concurrency/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Split</title>
+      <link>https://LMDAWN1127.github.io/en/tags/split/</link>
+      <pubDate>Wed, 23 Sep 2026 16:00:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/tags/split/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Monitoring</title>
+      <link>https://LMDAWN1127.github.io/en/tags/monitoring/</link>
+      <pubDate>Wed, 23 Sep 2026 13:21:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/tags/monitoring/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Monitoring-Config</title>
+      <link>https://LMDAWN1127.github.io/en/tags/monitoring-config/</link>
+      <pubDate>Wed, 23 Sep 2026 13:21:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/tags/monitoring-config/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Zabbix-Agent</title>
+      <link>https://LMDAWN1127.github.io/en/tags/zabbix-agent/</link>
+      <pubDate>Wed, 23 Sep 2026 13:21:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/tags/zabbix-agent/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>CentOS7</title>
+      <link>https://LMDAWN1127.github.io/en/tags/centos7/</link>
+      <pubDate>Wed, 23 Sep 2026 01:52:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/tags/centos7/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Installation</title>
+      <link>https://LMDAWN1127.github.io/en/tags/installation/</link>
+      <pubDate>Wed, 23 Sep 2026 01:52:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/tags/installation/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Calico</title>
+      <link>https://LMDAWN1127.github.io/en/tags/calico/</link>
+      <pubDate>Fri, 07 Aug 2026 13:52:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/tags/calico/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Cluster-Deployment</title>
+      <link>https://LMDAWN1127.github.io/en/tags/cluster-deployment/</link>
+      <pubDate>Fri, 07 Aug 2026 13:52:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/tags/cluster-deployment/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Containerd</title>
+      <link>https://LMDAWN1127.github.io/en/tags/containerd/</link>
+      <pubDate>Fri, 07 Aug 2026 13:52:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/tags/containerd/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Kubeadm</title>
+      <link>https://LMDAWN1127.github.io/en/tags/kubeadm/</link>
+      <pubDate>Fri, 07 Aug 2026 13:52:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/tags/kubeadm/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Kubernetes</title>
+      <link>https://LMDAWN1127.github.io/en/tags/kubernetes/</link>
+      <pubDate>Fri, 07 Aug 2026 13:52:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/tags/kubernetes/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>V1.30</title>
+      <link>https://LMDAWN1127.github.io/en/tags/v1.30/</link>
+      <pubDate>Fri, 07 Aug 2026 13:52:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/tags/v1.30/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Docker</title>
+      <link>https://LMDAWN1127.github.io/en/tags/docker/</link>
+      <pubDate>Tue, 04 Aug 2026 00:00:00 +0000</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/tags/docker/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Harbor</title>
+      <link>https://LMDAWN1127.github.io/en/tags/harbor/</link>
+      <pubDate>Tue, 04 Aug 2026 00:00:00 +0000</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/tags/harbor/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>HTTPS</title>
+      <link>https://LMDAWN1127.github.io/en/tags/https/</link>
+      <pubDate>Tue, 04 Aug 2026 00:00:00 +0000</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/tags/https/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Image Registry</title>
+      <link>https://LMDAWN1127.github.io/en/tags/image-registry/</link>
+      <pubDate>Tue, 04 Aug 2026 00:00:00 +0000</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/tags/image-registry/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Replication</title>
+      <link>https://LMDAWN1127.github.io/en/tags/replication/</link>
+      <pubDate>Tue, 04 Aug 2026 00:00:00 +0000</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/tags/replication/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>CentOS</title>
+      <link>https://LMDAWN1127.github.io/en/tags/centos/</link>
+      <pubDate>Sun, 02 Aug 2026 00:00:00 +0000</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/tags/centos/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>KVM</title>
+      <link>https://LMDAWN1127.github.io/en/tags/kvm/</link>
+      <pubDate>Sun, 02 Aug 2026 00:00:00 +0000</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/tags/kvm/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Linux</title>
+      <link>https://LMDAWN1127.github.io/en/tags/linux/</link>
+      <pubDate>Sun, 02 Aug 2026 00:00:00 +0000</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/tags/linux/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Virtualization</title>
+      <link>https://LMDAWN1127.github.io/en/tags/virtualization/</link>
+      <pubDate>Sun, 02 Aug 2026 00:00:00 +0000</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/tags/virtualization/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Containerization</title>
+      <link>https://LMDAWN1127.github.io/en/tags/containerization/</link>
+      <pubDate>Thu, 30 Jul 2026 12:00:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/tags/containerization/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Dockerfile</title>
+      <link>https://LMDAWN1127.github.io/en/tags/dockerfile/</link>
+      <pubDate>Thu, 30 Jul 2026 12:00:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/tags/dockerfile/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Image Optimization</title>
+      <link>https://LMDAWN1127.github.io/en/tags/image-optimization/</link>
+      <pubDate>Thu, 30 Jul 2026 12:00:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/tags/image-optimization/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Performance</title>
+      <link>https://LMDAWN1127.github.io/en/tags/performance/</link>
+      <pubDate>Thu, 30 Jul 2026 11:00:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/tags/performance/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>AI</title>
+      <link>https://LMDAWN1127.github.io/en/tags/ai/</link>
+      <pubDate>Sat, 04 Jul 2026 05:00:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/tags/ai/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Claude Code</title>
+      <link>https://LMDAWN1127.github.io/en/tags/claude-code/</link>
+      <pubDate>Sat, 04 Jul 2026 05:00:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/tags/claude-code/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Deployment</title>
+      <link>https://LMDAWN1127.github.io/en/tags/deployment/</link>
+      <pubDate>Sat, 04 Jul 2026 05:00:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/tags/deployment/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Etcd</title>
+      <link>https://LMDAWN1127.github.io/en/tags/etcd/</link>
+      <pubDate>Wed, 21 May 2025 00:00:00 +0000</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/tags/etcd/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Flannel</title>
+      <link>https://LMDAWN1127.github.io/en/tags/flannel/</link>
+      <pubDate>Wed, 21 May 2025 00:00:00 +0000</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/tags/flannel/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Networking</title>
+      <link>https://LMDAWN1127.github.io/en/tags/networking/</link>
+      <pubDate>Wed, 21 May 2025 00:00:00 +0000</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/tags/networking/</guid>
+      <description></description>
+    </item>
+  </channel>
+</rss>

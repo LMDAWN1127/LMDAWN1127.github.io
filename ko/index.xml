@@ -1,119 +1,289 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>DAWN's Blog</title><link>https://LMDAWN1127.github.io/ko/</link><description>Recent content on DAWN's Blog</description><image><title>DAWN's Blog</title><url>https://LMDAWN1127.github.io/images/DAWN.jpg</url><link>https://LMDAWN1127.github.io/images/DAWN.jpg</link></image><generator>Hugo</generator><language>ko</language><lastBuildDate>Tue, 04 Aug 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://LMDAWN1127.github.io/ko/index.xml" rel="self" type="application/rss+xml"/><item><title>Harbor 액티브-스탠바이 배포: 설치부터 HTTPS 및 복제까지</title><link>https://LMDAWN1127.github.io/ko/posts/harbor-master-slave/</link><pubDate>Tue, 04 Aug 2026 00:00:00 +0000</pubDate><guid>https://LMDAWN1127.github.io/ko/posts/harbor-master-slave/</guid><description>Harbor 엔터프라이즈 Docker 레지스트리의 액티브-스탠바이 아키텍처, HTTP/HTTPS 모드, 자체 서명 인증서, 크로스 호스트 복제를 완전히 다루는 배포 가이드입니다.</description></item><item><title>KVM 가상화 입문부터 실전까지: 배포, 관리 및 네트워크 구성</title><link>https://LMDAWN1127.github.io/ko/posts/kvm-virtualization-guide/</link><pubDate>Sun, 02 Aug 2026 00:00:00 +0000</pubDate><guid>https://LMDAWN1127.github.io/ko/posts/kvm-virtualization-guide/</guid><description>KVM 가상화 기술을 체계적으로 소개합니다. 발전 역사, 배포 방법, 가상 머신 관리, 네트워크 모드 구성 및 명령줄을 통한 가상 머신 자동 설치를 다룹니다.</description></item><item><title>Dockerfile 이미지가 너무 크다고요? 이미지 크기를 90% 줄이는 10가지 팁</title><link>https://LMDAWN1127.github.io/ko/posts/dockerfile-smaller-image/</link><pubDate>Thu, 30 Jul 2026 12:00:00 +0800</pubDate><guid>https://LMDAWN1127.github.io/ko/posts/dockerfile-smaller-image/</guid><description>Docker 이미지 크기를 90% 이상 줄이는 검증된 10가지 팁을 소개합니다.</description></item><item><title>Dockerfile 빌드 속도를 높이는 방법? 10가지 실용적인 최적화 팁</title><link>https://LMDAWN1127.github.io/ko/posts/dockerfile-faster-build/</link><pubDate>Thu, 30 Jul 2026 11:00:00 +0800</pubDate><guid>https://LMDAWN1127.github.io/ko/posts/dockerfile-faster-build/</guid><description>캐시 전략부터 멀티스테이지 빌드까지, Docker 빌드 시간을 대폭 단축하는 검증된 10가지 팁을 소개합니다.</description></item><item><title>Dockerfile에서 COPY와 ADD의 차이점 완벽 정리</title><link>https://LMDAWN1127.github.io/ko/posts/dockerfile-copy-vs-add/</link><pubDate>Thu, 30 Jul 2026 10:00:00 +0800</pubDate><guid>https://LMDAWN1127.github.io/ko/posts/dockerfile-copy-vs-add/</guid><description>COPY와 ADD 모두 파일을 복사할 수 있지만 동작 방식에 큰 차이가 있습니다. 이 글에서는 비교와 예제를 통해 두 명령어의 차이점을 명확하게 설명합니다.</description></item><item><title>CentOS에서 Claude Code 배포 전체 가이드</title><link>https://LMDAWN1127.github.io/ko/posts/centos-deploy-claude-code/</link><pubDate>Sat, 04 Jul 2026 05:00:00 +0800</pubDate><guid>https://LMDAWN1127.github.io/ko/posts/centos-deploy-claude-code/</guid><description>CentOS에서 Claude Code를 처음부터 배포하는 방법으로, Node.js 설치, API Key 설정, 자주 발생하는 문제 해결 방법을 다룹니다.</description></item><item><title>flannel 실전: Docker 크로스 호스트 컨테이너 네트워크 구축</title><link>https://LMDAWN1127.github.io/ko/posts/flannel-network-lab/</link><pubDate>Wed, 21 May 2025 00:00:00 +0000</pubDate><guid>https://LMDAWN1127.github.io/ko/posts/flannel-network-lab/</guid><description>&lt;h1 id="flannel-실전-docker-크로스-호스트-컨테이너-네트워크-구축"&gt;flannel 실전: Docker 크로스 호스트 컨테이너 네트워크 구축&lt;/h1&gt;
-&lt;h2 id="1-네트워크-환경-계획"&gt;1. 네트워크 환경 계획&lt;/h2&gt;
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>DAWN&#39;s Blog</title>
+    <link>https://LMDAWN1127.github.io/ko/</link>
+    <description>Recent content on DAWN&#39;s Blog</description>
+    <image>
+      <title>DAWN&#39;s Blog</title>
+      <url>https://LMDAWN1127.github.io/images/DAWN.jpg</url>
+      <link>https://LMDAWN1127.github.io/images/DAWN.jpg</link>
+    </image>
+    <generator>Hugo</generator>
+    <language>ko</language>
+    <lastBuildDate>Tue, 06 Oct 2026 20:35:00 +0800</lastBuildDate>
+    <atom:link href="https://LMDAWN1127.github.io/ko/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Harbor 액티브-스탠바이 배포: 설치부터 HTTPS 및 복제까지</title>
+      <link>https://LMDAWN1127.github.io/ko/posts/harbor-master-slave/</link>
+      <pubDate>Tue, 04 Aug 2026 00:00:00 +0000</pubDate>
+      <guid>https://LMDAWN1127.github.io/ko/posts/harbor-master-slave/</guid>
+      <description>Harbor 엔터프라이즈 Docker 레지스트리의 액티브-스탠바이 아키텍처, HTTP/HTTPS 모드, 자체 서명 인증서, 크로스 호스트 복제를 완전히 다루는 배포 가이드입니다.</description>
+    </item>
+    <item>
+      <title>OpenStack 클라우드 OS: 핵심 아키텍처 및 자동화 배포</title>
+      <link>https://LMDAWN1127.github.io/ko/posts/openstack-core-architecture-deployment/</link>
+      <pubDate>Tue, 06 Oct 2026 20:35:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/ko/posts/openstack-core-architecture-deployment/</guid>
+      <description>Nova/Glance/Neutron/Cinder 등 핵심 컴포넌트부터 Packstack 기반 Victoria 릴리스 원클릭 자동 배포, 그리고 Rsyslog 로그 트러블슈팅까지.</description>
+    </item>
+    <item>
+      <title>OpenStack Cinder 블록 스토리지 상세 정리: 로컬 LVM &#43; iSCSI 볼륨과 NFS 백엔드 연동</title>
+      <link>https://LMDAWN1127.github.io/ko/posts/openstack-cinder-block-storage/</link>
+      <pubDate>Mon, 05 Oct 2026 23:30:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/ko/posts/openstack-cinder-block-storage/</guid>
+      <description>OpenStack Cinder 블록 스토리지 정리: 볼륨 생성과 마운트의 역할 분담(Cinder는 생성, Nova는 마운트), 로컬 LVM + iSCSI로 컨트롤러를 스토리지로 만드는 전체 흐름(VG/LV, targetcli 기반 ISCSI 공유, libvirt 마운트), 그리고 NFS 백엔드 연동과 대시보드 실습.</description>
+    </item>
+    <item>
+      <title>OpenStack 핵심 서비스 상세 정리: Keystone 인증·Nova 컴퓨트·Glance/Swift 이미지 스토리지</title>
+      <link>https://LMDAWN1127.github.io/ko/posts/openstack-keystone-glance-nova/</link>
+      <pubDate>Mon, 05 Oct 2026 00:21:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/ko/posts/openstack-keystone-glance-nova/</guid>
+      <description>OpenStack 3대 핵심 서비스 정리: Keystone 다중 도메인 지원, service/endpoint 등록과 정책 파일 기반 권한 제어, Nova 모듈(api/scheduler/conductor/compute/novncproxy)과 메시지 큐·차분 디스크, 그리고 Swift 오브젝트 스토리지를 백엔드로 쓰는 Glance 이미지 서비스.</description>
+    </item>
+    <item>
+      <title>OpenStack 클라우드 서버 프로비저닝</title>
+      <link>https://LMDAWN1127.github.io/ko/posts/openstack-provision-cloud-server/</link>
+      <pubDate>Sun, 04 Oct 2026 21:50:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/ko/posts/openstack-provision-cloud-server/</guid>
+      <description>GUI부터 CLI까지 OpenStack 클라우드 서버 제공 전체 흐름을 완전 정리: 테넌트·사용자·이미지·플레이버·네트워크·라우터·보안 그룹·키 페어·플로팅 IP 생성 및 삭제, 그리고 iptables SNAT/DNAT와 Nova cell_v2 discover_hosts 트러블슈팅.</description>
+    </item>
+    <item>
+      <title>systemd 서비스 관리와 MySQL 멀티버전 배포</title>
+      <link>https://LMDAWN1127.github.io/ko/posts/systemd-mysql-multiversion/</link>
+      <pubDate>Sat, 03 Oct 2026 17:11:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/ko/posts/systemd-mysql-multiversion/</guid>
+      <description>systemd Unit 관리와 MySQL 5.6/5.7 멀티버전·다중 인스턴스 배포 실전: 두 가지 운영 데몬 구성, 아카이브 다운로드, 초기화, 인스턴스별 설정 파일 작성, 그리고 시작/중지 및 3개 서비스 상태 검증.</description>
+    </item>
+    <item>
+      <title>MySQL 실전: 바이너리 설치, 시작/중지, 비밀번호 관리</title>
+      <link>https://LMDAWN1127.github.io/ko/posts/mysql-binary-deploy/</link>
+      <pubDate>Sat, 03 Oct 2026 14:53:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/ko/posts/mysql-binary-deploy/</guid>
+      <description>MySQL 8.0 운영 실전: 공식 바이너리 패키지 설치, OS 준비, 초기화, 설정 파일, 다양한 시작/중지 방법, 그리고 비밀번호 설정/변경/분실 시 재설정.</description>
+    </item>
+    <item>
+      <title>SonarQube 실전: 사설 배포, 토큰 설정, 코드 품질 스캔</title>
+      <link>https://LMDAWN1127.github.io/ko/posts/sonarqube-practice/</link>
+      <pubDate>Fri, 02 Oct 2026 14:12:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/ko/posts/sonarqube-practice/</guid>
+      <description>SonarQube 을 사설로 배포하는 실전 가이드: JDK8/MySQL5.6 설치, 플러그인 포함 압축 해제, 비 root 사용자 실행, 웹 토큰 설정, sonar-scanner 클라이언트 코드 스캔.</description>
+    </item>
+    <item>
+      <title>Jenkins 실전: 사설 배포, 플러그인 설치, GitLab 연동 CI</title>
+      <link>https://LMDAWN1127.github.io/ko/posts/jenkins-practice/</link>
+      <pubDate>Thu, 01 Oct 2026 21:28:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/ko/posts/jenkins-practice/</guid>
+      <description>Jenkins 을 사설로 배포하는 실전 가이드: JDK/GitLab RPM 설치, root 계정 실행, 오프라인 플러그인 설치, GitLab SSH 키 인증과 webhook 자동 빌드 연동.</description>
+    </item>
+    <item>
+      <title>GitLab 실전: 사설 배포, SSH 키 인증, 저장소 관리</title>
+      <link>https://LMDAWN1127.github.io/ko/posts/gitlab-practice/</link>
+      <pubDate>Thu, 01 Oct 2026 17:50:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/ko/posts/gitlab-practice/</guid>
+      <description>GitLab 을 사설로 배포하는 실전 가이드: RPM 설치, 구성 요소, 자주 쓰는 명령어, 웹 UI 설정, SSH 키 인증, 다중 사용자 협업.</description>
+    </item>
+    <item>
+      <title>Git 실전 노트: 설치부터 기본 명령어와 브랜치 관리까지</title>
+      <link>https://LMDAWN1127.github.io/ko/posts/git-practice-notes/</link>
+      <pubDate>Thu, 01 Oct 2026 01:20:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/ko/posts/git-practice-notes/</guid>
+      <description>설치와 기본 명령어, 브랜치 운영, 충돌 해결까지 다루는 Git 실습 기록.</description>
+    </item>
+    <item>
+      <title>Zabbix 커스텀 모니터링</title>
+      <link>https://LMDAWN1127.github.io/ko/posts/zabbix-custom-monitor/</link>
+      <pubDate>Wed, 23 Sep 2026 18:30:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/ko/posts/zabbix-custom-monitor/</guid>
+      <description>Zabbix 커스텀 모니터링 실전 — UserParameter로 로그인 사용자 수·메모리 가용률 등 사용자 정의 메트릭을 수집하고 zabbix_get으로 검증한 뒤, 웹 UI에서 모니터링 항목·값 매핑·트리거(다중 조건 트리거 포함)를 추가해 커스텀 알림을 구성합니다.</description>
+    </item>
+    <item>
+      <title>Zabbix 데이터베이스 분리</title>
+      <link>https://LMDAWN1127.github.io/ko/posts/zabbix-split-database/</link>
+      <pubDate>Wed, 23 Sep 2026 16:00:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/ko/posts/zabbix-split-database/</guid>
+      <description>기업 Zabbix 고부하 시나리오용 — Zabbix 서버의 데이터베이스를 전용 MariaDB 서버(11.0.1.52)로 분리합니다. 데이터베이스 생성 및 권한 부여, 데이터 내보내기/가져오기, Web UI와 Server의 데이터베이스 연결 설정 변경, 그리고 서비스 재시작까지 다룹니다.</description>
+    </item>
+    <item>
+      <title>Zabbix로 서버 정보 모니터링하기</title>
+      <link>https://LMDAWN1127.github.io/ko/posts/zabbix-monitor-server/</link>
+      <pubDate>Wed, 23 Sep 2026 13:21:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/ko/posts/zabbix-monitor-server/</guid>
+      <description>대상 서버(web02, 11.0.1.8)에 Zabbix 에이전트를 설치하고 Zabbix 서버에 연결한 뒤 웹 UI에서 모니터링을 시작하는 방법입니다.</description>
+    </item>
+    <item>
+      <title>Zabbix 설치 및 배포</title>
+      <link>https://LMDAWN1127.github.io/ko/posts/zabbix-install/</link>
+      <pubDate>Wed, 23 Sep 2026 01:52:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/ko/posts/zabbix-install/</guid>
+      <description>CentOS 7에 Zabbix 5.0을 설치하는 단계별 가이드입니다. 저장소 설정, 서버/에이전트/프론트엔드 설치, MariaDB 구축, 스키마 가져오기, 웹 UI의 중국어 전환 및 폰트 설정까지 다룹니다.</description>
+    </item>
+    <item>
+      <title>Kubernetes v1.30 클러스터 수동 배포 (kubeadm 방식)</title>
+      <link>https://LMDAWN1127.github.io/ko/posts/k8s-v1.30-manual-deploy/</link>
+      <pubDate>Fri, 07 Aug 2026 13:52:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/ko/posts/k8s-v1.30-manual-deploy/</guid>
+      <description>kubeadm으로 Kubernetes v1.30 클러스터를 수동 배포하는 단계별 가이드입니다. 방화벽/SELinux, 스왑, 커널 모듈, Containerd, kubeadm init, 워커 가입, Calico, IPVS 추가까지 다룹니다.</description>
+    </item>
+    <item>
+      <title>KVM 가상화 입문부터 실전까지: 배포, 관리 및 네트워크 구성</title>
+      <link>https://LMDAWN1127.github.io/ko/posts/kvm-virtualization-guide/</link>
+      <pubDate>Sun, 02 Aug 2026 00:00:00 +0000</pubDate>
+      <guid>https://LMDAWN1127.github.io/ko/posts/kvm-virtualization-guide/</guid>
+      <description>KVM 가상화 기술을 체계적으로 소개합니다. 발전 역사, 배포 방법, 가상 머신 관리, 네트워크 모드 구성 및 명령줄을 통한 가상 머신 자동 설치를 다룹니다.</description>
+    </item>
+    <item>
+      <title>Dockerfile 이미지가 너무 크다고요? 이미지 크기를 90% 줄이는 10가지 팁</title>
+      <link>https://LMDAWN1127.github.io/ko/posts/dockerfile-smaller-image/</link>
+      <pubDate>Thu, 30 Jul 2026 12:00:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/ko/posts/dockerfile-smaller-image/</guid>
+      <description>Docker 이미지 크기를 90% 이상 줄이는 검증된 10가지 팁을 소개합니다.</description>
+    </item>
+    <item>
+      <title>Dockerfile 빌드 속도를 높이는 방법? 10가지 실용적인 최적화 팁</title>
+      <link>https://LMDAWN1127.github.io/ko/posts/dockerfile-faster-build/</link>
+      <pubDate>Thu, 30 Jul 2026 11:00:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/ko/posts/dockerfile-faster-build/</guid>
+      <description>캐시 전략부터 멀티스테이지 빌드까지, Docker 빌드 시간을 대폭 단축하는 검증된 10가지 팁을 소개합니다.</description>
+    </item>
+    <item>
+      <title>Dockerfile에서 COPY와 ADD의 차이점 완벽 정리</title>
+      <link>https://LMDAWN1127.github.io/ko/posts/dockerfile-copy-vs-add/</link>
+      <pubDate>Thu, 30 Jul 2026 10:00:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/ko/posts/dockerfile-copy-vs-add/</guid>
+      <description>COPY와 ADD 모두 파일을 복사할 수 있지만 동작 방식에 큰 차이가 있습니다. 이 글에서는 비교와 예제를 통해 두 명령어의 차이점을 명확하게 설명합니다.</description>
+    </item>
+    <item>
+      <title>CentOS에서 Claude Code 배포 전체 가이드</title>
+      <link>https://LMDAWN1127.github.io/ko/posts/centos-deploy-claude-code/</link>
+      <pubDate>Sat, 04 Jul 2026 05:00:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/ko/posts/centos-deploy-claude-code/</guid>
+      <description>CentOS에서 Claude Code를 처음부터 배포하는 방법으로, Node.js 설치, API Key 설정, 자주 발생하는 문제 해결 방법을 다룹니다.</description>
+    </item>
+    <item>
+      <title>flannel 실전: Docker 크로스 호스트 컨테이너 네트워크 구축</title>
+      <link>https://LMDAWN1127.github.io/ko/posts/flannel-network-lab/</link>
+      <pubDate>Wed, 21 May 2025 00:00:00 +0000</pubDate>
+      <guid>https://LMDAWN1127.github.io/ko/posts/flannel-network-lab/</guid>
+      <description>&lt;h1 id=&#34;flannel-실전-docker-크로스-호스트-컨테이너-네트워크-구축&#34;&gt;flannel 실전: Docker 크로스 호스트 컨테이너 네트워크 구축&lt;/h1&gt;
+&lt;h2 id=&#34;1-네트워크-환경-계획&#34;&gt;1. 네트워크 환경 계획&lt;/h2&gt;
 &lt;ol&gt;
 &lt;li&gt;etcd 호스트 IP: 192.168.8.88 호스트명: docker-network&lt;/li&gt;
 &lt;li&gt;Host1 IP: 192.168.8.188 호스트명: web01&lt;/li&gt;
 &lt;li&gt;Host2 IP: 192.168.8.99 호스트명: web02&lt;/li&gt;
 &lt;/ol&gt;
-&lt;h2 id="2-etcd-호스트-구성"&gt;2. etcd 호스트 구성&lt;/h2&gt;
-&lt;h3 id="단계-1-etcd-다운로드-및-압축-해제"&gt;단계 1: etcd 다운로드 및 압축 해제&lt;/h3&gt;
+&lt;h2 id=&#34;2-etcd-호스트-구성&#34;&gt;2. etcd 호스트 구성&lt;/h2&gt;
+&lt;h3 id=&#34;단계-1-etcd-다운로드-및-압축-해제&#34;&gt;단계 1: etcd 다운로드 및 압축 해제&lt;/h3&gt;
 &lt;ol&gt;
 &lt;li&gt;github.com에서 etcd-v3.6.0-linux-amd64.tar.gz 소프트웨어 패키지를 다운로드합니다&lt;/li&gt;
 &lt;li&gt;소프트웨어 패키지를 etcd 호스트의 /root 디렉토리에 복사하고 압축을 해제합니다:&lt;/li&gt;
 &lt;/ol&gt;
-&lt;div class="highlight"&gt;&lt;div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;
-&lt;table style="border-spacing:0;padding:0;margin:0;border:0;"&gt;&lt;tr&gt;&lt;td style="vertical-align:top;padding:0;margin:0;border:0;"&gt;
-&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code&gt;&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"&gt;1
+&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;
+&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;1
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%"&gt;
-&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;[&lt;/span&gt;root@docker-network ~&lt;span style="color:#f92672"&gt;]&lt;/span&gt;&lt;span style="color:#75715e"&gt;# tar -zxvf etcd-v3.6.0-linux-amd64.tar.gz&lt;/span&gt;
+&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;root@docker-network ~&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# tar -zxvf etcd-v3.6.0-linux-amd64.tar.gz&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;h3 id="단계-2-etcd-실행-파일-설치"&gt;단계 2: etcd 실행 파일 설치&lt;/h3&gt;
-&lt;div class="highlight"&gt;&lt;div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;
-&lt;table style="border-spacing:0;padding:0;margin:0;border:0;"&gt;&lt;tr&gt;&lt;td style="vertical-align:top;padding:0;margin:0;border:0;"&gt;
-&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code&gt;&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"&gt;1
-&lt;/span&gt;&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"&gt;2
+&lt;/div&gt;&lt;h3 id=&#34;단계-2-etcd-실행-파일-설치&#34;&gt;단계 2: etcd 실행 파일 설치&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;
+&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;1
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;2
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%"&gt;
-&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;[&lt;/span&gt;root@docker-network ~&lt;span style="color:#f92672"&gt;]&lt;/span&gt;&lt;span style="color:#75715e"&gt;# cd etcd-v3.6.0-linux-amd64&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;[&lt;/span&gt;root@docker-network etcd-v3.6.0-linux-amd64&lt;span style="color:#f92672"&gt;]&lt;/span&gt;&lt;span style="color:#75715e"&gt;# cp etcd* /usr/local/bin/&lt;/span&gt;
+&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;root@docker-network ~&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# cd etcd-v3.6.0-linux-amd64&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;root@docker-network etcd-v3.6.0-linux-amd64&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# cp etcd* /usr/local/bin/&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;h3 id="단계-3-데이터-디렉토리-생성"&gt;단계 3: 데이터 디렉토리 생성&lt;/h3&gt;
-&lt;div class="highlight"&gt;&lt;div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;
-&lt;table style="border-spacing:0;padding:0;margin:0;border:0;"&gt;&lt;tr&gt;&lt;td style="vertical-align:top;padding:0;margin:0;border:0;"&gt;
-&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code&gt;&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"&gt;1
+&lt;/div&gt;&lt;h3 id=&#34;단계-3-데이터-디렉토리-생성&#34;&gt;단계 3: 데이터 디렉토리 생성&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;
+&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;1
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%"&gt;
-&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;[&lt;/span&gt;root@docker-network ~&lt;span style="color:#f92672"&gt;]&lt;/span&gt;&lt;span style="color:#75715e"&gt;# mkdir /var/lib/etcd&lt;/span&gt;
+&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;root@docker-network ~&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# mkdir /var/lib/etcd&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;h3 id="단계-4-etcd-서비스-구성-및-시작"&gt;단계 4: etcd 서비스 구성 및 시작&lt;/h3&gt;
+&lt;/div&gt;&lt;h3 id=&#34;단계-4-etcd-서비스-구성-및-시작&#34;&gt;단계 4: etcd 서비스 구성 및 시작&lt;/h3&gt;
 &lt;ol&gt;
 &lt;li&gt;etcd.service 파일을 생성합니다:&lt;/li&gt;
 &lt;/ol&gt;
-&lt;div class="highlight"&gt;&lt;div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;
-&lt;table style="border-spacing:0;padding:0;margin:0;border:0;"&gt;&lt;tr&gt;&lt;td style="vertical-align:top;padding:0;margin:0;border:0;"&gt;
-&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code&gt;&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"&gt;1
+&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;
+&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;1
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%"&gt;
-&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;[&lt;/span&gt;root@docker-network ~&lt;span style="color:#f92672"&gt;]&lt;/span&gt;&lt;span style="color:#75715e"&gt;# vim /usr/lib/systemd/system/etcd.service&lt;/span&gt;
+&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;root@docker-network ~&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# vim /usr/lib/systemd/system/etcd.service&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;div class="highlight"&gt;&lt;div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;
-&lt;table style="border-spacing:0;padding:0;margin:0;border:0;"&gt;&lt;tr&gt;&lt;td style="vertical-align:top;padding:0;margin:0;border:0;"&gt;
-&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code&gt;&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"&gt;1
-&lt;/span&gt;&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"&gt;2
-&lt;/span&gt;&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"&gt;3
-&lt;/span&gt;&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"&gt;4
-&lt;/span&gt;&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"&gt;5
-&lt;/span&gt;&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"&gt;6
+&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;
+&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;1
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;2
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;3
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;4
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;5
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;6
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%"&gt;
-&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-ini" data-lang="ini"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;[Unit]&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#a6e22e"&gt;Description&lt;/span&gt;&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;etcd_service&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;[Service]&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#a6e22e"&gt;ExecStart&lt;/span&gt;&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;/usr/local/bin/etcd --name etcd1 --data-dir /var/lib/etcd --listen-client-urls http://192.168.8.88:2379,http://127.0.0.1:2379 --advertise-client-urls http://192.168.8.88:2379,http://127.0.0.1:2379&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;[Install]&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#a6e22e"&gt;WantedBy&lt;/span&gt;&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;multi-user.target&lt;/span&gt;
+&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-ini&#34; data-lang=&#34;ini&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;[Unit]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;Description&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;etcd_service&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;[Service]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;ExecStart&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;/usr/local/bin/etcd --name etcd1 --data-dir /var/lib/etcd --listen-client-urls http://192.168.8.88:2379,http://127.0.0.1:2379 --advertise-client-urls http://192.168.8.88:2379,http://127.0.0.1:2379&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;[Install]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;WantedBy&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;multi-user.target&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;ol start="2"&gt;
+&lt;/div&gt;&lt;ol start=&#34;2&#34;&gt;
 &lt;li&gt;시스템 서비스 구성을 다시 로드하고 etcd를 시작합니다:&lt;/li&gt;
 &lt;/ol&gt;
-&lt;div class="highlight"&gt;&lt;div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;
-&lt;table style="border-spacing:0;padding:0;margin:0;border:0;"&gt;&lt;tr&gt;&lt;td style="vertical-align:top;padding:0;margin:0;border:0;"&gt;
-&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code&gt;&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"&gt;1
-&lt;/span&gt;&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"&gt;2
-&lt;/span&gt;&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"&gt;3
+&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;
+&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;1
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;2
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;3
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%"&gt;
-&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;[&lt;/span&gt;root@docker-network ~&lt;span style="color:#f92672"&gt;]&lt;/span&gt;&lt;span style="color:#75715e"&gt;# systemctl daemon-reload&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;[&lt;/span&gt;root@docker-network ~&lt;span style="color:#f92672"&gt;]&lt;/span&gt;&lt;span style="color:#75715e"&gt;# systemctl enable etcd.service&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;[&lt;/span&gt;root@docker-network ~&lt;span style="color:#f92672"&gt;]&lt;/span&gt;&lt;span style="color:#75715e"&gt;# systemctl restart etcd.service&lt;/span&gt;
+&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;root@docker-network ~&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# systemctl daemon-reload&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;root@docker-network ~&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# systemctl enable etcd.service&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;root@docker-network ~&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# systemctl restart etcd.service&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;ol start="3"&gt;
+&lt;/div&gt;&lt;ol start=&#34;3&#34;&gt;
 &lt;li&gt;etcd 리스닝 상태를 확인합니다:&lt;/li&gt;
 &lt;/ol&gt;
-&lt;div class="highlight"&gt;&lt;div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;
-&lt;table style="border-spacing:0;padding:0;margin:0;border:0;"&gt;&lt;tr&gt;&lt;td style="vertical-align:top;padding:0;margin:0;border:0;"&gt;
-&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code&gt;&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"&gt;1
-&lt;/span&gt;&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"&gt;2
-&lt;/span&gt;&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"&gt;3
+&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;
+&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;1
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;2
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;3
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%"&gt;
-&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;[&lt;/span&gt;root@docker-network ~&lt;span style="color:#f92672"&gt;]&lt;/span&gt;&lt;span style="color:#75715e"&gt;# netstat -tulnp |grep :2379&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;tcp &lt;span style="color:#ae81ff"&gt;0&lt;/span&gt; &lt;span style="color:#ae81ff"&gt;0&lt;/span&gt; 192.168.8.88:2379 0.0.0.0:* LISTEN 1912/etcd
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;tcp &lt;span style="color:#ae81ff"&gt;0&lt;/span&gt; &lt;span style="color:#ae81ff"&gt;0&lt;/span&gt; 127.0.0.1:2379 0.0.0.0:* LISTEN 1912/etcd
+&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;root@docker-network ~&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# netstat -tulnp |grep :2379&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;tcp        &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;      &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt; 192.168.8.88:2379       0.0.0.0:*               LISTEN      1912/etcd
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;tcp        &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;      &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt; 127.0.0.1:2379          0.0.0.0:*               LISTEN      1912/etcd
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;h3 id="단계-5-etcd에-flannel-네트워크-구성-추가"&gt;단계 5: etcd에 flannel 네트워크 구성 추가&lt;/h3&gt;
-&lt;div class="highlight"&gt;&lt;div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;
-&lt;table style="border-spacing:0;padding:0;margin:0;border:0;"&gt;&lt;tr&gt;&lt;td style="vertical-align:top;padding:0;margin:0;border:0;"&gt;
-&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code&gt;&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"&gt;1
+&lt;/div&gt;&lt;h3 id=&#34;단계-5-etcd에-flannel-네트워크-구성-추가&#34;&gt;단계 5: etcd에 flannel 네트워크 구성 추가&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;
+&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;1
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%"&gt;
-&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;etcdctl --endpoints http://127.0.0.1:2379 put /coreos.com/network/config &lt;span style="color:#e6db74"&gt;&amp;#39;{&amp;#34;Network&amp;#34;: &amp;#34;172.16.0.0/16&amp;#34;, &amp;#34;SubnetLen&amp;#34;: 24, &amp;#34;SubnetMin&amp;#34;: &amp;#34;172.16.1.0&amp;#34;,&amp;#34;SubnetMax&amp;#34;: &amp;#34;172.16.10.0&amp;#34;, &amp;#34;Backend&amp;#34;: {&amp;#34;Type&amp;#34;: &amp;#34;vxlan&amp;#34;}}&amp;#39;&lt;/span&gt;
+&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;etcdctl --endpoints http://127.0.0.1:2379 put /coreos.com/network/config &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;{&amp;#34;Network&amp;#34;: &amp;#34;172.16.0.0/16&amp;#34;, &amp;#34;SubnetLen&amp;#34;: 24, &amp;#34;SubnetMin&amp;#34;: &amp;#34;172.16.1.0&amp;#34;,&amp;#34;SubnetMax&amp;#34;: &amp;#34;172.16.10.0&amp;#34;, &amp;#34;Backend&amp;#34;: {&amp;#34;Type&amp;#34;: &amp;#34;vxlan&amp;#34;}}&amp;#39;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;div class="highlight"&gt;&lt;div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;
-&lt;table style="border-spacing:0;padding:0;margin:0;border:0;"&gt;&lt;tr&gt;&lt;td style="vertical-align:top;padding:0;margin:0;border:0;"&gt;
-&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code&gt;&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"&gt;1
+&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;
+&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;1
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%"&gt;
-&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;etcdctl --endpoints http://192.168.8.88:2379 get /coreos.com/network/config
+&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;etcdctl --endpoints http://192.168.8.88:2379 get /coreos.com/network/config
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;구성 설명:&lt;/p&gt;</description></item></channel></rss>
+&lt;/div&gt;&lt;p&gt;구성 설명:&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

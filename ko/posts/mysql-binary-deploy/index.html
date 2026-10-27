@@ -1,0 +1,1513 @@
+<!DOCTYPE html>
+<html lang="ko" dir="auto" data-theme="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>MySQL 실전: 바이너리 설치, 시작/중지, 비밀번호 관리 | DAWN&#39;s Blog</title>
+<meta name="keywords" content="MySQL, 데이터베이스, 바이너리 설치">
+<meta name="description" content="MySQL 8.0 운영 실전: 공식 바이너리 패키지 설치, OS 준비, 초기화, 설정 파일, 다양한 시작/중지 방법, 그리고 비밀번호 설정/변경/분실 시 재설정.">
+<meta name="author" content="DAWN">
+<link rel="canonical" href="https://LMDAWN1127.github.io/ko/posts/mysql-binary-deploy/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.4bf808bff57bddc46d61c8ae060b00400fc679ab876e37243b11bd3f832f2958.css" integrity="sha256-S/gIv/V73cRtYciuBgsAQA/GeauHbjckOxG9P4MvKVg=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://LMDAWN1127.github.io/images/DAWN.jpg">
+<link rel="icon" type="image/png" sizes="16x16" href="https://LMDAWN1127.github.io/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://LMDAWN1127.github.io/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://LMDAWN1127.github.io/apple-touch-icon.png">
+<link rel="mask-icon" href="https://LMDAWN1127.github.io/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="zh" href="https://LMDAWN1127.github.io/posts/mysql-binary-deploy/">
+<link rel="alternate" hreflang="en" href="https://LMDAWN1127.github.io/en/posts/mysql-binary-deploy/">
+<link rel="alternate" hreflang="ko" href="https://LMDAWN1127.github.io/ko/posts/mysql-binary-deploy/">
+<link rel="alternate" hreflang="ja" href="https://LMDAWN1127.github.io/ja/posts/mysql-binary-deploy/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+                color-scheme: dark;
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .toc {
+                background: var(--entry);
+            }
+        }
+
+    </style>
+</noscript>
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.querySelector("html").dataset.theme = 'dark';
+    } else if (localStorage.getItem("pref-theme") === "light") {
+       document.querySelector("html").dataset.theme = 'light';
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.querySelector("html").dataset.theme = 'dark';
+    } else {
+        document.querySelector("html").dataset.theme = 'light';
+    }
+
+</script><link rel="stylesheet" href='https://LMDAWN1127.github.io/css/custom.css'>
+<meta property="og:url" content="https://LMDAWN1127.github.io/ko/posts/mysql-binary-deploy/">
+  <meta property="og:site_name" content="DAWN&#39;s Blog">
+  <meta property="og:title" content="MySQL 실전: 바이너리 설치, 시작/중지, 비밀번호 관리">
+  <meta property="og:description" content="MySQL 8.0 운영 실전: 공식 바이너리 패키지 설치, OS 준비, 초기화, 설정 파일, 다양한 시작/중지 방법, 그리고 비밀번호 설정/변경/분실 시 재설정.">
+  <meta property="og:locale" content="ko">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2026-10-03T14:53:00+08:00">
+    <meta property="article:modified_time" content="2026-10-03T14:53:00+08:00">
+    <meta property="article:tag" content="MySQL">
+    <meta property="article:tag" content="데이터베이스">
+    <meta property="article:tag" content="바이너리 설치">
+      <meta property="og:image" content="https://LMDAWN1127.github.io/images/DAWN.jpg">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://LMDAWN1127.github.io/images/DAWN.jpg">
+  <meta name="twitter:title" content="MySQL 실전: 바이너리 설치, 시작/중지, 비밀번호 관리">
+  <meta name="twitter:description" content="MySQL 8.0 운영 실전: 공식 바이너리 패키지 설치, OS 준비, 초기화, 설정 파일, 다양한 시작/중지 방법, 그리고 비밀번호 설정/변경/분실 시 재설정.">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://LMDAWN1127.github.io/ko/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "MySQL 실전: 바이너리 설치, 시작/중지, 비밀번호 관리",
+      "item": "https://LMDAWN1127.github.io/ko/posts/mysql-binary-deploy/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "MySQL 실전: 바이너리 설치, 시작/중지, 비밀번호 관리",
+  "name": "MySQL 실전: 바이너리 설치, 시작\/중지, 비밀번호 관리",
+  "description": "MySQL 8.0 운영 실전: 공식 바이너리 패키지 설치, OS 준비, 초기화, 설정 파일, 다양한 시작/중지 방법, 그리고 비밀번호 설정/변경/분실 시 재설정.",
+  "keywords": [
+    "MySQL", "데이터베이스", "바이너리 설치"
+  ],
+  "articleBody": "01 - 데이터베이스 서비스 설치 및 배포 1.1 데이터베이스 서버 패키지 다운로드 공식 다운로드 주소 (역사 보관 바이너리 설치 패키지):\n1 2 3 # 저장 디렉터리 [root@master ~]#cd /usr/local/ [root@master local]#wget https://downloads.mysql.com/archives/get/p/23/file/mysql-8.0.26-linux-glibc2.12-x86_64.tar.xz 설치 패키지 정보 확인\n1 2 [root@master local]#ll mysql-8.0.26-linux-glibc2.12-x86_64.tar.xz -rw-r--r-- 1 root root 914806904 Jul 2 2021 mysql-8.0.26-linux-glibc2.12-x86_64.tar.xz 1.2 바이너리 패키지로 데이터베이스 서버 설치 1단계: 운영체제 환경 준비 1. 네트워크 주소 확인 1 2 3 4 5 6 7 [root@master local]#ip addr show eth0 2: eth0: mtu 1500 qdisc pfifo_fast state UP group default qlen 1000 link/ether 00:0c:29:4b:b7:38 brd ff:ff:ff:ff:ff:ff inet 11.0.1.101/24 brd 11.0.1.255 scope global eth0 valid_lft forever preferred_lft forever inet6 fe80::20c:29ff:fe4b:b738/64 scope link valid_lft forever preferred_lft forever 2. 호스트명 해석 설정 1 2 3 4 [root@master local]#vim /etc/hosts 127.0.0.1 localhost localhost.localdomain localhost4 localhost4.localdomain4 ::1 localhost localhost.localdomain localhost6 localhost6.localdomain6 11.0.1.101 master 3. 시스템 방화벽 비활성화 1 [root@master local]#systemctl disable firewalld --now 4. SELinux 비활성화 1 2 3 4 5 [root@master local]#sed -i 's/^SELINUX=enforcing/SELINUX=disabled/' /etc/selinux/config # 재부팅 적용 [root@master local]#reboot [root@master local]#getenforce Disabled 5. 데이터베이스 설치 시 충돌 방지 1 2 3 4 5 6 # 시스템에 기본 포함된 mariadb가 있는지 확인 [root@master local]#rpm -qa | grep mariadb mariadb-libs-5.5.68-1.el7.x86_64 # 시스템 기본 데이터베이스 패키지 제거 [root@master local]#yum remove -y mariadb-libs 6. 데이터베이스 의존 소프트웨어 설치 (누락 시 초기화 오류) 1 [root@master local]#yum install -y libaio-devel 2단계: 데이터베이스 소프트웨어 설치 1. 패키지 압축 해제 및 심볼릭 링크 생성 (버전 관리 용이) 1 2 [root@master local]#tar xf mysql-8.0.26-linux-glibc2.12-x86_64.tar.xz [root@master local]#ln -s mysql-8.0.26-linux-glibc2.12-x86_64 mysql 2. 시스템 전역 환경변수 설정 1 2 3 4 5 [root@master local]#vim /etc/profile # 파일 끝에 추가 export PATH=$PATH:/usr/local/mysql/bin # 설정 적용 [root@master local]#source /etc/profile 3. 설치 버전 확인 1 2 [root@master local]#mysql -V mysql Ver 8.0.26 for Linux on x86_64 (MySQL Community Server - GPL) 3단계: 소프트웨어 초기화 MySQL 의 핵심 디렉터리 두 개:\n프로그램 디렉터리: /usr/local/mysql 데이터 디렉터리: /data/3306/data (실제 데이터 저장) 1. 전용 실행 사용자 생성 (시스템 로그인 불필요) 1 [root@master local]#useradd mysql -M -s /sbin/nologin 2. 데이터 저장 디렉터리 생성 및 권한 부여 1 2 [root@master local]#mkdir /data/3306/data -p [root@master local]#chown mysql.mysql /data/3306/data 3. 데이터 디렉터리 초기화 실행 1 2 3 4 5 # 존재할 수 있는 간섭 설정 파일 제거 [root@master local]#rm -f /etc/my.cnf # 비밀번호 없이 초기화 실행 (초기화 후 관리자 비밀번호 없음) [root@master local]#mysqld --initialize-insecure --user=mysql --datadir=/data/3306/data --basedir=/usr/local/mysql 4단계: 데이터베이스 서비스 설정 파일 작성 /etc/my.cnf 생성 및 편집:\n1 2 3 4 5 6 7 8 9 10 [root@master local]#cat \u003e /etc/my.cnf \u003c\u003c 'eof' \u003e [mysql] \u003e socket=/tmp/mysql.sock \u003e \u003e [mysqld] \u003e user=mysql \u003e basedir=/usr/local/mysql \u003e datadir=/data/3306/data \u003e socket=/tmp/mysql.sock \u003e eof 참고: 설정 파일의 basedir 및 datadir 경로는 실제 환경에 맞게 조정해야 함.\n5단계: 데이터베이스 서비스 시작 1. 공식 서비스 관리 스크립트로 시작 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 [root@master local]#cp /usr/local/mysql/support-files/mysql.server /etc/init.d/mysqld [root@master local]#/etc/init.d/mysqld start Starting MySQL.Logging to '/data/3306/data/master.err'. . SUCCESS! # 정상적으로 데이터베이스에 접속하면 시작 성공 [root@master local]#mysql -uroot Welcome to the MySQL monitor. Commands end with ; or \\g. Your MySQL connection id is 8 Server version: 8.0.26 MySQL Community Server - GPL Copyright (c) 2000, 2021, Oracle and/or its affiliates. Oracle is a registered trademark of Oracle Corporation and/or its affiliates. Other names may be trademarks of their respective owners. Type 'help;' or '\\h' for help. Type '\\c' to clear the current input statement. mysql\u003e 2. 명령줄에서 직접 시작 mysqld 명령으로 시작: 1 /usr/local/mysql/bin/mysqld --basedir=/usr/local/mysql --datadir=/data/3306/data --user=mysql --socket=/tmp/mysql.sock \u0026 mysqld_safe 안전 데몬으로 시작: 1 /usr/local/mysql/bin/mysqld_safe --datadir=/data/3306/data \u0026 3. systemctl / service 로 시작 방법 1: 전용 Systemd Unit 파일 작성 (/etc/systemd/system/mysqld.service) 방법 2: /etc/init.d/ 디렉터리의 서비스 스크립트를 직접 활성화 및 호출: 1 2 3 4 systemctl enable mysqld service mysqld start # 또는 systemctl start mysqld 1.3 보충 지식 1. 초기화 방법 두 가지 비교 방법 1: 비보안 초기화 (--initialize-insecure)\n1 mysqld --initialize-insecure --user=mysql --datadir=/data/3306/data --basedir=/usr/local/mysql 특징: DB 관리자에게 비밀번호가 없어 바로 비밀번호 없이 로그인 가능하며, 테스트나 스크립트 초기화에 편리. 방법 2: 보안 초기화 (--initialize)\n1 mysqld --initialize --user=mysql --datadir=/data/3306/data --basedir=/usr/local/mysql 특징: DB 관리자에게 무작위 임시 비밀번호가 생성되어 로그에 출력되며, 최초 로그인에 사용. 주의: 임시 비밀번호는 최초 로그인 전용이며, 로그인 후 반드시 새 비밀번호로 재설정해야 하며 변경 전에는 다른 작업을 실행할 수 없음: 1 ALTER USER root@'localhost' IDENTIFIED BY '123456'; 2. 데이터베이스 시작 실패 표준 해결 절차 1단계: 시스템 기본 환경 확인 SELinux 가 완전히 비활성화되었는지 확인; 포트 3306 이 점유되지 않았는지, 다른 충돌하는 데이터베이스 서비스 프로세스가 있는지 확인. 2단계: 오류 로그 조사 및 분석 전형적인 오류: Starting MySQL. ERROR! ... PID file ... 오류 로그 상세 확인: 1 2 3 cat /data/3306/data/master.err # 로그 오류 예시: # 2024-06-14T09:15:36.120048Z 1 [ERROR] [MY-012271] [InnoDB] The innodb_system data file 'ibdata1' must be writable 3단계: 오류 로그가 없을 때 조사 방법 설정 파일 /etc/my.cnf 확인: 설정 파일 경로와 파일 이름이 올바른지 확인; 설정 파일 내부 파라미터 구문 및 경로 설정이 올바른지 확인. 02 - 데이터베이스 서비스 시작 및 중지 데이터베이스 서비스를 시작하고 중지하는 방법은 여러 가지이며, 일반적인 방법을 아래에 정리함:\n번호 시작 방법 해당 중지 방법 설명 및 권장 01 mysqld \u0026 kill / pkill / killall 비권장; kill -9 사용 엄금 02 mysqld_safe \u0026 kill / pkill / killall 직접 kill 비권장 03 mysql.server start mysql.server stop 공식 기본 제어 스크립트 04 service mysqld start service mysqld stop 권장 (고전 서비스 관리) 05 systemctl start mysqld systemctl stop mysqld 권장 (현대 Linux 표준) 06 클라이언트/관리 명령 mysqladmin -uroot -p비밀번호 shutdown 관리자가 원격 또는 로컬 명령줄에서 정상 종료 07 SQL 세션 내 종료 터미널에서 shutdown; 실행 관리자 권한 필요 03 - 데이터베이스 서비스 비밀번호 관리 1. 비밀번호가 없을 때 설정 방법 1: 명령줄 이용\n1 2 3 [root@master local]#mysqladmin -uroot password '123456' mysqladmin: [Warning] Using a password on the command line interface can be insecure. Warning: Since password will be sent to server in plain text, use ssl connection to ensure password safety. 방법 2: SQL 문 이용\n1 2 mysql\u003e ALTER USER root@'localhost' IDENTIFIED BY '000000'; Query OK, 0 rows affected (0.02 sec) 2. 기존 비밀번호 변경 방법 1: 명령줄 이용 1 2 3 [root@master local]#mysqladmin -uroot -p000000 password '123456' mysqladmin: [Warning] Using a password on the command line interface can be insecure. Warning: Since password will be sent to server in plain text, use ssl connection to ensure password safety. 방법 2: SQL 문 이용 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 [root@master local]#mysql -uroot -p123456 mysql: [Warning] Using a password on the command line interface can be insecure. Welcome to the MySQL monitor. Commands end with ; or \\g. Your MySQL connection id is 14 Server version: 8.0.26 MySQL Community Server - GPL Copyright (c) 2000, 2021, Oracle and/or its affiliates. Oracle is a registered trademark of Oracle Corporation and/or its affiliates. Other names may be trademarks of their respective owners. Type 'help;' or '\\h' for help. Type '\\c' to clear the current input statement. mysql\u003e ALTER USER root@'localhost' IDENTIFIED BY '123456'; Query OK, 0 rows affected (0.00 sec) mysql\u003e 3. 비밀번호를 잊어버린 경우 (비밀번호 재설정) 비밀번호 재설정 실전 절차 1단계: 데이터베이스 서비스 중지\n1 mysql\u003e shutdown; 또는 시스템 터미널에서 실행:\n1 2 3 4 [root@master local]#service mysqld stop Shutting down MySQL.. SUCCESS! # 또는 pkill mysqld 2단계: 안전 모드로 시작 (권한 테이블 로드 건너뛰기로 비밀번호 없이 로그인)\n1 2 [root@master local]#/usr/local/mysql/bin/mysqld_safe --datadir=/data/3306/data --skip-grant-tables --skip-networking \u0026 [1] 2658 설명: --skip-networking 은 네트워크 수신을 비활성화하여 비밀번호 없는 동안 다른 네트워크 클라이언트의 개입을 방지함.\n3단계: 비밀번호 없이 로그인 후 재설정\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 [root@master local]#mysql Welcome to the MySQL monitor. Commands end with ; or \\g. Your MySQL connection id is 7 Server version: 8.0.26 MySQL Community Server - GPL Copyright (c) 2000, 2021, Oracle and/or its affiliates. Oracle is a registered trademark of Oracle Corporation and/or its affiliates. Other names may be trademarks of their respective owners. Type 'help;' or '\\h' for help. Type '\\c' to clear the current input statement. mysql\u003e FLUSH PRIVILEGES; Query OK, 0 rows affected (0.01 sec) mysql\u003e ALTER USER root@'localhost' IDENTIFIED BY '123456'; Query OK, 0 rows affected (0.00 sec) mysql\u003e MySQL 터미널에서 순서대로 실행:\n1 2 3 4 5 6 7 -- 1. 권한 테이블 리플러시 (메모리와 디스크의 권한 테이블 동기화) -- 작용1: 메모리의 권한 테이블 정보를 디스크에 동기화 기록 -- 작용2: 디스크의 권한 테이블 정보를 메모리로 재로드 FLUSH PRIVILEGES; -- 2. 비밀번호 재설정 ALTER USER root@'localhost' IDENTIFIED BY '123456'; 주의: FLUSH PRIVILEGES; 를 실행하지 않고 ALTER USER 를 바로 실행하면 시스템이 오류를 발생:\n1 ERROR 1290 (HY000): The MySQL server is running with the --skip-grant-tables option so it cannot execute this statement 4단계: 데이터베이스 서비스 정상 재시작\n1 2 3 4 5 6 7 # 임시 안전 모드 프로세스 종료 [root@master local]#pkill mysqld # 데이터베이스 서비스 정상 시작 [root@master local]#/etc/init.d/mysqld start Starting MySQL.. SUCCESS! # 또는 service mysqld start 5단계: 새 비밀번호로 로그인 검증\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 [root@master local]#mysql -uroot -p123456 mysql: [Warning] Using a password on the command line interface can be insecure. Welcome to the MySQL monitor. Commands end with ; or \\g. Your MySQL connection id is 8 Server version: 8.0.26 MySQL Community Server - GPL Copyright (c) 2000, 2021, Oracle and/or its affiliates. Oracle is a registered trademark of Oracle Corporation and/or its affiliates. Other names may be trademarks of their respective owners. Type 'help;' or '\\h' for help. Type '\\c' to clear the current input statement. mysql\u003e ",
+  "wordCount" : "1566",
+  "inLanguage": "ko",
+  "image": "https://LMDAWN1127.github.io/images/DAWN.jpg","datePublished": "2026-10-03T14:53:00+08:00",
+  "dateModified": "2026-10-03T14:53:00+08:00",
+  "author":{
+    "@type": "Person",
+    "name": "DAWN"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://LMDAWN1127.github.io/ko/posts/mysql-binary-deploy/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "DAWN's Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://LMDAWN1127.github.io/images/DAWN.jpg"
+    }
+  }
+}
+</script>
+</head>
+<body id="top">
+    <header class="header">
+    <nav class="header-nav">
+        <div class="logo">
+            <a href="https://LMDAWN1127.github.io/ko/" accesskey="h" title="DAWN&#39;s Blog (Alt + H)">
+                <img src="https://LMDAWN1127.github.io/images/DAWN.jpg" alt="" aria-label="logo"
+                    height="38">DAWN&#39;s Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" class="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
+                    <svg class="moon" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg class="sun" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button><span class="nav-sep">|</span>
+                    <ul class="lang-menu">
+                        <li>
+                            <a href="https://LMDAWN1127.github.io/" title="中文"
+                                aria-label="中文">Zh</a>
+                        </li>
+                        <li>
+                            <a href="https://LMDAWN1127.github.io/en/" title="English"
+                                aria-label="English">En</a>
+                        </li>
+                        <li>
+                            <a href="https://LMDAWN1127.github.io/ja/" title="日本語"
+                                aria-label="日本語">Ja</a>
+                        </li>
+                    </ul>
+            </div>
+        </div>
+        <ul id="menu" class="menu">
+            <li>
+                <a href="https://LMDAWN1127.github.io/ko/archives/" title="아카이브">
+                    <span>아카이브</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <h1 class="post-title entry-hint-parent">
+      MySQL 실전: 바이너리 설치, 시작/중지, 비밀번호 관리
+    </h1>
+  </header>
+
+  <div class="post-layout">
+    <div class="post-content-wrapper"> 
+      <div class="post-content md-content"><h2 id="01---데이터베이스-서비스-설치-및-배포">01 - 데이터베이스 서비스 설치 및 배포<a hidden class="anchor" aria-hidden="true" href="#01---데이터베이스-서비스-설치-및-배포">#</a></h2>
+<h3 id="11-데이터베이스-서버-패키지-다운로드">1.1 데이터베이스 서버 패키지 다운로드<a hidden class="anchor" aria-hidden="true" href="#11-데이터베이스-서버-패키지-다운로드">#</a></h3>
+<p>공식 다운로드 주소 (역사 보관 바이너리 설치 패키지):</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 저장 디렉터리</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master ~<span style="color:#f92672">]</span><span style="color:#75715e">#cd /usr/local/</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master local<span style="color:#f92672">]</span><span style="color:#75715e">#wget https://downloads.mysql.com/archives/get/p/23/file/mysql-8.0.26-linux-glibc2.12-x86_64.tar.xz</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>설치 패키지 정보 확인</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master local<span style="color:#f92672">]</span><span style="color:#75715e">#ll mysql-8.0.26-linux-glibc2.12-x86_64.tar.xz</span>
+</span></span><span style="display:flex;"><span>-rw-r--r-- <span style="color:#ae81ff">1</span> root root <span style="color:#ae81ff">914806904</span> Jul  <span style="color:#ae81ff">2</span>  <span style="color:#ae81ff">2021</span> mysql-8.0.26-linux-glibc2.12-x86_64.tar.xz
+</span></span></code></pre></td></tr></table>
+</div>
+</div><hr>
+<h3 id="12-바이너리-패키지로-데이터베이스-서버-설치">1.2 바이너리 패키지로 데이터베이스 서버 설치<a hidden class="anchor" aria-hidden="true" href="#12-바이너리-패키지로-데이터베이스-서버-설치">#</a></h3>
+<h4 id="1단계-운영체제-환경-준비">1단계: 운영체제 환경 준비<a hidden class="anchor" aria-hidden="true" href="#1단계-운영체제-환경-준비">#</a></h4>
+<h5 id="1-네트워크-주소-확인">1. 네트워크 주소 확인<a hidden class="anchor" aria-hidden="true" href="#1-네트워크-주소-확인">#</a></h5>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master local<span style="color:#f92672">]</span><span style="color:#75715e">#ip addr show eth0</span>
+</span></span><span style="display:flex;"><span>2: eth0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu <span style="color:#ae81ff">1500</span> qdisc pfifo_fast state UP group default qlen <span style="color:#ae81ff">1000</span>
+</span></span><span style="display:flex;"><span>    link/ether 00:0c:29:4b:b7:38 brd ff:ff:ff:ff:ff:ff
+</span></span><span style="display:flex;"><span>    inet 11.0.1.101/24 brd 11.0.1.255 scope global eth0
+</span></span><span style="display:flex;"><span>       valid_lft forever preferred_lft forever
+</span></span><span style="display:flex;"><span>    inet6 fe80::20c:29ff:fe4b:b738/64 scope link
+</span></span><span style="display:flex;"><span>       valid_lft forever preferred_lft forever
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h5 id="2-호스트명-해석-설정">2. 호스트명 해석 설정<a hidden class="anchor" aria-hidden="true" href="#2-호스트명-해석-설정">#</a></h5>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master local<span style="color:#f92672">]</span><span style="color:#75715e">#vim /etc/hosts</span>
+</span></span><span style="display:flex;"><span>127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
+</span></span><span style="display:flex;"><span>::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
+</span></span><span style="display:flex;"><span>11.0.1.101 master
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h5 id="3-시스템-방화벽-비활성화">3. 시스템 방화벽 비활성화<a hidden class="anchor" aria-hidden="true" href="#3-시스템-방화벽-비활성화">#</a></h5>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master local<span style="color:#f92672">]</span><span style="color:#75715e">#systemctl disable firewalld --now</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h5 id="4-selinux-비활성화">4. SELinux 비활성화<a hidden class="anchor" aria-hidden="true" href="#4-selinux-비활성화">#</a></h5>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master local<span style="color:#f92672">]</span><span style="color:#75715e">#sed -i &#39;s/^SELINUX=enforcing/SELINUX=disabled/&#39; /etc/selinux/config</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 재부팅 적용</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master local<span style="color:#f92672">]</span><span style="color:#75715e">#reboot</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master local<span style="color:#f92672">]</span><span style="color:#75715e">#getenforce</span>
+</span></span><span style="display:flex;"><span>Disabled
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h5 id="5-데이터베이스-설치-시-충돌-방지">5. 데이터베이스 설치 시 충돌 방지<a hidden class="anchor" aria-hidden="true" href="#5-데이터베이스-설치-시-충돌-방지">#</a></h5>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 시스템에 기본 포함된 mariadb가 있는지 확인</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master local<span style="color:#f92672">]</span><span style="color:#75715e">#rpm -qa | grep mariadb</span>
+</span></span><span style="display:flex;"><span>mariadb-libs-5.5.68-1.el7.x86_64
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 시스템 기본 데이터베이스 패키지 제거</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master local<span style="color:#f92672">]</span><span style="color:#75715e">#yum remove -y mariadb-libs</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h5 id="6-데이터베이스-의존-소프트웨어-설치-누락-시-초기화-오류">6. 데이터베이스 의존 소프트웨어 설치 (누락 시 초기화 오류)<a hidden class="anchor" aria-hidden="true" href="#6-데이터베이스-의존-소프트웨어-설치-누락-시-초기화-오류">#</a></h5>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master local<span style="color:#f92672">]</span><span style="color:#75715e">#yum install -y libaio-devel</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><hr>
+<h4 id="2단계-데이터베이스-소프트웨어-설치">2단계: 데이터베이스 소프트웨어 설치<a hidden class="anchor" aria-hidden="true" href="#2단계-데이터베이스-소프트웨어-설치">#</a></h4>
+<h5 id="1-패키지-압축-해제-및-심볼릭-링크-생성-버전-관리-용이">1. 패키지 압축 해제 및 심볼릭 링크 생성 (버전 관리 용이)<a hidden class="anchor" aria-hidden="true" href="#1-패키지-압축-해제-및-심볼릭-링크-생성-버전-관리-용이">#</a></h5>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master local<span style="color:#f92672">]</span><span style="color:#75715e">#tar xf mysql-8.0.26-linux-glibc2.12-x86_64.tar.xz</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master local<span style="color:#f92672">]</span><span style="color:#75715e">#ln -s mysql-8.0.26-linux-glibc2.12-x86_64 mysql</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h5 id="2-시스템-전역-환경변수-설정">2. 시스템 전역 환경변수 설정<a hidden class="anchor" aria-hidden="true" href="#2-시스템-전역-환경변수-설정">#</a></h5>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master local<span style="color:#f92672">]</span><span style="color:#75715e">#vim /etc/profile</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 파일 끝에 추가</span>
+</span></span><span style="display:flex;"><span>export PATH<span style="color:#f92672">=</span>$PATH:/usr/local/mysql/bin
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 설정 적용</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master local<span style="color:#f92672">]</span><span style="color:#75715e">#source /etc/profile</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h5 id="3-설치-버전-확인">3. 설치 버전 확인<a hidden class="anchor" aria-hidden="true" href="#3-설치-버전-확인">#</a></h5>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master local<span style="color:#f92672">]</span><span style="color:#75715e">#mysql -V</span>
+</span></span><span style="display:flex;"><span>mysql  Ver 8.0.26 <span style="color:#66d9ef">for</span> Linux on x86_64 <span style="color:#f92672">(</span>MySQL Community Server - GPL<span style="color:#f92672">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><hr>
+<h4 id="3단계-소프트웨어-초기화">3단계: 소프트웨어 초기화<a hidden class="anchor" aria-hidden="true" href="#3단계-소프트웨어-초기화">#</a></h4>
+<p>MySQL 의 핵심 디렉터리 두 개:</p>
+<ul>
+<li><strong>프로그램 디렉터리</strong>: <code>/usr/local/mysql</code></li>
+<li><strong>데이터 디렉터리</strong>: <code>/data/3306/data</code> (실제 데이터 저장)</li>
+</ul>
+<h5 id="1-전용-실행-사용자-생성-시스템-로그인-불필요">1. 전용 실행 사용자 생성 (시스템 로그인 불필요)<a hidden class="anchor" aria-hidden="true" href="#1-전용-실행-사용자-생성-시스템-로그인-불필요">#</a></h5>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master local<span style="color:#f92672">]</span><span style="color:#75715e">#useradd mysql -M -s /sbin/nologin</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h5 id="2-데이터-저장-디렉터리-생성-및-권한-부여">2. 데이터 저장 디렉터리 생성 및 권한 부여<a hidden class="anchor" aria-hidden="true" href="#2-데이터-저장-디렉터리-생성-및-권한-부여">#</a></h5>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master local<span style="color:#f92672">]</span><span style="color:#75715e">#mkdir /data/3306/data -p</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master local<span style="color:#f92672">]</span><span style="color:#75715e">#chown mysql.mysql /data/3306/data</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h5 id="3-데이터-디렉터리-초기화-실행">3. 데이터 디렉터리 초기화 실행<a hidden class="anchor" aria-hidden="true" href="#3-데이터-디렉터리-초기화-실행">#</a></h5>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 존재할 수 있는 간섭 설정 파일 제거</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master local<span style="color:#f92672">]</span><span style="color:#75715e">#rm -f /etc/my.cnf</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 비밀번호 없이 초기화 실행 (초기화 후 관리자 비밀번호 없음)</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master local<span style="color:#f92672">]</span><span style="color:#75715e">#mysqld --initialize-insecure --user=mysql --datadir=/data/3306/data --basedir=/usr/local/mysql</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><hr>
+<h4 id="4단계-데이터베이스-서비스-설정-파일-작성">4단계: 데이터베이스 서비스 설정 파일 작성<a hidden class="anchor" aria-hidden="true" href="#4단계-데이터베이스-서비스-설정-파일-작성">#</a></h4>
+<p><code>/etc/my.cnf</code> 생성 및 편집:</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-ini" data-lang="ini"><span style="display:flex;"><span><span style="color:#a6e22e">[root@master local]#cat &gt; /etc/my.cnf &lt;&lt; &#39;eof&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">&gt; [mysql]</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">&gt; socket</span><span style="color:#f92672">=</span><span style="color:#e6db74">/tmp/mysql.sock</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">&gt; [mysqld]</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">&gt; user</span><span style="color:#f92672">=</span><span style="color:#e6db74">mysql</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">&gt; basedir</span><span style="color:#f92672">=</span><span style="color:#e6db74">/usr/local/mysql</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">&gt; datadir</span><span style="color:#f92672">=</span><span style="color:#e6db74">/data/3306/data</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">&gt; socket</span><span style="color:#f92672">=</span><span style="color:#e6db74">/tmp/mysql.sock</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">&gt; eof</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>참고: 설정 파일의 <code>basedir</code> 및 <code>datadir</code> 경로는 실제 환경에 맞게 조정해야 함.</p>
+</blockquote>
+<hr>
+<h4 id="5단계-데이터베이스-서비스-시작">5단계: 데이터베이스 서비스 시작<a hidden class="anchor" aria-hidden="true" href="#5단계-데이터베이스-서비스-시작">#</a></h4>
+<h5 id="1-공식-서비스-관리-스크립트로-시작">1. 공식 서비스 관리 스크립트로 시작<a hidden class="anchor" aria-hidden="true" href="#1-공식-서비스-관리-스크립트로-시작">#</a></h5>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master local<span style="color:#f92672">]</span><span style="color:#75715e">#cp /usr/local/mysql/support-files/mysql.server /etc/init.d/mysqld</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master local<span style="color:#f92672">]</span><span style="color:#75715e">#/etc/init.d/mysqld start</span>
+</span></span><span style="display:flex;"><span>Starting MySQL.Logging to <span style="color:#e6db74">&#39;/data/3306/data/master.err&#39;</span>.
+</span></span><span style="display:flex;"><span>. SUCCESS!
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 정상적으로 데이터베이스에 접속하면 시작 성공</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master local<span style="color:#f92672">]</span><span style="color:#75715e">#mysql -uroot</span>
+</span></span><span style="display:flex;"><span>Welcome to the MySQL monitor.  Commands end with ; or <span style="color:#ae81ff">\g</span>.
+</span></span><span style="display:flex;"><span>Your MySQL connection id is <span style="color:#ae81ff">8</span>
+</span></span><span style="display:flex;"><span>Server version: 8.0.26 MySQL Community Server - GPL
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Copyright <span style="color:#f92672">(</span>c<span style="color:#f92672">)</span> 2000, 2021, Oracle and/or its affiliates.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Oracle is a registered trademark of Oracle Corporation and/or its
+</span></span><span style="display:flex;"><span>affiliates. Other names may be trademarks of their respective
+</span></span><span style="display:flex;"><span>owners.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Type <span style="color:#e6db74">&#39;help;&#39;</span> or <span style="color:#e6db74">&#39;\h&#39;</span> <span style="color:#66d9ef">for</span> help. Type <span style="color:#e6db74">&#39;\c&#39;</span> to clear the current input statement.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>mysql&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h5 id="2-명령줄에서-직접-시작">2. 명령줄에서 직접 시작<a hidden class="anchor" aria-hidden="true" href="#2-명령줄에서-직접-시작">#</a></h5>
+<ul>
+<li><strong><code>mysqld</code> 명령으로 시작</strong>:
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>/usr/local/mysql/bin/mysqld --basedir<span style="color:#f92672">=</span>/usr/local/mysql --datadir<span style="color:#f92672">=</span>/data/3306/data --user<span style="color:#f92672">=</span>mysql --socket<span style="color:#f92672">=</span>/tmp/mysql.sock &amp;
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li><strong><code>mysqld_safe</code> 안전 데몬으로 시작</strong>:
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>/usr/local/mysql/bin/mysqld_safe --datadir<span style="color:#f92672">=</span>/data/3306/data &amp;
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+<h5 id="3-systemctl--service-로-시작">3. systemctl / service 로 시작<a hidden class="anchor" aria-hidden="true" href="#3-systemctl--service-로-시작">#</a></h5>
+<ul>
+<li><strong>방법 1</strong>: 전용 Systemd Unit 파일 작성 (<code>/etc/systemd/system/mysqld.service</code>)</li>
+<li><strong>방법 2</strong>: <code>/etc/init.d/</code> 디렉터리의 서비스 스크립트를 직접 활성화 및 호출:
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>systemctl enable mysqld
+</span></span><span style="display:flex;"><span>service mysqld start
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 또는</span>
+</span></span><span style="display:flex;"><span>systemctl start mysqld
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+<hr>
+<h3 id="13-보충-지식">1.3 보충 지식<a hidden class="anchor" aria-hidden="true" href="#13-보충-지식">#</a></h3>
+<h4 id="1-초기화-방법-두-가지-비교">1. 초기화 방법 두 가지 비교<a hidden class="anchor" aria-hidden="true" href="#1-초기화-방법-두-가지-비교">#</a></h4>
+<ul>
+<li>
+<p><strong>방법 1: 비보안 초기화 (<code>--initialize-insecure</code>)</strong></p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>mysqld --initialize-insecure --user<span style="color:#f92672">=</span>mysql --datadir<span style="color:#f92672">=</span>/data/3306/data --basedir<span style="color:#f92672">=</span>/usr/local/mysql
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>특징: DB 관리자에게 비밀번호가 없어 바로 비밀번호 없이 로그인 가능하며, 테스트나 스크립트 초기화에 편리.</li>
+</ul>
+</li>
+<li>
+<p><strong>방법 2: 보안 초기화 (<code>--initialize</code>)</strong></p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>mysqld --initialize --user<span style="color:#f92672">=</span>mysql --datadir<span style="color:#f92672">=</span>/data/3306/data --basedir<span style="color:#f92672">=</span>/usr/local/mysql
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>특징: DB 관리자에게 무작위 임시 비밀번호가 생성되어 로그에 출력되며, 최초 로그인에 사용.</li>
+<li><strong>주의</strong>: 임시 비밀번호는 최초 로그인 전용이며, 로그인 후 반드시 새 비밀번호로 재설정해야 하며 변경 전에는 다른 작업을 실행할 수 없음:
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">ALTER</span> <span style="color:#66d9ef">USER</span> root<span style="color:#f92672">@</span><span style="color:#e6db74">&#39;localhost&#39;</span> IDENTIFIED <span style="color:#66d9ef">BY</span> <span style="color:#e6db74">&#39;123456&#39;</span>;
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+</li>
+</ul>
+<h4 id="2-데이터베이스-시작-실패-표준-해결-절차">2. 데이터베이스 시작 실패 표준 해결 절차<a hidden class="anchor" aria-hidden="true" href="#2-데이터베이스-시작-실패-표준-해결-절차">#</a></h4>
+<ul>
+<li><strong>1단계: 시스템 기본 환경 확인</strong>
+<ul>
+<li>SELinux 가 완전히 비활성화되었는지 확인;</li>
+<li>포트 <code>3306</code> 이 점유되지 않았는지, 다른 충돌하는 데이터베이스 서비스 프로세스가 있는지 확인.</li>
+</ul>
+</li>
+<li><strong>2단계: 오류 로그 조사 및 분석</strong>
+<ul>
+<li>전형적인 오류: <code>Starting MySQL. ERROR! ... PID file ...</code></li>
+<li>오류 로그 상세 확인:
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>cat /data/3306/data/master.err
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 로그 오류 예시:</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 2024-06-14T09:15:36.120048Z 1 [ERROR] [MY-012271] [InnoDB] The innodb_system data file &#39;ibdata1&#39; must be writable</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+</li>
+<li><strong>3단계: 오류 로그가 없을 때 조사 방법</strong>
+<ul>
+<li>설정 파일 <code>/etc/my.cnf</code> 확인:
+<ol>
+<li>설정 파일 경로와 파일 이름이 올바른지 확인;</li>
+<li>설정 파일 내부 파라미터 구문 및 경로 설정이 올바른지 확인.</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="02---데이터베이스-서비스-시작-및-중지">02 - 데이터베이스 서비스 시작 및 중지<a hidden class="anchor" aria-hidden="true" href="#02---데이터베이스-서비스-시작-및-중지">#</a></h2>
+<p>데이터베이스 서비스를 시작하고 중지하는 방법은 여러 가지이며, 일반적인 방법을 아래에 정리함:</p>
+<table>
+	<thead>
+			<tr>
+					<th style="text-align: center">번호</th>
+					<th style="text-align: left">시작 방법</th>
+					<th style="text-align: left">해당 중지 방법</th>
+					<th style="text-align: left">설명 및 권장</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td style="text-align: center"><strong>01</strong></td>
+					<td style="text-align: left"><code>mysqld &amp;</code></td>
+					<td style="text-align: left"><code>kill</code> / <code>pkill</code> / <code>killall</code></td>
+					<td style="text-align: left">비권장; <strong><code>kill -9</code> 사용 엄금</strong></td>
+			</tr>
+			<tr>
+					<td style="text-align: center"><strong>02</strong></td>
+					<td style="text-align: left"><code>mysqld_safe &amp;</code></td>
+					<td style="text-align: left"><code>kill</code> / <code>pkill</code> / <code>killall</code></td>
+					<td style="text-align: left">직접 kill 비권장</td>
+			</tr>
+			<tr>
+					<td style="text-align: center"><strong>03</strong></td>
+					<td style="text-align: left"><code>mysql.server start</code></td>
+					<td style="text-align: left"><code>mysql.server stop</code></td>
+					<td style="text-align: left">공식 기본 제어 스크립트</td>
+			</tr>
+			<tr>
+					<td style="text-align: center"><strong>04</strong></td>
+					<td style="text-align: left"><code>service mysqld start</code></td>
+					<td style="text-align: left"><code>service mysqld stop</code></td>
+					<td style="text-align: left"><strong>권장</strong> (고전 서비스 관리)</td>
+			</tr>
+			<tr>
+					<td style="text-align: center"><strong>05</strong></td>
+					<td style="text-align: left"><code>systemctl start mysqld</code></td>
+					<td style="text-align: left"><code>systemctl stop mysqld</code></td>
+					<td style="text-align: left"><strong>권장</strong> (현대 Linux 표준)</td>
+			</tr>
+			<tr>
+					<td style="text-align: center"><strong>06</strong></td>
+					<td style="text-align: left">클라이언트/관리 명령</td>
+					<td style="text-align: left"><code>mysqladmin -uroot -p비밀번호 shutdown</code></td>
+					<td style="text-align: left">관리자가 원격 또는 로컬 명령줄에서 정상 종료</td>
+			</tr>
+			<tr>
+					<td style="text-align: center"><strong>07</strong></td>
+					<td style="text-align: left">SQL 세션 내 종료</td>
+					<td style="text-align: left">터미널에서 <code>shutdown;</code> 실행</td>
+					<td style="text-align: left">관리자 권한 필요</td>
+			</tr>
+	</tbody>
+</table>
+<hr>
+<h2 id="03---데이터베이스-서비스-비밀번호-관리">03 - 데이터베이스 서비스 비밀번호 관리<a hidden class="anchor" aria-hidden="true" href="#03---데이터베이스-서비스-비밀번호-관리">#</a></h2>
+<h3 id="1-비밀번호가-없을-때-설정">1. 비밀번호가 없을 때 설정<a hidden class="anchor" aria-hidden="true" href="#1-비밀번호가-없을-때-설정">#</a></h3>
+<ul>
+<li>
+<p><strong>방법 1: 명령줄 이용</strong></p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master local<span style="color:#f92672">]</span><span style="color:#75715e">#mysqladmin -uroot password &#39;123456&#39;</span>
+</span></span><span style="display:flex;"><span>mysqladmin: <span style="color:#f92672">[</span>Warning<span style="color:#f92672">]</span> Using a password on the command line interface can be insecure.
+</span></span><span style="display:flex;"><span>Warning: Since password will be sent to server in plain text, use ssl connection to ensure password safety.
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p><strong>방법 2: SQL 문 이용</strong></p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span>mysql<span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">ALTER</span> <span style="color:#66d9ef">USER</span> root<span style="color:#f92672">@</span><span style="color:#e6db74">&#39;localhost&#39;</span> IDENTIFIED <span style="color:#66d9ef">BY</span> <span style="color:#e6db74">&#39;000000&#39;</span>;
+</span></span><span style="display:flex;"><span>Query OK, <span style="color:#ae81ff">0</span> <span style="color:#66d9ef">rows</span> affected (<span style="color:#ae81ff">0</span>.<span style="color:#ae81ff">02</span> sec)
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+<hr>
+<h3 id="2-기존-비밀번호-변경">2. 기존 비밀번호 변경<a hidden class="anchor" aria-hidden="true" href="#2-기존-비밀번호-변경">#</a></h3>
+<ul>
+<li><strong>방법 1: 명령줄 이용</strong>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master local<span style="color:#f92672">]</span><span style="color:#75715e">#mysqladmin -uroot -p000000 password &#39;123456&#39;</span>
+</span></span><span style="display:flex;"><span>mysqladmin: <span style="color:#f92672">[</span>Warning<span style="color:#f92672">]</span> Using a password on the command line interface can be insecure.
+</span></span><span style="display:flex;"><span>Warning: Since password will be sent to server in plain text, use ssl connection to ensure password safety.
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li><strong>방법 2: SQL 문 이용</strong>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master local<span style="color:#f92672">]</span><span style="color:#75715e">#mysql -uroot -p123456</span>
+</span></span><span style="display:flex;"><span>mysql: <span style="color:#f92672">[</span>Warning<span style="color:#f92672">]</span> Using a password on the command line interface can be insecure.
+</span></span><span style="display:flex;"><span>Welcome to the MySQL monitor.  Commands end with ; or <span style="color:#ae81ff">\g</span>.
+</span></span><span style="display:flex;"><span>Your MySQL connection id is <span style="color:#ae81ff">14</span>
+</span></span><span style="display:flex;"><span>Server version: 8.0.26 MySQL Community Server - GPL
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Copyright <span style="color:#f92672">(</span>c<span style="color:#f92672">)</span> 2000, 2021, Oracle and/or its affiliates.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Oracle is a registered trademark of Oracle Corporation and/or its
+</span></span><span style="display:flex;"><span>affiliates. Other names may be trademarks of their respective
+</span></span><span style="display:flex;"><span>owners.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Type <span style="color:#e6db74">&#39;help;&#39;</span> or <span style="color:#e6db74">&#39;\h&#39;</span> <span style="color:#66d9ef">for</span> help. Type <span style="color:#e6db74">&#39;\c&#39;</span> to clear the current input statement.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>mysql&gt; ALTER USER root@<span style="color:#e6db74">&#39;localhost&#39;</span> IDENTIFIED BY <span style="color:#e6db74">&#39;123456&#39;</span>;
+</span></span><span style="display:flex;"><span>Query OK, <span style="color:#ae81ff">0</span> rows affected <span style="color:#f92672">(</span>0.00 sec<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>mysql&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+<hr>
+<h3 id="3-비밀번호를-잊어버린-경우-비밀번호-재설정">3. 비밀번호를 잊어버린 경우 (비밀번호 재설정)<a hidden class="anchor" aria-hidden="true" href="#3-비밀번호를-잊어버린-경우-비밀번호-재설정">#</a></h3>
+<h4 id="비밀번호-재설정-실전-절차">비밀번호 재설정 실전 절차<a hidden class="anchor" aria-hidden="true" href="#비밀번호-재설정-실전-절차">#</a></h4>
+<ul>
+<li>
+<p><strong>1단계: 데이터베이스 서비스 중지</strong></p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span>mysql<span style="color:#f92672">&gt;</span> shutdown;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>또는 시스템 터미널에서 실행:</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master local<span style="color:#f92672">]</span><span style="color:#75715e">#service mysqld stop</span>
+</span></span><span style="display:flex;"><span>Shutting down MySQL.. SUCCESS!
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 또는</span>
+</span></span><span style="display:flex;"><span>pkill mysqld
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p><strong>2단계: 안전 모드로 시작 (권한 테이블 로드 건너뛰기로 비밀번호 없이 로그인)</strong></p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master local<span style="color:#f92672">]</span><span style="color:#75715e">#/usr/local/mysql/bin/mysqld_safe --datadir=/data/3306/data --skip-grant-tables --skip-networking &amp;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>1<span style="color:#f92672">]</span> <span style="color:#ae81ff">2658</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><em>설명</em>: <code>--skip-networking</code> 은 네트워크 수신을 비활성화하여 비밀번호 없는 동안 다른 네트워크 클라이언트의 개입을 방지함.</p>
+</li>
+<li>
+<p><strong>3단계: 비밀번호 없이 로그인 후 재설정</strong></p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master local<span style="color:#f92672">]</span><span style="color:#75715e">#mysql</span>
+</span></span><span style="display:flex;"><span>Welcome to the MySQL monitor.  Commands end with ; or <span style="color:#ae81ff">\g</span>.
+</span></span><span style="display:flex;"><span>Your MySQL connection id is <span style="color:#ae81ff">7</span>
+</span></span><span style="display:flex;"><span>Server version: 8.0.26 MySQL Community Server - GPL
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Copyright <span style="color:#f92672">(</span>c<span style="color:#f92672">)</span> 2000, 2021, Oracle and/or its affiliates.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Oracle is a registered trademark of Oracle Corporation and/or its
+</span></span><span style="display:flex;"><span>affiliates. Other names may be trademarks of their respective
+</span></span><span style="display:flex;"><span>owners.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Type <span style="color:#e6db74">&#39;help;&#39;</span> or <span style="color:#e6db74">&#39;\h&#39;</span> <span style="color:#66d9ef">for</span> help. Type <span style="color:#e6db74">&#39;\c&#39;</span> to clear the current input statement.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>mysql&gt; FLUSH PRIVILEGES;
+</span></span><span style="display:flex;"><span>Query OK, <span style="color:#ae81ff">0</span> rows affected <span style="color:#f92672">(</span>0.01 sec<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>mysql&gt; ALTER USER root@<span style="color:#e6db74">&#39;localhost&#39;</span> IDENTIFIED BY <span style="color:#e6db74">&#39;123456&#39;</span>;
+</span></span><span style="display:flex;"><span>Query OK, <span style="color:#ae81ff">0</span> rows affected <span style="color:#f92672">(</span>0.00 sec<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>mysql&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>MySQL 터미널에서 순서대로 실행:</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- 1. 권한 테이블 리플러시 (메모리와 디스크의 권한 테이블 동기화)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">-- 작용1: 메모리의 권한 테이블 정보를 디스크에 동기화 기록
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">-- 작용2: 디스크의 권한 테이블 정보를 메모리로 재로드
+</span></span></span><span style="display:flex;"><span>FLUSH <span style="color:#66d9ef">PRIVILEGES</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">-- 2. 비밀번호 재설정
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">ALTER</span> <span style="color:#66d9ef">USER</span> root<span style="color:#f92672">@</span><span style="color:#e6db74">&#39;localhost&#39;</span> IDENTIFIED <span style="color:#66d9ef">BY</span> <span style="color:#e6db74">&#39;123456&#39;</span>;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p><strong>주의</strong>: <code>FLUSH PRIVILEGES;</code> 를 실행하지 않고 <code>ALTER USER</code> 를 바로 실행하면 시스템이 오류를 발생:</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>ERROR 1290 (HY000): The MySQL server is running with the --skip-grant-tables option so it cannot execute this statement
+</span></span></code></pre></td></tr></table>
+</div>
+</div></blockquote>
+</li>
+<li>
+<p><strong>4단계: 데이터베이스 서비스 정상 재시작</strong></p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 임시 안전 모드 프로세스 종료</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master local<span style="color:#f92672">]</span><span style="color:#75715e">#pkill mysqld</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 데이터베이스 서비스 정상 시작</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master local<span style="color:#f92672">]</span><span style="color:#75715e">#/etc/init.d/mysqld start</span>
+</span></span><span style="display:flex;"><span>Starting MySQL.. SUCCESS!
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 또는 service mysqld start</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p><strong>5단계: 새 비밀번호로 로그인 검증</strong></p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master local<span style="color:#f92672">]</span><span style="color:#75715e">#mysql -uroot -p123456</span>
+</span></span><span style="display:flex;"><span>mysql: <span style="color:#f92672">[</span>Warning<span style="color:#f92672">]</span> Using a password on the command line interface can be insecure.
+</span></span><span style="display:flex;"><span>Welcome to the MySQL monitor.  Commands end with ; or <span style="color:#ae81ff">\g</span>.
+</span></span><span style="display:flex;"><span>Your MySQL connection id is <span style="color:#ae81ff">8</span>
+</span></span><span style="display:flex;"><span>Server version: 8.0.26 MySQL Community Server - GPL
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Copyright <span style="color:#f92672">(</span>c<span style="color:#f92672">)</span> 2000, 2021, Oracle and/or its affiliates.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Oracle is a registered trademark of Oracle Corporation and/or its
+</span></span><span style="display:flex;"><span>affiliates. Other names may be trademarks of their respective
+</span></span><span style="display:flex;"><span>owners.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Type <span style="color:#e6db74">&#39;help;&#39;</span> or <span style="color:#e6db74">&#39;\h&#39;</span> <span style="color:#66d9ef">for</span> help. Type <span style="color:#e6db74">&#39;\c&#39;</span> to clear the current input statement.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>mysql&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+
+
+      </div><div id="giscus-container" style="margin-top: 2rem; padding-top: 1rem; border-top: 1px solid var(--border);">
+  <script src="https://giscus.app/client.js"
+          data-repo="LMDAWN1127/LMDAWN1127.github.io"
+          data-repo-id="R_kgDOTMWmvw"
+          data-category="Announcements"
+          data-category-id="DIC_kwDOTMWmv84DAd3g"
+          data-mapping="pathname"
+          data-strict="0"
+          data-reactions-enabled="1"
+          data-emit-metadata="0"
+          data-input-position="bottom"
+          data-theme="preferred_color_scheme"
+          data-lang="zh-CN"
+          crossorigin="anonymous"
+          async>
+  </script>
+</div>
+
+    </div>
+
+    <aside class="toc-sidebar" id="toc-sidebar">
+    <div class="toc-header">目录</div>
+    <nav class="toc-nav"><ul class="toc-list">
+            <li>
+                <a href="#01---%eb%8d%b0%ec%9d%b4%ed%84%b0%eb%b2%a0%ec%9d%b4%ec%8a%a4-%ec%84%9c%eb%b9%84%ec%8a%a4-%ec%84%a4%ec%b9%98-%eb%b0%8f-%eb%b0%b0%ed%8f%ac" class="toc-link" data-target="01---데이터베이스-서비스-설치-및-배포">01 - 데이터베이스 서비스 설치 및 배포</a><ul>
+            <li>
+                <a href="#11-%eb%8d%b0%ec%9d%b4%ed%84%b0%eb%b2%a0%ec%9d%b4%ec%8a%a4-%ec%84%9c%eb%b2%84-%ed%8c%a8%ed%82%a4%ec%a7%80-%eb%8b%a4%ec%9a%b4%eb%a1%9c%eb%93%9c" class="toc-link" data-target="11-데이터베이스-서버-패키지-다운로드">1.1 데이터베이스 서버 패키지 다운로드</a></li>
+            <li>
+                <a href="#12-%eb%b0%94%ec%9d%b4%eb%84%88%eb%a6%ac-%ed%8c%a8%ed%82%a4%ec%a7%80%eb%a1%9c-%eb%8d%b0%ec%9d%b4%ed%84%b0%eb%b2%a0%ec%9d%b4%ec%8a%a4-%ec%84%9c%eb%b2%84-%ec%84%a4%ec%b9%98" class="toc-link" data-target="12-바이너리-패키지로-데이터베이스-서버-설치">1.2 바이너리 패키지로 데이터베이스 서버 설치</a><ul>
+            <li>
+                <a href="#1%eb%8b%a8%ea%b3%84-%ec%9a%b4%ec%98%81%ec%b2%b4%ec%a0%9c-%ed%99%98%ea%b2%bd-%ec%a4%80%eb%b9%84" class="toc-link" data-target="1단계-운영체제-환경-준비">1단계: 운영체제 환경 준비</a><ul>
+            <li>
+                <a href="#1-%eb%84%a4%ed%8a%b8%ec%9b%8c%ed%81%ac-%ec%a3%bc%ec%86%8c-%ed%99%95%ec%9d%b8" class="toc-link" data-target="1-네트워크-주소-확인">1. 네트워크 주소 확인</a></li>
+            <li>
+                <a href="#2-%ed%98%b8%ec%8a%a4%ed%8a%b8%eb%aa%85-%ed%95%b4%ec%84%9d-%ec%84%a4%ec%a0%95" class="toc-link" data-target="2-호스트명-해석-설정">2. 호스트명 해석 설정</a></li>
+            <li>
+                <a href="#3-%ec%8b%9c%ec%8a%a4%ed%85%9c-%eb%b0%a9%ed%99%94%eb%b2%bd-%eb%b9%84%ed%99%9c%ec%84%b1%ed%99%94" class="toc-link" data-target="3-시스템-방화벽-비활성화">3. 시스템 방화벽 비활성화</a></li>
+            <li>
+                <a href="#4-selinux-%eb%b9%84%ed%99%9c%ec%84%b1%ed%99%94" class="toc-link" data-target="4-selinux-비활성화">4. SELinux 비활성화</a></li>
+            <li>
+                <a href="#5-%eb%8d%b0%ec%9d%b4%ed%84%b0%eb%b2%a0%ec%9d%b4%ec%8a%a4-%ec%84%a4%ec%b9%98-%ec%8b%9c-%ec%b6%a9%eb%8f%8c-%eb%b0%a9%ec%a7%80" class="toc-link" data-target="5-데이터베이스-설치-시-충돌-방지">5. 데이터베이스 설치 시 충돌 방지</a></li>
+            <li>
+                <a href="#6-%eb%8d%b0%ec%9d%b4%ed%84%b0%eb%b2%a0%ec%9d%b4%ec%8a%a4-%ec%9d%98%ec%a1%b4-%ec%86%8c%ed%94%84%ed%8a%b8%ec%9b%a8%ec%96%b4-%ec%84%a4%ec%b9%98-%eb%88%84%eb%9d%bd-%ec%8b%9c-%ec%b4%88%ea%b8%b0%ed%99%94-%ec%98%a4%eb%a5%98" class="toc-link" data-target="6-데이터베이스-의존-소프트웨어-설치-누락-시-초기화-오류">6. 데이터베이스 의존 소프트웨어 설치 (누락 시 초기화 오류)</a></li></ul>
+            </li>
+            <li>
+                <a href="#2%eb%8b%a8%ea%b3%84-%eb%8d%b0%ec%9d%b4%ed%84%b0%eb%b2%a0%ec%9d%b4%ec%8a%a4-%ec%86%8c%ed%94%84%ed%8a%b8%ec%9b%a8%ec%96%b4-%ec%84%a4%ec%b9%98" class="toc-link" data-target="2단계-데이터베이스-소프트웨어-설치">2단계: 데이터베이스 소프트웨어 설치</a><ul>
+            <li>
+                <a href="#1-%ed%8c%a8%ed%82%a4%ec%a7%80-%ec%95%95%ec%b6%95-%ed%95%b4%ec%a0%9c-%eb%b0%8f-%ec%8b%ac%eb%b3%bc%eb%a6%ad-%eb%a7%81%ed%81%ac-%ec%83%9d%ec%84%b1-%eb%b2%84%ec%a0%84-%ea%b4%80%eb%a6%ac-%ec%9a%a9%ec%9d%b4" class="toc-link" data-target="1-패키지-압축-해제-및-심볼릭-링크-생성-버전-관리-용이">1. 패키지 압축 해제 및 심볼릭 링크 생성 (버전 관리 용이)</a></li>
+            <li>
+                <a href="#2-%ec%8b%9c%ec%8a%a4%ed%85%9c-%ec%a0%84%ec%97%ad-%ed%99%98%ea%b2%bd%eb%b3%80%ec%88%98-%ec%84%a4%ec%a0%95" class="toc-link" data-target="2-시스템-전역-환경변수-설정">2. 시스템 전역 환경변수 설정</a></li>
+            <li>
+                <a href="#3-%ec%84%a4%ec%b9%98-%eb%b2%84%ec%a0%84-%ed%99%95%ec%9d%b8" class="toc-link" data-target="3-설치-버전-확인">3. 설치 버전 확인</a></li></ul>
+            </li>
+            <li>
+                <a href="#3%eb%8b%a8%ea%b3%84-%ec%86%8c%ed%94%84%ed%8a%b8%ec%9b%a8%ec%96%b4-%ec%b4%88%ea%b8%b0%ed%99%94" class="toc-link" data-target="3단계-소프트웨어-초기화">3단계: 소프트웨어 초기화</a><ul>
+            <li>
+                <a href="#1-%ec%a0%84%ec%9a%a9-%ec%8b%a4%ed%96%89-%ec%82%ac%ec%9a%a9%ec%9e%90-%ec%83%9d%ec%84%b1-%ec%8b%9c%ec%8a%a4%ed%85%9c-%eb%a1%9c%ea%b7%b8%ec%9d%b8-%eb%b6%88%ed%95%84%ec%9a%94" class="toc-link" data-target="1-전용-실행-사용자-생성-시스템-로그인-불필요">1. 전용 실행 사용자 생성 (시스템 로그인 불필요)</a></li>
+            <li>
+                <a href="#2-%eb%8d%b0%ec%9d%b4%ed%84%b0-%ec%a0%80%ec%9e%a5-%eb%94%94%eb%a0%89%ed%84%b0%eb%a6%ac-%ec%83%9d%ec%84%b1-%eb%b0%8f-%ea%b6%8c%ed%95%9c-%eb%b6%80%ec%97%ac" class="toc-link" data-target="2-데이터-저장-디렉터리-생성-및-권한-부여">2. 데이터 저장 디렉터리 생성 및 권한 부여</a></li>
+            <li>
+                <a href="#3-%eb%8d%b0%ec%9d%b4%ed%84%b0-%eb%94%94%eb%a0%89%ed%84%b0%eb%a6%ac-%ec%b4%88%ea%b8%b0%ed%99%94-%ec%8b%a4%ed%96%89" class="toc-link" data-target="3-데이터-디렉터리-초기화-실행">3. 데이터 디렉터리 초기화 실행</a></li></ul>
+            </li>
+            <li>
+                <a href="#4%eb%8b%a8%ea%b3%84-%eb%8d%b0%ec%9d%b4%ed%84%b0%eb%b2%a0%ec%9d%b4%ec%8a%a4-%ec%84%9c%eb%b9%84%ec%8a%a4-%ec%84%a4%ec%a0%95-%ed%8c%8c%ec%9d%bc-%ec%9e%91%ec%84%b1" class="toc-link" data-target="4단계-데이터베이스-서비스-설정-파일-작성">4단계: 데이터베이스 서비스 설정 파일 작성</a></li>
+            <li>
+                <a href="#5%eb%8b%a8%ea%b3%84-%eb%8d%b0%ec%9d%b4%ed%84%b0%eb%b2%a0%ec%9d%b4%ec%8a%a4-%ec%84%9c%eb%b9%84%ec%8a%a4-%ec%8b%9c%ec%9e%91" class="toc-link" data-target="5단계-데이터베이스-서비스-시작">5단계: 데이터베이스 서비스 시작</a><ul>
+            <li>
+                <a href="#1-%ea%b3%b5%ec%8b%9d-%ec%84%9c%eb%b9%84%ec%8a%a4-%ea%b4%80%eb%a6%ac-%ec%8a%a4%ed%81%ac%eb%a6%bd%ed%8a%b8%eb%a1%9c-%ec%8b%9c%ec%9e%91" class="toc-link" data-target="1-공식-서비스-관리-스크립트로-시작">1. 공식 서비스 관리 스크립트로 시작</a></li>
+            <li>
+                <a href="#2-%eb%aa%85%eb%a0%b9%ec%a4%84%ec%97%90%ec%84%9c-%ec%a7%81%ec%a0%91-%ec%8b%9c%ec%9e%91" class="toc-link" data-target="2-명령줄에서-직접-시작">2. 명령줄에서 직접 시작</a></li>
+            <li>
+                <a href="#3-systemctl--service-%eb%a1%9c-%ec%8b%9c%ec%9e%91" class="toc-link" data-target="3-systemctl--service-로-시작">3. systemctl / service 로 시작</a></li></ul>
+            </li></ul>
+            </li>
+            <li>
+                <a href="#13-%eb%b3%b4%ec%b6%a9-%ec%a7%80%ec%8b%9d" class="toc-link" data-target="13-보충-지식">1.3 보충 지식</a><ul>
+            <li>
+                <a href="#1-%ec%b4%88%ea%b8%b0%ed%99%94-%eb%b0%a9%eb%b2%95-%eb%91%90-%ea%b0%80%ec%a7%80-%eb%b9%84%ea%b5%90" class="toc-link" data-target="1-초기화-방법-두-가지-비교">1. 초기화 방법 두 가지 비교</a></li>
+            <li>
+                <a href="#2-%eb%8d%b0%ec%9d%b4%ed%84%b0%eb%b2%a0%ec%9d%b4%ec%8a%a4-%ec%8b%9c%ec%9e%91-%ec%8b%a4%ed%8c%a8-%ed%91%9c%ec%a4%80-%ed%95%b4%ea%b2%b0-%ec%a0%88%ec%b0%a8" class="toc-link" data-target="2-데이터베이스-시작-실패-표준-해결-절차">2. 데이터베이스 시작 실패 표준 해결 절차</a></li></ul>
+            </li></ul>
+            </li>
+            <li>
+                <a href="#02---%eb%8d%b0%ec%9d%b4%ed%84%b0%eb%b2%a0%ec%9d%b4%ec%8a%a4-%ec%84%9c%eb%b9%84%ec%8a%a4-%ec%8b%9c%ec%9e%91-%eb%b0%8f-%ec%a4%91%ec%a7%80" class="toc-link" data-target="02---데이터베이스-서비스-시작-및-중지">02 - 데이터베이스 서비스 시작 및 중지</a></li>
+            <li>
+                <a href="#03---%eb%8d%b0%ec%9d%b4%ed%84%b0%eb%b2%a0%ec%9d%b4%ec%8a%a4-%ec%84%9c%eb%b9%84%ec%8a%a4-%eb%b9%84%eb%b0%80%eb%b2%88%ed%98%b8-%ea%b4%80%eb%a6%ac" class="toc-link" data-target="03---데이터베이스-서비스-비밀번호-관리">03 - 데이터베이스 서비스 비밀번호 관리</a><ul>
+            <li>
+                <a href="#1-%eb%b9%84%eb%b0%80%eb%b2%88%ed%98%b8%ea%b0%80-%ec%97%86%ec%9d%84-%eb%95%8c-%ec%84%a4%ec%a0%95" class="toc-link" data-target="1-비밀번호가-없을-때-설정">1. 비밀번호가 없을 때 설정</a></li>
+            <li>
+                <a href="#2-%ea%b8%b0%ec%a1%b4-%eb%b9%84%eb%b0%80%eb%b2%88%ed%98%b8-%eb%b3%80%ea%b2%bd" class="toc-link" data-target="2-기존-비밀번호-변경">2. 기존 비밀번호 변경</a></li>
+            <li>
+                <a href="#3-%eb%b9%84%eb%b0%80%eb%b2%88%ed%98%b8%eb%a5%bc-%ec%9e%8a%ec%96%b4%eb%b2%84%eb%a6%b0-%ea%b2%bd%ec%9a%b0-%eb%b9%84%eb%b0%80%eb%b2%88%ed%98%b8-%ec%9e%ac%ec%84%a4%ec%a0%95" class="toc-link" data-target="3-비밀번호를-잊어버린-경우-비밀번호-재설정">3. 비밀번호를 잊어버린 경우 (비밀번호 재설정)</a><ul>
+            <li>
+                <a href="#%eb%b9%84%eb%b0%80%eb%b2%88%ed%98%b8-%ec%9e%ac%ec%84%a4%ec%a0%95-%ec%8b%a4%ec%a0%84-%ec%a0%88%ec%b0%a8" class="toc-link" data-target="비밀번호-재설정-실전-절차">비밀번호 재설정 실전 절차</a>
+            </li>
+        </ul>
+        </li>
+        </ul>
+        </li>
+        </ul>
+    </nav>
+</aside>
+
+  </div>
+</article>
+    </main>
+    
+<a href="#top" id="top-link" class="top-link hidden" aria-label="go to top" title="Go to Top (Alt + G)" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevrons-up">
+        <polyline points="17 11 12 6 7 11"></polyline>
+        <polyline points="17 18 12 13 7 18"></polyline>
+    </svg>
+</a>
+<script defer src="/js/custom.js"></script>
+<div id="algolia-search-modal" class="algolia-modal" style="display: none;">
+  <div class="algolia-modal-overlay"></div>
+  <div class="algolia-modal-content">
+    <div class="algolia-search-header">
+      <div class="algolia-search-input-wrapper">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <input type="text" id="algolia-search-input" placeholder="搜索文章..." autofocus>
+        <kbd class="algolia-esc">Esc</kbd>
+      </div>
+    </div>
+    <div id="algolia-search-results" class="algolia-search-results">
+      <div class="algolia-empty-state">
+        <p>输入关键词开始搜索</p>
+      </div>
+    </div>
+    <div class="algolia-search-footer">
+      <span class="algolia-footer-text">
+        <kbd>↑</kbd> <kbd>↓</kbd> 导航
+        <kbd>↵</kbd> 打开
+        <kbd>Esc</kbd> 关闭
+      </span>
+      <span class="algolia-footer-logo">
+        搜索由 <a href="https://www.algolia.com/" target="_blank" rel="noopener">Algolia</a> 提供
+      </span>
+    </div>
+  </div>
+</div>
+
+<script>
+(function() {
+  'use strict';
+
+  var APP_ID = 'Y0SCRI4LCW';
+  var SEARCH_KEY = '03dda5e44aec7e0dd93b6a3653250b1f';
+  var INDEX_NAME = 'lmdawn1127-blog';
+  var API_URL = 'https://' + APP_ID + '-dsn.algolia.net/1/indexes/' + INDEX_NAME + '/query';
+  var debounceTimer = null;
+  var selectedIndex = -1;
+
+   
+  function doSearch(query) {
+    if (!query || !query.trim()) {
+      showEmpty();
+      return;
+    }
+
+    var body = JSON.stringify({
+      query: query,
+      hitsPerPage: 10,
+      attributesToRetrieve: ['title', 'content', 'url'],
+      attributesToHighlight: ['title', 'content'],
+      highlightPreTag: '<mark class="algolia-highlight">',
+      highlightPostTag: '</mark>'
+    });
+
+    fetch(API_URL, {
+      method: 'POST',
+      headers: {
+        'X-Algolia-Application-Id': APP_ID,
+        'X-Algolia-API-Key': SEARCH_KEY,
+        'Content-Type': 'application/json'
+      },
+      body: body
+    })
+    .then(function(resp) {
+      if (!resp.ok) throw new Error('HTTP ' + resp.status);
+      return resp.json();
+    })
+    .then(function(data) {
+      renderResults(data.hits || [], query);
+    })
+    .catch(function(err) {
+      console.error('Algolia search error:', err);
+      showError(err.message || '未知错误');
+    });
+  }
+
+   
+  function showEmpty() {
+    document.getElementById('algolia-search-results').innerHTML =
+      '<div class="algolia-empty-state"><p>输入关键词开始搜索</p></div>';
+  }
+
+  function showError(detail) {
+    var msg = '搜索出错，请稍后再试';
+    if (detail) msg += '<br><small style="color:#888">错误详情: ' + escapeHtml(detail) + '</small>';
+    document.getElementById('algolia-search-results').innerHTML =
+      '<div class="algolia-empty-state"><p>' + msg + '</p></div>';
+  }
+
+  function showNoResults(query) {
+    document.getElementById('algolia-search-results').innerHTML =
+      '<div class="algolia-empty-state"><p>未找到与「' + escapeHtml(query) + '」相关的结果</p></div>';
+  }
+
+  function escapeHtml(s) {
+    var d = document.createElement('div');
+    d.appendChild(document.createTextNode(s));
+    return d.innerHTML;
+  }
+
+  function getHL(hit, attr) {
+    if (hit._highlightResult && hit._highlightResult[attr]) return hit._highlightResult[attr].value;
+    return hit[attr] || '';
+  }
+
+  function trunc(s, n) {
+    if (!s) return '';
+    s = s.replace(/<[^>]+>/g, '');
+    return s.length > n ? s.substring(0, n) + '…' : s;
+  }
+
+  function renderResults(hits, query) {
+    var box = document.getElementById('algolia-search-results');
+    if (!hits.length) { showNoResults(query); return; }
+
+    var h = '<div class="algolia-results-count">' + hits.length + ' 个结果</div>';
+    hits.forEach(function(hit, i) {
+      var title = getHL(hit, 'title') || '无标题';
+      var content = getHL(hit, 'content');
+      var url = hit.url || '#';
+
+      h += '<a class="algolia-hit" href="' + url + '" data-index="' + i + '">';
+      h += '<div class="algolia-hit-title">' + title + '</div>';
+      h += '<div class="algolia-hit-content">' + trunc(content, 150) + '</div>';
+
+      h += '</a>';
+    });
+    box.innerHTML = h;
+
+    box.querySelectorAll('.algolia-hit').forEach(function(el) {
+      el.addEventListener('click', closeAlgoliaSearch);
+    });
+  }
+
+   
+  function onInput(e) {
+    var q = e.target.value;
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(function() { doSearch(q); }, 200);
+  }
+
+  function onKeydown(e) {
+    var hits = document.querySelectorAll('.algolia-hit');
+    if (!hits.length) return;
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      selectedIndex = Math.min(selectedIndex + 1, hits.length - 1);
+      sel(hits);
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      selectedIndex = Math.max(selectedIndex - 1, 0);
+      sel(hits);
+    } else if (e.key === 'Enter' && selectedIndex >= 0) {
+      e.preventDefault();
+      window.location.href = hits[selectedIndex].getAttribute('href');
+      closeAlgoliaSearch();
+    }
+  }
+
+  function sel(hits) {
+    hits.forEach(function(el, i) {
+      if (i === selectedIndex) { el.classList.add('selected'); el.scrollIntoView({ block: 'nearest' }); }
+      else el.classList.remove('selected');
+    });
+  }
+
+   
+  document.addEventListener('DOMContentLoaded', function() {
+    var input = document.getElementById('algolia-search-input');
+    if (input) {
+      input.addEventListener('input', onInput);
+      input.addEventListener('keydown', onKeydown);
+    }
+  });
+
+  window.openAlgoliaSearch = function() {
+    var modal = document.getElementById('algolia-search-modal');
+    modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+    setTimeout(function() {
+      var input = document.getElementById('algolia-search-input');
+      if (input) { input.value = ''; input.focus(); showEmpty(); }
+    }, 100);
+  };
+
+  window.closeAlgoliaSearch = function() {
+    document.getElementById('algolia-search-modal').style.display = 'none';
+    document.body.style.overflow = '';
+    selectedIndex = -1;
+  };
+})();
+</script>
+
+<style>
+  .algolia-modal{position:fixed;top:0;left:0;width:100%;height:100%;z-index:1000;display:flex;align-items:flex-start;justify-content:center;padding-top:10vh}
+  .algolia-modal-overlay{position:absolute;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.6);backdrop-filter:blur(4px)}
+  .algolia-modal-content{position:relative;width:90%;max-width:600px;background:#1a1a1a;border-radius:12px;box-shadow:0 20px 60px rgba(0,0,0,.5);overflow:hidden;border:1px solid #333}
+  .algolia-search-header{padding:16px;border-bottom:1px solid #333}
+  .algolia-search-input-wrapper{display:flex;align-items:center;gap:12px;background:#2a2a2a;border-radius:8px;padding:12px 16px;border:1px solid #444}
+  .algolia-search-input-wrapper svg{color:#666;flex-shrink:0}
+  #algolia-search-input{flex:1;background:transparent;border:none;outline:none;color:#fff;font-size:16px;font-family:inherit}
+  #algolia-search-input::placeholder{color:#666}
+  .algolia-esc{background:#444;color:#999;padding:2px 6px;border-radius:4px;font-size:11px;font-family:inherit}
+  .algolia-search-results{max-height:400px;overflow-y:auto;padding:8px}
+  .algolia-empty-state{padding:40px 20px;text-align:center;color:#666}
+  .algolia-results-count{padding:8px 12px;font-size:12px;color:#666}
+  .algolia-search-footer{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;border-top:1px solid #333;background:#222;font-size:12px;color:#666}
+  .algolia-footer-text kbd{background:#444;color:#999;padding:2px 4px;border-radius:3px;font-size:10px;margin:0 2px}
+  .algolia-footer-logo a{color:#5EEAD4;text-decoration:none}
+  .algolia-footer-logo a:hover{text-decoration:underline}
+  .algolia-hit{display:block;padding:12px;border-radius:6px;text-decoration:none;color:#fff;transition:background .2s}
+  .algolia-hit:hover,.algolia-hit.selected{background:#2a2a2a}
+  .algolia-hit-title{font-weight:600;color:#5EEAD4;margin-bottom:4px;font-size:15px}
+  .algolia-hit-title mark,.algolia-highlight{background:rgba(94,234,212,.25);color:#5EEAD4;padding:0 2px;border-radius:2px}
+  .algolia-hit-content{font-size:13px;color:#999;line-height:1.5}
+  .algolia-hit-content mark,.algolia-hit-content .algolia-highlight{background:rgba(94,234,212,.2);color:#ccc;padding:0 2px;border-radius:2px}
+  .algolia-hit-meta{display:flex;align-items:center;gap:10px;margin-top:8px}
+  .algolia-hit-date{font-size:12px;color:#666}
+  .algolia-hit-tags{display:flex;gap:6px}
+  .algolia-hit-tag{background:#333;color:#999;padding:2px 8px;border-radius:4px;font-size:11px}
+</style>
+<script>
+  
+  document.addEventListener('keydown', function(e) {
+    
+    if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+      e.preventDefault();
+      if (typeof openAlgoliaSearch === 'function') openAlgoliaSearch();
+    }
+    
+    if (e.key === 'Escape') {
+      if (typeof closeAlgoliaSearch === 'function') closeAlgoliaSearch();
+    }
+    
+    if (e.altKey && e.key === '/') {
+      e.preventDefault();
+      if (typeof openAlgoliaSearch === 'function') openAlgoliaSearch();
+    }
+  });
+
+  
+  document.addEventListener('DOMContentLoaded', function() {
+    var modal = document.getElementById('algolia-search-modal');
+    if (modal) {
+      var overlay = modal.querySelector('.algolia-modal-overlay');
+      if (overlay) {
+        overlay.addEventListener('click', function() {
+          if (typeof closeAlgoliaSearch === 'function') closeAlgoliaSearch();
+        });
+      }
+    }
+  });
+
+  
+  
+  document.addEventListener('DOMContentLoaded', function() {
+    if (document.getElementById('algolia-search-btn')) return;
+    var btn = document.createElement('button');
+    btn.id = 'algolia-search-btn';
+    btn.className = 'theme-toggle search-toggle';
+    btn.type = 'button';
+    btn.title = '搜索 (Ctrl+K)';
+    btn.setAttribute('aria-label', '搜索');
+    btn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>';
+    btn.addEventListener('click', function() {
+      if (typeof openAlgoliaSearch === 'function') openAlgoliaSearch();
+    });
+    var target = document.querySelector('.logo-switches') || document.querySelector('.header-nav');
+    if (target) target.appendChild(btn);
+  });
+</script><script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var cur = (document.documentElement.lang || 'zh').toLowerCase();
+    
+    
+    
+    var rawPath = location.pathname.replace(/\/+$/, '');
+    var pm = rawPath.match(/^\/(en|ko|ja)(?:\/(.*))?$/);
+    var rest = pm ? (pm[2] ? '/' + pm[2] : '') : rawPath; 
+    function langHref(code) {
+      var base = (code === 'zh') ? '' : '/' + code;
+      if (rest === '' || rest === '/') {
+        return base === '' ? '/' : base + '/';
+      }
+      return base + rest + '/';
+    }
+
+    var langs = [
+      { code: 'zh', label: '中文' },
+      { code: 'en', label: 'English' },
+      { code: 'ko', label: '한국어' },
+      { code: 'ja', label: '日本語' }
+    ];
+    var wrap = document.querySelector('.logo-switches') || document.querySelector('.header-nav');
+    if (!wrap || document.getElementById('lang-dropdown')) return;
+
+    var current = langs.find(function(l) { return l.code === cur; }) || langs[0];
+
+    var dd = document.createElement('div');
+    dd.className = 'lang-dropdown';
+    dd.id = 'lang-dropdown';
+
+    var toggle = document.createElement('button');
+    toggle.type = 'button';
+    toggle.className = 'lang-dropdown-toggle';
+    toggle.setAttribute('aria-label', '选择语言');
+    toggle.innerHTML = '<span class="lang-current">' + current.label + '</span><span class="lang-caret">▾</span>';
+
+    var menu = document.createElement('ul');
+    menu.className = 'lang-dropdown-menu';
+    langs.forEach(function(l) {
+      var li = document.createElement('li');
+      if (l.code === cur) li.className = 'active';
+      var a = document.createElement('a');
+      a.href = langHref(l.code);
+      a.textContent = l.label;
+      li.appendChild(a);
+      menu.appendChild(li);
+    });
+
+    dd.appendChild(toggle);
+    dd.appendChild(menu);
+    wrap.appendChild(dd);
+
+    toggle.addEventListener('click', function(e) {
+      e.stopPropagation();
+      dd.classList.toggle('open');
+    });
+    document.addEventListener('click', function(e) {
+      if (!dd.contains(e.target)) dd.classList.remove('open');
+    });
+  });
+</script>
+
+
+<script>
+    let menu = document.getElementById('menu');
+    if (menu) {
+        const scrollPosition = localStorage.getItem("menu-scroll-position");
+        if (scrollPosition) {
+            menu.scrollLeft = parseInt(scrollPosition, 10);
+        }
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+</script>
+<script>
+    var toplink = document.getElementById("top-link");
+    window.onscroll = function () {
+        const scrollThreshold = window.innerHeight;
+        if (document.body.scrollTop > scrollThreshold || document.documentElement.scrollTop > scrollThreshold) {
+            toplink.classList.remove("hidden");
+        } else {
+            toplink.classList.add("hidden");
+        }
+    };
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        const html = document.querySelector("html");
+        if (html.dataset.theme === "dark") {
+            html.dataset.theme = 'light';
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            html.dataset.theme = 'dark';
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = '복사';
+
+        function copyingDone() {
+            copybutton.innerHTML = '복사 완료!';
+            setTimeout(() => {
+                copybutton.innerHTML = '복사';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>

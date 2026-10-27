@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>多实例部署 on DAWN&#39;s Blog</title>
+    <link>https://LMDAWN1127.github.io/tags/%E5%A4%9A%E5%AE%9E%E4%BE%8B%E9%83%A8%E7%BD%B2/</link>
+    <description>Recent content in 多实例部署 on DAWN&#39;s Blog</description>
+    <image>
+      <title>DAWN&#39;s Blog</title>
+      <url>https://LMDAWN1127.github.io/images/DAWN.jpg</url>
+      <link>https://LMDAWN1127.github.io/images/DAWN.jpg</link>
+    </image>
+    <generator>Hugo</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sat, 17 Oct 2026 22:00:00 +0800</lastBuildDate>
+    <atom:link href="https://LMDAWN1127.github.io/tags/%E5%A4%9A%E5%AE%9E%E4%BE%8B%E9%83%A8%E7%BD%B2/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Filebeat 多 Input 写入不同 ES 索引与多实例部署实战</title>
+      <link>https://LMDAWN1127.github.io/posts/filebeat-multi-input-multi-instance/</link>
+      <pubDate>Sat, 17 Oct 2026 22:00:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/posts/filebeat-multi-input-multi-instance/</guid>
+      <description>实战演示 Filebeat 两个核心进阶用法：一是配置多个 input 按 tags 将事件分流写入不同 Elasticsearch 索引（dawn-log-zlm、dawn-log-lmy），含 multiline 多行合并与关闭 ILM、自定义 dawn-log* 模板；二是 Filebeat 多实例部署，通过 &amp;ndash;path.data 隔离数据目录实现同一主机并行运行多个采集进程。</description>
+    </item>
+  </channel>
+</rss>
