@@ -163,6 +163,29 @@
 <article class="post-entry tag-entry"> 
   <header class="entry-header">
     <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/posts/docker-bind-mount-volume/">Docker 实战：容器数据持久化——bind 挂载与存储卷（Volume）</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>Docker 实战：容器数据持久化——bind 挂载与存储卷（Volume） 将宿主机的路径挂载到容器的指定路径 1 2 3 4 5 6 7 8 9 10 root@docker02:~# vim /dawn/index.html root@docker02:~# docker run -d --name c1 -v /dawn:/usr/share/nginx/html uhub.service.ucloud.cn/dawn/apps:v1 9dc72299ea7f17af4855f062abaf7435616ef6c74bb5f0a6898e1d003a010f18 root@docker02:~# docker container inspect -f &#34;{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}&#34; `docker container ps -lq` 172.17.0.2 root@docker02:~# curl 172.17.0.2 11111 root@docker02:~# echo 22222 &gt; /dawn/index.html root@docker02:~# curl 172.17.0.2 22222 1.当删除容器时，宿主机的挂载目录不会被删除
+...</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-26">
+  2026年10月26日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 7 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to Docker 实战：容器数据持久化——bind 挂载与存储卷（Volume）" href="https://LMDAWN1127.github.io/posts/docker-bind-mount-volume/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
       <a href="https://LMDAWN1127.github.io/posts/docker-container-lifecycle/">Docker 实战：容器生命周期管理——启动、停止与重启策略</a>
     </h2>
   </header>
@@ -251,28 +274,6 @@
 </span>
 </footer>
   <a class="entry-link" aria-label="post link to Docker 应用部署实战：Tomcat/MySQL/WordPress/ELK" href="https://LMDAWN1127.github.io/posts/docker-app-deployments/"></a>
-</article>
-
-<article class="post-entry tag-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/posts/docker-env-var-passing/">Docker 实战：容器环境变量传递与查看</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>Docker 实战：容器环境变量传递与查看 容器传递环境变量 启动容器 1 2 3 4 5 root@docker02:~# docker run -d --name c1 -e SCHOOL=dawn -e CLASS=docker uhub.service.ucloud.cn/dawn/nginx:1.30.4 aa3538d29cc8ea72d6058d48b4c038b4f3234e6bf3ff970432c66b80f935d6a4 root@docker02:~# docker ps -l CONTAINER ID IMAGE COMMAND CREATED STATUS PORTS NAMES aa3538d29cc8 uhub.service.ucloud.cn/dawn/nginx:1.30.4 &#34;/docker-entrypoint.…&#34; 13 seconds ago Up 12 seconds 80/tcp c1 查看环境变量 1 2 3 4 5 6 7 8 9 10 11 12 root@docker02:~# docker exec c1 env PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin HOSTNAME=aa3538d29cc8 SCHOOL=dawn CLASS=docker NGINX_VERSION=1.30.4 NJS_VERSION=1.0.0 NJS_RELEASE=1~trixie ACME_VERSION=0.4.1 PKG_RELEASE=1~trixie DYNPKG_RELEASE=1~trixie HOME=/root </p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-23">
-  2026年10月23日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 1 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to Docker 实战：容器环境变量传递与查看" href="https://LMDAWN1127.github.io/posts/docker-env-var-passing/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">

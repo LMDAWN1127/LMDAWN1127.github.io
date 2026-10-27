@@ -11,7 +11,7 @@
     </image>
     <generator>Hugo</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Mon, 26 Oct 2026 21:00:00 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 27 Oct 2026 09:50:00 +0800</lastBuildDate>
     <atom:link href="https://LMDAWN1127.github.io/categories/devops/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Harbor 主备部署实战：从安装到 HTTPS 与主备复制</title>
@@ -19,6 +19,13 @@
       <pubDate>Tue, 04 Aug 2026 00:00:00 +0000</pubDate>
       <guid>https://LMDAWN1127.github.io/posts/harbor-master-slave/</guid>
       <description>完整记录 Harbor 企业级镜像仓库的主备部署过程，涵盖 HTTP/HTTPS 双模式安装、自签名证书配置、跨主机主备复制等核心运维技能。</description>
+    </item>
+    <item>
+      <title>Docker 实战：单机网络类型与容器间通信方案详解</title>
+      <link>https://LMDAWN1127.github.io/posts/docker-single-host-network/</link>
+      <pubDate>Tue, 27 Oct 2026 09:50:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/posts/docker-single-host-network/</guid>
+      <description>Docker 单机网络：none/bridge/host/container/custom 五种类型与案例，以及容器间通信三方案——/etc/hosts 解析、&amp;ndash;link 关联、自定义网络（含创建/inspect/prune/自定义子网与手动 IP）。</description>
     </item>
     <item>
       <title>Docker 实战：OverlayFS 联合挂载与存储驱动解析</title>
