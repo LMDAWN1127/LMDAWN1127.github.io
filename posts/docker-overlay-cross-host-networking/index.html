@@ -1,24 +1,24 @@
 <!DOCTYPE html>
 <html lang="zh" dir="auto" data-theme="auto">
 
-<head><meta charset="utf-8">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="robots" content="index, follow">
-<title>Docker 实战：Overlay 实现容器跨主机网络互联 | DAWN&#39;s Blog</title>
+<title>Docker 实战：Overlay 实现容器跨主机网络互联与 WordPress 实战 | DAWN&#39;s Blog</title>
 <meta name="keywords" content="Docker">
-<meta name="description" content="在两台 Docker 主机上初始化 Swarm 集群，创建 attachable overlay 网络 dawn-overlay，演示容器跨主机通过 IP 与容器名通信，并验证外网经 docker_gwbridge 出口、最终通过 VXLAN（UDP 4789）抓包观察 overlay 数据封装过程。">
+<meta name="description" content="在两台 Docker 主机上初始化 Swarm 集群，创建 attachable overlay 网络 dawn-overlay，演示容器跨主机通过 IP 与容器名通信，验证外网经 docker_gwbridge 出口，通过 VXLAN（UDP 4789）抓包观察数据封装，最后以 WordPress 跨主机部署实战收尾。">
 <meta name="author" content="DAWN">
-<link rel="canonical" href="https://LMDAWN1127.github.io/posts/docker-overlay-cross-host-networking/">
+<link rel="canonical" href="http://192.168.100.30:1313/posts/docker-overlay-cross-host-networking/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.4bf808bff57bddc46d61c8ae060b00400fc679ab876e37243b11bd3f832f2958.css" integrity="sha256-S/gIv/V73cRtYciuBgsAQA/GeauHbjckOxG9P4MvKVg=" rel="preload stylesheet" as="style">
-<link rel="icon" href="https://LMDAWN1127.github.io/images/DAWN.jpg">
-<link rel="icon" type="image/png" sizes="16x16" href="https://LMDAWN1127.github.io/favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="https://LMDAWN1127.github.io/favicon-32x32.png">
-<link rel="apple-touch-icon" href="https://LMDAWN1127.github.io/apple-touch-icon.png">
-<link rel="mask-icon" href="https://LMDAWN1127.github.io/safari-pinned-tab.svg">
+<link rel="icon" href="http://192.168.100.30:1313/images/DAWN.jpg">
+<link rel="icon" type="image/png" sizes="16x16" href="http://192.168.100.30:1313/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://192.168.100.30:1313/favicon-32x32.png">
+<link rel="apple-touch-icon" href="http://192.168.100.30:1313/apple-touch-icon.png">
+<link rel="mask-icon" href="http://192.168.100.30:1313/safari-pinned-tab.svg">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
-<link rel="alternate" hreflang="zh" href="https://LMDAWN1127.github.io/posts/docker-overlay-cross-host-networking/">
+<link rel="alternate" hreflang="zh" href="http://192.168.100.30:1313/posts/docker-overlay-cross-host-networking/">
 <noscript>
     <style>
         #theme-toggle,
@@ -64,23 +64,23 @@
         document.querySelector("html").dataset.theme = 'light';
     }
 
-</script><link rel="stylesheet" href='https://LMDAWN1127.github.io/css/custom.css'>
-<meta property="og:url" content="https://LMDAWN1127.github.io/posts/docker-overlay-cross-host-networking/">
+</script><link rel="stylesheet" href='http://192.168.100.30:1313/css/custom.css'>
+<meta property="og:url" content="http://192.168.100.30:1313/posts/docker-overlay-cross-host-networking/">
   <meta property="og:site_name" content="DAWN&#39;s Blog">
-  <meta property="og:title" content="Docker 实战：Overlay 实现容器跨主机网络互联">
-  <meta property="og:description" content="在两台 Docker 主机上初始化 Swarm 集群，创建 attachable overlay 网络 dawn-overlay，演示容器跨主机通过 IP 与容器名通信，并验证外网经 docker_gwbridge 出口、最终通过 VXLAN（UDP 4789）抓包观察 overlay 数据封装过程。">
+  <meta property="og:title" content="Docker 实战：Overlay 实现容器跨主机网络互联与 WordPress 实战">
+  <meta property="og:description" content="在两台 Docker 主机上初始化 Swarm 集群，创建 attachable overlay 网络 dawn-overlay，演示容器跨主机通过 IP 与容器名通信，验证外网经 docker_gwbridge 出口，通过 VXLAN（UDP 4789）抓包观察数据封装，最后以 WordPress 跨主机部署实战收尾。">
   <meta property="og:locale" content="zh_cn">
   <meta property="og:type" content="article">
     <meta property="article:section" content="posts">
     <meta property="article:published_time" content="2026-10-27T18:30:00+08:00">
     <meta property="article:modified_time" content="2026-10-27T18:30:00+08:00">
     <meta property="article:tag" content="Docker">
-      <meta property="og:image" content="https://LMDAWN1127.github.io/images/DAWN.jpg">
+      <meta property="og:image" content="http://192.168.100.30:1313/images/DAWN.jpg">
 
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:image" content="https://LMDAWN1127.github.io/images/DAWN.jpg">
-  <meta name="twitter:title" content="Docker 实战：Overlay 实现容器跨主机网络互联">
-  <meta name="twitter:description" content="在两台 Docker 主机上初始化 Swarm 集群，创建 attachable overlay 网络 dawn-overlay，演示容器跨主机通过 IP 与容器名通信，并验证外网经 docker_gwbridge 出口、最终通过 VXLAN（UDP 4789）抓包观察 overlay 数据封装过程。">
+  <meta name="twitter:image" content="http://192.168.100.30:1313/images/DAWN.jpg">
+  <meta name="twitter:title" content="Docker 实战：Overlay 实现容器跨主机网络互联与 WordPress 实战">
+  <meta name="twitter:description" content="在两台 Docker 主机上初始化 Swarm 集群，创建 attachable overlay 网络 dawn-overlay，演示容器跨主机通过 IP 与容器名通信，验证外网经 docker_gwbridge 出口，通过 VXLAN（UDP 4789）抓包观察数据封装，最后以 WordPress 跨主机部署实战收尾。">
 
 
 <script type="application/ld+json">
@@ -92,13 +92,13 @@
       "@type": "ListItem",
       "position":  1 ,
       "name": "Posts",
-      "item": "https://LMDAWN1127.github.io/posts/"
+      "item": "http://192.168.100.30:1313/posts/"
     }, 
     {
       "@type": "ListItem",
       "position":  2 ,
-      "name": "Docker 实战：Overlay 实现容器跨主机网络互联",
-      "item": "https://LMDAWN1127.github.io/posts/docker-overlay-cross-host-networking/"
+      "name": "Docker 实战：Overlay 实现容器跨主机网络互联与 WordPress 实战",
+      "item": "http://192.168.100.30:1313/posts/docker-overlay-cross-host-networking/"
     }
   ]
 }
@@ -107,16 +107,16 @@
 {
   "@context": "https://schema.org",
   "@type": "BlogPosting",
-  "headline": "Docker 实战：Overlay 实现容器跨主机网络互联",
-  "name": "Docker 实战：Overlay 实现容器跨主机网络互联",
-  "description": "在两台 Docker 主机上初始化 Swarm 集群，创建 attachable overlay 网络 dawn-overlay，演示容器跨主机通过 IP 与容器名通信，并验证外网经 docker_gwbridge 出口、最终通过 VXLAN（UDP 4789）抓包观察 overlay 数据封装过程。",
+  "headline": "Docker 实战：Overlay 实现容器跨主机网络互联与 WordPress 实战",
+  "name": "Docker 实战：Overlay 实现容器跨主机网络互联与 WordPress 实战",
+  "description": "在两台 Docker 主机上初始化 Swarm 集群，创建 attachable overlay 网络 dawn-overlay，演示容器跨主机通过 IP 与容器名通信，验证外网经 docker_gwbridge 出口，通过 VXLAN（UDP 4789）抓包观察数据封装，最后以 WordPress 跨主机部署实战收尾。",
   "keywords": [
     "Docker"
   ],
-  "articleBody": "Docker 实战：Overlay 实现容器跨主机网络互联 1. 实验目标 将 docker01 和 docker02 组成一个 Docker Swarm 集群。 创建自定义 overlay 网络 dawn-overlay，网段为 172.30.0.0/16。 在 docker02 上启动容器 c1，在 docker01 上启动容器 c2。 验证两个容器可以跨主机通过 IP 和容器名通信。 验证容器仍可通过 docker_gwbridge 访问外网。 在宿主机业务网卡 ens33 上抓取 VXLAN 报文，观察 overlay 的数据封装过程。 2. 实验环境与拓扑 2.1 主机环境 主机 业务 IP 网卡 Docker Swarm 角色 测试容器 docker01 11.0.1.121/24 ens33 27.0.3 manager、leader c2，172.30.0.3 docker02 11.0.1.122/24 ens33 27.0.3 worker c1，172.30.0.1 2.2 逻辑拓扑 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 Swarm 集群 控制面：Raft + 节点发现 docker01 docker02 11.0.1.121 11.0.1.122 manager / leader worker | | | UDP 4789，VXLAN 隧道 | |\u003c===================================\u003e| | | c2 容器 c1 容器 172.30.0.3/16 172.30.0.1/16 | | +------ dawn-overlay，同一二层网段 -----+ 容器访问外网：eth1 -\u003e docker_gwbridge -\u003e 宿主机 NAT -\u003e ens33 2.3 Swarm 所需端口 端口 协议 用途 2377 TCP Swarm 管理通信，主要用于节点加入和管理节点通信 7946 TCP、UDP 节点之间的发现与状态传播 4789 UDP overlay 网络的 VXLAN 数据封装 如果跨主机 ping 不通，但容器和 overlay 网络均已创建，应优先检查这些端口及中间网络安全策略。\n3. 在 docker01 初始化 Swarm 在 docker01 上执行：\n1 2 3 docker swarm init \\ --advertise-addr 11.0.1.121 \\ --listen-addr 11.0.1.121:2377 1 Swarm initialized: current node (ilsct3hz5rg7tc1ln7l426p1e) is now a manager. 查看节点：\n1 docker node ls 此时只有管理节点：\n1 2 ID HOSTNAME STATUS AVAILABILITY MANAGER STATUS ENGINE VERSION ilsct3hz5rg7tc1ln7l426p1e * docker01 Ready Active Leader 27.0.3 查看 worker 加入令牌：\n1 docker swarm join-token worker 令牌属于集群加入凭据，复现实验时应在 docker01 上实时获取。\n初始化后，docker01 开始监听：\n1 2 3 tcp 11.0.1.121:2377 tcp 11.0.1.121:7946 udp 11.0.1.121:7946 自动生成的其他网络 初始化 Swarm 后还可以看到：\n网络 作用 ingress Swarm 服务发布端口时使用的路由网格网络 docker_gwbridge overlay 容器连接宿主机和外网的本地桥接网络 4. 将 docker02 加入集群 在 docker02 上执行以下命令：\n1 2 3 4 5 docker swarm join \\ --token \\ --advertise-addr 11.0.1.122 \\ --listen-addr 11.0.1.122:2377 \\ 11.0.1.121:2377 1 This node joined a swarm as a worker. 回到 docker01 验证：\n1 docker node ls 1 2 3 ID HOSTNAME STATUS AVAILABILITY MANAGER STATUS ENGINE VERSION ilsct3hz5rg7tc1ln7l426p1e * docker01 Ready Active Leader 27.0.3 zqccn7zzxvujvbuw8i43jczdn docker02 Ready Active 27.0.3 两个节点均为 Ready / Active，说明集群控制面正常。\ndocker node ls 是管理节点命令，在 worker 上执行会提示当前节点不是 manager。\n5. 创建自定义 overlay 网络 在管理节点 docker01 上执行：\n1 2 3 4 5 6 docker network create \\ -d overlay \\ --attachable \\ --subnet 172.30.0.0/16 \\ --gateway 172.30.0.254 \\ dawn-overlay 1 8myzpa127zbqa8x3wnzrfv1eh 查看网络：\n1 2 docker network inspect dawn-overlay \\ --format 'Name={{.Name}} Id={{.Id}} Scope={{.Scope}} Driver={{.Driver}} Attachable={{.Attachable}} Subnet={{(index .IPAM.Config 0).Subnet}} Gateway={{(index .IPAM.Config 0).Gateway}}' 1 2 3 4 5 6 7 Name=dawn-overlay Id=8myzpa127zbqa8x3wnzrfv1eh Scope=swarm Driver=overlay Attachable=true Subnet=172.30.0.0/16 Gateway=172.30.0.254 Swarm 模式下的 overlay 网络默认主要供 service/task 使用。如果希望普通容器也能通过 docker run --network dawn-overlay 接入，需要在创建网络时指定 --attachable。\n网络刚创建时，在 docker02 上执行：\n1 2 docker network ls docker network inspect dawn-overlay 观察到：\n1 Error response from daemon: network dawn-overlay not found 此时 docker network ls 中也只有 bridge、host、none、ingress 和 docker_gwbridge，暂时没有 dawn-overlay。\n这不是集群同步失败，而是 Swarm overlay 网络在工作节点上的按需下发机制：网络配置保存在集群中，但工作节点通常在有容器或任务实际需要接入该网络时，才建立本地的数据面资源。\n6. 在 docker02 启动 c1 在 docker02 上执行：\n1 2 3 4 5 docker run -d \\ --name c1 \\ --network dawn-overlay \\ uhub.service.ucloud.cn/dawn/apps:v1 \\ sleep 3600 查看容器网卡：\n1 docker exec c1 ifconfig 关键结果：\n1 2 3 eth0: inet addr 172.30.0.1/16，MTU 1450 eth1: inet addr 172.18.0.3/16，MTU 1500 lo: 127.0.0.1 再次查看网络：\n1 2 3 4 5 6 7 docker network ls --filter name=dawn-overlay NETWORK ID NAME DRIVER SCOPE 8myzpa127zbq dawn-overlay overlay swarm docker network inspect dawn-overlay \\ --format 'Id={{.Id}} Scope={{.Scope}} Attachable={{.Attachable}}' Id=8myzpa127zbqa8x3wnzrfv1eh Scope=swarm Attachable=true 接入容器后，dawn-overlay 已在 docker02 上出现，并且网络 ID 与 docker01 完全一致。\n7. 在 docker01 启动 c2 在 docker01 上执行：\n1 2 3 4 5 docker run -d \\ --name c2 \\ --network dawn-overlay \\ uhub.service.ucloud.cn/dawn/apps:v1 \\ sleep 3600 查看网卡：\n1 docker exec c2 ifconfig 关键结果：\n1 2 3 eth0: inet addr 172.30.0.3/16，MTU 1450 eth1: inet addr 172.18.0.3/16，MTU 1500 lo: 127.0.0.1 8. 验证跨主机通信 8.1 通过目标 IP 通信 在 docker01 上执行：\n1 2 3 4 5 6 7 8 docker exec c2 ping -c 3 172.30.0.1 PING 172.30.0.1 (172.30.0.1): 56 data bytes 64 bytes from 172.30.0.1: seq=0 ttl=64 time=7.124 ms 64 bytes from 172.30.0.1: seq=1 ttl=64 time=0.414 ms 64 bytes from 172.30.0.1: seq=2 ttl=64 time=0.518 ms --- 172.30.0.1 ping statistics --- 3 packets transmitted, 3 packets received, 0% packet loss 8.2 通过容器名通信 继续执行：\n1 2 3 4 5 6 7 8 docker exec c2 ping -c 3 c1 PING c1 (172.30.0.1): 56 data bytes 64 bytes from 172.30.0.1: seq=0 ttl=64 time=0.996 ms 64 bytes from 172.30.0.1: seq=1 ttl=64 time=0.456 ms 64 bytes from 172.30.0.1: seq=2 ttl=64 time=0.492 ms --- c1 ping statistics --- 3 packets transmitted, 3 packets received, 0% packet loss 生产环境中应优先使用稳定的服务名或容器名，而不是把动态分配的容器 IP 写死在配置文件中。\n9. 验证路由和外网访问 查看 c2 路由：\n1 2 3 4 5 6 docker exec c2 route -n Kernel IP routing table Destination Gateway Genmask Flags Metric Ref Use Iface 0.0.0.0 172.18.0.1 0.0.0.0 UG 0 0 0 eth1 172.18.0.0 0.0.0.0 255.255.0.0 U 0 0 0 eth1 172.30.0.0 0.0.0.0 255.255.0.0 U 0 0 0 eth0 目的地址属于 172.30.0.0/16 时，走 overlay 网卡 eth0。\n其他地址走默认路由 172.18.0.1，对应 eth1 和 docker_gwbridge。\n测试外网：\n1 docker exec c2 ping -c 3 baidu.com 实际结果：\n1 2 3 packets transmitted, 3 packets received, 0% packet loss round-trip min/avg/max = 37.178/40.291/46.454 ms 同时在 docker01 的 docker_gwbridge 上抓包：\n1 timeout 10 tcpdump -i docker_gwbridge -nn -c 2 icmp 另开终端执行：\n1 docker exec c2 ping -c 2 baidu.com 抓到：\n1 2 IP 172.18.0.3 \u003e 111.63.65.103: ICMP echo request IP 111.63.65.103 \u003e 172.18.0.3: ICMP echo reply 验证了外网流量是经过 docker_gwbridge，而不是走 overlay 的 VXLAN 隧道。\n10. 抓取 VXLAN 跨主机报文 在 docker01 上执行抓包：\n1 timeout 12 tcpdump -i ens33 -nn -vv -c 4 'udp port 4789' 另开终端产生跨主机流量：\n1 docker exec c2 ping -c 4 172.30.0.1 关键报文：\n1 2 3 4 5 6 7 11.0.1.121.41805 \u003e 11.0.1.122.4789: VXLAN, flags [I] (0x08), vni 4097 IP 172.30.0.3 \u003e 172.30.0.1: ICMP echo request 11.0.1.122.44099 \u003e 11.0.1.121.4789: VXLAN, flags [I] (0x08), vni 4097 IP 172.30.0.1 \u003e 172.30.0.3: ICMP echo reply 抓包统计：\n1 2 3 4 packets captured 4 packets received by filter 0 packets dropped by kernel 跨主机容器是把容器原始报文封装进 VXLAN，再通过两台宿主机的 ens33 网络传输。\n11. 实验环境清理 删除容器：\n1 2 3 4 5 # docker01 docker rm -f c2 # docker02 docker rm -f c1 在manager上删除自定义网络：\n1 docker network rm dawn-overlay 让worker离开集群：\n1 2 # docker02 docker swarm leave 让manager离开并解散集群：\n1 2 # docker01 docker swarm leave --force 清理后检查：\n1 2 3 docker info --format '{{.Swarm.LocalNodeState}}' docker network ls docker ps -a ",
-  "wordCount" : "977",
+  "articleBody": "Docker 实战：Overlay 实现容器跨主机网络互联与 WordPress 实战与 WordPress 实战 1. 实验目标 将 docker01 和 docker02 组成一个 Docker Swarm 集群。 创建自定义 overlay 网络 dawn-overlay，网段为 172.30.0.0/16。 在 docker02 上启动容器 c1，在 docker01 上启动容器 c2。 验证两个容器可以跨主机通过 IP 和容器名通信。 验证容器仍可通过 docker_gwbridge 访问外网。 在宿主机业务网卡 ens33 上抓取 VXLAN 报文，观察 overlay 的数据封装过程。 2. 实验环境与拓扑 2.1 主机环境 主机 业务 IP 网卡 Docker Swarm 角色 测试容器 docker01 11.0.1.121/24 ens33 27.0.3 manager、leader c2，172.30.0.3 docker02 11.0.1.122/24 ens33 27.0.3 worker c1，172.30.0.1 2.2 逻辑拓扑 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 Swarm 集群 控制面：Raft + 节点发现 docker01 docker02 11.0.1.121 11.0.1.122 manager / leader worker | | | UDP 4789，VXLAN 隧道 | |\u003c===================================\u003e| | | c2 容器 c1 容器 172.30.0.3/16 172.30.0.1/16 | | +------ dawn-overlay，同一二层网段 -----+ 容器访问外网：eth1 -\u003e docker_gwbridge -\u003e 宿主机 NAT -\u003e ens33 2.3 Swarm 所需端口 端口 协议 用途 2377 TCP Swarm 管理通信，主要用于节点加入和管理节点通信 7946 TCP、UDP 节点之间的发现与状态传播 4789 UDP overlay 网络的 VXLAN 数据封装 如果跨主机 ping 不通，但容器和 overlay 网络均已创建，应优先检查这些端口及中间网络安全策略。\n3. 在 docker01 初始化 Swarm 在 docker01 上执行：\n1 2 3 docker swarm init \\ --advertise-addr 11.0.1.121 \\ --listen-addr 11.0.1.121:2377 1 Swarm initialized: current node (ilsct3hz5rg7tc1ln7l426p1e) is now a manager. 查看节点：\n1 docker node ls 此时只有管理节点：\n1 2 ID HOSTNAME STATUS AVAILABILITY MANAGER STATUS ENGINE VERSION ilsct3hz5rg7tc1ln7l426p1e * docker01 Ready Active Leader 27.0.3 查看 worker 加入令牌：\n1 docker swarm join-token worker 令牌属于集群加入凭据，复现实验时应在 docker01 上实时获取。\n初始化后，docker01 开始监听：\n1 2 3 tcp 11.0.1.121:2377 tcp 11.0.1.121:7946 udp 11.0.1.121:7946 自动生成的其他网络 初始化 Swarm 后还可以看到：\n网络 作用 ingress Swarm 服务发布端口时使用的路由网格网络 docker_gwbridge overlay 容器连接宿主机和外网的本地桥接网络 4. 将 docker02 加入集群 在 docker02 上执行以下命令：\n1 2 3 4 5 docker swarm join \\ --token \\ --advertise-addr 11.0.1.122 \\ --listen-addr 11.0.1.122:2377 \\ 11.0.1.121:2377 1 This node joined a swarm as a worker. 回到 docker01 验证：\n1 docker node ls 1 2 3 ID HOSTNAME STATUS AVAILABILITY MANAGER STATUS ENGINE VERSION ilsct3hz5rg7tc1ln7l426p1e * docker01 Ready Active Leader 27.0.3 zqccn7zzxvujvbuw8i43jczdn docker02 Ready Active 27.0.3 两个节点均为 Ready / Active，说明集群控制面正常。\ndocker node ls 是管理节点命令，在 worker 上执行会提示当前节点不是 manager。\n5. 创建自定义 overlay 网络 在管理节点 docker01 上执行：\n1 2 3 4 5 6 docker network create \\ -d overlay \\ --attachable \\ --subnet 172.30.0.0/16 \\ --gateway 172.30.0.254 \\ dawn-overlay 1 8myzpa127zbqa8x3wnzrfv1eh 查看网络：\n1 2 docker network inspect dawn-overlay \\ --format 'Name={{.Name}} Id={{.Id}} Scope={{.Scope}} Driver={{.Driver}} Attachable={{.Attachable}} Subnet={{(index .IPAM.Config 0).Subnet}} Gateway={{(index .IPAM.Config 0).Gateway}}' 1 2 3 4 5 6 7 Name=dawn-overlay Id=8myzpa127zbqa8x3wnzrfv1eh Scope=swarm Driver=overlay Attachable=true Subnet=172.30.0.0/16 Gateway=172.30.0.254 Swarm 模式下的 overlay 网络默认主要供 service/task 使用。如果希望普通容器也能通过 docker run --network dawn-overlay 接入，需要在创建网络时指定 --attachable。\n网络刚创建时，在 docker02 上执行：\n1 2 docker network ls docker network inspect dawn-overlay 观察到：\n1 Error response from daemon: network dawn-overlay not found 此时 docker network ls 中也只有 bridge、host、none、ingress 和 docker_gwbridge，暂时没有 dawn-overlay。\n这不是集群同步失败，而是 Swarm overlay 网络在工作节点上的按需下发机制：网络配置保存在集群中，但工作节点通常在有容器或任务实际需要接入该网络时，才建立本地的数据面资源。\n6. 在 docker02 启动 c1 在 docker02 上执行：\n1 2 3 4 5 docker run -d \\ --name c1 \\ --network dawn-overlay \\ uhub.service.ucloud.cn/dawn/apps:v1 \\ sleep 3600 查看容器网卡：\n1 docker exec c1 ifconfig 关键结果：\n1 2 3 eth0: inet addr 172.30.0.1/16，MTU 1450 eth1: inet addr 172.18.0.3/16，MTU 1500 lo: 127.0.0.1 再次查看网络：\n1 2 3 4 5 6 7 docker network ls --filter name=dawn-overlay NETWORK ID NAME DRIVER SCOPE 8myzpa127zbq dawn-overlay overlay swarm docker network inspect dawn-overlay \\ --format 'Id={{.Id}} Scope={{.Scope}} Attachable={{.Attachable}}' Id=8myzpa127zbqa8x3wnzrfv1eh Scope=swarm Attachable=true 接入容器后，dawn-overlay 已在 docker02 上出现，并且网络 ID 与 docker01 完全一致。\n7. 在 docker01 启动 c2 在 docker01 上执行：\n1 2 3 4 5 docker run -d \\ --name c2 \\ --network dawn-overlay \\ uhub.service.ucloud.cn/dawn/apps:v1 \\ sleep 3600 查看网卡：\n1 docker exec c2 ifconfig 关键结果：\n1 2 3 eth0: inet addr 172.30.0.3/16，MTU 1450 eth1: inet addr 172.18.0.3/16，MTU 1500 lo: 127.0.0.1 8. 验证跨主机通信 8.1 通过目标 IP 通信 在 docker01 上执行：\n1 2 3 4 5 6 7 8 docker exec c2 ping -c 3 172.30.0.1 PING 172.30.0.1 (172.30.0.1): 56 data bytes 64 bytes from 172.30.0.1: seq=0 ttl=64 time=7.124 ms 64 bytes from 172.30.0.1: seq=1 ttl=64 time=0.414 ms 64 bytes from 172.30.0.1: seq=2 ttl=64 time=0.518 ms --- 172.30.0.1 ping statistics --- 3 packets transmitted, 3 packets received, 0% packet loss 8.2 通过容器名通信 继续执行：\n1 2 3 4 5 6 7 8 docker exec c2 ping -c 3 c1 PING c1 (172.30.0.1): 56 data bytes 64 bytes from 172.30.0.1: seq=0 ttl=64 time=0.996 ms 64 bytes from 172.30.0.1: seq=1 ttl=64 time=0.456 ms 64 bytes from 172.30.0.1: seq=2 ttl=64 time=0.492 ms --- c1 ping statistics --- 3 packets transmitted, 3 packets received, 0% packet loss 生产环境中应优先使用稳定的服务名或容器名，而不是把动态分配的容器 IP 写死在配置文件中。\n9. 验证路由和外网访问 查看 c2 路由：\n1 2 3 4 5 6 docker exec c2 route -n Kernel IP routing table Destination Gateway Genmask Flags Metric Ref Use Iface 0.0.0.0 172.18.0.1 0.0.0.0 UG 0 0 0 eth1 172.18.0.0 0.0.0.0 255.255.0.0 U 0 0 0 eth1 172.30.0.0 0.0.0.0 255.255.0.0 U 0 0 0 eth0 目的地址属于 172.30.0.0/16 时，走 overlay 网卡 eth0。\n其他地址走默认路由 172.18.0.1，对应 eth1 和 docker_gwbridge。\n测试外网：\n1 docker exec c2 ping -c 3 baidu.com 实际结果：\n1 2 3 packets transmitted, 3 packets received, 0% packet loss round-trip min/avg/max = 37.178/40.291/46.454 ms 同时在 docker01 的 docker_gwbridge 上抓包：\n1 timeout 10 tcpdump -i docker_gwbridge -nn -c 2 icmp 另开终端执行：\n1 docker exec c2 ping -c 2 baidu.com 抓到：\n1 2 IP 172.18.0.3 \u003e 111.63.65.103: ICMP echo request IP 111.63.65.103 \u003e 172.18.0.3: ICMP echo reply 验证了外网流量是经过 docker_gwbridge，而不是走 overlay 的 VXLAN 隧道。\n10. 抓取 VXLAN 跨主机报文 在 docker01 上执行抓包：\n1 timeout 12 tcpdump -i ens33 -nn -vv -c 4 'udp port 4789' 另开终端产生跨主机流量：\n1 docker exec c2 ping -c 4 172.30.0.1 关键报文：\n1 2 3 4 5 6 7 11.0.1.121.41805 \u003e 11.0.1.122.4789: VXLAN, flags [I] (0x08), vni 4097 IP 172.30.0.3 \u003e 172.30.0.1: ICMP echo request 11.0.1.122.44099 \u003e 11.0.1.121.4789: VXLAN, flags [I] (0x08), vni 4097 IP 172.30.0.1 \u003e 172.30.0.3: ICMP echo reply 抓包统计：\n1 2 3 4 packets captured 4 packets received by filter 0 packets dropped by kernel 跨主机容器是把容器原始报文封装进 VXLAN，再通过两台宿主机的 ens33 网络传输。\n11. 实战案例：用 overlay 部署 WordPress 用自定义 overlay 网络部署 wordpress，网段 172.23.0.0/16。\n11.1 创建网络 1 2 3 # docker01 docker network create -d overlay --attachable \\ --subnet 172.23.0.0/16 --gateway 172.23.0.254 wp-overlay 11.2 在 docker02 部署 MySQL 1 2 3 4 5 6 7 8 # docker02 docker run -d --name wp-db --network wp-overlay --restart unless-stopped \\ -e MYSQL_DATABASE=wordpress \\ -e MYSQL_USER=wordpress \\ -e MYSQL_PASSWORD=123456 \\ -e MYSQL_ROOT_PASSWORD=123456 \\ -v wp-db-data:/var/lib/mysql \\ mysql:8.4.1-oracle 11.3 在 docker01 部署 WordPress 1 2 3 4 5 6 7 8 # docker01 docker run -d --name wp-web --network wp-overlay --restart unless-stopped \\ -p 8080:80 \\ -e WORDPRESS_DB_HOST=wp-db:3306 \\ -e WORDPRESS_DB_NAME=wordpress \\ -e WORDPRESS_DB_USER=wordpress \\ -e WORDPRESS_DB_PASSWORD=123456 \\ uhub.service.ucloud.cn/dawn/wordpress:6.8 WORDPRESS_DB_HOST=wp-db:3306 直接使用容器名。两个容器虽在不同宿主机，但同处 wp-overlay 网络，Docker 内置 DNS 会将 wp-db 解析为 docker02 上的 MySQL 容器 IP，实现跨主机数据库访问。\n验证跨主机 DNS 解析：\n1 2 docker exec wp-web getent hosts wp-db 172.23.0.1 wp-db 11.4 验证安装页 12. 实验环境清理 删除容器：\n1 2 3 4 5 # docker01 docker rm -f c2 # docker02 docker rm -f c1 在manager上删除自定义网络：\n1 docker network rm dawn-overlay 让worker离开集群：\n1 2 # docker02 docker swarm leave 让manager离开并解散集群：\n1 2 # docker01 docker swarm leave --force 清理后检查：\n1 2 3 docker info --format '{{.Swarm.LocalNodeState}}' docker network ls docker ps -a ",
+  "wordCount" : "1121",
   "inLanguage": "zh",
-  "image": "https://LMDAWN1127.github.io/images/DAWN.jpg","datePublished": "2026-10-27T18:30:00+08:00",
+  "image": "http://192.168.100.30:1313/images/DAWN.jpg","datePublished": "2026-10-27T18:30:00+08:00",
   "dateModified": "2026-10-27T18:30:00+08:00",
   "author":{
     "@type": "Person",
@@ -124,14 +124,14 @@
   },
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "https://LMDAWN1127.github.io/posts/docker-overlay-cross-host-networking/"
+    "@id": "http://192.168.100.30:1313/posts/docker-overlay-cross-host-networking/"
   },
   "publisher": {
     "@type": "Organization",
     "name": "DAWN's Blog",
     "logo": {
       "@type": "ImageObject",
-      "url": "https://LMDAWN1127.github.io/images/DAWN.jpg"
+      "url": "http://192.168.100.30:1313/images/DAWN.jpg"
     }
   }
 }
@@ -141,8 +141,8 @@
     <header class="header">
     <nav class="header-nav">
         <div class="logo">
-            <a href="https://LMDAWN1127.github.io/" accesskey="h" title="DAWN&#39;s Blog (Alt + H)">
-                <img src="https://LMDAWN1127.github.io/images/DAWN.jpg" alt="" aria-label="logo"
+            <a href="http://192.168.100.30:1313/" accesskey="h" title="DAWN&#39;s Blog (Alt + H)">
+                <img src="http://192.168.100.30:1313/images/DAWN.jpg" alt="" aria-label="logo"
                     height="38">DAWN&#39;s Blog</a>
             <div class="logo-switches">
                 <button id="theme-toggle" class="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
@@ -167,15 +167,15 @@
                 </button><span class="nav-sep">|</span>
                     <ul class="lang-menu">
                         <li>
-                            <a href="https://LMDAWN1127.github.io/en/" title="English"
+                            <a href="http://192.168.100.30:1313/en/" title="English"
                                 aria-label="English">En</a>
                         </li>
                         <li>
-                            <a href="https://LMDAWN1127.github.io/ko/" title="한국어"
+                            <a href="http://192.168.100.30:1313/ko/" title="한국어"
                                 aria-label="한국어">Ko</a>
                         </li>
                         <li>
-                            <a href="https://LMDAWN1127.github.io/ja/" title="日本語"
+                            <a href="http://192.168.100.30:1313/ja/" title="日本語"
                                 aria-label="日本語">Ja</a>
                         </li>
                     </ul>
@@ -183,7 +183,7 @@
         </div>
         <ul id="menu" class="menu">
             <li>
-                <a href="https://LMDAWN1127.github.io/archives/" title="归档">
+                <a href="http://192.168.100.30:1313/archives/" title="归档">
                     <span>归档</span>
                 </a>
             </li>
@@ -195,13 +195,13 @@
 <article class="post-single">
   <header class="post-header">
     <h1 class="post-title entry-hint-parent">
-      Docker 实战：Overlay 实现容器跨主机网络互联
+      Docker 实战：Overlay 实现容器跨主机网络互联与 WordPress 实战
     </h1>
   </header>
 
   <div class="post-layout">
     <div class="post-content-wrapper"> 
-      <div class="post-content md-content"><h1 id="docker-实战overlay-实现容器跨主机网络互联">Docker 实战：Overlay 实现容器跨主机网络互联<a hidden class="anchor" aria-hidden="true" href="#docker-实战overlay-实现容器跨主机网络互联">#</a></h1>
+      <div class="post-content md-content"><h1 id="docker-实战overlay-实现容器跨主机网络互联与-wordpress-实战与-wordpress-实战">Docker 实战：Overlay 实现容器跨主机网络互联与 WordPress 实战与 WordPress 实战<a hidden class="anchor" aria-hidden="true" href="#docker-实战overlay-实现容器跨主机网络互联与-wordpress-实战与-wordpress-实战">#</a></h1>
 <h2 id="1-实验目标">1. 实验目标<a hidden class="anchor" aria-hidden="true" href="#1-实验目标">#</a></h2>
 <ol>
 <li>将 docker01 和 docker02 组成一个 Docker Swarm 集群。</li>
@@ -804,7 +804,82 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>跨主机容器是把容器原始报文封装进 VXLAN，再通过两台宿主机的 <code>ens33</code> 网络传输。</p>
-<h2 id="11-实验环境清理">11. 实验环境清理<a hidden class="anchor" aria-hidden="true" href="#11-实验环境清理">#</a></h2>
+<h2 id="11-实战案例用-overlay-部署-wordpress">11. 实战案例：用 overlay 部署 WordPress<a hidden class="anchor" aria-hidden="true" href="#11-实战案例用-overlay-部署-wordpress">#</a></h2>
+<p>用自定义 overlay 网络部署 wordpress，网段 <code>172.23.0.0/16</code>。</p>
+<h3 id="111-创建网络">11.1 创建网络<a hidden class="anchor" aria-hidden="true" href="#111-创建网络">#</a></h3>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># docker01</span>
+</span></span><span style="display:flex;"><span>docker network create -d overlay --attachable <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>  --subnet 172.23.0.0/16 --gateway 172.23.0.254 wp-overlay
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="112-在-docker02-部署-mysql">11.2 在 docker02 部署 MySQL<a hidden class="anchor" aria-hidden="true" href="#112-在-docker02-部署-mysql">#</a></h3>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># docker02</span>
+</span></span><span style="display:flex;"><span>docker run -d --name wp-db --network wp-overlay --restart unless-stopped <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>  -e MYSQL_DATABASE<span style="color:#f92672">=</span>wordpress <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>  -e MYSQL_USER<span style="color:#f92672">=</span>wordpress <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>  -e MYSQL_PASSWORD<span style="color:#f92672">=</span><span style="color:#ae81ff">123456</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>  -e MYSQL_ROOT_PASSWORD<span style="color:#f92672">=</span><span style="color:#ae81ff">123456</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>  -v wp-db-data:/var/lib/mysql <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>  mysql:8.4.1-oracle
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="113-在-docker01-部署-wordpress">11.3 在 docker01 部署 WordPress<a hidden class="anchor" aria-hidden="true" href="#113-在-docker01-部署-wordpress">#</a></h3>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># docker01</span>
+</span></span><span style="display:flex;"><span>docker run -d --name wp-web --network wp-overlay --restart unless-stopped <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>  -p 8080:80 <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>  -e WORDPRESS_DB_HOST<span style="color:#f92672">=</span>wp-db:3306 <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>  -e WORDPRESS_DB_NAME<span style="color:#f92672">=</span>wordpress <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>  -e WORDPRESS_DB_USER<span style="color:#f92672">=</span>wordpress <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>  -e WORDPRESS_DB_PASSWORD<span style="color:#f92672">=</span><span style="color:#ae81ff">123456</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>  uhub.service.ucloud.cn/dawn/wordpress:6.8
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><code>WORDPRESS_DB_HOST=wp-db:3306</code> 直接使用容器名。两个容器虽在不同宿主机，但同处 <code>wp-overlay</code> 网络，Docker 内置 DNS 会将 <code>wp-db</code> 解析为 docker02 上的 MySQL 容器 IP，实现跨主机数据库访问。</p>
+<p>验证跨主机 DNS 解析：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>docker exec wp-web getent hosts wp-db
+</span></span><span style="display:flex;"><span>172.23.0.1  wp-db
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="114-验证安装页">11.4 验证安装页<a hidden class="anchor" aria-hidden="true" href="#114-验证安装页">#</a></h3>
+<p><img alt="image-20261027210610539" loading="lazy" src="/images/docker-overlay-cross-host-networking-image-20261027210610539.png"></p>
+<h2 id="12-实验环境清理">12. 实验环境清理<a hidden class="anchor" aria-hidden="true" href="#12-实验环境清理">#</a></h2>
 <p>删除容器：</p>
 <div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -892,7 +967,7 @@
     <div class="toc-header">目录</div>
     <nav class="toc-nav"><ul class="toc-list">
             <li>
-                <a href="#docker-%e5%ae%9e%e6%88%98overlay-%e5%ae%9e%e7%8e%b0%e5%ae%b9%e5%99%a8%e8%b7%a8%e4%b8%bb%e6%9c%ba%e7%bd%91%e7%bb%9c%e4%ba%92%e8%81%94" class="toc-link" data-target="docker-实战overlay-实现容器跨主机网络互联">Docker 实战：Overlay 实现容器跨主机网络互联</a><ul>
+                <a href="#docker-%e5%ae%9e%e6%88%98overlay-%e5%ae%9e%e7%8e%b0%e5%ae%b9%e5%99%a8%e8%b7%a8%e4%b8%bb%e6%9c%ba%e7%bd%91%e7%bb%9c%e4%ba%92%e8%81%94%e4%b8%8e-wordpress-%e5%ae%9e%e6%88%98%e4%b8%8e-wordpress-%e5%ae%9e%e6%88%98" class="toc-link" data-target="docker-实战overlay-实现容器跨主机网络互联与-wordpress-实战与-wordpress-实战">Docker 实战：Overlay 实现容器跨主机网络互联与 WordPress 实战与 WordPress 实战</a><ul>
             <li>
                 <a href="#1-%e5%ae%9e%e9%aa%8c%e7%9b%ae%e6%a0%87" class="toc-link" data-target="1-实验目标">1. 实验目标</a></li>
             <li>
@@ -929,7 +1004,18 @@
             <li>
                 <a href="#10-%e6%8a%93%e5%8f%96-vxlan-%e8%b7%a8%e4%b8%bb%e6%9c%ba%e6%8a%a5%e6%96%87" class="toc-link" data-target="10-抓取-vxlan-跨主机报文">10. 抓取 VXLAN 跨主机报文</a></li>
             <li>
-                <a href="#11-%e5%ae%9e%e9%aa%8c%e7%8e%af%e5%a2%83%e6%b8%85%e7%90%86" class="toc-link" data-target="11-实验环境清理">11. 实验环境清理</a>
+                <a href="#11-%e5%ae%9e%e6%88%98%e6%a1%88%e4%be%8b%e7%94%a8-overlay-%e9%83%a8%e7%bd%b2-wordpress" class="toc-link" data-target="11-实战案例用-overlay-部署-wordpress">11. 实战案例：用 overlay 部署 WordPress</a><ul>
+            <li>
+                <a href="#111-%e5%88%9b%e5%bb%ba%e7%bd%91%e7%bb%9c" class="toc-link" data-target="111-创建网络">11.1 创建网络</a></li>
+            <li>
+                <a href="#112-%e5%9c%a8-docker02-%e9%83%a8%e7%bd%b2-mysql" class="toc-link" data-target="112-在-docker02-部署-mysql">11.2 在 docker02 部署 MySQL</a></li>
+            <li>
+                <a href="#113-%e5%9c%a8-docker01-%e9%83%a8%e7%bd%b2-wordpress" class="toc-link" data-target="113-在-docker01-部署-wordpress">11.3 在 docker01 部署 WordPress</a></li>
+            <li>
+                <a href="#114-%e9%aa%8c%e8%af%81%e5%ae%89%e8%a3%85%e9%a1%b5" class="toc-link" data-target="114-验证安装页">11.4 验证安装页</a></li></ul>
+            </li>
+            <li>
+                <a href="#12-%e5%ae%9e%e9%aa%8c%e7%8e%af%e5%a2%83%e6%b8%85%e7%90%86" class="toc-link" data-target="12-实验环境清理">12. 实验环境清理</a>
             </li>
         </ul>
         </li>
