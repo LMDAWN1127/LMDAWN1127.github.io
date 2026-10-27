@@ -11,7 +11,7 @@
     </image>
     <generator>Hugo</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Tue, 27 Oct 2026 12:19:00 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 27 Oct 2026 14:30:00 +0800</lastBuildDate>
     <atom:link href="https://LMDAWN1127.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Harbor 主备部署实战：从安装到 HTTPS 与主备复制</title>
@@ -19,6 +19,13 @@
       <pubDate>Tue, 04 Aug 2026 00:00:00 +0000</pubDate>
       <guid>https://LMDAWN1127.github.io/posts/harbor-master-slave/</guid>
       <description>完整记录 Harbor 企业级镜像仓库的主备部署过程，涵盖 HTTP/HTTPS 双模式安装、自签名证书配置、跨主机主备复制等核心运维技能。</description>
+    </item>
+    <item>
+      <title>Docker 实战：macvlan 实现容器跨主机网络互联</title>
+      <link>https://LMDAWN1127.github.io/posts/docker-macvlan-cross-host-networking/</link>
+      <pubDate>Tue, 27 Oct 2026 14:30:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/posts/docker-macvlan-cross-host-networking/</guid>
+      <description>在两台 Docker 主机上用 macvlan 驱动创建同网段自定义网络，演示容器跨主机二层互通；并给出 macvlan 默认无法连通宿主机/外网的解决办法，最后以 WordPress 多节点部署实战收尾。</description>
     </item>
     <item>
       <title>Docker 实战：Docker 部署 Zabbix 监控与 WordPress 应用</title>
