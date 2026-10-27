@@ -349,13 +349,4 @@ lo        Link encap:Local Loopback
 
 网卡 eth1 已被动态卸载，c1 恢复为仅加入 xixi 网络的原有状态
 
-## 小结
-
-本文通过 `xixi` 与 `haha` 两个自定义 Bridge 网络，演示了 Docker 的网络隔离机制与运行时动态组网能力：
-
-- **默认隔离**：不同自定义 Bridge 网络之间由 Linux iptables 规则隔离，既无法跨网 IP 互通，Docker 内置 DNS 也不会跨网络解析容器名；
-- **动态加入**：`docker network connect <网络> <容器>` 可在容器运行时将其加入另一个网络，自动新增一块网卡并分配该网段 IP，从而实现跨网络通信；
-- **动态退出**：`docker network disconnect <网络> <容器>` 可卸载对应网卡，使容器恢复原有隔离状态；
-- **轻量运维**：connect/disconnect 不重建容器、不影响容器生命周期，是运行时调整网络拓扑的轻量手段，适用于临时排障、灰度联通等场景。
-
 > 提示：容器名 DNS 解析仅在**同一自定义网络**内生效；跨网络互通依赖 `connect` 后共用网段，而非 DNS。
