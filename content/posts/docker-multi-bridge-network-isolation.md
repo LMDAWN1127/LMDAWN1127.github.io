@@ -349,4 +349,4 @@ lo        Link encap:Local Loopback
 
 网卡 eth1 已被动态卸载，c1 恢复为仅加入 xixi 网络的原有状态
 
-> 提示：容器名 DNS 解析仅在**同一自定义网络**内生效；跨网络互通依赖 `connect` 后共用网段，而非 DNS。
+> 容器名 DNS 解析仅在**同一自定义网络**内生效；跨网络互通依赖 `connect` 后共用网段，而非 DNS。
