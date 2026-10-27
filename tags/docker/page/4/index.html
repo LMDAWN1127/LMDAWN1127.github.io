@@ -163,6 +163,29 @@
 <article class="post-entry tag-entry"> 
   <header class="entry-header">
     <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/posts/docker-image-container-flow/">Docker 实战：镜像拉取与容器启动全流程</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>Docker 实战：镜像拉取与容器启动全流程 镜像仓库、镜像和容器 查看本地镜像仓库列表 1 2 root@docker02:~# docker image ls REPOSITORY TAG IMAGE ID CREATED SIZE 从远程仓库下载镜像 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 root@docker02:~# docker pull uhub.service.ucloud.cn/dawn/nginx:1.30.4 1.30.4: Pulling from dawn/nginx 26c307b5e35a: Pull complete 7be390ba6238: Pull complete d84ae7b21412: Pull complete c0df8d325117: Pull complete b8b80b9bc028: Pull complete f5de6e85ac74: Pull complete 5a4222b844e8: Pull complete Digest: sha256:9e4b33ead4c69e9845e53a1f175d0aa70a6cea62425b5d08957ba7eee5dc9b1d Status: Downloaded newer image for uhub.service.ucloud.cn/dawn/nginx:1.30.4 uhub.service.ucloud.cn/dawn/nginx:1.30.4 root@docker02:~# docker image ls REPOSITORY TAG IMAGE ID CREATED SIZE uhub.service.ucloud.cn/dawn/nginx 1.30.4 886dbea595a1 2 months ago 161MB 相关字段说明:
+...</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-23">
+  2026年10月23日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 2 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to Docker 实战：镜像拉取与容器启动全流程" href="https://LMDAWN1127.github.io/posts/docker-image-container-flow/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
       <a href="https://LMDAWN1127.github.io/posts/docker-binary-script-install/">Docker 安装实战：二进制部署与一键脚本部署</a>
     </h2>
   </header>
@@ -252,33 +275,12 @@ https://docs.docker.com/engine/install/ubuntu/
 </footer>
   <a class="entry-link" aria-label="post link to Dockerfile 中 COPY 与 ADD 的区别详解" href="https://LMDAWN1127.github.io/posts/dockerfile-copy-vs-add/"></a>
 </article>
-
-<article class="post-entry tag-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/posts/flannel-network-lab/">flannel 实战：从零搭建 Docker 跨主机容器网络</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>flannel 实战：从零搭建 Docker 跨主机容器网络 一、网络环境规划 etcd 主机 IP：192.168.8.88 主机名：docker-network Host1 IP：192.168.8.188 主机名：web01 Host2 IP：192.168.8.99 主机名：web02 二、etcd 主机配置 步骤 1：下载并解压 etcd 从github.com 下载etcd-v3.6.0-linux-amd64.tar.gz 软件包 将软件包复制到 etcd 主机/root 目录并解压： 1 [root@docker-network ~]# tar -zxvf etcd-v3.6.0-linux-amd64.tar.gz 步骤 2：安装 etcd 可执行文件 1 2 [root@docker-network ~]# cd etcd-v3.6.0-linux-amd64 [root@docker-network etcd-v3.6.0-linux-amd64]# cp etcd* /usr/local/bin/ 步骤 3：创建数据目录 1 [root@docker-network ~]# mkdir /var/lib/etcd 步骤 4：配置并启动 etcd 服务 创建etcd.service 文件： 1 [root@docker-network ~]# vim /usr/lib/systemd/system/etcd.service 1 2 3 4 5 6 [Unit] Description=etcd_service [Service] ExecStart=/usr/local/bin/etcd --name etcd1 --data-dir /var/lib/etcd --listen-client-urls http://192.168.8.88:2379,http://127.0.0.1:2379 --advertise-client-urls http://192.168.8.88:2379,http://127.0.0.1:2379 [Install] WantedBy=multi-user.target 重载系统服务配置并启动 etcd： 1 2 3 [root@docker-network ~]# systemctl daemon-reload [root@docker-network ~]# systemctl enable etcd.service [root@docker-network ~]# systemctl restart etcd.service 验证 etcd 监听状态： 1 2 3 [root@docker-network ~]# netstat -tulnp |grep :2379 tcp 0 0 192.168.8.88:2379 0.0.0.0:* LISTEN 1912/etcd tcp 0 0 127.0.0.1:2379 0.0.0.0:* LISTEN 1912/etcd 步骤 5：向 etcd 添加 flannel 网络配置 1 etcdctl --endpoints http://127.0.0.1:2379 put /coreos.com/network/config &#39;{&#34;Network&#34;: &#34;172.16.0.0/16&#34;, &#34;SubnetLen&#34;: 24, &#34;SubnetMin&#34;: &#34;172.16.1.0&#34;,&#34;SubnetMax&#34;: &#34;172.16.10.0&#34;, &#34;Backend&#34;: {&#34;Type&#34;: &#34;vxlan&#34;}}&#39; 1 etcdctl --endpoints http://192.168.8.88:2379 get /coreos.com/network/config 配置说明：
-...</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2025-05-21">
-  2025年5月21日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 3 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to flannel 实战：从零搭建 Docker 跨主机容器网络" href="https://LMDAWN1127.github.io/posts/flannel-network-lab/"></a>
-</article>
 <footer class="page-footer">
   <nav class="pagination">
     <a class="prev" href="https://LMDAWN1127.github.io/tags/docker/page/3/">
       «&nbsp;上一页&nbsp;
+    </a>
+    <a class="next" href="https://LMDAWN1127.github.io/tags/docker/page/5/">下一页&nbsp;&nbsp;»
     </a>
   </nav>
 </footer>
