@@ -154,6 +154,28 @@
 <article class="post-entry"> 
   <header class="entry-header">
     <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/posts/docker-multi-bridge-network-isolation/">Docker 实战：基于多 Bridge 网络的容器隔离与跨网络通信</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>通过 xixi 与 haha 两个自定义 Bridge 网络，演示 Docker 默认网络隔离机制，以及 docker network connect/disconnect 在运行时动态加入/退出网络、实现跨网络容器互通的轻量组网手段。</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-27">
+  2026年10月27日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 6 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to Docker 实战：基于多 Bridge 网络的容器隔离与跨网络通信" href="https://LMDAWN1127.github.io/posts/docker-multi-bridge-network-isolation/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
       <a href="https://LMDAWN1127.github.io/posts/docker-overlayfs-storage-driver/">Docker 实战：OverlayFS 联合挂载与存储驱动解析</a>
     </h2>
   </header>
@@ -238,31 +260,6 @@
 </span>
 </footer>
   <a class="entry-link" aria-label="post link to Docker 实战：容器数据持久化——bind 挂载与存储卷（Volume）" href="https://LMDAWN1127.github.io/posts/docker-bind-mount-volume/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/posts/docker-container-lifecycle/">Docker 实战：容器生命周期管理——启动、停止与重启策略</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>Docker 实战：容器生命周期管理——启动、停止与重启策略 1. 容器启动和停止 1. 停止容器 1 2 3 root@docker02:~# docker stop -t 0 es01 # 可以指定容器的名称停止，-t表示指定等待多久后开始发送kill指令。如果停止服务较长，默认等待10s es01 root@docker02:~# docker stop 31198819a488 2. 启动容器 1 2 3 root@docker02:~# docker start es01 es01 root@docker02:~# docker start 31198819a488 3. 重启容器 先停止，在启动。只要停止容器就会重新对STATUS进行重新计数
-1 root@docker02:~# docker restart es01 docker stop命令本质是调用的是docker kill表示杀死容器的进程ID
-1 2 3 4 root@docker02:~# docker start kibana es01 kibana es01 root@docker02:~# docker kill kibana 容器启动本质上是在宿主机上启动了一个进程ID
-...</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-26">
-  2026年10月26日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 6 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to Docker 实战：容器生命周期管理——启动、停止与重启策略" href="https://LMDAWN1127.github.io/posts/docker-container-lifecycle/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">

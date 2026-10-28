@@ -185,6 +185,28 @@
 <article class="post-entry tag-entry"> 
   <header class="entry-header">
     <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/posts/docker-dockerfile-multi-game-image-add/">Docker 实战：Dockerfile 多游戏镜像构建与 ADD 自动解压</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>从一份旧的全家桶镜像 dawn-games-dawn:v0.6 里用中转容器拷出黄金矿工与压扁小鸟两个游戏的静态文件，各自打成 tar.gz，再用 Dockerfile 的 ADD 指令在构建时自动解压进 Alpine&#43;nginx 容器，最后构建镜像、起容器并用域名访问两个游戏；并对比 ADD 与 COPY 的关键区别（ADD 自动解压 tar.gz）。</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-28">
+  2026年10月28日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 3 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to Docker 实战：Dockerfile 多游戏镜像构建与 ADD 自动解压" href="https://LMDAWN1127.github.io/posts/docker-dockerfile-multi-game-image-add/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
       <a href="https://LMDAWN1127.github.io/posts/docker-image-manual-and-dockerfile/">Docker 实战：手动制作 Docker 镜像与 Dockerfile 自动构建</a>
     </h2>
   </header>
@@ -246,28 +268,6 @@
 </span>
 </footer>
   <a class="entry-link" aria-label="post link to Docker 实战：容器状态详解——Up / Exited / Created / Paused" href="https://LMDAWN1127.github.io/posts/docker-container-states/"></a>
-</article>
-
-<article class="post-entry tag-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/posts/docker-namespace-cgroup-resource-limit/">Docker 实战：Linux Namespace 网络隔离与 CGroup 资源限制</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>用 ip netns 手工搭建 Linux 网络命名空间，经 veth pair 与 NAT 打通外网；再看 Docker 容器共享 net namespace；最后用 cgroup v2 做 CPU/内存限额压测并复现 OOM kill，完整串起容器的隔离(Namespace)与限制(CGroup)两大底层机制。</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-28">
-  2026年10月28日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 9 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to Docker 实战：Linux Namespace 网络隔离与 CGroup 资源限制" href="https://LMDAWN1127.github.io/posts/docker-namespace-cgroup-resource-limit/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">

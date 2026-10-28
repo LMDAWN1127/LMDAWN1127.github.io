@@ -11,7 +11,7 @@
     </image>
     <generator>Hugo</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Wed, 28 Oct 2026 14:30:00 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 28 Oct 2026 18:30:00 +0800</lastBuildDate>
     <atom:link href="https://LMDAWN1127.github.io/categories/devops/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Harbor 主备部署实战：从安装到 HTTPS 与主备复制</title>
@@ -19,6 +19,13 @@
       <pubDate>Tue, 04 Aug 2026 00:00:00 +0000</pubDate>
       <guid>https://LMDAWN1127.github.io/posts/harbor-master-slave/</guid>
       <description>完整记录 Harbor 企业级镜像仓库的主备部署过程，涵盖 HTTP/HTTPS 双模式安装、自签名证书配置、跨主机主备复制等核心运维技能。</description>
+    </item>
+    <item>
+      <title>Docker 实战：Dockerfile 多游戏镜像构建与 ADD 自动解压</title>
+      <link>https://LMDAWN1127.github.io/posts/docker-dockerfile-multi-game-image-add/</link>
+      <pubDate>Wed, 28 Oct 2026 18:30:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/posts/docker-dockerfile-multi-game-image-add/</guid>
+      <description>从一份旧的全家桶镜像 dawn-games-dawn:v0.6 里用中转容器拷出黄金矿工与压扁小鸟两个游戏的静态文件，各自打成 tar.gz，再用 Dockerfile 的 ADD 指令在构建时自动解压进 Alpine+nginx 容器，最后构建镜像、起容器并用域名访问两个游戏；并对比 ADD 与 COPY 的关键区别（ADD 自动解压 tar.gz）。</description>
     </item>
     <item>
       <title>Docker 实战：手动制作 Docker 镜像与 Dockerfile 自动构建</title>
