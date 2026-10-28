@@ -939,10 +939,10 @@
       <pubDate>Fri, 23 Oct 2026 14:30:00 +0800</pubDate>
       <guid>https://LMDAWN1127.github.io/posts/docker-image-container-flow/</guid>
       <description>&lt;h1 id=&#34;docker-实战镜像拉取与容器启动全流程&#34;&gt;Docker 实战：镜像拉取与容器启动全流程&lt;/h1&gt;
-&lt;h2 id=&#34;镜像仓库镜像和容器&#34;&gt;镜像仓库、镜像和容器&lt;/h2&gt;
-&lt;ol&gt;
-&lt;li&gt;查看本地镜像仓库列表&lt;/li&gt;
-&lt;/ol&gt;
+&lt;p&gt;镜像、容器与镜像仓库是 Docker 的三大核心对象：镜像仓库负责镜像的存储与分发，镜像是由仓库拉取而来的只读模板，容器则是镜像的运行实例。下面按「镜像仓库 → 镜像 → 容器」的顺序，走一遍从查看仓库、拉取镜像，到启动并访问容器的完整流程。&lt;/p&gt;
+&lt;h2 id=&#34;镜像仓库&#34;&gt;镜像仓库&lt;/h2&gt;
+&lt;p&gt;镜像仓库是镜像的存储与分发中心，既可以查看本地已有的镜像仓库列表，也可以从远程仓库把镜像拉取到本地。&lt;/p&gt;
+&lt;h3 id=&#34;1-查看本地镜像仓库列表&#34;&gt;1. 查看本地镜像仓库列表&lt;/h3&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;
 &lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;1
@@ -953,9 +953,9 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;REPOSITORY   TAG       IMAGE ID   CREATED   SIZE
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;ol start=&#34;2&#34;&gt;
-&lt;li&gt;从远程仓库下载镜像&lt;/li&gt;
-&lt;/ol&gt;
+&lt;/div&gt;&lt;h2 id=&#34;镜像&#34;&gt;镜像&lt;/h2&gt;
+&lt;p&gt;镜像是由镜像仓库拉取而来的只读模板，本身不可修改，只能通过重新构建或拉取新版本来更新。&lt;/p&gt;
+&lt;h3 id=&#34;2-从远程仓库下载镜像&#34;&gt;2. 从远程仓库下载镜像&lt;/h3&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;
 &lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 1
