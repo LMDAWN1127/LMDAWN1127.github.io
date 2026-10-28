@@ -27,12 +27,5 @@
       <guid>https://LMDAWN1127.github.io/posts/dockerfile-faster-build/</guid>
       <description>10 个经过验证的技巧，从缓存策略到多阶段构建，大幅缩短 Docker 构建时间。</description>
     </item>
-    <item>
-      <title>Dockerfile 中 COPY 与 ADD 的区别详解</title>
-      <link>https://LMDAWN1127.github.io/posts/dockerfile-copy-vs-add/</link>
-      <pubDate>Thu, 30 Jul 2026 10:00:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/posts/dockerfile-copy-vs-add/</guid>
-      <description>COPY 和 ADD 都能复制文件，但行为差异很大。本文通过对比和示例讲清两者区别。</description>
-    </item>
   </channel>
 </rss>

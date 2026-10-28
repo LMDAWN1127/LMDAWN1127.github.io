@@ -20,12 +20,5 @@
       <guid>https://LMDAWN1127.github.io/posts/dockerfile-smaller-image/</guid>
       <description>10 个经过验证的技巧，把 Docker 镜像体积缩小 90% 以上。</description>
     </item>
-    <item>
-      <title>Dockerfile 中 COPY 与 ADD 的区别详解</title>
-      <link>https://LMDAWN1127.github.io/posts/dockerfile-copy-vs-add/</link>
-      <pubDate>Thu, 30 Jul 2026 10:00:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/posts/dockerfile-copy-vs-add/</guid>
-      <description>COPY 和 ADD 都能复制文件，但行为差异很大。本文通过对比和示例讲清两者区别。</description>
-    </item>
   </channel>
 </rss>
