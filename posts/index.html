@@ -199,7 +199,7 @@
     </h2>
   </header>
   <div class="entry-content">
-    <p>逐个复现 docker ps 中四种容器状态的产生方式——Up、Exited（含退出状态码语义）、Created、Paused，并给出查看容器内主进程 ID 的三种方法：docker top、docker inspect 与宿主机 ps。</p>
+    <p>逐个复现 docker ps 中四种容器状态的产生方式——Up、Exited（含退出状态码语义：0 为正常退出、137 为被 SIGKILL）、Created（docker create 后尚未 start）、Paused（暂停对外服务，且与 restart 的时间重新计时行为不同）。</p>
   </div>
   <footer class="entry-footer">
 
@@ -208,7 +208,7 @@
 </time>
 <span class="meta-separator">·</span>
 <span class="meta-reading-time">
-  阅读需 3 分钟
+  阅读需 2 分钟
 </span>
 </footer>
   <a class="entry-link" aria-label="post link to Docker 实战：容器状态详解——Up / Exited / Created / Paused" href="https://LMDAWN1127.github.io/posts/docker-container-states/"></a>
