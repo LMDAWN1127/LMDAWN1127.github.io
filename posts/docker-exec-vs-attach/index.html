@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh" dir="auto" data-theme="auto">
 
-<head><meta charset="utf-8">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="robots" content="index, follow">
@@ -9,16 +9,16 @@
 <meta name="keywords" content="Docker">
 <meta name="description" content="用 docker top 对比进程树，看清 docker exec 与 docker attach 的本质差别：exec 在容器内新建进程，attach 只把本地标准输入输出接上容器已有主进程；并给出 attach 用 ctrl&#43;p、ctrl&#43;q 退出而不终止容器的方法。">
 <meta name="author" content="DAWN">
-<link rel="canonical" href="https://LMDAWN1127.github.io/posts/docker-exec-vs-attach/">
+<link rel="canonical" href="http://192.168.100.30:1313/posts/docker-exec-vs-attach/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.4bf808bff57bddc46d61c8ae060b00400fc679ab876e37243b11bd3f832f2958.css" integrity="sha256-S/gIv/V73cRtYciuBgsAQA/GeauHbjckOxG9P4MvKVg=" rel="preload stylesheet" as="style">
-<link rel="icon" href="https://LMDAWN1127.github.io/images/DAWN.jpg">
-<link rel="icon" type="image/png" sizes="16x16" href="https://LMDAWN1127.github.io/favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="https://LMDAWN1127.github.io/favicon-32x32.png">
-<link rel="apple-touch-icon" href="https://LMDAWN1127.github.io/apple-touch-icon.png">
-<link rel="mask-icon" href="https://LMDAWN1127.github.io/safari-pinned-tab.svg">
+<link rel="icon" href="http://192.168.100.30:1313/images/DAWN.jpg">
+<link rel="icon" type="image/png" sizes="16x16" href="http://192.168.100.30:1313/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://192.168.100.30:1313/favicon-32x32.png">
+<link rel="apple-touch-icon" href="http://192.168.100.30:1313/apple-touch-icon.png">
+<link rel="mask-icon" href="http://192.168.100.30:1313/safari-pinned-tab.svg">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
-<link rel="alternate" hreflang="zh" href="https://LMDAWN1127.github.io/posts/docker-exec-vs-attach/">
+<link rel="alternate" hreflang="zh" href="http://192.168.100.30:1313/posts/docker-exec-vs-attach/">
 <noscript>
     <style>
         #theme-toggle,
@@ -64,8 +64,8 @@
         document.querySelector("html").dataset.theme = 'light';
     }
 
-</script><link rel="stylesheet" href='https://LMDAWN1127.github.io/css/custom.css'>
-<meta property="og:url" content="https://LMDAWN1127.github.io/posts/docker-exec-vs-attach/">
+</script><link rel="stylesheet" href='http://192.168.100.30:1313/css/custom.css'>
+<meta property="og:url" content="http://192.168.100.30:1313/posts/docker-exec-vs-attach/">
   <meta property="og:site_name" content="DAWN&#39;s Blog">
   <meta property="og:title" content="Docker 实战：docker exec 与 docker attach 的区别">
   <meta property="og:description" content="用 docker top 对比进程树，看清 docker exec 与 docker attach 的本质差别：exec 在容器内新建进程，attach 只把本地标准输入输出接上容器已有主进程；并给出 attach 用 ctrl&#43;p、ctrl&#43;q 退出而不终止容器的方法。">
@@ -75,10 +75,10 @@
     <meta property="article:published_time" content="2026-10-28T12:30:00+08:00">
     <meta property="article:modified_time" content="2026-10-28T12:30:00+08:00">
     <meta property="article:tag" content="Docker">
-      <meta property="og:image" content="https://LMDAWN1127.github.io/images/DAWN.jpg">
+      <meta property="og:image" content="http://192.168.100.30:1313/images/DAWN.jpg">
 
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:image" content="https://LMDAWN1127.github.io/images/DAWN.jpg">
+  <meta name="twitter:image" content="http://192.168.100.30:1313/images/DAWN.jpg">
   <meta name="twitter:title" content="Docker 实战：docker exec 与 docker attach 的区别">
   <meta name="twitter:description" content="用 docker top 对比进程树，看清 docker exec 与 docker attach 的本质差别：exec 在容器内新建进程，attach 只把本地标准输入输出接上容器已有主进程；并给出 attach 用 ctrl&#43;p、ctrl&#43;q 退出而不终止容器的方法。">
 
@@ -92,13 +92,13 @@
       "@type": "ListItem",
       "position":  1 ,
       "name": "Posts",
-      "item": "https://LMDAWN1127.github.io/posts/"
+      "item": "http://192.168.100.30:1313/posts/"
     }, 
     {
       "@type": "ListItem",
       "position":  2 ,
       "name": "Docker 实战：docker exec 与 docker attach 的区别",
-      "item": "https://LMDAWN1127.github.io/posts/docker-exec-vs-attach/"
+      "item": "http://192.168.100.30:1313/posts/docker-exec-vs-attach/"
     }
   ]
 }
@@ -116,7 +116,7 @@
   "articleBody": "Docker 实战：docker exec 与 docker attach 的区别 docker exec 和 docker attach 都能进入容器，但本质完全不同：exec 会在容器内新建一个进程，容器主进程不受影响；attach 不新建任何进程，只是把本地的标准输入/输出/错误输出接上容器正在运行的那个主进程。下面用 docker top 观察两者的进程树差异。\n1. 环境准备 1 2 3 4 root@docker01:~# docker run -itd --name c5 uhub.service.ucloud.cn/dawn/dawn-linux-tools:v0.1 d81eb31cf5173dcb1d777559af33157dcef5a0d3f61e81f17103f27595c71a20 root@docker01:~# docker run -d --name c6 uhub.service.ucloud.cn/dawn/dawn-linux-tools:v0.1 sleep 3600 c91146c125ff956871ff359d428174e48d350eb94e9b671578d51a5e855abfeb 2. 查看容器的进程信息 1 2 3 4 5 6 root@docker01:~# docker top c5 UID PID PPID C STIME TTY TIME CMD root 9691 9671 0 04:35 pts/0 00:00:00 /bin/sh root@docker01:~# docker top c6 UID PID PPID C STIME TTY TIME CMD root 9784 9763 0 04:35 ? 00:00:00 sleep 3600 3. 使用exec连接c5容器 测试 1 一个终端：\n1 2 3 4 root@docker01:~# docker exec -it c5 sh /usr/local/stress # ls bin share /usr/local/stress # sleep 3600 另一个终端：\n1 2 3 4 5 root@docker01:~# docker top c5 UID PID PPID C STIME TTY TIME CMD root 9691 9671 0 04:35 pts/0 00:00:00 /bin/sh root 9887 9671 0 04:36 pts/1 00:00:00 sh root 10120 9887 0 04:37 pts/1 00:00:00 sleep 3600 测试 2 一个终端：\n1 2 3 4 5 6 7 8 root@docker01:~# docker exec c5 tail -f /etc/hosts 127.0.0.1 localhost ::1 localhost ip6-localhost ip6-loopback fe00::0 ip6-localnet ff00::0 ip6-mcastprefix ff02::1 ip6-allnodes ff02::2 ip6-allrouters 172.17.0.2 d81eb31cf517 另一个终端：\n1 2 3 4 root@docker01:~# docker top c5 UID PID PPID C STIME TTY TIME CMD root 9691 9671 0 04:35 pts/0 00:00:00 /bin/sh root 10176 9671 0 04:38 ? 00:00:00 tail -f /etc/hosts 4. 使用attach连接c5容器 一个终端：\n1 2 3 4 5 root@docker01:~# docker top c5 UID PID PPID C STIME TTY TIME CMD root 10411 10390 1 04:41 pts/0 00:00:00 /bin/sh root@docker01:~# docker attach c5 /usr/local/stress # sleep 3600 另一个终端：\n1 2 3 4 root@docker01:~# docker top c5 UID PID PPID C STIME TTY TIME CMD root 10411 10390 0 04:41 pts/0 00:00:00 /bin/sh root 10485 10411 0 04:42 pts/0 00:00:00 sleep 3600 5. 本质区别与退出技巧 exec本质上是在正在运行的容器中产生了一个新的进程，就是在容器中执行你想要执行的任何命令;\nattach本质上不会产生任何新的进程，只是将本地的标准输入，标准输出，错误输出连接到正在运行的容器;\nattach工具如果想要退出容器，且不退出终端的情况下，可以连续按\"ctrl + p\"，再按\"ctrl + q\"就可以不退出当前终端。\n",
   "wordCount" : "306",
   "inLanguage": "zh",
-  "image": "https://LMDAWN1127.github.io/images/DAWN.jpg","datePublished": "2026-10-28T12:30:00+08:00",
+  "image": "http://192.168.100.30:1313/images/DAWN.jpg","datePublished": "2026-10-28T12:30:00+08:00",
   "dateModified": "2026-10-28T12:30:00+08:00",
   "author":{
     "@type": "Person",
@@ -124,14 +124,14 @@
   },
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "https://LMDAWN1127.github.io/posts/docker-exec-vs-attach/"
+    "@id": "http://192.168.100.30:1313/posts/docker-exec-vs-attach/"
   },
   "publisher": {
     "@type": "Organization",
     "name": "DAWN's Blog",
     "logo": {
       "@type": "ImageObject",
-      "url": "https://LMDAWN1127.github.io/images/DAWN.jpg"
+      "url": "http://192.168.100.30:1313/images/DAWN.jpg"
     }
   }
 }
@@ -141,8 +141,8 @@
     <header class="header">
     <nav class="header-nav">
         <div class="logo">
-            <a href="https://LMDAWN1127.github.io/" accesskey="h" title="DAWN&#39;s Blog (Alt + H)">
-                <img src="https://LMDAWN1127.github.io/images/DAWN.jpg" alt="" aria-label="logo"
+            <a href="http://192.168.100.30:1313/" accesskey="h" title="DAWN&#39;s Blog (Alt + H)">
+                <img src="http://192.168.100.30:1313/images/DAWN.jpg" alt="" aria-label="logo"
                     height="38">DAWN&#39;s Blog</a>
             <div class="logo-switches">
                 <button id="theme-toggle" class="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
@@ -167,15 +167,15 @@
                 </button><span class="nav-sep">|</span>
                     <ul class="lang-menu">
                         <li>
-                            <a href="https://LMDAWN1127.github.io/en/" title="English"
+                            <a href="http://192.168.100.30:1313/en/" title="English"
                                 aria-label="English">En</a>
                         </li>
                         <li>
-                            <a href="https://LMDAWN1127.github.io/ko/" title="한국어"
+                            <a href="http://192.168.100.30:1313/ko/" title="한국어"
                                 aria-label="한국어">Ko</a>
                         </li>
                         <li>
-                            <a href="https://LMDAWN1127.github.io/ja/" title="日本語"
+                            <a href="http://192.168.100.30:1313/ja/" title="日本語"
                                 aria-label="日本語">Ja</a>
                         </li>
                     </ul>
@@ -183,7 +183,7 @@
         </div>
         <ul id="menu" class="menu">
             <li>
-                <a href="https://LMDAWN1127.github.io/archives/" title="归档">
+                <a href="http://192.168.100.30:1313/archives/" title="归档">
                     <span>归档</span>
                 </a>
             </li>

@@ -154,6 +154,50 @@
 <article class="post-entry"> 
   <header class="entry-header">
     <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/posts/docker-zabbix-wordpress-deployment/">Docker 实战：Docker 部署 Zabbix 监控与 WordPress 应用</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>Docker 实战：基于自定义网络，用 docker run 单机部署 Zabbix 监控（MySQL &#43; Java gateway &#43; Server &#43; Web）与 WordPress 应用，含端口映射与持久化卷。</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-27">
+  2026年10月27日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 3 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to Docker 实战：Docker 部署 Zabbix 监控与 WordPress 应用" href="https://LMDAWN1127.github.io/posts/docker-zabbix-wordpress-deployment/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/posts/docker-single-host-network/">Docker 实战：单机网络类型与容器间通信方案详解</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>Docker 单机网络：none/bridge/host/container/custom 五种类型与案例，以及容器间通信三方案——/etc/hosts 解析、–link 关联、自定义网络（含创建/inspect/prune/自定义子网与手动 IP）。</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-27">
+  2026年10月27日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 14 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to Docker 实战：单机网络类型与容器间通信方案详解" href="https://LMDAWN1127.github.io/posts/docker-single-host-network/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
       <a href="https://LMDAWN1127.github.io/posts/docker-multi-bridge-network-isolation/">Docker 实战：基于多 Bridge 网络的容器隔离与跨网络通信</a>
     </h2>
   </header>
@@ -215,51 +259,6 @@
 </span>
 </footer>
   <a class="entry-link" aria-label="post link to Docker 实战：从 chroot 手搓最小容器根，理解容器本质" href="https://LMDAWN1127.github.io/posts/docker-chroot-minimal-root/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/posts/docker-wordpress-multinode/">Docker 实战：WordPress 跨节点部署与持久化验证</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>Docker 实战：将 WordPress 与 MySQL 跨两个节点部署（数据库与 Web 分离），使用命名卷持久化数据，验证删除并重建容器后已发表的博客不丢失。</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-26">
-  2026年10月26日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 1 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to Docker 实战：WordPress 跨节点部署与持久化验证" href="https://LMDAWN1127.github.io/posts/docker-wordpress-multinode/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/posts/docker-bind-mount-volume/">Docker 实战：容器数据持久化——bind 挂载与存储卷（Volume）</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>Docker 实战：容器数据持久化——bind 挂载与存储卷（Volume） 将宿主机的路径挂载到容器的指定路径 1 2 3 4 5 6 7 8 9 10 root@docker02:~# vim /dawn/index.html root@docker02:~# docker run -d --name c1 -v /dawn:/usr/share/nginx/html uhub.service.ucloud.cn/dawn/apps:v1 9dc72299ea7f17af4855f062abaf7435616ef6c74bb5f0a6898e1d003a010f18 root@docker02:~# docker container inspect -f &#34;{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}&#34; `docker container ps -lq` 172.17.0.2 root@docker02:~# curl 172.17.0.2 11111 root@docker02:~# echo 22222 &gt; /dawn/index.html root@docker02:~# curl 172.17.0.2 22222 1.当删除容器时，宿主机的挂载目录不会被删除
-...</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-26">
-  2026年10月26日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 7 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to Docker 实战：容器数据持久化——bind 挂载与存储卷（Volume）" href="https://LMDAWN1127.github.io/posts/docker-bind-mount-volume/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">

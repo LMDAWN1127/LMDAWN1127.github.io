@@ -190,6 +190,50 @@
 <article class="post-entry"> 
   <header class="entry-header">
     <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/posts/docker-image-tag-maintainer-label-metadata/">Docker 实战：镜像打标签 MAINTAINER 与 LABEL 及元数据查看</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>以 dawn-games 镜像为例，演示如何在 Dockerfile 中用已弃用的 MAINTAINER 与官方推荐的 LABEL 写入作者/学校/邮箱等元数据，构建后用 docker image inspect -f 读取 .Author 与 .Config.Labels 核对，并用 –network host 直接起容器以 host 网络访问验证；含一张访问截图。</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-28">
+  2026年10月28日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 2 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to Docker 实战：镜像打标签 MAINTAINER 与 LABEL 及元数据查看" href="https://LMDAWN1127.github.io/posts/docker-image-tag-maintainer-label-metadata/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/posts/docker-dockerfile-optimization-and-run-tips/">Docker 实战：Dockerfile 优化技巧与容器启动技巧</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>梳理 Docker 实战中的高频提效技巧：构建侧讲清镜像层缓存(Using cache)的命中逻辑、用 .dockerignore 把 1GB 的 build context 砍到约 1.6MB；运行侧演示 docker exec -w 指定工作目录、匿名存储卷在宿主机的落盘路径(/var/lib/docker/volumes//_data)、以及 -p :80 随机端口映射(32768~60999)。</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-28">
+  2026年10月28日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 2 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to Docker 实战：Dockerfile 优化技巧与容器启动技巧" href="https://LMDAWN1127.github.io/posts/docker-dockerfile-optimization-and-run-tips/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
       <a href="https://LMDAWN1127.github.io/posts/docker-dockerfile-multi-game-image-add/">Docker 实战：Dockerfile 多游戏镜像构建与 ADD 自动解压</a>
     </h2>
   </header>
@@ -229,50 +273,6 @@
 </span>
 </footer>
   <a class="entry-link" aria-label="post link to Docker 实战：手动制作 Docker 镜像与 Dockerfile 自动构建" href="https://LMDAWN1127.github.io/posts/docker-image-manual-and-dockerfile/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/posts/docker-exec-vs-attach/">Docker 实战：docker exec 与 docker attach 的区别</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>用 docker top 对比进程树，看清 docker exec 与 docker attach 的本质差别：exec 在容器内新建进程，attach 只把本地标准输入输出接上容器已有主进程；并给出 attach 用 ctrl&#43;p、ctrl&#43;q 退出而不终止容器的方法。</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-28">
-  2026年10月28日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 2 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to Docker 实战：docker exec 与 docker attach 的区别" href="https://LMDAWN1127.github.io/posts/docker-exec-vs-attach/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/posts/docker-container-states/">Docker 实战：容器状态详解——Up / Exited / Created / Paused</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>逐个复现 docker ps 中四种容器状态的产生方式——Up、Exited（含退出状态码语义：0 为正常退出、137 为被 SIGKILL）、Created（docker create 后尚未 start）、Paused（暂停对外服务，且与 restart 的时间重新计时行为不同）。</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-28">
-  2026年10月28日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 2 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to Docker 实战：容器状态详解——Up / Exited / Created / Paused" href="https://LMDAWN1127.github.io/posts/docker-container-states/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">

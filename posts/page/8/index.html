@@ -173,6 +173,50 @@
 <article class="post-entry"> 
   <header class="entry-header">
     <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/posts/zookeeper-cluster-ha/">ZooKeeper 集群搭建与高可用验证实战</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>ZooKeeper 三节点集群实战：集群规模选择依据、13&#43;1 步搭建流程（zoo.cfg/myid/systemd/免密登录），以及停 leader、停 follower 的故障演练，解读过半存活（quorum）机制。</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-22">
+  2026年10月22日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 4 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to ZooKeeper 集群搭建与高可用验证实战" href="https://LMDAWN1127.github.io/posts/zookeeper-cluster-ha/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/posts/es-cluster-health/">ES 集群健康状态查看实战：_cluster/health 全参数解析</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>通过 _cluster/health API 查看 ES 集群健康状态：curl &#43; jq 的两种查询姿势（整包 JSON 与单字段提取），以及 status/timed_out/active_shards 等全部返回参数的逐项解读。</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-21">
+  2026年10月21日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 1 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to ES 集群健康状态查看实战：_cluster/health 全参数解析" href="https://LMDAWN1127.github.io/posts/es-cluster-health/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
       <a href="https://LMDAWN1127.github.io/posts/kibana-rbac/">Kibana RBAC 实战：角色创建、用户授权与空间隔离</a>
     </h2>
   </header>
@@ -234,50 +278,6 @@
 </span>
 </footer>
   <a class="entry-link" aria-label="post link to Logstash 进阶实战：多分支语句、多实例与 pipeline 语法" href="https://LMDAWN1127.github.io/posts/logstash-multi-branch-instance-pipeline/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/posts/logstash-sincedb-date-index/">Logstash 进阶实战：sincedb 重新采集、date 时间处理与自定义索引</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>记录 Logstash 四段进阶实践：file 输入 sincedb 的 offset 机制与旧数据重新采集、date 插件处理日志时间、ES 自定义索引名，以及 grok 自定义正则配合 geoip/useragent/translate 等 filter 的完整案例。</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-20">
-  2026年10月20日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 7 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to Logstash 进阶实战：sincedb 重新采集、date 时间处理与自定义索引" href="https://LMDAWN1127.github.io/posts/logstash-sincedb-date-index/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/posts/elfk-nginx-access-log/">ELFK 架构分析 Nginx 访问日志实战：Filebeat &#43; Logstash &#43; Kibana 全流程</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>完整演示基于 ELFK 架构分析 Nginx 访问日志的全流程：Logstash 编写 05-beats-filter-es.conf（beats 输入 9999、grok 用 HTTPD_COMBINEDLOG 解析 combined 格式、geoip 指定本地 GeoLite2-City.mmdb、ruby 将经纬度拼成 dawn-geo 的 [lon,lat] 数组、useragent 解析 dawn-device、rename 规避字段冲突、date 对齐 @timestamp），输出到 Elasticsearch 的 dawn-logstash-nginx 索引；Filebeat 启用 nginx 模块并将数据推送至 Logstash；最后在 Kibana 建立索引模式，制作访客地理分布 Maps、设备类型/操作系统饼图、响应状态码柱状图，并整合进统一 Dashboard。</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-20">
-  2026年10月20日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 2 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to ELFK 架构分析 Nginx 访问日志实战：Filebeat &#43; Logstash &#43; Kibana 全流程" href="https://LMDAWN1127.github.io/posts/elfk-nginx-access-log/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">

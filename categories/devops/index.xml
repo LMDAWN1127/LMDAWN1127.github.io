@@ -11,7 +11,7 @@
     </image>
     <generator>Hugo</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Wed, 28 Oct 2026 18:30:00 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 28 Oct 2026 19:40:00 +0800</lastBuildDate>
     <atom:link href="https://LMDAWN1127.github.io/categories/devops/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Harbor 主备部署实战：从安装到 HTTPS 与主备复制</title>
@@ -19,6 +19,20 @@
       <pubDate>Tue, 04 Aug 2026 00:00:00 +0000</pubDate>
       <guid>https://LMDAWN1127.github.io/posts/harbor-master-slave/</guid>
       <description>完整记录 Harbor 企业级镜像仓库的主备部署过程，涵盖 HTTP/HTTPS 双模式安装、自签名证书配置、跨主机主备复制等核心运维技能。</description>
+    </item>
+    <item>
+      <title>Docker 实战：镜像打标签 MAINTAINER 与 LABEL 及元数据查看</title>
+      <link>https://LMDAWN1127.github.io/posts/docker-image-tag-maintainer-label-metadata/</link>
+      <pubDate>Wed, 28 Oct 2026 19:40:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/posts/docker-image-tag-maintainer-label-metadata/</guid>
+      <description>以 dawn-games 镜像为例，演示如何在 Dockerfile 中用已弃用的 MAINTAINER 与官方推荐的 LABEL 写入作者/学校/邮箱等元数据，构建后用 docker image inspect -f 读取 .Author 与 .Config.Labels 核对，并用 &amp;ndash;network host 直接起容器以 host 网络访问验证；含一张访问截图。</description>
+    </item>
+    <item>
+      <title>Docker 实战：Dockerfile 优化技巧与容器启动技巧</title>
+      <link>https://LMDAWN1127.github.io/posts/docker-dockerfile-optimization-and-run-tips/</link>
+      <pubDate>Wed, 28 Oct 2026 19:30:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/posts/docker-dockerfile-optimization-and-run-tips/</guid>
+      <description>梳理 Docker 实战中的高频提效技巧：构建侧讲清镜像层缓存(Using cache)的命中逻辑、用 .dockerignore 把 1GB 的 build context 砍到约 1.6MB；运行侧演示 docker exec -w 指定工作目录、匿名存储卷在宿主机的落盘路径(/var/lib/docker/volumes/&lt;hash&gt;/_data)、以及 -p :80 随机端口映射(32768~60999)。</description>
     </item>
     <item>
       <title>Docker 实战：Dockerfile 多游戏镜像构建与 ADD 自动解压</title>
