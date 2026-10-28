@@ -5,12 +5,12 @@ draft: false
 categories: ["DevOps"]
 tags: ["Docker"]
 showToc: true
-summary: "逐个复现 docker ps 中四种容器状态的产生方式——Up、Exited（含退出状态码语义）、Created、Paused，并给出查看容器内主进程 ID 的三种方法：docker top、docker inspect 与宿主机 ps。"
+summary: "逐个复现 docker ps 中四种容器状态的产生方式——Up、Exited（含退出状态码语义：0 为正常退出、137 为被 SIGKILL）、Created（docker create 后尚未 start）、Paused（暂停对外服务，且与 restart 的时间重新计时行为不同）。"
 ---
 
 # Docker 实战：容器状态详解——Up / Exited / Created / Paused
 
-`docker ps` 输出的 STATUS 列其实就是容器的生命周期状态：**Up**（运行中）、**Exited**（已退出，括号里是退出状态码）、**Created**（已创建未启动）、**Paused**（暂停对外服务）。本文逐个复现这四种状态的产生方式，并顺带给出查看容器内主进程 ID 的三种办法（`docker top` / `docker inspect` / 宿主机 `ps`）。
+`docker ps` 输出的 STATUS 列其实就是容器的生命周期状态：**Up**（运行中）、**Exited**（已退出，括号里是退出状态码）、**Created**（已创建未启动）、**Paused**（暂停对外服务）。本文逐个复现这四种状态的产生方式。
 
 ## 1. Up
 
@@ -85,22 +85,4 @@ c4
 root@docker01:~# docker ps -l
 CONTAINER ID   IMAGE                                 COMMAND                  CREATED              STATUS         PORTS                               NAMES
 e99412feba6d   uhub.service.ucloud.cn/dawn/apps:v1   "/docker-entrypoint.…"   About a minute ago   Up 2 seconds   0.0.0.0:80->80/tcp, :::80->80/tcp   c4
-```
-
-## 5. 查看容器的进程
-
-```bash
-# 使用top查看容器的进程ID  
-root@docker01:~# docker top c2
-UID                 PID                 PPID                C                   STIME               TTY                 TIME                CMD
-root                7427                7406                0                   03:56               ?                   00:00:00            tail -f /dev/null
-
-# 使用docker inspect查看容器的详细信息
-root@docker01:~# docker inspect -f "{{.State.Pid}}" c2
-7427
-
-# 在宿主机直接过滤
-root@docker01:~# ps -ef | grep 7427
-root        7427    7406  0 03:56 ?        00:00:00 tail -f /dev/null
-root        9341    2023  0 04:23 pts/0    00:00:00 grep --color=auto 7427
 ```
