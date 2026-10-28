@@ -11,7 +11,7 @@
     </image>
     <generator>Hugo</generator>
     <language>en</language>
-    <lastBuildDate>Tue, 06 Oct 2026 20:35:00 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 28 Oct 2026 19:40:00 +0800</lastBuildDate>
     <atom:link href="https://LMDAWN1127.github.io/en/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Harbor Active-Standby Deployment: From Installation to HTTPS and Replication</title>
@@ -19,6 +19,20 @@
       <pubDate>Tue, 04 Aug 2026 00:00:00 +0000</pubDate>
       <guid>https://LMDAWN1127.github.io/en/posts/harbor-master-slave/</guid>
       <description>Complete guide to deploying Harbor enterprise Docker registry with active-standby architecture, HTTP/HTTPS modes, self-signed certificates, and cross-host replication.</description>
+    </item>
+    <item>
+      <title>Docker in Practice: Tag Images with MAINTAINER and LABEL, and Inspect Metadata</title>
+      <link>https://LMDAWN1127.github.io/en/posts/docker-image-tag-maintainer-label-metadata/</link>
+      <pubDate>Wed, 28 Oct 2026 19:40:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/posts/docker-image-tag-maintainer-label-metadata/</guid>
+      <description>Using a real dawn-games image, demonstrate writing author/school/email metadata into the Dockerfile with the deprecated MAINTAINER and the officially recommended LABEL, then reading .Author and .Config.Labels back with docker image inspect -f to verify, and starting the container with &amp;ndash;network host to access over the host network. Includes a screenshot.</description>
+    </item>
+    <item>
+      <title>Docker in Practice: Dockerfile Optimization Tips and Container Startup Techniques</title>
+      <link>https://LMDAWN1127.github.io/en/posts/docker-dockerfile-optimization-and-run-tips/</link>
+      <pubDate>Wed, 28 Oct 2026 19:30:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/posts/docker-dockerfile-optimization-and-run-tips/</guid>
+      <description>A practical roundup of Docker efficiency tips: build-side image layer caching (Using cache) and .dockerignore to shrink a 1GB build context to &lt;del&gt;1.6MB; runtime tricks docker exec -w for the working directory, anonymous volume host paths (/var/lib/docker/volumes/&lt;hash&gt;/_data), and -p :80 random port mapping (32768&lt;/del&gt;60999).</description>
     </item>
     <item>
       <title>OpenStack Cloud OS: Core Architecture and Automated Deployment</title>

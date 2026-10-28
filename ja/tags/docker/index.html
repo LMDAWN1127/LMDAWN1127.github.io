@@ -185,6 +185,50 @@
 <article class="post-entry tag-entry"> 
   <header class="entry-header">
     <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/ja/posts/docker-image-tag-maintainer-label-metadata/">Docker 実戦：MAINTAINER と LABEL でイメージにタグを付け、メタデータを確認する</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>実際の dawn-games イメージを例に、Dockerfile に非推奨の MAINTAINER と公式推奨の LABEL で 作成者/学校/メールなどのメタデータを記録し、docker image inspect -f で .Author と .Config.Labels を 読み出して確認、さらに –network host でコンテナを起動してホストネットワーク経由でアクセスします。スクリーンショット付き。</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-28">
+  2026年10月28日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 2 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to Docker 実戦：MAINTAINER と LABEL でイメージにタグを付け、メタデータを確認する" href="https://LMDAWN1127.github.io/ja/posts/docker-image-tag-maintainer-label-metadata/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/ja/posts/docker-dockerfile-optimization-and-run-tips/">Docker 実戦：Dockerfile 最適化のコツとコンテナ起動テクニック</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>Docker の効率化コツをまとめます。ビルド側はイメージレイヤーキャッシュ(Using cache)と .dockerignore で 1GB のビルドコンテキストを約 1.6MB に削減、実行側は docker exec -w の作業 ディレクトリ指定、匿名ボリュームのホストパス(/var/lib/docker/volumes//_data)、-p :80 のランダムポートマッピング(32768~60999)を解説。</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-28">
+  2026年10月28日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 2 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to Docker 実戦：Dockerfile 最適化のコツとコンテナ起動テクニック" href="https://LMDAWN1127.github.io/ja/posts/docker-dockerfile-optimization-and-run-tips/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
       <a href="https://LMDAWN1127.github.io/ja/posts/flannel-network-lab/">flannel 実践：Docker クロスホストコンテナネットワークをゼロから構築</a>
     </h2>
   </header>

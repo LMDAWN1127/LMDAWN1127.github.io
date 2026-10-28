@@ -106,6 +106,26 @@
     <lastmod>2026-10-28T19:40:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://LMDAWN1127.github.io/posts/docker-image-tag-maintainer-label-metadata/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://LMDAWN1127.github.io/en/posts/docker-image-tag-maintainer-label-metadata/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="ko"
+                href="https://LMDAWN1127.github.io/ko/posts/docker-image-tag-maintainer-label-metadata/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="ja"
+                href="https://LMDAWN1127.github.io/ja/posts/docker-image-tag-maintainer-label-metadata/"
+                />
   </url><url>
     <loc>https://LMDAWN1127.github.io/posts/</loc>
     <lastmod>2026-10-28T19:40:00+08:00</lastmod>
@@ -161,6 +181,26 @@
     <lastmod>2026-10-28T19:30:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://LMDAWN1127.github.io/posts/docker-dockerfile-optimization-and-run-tips/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://LMDAWN1127.github.io/en/posts/docker-dockerfile-optimization-and-run-tips/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="ko"
+                href="https://LMDAWN1127.github.io/ko/posts/docker-dockerfile-optimization-and-run-tips/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="ja"
+                href="https://LMDAWN1127.github.io/ja/posts/docker-dockerfile-optimization-and-run-tips/"
+                />
   </url><url>
     <loc>https://LMDAWN1127.github.io/posts/docker-dockerfile-multi-game-image-add/</loc>
     <lastmod>2026-10-28T18:30:00+08:00</lastmod>

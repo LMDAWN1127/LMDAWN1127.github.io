@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh" dir="auto" data-theme="auto">
 
-<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
+<head><meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="robots" content="index, follow">
@@ -9,16 +9,16 @@
 <meta name="keywords" content="Docker">
 <meta name="description" content="逐个复现 docker ps 中四种容器状态的产生方式——Up、Exited（含退出状态码语义：0 为正常退出、137 为被 SIGKILL）、Created（docker create 后尚未 start）、Paused（暂停对外服务，且与 restart 的时间重新计时行为不同）。">
 <meta name="author" content="DAWN">
-<link rel="canonical" href="http://192.168.100.30:1313/posts/docker-container-states/">
+<link rel="canonical" href="https://LMDAWN1127.github.io/posts/docker-container-states/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.4bf808bff57bddc46d61c8ae060b00400fc679ab876e37243b11bd3f832f2958.css" integrity="sha256-S/gIv/V73cRtYciuBgsAQA/GeauHbjckOxG9P4MvKVg=" rel="preload stylesheet" as="style">
-<link rel="icon" href="http://192.168.100.30:1313/images/DAWN.jpg">
-<link rel="icon" type="image/png" sizes="16x16" href="http://192.168.100.30:1313/favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="http://192.168.100.30:1313/favicon-32x32.png">
-<link rel="apple-touch-icon" href="http://192.168.100.30:1313/apple-touch-icon.png">
-<link rel="mask-icon" href="http://192.168.100.30:1313/safari-pinned-tab.svg">
+<link rel="icon" href="https://LMDAWN1127.github.io/images/DAWN.jpg">
+<link rel="icon" type="image/png" sizes="16x16" href="https://LMDAWN1127.github.io/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://LMDAWN1127.github.io/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://LMDAWN1127.github.io/apple-touch-icon.png">
+<link rel="mask-icon" href="https://LMDAWN1127.github.io/safari-pinned-tab.svg">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
-<link rel="alternate" hreflang="zh" href="http://192.168.100.30:1313/posts/docker-container-states/">
+<link rel="alternate" hreflang="zh" href="https://LMDAWN1127.github.io/posts/docker-container-states/">
 <noscript>
     <style>
         #theme-toggle,
@@ -64,8 +64,8 @@
         document.querySelector("html").dataset.theme = 'light';
     }
 
-</script><link rel="stylesheet" href='http://192.168.100.30:1313/css/custom.css'>
-<meta property="og:url" content="http://192.168.100.30:1313/posts/docker-container-states/">
+</script><link rel="stylesheet" href='https://LMDAWN1127.github.io/css/custom.css'>
+<meta property="og:url" content="https://LMDAWN1127.github.io/posts/docker-container-states/">
   <meta property="og:site_name" content="DAWN&#39;s Blog">
   <meta property="og:title" content="Docker 实战：容器状态详解——Up / Exited / Created / Paused">
   <meta property="og:description" content="逐个复现 docker ps 中四种容器状态的产生方式——Up、Exited（含退出状态码语义：0 为正常退出、137 为被 SIGKILL）、Created（docker create 后尚未 start）、Paused（暂停对外服务，且与 restart 的时间重新计时行为不同）。">
@@ -75,10 +75,10 @@
     <meta property="article:published_time" content="2026-10-28T11:30:00+08:00">
     <meta property="article:modified_time" content="2026-10-28T11:30:00+08:00">
     <meta property="article:tag" content="Docker">
-      <meta property="og:image" content="http://192.168.100.30:1313/images/DAWN.jpg">
+      <meta property="og:image" content="https://LMDAWN1127.github.io/images/DAWN.jpg">
 
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:image" content="http://192.168.100.30:1313/images/DAWN.jpg">
+  <meta name="twitter:image" content="https://LMDAWN1127.github.io/images/DAWN.jpg">
   <meta name="twitter:title" content="Docker 实战：容器状态详解——Up / Exited / Created / Paused">
   <meta name="twitter:description" content="逐个复现 docker ps 中四种容器状态的产生方式——Up、Exited（含退出状态码语义：0 为正常退出、137 为被 SIGKILL）、Created（docker create 后尚未 start）、Paused（暂停对外服务，且与 restart 的时间重新计时行为不同）。">
 
@@ -92,13 +92,13 @@
       "@type": "ListItem",
       "position":  1 ,
       "name": "Posts",
-      "item": "http://192.168.100.30:1313/posts/"
+      "item": "https://LMDAWN1127.github.io/posts/"
     }, 
     {
       "@type": "ListItem",
       "position":  2 ,
       "name": "Docker 实战：容器状态详解——Up / Exited / Created / Paused",
-      "item": "http://192.168.100.30:1313/posts/docker-container-states/"
+      "item": "https://LMDAWN1127.github.io/posts/docker-container-states/"
     }
   ]
 }
@@ -116,7 +116,7 @@
   "articleBody": "Docker 实战：容器状态详解——Up / Exited / Created / Paused docker ps 输出的 STATUS 列其实就是容器的生命周期状态：Up（运行中）、Exited（已退出，括号里是退出状态码）、Created（已创建未启动）、Paused（暂停对外服务）。本文逐个复现这四种状态的产生方式。\n1. Up 代表的是容器处于运行状态。\n2. Exited 表示容器的启动名称被终止，通常情况下，退出状态码为0则该容器正常退出，非0表示异常退出。\n比如:“sleep 3600”，表示一小时后容器再退出，但是如果不到1小时就退出了，则状态码非0。\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 root@docker01:~# docker run -d --name c1 uhub.service.ucloud.cn/dawn/dawn-linux-tools:v0.1 sleep 10 aee6dd889ae1f028b1f477dce2b1725a3c03b4683f9cb4ef06ce62c44aa02e96 root@docker01:~# docker ps -l CONTAINER ID IMAGE COMMAND CREATED STATUS PORTS NAMES aee6dd889ae1 uhub.service.ucloud.cn/dawn/dawn-linux-tools:v0.1 \"sleep 10\" 8 seconds ago Up 7 seconds c1 root@docker01:~# docker ps -l # 观察退出的状态码为0 CONTAINER ID IMAGE COMMAND CREATED STATUS PORTS NAMES aee6dd889ae1 uhub.service.ucloud.cn/dawn/dawn-linux-tools:v0.1 \"sleep 10\" 18 seconds ago Exited (0) 7 seconds ago c1 root@docker01:~# docker run -d --name c3 uhub.service.ucloud.cn/dawn/dawn-linux-tools:v0.1 sleep 3600 f95bb6bea64926abf65662f844596b0cd240858f6e5ddcb1c4d2c7409c083885 root@docker01:~# docker ps -l CONTAINER ID IMAGE COMMAND CREATED STATUS PORTS NAMES f95bb6bea649 uhub.service.ucloud.cn/dawn/dawn-linux-tools:v0.1 \"sleep 3600\" 2 minutes ago Up 2 minutes c3 root@docker01:~# docker inspect -f \"{{.State.Pid}}\" c3 7158 root@docker01:~# kill -9 7158 root@docker01:~# docker ps -l # 观察退出的状态码为非0 CONTAINER ID IMAGE COMMAND CREATED STATUS PORTS NAMES f95bb6bea649 uhub.service.ucloud.cn/dawn/dawn-linux-tools:v0.1 \"sleep 3600\" 4 minutes ago Exited (137) 12 seconds ago c3 3. Created 表示容器处于创建状态，但是没有启动，需要执行\"docker start\"命令启动该容器。docker run等效于\"docker create + docker start\"。\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 root@docker01:~# docker create --name c3 uhub.service.ucloud.cn/dawn/dawn-linux-tools:v0.1 sleep 3600 0d1f9b6be2ebe5ae3b26dcd760df11e916bcba6f741e0f6110cc7e56089b28ae root@docker01:~# docker ps -l CONTAINER ID IMAGE COMMAND CREATED STATUS PORTS NAMES 0d1f9b6be2eb uhub.service.ucloud.cn/dawn/dawn-linux-tools:v0.1 \"sleep 3600\" 5 seconds ago Created c3 root@docker01:~# docker start c3 c3 root@docker01:~# docker ps -l CONTAINER ID IMAGE COMMAND CREATED STATUS PORTS NAMES 0d1f9b6be2eb uhub.service.ucloud.cn/dawn/dawn-linux-tools:v0.1 \"sleep 3600\" 26 seconds ago Up 8 seconds c3 root@docker01:~# docker run -d --name c4 -p 80:80 uhub.service.ucloud.cn/dawn/apps:v1 e19ebe79516214e59ea5b0197ee6ce760805eb9033b6acb433d83019b8403820 root@docker01:~# docker ps -l CONTAINER ID IMAGE COMMAND CREATED STATUS PORTS NAMES e19ebe795162 uhub.service.ucloud.cn/dawn/apps:v1 \"/docker-entrypoint.…\" 52 seconds ago Up 51 seconds 0.0.0.0:80-\u003e80/tcp, :::80-\u003e80/tcp c4 4. Paused 容器依旧处于运行状态，但是此状态暂停对外服务。（类似于虚拟机被挂起）\n重启容器，会对状态的时间重新计时，但暂停不会。\n1 2 3 4 5 6 7 8 9 10 root@docker01:~# docker container pause c4 c4 root@docker01:~# docker ps -l CONTAINER ID IMAGE COMMAND CREATED STATUS PORTS NAMES e99412feba6d uhub.service.ucloud.cn/dawn/apps:v1 \"/docker-entrypoint.…\" 15 seconds ago Up 15 seconds (Paused) 0.0.0.0:80-\u003e80/tcp, :::80-\u003e80/tcp c4 root@docker01:~# docker restart c4 c4 root@docker01:~# docker ps -l CONTAINER ID IMAGE COMMAND CREATED STATUS PORTS NAMES e99412feba6d uhub.service.ucloud.cn/dawn/apps:v1 \"/docker-entrypoint.…\" About a minute ago Up 2 seconds 0.0.0.0:80-\u003e80/tcp, :::80-\u003e80/tcp c4 ",
   "wordCount" : "364",
   "inLanguage": "zh",
-  "image": "http://192.168.100.30:1313/images/DAWN.jpg","datePublished": "2026-10-28T11:30:00+08:00",
+  "image": "https://LMDAWN1127.github.io/images/DAWN.jpg","datePublished": "2026-10-28T11:30:00+08:00",
   "dateModified": "2026-10-28T11:30:00+08:00",
   "author":{
     "@type": "Person",
@@ -124,14 +124,14 @@
   },
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "http://192.168.100.30:1313/posts/docker-container-states/"
+    "@id": "https://LMDAWN1127.github.io/posts/docker-container-states/"
   },
   "publisher": {
     "@type": "Organization",
     "name": "DAWN's Blog",
     "logo": {
       "@type": "ImageObject",
-      "url": "http://192.168.100.30:1313/images/DAWN.jpg"
+      "url": "https://LMDAWN1127.github.io/images/DAWN.jpg"
     }
   }
 }
@@ -141,8 +141,8 @@
     <header class="header">
     <nav class="header-nav">
         <div class="logo">
-            <a href="http://192.168.100.30:1313/" accesskey="h" title="DAWN&#39;s Blog (Alt + H)">
-                <img src="http://192.168.100.30:1313/images/DAWN.jpg" alt="" aria-label="logo"
+            <a href="https://LMDAWN1127.github.io/" accesskey="h" title="DAWN&#39;s Blog (Alt + H)">
+                <img src="https://LMDAWN1127.github.io/images/DAWN.jpg" alt="" aria-label="logo"
                     height="38">DAWN&#39;s Blog</a>
             <div class="logo-switches">
                 <button id="theme-toggle" class="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
@@ -167,15 +167,15 @@
                 </button><span class="nav-sep">|</span>
                     <ul class="lang-menu">
                         <li>
-                            <a href="http://192.168.100.30:1313/en/" title="English"
+                            <a href="https://LMDAWN1127.github.io/en/" title="English"
                                 aria-label="English">En</a>
                         </li>
                         <li>
-                            <a href="http://192.168.100.30:1313/ko/" title="한국어"
+                            <a href="https://LMDAWN1127.github.io/ko/" title="한국어"
                                 aria-label="한국어">Ko</a>
                         </li>
                         <li>
-                            <a href="http://192.168.100.30:1313/ja/" title="日本語"
+                            <a href="https://LMDAWN1127.github.io/ja/" title="日本語"
                                 aria-label="日本語">Ja</a>
                         </li>
                     </ul>
@@ -183,7 +183,7 @@
         </div>
         <ul id="menu" class="menu">
             <li>
-                <a href="http://192.168.100.30:1313/archives/" title="归档">
+                <a href="https://LMDAWN1127.github.io/archives/" title="归档">
                     <span>归档</span>
                 </a>
             </li>

@@ -11,7 +11,7 @@
     </image>
     <generator>Hugo</generator>
     <language>ko</language>
-    <lastBuildDate>Tue, 04 Aug 2026 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 28 Oct 2026 19:40:00 +0800</lastBuildDate>
     <atom:link href="https://LMDAWN1127.github.io/ko/tags/docker/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Harbor 액티브-스탠바이 배포: 설치부터 HTTPS 및 복제까지</title>
@@ -19,6 +19,20 @@
       <pubDate>Tue, 04 Aug 2026 00:00:00 +0000</pubDate>
       <guid>https://LMDAWN1127.github.io/ko/posts/harbor-master-slave/</guid>
       <description>Harbor 엔터프라이즈 Docker 레지스트리의 액티브-스탠바이 아키텍처, HTTP/HTTPS 모드, 자체 서명 인증서, 크로스 호스트 복제를 완전히 다루는 배포 가이드입니다.</description>
+    </item>
+    <item>
+      <title>Docker 실전: MAINTAINER와 LABEL로 이미지 태그 달기 및 메타데이터 조회</title>
+      <link>https://LMDAWN1127.github.io/ko/posts/docker-image-tag-maintainer-label-metadata/</link>
+      <pubDate>Wed, 28 Oct 2026 19:40:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/ko/posts/docker-image-tag-maintainer-label-metadata/</guid>
+      <description>실제 dawn-games 이미지를 예로 들어, Dockerfile에 비권장 MAINTAINER와 공식 권장 LABEL로 작성자/학교/이메일 메타데이터를 기록하고, docker image inspect -f로 .Author와 .Config.Labels를 읽어 확인한 뒤 &amp;ndash;network host로 컨테이너를 시작해 호스트 네트워크로 접근합니다. 스크린샷 포함.</description>
+    </item>
+    <item>
+      <title>Docker 실전: Dockerfile 최적화 팁과 컨테이너 시작 기법</title>
+      <link>https://LMDAWN1127.github.io/ko/posts/docker-dockerfile-optimization-and-run-tips/</link>
+      <pubDate>Wed, 28 Oct 2026 19:30:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/ko/posts/docker-dockerfile-optimization-and-run-tips/</guid>
+      <description>Docker 효율화 팁을 정리합니다. 빌드 측면의 이미지 레이어 캐싱(Using cache)과 .dockerignore로 1GB 빌드 컨텍스트를 약 1.6MB로 축소, 실행 측면의 docker exec -w 작업 디렉터리 지정, 익명 볼륨 호스트 경로(/var/lib/docker/volumes/&lt;hash&gt;/_data), -p :80 임의 포트 매핑(32768~60999)을 다룹니다.</description>
     </item>
     <item>
       <title>flannel 실전: Docker 크로스 호스트 컨테이너 네트워크 구축</title>

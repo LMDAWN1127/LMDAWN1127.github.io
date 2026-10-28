@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh" dir="auto" data-theme="auto">
 
-<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
+<head><meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="robots" content="index, follow">
@@ -9,16 +9,19 @@
 <meta name="keywords" content="Docker">
 <meta name="description" content="梳理 Docker 实战中的高频提效技巧：构建侧讲清镜像层缓存(Using cache)的命中逻辑、用 .dockerignore 把 1GB 的 build context 砍到约 1.6MB；运行侧演示 docker exec -w 指定工作目录、匿名存储卷在宿主机的落盘路径(/var/lib/docker/volumes//_data)、以及 -p :80 随机端口映射(32768~60999)。">
 <meta name="author" content="DAWN">
-<link rel="canonical" href="http://192.168.100.30:1313/posts/docker-dockerfile-optimization-and-run-tips/">
+<link rel="canonical" href="https://LMDAWN1127.github.io/posts/docker-dockerfile-optimization-and-run-tips/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.4bf808bff57bddc46d61c8ae060b00400fc679ab876e37243b11bd3f832f2958.css" integrity="sha256-S/gIv/V73cRtYciuBgsAQA/GeauHbjckOxG9P4MvKVg=" rel="preload stylesheet" as="style">
-<link rel="icon" href="http://192.168.100.30:1313/images/DAWN.jpg">
-<link rel="icon" type="image/png" sizes="16x16" href="http://192.168.100.30:1313/favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="http://192.168.100.30:1313/favicon-32x32.png">
-<link rel="apple-touch-icon" href="http://192.168.100.30:1313/apple-touch-icon.png">
-<link rel="mask-icon" href="http://192.168.100.30:1313/safari-pinned-tab.svg">
+<link rel="icon" href="https://LMDAWN1127.github.io/images/DAWN.jpg">
+<link rel="icon" type="image/png" sizes="16x16" href="https://LMDAWN1127.github.io/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://LMDAWN1127.github.io/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://LMDAWN1127.github.io/apple-touch-icon.png">
+<link rel="mask-icon" href="https://LMDAWN1127.github.io/safari-pinned-tab.svg">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
-<link rel="alternate" hreflang="zh" href="http://192.168.100.30:1313/posts/docker-dockerfile-optimization-and-run-tips/">
+<link rel="alternate" hreflang="zh" href="https://LMDAWN1127.github.io/posts/docker-dockerfile-optimization-and-run-tips/">
+<link rel="alternate" hreflang="en" href="https://LMDAWN1127.github.io/en/posts/docker-dockerfile-optimization-and-run-tips/">
+<link rel="alternate" hreflang="ko" href="https://LMDAWN1127.github.io/ko/posts/docker-dockerfile-optimization-and-run-tips/">
+<link rel="alternate" hreflang="ja" href="https://LMDAWN1127.github.io/ja/posts/docker-dockerfile-optimization-and-run-tips/">
 <noscript>
     <style>
         #theme-toggle,
@@ -64,8 +67,8 @@
         document.querySelector("html").dataset.theme = 'light';
     }
 
-</script><link rel="stylesheet" href='http://192.168.100.30:1313/css/custom.css'>
-<meta property="og:url" content="http://192.168.100.30:1313/posts/docker-dockerfile-optimization-and-run-tips/">
+</script><link rel="stylesheet" href='https://LMDAWN1127.github.io/css/custom.css'>
+<meta property="og:url" content="https://LMDAWN1127.github.io/posts/docker-dockerfile-optimization-and-run-tips/">
   <meta property="og:site_name" content="DAWN&#39;s Blog">
   <meta property="og:title" content="Docker 实战：Dockerfile 优化技巧与容器启动技巧">
   <meta property="og:description" content="梳理 Docker 实战中的高频提效技巧：构建侧讲清镜像层缓存(Using cache)的命中逻辑、用 .dockerignore 把 1GB 的 build context 砍到约 1.6MB；运行侧演示 docker exec -w 指定工作目录、匿名存储卷在宿主机的落盘路径(/var/lib/docker/volumes//_data)、以及 -p :80 随机端口映射(32768~60999)。">
@@ -75,10 +78,10 @@
     <meta property="article:published_time" content="2026-10-28T19:30:00+08:00">
     <meta property="article:modified_time" content="2026-10-28T19:30:00+08:00">
     <meta property="article:tag" content="Docker">
-      <meta property="og:image" content="http://192.168.100.30:1313/images/DAWN.jpg">
+      <meta property="og:image" content="https://LMDAWN1127.github.io/images/DAWN.jpg">
 
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:image" content="http://192.168.100.30:1313/images/DAWN.jpg">
+  <meta name="twitter:image" content="https://LMDAWN1127.github.io/images/DAWN.jpg">
   <meta name="twitter:title" content="Docker 实战：Dockerfile 优化技巧与容器启动技巧">
   <meta name="twitter:description" content="梳理 Docker 实战中的高频提效技巧：构建侧讲清镜像层缓存(Using cache)的命中逻辑、用 .dockerignore 把 1GB 的 build context 砍到约 1.6MB；运行侧演示 docker exec -w 指定工作目录、匿名存储卷在宿主机的落盘路径(/var/lib/docker/volumes//_data)、以及 -p :80 随机端口映射(32768~60999)。">
 
@@ -92,13 +95,13 @@
       "@type": "ListItem",
       "position":  1 ,
       "name": "Posts",
-      "item": "http://192.168.100.30:1313/posts/"
+      "item": "https://LMDAWN1127.github.io/posts/"
     }, 
     {
       "@type": "ListItem",
       "position":  2 ,
       "name": "Docker 实战：Dockerfile 优化技巧与容器启动技巧",
-      "item": "http://192.168.100.30:1313/posts/docker-dockerfile-optimization-and-run-tips/"
+      "item": "https://LMDAWN1127.github.io/posts/docker-dockerfile-optimization-and-run-tips/"
     }
   ]
 }
@@ -116,7 +119,7 @@
   "articleBody": "Docker 实战：Dockerfile 优化技巧与容器启动技巧 写 Dockerfile 和起容器，最常被忽略的就是“怎么更快、怎么更小、怎么更顺手”。本文把几个高频实用技巧串起来：构建侧讲透镜像层缓存的命中逻辑、用 .dockerignore 把臃肿的 build context 砍下去；运行侧则演示 docker exec -w 指定进容器后的工作目录、匿名存储卷在宿主机的落盘位置、以及 -p :80 的随机端口映射。都是日常能立刻用上的提效手段。\nDockerfile 优化技巧 技巧一：镜像层缓存 重新构建时，未变化的层会命中缓存（Using cache）：\n1 docker image build -t dawn-games:v2.8 . 2\u003e\u00261 | grep -E 'Step|Using cache' 1 2 3 4 5 Step 2/7 : RUN ... apk add nginx ... ← 未变化，命中缓存 ---\u003e Using cache ---\u003e 2a68b3185350 Step 3/7 : ADD code/dawn-tanke.tar.gz ... ← tar 包变了，重新执行 ---\u003e 9b1dba3f40f1 Docker 会缓存每条指令的执行结果，只有指令内容或依赖的层变化时才重新执行。 因此把不常变化的指令放上面、经常变化的指令放下面，能最大化利用缓存、加速构建。\n技巧二：.dockerignore 忽略文件 制造一个大文件 1 2 cd /dawn/dockerfile/alpine/tankedazhan-MAINTAINER-LABELS dd if=/dev/zero of=./bigfile bs=1M count=1024 无 .dockerignore 时构建（build context 暴涨） 1 2 docker image build -t dawn-games:v2.12 . 2\u003e\u00261 | grep 'Sending build context' # Sending build context to Docker daemon 1.075GB 此时 1GB 的 bigfile 被整个打包发送给 Docker daemon，浪费时间和带宽。\n编写 .dockerignore 1 2 3 4 5 big* *.exe *.txt *.log # config 规则 作用 big* 忽略所有 big 开头的文件（如 bigfile） *.exe / *.txt / *.log 忽略指定后缀 # config 注释 有 .dockerignore 后构建（体积骤降） 1 2 docker image build -t dawn-games:v2.13 . 2\u003e\u00261 | grep 'Sending build context' # Sending build context to Docker daemon 1.623MB Dockerfile 优化总结 编译速度\n将不频繁修改的指令放上面、频繁修改的放下面，最大化利用缓存； 用 .dockerignore 忽略编译时不必要的文件； 使用国内软件源（如清华镜像）或本地仓库，提升下载速度； 将较大的软件包放在本地/内网文件站点，避免重复下载。 镜像大小\n删除缓存、无用的软件包（如 rm -rf /var/cache/）； 尽量合并指令，减少不必要的镜像分层（每条指令产生一个中间层，docker image ls -a 可见）； 使用较小的基础镜像（如 alpine，仅约 5MB）。 启动容器的技巧 1.指定进入容器后的工作目录 1 2 3 # exec -w 指定进入容器后的工作目录 root@docker01:~# docker exec -w /usr/share/nginx/html/tanke games pwd /usr/share/nginx/html/tanke 2.匿名存储卷 1 2 3 4 5 6 # -v 容器内路径 root@docker01:~# docker run -d --name game -v /usr/share/nginx/html dawn-games:v2.8 1aa0eb13c9dbb5a35018543ed125ad855a53a7f6df27519447bd94b407b25f5e # 查看匿名卷在宿主机的位置 root@docker01:~# docker inspect -f '{{range .Mounts}}{{.Source}}{{end}}' game /var/lib/docker/volumes/d700421bb6aa4da3f55bf98a8700218471410adb6494805aae5d410c832a9c96/_data 匿名卷由 Docker 自动分配一个随机卷名，存放在 /var/lib/docker/volumes//_data。 适合不想指定宿主机路径、只需持久化的场景。\n3.随机端口映射 1 2 3 4 5 6 # 随机端口映射（-p :80 省略宿主机端口） root@docker01:~# docker run -dp :80 --name c2-tanke dawn-games:v2.8 fa72c4ac0470a15e7b5c5e9143190ccb7c66f1db715aa0c886a3db4d533c8c4b root@docker01:~# docker ps -l CONTAINER ID IMAGE COMMAND CREATED STATUS PORTS NAMES fa72c4ac0470 dawn-games:v2.8 \"nginx -g 'daemon of…\" 8 seconds ago Up 7 seconds 0.0.0.0:32769-\u003e80/tcp, :::32769-\u003e80/tcp c2-tanke 省略冒号前的宿主机端口，Docker 会从 32768~60999 范围随机分配一个端口。\n",
   "wordCount" : "296",
   "inLanguage": "zh",
-  "image": "http://192.168.100.30:1313/images/DAWN.jpg","datePublished": "2026-10-28T19:30:00+08:00",
+  "image": "https://LMDAWN1127.github.io/images/DAWN.jpg","datePublished": "2026-10-28T19:30:00+08:00",
   "dateModified": "2026-10-28T19:30:00+08:00",
   "author":{
     "@type": "Person",
@@ -124,14 +127,14 @@
   },
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "http://192.168.100.30:1313/posts/docker-dockerfile-optimization-and-run-tips/"
+    "@id": "https://LMDAWN1127.github.io/posts/docker-dockerfile-optimization-and-run-tips/"
   },
   "publisher": {
     "@type": "Organization",
     "name": "DAWN's Blog",
     "logo": {
       "@type": "ImageObject",
-      "url": "http://192.168.100.30:1313/images/DAWN.jpg"
+      "url": "https://LMDAWN1127.github.io/images/DAWN.jpg"
     }
   }
 }
@@ -141,8 +144,8 @@
     <header class="header">
     <nav class="header-nav">
         <div class="logo">
-            <a href="http://192.168.100.30:1313/" accesskey="h" title="DAWN&#39;s Blog (Alt + H)">
-                <img src="http://192.168.100.30:1313/images/DAWN.jpg" alt="" aria-label="logo"
+            <a href="https://LMDAWN1127.github.io/" accesskey="h" title="DAWN&#39;s Blog (Alt + H)">
+                <img src="https://LMDAWN1127.github.io/images/DAWN.jpg" alt="" aria-label="logo"
                     height="38">DAWN&#39;s Blog</a>
             <div class="logo-switches">
                 <button id="theme-toggle" class="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
@@ -167,15 +170,15 @@
                 </button><span class="nav-sep">|</span>
                     <ul class="lang-menu">
                         <li>
-                            <a href="http://192.168.100.30:1313/en/" title="English"
+                            <a href="https://LMDAWN1127.github.io/en/" title="English"
                                 aria-label="English">En</a>
                         </li>
                         <li>
-                            <a href="http://192.168.100.30:1313/ko/" title="한국어"
+                            <a href="https://LMDAWN1127.github.io/ko/" title="한국어"
                                 aria-label="한국어">Ko</a>
                         </li>
                         <li>
-                            <a href="http://192.168.100.30:1313/ja/" title="日本語"
+                            <a href="https://LMDAWN1127.github.io/ja/" title="日本語"
                                 aria-label="日本語">Ja</a>
                         </li>
                     </ul>
@@ -183,7 +186,7 @@
         </div>
         <ul id="menu" class="menu">
             <li>
-                <a href="http://192.168.100.30:1313/archives/" title="归档">
+                <a href="https://LMDAWN1127.github.io/archives/" title="归档">
                     <span>归档</span>
                 </a>
             </li>

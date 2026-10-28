@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh" dir="auto" data-theme="auto">
 
-<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
+<head><meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="robots" content="index, follow">
@@ -34,16 +34,16 @@ ff10508a36b1   uhub.service.ucloud.cn/dawn/nginx:latest   &#34;/docker-entrypoin
 
 查看所有容器列表">
 <meta name="author" content="DAWN">
-<link rel="canonical" href="http://192.168.100.30:1313/posts/docker-common-commands-exec/">
+<link rel="canonical" href="https://LMDAWN1127.github.io/posts/docker-common-commands-exec/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.4bf808bff57bddc46d61c8ae060b00400fc679ab876e37243b11bd3f832f2958.css" integrity="sha256-S/gIv/V73cRtYciuBgsAQA/GeauHbjckOxG9P4MvKVg=" rel="preload stylesheet" as="style">
-<link rel="icon" href="http://192.168.100.30:1313/images/DAWN.jpg">
-<link rel="icon" type="image/png" sizes="16x16" href="http://192.168.100.30:1313/favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="http://192.168.100.30:1313/favicon-32x32.png">
-<link rel="apple-touch-icon" href="http://192.168.100.30:1313/apple-touch-icon.png">
-<link rel="mask-icon" href="http://192.168.100.30:1313/safari-pinned-tab.svg">
+<link rel="icon" href="https://LMDAWN1127.github.io/images/DAWN.jpg">
+<link rel="icon" type="image/png" sizes="16x16" href="https://LMDAWN1127.github.io/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://LMDAWN1127.github.io/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://LMDAWN1127.github.io/apple-touch-icon.png">
+<link rel="mask-icon" href="https://LMDAWN1127.github.io/safari-pinned-tab.svg">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
-<link rel="alternate" hreflang="zh" href="http://192.168.100.30:1313/posts/docker-common-commands-exec/">
+<link rel="alternate" hreflang="zh" href="https://LMDAWN1127.github.io/posts/docker-common-commands-exec/">
 <noscript>
     <style>
         #theme-toggle,
@@ -89,8 +89,8 @@ ff10508a36b1   uhub.service.ucloud.cn/dawn/nginx:latest   &#34;/docker-entrypoin
         document.querySelector("html").dataset.theme = 'light';
     }
 
-</script><link rel="stylesheet" href='http://192.168.100.30:1313/css/custom.css'>
-<meta property="og:url" content="http://192.168.100.30:1313/posts/docker-common-commands-exec/">
+</script><link rel="stylesheet" href='https://LMDAWN1127.github.io/css/custom.css'>
+<meta property="og:url" content="https://LMDAWN1127.github.io/posts/docker-common-commands-exec/">
   <meta property="og:site_name" content="DAWN&#39;s Blog">
   <meta property="og:title" content="Docker 实战：容器常用命令与 exec 操作">
   <meta property="og:description" content="Docker 实战：容器常用命令与 exec 操作 1. docker常用命令 查看正在运行的容器列表
@@ -101,10 +101,10 @@ ff10508a36b1   uhub.service.ucloud.cn/dawn/nginx:latest   &#34;/docker-entrypoin
     <meta property="article:published_time" content="2026-10-23T15:20:00+08:00">
     <meta property="article:modified_time" content="2026-10-23T15:20:00+08:00">
     <meta property="article:tag" content="Docker">
-      <meta property="og:image" content="http://192.168.100.30:1313/images/DAWN.jpg">
+      <meta property="og:image" content="https://LMDAWN1127.github.io/images/DAWN.jpg">
 
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:image" content="http://192.168.100.30:1313/images/DAWN.jpg">
+  <meta name="twitter:image" content="https://LMDAWN1127.github.io/images/DAWN.jpg">
   <meta name="twitter:title" content="Docker 实战：容器常用命令与 exec 操作">
   <meta name="twitter:description" content="Docker 实战：容器常用命令与 exec 操作 1. docker常用命令 查看正在运行的容器列表
 1 2 3 4 5 6 7 8 root@docker02:~# docker container ps CONTAINER ID IMAGE COMMAND CREATED STATUS PORTS NAMES ff10508a36b1 uhub.service.ucloud.cn/dawn/nginx:latest &#34;/docker-entrypoint.…&#34; 8 minutes ago Up 8 minutes 0.0.0.0:82-&gt;80/tcp, :::82-&gt;80/tcp c2 53efc7e7cfcb uhub.service.ucloud.cn/dawn/nginx:1.30.4 &#34;/docker-entrypoint.…&#34; 8 minutes ago Up 8 minutes 0.0.0.0:81-&gt;80/tcp, :::81-&gt;80/tcp c1 root@docker02:~# docker ps CONTAINER ID IMAGE COMMAND CREATED STATUS PORTS NAMES ff10508a36b1 uhub.service.ucloud.cn/dawn/nginx:latest &#34;/docker-entrypoint.…&#34; 8 minutes ago Up 8 minutes 0.0.0.0:82-&gt;80/tcp, :::82-&gt;80/tcp c2 53efc7e7cfcb uhub.service.ucloud.cn/dawn/nginx:1.30.4 &#34;/docker-entrypoint.…&#34; 8 minutes ago Up 8 minutes 0.0.0.0:81-&gt;80/tcp, :::81-&gt;80/tcp c1 查看所有容器列表">
@@ -119,13 +119,13 @@ ff10508a36b1   uhub.service.ucloud.cn/dawn/nginx:latest   &#34;/docker-entrypoin
       "@type": "ListItem",
       "position":  1 ,
       "name": "Posts",
-      "item": "http://192.168.100.30:1313/posts/"
+      "item": "https://LMDAWN1127.github.io/posts/"
     }, 
     {
       "@type": "ListItem",
       "position":  2 ,
       "name": "Docker 实战：容器常用命令与 exec 操作",
-      "item": "http://192.168.100.30:1313/posts/docker-common-commands-exec/"
+      "item": "https://LMDAWN1127.github.io/posts/docker-common-commands-exec/"
     }
   ]
 }
@@ -143,7 +143,7 @@ ff10508a36b1   uhub.service.ucloud.cn/dawn/nginx:latest   &#34;/docker-entrypoin
   "articleBody": "Docker 实战：容器常用命令与 exec 操作 1. docker常用命令 查看正在运行的容器列表\n1 2 3 4 5 6 7 8 root@docker02:~# docker container ps CONTAINER ID IMAGE COMMAND CREATED STATUS PORTS NAMES ff10508a36b1 uhub.service.ucloud.cn/dawn/nginx:latest \"/docker-entrypoint.…\" 8 minutes ago Up 8 minutes 0.0.0.0:82-\u003e80/tcp, :::82-\u003e80/tcp c2 53efc7e7cfcb uhub.service.ucloud.cn/dawn/nginx:1.30.4 \"/docker-entrypoint.…\" 8 minutes ago Up 8 minutes 0.0.0.0:81-\u003e80/tcp, :::81-\u003e80/tcp c1 root@docker02:~# docker ps CONTAINER ID IMAGE COMMAND CREATED STATUS PORTS NAMES ff10508a36b1 uhub.service.ucloud.cn/dawn/nginx:latest \"/docker-entrypoint.…\" 8 minutes ago Up 8 minutes 0.0.0.0:82-\u003e80/tcp, :::82-\u003e80/tcp c2 53efc7e7cfcb uhub.service.ucloud.cn/dawn/nginx:1.30.4 \"/docker-entrypoint.…\" 8 minutes ago Up 8 minutes 0.0.0.0:81-\u003e80/tcp, :::81-\u003e80/tcp c1 查看所有容器列表\n1 2 3 root@docker02:~# docker ps -a root@docker02:~# docker container ls -a root@docker02:~# docker container ps -a 查看所有容器的ID\n1 root@docker02:~# docker container ls -a -q 删除未运行的容器\n1 root@docker02:~# docker container rm c3 删除正在运行的容器\n1 2 3 4 5 6 root@docker02:~# docker container rm -f c1 c1 # 或者 root@docker02:~# docker container stop c1 c1 root@docker02:~# docker container rm c1 删除所有的容器\n1 root@docker02:~# docker container rm -f `docker ps -qa` 修改容器的名称\n1 root@docker02:~# docker container rename c3 c4 实时查看日志\n1 2 3 root@docker02:~# docker container logs -f c1 root@docker02:~# docker container logs -f --until 20m c1 root@docker02:~# docker container logs -f --since 20m c1 相关参数说明：\n-f:\n实时查看日志\n–since 20m:\n查看20分钟内产生的日志\n–until 20m:\n查看20分钟之前的日志\n查看最近创建的一个容器\n1 root@docker02:~# docker ps -l 宿主机和容器之间拷贝数据\n将容器的文件拷贝到宿主机：\n1 root@docker02:~# docker container cp c1:/docker-entrypoint.sh /root/ 将宿主机的文件拷贝到容器中：\n1 root@docker02:~# docker cp install-docker.sh c1:/ 2. 在运行中的容器内执行命令 查看ip地址 1 2 root@docker02:~# docker exec c1 hostname -I 172.17.0.2 连接到容器使用shell环境 1 2 3 4 5 root@docker02:~# docker exec -it c1 sh # ls bin dev docker-entrypoint.sh home lib64 mnt proc run srv tmp var boot docker-entrypoint.d etc lib media opt root sbin sys usr # 连接容器执行命令式要注意确保该容器有此命令 1 2 root@docker02:~# docker exec -it c1 ifconfig OCI runtime exec failed: exec failed: unable to start container process: exec: \"ifconfig\": executable file not found in $PATH: unknown ",
   "wordCount" : "298",
   "inLanguage": "zh",
-  "image": "http://192.168.100.30:1313/images/DAWN.jpg","datePublished": "2026-10-23T15:20:00+08:00",
+  "image": "https://LMDAWN1127.github.io/images/DAWN.jpg","datePublished": "2026-10-23T15:20:00+08:00",
   "dateModified": "2026-10-23T15:20:00+08:00",
   "author":{
     "@type": "Person",
@@ -151,14 +151,14 @@ ff10508a36b1   uhub.service.ucloud.cn/dawn/nginx:latest   &#34;/docker-entrypoin
   },
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "http://192.168.100.30:1313/posts/docker-common-commands-exec/"
+    "@id": "https://LMDAWN1127.github.io/posts/docker-common-commands-exec/"
   },
   "publisher": {
     "@type": "Organization",
     "name": "DAWN's Blog",
     "logo": {
       "@type": "ImageObject",
-      "url": "http://192.168.100.30:1313/images/DAWN.jpg"
+      "url": "https://LMDAWN1127.github.io/images/DAWN.jpg"
     }
   }
 }
@@ -168,8 +168,8 @@ ff10508a36b1   uhub.service.ucloud.cn/dawn/nginx:latest   &#34;/docker-entrypoin
     <header class="header">
     <nav class="header-nav">
         <div class="logo">
-            <a href="http://192.168.100.30:1313/" accesskey="h" title="DAWN&#39;s Blog (Alt + H)">
-                <img src="http://192.168.100.30:1313/images/DAWN.jpg" alt="" aria-label="logo"
+            <a href="https://LMDAWN1127.github.io/" accesskey="h" title="DAWN&#39;s Blog (Alt + H)">
+                <img src="https://LMDAWN1127.github.io/images/DAWN.jpg" alt="" aria-label="logo"
                     height="38">DAWN&#39;s Blog</a>
             <div class="logo-switches">
                 <button id="theme-toggle" class="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
@@ -194,15 +194,15 @@ ff10508a36b1   uhub.service.ucloud.cn/dawn/nginx:latest   &#34;/docker-entrypoin
                 </button><span class="nav-sep">|</span>
                     <ul class="lang-menu">
                         <li>
-                            <a href="http://192.168.100.30:1313/en/" title="English"
+                            <a href="https://LMDAWN1127.github.io/en/" title="English"
                                 aria-label="English">En</a>
                         </li>
                         <li>
-                            <a href="http://192.168.100.30:1313/ko/" title="한국어"
+                            <a href="https://LMDAWN1127.github.io/ko/" title="한국어"
                                 aria-label="한국어">Ko</a>
                         </li>
                         <li>
-                            <a href="http://192.168.100.30:1313/ja/" title="日本語"
+                            <a href="https://LMDAWN1127.github.io/ja/" title="日本語"
                                 aria-label="日本語">Ja</a>
                         </li>
                     </ul>
@@ -210,7 +210,7 @@ ff10508a36b1   uhub.service.ucloud.cn/dawn/nginx:latest   &#34;/docker-entrypoin
         </div>
         <ul id="menu" class="menu">
             <li>
-                <a href="http://192.168.100.30:1313/archives/" title="归档">
+                <a href="https://LMDAWN1127.github.io/archives/" title="归档">
                     <span>归档</span>
                 </a>
             </li>
