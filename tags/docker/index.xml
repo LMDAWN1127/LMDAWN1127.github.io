@@ -11,7 +11,7 @@
     </image>
     <generator>Hugo</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Tue, 27 Oct 2026 18:30:00 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 28 Oct 2026 10:00:00 +0800</lastBuildDate>
     <atom:link href="https://LMDAWN1127.github.io/tags/docker/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Harbor 主备部署实战：从安装到 HTTPS 与主备复制</title>
@@ -19,6 +19,13 @@
       <pubDate>Tue, 04 Aug 2026 00:00:00 +0000</pubDate>
       <guid>https://LMDAWN1127.github.io/posts/harbor-master-slave/</guid>
       <description>完整记录 Harbor 企业级镜像仓库的主备部署过程，涵盖 HTTP/HTTPS 双模式安装、自签名证书配置、跨主机主备复制等核心运维技能。</description>
+    </item>
+    <item>
+      <title>Docker 实战：Linux Namespace 网络隔离与 CGroup 资源限制</title>
+      <link>https://LMDAWN1127.github.io/posts/docker-namespace-cgroup-resource-limit/</link>
+      <pubDate>Wed, 28 Oct 2026 10:00:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/posts/docker-namespace-cgroup-resource-limit/</guid>
+      <description>用 ip netns 手工搭建 Linux 网络命名空间，经 veth pair 与 NAT 打通外网；再看 Docker 容器共享 net namespace；最后用 cgroup v2 做 CPU/内存限额压测并复现 OOM kill，完整串起容器的隔离(Namespace)与限制(CGroup)两大底层机制。</description>
     </item>
     <item>
       <title>Docker 实战：Overlay 实现容器跨主机网络互联与 WordPress 实战</title>
