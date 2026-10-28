@@ -1116,20 +1116,6 @@
 &lt;p&gt;注意：下面的卸载命令通过遍历当前目录下的 docker 文件夹来删除 /usr/bin 中的相关文件，执行前需先进入当初解压 docker-27.0.3.tgz 时生成的 docker 目录。&lt;/p&gt;</description>
     </item>
     <item>
-      <title>Dockerfile 构建镜像太大？10 个技巧让镜像瘦身 90%</title>
-      <link>https://LMDAWN1127.github.io/posts/dockerfile-smaller-image/</link>
-      <pubDate>Thu, 30 Jul 2026 12:00:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/posts/dockerfile-smaller-image/</guid>
-      <description>10 个经过验证的技巧，把 Docker 镜像体积缩小 90% 以上。</description>
-    </item>
-    <item>
-      <title>Dockerfile 构建镜像如何更快？10 个实用优化技巧</title>
-      <link>https://LMDAWN1127.github.io/posts/dockerfile-faster-build/</link>
-      <pubDate>Thu, 30 Jul 2026 11:00:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/posts/dockerfile-faster-build/</guid>
-      <description>10 个经过验证的技巧，从缓存策略到多阶段构建，大幅缩短 Docker 构建时间。</description>
-    </item>
-    <item>
       <title>flannel 实战：从零搭建 Docker 跨主机容器网络</title>
       <link>https://LMDAWN1127.github.io/posts/flannel-network-lab/</link>
       <pubDate>Wed, 21 May 2025 00:00:00 +0000</pubDate>

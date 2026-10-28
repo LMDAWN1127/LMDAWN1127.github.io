@@ -1708,11 +1708,6 @@
     <priority>0.5</priority>
     <xhtml:link
                 rel="alternate"
-                hreflang="zh-cn"
-                href="https://LMDAWN1127.github.io/posts/dockerfile-smaller-image/"
-                />
-    <xhtml:link
-                rel="alternate"
                 hreflang="en"
                 href="https://LMDAWN1127.github.io/en/posts/dockerfile-smaller-image/"
                 />
@@ -1731,11 +1726,6 @@
     <lastmod>2026-07-30T12:00:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
-    <xhtml:link
-                rel="alternate"
-                hreflang="zh-cn"
-                href="https://LMDAWN1127.github.io/tags/dockerfile/"
-                />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
@@ -1761,11 +1751,6 @@
     <lastmod>2026-07-30T11:00:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
-    <xhtml:link
-                rel="alternate"
-                hreflang="zh-cn"
-                href="https://LMDAWN1127.github.io/posts/dockerfile-faster-build/"
-                />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"

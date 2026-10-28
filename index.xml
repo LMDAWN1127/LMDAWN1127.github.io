@@ -1828,20 +1828,6 @@
 &lt;p&gt;如今，主流云厂商的虚拟化底层基本都是 KVM。华为 FusionCompute 6.3 版本也从 Xen 切换到了 KVM。2019 年 IBM 以约 340 亿美金收购红帽公司，ansible、glusterfs、ceph 等红帽生态项目随之纳入麾下，进一步印证了这条技术路线的价值。&lt;/p&gt;</description>
     </item>
     <item>
-      <title>Dockerfile 构建镜像太大？10 个技巧让镜像瘦身 90%</title>
-      <link>https://LMDAWN1127.github.io/posts/dockerfile-smaller-image/</link>
-      <pubDate>Thu, 30 Jul 2026 12:00:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/posts/dockerfile-smaller-image/</guid>
-      <description>10 个经过验证的技巧，把 Docker 镜像体积缩小 90% 以上。</description>
-    </item>
-    <item>
-      <title>Dockerfile 构建镜像如何更快？10 个实用优化技巧</title>
-      <link>https://LMDAWN1127.github.io/posts/dockerfile-faster-build/</link>
-      <pubDate>Thu, 30 Jul 2026 11:00:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/posts/dockerfile-faster-build/</guid>
-      <description>10 个经过验证的技巧，从缓存策略到多阶段构建，大幅缩短 Docker 构建时间。</description>
-    </item>
-    <item>
       <title>CentOS 部署 Claude Code 全流程指南</title>
       <link>https://LMDAWN1127.github.io/posts/centos-deploy-claude-code/</link>
       <pubDate>Sat, 04 Jul 2026 05:00:00 +0800</pubDate>

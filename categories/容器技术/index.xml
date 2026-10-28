@@ -20,19 +20,5 @@
       <guid>https://LMDAWN1127.github.io/posts/harbor-master-slave/</guid>
       <description>完整记录 Harbor 企业级镜像仓库的主备部署过程，涵盖 HTTP/HTTPS 双模式安装、自签名证书配置、跨主机主备复制等核心运维技能。</description>
     </item>
-    <item>
-      <title>Dockerfile 构建镜像太大？10 个技巧让镜像瘦身 90%</title>
-      <link>https://LMDAWN1127.github.io/posts/dockerfile-smaller-image/</link>
-      <pubDate>Thu, 30 Jul 2026 12:00:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/posts/dockerfile-smaller-image/</guid>
-      <description>10 个经过验证的技巧，把 Docker 镜像体积缩小 90% 以上。</description>
-    </item>
-    <item>
-      <title>Dockerfile 构建镜像如何更快？10 个实用优化技巧</title>
-      <link>https://LMDAWN1127.github.io/posts/dockerfile-faster-build/</link>
-      <pubDate>Thu, 30 Jul 2026 11:00:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/posts/dockerfile-faster-build/</guid>
-      <description>10 个经过验证的技巧，从缓存策略到多阶段构建，大幅缩短 Docker 构建时间。</description>
-    </item>
   </channel>
 </rss>
