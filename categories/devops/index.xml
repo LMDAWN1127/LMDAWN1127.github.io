@@ -11,7 +11,7 @@
     </image>
     <generator>Hugo</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Wed, 28 Oct 2026 12:30:00 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 28 Oct 2026 14:30:00 +0800</lastBuildDate>
     <atom:link href="https://LMDAWN1127.github.io/categories/devops/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Harbor 主备部署实战：从安装到 HTTPS 与主备复制</title>
@@ -19,6 +19,13 @@
       <pubDate>Tue, 04 Aug 2026 00:00:00 +0000</pubDate>
       <guid>https://LMDAWN1127.github.io/posts/harbor-master-slave/</guid>
       <description>完整记录 Harbor 企业级镜像仓库的主备部署过程，涵盖 HTTP/HTTPS 双模式安装、自签名证书配置、跨主机主备复制等核心运维技能。</description>
+    </item>
+    <item>
+      <title>Docker 实战：手动制作 Docker 镜像与 Dockerfile 自动构建</title>
+      <link>https://LMDAWN1127.github.io/posts/docker-image-manual-and-dockerfile/</link>
+      <pubDate>Wed, 28 Oct 2026 14:30:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/posts/docker-image-manual-and-dockerfile/</guid>
+      <description>先用 CentOS、Ubuntu、Alpine 三种基础镜像手动制作 nginx 游戏镜像并用 docker commit 提交（体积 236MB / 215MB / 9.41MB），再用 Dockerfile 自动构建同一个镜像，并总结手动制作镜像体积大、改启动命令繁琐、无法利用缓存三个缺点。</description>
     </item>
     <item>
       <title>Docker 实战：docker exec 与 docker attach 的区别</title>
