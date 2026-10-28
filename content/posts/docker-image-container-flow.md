@@ -7,16 +7,24 @@ tags: ["Docker"]
 
 # Docker 实战：镜像拉取与容器启动全流程
 
-## 镜像仓库、镜像和容器
+镜像、容器与镜像仓库是 Docker 的三大核心对象：镜像仓库负责镜像的存储与分发，镜像是由仓库拉取而来的只读模板，容器则是镜像的运行实例。下面按「镜像仓库 → 镜像 → 容器」的顺序，走一遍从查看仓库、拉取镜像，到启动并访问容器的完整流程。
 
-1. 查看本地镜像仓库列表
+## 镜像仓库
+
+镜像仓库是镜像的存储与分发中心，既可以查看本地已有的镜像仓库列表，也可以从远程仓库把镜像拉取到本地。
+
+### 1. 查看本地镜像仓库列表
 
 ```bash
 root@docker02:~# docker image ls
 REPOSITORY   TAG       IMAGE ID   CREATED   SIZE
 ```
 
-2. 从远程仓库下载镜像
+## 镜像
+
+镜像是由镜像仓库拉取而来的只读模板，本身不可修改，只能通过重新构建或拉取新版本来更新。
+
+### 2. 从远程仓库下载镜像
 
 ```bash
 root@docker02:~# docker pull uhub.service.ucloud.cn/dawn/nginx:1.30.4
@@ -37,29 +45,19 @@ REPOSITORY                          TAG       IMAGE ID       CREATED        SIZE
 uhub.service.ucloud.cn/dawn/nginx   1.30.4    886dbea595a1   2 months ago   161MB
 ```
 
-  相关字段说明:
+相关字段说明:
 
-  REPOSITORY:
+- **REPOSITORY**：代表从哪个仓库下载来的。
+- **TAG**：一般代表对应版本。
+- **IMAGE ID**：镜像的唯一标识，不可修改。
+- **CREATED**：镜像的创建时间。
+- **SIZE**：镜像的大小。
 
-  代表从哪个仓库下载来的。
+## 容器
 
-  TAG:
+容器是镜像的运行实例，基于镜像启动。下面演示容器的启动、查看，以及运行容器时镜像的自动拉取与访问测试。
 
-  一般代表对应版本。
-
-  IMAGE ID:
-
-  镜像的唯一标识，不可修改。
-
-  CREATED:
-
-  镜像的创建时间。
-
-  SIZE:
-
-  镜像的大小。
-
-3. 启动容器
+### 3. 启动容器
 
 ```bash
 root@docker02:~# docker run -d -p 88:80 886dbea595a1
@@ -68,15 +66,10 @@ root@docker02:~# docker run -d -p 88:80 886dbea595a1
 
 相关参数说明:
 
-  -d :
+- **-d**：代表后台运行容器。
+- **-p**：指定端口映射"宿主机端口:容器端口"
 
-  代表后台运行容器。
-
-  -p:
-
-  指定端口映射"宿主机端口:容器端口"
-
-4. 查看正在运行的容器
+### 4. 查看正在运行的容器
 
 ```bash
 root@docker02:~# docker container ls
@@ -87,7 +80,7 @@ CONTAINER ID   IMAGE          COMMAND                  CREATED         STATUS   
 5053b48e3161   886dbea595a1   "/docker-entrypoint.…"   2 minutes ago   Up About a minute   0.0.0.0:88->80/tcp, :::88->80/tcp   gifted_carver
 ```
 
-5. 运行容器时，若本地没有镜像，会自动去远程仓库拉取镜像，如果远程仓库中没有镜像，则拉取失败（不指定TAG，默认latest）
+### 5. 运行容器时，若本地没有镜像，会自动去远程仓库拉取镜像，如果远程仓库中没有镜像，则拉取失败（不指定TAG，默认latest）
 
 ```bash
 root@docker02:~# docker images
@@ -113,7 +106,7 @@ uhub.service.ucloud.cn/dawn/nginx   latest    4e5db4761e0f   3 months ago   161M
 root@docker02:~# docker container ps
 CONTAINER ID   IMAGE                                      COMMAND                  CREATED          STATUS          PORTS                               NAMES
 8b9fd82e4e01   uhub.service.ucloud.cn/dawn/nginx:latest   "/docker-entrypoint.…"   38 seconds ago   Up 38 seconds   0.0.0.0:99->80/tcp, :::99->80/tcp   practical_elion
-5053b48e3161   886dbea595a1                               "/docker-entrypoint.…"   5 minutes ago    Up 5 minutes    0.0.0.0:88->80/tcp, :::88->80/tcp   gifted_carver
+5053b48e3161   886dbea595a1                               "/docker-entrypoint.…"   5 minutes ago   Up 5 minutes    0.0.0.0:88->80/tcp, :::88->80/tcp   gifted_carver
 
 root@docker02:~# docker run -d -p 66:80 uhub.service.ucloud.cn/dawn/nginx:v6
 Unable to find image 'uhub.service.ucloud.cn/dawn/nginx:v6' locally
@@ -121,37 +114,17 @@ docker: Error response from daemon: manifest for uhub.service.ucloud.cn/dawn/ngi
 See 'docker run --help'.
 ```
 
- 相关字段说明:
+相关字段说明:
 
-  CONTAINER ID
+- **CONTAINER ID**：容器的ID，容器的唯一标识，不可修改。
+- **IMAGE**：容器基于哪个镜像启动。
+- **COMMAND**：容器启动时，运行哪些服务。
+- **CREATED**：容器的创建时间。
+- **STATUS**：容器的状态。
+- **PORTS**：容器端口映射。
+- **NAMES**：容器的名称，创建容器时可以指定名称，也可以后期修改容器名称，但是每个容器的名称必须唯一。
 
-  容器的ID，容器的唯一标识，不可修改。
-
-  IMAGE:
-
-  容器基于哪个镜像启动。
-
-  COMMAND:
-
-  容器启动时，运行哪些服务。
-
-  CREATED:
-
-  容器的创建时间。
-
-  STATUS:
-
-  容器的状态。
-
-  PORTS:
-
-  容器端口映射。
-
-  NAMES:
-
-  容器的名称，创建容器时可以指定名称，也可以后期修改容器名称，但是每个容器的名称必须唯一。
-
-6. 访问测试
+### 6. 访问测试
 
   http://11.0.1.122:88/
 
