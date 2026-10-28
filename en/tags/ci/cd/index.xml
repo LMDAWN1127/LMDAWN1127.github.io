@@ -34,12 +34,5 @@
       <guid>https://LMDAWN1127.github.io/en/posts/gitlab-practice/</guid>
       <description>A complete hands-on guide to self-hosting GitLab: RPM install, components, common commands, web UI setup, SSH keyless access, and multi-user collaboration.</description>
     </item>
-    <item>
-      <title>How to Make Dockerfile Builds Faster: 10 Practical Optimization Tips</title>
-      <link>https://LMDAWN1127.github.io/en/posts/dockerfile-faster-build/</link>
-      <pubDate>Thu, 30 Jul 2026 11:00:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/en/posts/dockerfile-faster-build/</guid>
-      <description>10 proven tips — from cache strategy to multi-stage builds — to dramatically cut Docker build time.</description>
-    </item>
   </channel>
 </rss>
