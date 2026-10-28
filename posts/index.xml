@@ -11,7 +11,7 @@
     </image>
     <generator>Hugo</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Wed, 28 Oct 2026 11:30:00 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 28 Oct 2026 12:30:00 +0800</lastBuildDate>
     <atom:link href="https://LMDAWN1127.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Harbor 主备部署实战：从安装到 HTTPS 与主备复制</title>
@@ -19,6 +19,13 @@
       <pubDate>Tue, 04 Aug 2026 00:00:00 +0000</pubDate>
       <guid>https://LMDAWN1127.github.io/posts/harbor-master-slave/</guid>
       <description>完整记录 Harbor 企业级镜像仓库的主备部署过程，涵盖 HTTP/HTTPS 双模式安装、自签名证书配置、跨主机主备复制等核心运维技能。</description>
+    </item>
+    <item>
+      <title>Docker 实战：docker exec 与 docker attach 的区别</title>
+      <link>https://LMDAWN1127.github.io/posts/docker-exec-vs-attach/</link>
+      <pubDate>Wed, 28 Oct 2026 12:30:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/posts/docker-exec-vs-attach/</guid>
+      <description>用 docker top 对比进程树，看清 docker exec 与 docker attach 的本质差别：exec 在容器内新建进程，attach 只把本地标准输入输出接上容器已有主进程；并给出 attach 用 ctrl+p、ctrl+q 退出而不终止容器的方法。</description>
     </item>
     <item>
       <title>Docker 实战：容器状态详解——Up / Exited / Created / Paused</title>
