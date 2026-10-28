@@ -11,7 +11,7 @@
     </image>
     <generator>Hugo</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Wed, 28 Oct 2026 10:00:00 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 28 Oct 2026 11:30:00 +0800</lastBuildDate>
     <atom:link href="https://LMDAWN1127.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Harbor 主备部署实战：从安装到 HTTPS 与主备复制</title>
@@ -19,6 +19,13 @@
       <pubDate>Tue, 04 Aug 2026 00:00:00 +0000</pubDate>
       <guid>https://LMDAWN1127.github.io/posts/harbor-master-slave/</guid>
       <description>完整记录 Harbor 企业级镜像仓库的主备部署过程，涵盖 HTTP/HTTPS 双模式安装、自签名证书配置、跨主机主备复制等核心运维技能。</description>
+    </item>
+    <item>
+      <title>Docker 实战：容器状态详解——Up / Exited / Created / Paused</title>
+      <link>https://LMDAWN1127.github.io/posts/docker-container-states/</link>
+      <pubDate>Wed, 28 Oct 2026 11:30:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/posts/docker-container-states/</guid>
+      <description>逐个复现 docker ps 中四种容器状态的产生方式——Up、Exited（含退出状态码语义）、Created、Paused，并给出查看容器内主进程 ID 的三种方法：docker top、docker inspect 与宿主机 ps。</description>
     </item>
     <item>
       <title>Docker 实战：Linux Namespace 网络隔离与 CGroup 资源限制</title>
