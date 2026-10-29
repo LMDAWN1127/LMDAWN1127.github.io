@@ -11,7 +11,7 @@
     </image>
     <generator>Hugo</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Wed, 28 Oct 2026 19:40:00 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 28 Oct 2026 21:41:00 +0800</lastBuildDate>
     <atom:link href="https://LMDAWN1127.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Harbor 主备部署实战：从安装到 HTTPS 与主备复制</title>
@@ -19,6 +19,13 @@
       <pubDate>Tue, 04 Aug 2026 00:00:00 +0000</pubDate>
       <guid>https://LMDAWN1127.github.io/posts/harbor-master-slave/</guid>
       <description>完整记录 Harbor 企业级镜像仓库的主备部署过程，涵盖 HTTP/HTTPS 双模式安装、自签名证书配置、跨主机主备复制等核心运维技能。</description>
+    </item>
+    <item>
+      <title>Dockerfile 核心指令实战：WORKDIR/EXPOSE/VOLUME、ENV/ARG、HEALTHCHECK、ENTRYPOINT</title>
+      <link>https://LMDAWN1127.github.io/posts/docker-dockerfile-core-instructions/</link>
+      <pubDate>Wed, 28 Oct 2026 21:41:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/posts/docker-dockerfile-core-instructions/</guid>
+      <description>用 4 个网页游戏完整演示 7 个核心 Dockerfile 指令：WORKDIR/EXPOSE/VOLUME 的目录、端口与持久化效果，ENV 与 ARG 在构建期/运行期的差异及覆盖方式，HEALTHCHECK 的健康状态流转，以及 ENTRYPOINT 与 CMD 的不可覆盖/可覆盖区别与参数传递机制。</description>
     </item>
     <item>
       <title>Docker 实战：镜像打标签 MAINTAINER 与 LABEL 及元数据查看</title>
