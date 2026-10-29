@@ -49,11 +49,32 @@
       <description>docker ps が表示する 4 つのコンテナ状態がどう発生するかを順に再現します — Up、Exited（終了コードの意味: 0=正常, 137=SIGKILL）、Created（作成済みだが未起動）、Paused（サービス提供を停止、再起動とは異なり状態の時間はリセットされない）。</description>
     </item>
     <item>
+      <title>Docker 実戦：Overlay によるコンテナのクロスホストネットワーク接続と WordPress 実践</title>
+      <link>https://LMDAWN1127.github.io/ja/posts/docker-overlay-cross-host-networking/</link>
+      <pubDate>Tue, 27 Oct 2026 18:30:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/ja/posts/docker-overlay-cross-host-networking/</guid>
+      <description>2 台の Docker ホストで Swarm クラスタを初期化し、attachable な overlay ネットワーク dawn-overlay を作成します。コンテナが IP とコンテナ名でクロスホスト通信することを確認し、docker_gwbridge 経由の外部ネットワーク出口を検証し、VXLAN（UDP 4789）をキャプチャしてデータのカプセル化を観察し、最後に WordPress のクロスホストデプロイで締めくくります。</description>
+    </item>
+    <item>
+      <title>Docker 実戦：macvlan によるコンテナのクロスホストネットワーク接続</title>
+      <link>https://LMDAWN1127.github.io/ja/posts/docker-macvlan-cross-host-networking/</link>
+      <pubDate>Tue, 27 Oct 2026 14:30:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/ja/posts/docker-macvlan-cross-host-networking/</guid>
+      <description>2 台の Docker ホストで macvlan ドライバにより同一セグメントのカスタムネットワークを作成し、コンテナのクロスホスト L2 接続を実演します。さらに macvlan が既定ではホストや外部ネットワークに接続できない問題の解決策を示し、最後に WordPress のマルチノードデプロイで締めくくります。</description>
+    </item>
+    <item>
       <title>Docker 実戦：Docker で Zabbix 監視と WordPress アプリを導入</title>
       <link>https://LMDAWN1127.github.io/ja/posts/docker-zabbix-wordpress-deployment/</link>
       <pubDate>Tue, 27 Oct 2026 12:19:00 +0800</pubDate>
       <guid>https://LMDAWN1127.github.io/ja/posts/docker-zabbix-wordpress-deployment/</guid>
       <description>カスタムネットワーク上の単一ホストで、docker run を使って Zabbix スタック (MySQL + Java gateway + Server + Web) と WordPress アプリを導入します。ポートマッピングと永続ボリュームも含みます。</description>
+    </item>
+    <item>
+      <title>Docker 実戦：複数 Bridge ネットワークによるコンテナ分離とネットワーク間通信</title>
+      <link>https://LMDAWN1127.github.io/ja/posts/docker-multi-bridge-network-isolation/</link>
+      <pubDate>Tue, 27 Oct 2026 08:00:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/ja/posts/docker-multi-bridge-network-isolation/</guid>
+      <description>xixi と haha という 2 つのカスタム Bridge ネットワークを使い、Docker の既定のネットワーク分離の仕組みを実演します。さらに docker network connect/disconnect によりコンテナを実行時にネットワークへ参加・離脱させ、ネットワークをまたぐコンテナ間通信を実現する軽量な手法を紹介します。</description>
     </item>
     <item>
       <title>Docker 実戦：chroot で最小コンテナルートを手作りしてコンテナの本質を理解する</title>

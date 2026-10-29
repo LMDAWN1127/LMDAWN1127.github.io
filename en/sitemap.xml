@@ -277,6 +277,56 @@
                 href="https://LMDAWN1127.github.io/ja/posts/docker-container-states/"
                 />
   </url><url>
+    <loc>https://LMDAWN1127.github.io/en/posts/docker-overlay-cross-host-networking/</loc>
+    <lastmod>2026-10-27T18:30:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://LMDAWN1127.github.io/posts/docker-overlay-cross-host-networking/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://LMDAWN1127.github.io/en/posts/docker-overlay-cross-host-networking/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="ko"
+                href="https://LMDAWN1127.github.io/ko/posts/docker-overlay-cross-host-networking/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="ja"
+                href="https://LMDAWN1127.github.io/ja/posts/docker-overlay-cross-host-networking/"
+                />
+  </url><url>
+    <loc>https://LMDAWN1127.github.io/en/posts/docker-macvlan-cross-host-networking/</loc>
+    <lastmod>2026-10-27T14:30:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://LMDAWN1127.github.io/posts/docker-macvlan-cross-host-networking/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://LMDAWN1127.github.io/en/posts/docker-macvlan-cross-host-networking/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="ko"
+                href="https://LMDAWN1127.github.io/ko/posts/docker-macvlan-cross-host-networking/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="ja"
+                href="https://LMDAWN1127.github.io/ja/posts/docker-macvlan-cross-host-networking/"
+                />
+  </url><url>
     <loc>https://LMDAWN1127.github.io/en/posts/docker-zabbix-wordpress-deployment/</loc>
     <lastmod>2026-10-27T12:19:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -300,6 +350,31 @@
                 rel="alternate"
                 hreflang="ja"
                 href="https://LMDAWN1127.github.io/ja/posts/docker-zabbix-wordpress-deployment/"
+                />
+  </url><url>
+    <loc>https://LMDAWN1127.github.io/en/posts/docker-multi-bridge-network-isolation/</loc>
+    <lastmod>2026-10-27T08:00:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://LMDAWN1127.github.io/posts/docker-multi-bridge-network-isolation/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://LMDAWN1127.github.io/en/posts/docker-multi-bridge-network-isolation/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="ko"
+                href="https://LMDAWN1127.github.io/ko/posts/docker-multi-bridge-network-isolation/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="ja"
+                href="https://LMDAWN1127.github.io/ja/posts/docker-multi-bridge-network-isolation/"
                 />
   </url><url>
     <loc>https://LMDAWN1127.github.io/en/posts/docker-chroot-minimal-root/</loc>

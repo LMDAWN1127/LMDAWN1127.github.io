@@ -163,6 +163,50 @@
 <article class="post-entry tag-entry"> 
   <header class="entry-header">
     <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/ja/posts/docker-overlay-cross-host-networking/">Docker 実戦：Overlay によるコンテナのクロスホストネットワーク接続と WordPress 実践</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>2 台の Docker ホストで Swarm クラスタを初期化し、attachable な overlay ネットワーク dawn-overlay を作成します。コンテナが IP とコンテナ名でクロスホスト通信することを確認し、docker_gwbridge 経由の外部ネットワーク出口を検証し、VXLAN（UDP 4789）をキャプチャしてデータのカプセル化を観察し、最後に WordPress のクロスホストデプロイで締めくくります。</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-27">
+  2026年10月27日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 6 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to Docker 実戦：Overlay によるコンテナのクロスホストネットワーク接続と WordPress 実践" href="https://LMDAWN1127.github.io/ja/posts/docker-overlay-cross-host-networking/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/ja/posts/docker-macvlan-cross-host-networking/">Docker 実戦：macvlan によるコンテナのクロスホストネットワーク接続</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>2 台の Docker ホストで macvlan ドライバにより同一セグメントのカスタムネットワークを作成し、コンテナのクロスホスト L2 接続を実演します。さらに macvlan が既定ではホストや外部ネットワークに接続できない問題の解決策を示し、最後に WordPress のマルチノードデプロイで締めくくります。</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-27">
+  2026年10月27日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 5 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to Docker 実戦：macvlan によるコンテナのクロスホストネットワーク接続" href="https://LMDAWN1127.github.io/ja/posts/docker-macvlan-cross-host-networking/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
       <a href="https://LMDAWN1127.github.io/ja/posts/docker-zabbix-wordpress-deployment/">Docker 実戦：Docker で Zabbix 監視と WordPress アプリを導入</a>
     </h2>
   </header>
@@ -185,6 +229,28 @@
 <article class="post-entry tag-entry"> 
   <header class="entry-header">
     <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/ja/posts/docker-multi-bridge-network-isolation/">Docker 実戦：複数 Bridge ネットワークによるコンテナ分離とネットワーク間通信</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>xixi と haha という 2 つのカスタム Bridge ネットワークを使い、Docker の既定のネットワーク分離の仕組みを実演します。さらに docker network connect/disconnect によりコンテナを実行時にネットワークへ参加・離脱させ、ネットワークをまたぐコンテナ間通信を実現する軽量な手法を紹介します。</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-27">
+  2026年10月27日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 6 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to Docker 実戦：複数 Bridge ネットワークによるコンテナ分離とネットワーク間通信" href="https://LMDAWN1127.github.io/ja/posts/docker-multi-bridge-network-isolation/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
       <a href="https://LMDAWN1127.github.io/ja/posts/docker-chroot-minimal-root/">Docker 実戦：chroot で最小コンテナルートを手作りしてコンテナの本質を理解する</a>
     </h2>
   </header>
@@ -202,72 +268,6 @@
 </span>
 </footer>
   <a class="entry-link" aria-label="post link to Docker 実戦：chroot で最小コンテナルートを手作りしてコンテナの本質を理解する" href="https://LMDAWN1127.github.io/ja/posts/docker-chroot-minimal-root/"></a>
-</article>
-
-<article class="post-entry tag-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/ja/posts/docker-wordpress-multinode/">Docker 実戦：WordPress のマルチノード展開と永続化検証</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>WordPress を Docker で 2 ノードにまたがって展開 (データベースと Web を分離) し、名前付きボリュームでデータを永続化した上で、コンテナを削除して再作成し、公開済みブログが失われないことを検証します。</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-26">
-  2026年10月26日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 2 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to Docker 実戦：WordPress のマルチノード展開と永続化検証" href="https://LMDAWN1127.github.io/ja/posts/docker-wordpress-multinode/"></a>
-</article>
-
-<article class="post-entry tag-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/ja/posts/docker-dockerfile-multi-game-image-add/">Docker 実戦：Dockerfile でマルチゲームイメージをビルドし ADD で自動展開</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>古い全部入りイメージ dawn-games-dawn:v0.6 から中継コンテナ経由で 2 つのゲーム (黄金鉱夫と Flappy Bird) の静的ファイルを取り出し、それぞれ tar.gz に固め、Dockerfile の ADD 命令でビルド時に Alpine&#43;nginx コンテナへ自動展開します。最後にイメージをビルドしてコンテナを起動し、ドメインで 2 つのゲームにアクセスします。さらに ADD と COPY の決定的な違い (ADD は tar.gz を自動展開する) も解説します。</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-26">
-  2026年10月26日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 3 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to Docker 実戦：Dockerfile でマルチゲームイメージをビルドし ADD で自動展開" href="https://LMDAWN1127.github.io/ja/posts/docker-dockerfile-multi-game-image-add/"></a>
-</article>
-
-<article class="post-entry tag-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/ja/posts/docker-app-deployments/">Docker 実戦：アプリ導入 - Tomcat / MySQL / WordPress / ELK</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>docker run で実アプリを導入します。Tomcat、MySQL (20 インスタンスの一括起動と複数インスタンスでの公開を含む)、WordPress、そして ElasticSearch &#43; Kibana スタックを、ポートマッピング・永続ボリューム・パスワード/トークン設定とともに扱います。</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-26">
-  2026年10月26日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 6 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to Docker 実戦：アプリ導入 - Tomcat / MySQL / WordPress / ELK" href="https://LMDAWN1127.github.io/ja/posts/docker-app-deployments/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">

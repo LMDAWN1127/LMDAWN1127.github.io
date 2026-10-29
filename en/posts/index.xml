@@ -49,11 +49,32 @@
       <description>Reproduce how each of the four container states shown by docker ps is produced — Up, Exited (exit-code semantics: 0 = normal, 137 = SIGKILL), Created (created but not started), and Paused (suspended from serving, and unlike restart it does not reset the status timer).</description>
     </item>
     <item>
+      <title>Docker in Practice: Overlay Cross-Host Container Networking with a WordPress Case</title>
+      <link>https://LMDAWN1127.github.io/en/posts/docker-overlay-cross-host-networking/</link>
+      <pubDate>Tue, 27 Oct 2026 18:30:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/posts/docker-overlay-cross-host-networking/</guid>
+      <description>Initialize a Swarm cluster on two Docker hosts, create the attachable overlay network dawn-overlay, demonstrate cross-host container communication by IP and container name, verify Internet egress via docker_gwbridge, observe encapsulation by capturing VXLAN (UDP 4789) packets, and finish with a cross-host WordPress deployment.</description>
+    </item>
+    <item>
+      <title>Docker in Practice: macvlan for Cross-Host Container Networking</title>
+      <link>https://LMDAWN1127.github.io/en/posts/docker-macvlan-cross-host-networking/</link>
+      <pubDate>Tue, 27 Oct 2026 14:30:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/posts/docker-macvlan-cross-host-networking/</guid>
+      <description>Create same-subnet custom networks with the macvlan driver on two Docker hosts and demonstrate cross-host Layer-2 container connectivity; also cover the fix for macvlan&amp;rsquo;s default inability to reach the host or the Internet, and finish with a multi-node WordPress deployment.</description>
+    </item>
+    <item>
       <title>Docker in Practice: Deploying Zabbix Monitoring and a WordPress App with Docker</title>
       <link>https://LMDAWN1127.github.io/en/posts/docker-zabbix-wordpress-deployment/</link>
       <pubDate>Tue, 27 Oct 2026 12:19:00 +0800</pubDate>
       <guid>https://LMDAWN1127.github.io/en/posts/docker-zabbix-wordpress-deployment/</guid>
       <description>On a single host with a custom network, deploy the Zabbix stack (MySQL + Java gateway + Server + Web) and a WordPress app with docker run, including port mapping and persistent volumes.</description>
+    </item>
+    <item>
+      <title>Docker in Practice: Container Isolation and Cross-Network Communication with Multiple Bridge Networks</title>
+      <link>https://LMDAWN1127.github.io/en/posts/docker-multi-bridge-network-isolation/</link>
+      <pubDate>Tue, 27 Oct 2026 08:00:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/posts/docker-multi-bridge-network-isolation/</guid>
+      <description>Using two custom Bridge networks, xixi and haha, this walkthrough demonstrates Docker&amp;rsquo;s default network isolation mechanism and shows how docker network connect/disconnect lets a container join or leave a network at runtime to achieve cross-network container communication.</description>
     </item>
     <item>
       <title>Docker in Practice: Hand-Building a Minimal Container Root with chroot to Understand What a Container Is</title>

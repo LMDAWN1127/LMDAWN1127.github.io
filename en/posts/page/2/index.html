@@ -173,6 +173,50 @@
 <article class="post-entry"> 
   <header class="entry-header">
     <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/en/posts/docker-overlay-cross-host-networking/">Docker in Practice: Overlay Cross-Host Container Networking with a WordPress Case</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>Initialize a Swarm cluster on two Docker hosts, create the attachable overlay network dawn-overlay, demonstrate cross-host container communication by IP and container name, verify Internet egress via docker_gwbridge, observe encapsulation by capturing VXLAN (UDP 4789) packets, and finish with a cross-host WordPress deployment.</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-27">
+  2026年10月27日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 8 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to Docker in Practice: Overlay Cross-Host Container Networking with a WordPress Case" href="https://LMDAWN1127.github.io/en/posts/docker-overlay-cross-host-networking/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/en/posts/docker-macvlan-cross-host-networking/">Docker in Practice: macvlan for Cross-Host Container Networking</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>Create same-subnet custom networks with the macvlan driver on two Docker hosts and demonstrate cross-host Layer-2 container connectivity; also cover the fix for macvlan’s default inability to reach the host or the Internet, and finish with a multi-node WordPress deployment.</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-27">
+  2026年10月27日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 7 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to Docker in Practice: macvlan for Cross-Host Container Networking" href="https://LMDAWN1127.github.io/en/posts/docker-macvlan-cross-host-networking/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
       <a href="https://LMDAWN1127.github.io/en/posts/docker-zabbix-wordpress-deployment/">Docker in Practice: Deploying Zabbix Monitoring and a WordPress App with Docker</a>
     </h2>
   </header>
@@ -195,6 +239,28 @@
 <article class="post-entry"> 
   <header class="entry-header">
     <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/en/posts/docker-multi-bridge-network-isolation/">Docker in Practice: Container Isolation and Cross-Network Communication with Multiple Bridge Networks</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>Using two custom Bridge networks, xixi and haha, this walkthrough demonstrates Docker’s default network isolation mechanism and shows how docker network connect/disconnect lets a container join or leave a network at runtime to achieve cross-network container communication.</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-27">
+  2026年10月27日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 7 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to Docker in Practice: Container Isolation and Cross-Network Communication with Multiple Bridge Networks" href="https://LMDAWN1127.github.io/en/posts/docker-multi-bridge-network-isolation/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
       <a href="https://LMDAWN1127.github.io/en/posts/docker-chroot-minimal-root/">Docker in Practice: Hand-Building a Minimal Container Root with chroot to Understand What a Container Is</a>
     </h2>
   </header>
@@ -212,72 +278,6 @@
 </span>
 </footer>
   <a class="entry-link" aria-label="post link to Docker in Practice: Hand-Building a Minimal Container Root with chroot to Understand What a Container Is" href="https://LMDAWN1127.github.io/en/posts/docker-chroot-minimal-root/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/en/posts/docker-wordpress-multinode/">Docker in Practice: WordPress Multi-Node Deployment and Persistence Verification</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>Deploy WordPress with Docker across two nodes (database and web separated), persist data with named volumes, then delete and recreate the containers to verify the published blog is not lost.</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-26">
-  2026年10月26日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 2 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to Docker in Practice: WordPress Multi-Node Deployment and Persistence Verification" href="https://LMDAWN1127.github.io/en/posts/docker-wordpress-multinode/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/en/posts/docker-dockerfile-multi-game-image-add/">Docker in Practice: Building a Multi-Game Image with Dockerfile and ADD Auto-Extraction</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>Copy the static files of two games (Gold Miner and Flappy Bird) out of an old all-in-one image dawn-games-dawn:v0.6 using a staging container, pack each into a tar.gz, then let the Dockerfile ADD instruction auto-extract them into an Alpine&#43;nginx container at build time; finally build the image, start the container and visit both games by domain — plus the key difference between ADD and COPY: ADD auto-extracts tar.gz.</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-26">
-  2026年10月26日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 5 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to Docker in Practice: Building a Multi-Game Image with Dockerfile and ADD Auto-Extraction" href="https://LMDAWN1127.github.io/en/posts/docker-dockerfile-multi-game-image-add/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/en/posts/docker-app-deployments/">Docker in Practice: Deploying Applications - Tomcat / MySQL / WordPress / ELK</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>Deploy real applications with docker run: Tomcat, MySQL (including bulk 20-instance startup and multi-instance exposure), WordPress and the ElasticSearch &#43; Kibana stack, with port mapping, persistent volumes and password/token setup.</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-26">
-  2026年10月26日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 6 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to Docker in Practice: Deploying Applications - Tomcat / MySQL / WordPress / ELK" href="https://LMDAWN1127.github.io/en/posts/docker-app-deployments/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">

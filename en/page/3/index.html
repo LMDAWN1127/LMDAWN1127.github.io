@@ -154,6 +154,72 @@
 <article class="post-entry"> 
   <header class="entry-header">
     <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/en/posts/docker-wordpress-multinode/">Docker in Practice: WordPress Multi-Node Deployment and Persistence Verification</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>Deploy WordPress with Docker across two nodes (database and web separated), persist data with named volumes, then delete and recreate the containers to verify the published blog is not lost.</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-26">
+  2026年10月26日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 2 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to Docker in Practice: WordPress Multi-Node Deployment and Persistence Verification" href="https://LMDAWN1127.github.io/en/posts/docker-wordpress-multinode/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/en/posts/docker-dockerfile-multi-game-image-add/">Docker in Practice: Building a Multi-Game Image with Dockerfile and ADD Auto-Extraction</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>Copy the static files of two games (Gold Miner and Flappy Bird) out of an old all-in-one image dawn-games-dawn:v0.6 using a staging container, pack each into a tar.gz, then let the Dockerfile ADD instruction auto-extract them into an Alpine&#43;nginx container at build time; finally build the image, start the container and visit both games by domain — plus the key difference between ADD and COPY: ADD auto-extracts tar.gz.</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-26">
+  2026年10月26日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 5 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to Docker in Practice: Building a Multi-Game Image with Dockerfile and ADD Auto-Extraction" href="https://LMDAWN1127.github.io/en/posts/docker-dockerfile-multi-game-image-add/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/en/posts/docker-app-deployments/">Docker in Practice: Deploying Applications - Tomcat / MySQL / WordPress / ELK</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>Deploy real applications with docker run: Tomcat, MySQL (including bulk 20-instance startup and multi-instance exposure), WordPress and the ElasticSearch &#43; Kibana stack, with port mapping, persistent volumes and password/token setup.</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-26">
+  2026年10月26日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 6 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to Docker in Practice: Deploying Applications - Tomcat / MySQL / WordPress / ELK" href="https://LMDAWN1127.github.io/en/posts/docker-app-deployments/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
       <a href="https://LMDAWN1127.github.io/en/posts/docker-inspect-pid-id-network/">Docker in Practice: Inspecting Container PID, ID and Network Info with inspect</a>
     </h2>
   </header>
@@ -193,72 +259,6 @@
 </span>
 </footer>
   <a class="entry-link" aria-label="post link to Docker in Practice: Nginx Load Balancing and Container Traffic Distribution" href="https://LMDAWN1127.github.io/en/posts/docker-nginx-load-balancing/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/en/posts/docker-image-container-flow/">Docker in Practice: The Full Flow of Pulling an Image and Starting a Container</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>Walk through Docker’s three core objects in order — image registry, image, container: inspect the local registry list, pull an image from a remote registry, start a container, and run an access test.</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-26">
-  2026年10月26日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 4 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to Docker in Practice: The Full Flow of Pulling an Image and Starting a Container" href="https://LMDAWN1127.github.io/en/posts/docker-image-container-flow/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/en/posts/docker-env-var-passing/">Docker in Practice: Passing and Inspecting Environment Variables in Containers</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>How to pass environment variables into a container with -e and how to inspect them afterwards with docker exec env.</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-23">
-  2026年10月23日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 1 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to Docker in Practice: Passing and Inspecting Environment Variables in Containers" href="https://LMDAWN1127.github.io/en/posts/docker-env-var-passing/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/en/posts/docker-image-migration-tag/">Docker in Practice: Image Migration - Offline save/load Transfer and Tagging</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>Export an image with docker save, transfer it offline over SSH, verify integrity with md5sum, then import it with docker load and re-tag it. Shows that save/load preserves the IMAGE ID, how to export multiple images at once, two import forms, and two ways to batch-delete images.</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-23">
-  2026年10月23日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 2 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to Docker in Practice: Image Migration - Offline save/load Transfer and Tagging" href="https://LMDAWN1127.github.io/en/posts/docker-image-migration-tag/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">
