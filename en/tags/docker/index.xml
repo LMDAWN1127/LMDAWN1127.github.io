@@ -11,7 +11,7 @@
     </image>
     <generator>Hugo</generator>
     <language>en</language>
-    <lastBuildDate>Thu, 29 Oct 2026 20:38:15 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 29 Oct 2026 20:57:00 +0800</lastBuildDate>
     <atom:link href="https://LMDAWN1127.github.io/en/tags/docker/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Harbor Active-Standby Deployment: From Installation to HTTPS and Replication</title>
@@ -19,6 +19,13 @@
       <pubDate>Tue, 04 Aug 2026 00:00:00 +0000</pubDate>
       <guid>https://LMDAWN1127.github.io/en/posts/harbor-master-slave/</guid>
       <description>Complete guide to deploying Harbor enterprise Docker registry with active-standby architecture, HTTP/HTTPS modes, self-signed certificates, and cross-host replication.</description>
+    </item>
+    <item>
+      <title>Harbor HTTPS Deployment with a Self-Signed Certificate</title>
+      <link>https://LMDAWN1127.github.io/en/posts/harbor-self-signed-https/</link>
+      <pubDate>Thu, 29 Oct 2026 20:57:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/posts/harbor-self-signed-https/</guid>
+      <description>This hands-on walkthrough configures Harbor with HTTPS using a self-signed certificate. We create the certificate directory, generate a self-signed certificate with openssl (domain harbor.dawn.com, SAN covering both DNS and IP 11.0.1.122), edit harbor.yml to enable HTTPS on port 443, and reinstall with install.sh. Finally we use ss and curl to confirm that port 80 is automatically redirected to 443 and the WebUI is accessible. Self-signed certificates require client trust; in production, use a certificate issued by an official CA to avoid warnings.</description>
     </item>
     <item>
       <title>Harbor High Availability: Implementing VIP Failover with keepalived</title>

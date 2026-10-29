@@ -190,6 +190,28 @@
 <article class="post-entry"> 
   <header class="entry-header">
     <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/posts/harbor-self-signed-https/">Harbor 基于自签名证书的 HTTPS 部署实战</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>本文实战演示为 Harbor 配置基于自签名证书的 HTTPS 访问。依次创建证书目录、用 openssl 生成自签名证书（域名 harbor.dawn.com，SAN 同时包含 DNS 与 IP 11.0.1.122）、修改 harbor.yml 启用 443 端口 HTTPS、重新执行 install.sh 安装，最后通过 ss 与 curl 验证 80 端口已自动重定向到 443、WebUI 可正常访问。自签名证书需客户端信任，生产环境建议改用官方 CA 签发的证书以避免告警。</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-29">
+  2026年10月29日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 1 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to Harbor 基于自签名证书的 HTTPS 部署实战" href="https://LMDAWN1127.github.io/posts/harbor-self-signed-https/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
       <a href="https://LMDAWN1127.github.io/posts/harbor-keepalived-vip/">Harbor 高可用方案：用 keepalived 实现 VIP 漂移</a>
     </h2>
   </header>
@@ -251,28 +273,6 @@
 </span>
 </footer>
   <a class="entry-link" aria-label="post link to 不指定基础镜像实现自定义镜像scratch" href="https://LMDAWN1127.github.io/posts/docker-scratch-custom-image/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/posts/docker-harbor-private-registry/">私有镜像仓库harbor实战</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>从零搭建两套私有镜像仓库：先用 docker registry 轻量级方案完成镜像的部署、推送、下载与删除（含手动删元数据 &#43; GC 回收存储），再部署企业级 VMware Harbor（HTTP 模式），演示 hosts 解析、insecure-registries 配置、新建项目、三种 docker login 方式、镜像推送/拉取/删除全流程，最后用对比表总结 registry 与 Harbor 在体积、部署、WebUI、项目管理、删除与适用场景上的差异。</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-29">
-  2026年10月29日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 6 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to 私有镜像仓库harbor实战" href="https://LMDAWN1127.github.io/posts/docker-harbor-private-registry/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">
