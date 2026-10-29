@@ -49,6 +49,13 @@
       <description>docker ps が表示する 4 つのコンテナ状態がどう発生するかを順に再現します — Up、Exited（終了コードの意味: 0=正常, 137=SIGKILL）、Created（作成済みだが未起動）、Paused（サービス提供を停止、再起動とは異なり状態の時間はリセットされない）。</description>
     </item>
     <item>
+      <title>Docker 実戦：Docker で Zabbix 監視と WordPress アプリを導入</title>
+      <link>https://LMDAWN1127.github.io/ja/posts/docker-zabbix-wordpress-deployment/</link>
+      <pubDate>Tue, 27 Oct 2026 12:19:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/ja/posts/docker-zabbix-wordpress-deployment/</guid>
+      <description>カスタムネットワーク上の単一ホストで、docker run を使って Zabbix スタック (MySQL + Java gateway + Server + Web) と WordPress アプリを導入します。ポートマッピングと永続ボリュームも含みます。</description>
+    </item>
+    <item>
       <title>Docker 実戦：chroot で最小コンテナルートを手作りしてコンテナの本質を理解する</title>
       <link>https://LMDAWN1127.github.io/ja/posts/docker-chroot-minimal-root/</link>
       <pubDate>Mon, 26 Oct 2026 19:50:00 +0800</pubDate>
@@ -56,11 +63,25 @@
       <description>Docker コマンドを使わず、chroot で最小コンテナルートをゼロから手作り (bash と動的ライブラリチェーンをコピー) し、ファイルシステム分離の「コンテナ感」を味わいます。さらに 2 つの独立ルートでプロセス/データが互いに見えないことを示し、最後に実コンテナの overlay2 merged ファイルシステムに chroot してファイルを直したりログを読んだりします。</description>
     </item>
     <item>
+      <title>Docker 実戦：WordPress のマルチノード展開と永続化検証</title>
+      <link>https://LMDAWN1127.github.io/ja/posts/docker-wordpress-multinode/</link>
+      <pubDate>Mon, 26 Oct 2026 16:30:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/ja/posts/docker-wordpress-multinode/</guid>
+      <description>WordPress を Docker で 2 ノードにまたがって展開 (データベースと Web を分離) し、名前付きボリュームでデータを永続化した上で、コンテナを削除して再作成し、公開済みブログが失われないことを検証します。</description>
+    </item>
+    <item>
       <title>Docker 実戦：inspect でコンテナの PID・ID・ネットワーク情報を確認</title>
       <link>https://LMDAWN1127.github.io/ja/posts/docker-inspect-pid-id-network/</link>
       <pubDate>Mon, 26 Oct 2026 13:00:00 +0800</pubDate>
       <guid>https://LMDAWN1127.github.io/ja/posts/docker-inspect-pid-id-network/</guid>
       <description>docker container inspect -f と Go テンプレートを使って、コンテナの PID・ID・IP アドレス・ゲートウェイ・MAC アドレスを取り出します。</description>
+    </item>
+    <item>
+      <title>Docker 実戦：Nginx ロードバランシングとコンテナトラフィック分散</title>
+      <link>https://LMDAWN1127.github.io/ja/posts/docker-nginx-load-balancing/</link>
+      <pubDate>Mon, 26 Oct 2026 11:50:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/ja/posts/docker-nginx-load-balancing/</guid>
+      <description>lb コンテナと web コンテナ 2 つを起動し、lb 上の Nginx default.conf を編集して web01/web02 にリバースプロキシし、lb に 10 回 curl してトラフィックが 2 つのバックエンド間で交互に振り分けられることを確認します。</description>
     </item>
     <item>
       <title>Docker 実戦：コンテナの環境変数の渡し方と確認方法</title>

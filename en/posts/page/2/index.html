@@ -173,6 +173,28 @@
 <article class="post-entry"> 
   <header class="entry-header">
     <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/en/posts/docker-zabbix-wordpress-deployment/">Docker in Practice: Deploying Zabbix Monitoring and a WordPress App with Docker</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>On a single host with a custom network, deploy the Zabbix stack (MySQL &#43; Java gateway &#43; Server &#43; Web) and a WordPress app with docker run, including port mapping and persistent volumes.</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-27">
+  2026年10月27日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 3 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to Docker in Practice: Deploying Zabbix Monitoring and a WordPress App with Docker" href="https://LMDAWN1127.github.io/en/posts/docker-zabbix-wordpress-deployment/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
       <a href="https://LMDAWN1127.github.io/en/posts/docker-chroot-minimal-root/">Docker in Practice: Hand-Building a Minimal Container Root with chroot to Understand What a Container Is</a>
     </h2>
   </header>
@@ -190,6 +212,28 @@
 </span>
 </footer>
   <a class="entry-link" aria-label="post link to Docker in Practice: Hand-Building a Minimal Container Root with chroot to Understand What a Container Is" href="https://LMDAWN1127.github.io/en/posts/docker-chroot-minimal-root/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/en/posts/docker-wordpress-multinode/">Docker in Practice: WordPress Multi-Node Deployment and Persistence Verification</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>Deploy WordPress with Docker across two nodes (database and web separated), persist data with named volumes, then delete and recreate the containers to verify the published blog is not lost.</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-26">
+  2026年10月26日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 2 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to Docker in Practice: WordPress Multi-Node Deployment and Persistence Verification" href="https://LMDAWN1127.github.io/en/posts/docker-wordpress-multinode/"></a>
 </article>
 
 <article class="post-entry"> 
@@ -217,67 +261,23 @@
 <article class="post-entry"> 
   <header class="entry-header">
     <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/en/posts/docker-env-var-passing/">Docker in Practice: Passing and Inspecting Environment Variables in Containers</a>
+      <a href="https://LMDAWN1127.github.io/en/posts/docker-nginx-load-balancing/">Docker in Practice: Nginx Load Balancing and Container Traffic Distribution</a>
     </h2>
   </header>
   <div class="entry-content">
-    <p>How to pass environment variables into a container with -e and how to inspect them afterwards with docker exec env.</p>
+    <p>Run an lb container plus two web containers, edit the Nginx default.conf on lb to reverse-proxy to web01/web02, then curl the lb 10 times to see the traffic alternate between the two backends.</p>
   </div>
   <footer class="entry-footer">
 
-<time class="meta-date" datetime="2026-10-23">
-  2026年10月23日
+<time class="meta-date" datetime="2026-10-26">
+  2026年10月26日
 </time>
 <span class="meta-separator">·</span>
 <span class="meta-reading-time">
-  阅读需 1 分钟
+  阅读需 3 分钟
 </span>
 </footer>
-  <a class="entry-link" aria-label="post link to Docker in Practice: Passing and Inspecting Environment Variables in Containers" href="https://LMDAWN1127.github.io/en/posts/docker-env-var-passing/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/en/posts/docker-image-migration-tag/">Docker in Practice: Image Migration - Offline save/load Transfer and Tagging</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>Export an image with docker save, transfer it offline over SSH, verify integrity with md5sum, then import it with docker load and re-tag it. Shows that save/load preserves the IMAGE ID, how to export multiple images at once, two import forms, and two ways to batch-delete images.</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-23">
-  2026年10月23日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 2 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to Docker in Practice: Image Migration - Offline save/load Transfer and Tagging" href="https://LMDAWN1127.github.io/en/posts/docker-image-migration-tag/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/en/posts/docker-port-mapping-principle/">Docker in Practice: How Port Mapping Works - From the veth NIC to iptables DNAT</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>Observe how Docker maps a container port to the host: from the veth NIC and the docker0 bridge, to the iptables DNAT rules and the net.ipv4.ip_forward kernel switch that makes external access work.</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-23">
-  2026年10月23日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 5 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to Docker in Practice: How Port Mapping Works - From the veth NIC to iptables DNAT" href="https://LMDAWN1127.github.io/en/posts/docker-port-mapping-principle/"></a>
+  <a class="entry-link" aria-label="post link to Docker in Practice: Nginx Load Balancing and Container Traffic Distribution" href="https://LMDAWN1127.github.io/en/posts/docker-nginx-load-balancing/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">

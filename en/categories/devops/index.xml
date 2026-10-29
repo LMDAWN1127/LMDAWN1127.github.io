@@ -49,6 +49,13 @@
       <description>Reproduce how each of the four container states shown by docker ps is produced — Up, Exited (exit-code semantics: 0 = normal, 137 = SIGKILL), Created (created but not started), and Paused (suspended from serving, and unlike restart it does not reset the status timer).</description>
     </item>
     <item>
+      <title>Docker in Practice: Deploying Zabbix Monitoring and a WordPress App with Docker</title>
+      <link>https://LMDAWN1127.github.io/en/posts/docker-zabbix-wordpress-deployment/</link>
+      <pubDate>Tue, 27 Oct 2026 12:19:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/posts/docker-zabbix-wordpress-deployment/</guid>
+      <description>On a single host with a custom network, deploy the Zabbix stack (MySQL + Java gateway + Server + Web) and a WordPress app with docker run, including port mapping and persistent volumes.</description>
+    </item>
+    <item>
       <title>Docker in Practice: Hand-Building a Minimal Container Root with chroot to Understand What a Container Is</title>
       <link>https://LMDAWN1127.github.io/en/posts/docker-chroot-minimal-root/</link>
       <pubDate>Mon, 26 Oct 2026 19:50:00 +0800</pubDate>
@@ -56,11 +63,25 @@
       <description>Without Docker commands, use chroot to hand-build a minimal container root from scratch (copying bash and its dynamic-library chain) to feel filesystem isolation; then show two independent roots make processes/data invisible to each other, and finally chroot into a real container&amp;rsquo;s overlay2 merged filesystem to fix files and read logs.</description>
     </item>
     <item>
+      <title>Docker in Practice: WordPress Multi-Node Deployment and Persistence Verification</title>
+      <link>https://LMDAWN1127.github.io/en/posts/docker-wordpress-multinode/</link>
+      <pubDate>Mon, 26 Oct 2026 16:30:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/posts/docker-wordpress-multinode/</guid>
+      <description>Deploy WordPress with Docker across two nodes (database and web separated), persist data with named volumes, then delete and recreate the containers to verify the published blog is not lost.</description>
+    </item>
+    <item>
       <title>Docker in Practice: Inspecting Container PID, ID and Network Info with inspect</title>
       <link>https://LMDAWN1127.github.io/en/posts/docker-inspect-pid-id-network/</link>
       <pubDate>Mon, 26 Oct 2026 13:00:00 +0800</pubDate>
       <guid>https://LMDAWN1127.github.io/en/posts/docker-inspect-pid-id-network/</guid>
       <description>Use docker container inspect -f with Go templates to pull a container&amp;rsquo;s PID, ID, IP address, gateway and MAC address.</description>
+    </item>
+    <item>
+      <title>Docker in Practice: Nginx Load Balancing and Container Traffic Distribution</title>
+      <link>https://LMDAWN1127.github.io/en/posts/docker-nginx-load-balancing/</link>
+      <pubDate>Mon, 26 Oct 2026 11:50:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/posts/docker-nginx-load-balancing/</guid>
+      <description>Run an lb container plus two web containers, edit the Nginx default.conf on lb to reverse-proxy to web01/web02, then curl the lb 10 times to see the traffic alternate between the two backends.</description>
     </item>
     <item>
       <title>Docker in Practice: Passing and Inspecting Environment Variables in Containers</title>

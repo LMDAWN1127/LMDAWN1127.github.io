@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="ja" dir="auto" data-theme="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Docker 実戦：WordPress のマルチノード展開と永続化検証 | DAWN&#39;s Blog</title>
+<meta name="keywords" content="Docker">
+<meta name="description" content="WordPress を Docker で 2 ノードにまたがって展開 (データベースと Web を分離) し、名前付きボリュームでデータを永続化した上で、コンテナを削除して再作成し、公開済みブログが失われないことを検証します。">
+<meta name="author" content="DAWN">
+<link rel="canonical" href="https://LMDAWN1127.github.io/ja/posts/docker-wordpress-multinode/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.4bf808bff57bddc46d61c8ae060b00400fc679ab876e37243b11bd3f832f2958.css" integrity="sha256-S/gIv/V73cRtYciuBgsAQA/GeauHbjckOxG9P4MvKVg=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://LMDAWN1127.github.io/images/DAWN.jpg">
+<link rel="icon" type="image/png" sizes="16x16" href="https://LMDAWN1127.github.io/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://LMDAWN1127.github.io/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://LMDAWN1127.github.io/apple-touch-icon.png">
+<link rel="mask-icon" href="https://LMDAWN1127.github.io/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="zh" href="https://LMDAWN1127.github.io/posts/docker-wordpress-multinode/">
+<link rel="alternate" hreflang="en" href="https://LMDAWN1127.github.io/en/posts/docker-wordpress-multinode/">
+<link rel="alternate" hreflang="ko" href="https://LMDAWN1127.github.io/ko/posts/docker-wordpress-multinode/">
+<link rel="alternate" hreflang="ja" href="https://LMDAWN1127.github.io/ja/posts/docker-wordpress-multinode/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+                color-scheme: dark;
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .toc {
+                background: var(--entry);
+            }
+        }
+
+    </style>
+</noscript>
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.querySelector("html").dataset.theme = 'dark';
+    } else if (localStorage.getItem("pref-theme") === "light") {
+       document.querySelector("html").dataset.theme = 'light';
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.querySelector("html").dataset.theme = 'dark';
+    } else {
+        document.querySelector("html").dataset.theme = 'light';
+    }
+
+</script><link rel="stylesheet" href='https://LMDAWN1127.github.io/css/custom.css'>
+<meta property="og:url" content="https://LMDAWN1127.github.io/ja/posts/docker-wordpress-multinode/">
+  <meta property="og:site_name" content="DAWN&#39;s Blog">
+  <meta property="og:title" content="Docker 実戦：WordPress のマルチノード展開と永続化検証">
+  <meta property="og:description" content="WordPress を Docker で 2 ノードにまたがって展開 (データベースと Web を分離) し、名前付きボリュームでデータを永続化した上で、コンテナを削除して再作成し、公開済みブログが失われないことを検証します。">
+  <meta property="og:locale" content="ja">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2026-10-26T16:30:00+08:00">
+    <meta property="article:modified_time" content="2026-10-26T16:30:00+08:00">
+    <meta property="article:tag" content="Docker">
+      <meta property="og:image" content="https://LMDAWN1127.github.io/images/DAWN.jpg">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://LMDAWN1127.github.io/images/DAWN.jpg">
+  <meta name="twitter:title" content="Docker 実戦：WordPress のマルチノード展開と永続化検証">
+  <meta name="twitter:description" content="WordPress を Docker で 2 ノードにまたがって展開 (データベースと Web を分離) し、名前付きボリュームでデータを永続化した上で、コンテナを削除して再作成し、公開済みブログが失われないことを検証します。">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://LMDAWN1127.github.io/ja/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Docker 実戦：WordPress のマルチノード展開と永続化検証",
+      "item": "https://LMDAWN1127.github.io/ja/posts/docker-wordpress-multinode/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Docker 実戦：WordPress のマルチノード展開と永続化検証",
+  "name": "Docker 実戦：WordPress のマルチノード展開と永続化検証",
+  "description": "WordPress を Docker で 2 ノードにまたがって展開 (データベースと Web を分離) し、名前付きボリュームでデータを永続化した上で、コンテナを削除して再作成し、公開済みブログが失われないことを検証します。",
+  "keywords": [
+    "Docker"
+  ],
+  "articleBody": "Docker 実戦：WordPress のマルチノード展開と永続化検証 実験の目的:\nWordPress を Docker でデプロイし、テストブログを公開します。要件は、データベースと WordPress コンテナを 2 つの異なるノードに配置し、データベースと WordPress コンテナを削除した後、新しいコンテナを再作成して公開済みブログが失われないことを確認することです。\n1. データベースを起動 1 2 3 4 5 6 7 8 9 root@docker02:~# docker run --name mysql-server \\ -e MYSQL_ALLOW_EMPTY_PASSWORD=yes \\ -e MYSQL_DATABASE=wordpress \\ -e MYSQL_USER=dawn \\ -e MYSQL_PASSWORD=123456 \\ -v dawn:/var/lib/mysql \\ -d \\ -p 13306:3306 \\ mysql:8.4.1-oracle 2. データベースのマウント情報を確認 1 2 root@docker02:~# docker container inspect -f \"{{range .Mounts }}容器挂载路径: {{.Destination}} 宿主机路径: {{.Source}}{{end}}\" mysql-server 容器挂载路径: /var/lib/mysql 宿主机路径: /var/lib/docker/volumes/dawn/_data 3. WordPress を起動 1 2 3 4 5 6 7 8 9 root@docker01:~# docker run -d --name wordpress \\ -e WORDPRESS_DB_HOST=11.0.1.122:13306 \\ -e WORDPRESS_DB_USER=dawn \\ -e WORDPRESS_DB_PASSWORD=123456 \\ -e WORDPRESS_DB_NAME=wordpress \\ -p 80:80 \\ -v wordpress:/var/www/html/ \\ uhub.service.ucloud.cn/dawn/wordpress:6.8 48a48bcb637c1f12b6a4f311991a119269e05a0cfaed50739377edef74dc35e0 4. WordPress を初期化してインストール http://11.0.1.121/\n5. コンテナを削除 1 2 3 4 root@docker01:~# docker container rm -f `docker container ps -qa` 48a48bcb637c root@docker02:~# docker container rm -f `docker container ps -qa` 57460e172c20 6. インスタンスを再起動し、正常にアクセスできるか確認 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 root@docker02:~# docker run --name mysql-server \\ -e MYSQL_ALLOW_EMPTY_PASSWORD=yes \\ -e MYSQL_DATABASE=wordpress \\ -e MYSQL_USER=dawn \\ -e MYSQL_PASSWORD=123456 \\ -v dawn:/var/lib/mysql \\ -d \\ -p 13306:3306 \\ mysql:8.4.1-oracle root@docker01:~# docker run -d --name wordpress \\ -e WORDPRESS_DB_HOST=11.0.1.122:13306 \\ -e WORDPRESS_DB_USER=dawn \\ -e WORDPRESS_DB_PASSWORD=123456 \\ -e WORDPRESS_DB_NAME=wordpress \\ -p 80:80 \\ -v wordpress:/var/www/html/ \\ uhub.service.ucloud.cn/dawn/wordpress:6.8 48a48bcb637c1f12b6a4f311991a119269e05a0cfaed50739377edef74dc35e0 ",
+  "wordCount" : "216",
+  "inLanguage": "ja",
+  "image": "https://LMDAWN1127.github.io/images/DAWN.jpg","datePublished": "2026-10-26T16:30:00+08:00",
+  "dateModified": "2026-10-26T16:30:00+08:00",
+  "author":{
+    "@type": "Person",
+    "name": "DAWN"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://LMDAWN1127.github.io/ja/posts/docker-wordpress-multinode/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "DAWN's Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://LMDAWN1127.github.io/images/DAWN.jpg"
+    }
+  }
+}
+</script>
+</head>
+<body id="top">
+    <header class="header">
+    <nav class="header-nav">
+        <div class="logo">
+            <a href="https://LMDAWN1127.github.io/ja/" accesskey="h" title="DAWN&#39;s Blog (Alt + H)">
+                <img src="https://LMDAWN1127.github.io/images/DAWN.jpg" alt="" aria-label="logo"
+                    height="38">DAWN&#39;s Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" class="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
+                    <svg class="moon" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg class="sun" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button><span class="nav-sep">|</span>
+                    <ul class="lang-menu">
+                        <li>
+                            <a href="https://LMDAWN1127.github.io/" title="中文"
+                                aria-label="中文">Zh</a>
+                        </li>
+                        <li>
+                            <a href="https://LMDAWN1127.github.io/en/" title="English"
+                                aria-label="English">En</a>
+                        </li>
+                        <li>
+                            <a href="https://LMDAWN1127.github.io/ko/" title="한국어"
+                                aria-label="한국어">Ko</a>
+                        </li>
+                    </ul>
+            </div>
+        </div>
+        <ul id="menu" class="menu">
+            <li>
+                <a href="https://LMDAWN1127.github.io/ja/archives/" title="アーカイブ">
+                    <span>アーカイブ</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <h1 class="post-title entry-hint-parent">
+      Docker 実戦：WordPress のマルチノード展開と永続化検証
+    </h1>
+  </header>
+
+  <div class="post-layout">
+    <div class="post-content-wrapper"> 
+      <div class="post-content md-content"><h1 id="docker-実戦wordpress-のマルチノード展開と永続化検証">Docker 実戦：WordPress のマルチノード展開と永続化検証<a hidden class="anchor" aria-hidden="true" href="#docker-実戦wordpress-のマルチノード展開と永続化検証">#</a></h1>
+<p>実験の目的:</p>
+<p>WordPress を Docker でデプロイし、テストブログを公開します。要件は、データベースと WordPress コンテナを 2 つの異なるノードに配置し、データベースと WordPress コンテナを削除した後、新しいコンテナを再作成して公開済みブログが失われないことを確認することです。</p>
+<h2 id="1-データベースを起動">1. データベースを起動<a hidden class="anchor" aria-hidden="true" href="#1-データベースを起動">#</a></h2>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">9
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>root@docker02:~# docker run --name mysql-server <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>  -e MYSQL_ALLOW_EMPTY_PASSWORD<span style="color:#f92672">=</span>yes <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>  -e MYSQL_DATABASE<span style="color:#f92672">=</span>wordpress <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>  -e MYSQL_USER<span style="color:#f92672">=</span>dawn <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>  -e MYSQL_PASSWORD<span style="color:#f92672">=</span><span style="color:#ae81ff">123456</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>  -v dawn:/var/lib/mysql <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>  -d <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>  -p 13306:3306 <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>  mysql:8.4.1-oracle
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="2-データベースのマウント情報を確認">2. データベースのマウント情報を確認<a hidden class="anchor" aria-hidden="true" href="#2-データベースのマウント情報を確認">#</a></h2>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>root@docker02:~# docker container inspect -f <span style="color:#e6db74">&#34;{{range .Mounts }}容器挂载路径: {{.Destination}} 宿主机路径: {{.Source}}{{end}}&#34;</span> mysql-server
+</span></span><span style="display:flex;"><span>容器挂载路径: /var/lib/mysql 宿主机路径: /var/lib/docker/volumes/dawn/_data
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="3-wordpress-を起動">3. WordPress を起動<a hidden class="anchor" aria-hidden="true" href="#3-wordpress-を起動">#</a></h2>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">9
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>root@docker01:~# docker run -d --name wordpress <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>  -e WORDPRESS_DB_HOST<span style="color:#f92672">=</span>11.0.1.122:13306 <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>  -e WORDPRESS_DB_USER<span style="color:#f92672">=</span>dawn <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>  -e WORDPRESS_DB_PASSWORD<span style="color:#f92672">=</span><span style="color:#ae81ff">123456</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>  -e WORDPRESS_DB_NAME<span style="color:#f92672">=</span>wordpress <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>  -p 80:80 <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>  -v wordpress:/var/www/html/ <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>  uhub.service.ucloud.cn/dawn/wordpress:6.8
+</span></span><span style="display:flex;"><span>48a48bcb637c1f12b6a4f311991a119269e05a0cfaed50739377edef74dc35e0
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="4-wordpress-を初期化してインストール">4. WordPress を初期化してインストール<a hidden class="anchor" aria-hidden="true" href="#4-wordpress-を初期化してインストール">#</a></h2>
+<p>http://11.0.1.121/</p>
+<p><img alt="image-20261026162513717" loading="lazy" src="/images/docker-wordpress-multinode-image-20261026162513717.png"></p>
+<p><img alt="image-20261026162927303" loading="lazy" src="/images/docker-wordpress-multinode-image-20261026162927303.png"></p>
+<p><img alt="image-20261026163043591" loading="lazy" src="/images/docker-wordpress-multinode-image-20261026163043591.png"></p>
+<h2 id="5-コンテナを削除">5. コンテナを削除<a hidden class="anchor" aria-hidden="true" href="#5-コンテナを削除">#</a></h2>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>root@docker01:~# docker container rm -f <span style="color:#e6db74">`</span>docker container ps -qa<span style="color:#e6db74">`</span>
+</span></span><span style="display:flex;"><span>48a48bcb637c
+</span></span><span style="display:flex;"><span>root@docker02:~# docker container rm -f <span style="color:#e6db74">`</span>docker container ps -qa<span style="color:#e6db74">`</span>
+</span></span><span style="display:flex;"><span>57460e172c20
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="6-インスタンスを再起動し正常にアクセスできるか確認">6. インスタンスを再起動し、正常にアクセスできるか確認<a hidden class="anchor" aria-hidden="true" href="#6-インスタンスを再起動し正常にアクセスできるか確認">#</a></h2>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>root@docker02:~# docker run --name mysql-server <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>-e MYSQL_ALLOW_EMPTY_PASSWORD<span style="color:#f92672">=</span>yes <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>-e MYSQL_DATABASE<span style="color:#f92672">=</span>wordpress <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>-e MYSQL_USER<span style="color:#f92672">=</span>dawn <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>-e MYSQL_PASSWORD<span style="color:#f92672">=</span><span style="color:#ae81ff">123456</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>-v dawn:/var/lib/mysql <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>-d <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>-p 13306:3306 <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>mysql:8.4.1-oracle
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>root@docker01:~# docker run -d --name wordpress <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>-e WORDPRESS_DB_HOST<span style="color:#f92672">=</span>11.0.1.122:13306 <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>-e WORDPRESS_DB_USER<span style="color:#f92672">=</span>dawn <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>-e WORDPRESS_DB_PASSWORD<span style="color:#f92672">=</span><span style="color:#ae81ff">123456</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>-e WORDPRESS_DB_NAME<span style="color:#f92672">=</span>wordpress <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>-p 80:80 <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>-v wordpress:/var/www/html/ <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>uhub.service.ucloud.cn/dawn/wordpress:6.8
+</span></span><span style="display:flex;"><span>48a48bcb637c1f12b6a4f311991a119269e05a0cfaed50739377edef74dc35e0
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img alt="image-20261026163215647" loading="lazy" src="/images/docker-wordpress-multinode-image-20261026163215647.png"></p>
+
+
+      </div><div id="giscus-container" style="margin-top: 2rem; padding-top: 1rem; border-top: 1px solid var(--border);">
+  <script src="https://giscus.app/client.js"
+          data-repo="LMDAWN1127/LMDAWN1127.github.io"
+          data-repo-id="R_kgDOTMWmvw"
+          data-category="Announcements"
+          data-category-id="DIC_kwDOTMWmv84DAd3g"
+          data-mapping="pathname"
+          data-strict="0"
+          data-reactions-enabled="1"
+          data-emit-metadata="0"
+          data-input-position="bottom"
+          data-theme="preferred_color_scheme"
+          data-lang="zh-CN"
+          crossorigin="anonymous"
+          async>
+  </script>
+</div>
+
+    </div>
+
+    <aside class="toc-sidebar" id="toc-sidebar">
+    <div class="toc-header">目录</div>
+    <nav class="toc-nav"><ul class="toc-list">
+            <li>
+                <a href="#docker-%e5%ae%9f%e6%88%a6wordpress-%e3%81%ae%e3%83%9e%e3%83%ab%e3%83%81%e3%83%8e%e3%83%bc%e3%83%89%e5%b1%95%e9%96%8b%e3%81%a8%e6%b0%b8%e7%b6%9a%e5%8c%96%e6%a4%9c%e8%a8%bc" class="toc-link" data-target="docker-実戦wordpress-のマルチノード展開と永続化検証">Docker 実戦：WordPress のマルチノード展開と永続化検証</a><ul>
+            <li>
+                <a href="#1-%e3%83%87%e3%83%bc%e3%82%bf%e3%83%99%e3%83%bc%e3%82%b9%e3%82%92%e8%b5%b7%e5%8b%95" class="toc-link" data-target="1-データベースを起動">1. データベースを起動</a></li>
+            <li>
+                <a href="#2-%e3%83%87%e3%83%bc%e3%82%bf%e3%83%99%e3%83%bc%e3%82%b9%e3%81%ae%e3%83%9e%e3%82%a6%e3%83%b3%e3%83%88%e6%83%85%e5%a0%b1%e3%82%92%e7%a2%ba%e8%aa%8d" class="toc-link" data-target="2-データベースのマウント情報を確認">2. データベースのマウント情報を確認</a></li>
+            <li>
+                <a href="#3-wordpress-%e3%82%92%e8%b5%b7%e5%8b%95" class="toc-link" data-target="3-wordpress-を起動">3. WordPress を起動</a></li>
+            <li>
+                <a href="#4-wordpress-%e3%82%92%e5%88%9d%e6%9c%9f%e5%8c%96%e3%81%97%e3%81%a6%e3%82%a4%e3%83%b3%e3%82%b9%e3%83%88%e3%83%bc%e3%83%ab" class="toc-link" data-target="4-wordpress-を初期化してインストール">4. WordPress を初期化してインストール</a></li>
+            <li>
+                <a href="#5-%e3%82%b3%e3%83%b3%e3%83%86%e3%83%8a%e3%82%92%e5%89%8a%e9%99%a4" class="toc-link" data-target="5-コンテナを削除">5. コンテナを削除</a></li>
+            <li>
+                <a href="#6-%e3%82%a4%e3%83%b3%e3%82%b9%e3%82%bf%e3%83%b3%e3%82%b9%e3%82%92%e5%86%8d%e8%b5%b7%e5%8b%95%e3%81%97%e6%ad%a3%e5%b8%b8%e3%81%ab%e3%82%a2%e3%82%af%e3%82%bb%e3%82%b9%e3%81%a7%e3%81%8d%e3%82%8b%e3%81%8b%e7%a2%ba%e8%aa%8d" class="toc-link" data-target="6-インスタンスを再起動し正常にアクセスできるか確認">6. インスタンスを再起動し、正常にアクセスできるか確認</a>
+            </li>
+        </ul>
+        </li>
+        </ul>
+    </nav>
+</aside>
+
+  </div>
+</article>
+    </main>
+    
+<a href="#top" id="top-link" class="top-link hidden" aria-label="go to top" title="Go to Top (Alt + G)" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevrons-up">
+        <polyline points="17 11 12 6 7 11"></polyline>
+        <polyline points="17 18 12 13 7 18"></polyline>
+    </svg>
+</a>
+<script defer src="/js/custom.js"></script>
+<div id="algolia-search-modal" class="algolia-modal" style="display: none;">
+  <div class="algolia-modal-overlay"></div>
+  <div class="algolia-modal-content">
+    <div class="algolia-search-header">
+      <div class="algolia-search-input-wrapper">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <input type="text" id="algolia-search-input" placeholder="搜索文章..." autofocus>
+        <kbd class="algolia-esc">Esc</kbd>
+      </div>
+    </div>
+    <div id="algolia-search-results" class="algolia-search-results">
+      <div class="algolia-empty-state">
+        <p>输入关键词开始搜索</p>
+      </div>
+    </div>
+    <div class="algolia-search-footer">
+      <span class="algolia-footer-text">
+        <kbd>↑</kbd> <kbd>↓</kbd> 导航
+        <kbd>↵</kbd> 打开
+        <kbd>Esc</kbd> 关闭
+      </span>
+      <span class="algolia-footer-logo">
+        搜索由 <a href="https://www.algolia.com/" target="_blank" rel="noopener">Algolia</a> 提供
+      </span>
+    </div>
+  </div>
+</div>
+
+<script>
+(function() {
+  'use strict';
+
+  var APP_ID = 'Y0SCRI4LCW';
+  var SEARCH_KEY = '03dda5e44aec7e0dd93b6a3653250b1f';
+  var INDEX_NAME = 'lmdawn1127-blog';
+  var API_URL = 'https://' + APP_ID + '-dsn.algolia.net/1/indexes/' + INDEX_NAME + '/query';
+  var debounceTimer = null;
+  var selectedIndex = -1;
+
+   
+  function doSearch(query) {
+    if (!query || !query.trim()) {
+      showEmpty();
+      return;
+    }
+
+    var body = JSON.stringify({
+      query: query,
+      hitsPerPage: 10,
+      attributesToRetrieve: ['title', 'content', 'url'],
+      attributesToHighlight: ['title', 'content'],
+      highlightPreTag: '<mark class="algolia-highlight">',
+      highlightPostTag: '</mark>'
+    });
+
+    fetch(API_URL, {
+      method: 'POST',
+      headers: {
+        'X-Algolia-Application-Id': APP_ID,
+        'X-Algolia-API-Key': SEARCH_KEY,
+        'Content-Type': 'application/json'
+      },
+      body: body
+    })
+    .then(function(resp) {
+      if (!resp.ok) throw new Error('HTTP ' + resp.status);
+      return resp.json();
+    })
+    .then(function(data) {
+      renderResults(data.hits || [], query);
+    })
+    .catch(function(err) {
+      console.error('Algolia search error:', err);
+      showError(err.message || '未知错误');
+    });
+  }
+
+   
+  function showEmpty() {
+    document.getElementById('algolia-search-results').innerHTML =
+      '<div class="algolia-empty-state"><p>输入关键词开始搜索</p></div>';
+  }
+
+  function showError(detail) {
+    var msg = '搜索出错，请稍后再试';
+    if (detail) msg += '<br><small style="color:#888">错误详情: ' + escapeHtml(detail) + '</small>';
+    document.getElementById('algolia-search-results').innerHTML =
+      '<div class="algolia-empty-state"><p>' + msg + '</p></div>';
+  }
+
+  function showNoResults(query) {
+    document.getElementById('algolia-search-results').innerHTML =
+      '<div class="algolia-empty-state"><p>未找到与「' + escapeHtml(query) + '」相关的结果</p></div>';
+  }
+
+  function escapeHtml(s) {
+    var d = document.createElement('div');
+    d.appendChild(document.createTextNode(s));
+    return d.innerHTML;
+  }
+
+  function getHL(hit, attr) {
+    if (hit._highlightResult && hit._highlightResult[attr]) return hit._highlightResult[attr].value;
+    return hit[attr] || '';
+  }
+
+  function trunc(s, n) {
+    if (!s) return '';
+    s = s.replace(/<[^>]+>/g, '');
+    return s.length > n ? s.substring(0, n) + '…' : s;
+  }
+
+  function renderResults(hits, query) {
+    var box = document.getElementById('algolia-search-results');
+    if (!hits.length) { showNoResults(query); return; }
+
+    var h = '<div class="algolia-results-count">' + hits.length + ' 个结果</div>';
+    hits.forEach(function(hit, i) {
+      var title = getHL(hit, 'title') || '无标题';
+      var content = getHL(hit, 'content');
+      var url = hit.url || '#';
+
+      h += '<a class="algolia-hit" href="' + url + '" data-index="' + i + '">';
+      h += '<div class="algolia-hit-title">' + title + '</div>';
+      h += '<div class="algolia-hit-content">' + trunc(content, 150) + '</div>';
+
+      h += '</a>';
+    });
+    box.innerHTML = h;
+
+    box.querySelectorAll('.algolia-hit').forEach(function(el) {
+      el.addEventListener('click', closeAlgoliaSearch);
+    });
+  }
+
+   
+  function onInput(e) {
+    var q = e.target.value;
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(function() { doSearch(q); }, 200);
+  }
+
+  function onKeydown(e) {
+    var hits = document.querySelectorAll('.algolia-hit');
+    if (!hits.length) return;
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      selectedIndex = Math.min(selectedIndex + 1, hits.length - 1);
+      sel(hits);
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      selectedIndex = Math.max(selectedIndex - 1, 0);
+      sel(hits);
+    } else if (e.key === 'Enter' && selectedIndex >= 0) {
+      e.preventDefault();
+      window.location.href = hits[selectedIndex].getAttribute('href');
+      closeAlgoliaSearch();
+    }
+  }
+
+  function sel(hits) {
+    hits.forEach(function(el, i) {
+      if (i === selectedIndex) { el.classList.add('selected'); el.scrollIntoView({ block: 'nearest' }); }
+      else el.classList.remove('selected');
+    });
+  }
+
+   
+  document.addEventListener('DOMContentLoaded', function() {
+    var input = document.getElementById('algolia-search-input');
+    if (input) {
+      input.addEventListener('input', onInput);
+      input.addEventListener('keydown', onKeydown);
+    }
+  });
+
+  window.openAlgoliaSearch = function() {
+    var modal = document.getElementById('algolia-search-modal');
+    modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+    setTimeout(function() {
+      var input = document.getElementById('algolia-search-input');
+      if (input) { input.value = ''; input.focus(); showEmpty(); }
+    }, 100);
+  };
+
+  window.closeAlgoliaSearch = function() {
+    document.getElementById('algolia-search-modal').style.display = 'none';
+    document.body.style.overflow = '';
+    selectedIndex = -1;
+  };
+})();
+</script>
+
+<style>
+  .algolia-modal{position:fixed;top:0;left:0;width:100%;height:100%;z-index:1000;display:flex;align-items:flex-start;justify-content:center;padding-top:10vh}
+  .algolia-modal-overlay{position:absolute;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.6);backdrop-filter:blur(4px)}
+  .algolia-modal-content{position:relative;width:90%;max-width:600px;background:#1a1a1a;border-radius:12px;box-shadow:0 20px 60px rgba(0,0,0,.5);overflow:hidden;border:1px solid #333}
+  .algolia-search-header{padding:16px;border-bottom:1px solid #333}
+  .algolia-search-input-wrapper{display:flex;align-items:center;gap:12px;background:#2a2a2a;border-radius:8px;padding:12px 16px;border:1px solid #444}
+  .algolia-search-input-wrapper svg{color:#666;flex-shrink:0}
+  #algolia-search-input{flex:1;background:transparent;border:none;outline:none;color:#fff;font-size:16px;font-family:inherit}
+  #algolia-search-input::placeholder{color:#666}
+  .algolia-esc{background:#444;color:#999;padding:2px 6px;border-radius:4px;font-size:11px;font-family:inherit}
+  .algolia-search-results{max-height:400px;overflow-y:auto;padding:8px}
+  .algolia-empty-state{padding:40px 20px;text-align:center;color:#666}
+  .algolia-results-count{padding:8px 12px;font-size:12px;color:#666}
+  .algolia-search-footer{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;border-top:1px solid #333;background:#222;font-size:12px;color:#666}
+  .algolia-footer-text kbd{background:#444;color:#999;padding:2px 4px;border-radius:3px;font-size:10px;margin:0 2px}
+  .algolia-footer-logo a{color:#5EEAD4;text-decoration:none}
+  .algolia-footer-logo a:hover{text-decoration:underline}
+  .algolia-hit{display:block;padding:12px;border-radius:6px;text-decoration:none;color:#fff;transition:background .2s}
+  .algolia-hit:hover,.algolia-hit.selected{background:#2a2a2a}
+  .algolia-hit-title{font-weight:600;color:#5EEAD4;margin-bottom:4px;font-size:15px}
+  .algolia-hit-title mark,.algolia-highlight{background:rgba(94,234,212,.25);color:#5EEAD4;padding:0 2px;border-radius:2px}
+  .algolia-hit-content{font-size:13px;color:#999;line-height:1.5}
+  .algolia-hit-content mark,.algolia-hit-content .algolia-highlight{background:rgba(94,234,212,.2);color:#ccc;padding:0 2px;border-radius:2px}
+  .algolia-hit-meta{display:flex;align-items:center;gap:10px;margin-top:8px}
+  .algolia-hit-date{font-size:12px;color:#666}
+  .algolia-hit-tags{display:flex;gap:6px}
+  .algolia-hit-tag{background:#333;color:#999;padding:2px 8px;border-radius:4px;font-size:11px}
+</style>
+<script>
+  
+  document.addEventListener('keydown', function(e) {
+    
+    if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+      e.preventDefault();
+      if (typeof openAlgoliaSearch === 'function') openAlgoliaSearch();
+    }
+    
+    if (e.key === 'Escape') {
+      if (typeof closeAlgoliaSearch === 'function') closeAlgoliaSearch();
+    }
+    
+    if (e.altKey && e.key === '/') {
+      e.preventDefault();
+      if (typeof openAlgoliaSearch === 'function') openAlgoliaSearch();
+    }
+  });
+
+  
+  document.addEventListener('DOMContentLoaded', function() {
+    var modal = document.getElementById('algolia-search-modal');
+    if (modal) {
+      var overlay = modal.querySelector('.algolia-modal-overlay');
+      if (overlay) {
+        overlay.addEventListener('click', function() {
+          if (typeof closeAlgoliaSearch === 'function') closeAlgoliaSearch();
+        });
+      }
+    }
+  });
+
+  
+  
+  document.addEventListener('DOMContentLoaded', function() {
+    if (document.getElementById('algolia-search-btn')) return;
+    var btn = document.createElement('button');
+    btn.id = 'algolia-search-btn';
+    btn.className = 'theme-toggle search-toggle';
+    btn.type = 'button';
+    btn.title = '搜索 (Ctrl+K)';
+    btn.setAttribute('aria-label', '搜索');
+    btn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>';
+    btn.addEventListener('click', function() {
+      if (typeof openAlgoliaSearch === 'function') openAlgoliaSearch();
+    });
+    var target = document.querySelector('.logo-switches') || document.querySelector('.header-nav');
+    if (target) target.appendChild(btn);
+  });
+</script><script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var cur = (document.documentElement.lang || 'zh').toLowerCase();
+    
+    
+    
+    var rawPath = location.pathname.replace(/\/+$/, '');
+    var pm = rawPath.match(/^\/(en|ko|ja)(?:\/(.*))?$/);
+    var rest = pm ? (pm[2] ? '/' + pm[2] : '') : rawPath; 
+    function langHref(code) {
+      var base = (code === 'zh') ? '' : '/' + code;
+      if (rest === '' || rest === '/') {
+        return base === '' ? '/' : base + '/';
+      }
+      return base + rest + '/';
+    }
+
+    var langs = [
+      { code: 'zh', label: '中文' },
+      { code: 'en', label: 'English' },
+      { code: 'ko', label: '한국어' },
+      { code: 'ja', label: '日本語' }
+    ];
+    var wrap = document.querySelector('.logo-switches') || document.querySelector('.header-nav');
+    if (!wrap || document.getElementById('lang-dropdown')) return;
+
+    var current = langs.find(function(l) { return l.code === cur; }) || langs[0];
+
+    var dd = document.createElement('div');
+    dd.className = 'lang-dropdown';
+    dd.id = 'lang-dropdown';
+
+    var toggle = document.createElement('button');
+    toggle.type = 'button';
+    toggle.className = 'lang-dropdown-toggle';
+    toggle.setAttribute('aria-label', '选择语言');
+    toggle.innerHTML = '<span class="lang-current">' + current.label + '</span><span class="lang-caret">▾</span>';
+
+    var menu = document.createElement('ul');
+    menu.className = 'lang-dropdown-menu';
+    langs.forEach(function(l) {
+      var li = document.createElement('li');
+      if (l.code === cur) li.className = 'active';
+      var a = document.createElement('a');
+      a.href = langHref(l.code);
+      a.textContent = l.label;
+      li.appendChild(a);
+      menu.appendChild(li);
+    });
+
+    dd.appendChild(toggle);
+    dd.appendChild(menu);
+    wrap.appendChild(dd);
+
+    toggle.addEventListener('click', function(e) {
+      e.stopPropagation();
+      dd.classList.toggle('open');
+    });
+    document.addEventListener('click', function(e) {
+      if (!dd.contains(e.target)) dd.classList.remove('open');
+    });
+  });
+</script>
+
+
+<script>
+    let menu = document.getElementById('menu');
+    if (menu) {
+        const scrollPosition = localStorage.getItem("menu-scroll-position");
+        if (scrollPosition) {
+            menu.scrollLeft = parseInt(scrollPosition, 10);
+        }
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+</script>
+<script>
+    var toplink = document.getElementById("top-link");
+    window.onscroll = function () {
+        const scrollThreshold = window.innerHeight;
+        if (document.body.scrollTop > scrollThreshold || document.documentElement.scrollTop > scrollThreshold) {
+            toplink.classList.remove("hidden");
+        } else {
+            toplink.classList.add("hidden");
+        }
+    };
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        const html = document.querySelector("html");
+        if (html.dataset.theme === "dark") {
+            html.dataset.theme = 'light';
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            html.dataset.theme = 'dark';
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'コピー';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'コピーされました!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'コピー';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>

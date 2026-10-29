@@ -281,6 +281,26 @@
     <lastmod>2026-10-27T12:19:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://LMDAWN1127.github.io/posts/docker-zabbix-wordpress-deployment/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://LMDAWN1127.github.io/en/posts/docker-zabbix-wordpress-deployment/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="ko"
+                href="https://LMDAWN1127.github.io/ko/posts/docker-zabbix-wordpress-deployment/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="ja"
+                href="https://LMDAWN1127.github.io/ja/posts/docker-zabbix-wordpress-deployment/"
+                />
   </url><url>
     <loc>https://LMDAWN1127.github.io/posts/docker-single-host-network/</loc>
     <lastmod>2026-10-27T09:50:00+08:00</lastmod>
@@ -326,6 +346,26 @@
     <lastmod>2026-10-26T16:30:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://LMDAWN1127.github.io/posts/docker-wordpress-multinode/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://LMDAWN1127.github.io/en/posts/docker-wordpress-multinode/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="ko"
+                href="https://LMDAWN1127.github.io/ko/posts/docker-wordpress-multinode/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="ja"
+                href="https://LMDAWN1127.github.io/ja/posts/docker-wordpress-multinode/"
+                />
   </url><url>
     <loc>https://LMDAWN1127.github.io/categories/docker/</loc>
     <lastmod>2026-10-26T15:00:00+08:00</lastmod>
@@ -371,6 +411,26 @@
     <lastmod>2026-10-26T11:50:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://LMDAWN1127.github.io/posts/docker-nginx-load-balancing/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://LMDAWN1127.github.io/en/posts/docker-nginx-load-balancing/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="ko"
+                href="https://LMDAWN1127.github.io/ko/posts/docker-nginx-load-balancing/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="ja"
+                href="https://LMDAWN1127.github.io/ja/posts/docker-nginx-load-balancing/"
+                />
   </url><url>
     <loc>https://LMDAWN1127.github.io/posts/docker-app-deployments/</loc>
     <lastmod>2026-10-23T17:28:00+08:00</lastmod>
