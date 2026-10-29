@@ -163,6 +163,72 @@
 <article class="post-entry tag-entry"> 
   <header class="entry-header">
     <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/en/posts/docker-app-deployments/">Docker in Practice: Deploying Applications - Tomcat / MySQL / WordPress / ELK</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>Deploy real applications with docker run: Tomcat, MySQL (including bulk 20-instance startup and multi-instance exposure), WordPress and the ElasticSearch &#43; Kibana stack, with port mapping, persistent volumes and password/token setup.</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-26">
+  2026年10月26日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 6 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to Docker in Practice: Deploying Applications - Tomcat / MySQL / WordPress / ELK" href="https://LMDAWN1127.github.io/en/posts/docker-app-deployments/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/en/posts/docker-inspect-pid-id-network/">Docker in Practice: Inspecting Container PID, ID and Network Info with inspect</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>Use docker container inspect -f with Go templates to pull a container’s PID, ID, IP address, gateway and MAC address.</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-26">
+  2026年10月26日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 1 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to Docker in Practice: Inspecting Container PID, ID and Network Info with inspect" href="https://LMDAWN1127.github.io/en/posts/docker-inspect-pid-id-network/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/en/posts/docker-nginx-load-balancing/">Docker in Practice: Nginx Load Balancing and Container Traffic Distribution</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>Run an lb container plus two web containers, edit the Nginx default.conf on lb to reverse-proxy to web01/web02, then curl the lb 10 times to see the traffic alternate between the two backends.</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-26">
+  2026年10月26日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 3 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to Docker in Practice: Nginx Load Balancing and Container Traffic Distribution" href="https://LMDAWN1127.github.io/en/posts/docker-nginx-load-balancing/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
       <a href="https://LMDAWN1127.github.io/en/posts/docker-image-container-flow/">Docker in Practice: The Full Flow of Pulling an Image and Starting a Container</a>
     </h2>
   </header>
@@ -202,72 +268,6 @@
 </span>
 </footer>
   <a class="entry-link" aria-label="post link to Docker in Practice: Passing and Inspecting Environment Variables in Containers" href="https://LMDAWN1127.github.io/en/posts/docker-env-var-passing/"></a>
-</article>
-
-<article class="post-entry tag-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/en/posts/docker-image-migration-tag/">Docker in Practice: Image Migration - Offline save/load Transfer and Tagging</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>Export an image with docker save, transfer it offline over SSH, verify integrity with md5sum, then import it with docker load and re-tag it. Shows that save/load preserves the IMAGE ID, how to export multiple images at once, two import forms, and two ways to batch-delete images.</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-23">
-  2026年10月23日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 2 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to Docker in Practice: Image Migration - Offline save/load Transfer and Tagging" href="https://LMDAWN1127.github.io/en/posts/docker-image-migration-tag/"></a>
-</article>
-
-<article class="post-entry tag-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/en/posts/docker-port-mapping-principle/">Docker in Practice: How Port Mapping Works - From the veth NIC to iptables DNAT</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>Observe how Docker maps a container port to the host: from the veth NIC and the docker0 bridge, to the iptables DNAT rules and the net.ipv4.ip_forward kernel switch that makes external access work.</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-23">
-  2026年10月23日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 5 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to Docker in Practice: How Port Mapping Works - From the veth NIC to iptables DNAT" href="https://LMDAWN1127.github.io/en/posts/docker-port-mapping-principle/"></a>
-</article>
-
-<article class="post-entry tag-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/en/posts/docker-common-commands-exec/">Docker in Practice: Common Container Commands and exec Operations</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>A roundup of everyday container commands (list/remove/rename containers, follow logs with -f/–since/–until, copy files with docker cp) plus running commands inside a running container with docker exec, including the gotcha that the target command must exist in the image.</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-23">
-  2026年10月23日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 2 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to Docker in Practice: Common Container Commands and exec Operations" href="https://LMDAWN1127.github.io/en/posts/docker-common-commands-exec/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">

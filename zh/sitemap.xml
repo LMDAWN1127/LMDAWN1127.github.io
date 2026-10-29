@@ -286,6 +286,26 @@
     <lastmod>2026-10-28T10:00:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://LMDAWN1127.github.io/posts/docker-namespace-cgroup-resource-limit/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://LMDAWN1127.github.io/en/posts/docker-namespace-cgroup-resource-limit/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="ko"
+                href="https://LMDAWN1127.github.io/ko/posts/docker-namespace-cgroup-resource-limit/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="ja"
+                href="https://LMDAWN1127.github.io/ja/posts/docker-namespace-cgroup-resource-limit/"
+                />
   </url><url>
     <loc>https://LMDAWN1127.github.io/posts/docker-overlay-cross-host-networking/</loc>
     <lastmod>2026-10-27T18:30:00+08:00</lastmod>
@@ -456,11 +476,51 @@
     <lastmod>2026-10-26T15:00:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://LMDAWN1127.github.io/posts/docker-bind-mount-volume/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://LMDAWN1127.github.io/en/posts/docker-bind-mount-volume/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="ko"
+                href="https://LMDAWN1127.github.io/ko/posts/docker-bind-mount-volume/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="ja"
+                href="https://LMDAWN1127.github.io/ja/posts/docker-bind-mount-volume/"
+                />
   </url><url>
     <loc>https://LMDAWN1127.github.io/posts/docker-container-lifecycle/</loc>
     <lastmod>2026-10-26T14:20:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://LMDAWN1127.github.io/posts/docker-container-lifecycle/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://LMDAWN1127.github.io/en/posts/docker-container-lifecycle/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="ko"
+                href="https://LMDAWN1127.github.io/ko/posts/docker-container-lifecycle/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="ja"
+                href="https://LMDAWN1127.github.io/ja/posts/docker-container-lifecycle/"
+                />
   </url><url>
     <loc>https://LMDAWN1127.github.io/posts/docker-inspect-pid-id-network/</loc>
     <lastmod>2026-10-26T13:00:00+08:00</lastmod>

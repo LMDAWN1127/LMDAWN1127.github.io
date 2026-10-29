@@ -154,6 +154,28 @@
 <article class="post-entry"> 
   <header class="entry-header">
     <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/ko/posts/docker-chroot-minimal-root/">Docker 실전: chroot 로 최소 컨테이너 루트를 직접 만들어 컨테이너 본질 이해하기</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>Docker 명령 없이 chroot 로 최소 컨테이너 루트를 처음부터 직접 만듭니다 (bash 와 동적 라이브러리 체인 복사). 파일시스템 격리의 ‘컨테이너 감각’ 을 느끼고, 두 독립 루트로 프로세스/데이터가 서로 보이지 않음을 보이며, 마지막으로 실제 컨테이너의 overlay2 merged 파일시스템에 chroot 해서 파일을 고치고 로그를 읽습니다.</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-26">
+  2026年10月26日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 4 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to Docker 실전: chroot 로 최소 컨테이너 루트를 직접 만들어 컨테이너 본질 이해하기" href="https://LMDAWN1127.github.io/ko/posts/docker-chroot-minimal-root/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
       <a href="https://LMDAWN1127.github.io/ko/posts/docker-wordpress-multinode/">Docker 실전: WordPress 멀티 노드 배포와 영속성 검증</a>
     </h2>
   </header>
@@ -198,11 +220,11 @@
 <article class="post-entry"> 
   <header class="entry-header">
     <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/ko/posts/docker-app-deployments/">Docker 실전: 애플리케이션 배포 - Tomcat / MySQL / WordPress / ELK</a>
+      <a href="https://LMDAWN1127.github.io/ko/posts/docker-bind-mount-volume/">Docker 실전: 컨테이너 데이터 영속화 - bind 마운트와 볼륨(Volume)</a>
     </h2>
   </header>
   <div class="entry-content">
-    <p>docker run 으로 실제 애플리케이션을 배포합니다. Tomcat, MySQL (20 개 인스턴스 일괄 시작과 다중 인스턴스 노출 포함), WordPress, 그리고 ElasticSearch &#43; Kibana 스택을 포트 매핑·영속 볼륨·비밀번호/토큰 설정과 함께 다룹니다.</p>
+    <p>-v 로 호스트 경로를 컨테이너에 마운트하고 여러 컨테이너가 같은 마운트 지점을 공유하며 하나의 컨테이너에 여러 마운트 지점을 붙이고 rw/ro 권한을 지정합니다. 그리고 docker volume 생성·조회·삭제, 익명 볼륨, 실행 중 컨테이너 재마운트까지 다룹니다.</p>
   </div>
   <footer class="entry-footer">
 
@@ -211,20 +233,20 @@
 </time>
 <span class="meta-separator">·</span>
 <span class="meta-reading-time">
-  阅读需 6 分钟
+  阅读需 8 分钟
 </span>
 </footer>
-  <a class="entry-link" aria-label="post link to Docker 실전: 애플리케이션 배포 - Tomcat / MySQL / WordPress / ELK" href="https://LMDAWN1127.github.io/ko/posts/docker-app-deployments/"></a>
+  <a class="entry-link" aria-label="post link to Docker 실전: 컨테이너 데이터 영속화 - bind 마운트와 볼륨(Volume)" href="https://LMDAWN1127.github.io/ko/posts/docker-bind-mount-volume/"></a>
 </article>
 
 <article class="post-entry"> 
   <header class="entry-header">
     <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/ko/posts/docker-inspect-pid-id-network/">Docker 실전: inspect로 컨테이너 PID・ID・네트워크 정보 확인</a>
+      <a href="https://LMDAWN1127.github.io/ko/posts/docker-container-lifecycle/">Docker 실전: 컨테이너 라이프사이클 관리 - 시작, 중지, 재시작 정책</a>
     </h2>
   </header>
   <div class="entry-content">
-    <p>docker container inspect -f 와 Go 템플릿을 사용해 컨테이너의 PID・ID・IP 주소・게이트웨이・MAC 주소를 추출합니다.</p>
+    <p>docker stop, start, restart 와 시작 시 명령 지정, 그리고 5 가지 재시작 정책을 다룹니다. 정책이 다른 컨테이너 5 개를 만들고 kill -9 로 강제 종료해 재시작 횟수를 비교하며 dockerd 재시작 후 살아나는 컨테이너를 확인합니다.</p>
   </div>
   <footer class="entry-footer">
 
@@ -233,32 +255,10 @@
 </time>
 <span class="meta-separator">·</span>
 <span class="meta-reading-time">
-  阅读需 1 分钟
+  阅读需 8 分钟
 </span>
 </footer>
-  <a class="entry-link" aria-label="post link to Docker 실전: inspect로 컨테이너 PID・ID・네트워크 정보 확인" href="https://LMDAWN1127.github.io/ko/posts/docker-inspect-pid-id-network/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/ko/posts/docker-nginx-load-balancing/">Docker 실전: Nginx 로드 밸런싱과 컨테이너 트래픽 분산</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>lb 컨테이너와 web 컨테이너 2개를 띄우고, lb 의 Nginx default.conf 를 수정해 web01/web02 로 리버스 프록시한 뒤 lb 에 10 회 curl 하여 트래픽이 두 백엔드 사이에서 번갈아 분산되는 것을 확인합니다.</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-26">
-  2026年10月26日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 3 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to Docker 실전: Nginx 로드 밸런싱과 컨테이너 트래픽 분산" href="https://LMDAWN1127.github.io/ko/posts/docker-nginx-load-balancing/"></a>
+  <a class="entry-link" aria-label="post link to Docker 실전: 컨테이너 라이프사이클 관리 - 시작, 중지, 재시작 정책" href="https://LMDAWN1127.github.io/ko/posts/docker-container-lifecycle/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">

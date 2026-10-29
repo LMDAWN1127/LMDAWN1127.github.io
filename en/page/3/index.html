@@ -154,6 +154,28 @@
 <article class="post-entry"> 
   <header class="entry-header">
     <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/en/posts/docker-chroot-minimal-root/">Docker in Practice: Hand-Building a Minimal Container Root with chroot to Understand What a Container Is</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>Without Docker commands, use chroot to hand-build a minimal container root from scratch (copying bash and its dynamic-library chain) to feel filesystem isolation; then show two independent roots make processes/data invisible to each other, and finally chroot into a real container’s overlay2 merged filesystem to fix files and read logs.</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-26">
+  2026年10月26日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 4 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to Docker in Practice: Hand-Building a Minimal Container Root with chroot to Understand What a Container Is" href="https://LMDAWN1127.github.io/en/posts/docker-chroot-minimal-root/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
       <a href="https://LMDAWN1127.github.io/en/posts/docker-wordpress-multinode/">Docker in Practice: WordPress Multi-Node Deployment and Persistence Verification</a>
     </h2>
   </header>
@@ -198,11 +220,11 @@
 <article class="post-entry"> 
   <header class="entry-header">
     <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/en/posts/docker-app-deployments/">Docker in Practice: Deploying Applications - Tomcat / MySQL / WordPress / ELK</a>
+      <a href="https://LMDAWN1127.github.io/en/posts/docker-bind-mount-volume/">Docker in Practice: Container Data Persistence - bind Mounts and Volumes</a>
     </h2>
   </header>
   <div class="entry-content">
-    <p>Deploy real applications with docker run: Tomcat, MySQL (including bulk 20-instance startup and multi-instance exposure), WordPress and the ElasticSearch &#43; Kibana stack, with port mapping, persistent volumes and password/token setup.</p>
+    <p>Mount host paths into containers with -v, share one mount point across containers, attach several mount points to a single container and set rw/ro permissions, then cover the whole docker volume workflow: create, inspect, delete, anonymous volumes and re-mounting a running container.</p>
   </div>
   <footer class="entry-footer">
 
@@ -211,20 +233,20 @@
 </time>
 <span class="meta-separator">·</span>
 <span class="meta-reading-time">
-  阅读需 6 分钟
+  阅读需 9 分钟
 </span>
 </footer>
-  <a class="entry-link" aria-label="post link to Docker in Practice: Deploying Applications - Tomcat / MySQL / WordPress / ELK" href="https://LMDAWN1127.github.io/en/posts/docker-app-deployments/"></a>
+  <a class="entry-link" aria-label="post link to Docker in Practice: Container Data Persistence - bind Mounts and Volumes" href="https://LMDAWN1127.github.io/en/posts/docker-bind-mount-volume/"></a>
 </article>
 
 <article class="post-entry"> 
   <header class="entry-header">
     <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/en/posts/docker-inspect-pid-id-network/">Docker in Practice: Inspecting Container PID, ID and Network Info with inspect</a>
+      <a href="https://LMDAWN1127.github.io/en/posts/docker-container-lifecycle/">Docker in Practice: Container Lifecycle Management - Start, Stop and Restart Policies</a>
     </h2>
   </header>
   <div class="entry-content">
-    <p>Use docker container inspect -f with Go templates to pull a container’s PID, ID, IP address, gateway and MAC address.</p>
+    <p>Walk through container lifecycle management: docker stop, start and restart plus custom startup commands, then the five restart policies - create five containers with different policies, kill them with kill -9 to compare restart counters, and see which ones come back after dockerd restarts.</p>
   </div>
   <footer class="entry-footer">
 
@@ -233,32 +255,10 @@
 </time>
 <span class="meta-separator">·</span>
 <span class="meta-reading-time">
-  阅读需 1 分钟
+  阅读需 8 分钟
 </span>
 </footer>
-  <a class="entry-link" aria-label="post link to Docker in Practice: Inspecting Container PID, ID and Network Info with inspect" href="https://LMDAWN1127.github.io/en/posts/docker-inspect-pid-id-network/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/en/posts/docker-nginx-load-balancing/">Docker in Practice: Nginx Load Balancing and Container Traffic Distribution</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>Run an lb container plus two web containers, edit the Nginx default.conf on lb to reverse-proxy to web01/web02, then curl the lb 10 times to see the traffic alternate between the two backends.</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-26">
-  2026年10月26日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 3 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to Docker in Practice: Nginx Load Balancing and Container Traffic Distribution" href="https://LMDAWN1127.github.io/en/posts/docker-nginx-load-balancing/"></a>
+  <a class="entry-link" aria-label="post link to Docker in Practice: Container Lifecycle Management - Start, Stop and Restart Policies" href="https://LMDAWN1127.github.io/en/posts/docker-container-lifecycle/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">

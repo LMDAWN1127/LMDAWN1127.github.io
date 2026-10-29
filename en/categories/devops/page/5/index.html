@@ -163,6 +163,72 @@
 <article class="post-entry tag-entry"> 
   <header class="entry-header">
     <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/en/posts/docker-image-migration-tag/">Docker in Practice: Image Migration - Offline save/load Transfer and Tagging</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>Export an image with docker save, transfer it offline over SSH, verify integrity with md5sum, then import it with docker load and re-tag it. Shows that save/load preserves the IMAGE ID, how to export multiple images at once, two import forms, and two ways to batch-delete images.</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-23">
+  2026年10月23日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 2 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to Docker in Practice: Image Migration - Offline save/load Transfer and Tagging" href="https://LMDAWN1127.github.io/en/posts/docker-image-migration-tag/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/en/posts/docker-port-mapping-principle/">Docker in Practice: How Port Mapping Works - From the veth NIC to iptables DNAT</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>Observe how Docker maps a container port to the host: from the veth NIC and the docker0 bridge, to the iptables DNAT rules and the net.ipv4.ip_forward kernel switch that makes external access work.</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-23">
+  2026年10月23日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 5 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to Docker in Practice: How Port Mapping Works - From the veth NIC to iptables DNAT" href="https://LMDAWN1127.github.io/en/posts/docker-port-mapping-principle/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/en/posts/docker-common-commands-exec/">Docker in Practice: Common Container Commands and exec Operations</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>A roundup of everyday container commands (list/remove/rename containers, follow logs with -f/–since/–until, copy files with docker cp) plus running commands inside a running container with docker exec, including the gotcha that the target command must exist in the image.</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-23">
+  2026年10月23日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 2 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to Docker in Practice: Common Container Commands and exec Operations" href="https://LMDAWN1127.github.io/en/posts/docker-common-commands-exec/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
       <a href="https://LMDAWN1127.github.io/en/posts/docker-binary-script-install/">Docker Installation in Practice: Binary Deployment and One-Click Script Deployment</a>
     </h2>
   </header>
@@ -203,76 +269,12 @@
 </footer>
   <a class="entry-link" aria-label="post link to SonarQube in Practice: Self-hosted Deployment, Token Setup, and Code Quality Scanning" href="https://LMDAWN1127.github.io/en/posts/sonarqube-practice/"></a>
 </article>
-
-<article class="post-entry tag-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/en/posts/jenkins-practice/">Jenkins in Practice: Self-hosted Deployment, Plugin Setup, and GitLab-Driven CI</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>A complete hands-on Jenkins self-hosting guide: RPM install of JDK and Jenkins, running as root, offline plugin install, and wiring GitLab SSH keyless access with webhook-triggered CI builds.</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-01">
-  2026年10月1日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 5 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to Jenkins in Practice: Self-hosted Deployment, Plugin Setup, and GitLab-Driven CI" href="https://LMDAWN1127.github.io/en/posts/jenkins-practice/"></a>
-</article>
-
-<article class="post-entry tag-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/en/posts/gitlab-practice/">GitLab in Practice: Self-hosted Deployment, SSH Keyless Access, and Repository Management</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>A complete hands-on guide to self-hosting GitLab: RPM install, components, common commands, web UI setup, SSH keyless access, and multi-user collaboration.</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-01">
-  2026年10月1日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 8 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to GitLab in Practice: Self-hosted Deployment, SSH Keyless Access, and Repository Management" href="https://LMDAWN1127.github.io/en/posts/gitlab-practice/"></a>
-</article>
-
-<article class="post-entry tag-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/en/posts/git-practice-notes/">Git in Practice: Installation, Essential Commands, and Branch Management</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>A hands-on Git walkthrough covering installation, everyday commands, branch workflows, and conflict resolution.</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-01">
-  2026年10月1日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 8 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to Git in Practice: Installation, Essential Commands, and Branch Management" href="https://LMDAWN1127.github.io/en/posts/git-practice-notes/"></a>
-</article>
 <footer class="page-footer">
   <nav class="pagination">
     <a class="prev" href="https://LMDAWN1127.github.io/en/categories/devops/page/4/">
       «&nbsp;Prev&nbsp;
+    </a>
+    <a class="next" href="https://LMDAWN1127.github.io/en/categories/devops/page/6/">Next&nbsp;&nbsp;»
     </a>
   </nav>
 </footer>

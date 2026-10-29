@@ -173,6 +173,72 @@
 <article class="post-entry"> 
   <header class="entry-header">
     <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/ko/posts/docker-image-migration-tag/">Docker 실전: 이미지 마이그레이션 - 오프라인 save/load 전송과 태그 지정</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>docker save 로 이미지를 내보내고 SSH 로 오프라인 전송한 뒤 md5sum 으로 무결성을 검증하고, docker load 로 가져와 다시 태그를 지정합니다. save/load 가 IMAGE ID 를 유지함을 보이고, 여러 이미지 한 번에 내보내기, 두 가지 가져오기 형식, 이미지 일괄 삭제 방법을 다룹니다.</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-23">
+  2026年10月23日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 2 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to Docker 실전: 이미지 마이그레이션 - 오프라인 save/load 전송과 태그 지정" href="https://LMDAWN1127.github.io/ko/posts/docker-image-migration-tag/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/ko/posts/docker-port-mapping-principle/">Docker 실전: 포트 매핑 원리 - veth NIC 에서 iptables DNAT 까지</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>Docker 가 컨테이너 포트를 호스트에 어떻게 매핑하는지 관찰합니다. veth NIC 와 docker0 브리지에서 iptables DNAT 규칙, 그리고 외부 접근을 가능하게 하는 net.ipv4.ip_forward 커널 스위치까지.</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-23">
+  2026年10月23日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 5 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to Docker 실전: 포트 매핑 원리 - veth NIC 에서 iptables DNAT 까지" href="https://LMDAWN1127.github.io/ko/posts/docker-port-mapping-principle/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/ko/posts/docker-common-commands-exec/">Docker 실전: 자주 쓰는 컨테이너 명령과 exec 작업</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>매일 쓰는 컨테이너 명령(목록/삭제/이름 변경, -f/–since/–until 로그 추적, docker cp 파일 복사)과 docker exec 로 실행 중인 컨테이너 내부에서 명령을 실행하는 방법을 다룹니다. 대상 명령이 이미지에 존재해야 한다는 주의점도 포함합니다.</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-23">
+  2026年10月23日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 2 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to Docker 실전: 자주 쓰는 컨테이너 명령과 exec 작업" href="https://LMDAWN1127.github.io/ko/posts/docker-common-commands-exec/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
       <a href="https://LMDAWN1127.github.io/ko/posts/docker-binary-script-install/">Docker 실전: 바이너리 배포와 원클릭 스크립트 배포</a>
     </h2>
   </header>
@@ -212,72 +278,6 @@
 </span>
 </footer>
   <a class="entry-link" aria-label="post link to OpenStack 클라우드 OS: 핵심 아키텍처 및 자동화 배포" href="https://LMDAWN1127.github.io/ko/posts/openstack-core-architecture-deployment/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/ko/posts/openstack-cinder-block-storage/">OpenStack Cinder 블록 스토리지 상세 정리: 로컬 LVM &#43; iSCSI 볼륨과 NFS 백엔드 연동</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>OpenStack Cinder 블록 스토리지 정리: 볼륨 생성과 마운트의 역할 분담(Cinder는 생성, Nova는 마운트), 로컬 LVM &#43; iSCSI로 컨트롤러를 스토리지로 만드는 전체 흐름(VG/LV, targetcli 기반 ISCSI 공유, libvirt 마운트), 그리고 NFS 백엔드 연동과 대시보드 실습.</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-05">
-  2026年10月5日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 7 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to OpenStack Cinder 블록 스토리지 상세 정리: 로컬 LVM &#43; iSCSI 볼륨과 NFS 백엔드 연동" href="https://LMDAWN1127.github.io/ko/posts/openstack-cinder-block-storage/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/ko/posts/openstack-keystone-glance-nova/">OpenStack 핵심 서비스 상세 정리: Keystone 인증·Nova 컴퓨트·Glance/Swift 이미지 스토리지</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>OpenStack 3대 핵심 서비스 정리: Keystone 다중 도메인 지원, service/endpoint 등록과 정책 파일 기반 권한 제어, Nova 모듈(api/scheduler/conductor/compute/novncproxy)과 메시지 큐·차분 디스크, 그리고 Swift 오브젝트 스토리지를 백엔드로 쓰는 Glance 이미지 서비스.</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-05">
-  2026年10月5日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 7 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to OpenStack 핵심 서비스 상세 정리: Keystone 인증·Nova 컴퓨트·Glance/Swift 이미지 스토리지" href="https://LMDAWN1127.github.io/ko/posts/openstack-keystone-glance-nova/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/ko/posts/openstack-provision-cloud-server/">OpenStack 클라우드 서버 프로비저닝</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>GUI부터 CLI까지 OpenStack 클라우드 서버 제공 전체 흐름을 완전 정리: 테넌트·사용자·이미지·플레이버·네트워크·라우터·보안 그룹·키 페어·플로팅 IP 생성 및 삭제, 그리고 iptables SNAT/DNAT와 Nova cell_v2 discover_hosts 트러블슈팅.</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-04">
-  2026年10月4日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 7 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to OpenStack 클라우드 서버 프로비저닝" href="https://LMDAWN1127.github.io/ko/posts/openstack-provision-cloud-server/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">

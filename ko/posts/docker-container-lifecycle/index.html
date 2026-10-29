@@ -1,0 +1,1332 @@
+<!DOCTYPE html>
+<html lang="ko" dir="auto" data-theme="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Docker 실전: 컨테이너 라이프사이클 관리 - 시작, 중지, 재시작 정책 | DAWN&#39;s Blog</title>
+<meta name="keywords" content="Docker">
+<meta name="description" content="docker stop, start, restart 와 시작 시 명령 지정, 그리고 5 가지 재시작 정책을 다룹니다. 정책이 다른 컨테이너 5 개를 만들고 kill -9 로 강제 종료해 재시작 횟수를 비교하며 dockerd 재시작 후 살아나는 컨테이너를 확인합니다.">
+<meta name="author" content="DAWN">
+<link rel="canonical" href="https://LMDAWN1127.github.io/ko/posts/docker-container-lifecycle/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.4bf808bff57bddc46d61c8ae060b00400fc679ab876e37243b11bd3f832f2958.css" integrity="sha256-S/gIv/V73cRtYciuBgsAQA/GeauHbjckOxG9P4MvKVg=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://LMDAWN1127.github.io/images/DAWN.jpg">
+<link rel="icon" type="image/png" sizes="16x16" href="https://LMDAWN1127.github.io/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://LMDAWN1127.github.io/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://LMDAWN1127.github.io/apple-touch-icon.png">
+<link rel="mask-icon" href="https://LMDAWN1127.github.io/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="zh" href="https://LMDAWN1127.github.io/posts/docker-container-lifecycle/">
+<link rel="alternate" hreflang="en" href="https://LMDAWN1127.github.io/en/posts/docker-container-lifecycle/">
+<link rel="alternate" hreflang="ko" href="https://LMDAWN1127.github.io/ko/posts/docker-container-lifecycle/">
+<link rel="alternate" hreflang="ja" href="https://LMDAWN1127.github.io/ja/posts/docker-container-lifecycle/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+                color-scheme: dark;
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .toc {
+                background: var(--entry);
+            }
+        }
+
+    </style>
+</noscript>
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.querySelector("html").dataset.theme = 'dark';
+    } else if (localStorage.getItem("pref-theme") === "light") {
+       document.querySelector("html").dataset.theme = 'light';
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.querySelector("html").dataset.theme = 'dark';
+    } else {
+        document.querySelector("html").dataset.theme = 'light';
+    }
+
+</script><link rel="stylesheet" href='https://LMDAWN1127.github.io/css/custom.css'>
+<meta property="og:url" content="https://LMDAWN1127.github.io/ko/posts/docker-container-lifecycle/">
+  <meta property="og:site_name" content="DAWN&#39;s Blog">
+  <meta property="og:title" content="Docker 실전: 컨테이너 라이프사이클 관리 - 시작, 중지, 재시작 정책">
+  <meta property="og:description" content="docker stop, start, restart 와 시작 시 명령 지정, 그리고 5 가지 재시작 정책을 다룹니다. 정책이 다른 컨테이너 5 개를 만들고 kill -9 로 강제 종료해 재시작 횟수를 비교하며 dockerd 재시작 후 살아나는 컨테이너를 확인합니다.">
+  <meta property="og:locale" content="ko">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2026-10-26T14:20:00+08:00">
+    <meta property="article:modified_time" content="2026-10-26T14:20:00+08:00">
+    <meta property="article:tag" content="Docker">
+      <meta property="og:image" content="https://LMDAWN1127.github.io/images/DAWN.jpg">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://LMDAWN1127.github.io/images/DAWN.jpg">
+  <meta name="twitter:title" content="Docker 실전: 컨테이너 라이프사이클 관리 - 시작, 중지, 재시작 정책">
+  <meta name="twitter:description" content="docker stop, start, restart 와 시작 시 명령 지정, 그리고 5 가지 재시작 정책을 다룹니다. 정책이 다른 컨테이너 5 개를 만들고 kill -9 로 강제 종료해 재시작 횟수를 비교하며 dockerd 재시작 후 살아나는 컨테이너를 확인합니다.">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://LMDAWN1127.github.io/ko/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Docker 실전: 컨테이너 라이프사이클 관리 - 시작, 중지, 재시작 정책",
+      "item": "https://LMDAWN1127.github.io/ko/posts/docker-container-lifecycle/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Docker 실전: 컨테이너 라이프사이클 관리 - 시작, 중지, 재시작 정책",
+  "name": "Docker 실전: 컨테이너 라이프사이클 관리 - 시작, 중지, 재시작 정책",
+  "description": "docker stop, start, restart 와 시작 시 명령 지정, 그리고 5 가지 재시작 정책을 다룹니다. 정책이 다른 컨테이너 5 개를 만들고 kill -9 로 강제 종료해 재시작 횟수를 비교하며 dockerd 재시작 후 살아나는 컨테이너를 확인합니다.",
+  "keywords": [
+    "Docker"
+  ],
+  "articleBody": "Docker 실전: 컨테이너 라이프사이클 관리 - 시작, 중지, 재시작 정책 1. 컨테이너 시작과 중지 1. 컨테이너 중지 1 2 3 root@docker02:~# docker stop -t 0 es01 # 컨테이너 이름을 지정해 중지할 수 있습니다. -t 는 kill 신호를 보낼 때까지의 대기 시간입니다. 중지가 오래 걸리면 기본 대기 시간은 10s 입니다 es01 root@docker02:~# docker stop 31198819a488 2. 컨테이너 시작 1 2 3 root@docker02:~# docker start es01 es01 root@docker02:~# docker start 31198819a488 3. 컨테이너 재시작 먼저 중지하고 그다음 시작합니다. 컨테이너를 중지할 때마다 STATUS 는 다시 카운트됩니다\n1 root@docker02:~# docker restart es01 docker stop 명령은 본질적으로 docker kill 을 호출해 컨테이너의 프로세스 ID 를 종료합니다\n1 2 3 4 root@docker02:~# docker start kibana es01 kibana es01 root@docker02:~# docker kill kibana 컨테이너 시작은 본질적으로 호스트에서 프로세스 ID 하나를 시작하는 것입니다\n1 2 3 4 root@docker02:~# ps -ef | grep java dawn 16267 16248 0 08:55 ? 00:00:08 /usr/share/elasticsearch/jdk/bin/java -Xms4m -Xmx64m -XX:+UseSerialGC -Dcli.name=server -Dcli.script=/usr/share/elasticsearch/bin/elasticsearch -Dcli.libs=lib/tools/server-cli -Des.path.home=/usr/share/elasticsearch -Des.path.conf=/usr/share/elasticsearch/config -Des.distribution.type=docker -cp /usr/share/elasticsearch/lib/*:/usr/share/elasticsearch/lib/cli-launcher/* org.elasticsearch.launcher.CliToolLauncher dawn 16325 16267 5 08:55 ? 00:02:52 /usr/share/elasticsearch/jdk/bin/java -Des.networkaddress.cache.ttl=60 -Des.networkaddress.cache.negative.ttl=10 -Djava.security.manager=allow -XX:+AlwaysPreTouch -Xss1m -Djava.awt.headless=true -Dfile.encoding=UTF-8 -Djna.nosys=true -XX:-OmitStackTraceInFastThrow -Dio.netty.noUnsafe=true -Dio.netty.noKeySetOptimization=true -Dio.netty.recycler.maxCapacityPerThread=0 -Dlog4j.shutdownHookEnabled=false -Dlog4j2.disable.jmx=true -Dlog4j2.formatMsgNoLookups=true -Djava.locale.providers=SPI,COMPAT --add-opens=java.base/java.io=org.elasticsearch.preallocate --add-opens=org.apache.lucene.core/org.apache.lucene.store=org.elasticsearch.vec --enable-native-access=org.elasticsearch.nativeaccess -Des.cgroups.hierarchy.override=/ -XX:ReplayDataFile=logs/replay_pid%p.log -Djava.library.path=/usr/share/elasticsearch/lib/platform/linux-x64:/usr/java/packages/lib:/usr/lib64:/lib64:/lib:/usr/lib -Djna.library.path=/usr/share/elasticsearch/lib/platform/linux-x64:/usr/java/packages/lib:/usr/lib64:/lib64:/lib:/usr/lib -Des.distribution.type=docker -XX:+UnlockDiagnosticVMOptions -XX:G1NumCollectionsKeepPinned=10000000 -XX:+UseG1GC -Djava.io.tmpdir=/tmp/elasticsearch-8824704605208172111 --add-modules=jdk.incubator.vector -XX:+HeapDumpOnOutOfMemoryError -XX:+ExitOnOutOfMemoryError -XX:HeapDumpPath=data -XX:ErrorFile=logs/hs_err_pid%p.log -Xlog:gc*,gc+age=trace,safepoint:file=logs/gc.log:utctime,level,pid,tags:filecount=32,filesize=64m -Xms1937m -Xmx1937m -XX:MaxDirectMemorySize=1016070144 -XX:G1HeapRegionSize=4m -XX:InitiatingHeapOccupancyPercent=30 -XX:G1ReservePercent=15 --module-path /usr/share/elasticsearch/lib --add-modules=jdk.net --add-modules=ALL-MODULE-PATH -m org.elasticsearch.server/org.elasticsearch.bootstrap.Elasticsearch root 18095 1268 0 09:50 pts/0 00:00:00 grep --color=auto java 2. 컨테이너 시작 시 사용자 지정 명령 지정 1.컨테이너 시작 명령 확인 1 2 3 root@docker02:~# docker ps -l --no-trunc CONTAINER ID IMAGE COMMAND CREATED STATUS PORTS NAMES 23d3c92b8ff878aa823714d9809fe576ee58ccf4f32c82d318883a58932c6182 uhub.service.ucloud.cn/dawn/kibana:8.14.3 \"/bin/tini -- /usr/local/bin/kibana-docker\" 59 minutes ago Up 59 minutes 0.0.0.0:5601-\u003e5601/tcp, :::5601-\u003e5601/tcp kibana 2.컨테이너를 사용자 지정 명령으로 시작 1 2 3 4 5 root@docker02:~# docker run -d -p 81:80 --name c1 uhub.service.ucloud.cn/dawn/nginx:1.30.4 sleep 120 3c32a25bdbd8b38e9040b4e195c28ccaf4d118b5edb4a723e8b1940a4d5d4e85 root@docker02:~# docker ps -l --no-trunc CONTAINER ID IMAGE COMMAND CREATED STATUS PORTS NAMES 3c32a25bdbd8b38e9040b4e195c28ccaf4d118b5edb4a723e8b1940a4d5d4e85 uhub.service.ucloud.cn/dawn/nginx:1.30.4 \"/docker-entrypoint.sh sleep 120\" 7 seconds ago Up 7 seconds 0.0.0.0:81-\u003e80/tcp, :::81-\u003e80/tcp c1 3.컨테이너 생성 후 연결 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 root@docker02:~# docker run -d --name c3 uhub.service.ucloud.cn/dawn/apps:v1 sleep 120 c5b72d46d1b5a6a42523292bcd2102ad2ecab8c7c66253885ce8cddbfc1f00e5 root@docker02:~# docker exec c3 ps -ef PID USER TIME COMMAND 1 root 0:00 sleep 120 6 root 0:00 ps -ef root@docker02:~# docker exec c3 nginx 2026/10/26 03:23:58 [notice] 12#12: using the \"epoll\" event method 2026/10/26 03:23:58 [notice] 12#12: nginx/1.20.1 2026/10/26 03:23:58 [notice] 12#12: built by gcc 10.2.1 20201203 (Alpine 10.2.1_pre1) 2026/10/26 03:23:58 [notice] 12#12: OS: Linux 5.15.0-198-generic 2026/10/26 03:23:58 [notice] 12#12: getrlimit(RLIMIT_NOFILE): 1024:524288 2026/10/26 03:23:58 [notice] 18#18: start worker processes 2026/10/26 03:23:58 [notice] 18#18: start worker process 19 2026/10/26 03:23:58 [notice] 18#18: start worker process 20 root@docker02:~# docker exec c3 ps -ef PID USER TIME COMMAND 1 root 0:00 sleep 120 18 root 0:00 nginx: master process nginx 19 nginx 0:00 nginx: worker process 20 nginx 0:00 nginx: worker process 21 root 0:00 ps -ef root@docker02:~# docker exec c3 nginx -s stop 2026/10/26 03:25:01 [notice] 27#27: signal process started root@docker02:~# docker exec c3 ps -ef PID USER TIME COMMAND 1 root 0:00 sleep 120 18 root 0:00 [nginx] 33 root 0:00 ps -ef root@docker02:~# docker ps -l CONTAINER ID IMAGE COMMAND CREATED STATUS PORTS NAMES c5b72d46d1b5 uhub.service.ucloud.cn/dawn/apps:v1 \"/docker-entrypoint.…\" 2 minutes ago Exited (0) 29 seconds ago c3 root@docker02:~# docker exec c3 ps -ef Error response from daemon: container c5b72d46d1b5a6a42523292bcd2102ad2ecab8c7c66253885ce8cddbfc1f00e5 is not running 컨테이너는 시작할 때 시작 명령을 바꿀 수 있고 바꾸면 기본 시작 명령을 덮어씁니다;\n컨테이너의 시작 명령이 종료되면 컨테이너도 중지됩니다.\n3. 컨테이너 재시작 정책 1.재시작 정책 정책 의미 종료 코드 0 (정상) 0 이외 (비정상) dockerd 재시작 후 no 기본값, 재시작하지 않음 재시작 안 함 재시작 안 함 시작 안 함 always 항상 재시작 재시작 재시작 무조건 시작 (수동 stop 이후에도) on-failure[:max] 비정상 종료 시에만 재시작 재시작 안 함 재시작 (상한 도달 후 정지) 마지막 종료 상황에 따라 unless-stopped 항상 재시작하지만 수동 중지 후에는 자동으로 살리지 않음 재시작 재시작 수동 stop 한 적이 없을 때만 시작 2.실습 사례 2.1 상주 서비스 (nginx), 비정상 종료 재현 정책이 서로 다른 컨테이너 5 개를 한 번에 생성\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 root@docker02:~# docker run -d --name policy-no --restart no uhub.service.ucloud.cn/dawn/apps:v1 55739e4c92d6ff9c9a457f06a0da6307bff2304d18190372d77da22ad705bd78 root@docker02:~# docker run -d --name policy-always --restart always uhub.service.ucloud.cn/dawn/apps:v1 29ca89007a83d83df7842d7e40fbaa852d461fd0f3cdb3f449fa638e197e06de root@docker02:~# docker run -d --name policy-unless-stopped --restart unless-stopped uhub.service.ucloud.cn/dawn/apps:v1 00b3fc7432f4ee82dffb42fe58e503b68c553019ff72ddad8ae74fd79b3cd392 root@docker02:~# docker run -d --name policy-on-failure --restart on-failure:3 uhub.service.ucloud.cn/dawn/apps:v1 1ede464183e3d8ff1892c596136fcec3db95f5b70586962b4d3085b60392a149 root@docker02:~# docker run -d --name policy-on-failure-max --restart on-failure uhub.service.ucloud.cn/dawn/apps:v1 49d0681c2797cb9be756d1a4b9c9de542a8f1dfd404253e51bb86fa4aba97d15 root@docker02:~# docker ps -a --format 'table {{.Names}}\\t{{.Status}}\\t{{.Ports}}' NAMES STATUS PORTS policy-on-failure-max Up 2 seconds 80/tcp policy-on-failure Up 2 seconds 80/tcp policy-unless-stopped Up 3 seconds 80/tcp policy-always Up 3 seconds 80/tcp policy-no Up 3 seconds 80/tcp kill -9 로 프로세스가 강제 종료된 상태 (비정상 종료) 를 재현\n1 2 #### 실행 중인 컨테이너의 메인 프로세스 PID 를 가져와 호스트에서 강제 종료 root@docker02:~# docker ps -qa | xargs -r docker inspect -f '{{.State.Pid}}' | grep -v '^0$' | xargs -r kill -9 5 라운드 연속으로 kill 하고 각 라운드가 끝난 뒤 상태와 재시작 횟수를 확인\n1 root@docker02:~# for c in $(docker ps -qa); do docker inspect -f '{{.Name}} restarts={{.RestartCount}}' $c; done 라운드 policy-no policy-always policy-unless-stopped policy-on-failure(:3) policy-on-failure-max 초기 Up Up Up Up Up 1 라운드 Exited (137) r=0 Up r=1 Up r=1 Up r=1 Up r=1 2 라운드 Exited (137) Up r=2 Up r=2 Up r=2 Up r=2 3 라운드 Exited (137) Up r=3 Up r=3 Up r=3 Up r=3 4 라운드 Exited (137) Up r=4 Up r=4 Exited (137) r=3 (상한 도달 후 정지) Up r=4 5 라운드 Exited (137) Up r=5 Up r=5 Exited (137) r=3 (더 이상 재시작 안 함) Up r=5 주요 출력:\n1 2 3 4 5 6 7 8 9 ===== 4 라운드 kill -9 ===== policy-on-failure-max Up 2 seconds policy-on-failure Exited (137) 2 seconds ago ← 이미 3 회 재시작되어 on-failure:3 상한에 도달 policy-unless-stopped Up 2 seconds policy-always Up 2 seconds policy-no Exited (137) 12 seconds ago -- 재시작 횟수 -- /policy-on-failure-max restarts=4 /policy-on-failure restarts=3 ← 3 에서 멈추고 더 이상 증가하지 않음 2.2 단기 작업 (sleep 10), 프로그램이 스스로 종료 1 2 3 4 5 root@docker02:~# docker run -d --name policy-no --restart no uhub.service.ucloud.cn/dawn/apps:v1 sleep 10 root@docker02:~# docker run -d --name policy-always --restart always uhub.service.ucloud.cn/dawn/apps:v1 sleep 10 root@docker02:~# docker run -d --name policy-unless-stopped --restart unless-stopped uhub.service.ucloud.cn/dawn/apps:v1 sleep 10 root@docker02:~# docker run -d --name policy-on-failure --restart on-failure:3 uhub.service.ucloud.cn/dawn/apps:v1 sleep 10 root@docker02:~# docker run -d --name policy-on-failure-max --restart on-failure uhub.service.ucloud.cn/dawn/apps:v1 sleep 10 생성 직후 (sleep 미완료) 는 모두 Up\n1 2 3 4 5 policy-on-failure-max Up Less than a second policy-on-failure Up Less than a second policy-unless-stopped Up Less than a second policy-always Up 1 second policy-no Up 1 second 35 초 (약 3 주기) 기다린 뒤 다시 확인\n1 2 3 4 5 6 7 8 9 10 11 12 13 root@docker02:~# docker ps -a --format '{{.Names}} {{.Status}}' policy-on-failure-max Exited (0) 25 seconds ago policy-on-failure Exited (0) 25 seconds ago policy-unless-stopped Up 4 seconds policy-always Up 4 seconds policy-no Exited (0) 26 seconds ago root@docker02:~# for c in $(docker ps -qa); do docker inspect -f '{{.Name}} restarts={{.RestartCount}} exitcode={{.State.ExitCode}}' $c; done /policy-on-failure-max restarts=0 exitcode=0 /policy-on-failure restarts=0 exitcode=0 /policy-unless-stopped restarts=3 exitcode=0 /policy-always restarts=3 exitcode=0 /policy-no restarts=0 exitcode=0 컨테이너 35 초 후 상태 재시작 횟수 설명 policy-no Exited (0) 0 재시작하지 않음 policy-always Up 3 종료 코드를 보지 않고 죽으면 즉시 살림 policy-unless-stopped Up 3 위와 동일 policy-on-failure(:3) Exited (0) 0 종료 코드 0 = 정상 종료, 재시작 안 함 policy-on-failure-max Exited (0) 0 위와 동일 2.3 docker 서비스 재시작 후 살아남는 것은 무엇인가 unless-stopped 와 always 의 진짜 차이는 dockerd 를 재시작할 때만 드러납니다\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 #### 상주 컨테이너 5 개를 다시 만든 뒤 그중 3 개를 수동 중지 (\"서비스 재시작 전에 사람이 멈춘 상태\" 재현) root@docker02:~# docker stop policy-no policy-always policy-unless-stopped policy-no policy-always policy-unless-stopped root@docker02:~# docker ps -a --format '{{.Names}} {{.Status}}' policy-on-failure-max Up 3 seconds ← 수동으로 중지되지 않음 policy-on-failure Up 3 seconds ← 수동으로 중지되지 않음 policy-unless-stopped Exited (0) 1 second ago policy-always Exited (0) 1 second ago policy-no Exited (0) 1 second ago #### docker 서비스 재시작 root@docker02:~# systemctl restart docker 재시작 후\n1 2 3 4 5 policy-on-failure-max Up 8 seconds restarts=0 policy-on-failure Up 8 seconds restarts=0 policy-unless-stopped Exited (0) 27 seconds ago ← 수동 중지되었으므로 다시 살리지 않음 policy-always Up 8 seconds restarts=0 ← 수동 중지되었어도 그대로 살아남 policy-no Exited (0) 27 seconds ago 컨테이너 재시작 전 dockerd 재시작 후 이유 policy-no 수동 stop Exited no 는 자동으로 시작하지 않음 policy-always 수동 stop Up always 는 무조건 시작 policy-unless-stopped 수동 stop Exited 수동 중지됨 → 이 상태를 기억 policy-on-failure(:3) 실행 중 Up 정상 완료가 아닌 “중단” 으로 취급 policy-on-failure-max 실행 중 Up 위와 동일 4. 컨테이너 종료 시 자동 삭제 1 2 3 4 5 6 7 root@docker02:~# docker run -d --name c1 --rm uhub.service.ucloud.cn/dawn/apps:v1 sleep 10 044a33b69fca3265306c1a7c5f78a1dc6b4e7f397fff4444597a573ecf1f0809 root@docker02:~# docker ps -a CONTAINER ID IMAGE COMMAND CREATED STATUS PORTS NAMES 044a33b69fca uhub.service.ucloud.cn/dawn/apps:v1 \"/docker-entrypoint.…\" 8 seconds ago Up 8 seconds 80/tcp c1 root@docker02:~# docker ps -a CONTAINER ID IMAGE COMMAND CREATED STATUS PORTS NAMES ",
+  "wordCount" : "1504",
+  "inLanguage": "ko",
+  "image": "https://LMDAWN1127.github.io/images/DAWN.jpg","datePublished": "2026-10-26T14:20:00+08:00",
+  "dateModified": "2026-10-26T14:20:00+08:00",
+  "author":{
+    "@type": "Person",
+    "name": "DAWN"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://LMDAWN1127.github.io/ko/posts/docker-container-lifecycle/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "DAWN's Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://LMDAWN1127.github.io/images/DAWN.jpg"
+    }
+  }
+}
+</script>
+</head>
+<body id="top">
+    <header class="header">
+    <nav class="header-nav">
+        <div class="logo">
+            <a href="https://LMDAWN1127.github.io/ko/" accesskey="h" title="DAWN&#39;s Blog (Alt + H)">
+                <img src="https://LMDAWN1127.github.io/images/DAWN.jpg" alt="" aria-label="logo"
+                    height="38">DAWN&#39;s Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" class="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
+                    <svg class="moon" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg class="sun" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button><span class="nav-sep">|</span>
+                    <ul class="lang-menu">
+                        <li>
+                            <a href="https://LMDAWN1127.github.io/" title="中文"
+                                aria-label="中文">Zh</a>
+                        </li>
+                        <li>
+                            <a href="https://LMDAWN1127.github.io/en/" title="English"
+                                aria-label="English">En</a>
+                        </li>
+                        <li>
+                            <a href="https://LMDAWN1127.github.io/ja/" title="日本語"
+                                aria-label="日本語">Ja</a>
+                        </li>
+                    </ul>
+            </div>
+        </div>
+        <ul id="menu" class="menu">
+            <li>
+                <a href="https://LMDAWN1127.github.io/ko/archives/" title="아카이브">
+                    <span>아카이브</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <h1 class="post-title entry-hint-parent">
+      Docker 실전: 컨테이너 라이프사이클 관리 - 시작, 중지, 재시작 정책
+    </h1>
+  </header>
+
+  <div class="post-layout">
+    <div class="post-content-wrapper"> 
+      <div class="post-content md-content"><h1 id="docker-실전-컨테이너-라이프사이클-관리---시작-중지-재시작-정책">Docker 실전: 컨테이너 라이프사이클 관리 - 시작, 중지, 재시작 정책<a hidden class="anchor" aria-hidden="true" href="#docker-실전-컨테이너-라이프사이클-관리---시작-중지-재시작-정책">#</a></h1>
+<h2 id="1-컨테이너-시작과-중지">1. 컨테이너 시작과 중지<a hidden class="anchor" aria-hidden="true" href="#1-컨테이너-시작과-중지">#</a></h2>
+<h3 id="1-컨테이너-중지">1. 컨테이너 중지<a hidden class="anchor" aria-hidden="true" href="#1-컨테이너-중지">#</a></h3>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>root@docker02:~# docker stop  -t <span style="color:#ae81ff">0</span> es01   <span style="color:#75715e"># 컨테이너 이름을 지정해 중지할 수 있습니다. -t 는 kill 신호를 보낼 때까지의 대기 시간입니다. 중지가 오래 걸리면 기본 대기 시간은 10s 입니다</span>
+</span></span><span style="display:flex;"><span>es01
+</span></span><span style="display:flex;"><span>root@docker02:~# docker stop 31198819a488
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="2-컨테이너-시작">2. 컨테이너 시작<a hidden class="anchor" aria-hidden="true" href="#2-컨테이너-시작">#</a></h3>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>root@docker02:~# docker start es01
+</span></span><span style="display:flex;"><span>es01
+</span></span><span style="display:flex;"><span>root@docker02:~# docker start 31198819a488
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="3-컨테이너-재시작">3. 컨테이너 재시작<a hidden class="anchor" aria-hidden="true" href="#3-컨테이너-재시작">#</a></h3>
+<p>먼저 중지하고 그다음 시작합니다. 컨테이너를 중지할 때마다 STATUS 는 다시 카운트됩니다</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>root@docker02:~# docker restart es01
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>docker stop 명령은 본질적으로 docker kill 을 호출해 컨테이너의 프로세스 ID 를 종료합니다</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>root@docker02:~# docker start kibana es01
+</span></span><span style="display:flex;"><span>kibana
+</span></span><span style="display:flex;"><span>es01
+</span></span><span style="display:flex;"><span>root@docker02:~# docker kill kibana
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>컨테이너 시작은 본질적으로 호스트에서 프로세스 ID 하나를 시작하는 것입니다</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>root@docker02:~# ps -ef | grep java
+</span></span><span style="display:flex;"><span>dawn       <span style="color:#ae81ff">16267</span>   <span style="color:#ae81ff">16248</span>  <span style="color:#ae81ff">0</span> 08:55 ?        00:00:08 /usr/share/elasticsearch/jdk/bin/java -Xms4m -Xmx64m -XX:+UseSerialGC -Dcli.name<span style="color:#f92672">=</span>server -Dcli.script<span style="color:#f92672">=</span>/usr/share/elasticsearch/bin/elasticsearch -Dcli.libs<span style="color:#f92672">=</span>lib/tools/server-cli -Des.path.home<span style="color:#f92672">=</span>/usr/share/elasticsearch -Des.path.conf<span style="color:#f92672">=</span>/usr/share/elasticsearch/config -Des.distribution.type<span style="color:#f92672">=</span>docker -cp /usr/share/elasticsearch/lib/*:/usr/share/elasticsearch/lib/cli-launcher/* org.elasticsearch.launcher.CliToolLauncher
+</span></span><span style="display:flex;"><span>dawn       <span style="color:#ae81ff">16325</span>   <span style="color:#ae81ff">16267</span>  <span style="color:#ae81ff">5</span> 08:55 ?        00:02:52 /usr/share/elasticsearch/jdk/bin/java -Des.networkaddress.cache.ttl<span style="color:#f92672">=</span><span style="color:#ae81ff">60</span> -Des.networkaddress.cache.negative.ttl<span style="color:#f92672">=</span><span style="color:#ae81ff">10</span> -Djava.security.manager<span style="color:#f92672">=</span>allow -XX:+AlwaysPreTouch -Xss1m -Djava.awt.headless<span style="color:#f92672">=</span>true -Dfile.encoding<span style="color:#f92672">=</span>UTF-8 -Djna.nosys<span style="color:#f92672">=</span>true -XX:-OmitStackTraceInFastThrow -Dio.netty.noUnsafe<span style="color:#f92672">=</span>true -Dio.netty.noKeySetOptimization<span style="color:#f92672">=</span>true -Dio.netty.recycler.maxCapacityPerThread<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span> -Dlog4j.shutdownHookEnabled<span style="color:#f92672">=</span>false -Dlog4j2.disable.jmx<span style="color:#f92672">=</span>true -Dlog4j2.formatMsgNoLookups<span style="color:#f92672">=</span>true -Djava.locale.providers<span style="color:#f92672">=</span>SPI,COMPAT --add-opens<span style="color:#f92672">=</span>java.base/java.io<span style="color:#f92672">=</span>org.elasticsearch.preallocate --add-opens<span style="color:#f92672">=</span>org.apache.lucene.core/org.apache.lucene.store<span style="color:#f92672">=</span>org.elasticsearch.vec --enable-native-access<span style="color:#f92672">=</span>org.elasticsearch.nativeaccess -Des.cgroups.hierarchy.override<span style="color:#f92672">=</span>/ -XX:ReplayDataFile<span style="color:#f92672">=</span>logs/replay_pid%p.log -Djava.library.path<span style="color:#f92672">=</span>/usr/share/elasticsearch/lib/platform/linux-x64:/usr/java/packages/lib:/usr/lib64:/lib64:/lib:/usr/lib -Djna.library.path<span style="color:#f92672">=</span>/usr/share/elasticsearch/lib/platform/linux-x64:/usr/java/packages/lib:/usr/lib64:/lib64:/lib:/usr/lib -Des.distribution.type<span style="color:#f92672">=</span>docker -XX:+UnlockDiagnosticVMOptions -XX:G1NumCollectionsKeepPinned<span style="color:#f92672">=</span><span style="color:#ae81ff">10000000</span> -XX:+UseG1GC -Djava.io.tmpdir<span style="color:#f92672">=</span>/tmp/elasticsearch-8824704605208172111 --add-modules<span style="color:#f92672">=</span>jdk.incubator.vector -XX:+HeapDumpOnOutOfMemoryError -XX:+ExitOnOutOfMemoryError -XX:HeapDumpPath<span style="color:#f92672">=</span>data -XX:ErrorFile<span style="color:#f92672">=</span>logs/hs_err_pid%p.log -Xlog:gc*,gc+age<span style="color:#f92672">=</span>trace,safepoint:file<span style="color:#f92672">=</span>logs/gc.log:utctime,level,pid,tags:filecount<span style="color:#f92672">=</span>32,filesize<span style="color:#f92672">=</span>64m -Xms1937m -Xmx1937m -XX:MaxDirectMemorySize<span style="color:#f92672">=</span><span style="color:#ae81ff">1016070144</span> -XX:G1HeapRegionSize<span style="color:#f92672">=</span>4m -XX:InitiatingHeapOccupancyPercent<span style="color:#f92672">=</span><span style="color:#ae81ff">30</span> -XX:G1ReservePercent<span style="color:#f92672">=</span><span style="color:#ae81ff">15</span> --module-path /usr/share/elasticsearch/lib --add-modules<span style="color:#f92672">=</span>jdk.net --add-modules<span style="color:#f92672">=</span>ALL-MODULE-PATH -m org.elasticsearch.server/org.elasticsearch.bootstrap.Elasticsearch
+</span></span><span style="display:flex;"><span>root       <span style="color:#ae81ff">18095</span>    <span style="color:#ae81ff">1268</span>  <span style="color:#ae81ff">0</span> 09:50 pts/0    00:00:00 grep --color<span style="color:#f92672">=</span>auto java
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="2-컨테이너-시작-시-사용자-지정-명령-지정">2. 컨테이너 시작 시 사용자 지정 명령 지정<a hidden class="anchor" aria-hidden="true" href="#2-컨테이너-시작-시-사용자-지정-명령-지정">#</a></h2>
+<h3 id="1컨테이너-시작-명령-확인">1.컨테이너 시작 명령 확인<a hidden class="anchor" aria-hidden="true" href="#1컨테이너-시작-명령-확인">#</a></h3>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>root@docker02:~# docker ps -l --no-trunc
+</span></span><span style="display:flex;"><span>CONTAINER ID                                                       IMAGE                                       COMMAND                                       CREATED          STATUS          PORTS                                       NAMES
+</span></span><span style="display:flex;"><span>23d3c92b8ff878aa823714d9809fe576ee58ccf4f32c82d318883a58932c6182   uhub.service.ucloud.cn/dawn/kibana:8.14.3   <span style="color:#e6db74">&#34;/bin/tini -- /usr/local/bin/kibana-docker&#34;</span>   <span style="color:#ae81ff">59</span> minutes ago   Up <span style="color:#ae81ff">59</span> minutes   0.0.0.0:5601-&gt;5601/tcp, :::5601-&gt;5601/tcp   kibana
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="2컨테이너를-사용자-지정-명령으로-시작">2.컨테이너를 사용자 지정 명령으로 시작<a hidden class="anchor" aria-hidden="true" href="#2컨테이너를-사용자-지정-명령으로-시작">#</a></h3>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>root@docker02:~# docker run -d -p 81:80 --name c1 uhub.service.ucloud.cn/dawn/nginx:1.30.4 sleep <span style="color:#ae81ff">120</span>
+</span></span><span style="display:flex;"><span>3c32a25bdbd8b38e9040b4e195c28ccaf4d118b5edb4a723e8b1940a4d5d4e85
+</span></span><span style="display:flex;"><span>root@docker02:~# docker ps -l --no-trunc
+</span></span><span style="display:flex;"><span>CONTAINER ID                                                       IMAGE                                      COMMAND                             CREATED         STATUS         PORTS                               NAMES
+</span></span><span style="display:flex;"><span>3c32a25bdbd8b38e9040b4e195c28ccaf4d118b5edb4a723e8b1940a4d5d4e85   uhub.service.ucloud.cn/dawn/nginx:1.30.4   <span style="color:#e6db74">&#34;/docker-entrypoint.sh sleep 120&#34;</span>   <span style="color:#ae81ff">7</span> seconds ago   Up <span style="color:#ae81ff">7</span> seconds   0.0.0.0:81-&gt;80/tcp, :::81-&gt;80/tcp   c1
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="3컨테이너-생성-후-연결">3.컨테이너 생성 후 연결<a hidden class="anchor" aria-hidden="true" href="#3컨테이너-생성-후-연결">#</a></h3>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>root@docker02:~# docker run -d --name c3 uhub.service.ucloud.cn/dawn/apps:v1 sleep <span style="color:#ae81ff">120</span>
+</span></span><span style="display:flex;"><span>c5b72d46d1b5a6a42523292bcd2102ad2ecab8c7c66253885ce8cddbfc1f00e5
+</span></span><span style="display:flex;"><span>root@docker02:~# docker exec c3 ps -ef
+</span></span><span style="display:flex;"><span>PID   USER     TIME  COMMAND
+</span></span><span style="display:flex;"><span>    <span style="color:#ae81ff">1</span> root      0:00 sleep <span style="color:#ae81ff">120</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ae81ff">6</span> root      0:00 ps -ef
+</span></span><span style="display:flex;"><span>root@docker02:~# docker exec c3 nginx
+</span></span><span style="display:flex;"><span>2026/10/26 03:23:58 <span style="color:#f92672">[</span>notice<span style="color:#f92672">]</span> 12#12: using the <span style="color:#e6db74">&#34;epoll&#34;</span> event method
+</span></span><span style="display:flex;"><span>2026/10/26 03:23:58 <span style="color:#f92672">[</span>notice<span style="color:#f92672">]</span> 12#12: nginx/1.20.1
+</span></span><span style="display:flex;"><span>2026/10/26 03:23:58 <span style="color:#f92672">[</span>notice<span style="color:#f92672">]</span> 12#12: built by gcc 10.2.1 <span style="color:#ae81ff">20201203</span> <span style="color:#f92672">(</span>Alpine 10.2.1_pre1<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>2026/10/26 03:23:58 <span style="color:#f92672">[</span>notice<span style="color:#f92672">]</span> 12#12: OS: Linux 5.15.0-198-generic
+</span></span><span style="display:flex;"><span>2026/10/26 03:23:58 <span style="color:#f92672">[</span>notice<span style="color:#f92672">]</span> 12#12: getrlimit<span style="color:#f92672">(</span>RLIMIT_NOFILE<span style="color:#f92672">)</span>: 1024:524288
+</span></span><span style="display:flex;"><span>2026/10/26 03:23:58 <span style="color:#f92672">[</span>notice<span style="color:#f92672">]</span> 18#18: start worker processes
+</span></span><span style="display:flex;"><span>2026/10/26 03:23:58 <span style="color:#f92672">[</span>notice<span style="color:#f92672">]</span> 18#18: start worker process <span style="color:#ae81ff">19</span>
+</span></span><span style="display:flex;"><span>2026/10/26 03:23:58 <span style="color:#f92672">[</span>notice<span style="color:#f92672">]</span> 18#18: start worker process <span style="color:#ae81ff">20</span>
+</span></span><span style="display:flex;"><span>root@docker02:~# docker exec c3 ps -ef
+</span></span><span style="display:flex;"><span>PID   USER     TIME  COMMAND
+</span></span><span style="display:flex;"><span>    <span style="color:#ae81ff">1</span> root      0:00 sleep <span style="color:#ae81ff">120</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#ae81ff">18</span> root      0:00 nginx: master process nginx
+</span></span><span style="display:flex;"><span>   <span style="color:#ae81ff">19</span> nginx     0:00 nginx: worker process
+</span></span><span style="display:flex;"><span>   <span style="color:#ae81ff">20</span> nginx     0:00 nginx: worker process
+</span></span><span style="display:flex;"><span>   <span style="color:#ae81ff">21</span> root      0:00 ps -ef
+</span></span><span style="display:flex;"><span>root@docker02:~# docker exec c3 nginx -s stop
+</span></span><span style="display:flex;"><span>2026/10/26 03:25:01 <span style="color:#f92672">[</span>notice<span style="color:#f92672">]</span> 27#27: signal process started
+</span></span><span style="display:flex;"><span>root@docker02:~# docker exec c3 ps -ef
+</span></span><span style="display:flex;"><span>PID   USER     TIME  COMMAND
+</span></span><span style="display:flex;"><span>    <span style="color:#ae81ff">1</span> root      0:00 sleep <span style="color:#ae81ff">120</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#ae81ff">18</span> root      0:00 <span style="color:#f92672">[</span>nginx<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#ae81ff">33</span> root      0:00 ps -ef
+</span></span><span style="display:flex;"><span>root@docker02:~# docker ps -l
+</span></span><span style="display:flex;"><span>CONTAINER ID   IMAGE                                 COMMAND                  CREATED         STATUS                      PORTS     NAMES
+</span></span><span style="display:flex;"><span>c5b72d46d1b5   uhub.service.ucloud.cn/dawn/apps:v1   <span style="color:#e6db74">&#34;/docker-entrypoint.…&#34;</span>   <span style="color:#ae81ff">2</span> minutes ago   Exited <span style="color:#f92672">(</span>0<span style="color:#f92672">)</span> <span style="color:#ae81ff">29</span> seconds ago             c3
+</span></span><span style="display:flex;"><span>root@docker02:~# docker exec c3 ps -ef
+</span></span><span style="display:flex;"><span>Error response from daemon: container c5b72d46d1b5a6a42523292bcd2102ad2ecab8c7c66253885ce8cddbfc1f00e5 is not running
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>컨테이너는 시작할 때 시작 명령을 바꿀 수 있고 바꾸면 기본 시작 명령을 덮어씁니다;</p>
+<p>컨테이너의 시작 명령이 종료되면 컨테이너도 중지됩니다.</p>
+<h2 id="3-컨테이너-재시작-정책">3. 컨테이너 재시작 정책<a hidden class="anchor" aria-hidden="true" href="#3-컨테이너-재시작-정책">#</a></h2>
+<h3 id="1재시작-정책">1.재시작 정책<a hidden class="anchor" aria-hidden="true" href="#1재시작-정책">#</a></h3>
+<table>
+	<thead>
+			<tr>
+					<th>정책</th>
+					<th>의미</th>
+					<th>종료 코드 0 (정상)</th>
+					<th>0 이외 (비정상)</th>
+					<th>dockerd 재시작 후</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td><code>no</code></td>
+					<td>기본값, 재시작하지 않음</td>
+					<td>재시작 안 함</td>
+					<td>재시작 안 함</td>
+					<td>시작 안 함</td>
+			</tr>
+			<tr>
+					<td><code>always</code></td>
+					<td>항상 재시작</td>
+					<td><strong>재시작</strong></td>
+					<td>재시작</td>
+					<td><strong>무조건 시작</strong> (수동 stop 이후에도)</td>
+			</tr>
+			<tr>
+					<td><code>on-failure[:max]</code></td>
+					<td>비정상 종료 시에만 재시작</td>
+					<td><strong>재시작 안 함</strong></td>
+					<td>재시작 (상한 도달 후 정지)</td>
+					<td>마지막 종료 상황에 따라</td>
+			</tr>
+			<tr>
+					<td><code>unless-stopped</code></td>
+					<td>항상 재시작하지만 수동 중지 후에는 자동으로 살리지 않음</td>
+					<td><strong>재시작</strong></td>
+					<td>재시작</td>
+					<td><strong>수동 stop 한 적이 없을 때만</strong> 시작</td>
+			</tr>
+	</tbody>
+</table>
+<h3 id="2실습-사례">2.실습 사례<a hidden class="anchor" aria-hidden="true" href="#2실습-사례">#</a></h3>
+<h4 id="21-상주-서비스-nginx-비정상-종료-재현">2.1 상주 서비스 (nginx), 비정상 종료 재현<a hidden class="anchor" aria-hidden="true" href="#21-상주-서비스-nginx-비정상-종료-재현">#</a></h4>
+<p>정책이 서로 다른 컨테이너 5 개를 한 번에 생성</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>root@docker02:~# docker run -d --name policy-no --restart no uhub.service.ucloud.cn/dawn/apps:v1
+</span></span><span style="display:flex;"><span>55739e4c92d6ff9c9a457f06a0da6307bff2304d18190372d77da22ad705bd78
+</span></span><span style="display:flex;"><span>root@docker02:~# docker run -d --name policy-always --restart always uhub.service.ucloud.cn/dawn/apps:v1
+</span></span><span style="display:flex;"><span>29ca89007a83d83df7842d7e40fbaa852d461fd0f3cdb3f449fa638e197e06de
+</span></span><span style="display:flex;"><span>root@docker02:~# docker run -d --name policy-unless-stopped --restart unless-stopped uhub.service.ucloud.cn/dawn/apps:v1
+</span></span><span style="display:flex;"><span>00b3fc7432f4ee82dffb42fe58e503b68c553019ff72ddad8ae74fd79b3cd392
+</span></span><span style="display:flex;"><span>root@docker02:~# docker run -d --name policy-on-failure --restart on-failure:3 uhub.service.ucloud.cn/dawn/apps:v1
+</span></span><span style="display:flex;"><span>1ede464183e3d8ff1892c596136fcec3db95f5b70586962b4d3085b60392a149
+</span></span><span style="display:flex;"><span>root@docker02:~# docker run -d --name policy-on-failure-max --restart on-failure uhub.service.ucloud.cn/dawn/apps:v1
+</span></span><span style="display:flex;"><span>49d0681c2797cb9be756d1a4b9c9de542a8f1dfd404253e51bb86fa4aba97d15
+</span></span><span style="display:flex;"><span>root@docker02:~# docker ps -a --format <span style="color:#e6db74">&#39;table {{.Names}}\t{{.Status}}\t{{.Ports}}&#39;</span>
+</span></span><span style="display:flex;"><span>NAMES                   STATUS         PORTS
+</span></span><span style="display:flex;"><span>policy-on-failure-max   Up <span style="color:#ae81ff">2</span> seconds   80/tcp
+</span></span><span style="display:flex;"><span>policy-on-failure       Up <span style="color:#ae81ff">2</span> seconds   80/tcp
+</span></span><span style="display:flex;"><span>policy-unless-stopped   Up <span style="color:#ae81ff">3</span> seconds   80/tcp
+</span></span><span style="display:flex;"><span>policy-always           Up <span style="color:#ae81ff">3</span> seconds   80/tcp
+</span></span><span style="display:flex;"><span>policy-no               Up <span style="color:#ae81ff">3</span> seconds   80/tcp
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>kill -9 로 프로세스가 강제 종료된 상태 (비정상 종료) 를 재현</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e">#### 실행 중인 컨테이너의 메인 프로세스 PID 를 가져와 호스트에서 강제 종료</span>
+</span></span><span style="display:flex;"><span>root@docker02:~# docker ps -qa | xargs -r docker inspect -f <span style="color:#e6db74">&#39;{{.State.Pid}}&#39;</span> | grep -v <span style="color:#e6db74">&#39;^0$&#39;</span> | xargs -r kill -9
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>5 라운드 연속으로 kill 하고 각 라운드가 끝난 뒤 상태와 재시작 횟수를 확인</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>root@docker02:~# <span style="color:#66d9ef">for</span> c in <span style="color:#66d9ef">$(</span>docker ps -qa<span style="color:#66d9ef">)</span>; <span style="color:#66d9ef">do</span> docker inspect -f <span style="color:#e6db74">&#39;{{.Name}} restarts={{.RestartCount}}&#39;</span> $c; <span style="color:#66d9ef">done</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><table>
+	<thead>
+			<tr>
+					<th></th>
+					<th></th>
+					<th></th>
+					<th></th>
+					<th></th>
+					<th></th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>라운드</td>
+					<td>policy-no</td>
+					<td>policy-always</td>
+					<td>policy-unless-stopped</td>
+					<td>policy-on-failure(:3)</td>
+					<td>policy-on-failure-max</td>
+			</tr>
+			<tr>
+					<td>초기</td>
+					<td>Up</td>
+					<td>Up</td>
+					<td>Up</td>
+					<td>Up</td>
+					<td>Up</td>
+			</tr>
+			<tr>
+					<td>1 라운드</td>
+					<td><strong>Exited (137)</strong> r=0</td>
+					<td>Up r=1</td>
+					<td>Up r=1</td>
+					<td>Up r=1</td>
+					<td>Up r=1</td>
+			</tr>
+			<tr>
+					<td>2 라운드</td>
+					<td>Exited (137)</td>
+					<td>Up r=2</td>
+					<td>Up r=2</td>
+					<td>Up r=2</td>
+					<td>Up r=2</td>
+			</tr>
+			<tr>
+					<td>3 라운드</td>
+					<td>Exited (137)</td>
+					<td>Up r=3</td>
+					<td>Up r=3</td>
+					<td>Up r=3</td>
+					<td>Up r=3</td>
+			</tr>
+			<tr>
+					<td>4 라운드</td>
+					<td>Exited (137)</td>
+					<td>Up r=4</td>
+					<td>Up r=4</td>
+					<td><strong>Exited (137) r=3 (상한 도달 후 정지)</strong></td>
+					<td>Up r=4</td>
+			</tr>
+			<tr>
+					<td>5 라운드</td>
+					<td>Exited (137)</td>
+					<td>Up r=5</td>
+					<td>Up r=5</td>
+					<td><strong>Exited (137) r=3 (더 이상 재시작 안 함)</strong></td>
+					<td>Up r=5</td>
+			</tr>
+	</tbody>
+</table>
+<p>주요 출력:</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">9
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>===== 4 라운드 kill -9 =====
+</span></span><span style="display:flex;"><span>policy-on-failure-max Up 2 seconds
+</span></span><span style="display:flex;"><span>policy-on-failure Exited (137) 2 seconds ago      ← 이미 3 회 재시작되어 on-failure:3 상한에 도달
+</span></span><span style="display:flex;"><span>policy-unless-stopped Up 2 seconds
+</span></span><span style="display:flex;"><span>policy-always Up 2 seconds
+</span></span><span style="display:flex;"><span>policy-no Exited (137) 12 seconds ago
+</span></span><span style="display:flex;"><span>-- 재시작 횟수 --
+</span></span><span style="display:flex;"><span>/policy-on-failure-max restarts=4
+</span></span><span style="display:flex;"><span>/policy-on-failure restarts=3                     ← 3 에서 멈추고 더 이상 증가하지 않음
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="22-단기-작업-sleep-10-프로그램이-스스로-종료">2.2 단기 작업 (sleep 10), 프로그램이 스스로 종료<a hidden class="anchor" aria-hidden="true" href="#22-단기-작업-sleep-10-프로그램이-스스로-종료">#</a></h4>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>root@docker02:~# docker run -d --name policy-no --restart no uhub.service.ucloud.cn/dawn/apps:v1 sleep <span style="color:#ae81ff">10</span>
+</span></span><span style="display:flex;"><span>root@docker02:~# docker run -d --name policy-always --restart always uhub.service.ucloud.cn/dawn/apps:v1 sleep <span style="color:#ae81ff">10</span>
+</span></span><span style="display:flex;"><span>root@docker02:~# docker run -d --name policy-unless-stopped --restart unless-stopped uhub.service.ucloud.cn/dawn/apps:v1 sleep <span style="color:#ae81ff">10</span>
+</span></span><span style="display:flex;"><span>root@docker02:~# docker run -d --name policy-on-failure --restart on-failure:3 uhub.service.ucloud.cn/dawn/apps:v1 sleep <span style="color:#ae81ff">10</span>
+</span></span><span style="display:flex;"><span>root@docker02:~# docker run -d --name policy-on-failure-max --restart on-failure uhub.service.ucloud.cn/dawn/apps:v1 sleep <span style="color:#ae81ff">10</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>생성 직후 (sleep 미완료) 는 모두 Up</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>policy-on-failure-max Up Less than a second
+</span></span><span style="display:flex;"><span>policy-on-failure Up Less than a second
+</span></span><span style="display:flex;"><span>policy-unless-stopped Up Less than a second
+</span></span><span style="display:flex;"><span>policy-always Up <span style="color:#ae81ff">1</span> second
+</span></span><span style="display:flex;"><span>policy-no Up <span style="color:#ae81ff">1</span> second
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>35 초 (약 3 주기) 기다린 뒤 다시 확인</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>root@docker02:~# docker ps -a --format <span style="color:#e6db74">&#39;{{.Names}} {{.Status}}&#39;</span>
+</span></span><span style="display:flex;"><span>policy-on-failure-max Exited <span style="color:#f92672">(</span>0<span style="color:#f92672">)</span> <span style="color:#ae81ff">25</span> seconds ago
+</span></span><span style="display:flex;"><span>policy-on-failure Exited <span style="color:#f92672">(</span>0<span style="color:#f92672">)</span> <span style="color:#ae81ff">25</span> seconds ago
+</span></span><span style="display:flex;"><span>policy-unless-stopped Up <span style="color:#ae81ff">4</span> seconds
+</span></span><span style="display:flex;"><span>policy-always Up <span style="color:#ae81ff">4</span> seconds
+</span></span><span style="display:flex;"><span>policy-no Exited <span style="color:#f92672">(</span>0<span style="color:#f92672">)</span> <span style="color:#ae81ff">26</span> seconds ago
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>root@docker02:~# <span style="color:#66d9ef">for</span> c in <span style="color:#66d9ef">$(</span>docker ps -qa<span style="color:#66d9ef">)</span>; <span style="color:#66d9ef">do</span> docker inspect -f <span style="color:#e6db74">&#39;{{.Name}} restarts={{.RestartCount}} exitcode={{.State.ExitCode}}&#39;</span> $c; <span style="color:#66d9ef">done</span>
+</span></span><span style="display:flex;"><span>/policy-on-failure-max restarts<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span> exitcode<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>/policy-on-failure     restarts<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span> exitcode<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>/policy-unless-stopped restarts<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span> exitcode<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>/policy-always         restarts<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span> exitcode<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>/policy-no             restarts<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span> exitcode<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><table>
+	<thead>
+			<tr>
+					<th>컨테이너</th>
+					<th>35 초 후 상태</th>
+					<th>재시작 횟수</th>
+					<th>설명</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>policy-no</td>
+					<td>Exited (0)</td>
+					<td>0</td>
+					<td>재시작하지 않음</td>
+			</tr>
+			<tr>
+					<td>policy-always</td>
+					<td><strong>Up</strong></td>
+					<td><strong>3</strong></td>
+					<td>종료 코드를 보지 않고 죽으면 즉시 살림</td>
+			</tr>
+			<tr>
+					<td>policy-unless-stopped</td>
+					<td><strong>Up</strong></td>
+					<td><strong>3</strong></td>
+					<td>위와 동일</td>
+			</tr>
+			<tr>
+					<td>policy-on-failure(:3)</td>
+					<td>Exited (0)</td>
+					<td><strong>0</strong></td>
+					<td><strong>종료 코드 0 = 정상 종료, 재시작 안 함</strong></td>
+			</tr>
+			<tr>
+					<td>policy-on-failure-max</td>
+					<td>Exited (0)</td>
+					<td><strong>0</strong></td>
+					<td>위와 동일</td>
+			</tr>
+	</tbody>
+</table>
+<hr>
+<h4 id="23-docker-서비스-재시작-후-살아남는-것은-무엇인가">2.3 docker 서비스 재시작 후 살아남는 것은 무엇인가<a hidden class="anchor" aria-hidden="true" href="#23-docker-서비스-재시작-후-살아남는-것은-무엇인가">#</a></h4>
+<p>unless-stopped 와 always 의 진짜 차이는 dockerd 를 재시작할 때만 드러납니다</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e">#### 상주 컨테이너 5 개를 다시 만든 뒤 그중 3 개를 수동 중지 (&#34;서비스 재시작 전에 사람이 멈춘 상태&#34; 재현)</span>
+</span></span><span style="display:flex;"><span>root@docker02:~# docker stop policy-no policy-always policy-unless-stopped
+</span></span><span style="display:flex;"><span>policy-no
+</span></span><span style="display:flex;"><span>policy-always
+</span></span><span style="display:flex;"><span>policy-unless-stopped
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>root@docker02:~# docker ps -a --format <span style="color:#e6db74">&#39;{{.Names}} {{.Status}}&#39;</span>
+</span></span><span style="display:flex;"><span>policy-on-failure-max Up <span style="color:#ae81ff">3</span> seconds          ← 수동으로 중지되지 않음
+</span></span><span style="display:flex;"><span>policy-on-failure Up <span style="color:#ae81ff">3</span> seconds              ← 수동으로 중지되지 않음
+</span></span><span style="display:flex;"><span>policy-unless-stopped Exited <span style="color:#f92672">(</span>0<span style="color:#f92672">)</span> <span style="color:#ae81ff">1</span> second ago
+</span></span><span style="display:flex;"><span>policy-always Exited <span style="color:#f92672">(</span>0<span style="color:#f92672">)</span> <span style="color:#ae81ff">1</span> second ago
+</span></span><span style="display:flex;"><span>policy-no Exited <span style="color:#f92672">(</span>0<span style="color:#f92672">)</span> <span style="color:#ae81ff">1</span> second ago
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#### docker 서비스 재시작</span>
+</span></span><span style="display:flex;"><span>root@docker02:~# systemctl restart docker
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>재시작 후</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>policy-on-failure-max Up 8 seconds      restarts=0
+</span></span><span style="display:flex;"><span>policy-on-failure     Up 8 seconds      restarts=0
+</span></span><span style="display:flex;"><span>policy-unless-stopped Exited (0) 27 seconds ago   ← 수동 중지되었으므로 다시 살리지 않음
+</span></span><span style="display:flex;"><span>policy-always         Up 8 seconds      restarts=0  ← 수동 중지되었어도 그대로 살아남
+</span></span><span style="display:flex;"><span>policy-no             Exited (0) 27 seconds ago
+</span></span></code></pre></td></tr></table>
+</div>
+</div><table>
+	<thead>
+			<tr>
+					<th>컨테이너</th>
+					<th>재시작 전</th>
+					<th>dockerd 재시작 후</th>
+					<th>이유</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>policy-no</td>
+					<td>수동 stop</td>
+					<td>Exited</td>
+					<td><code>no</code> 는 자동으로 시작하지 않음</td>
+			</tr>
+			<tr>
+					<td>policy-always</td>
+					<td>수동 stop</td>
+					<td><strong>Up</strong></td>
+					<td><code>always</code> 는 무조건 시작</td>
+			</tr>
+			<tr>
+					<td>policy-unless-stopped</td>
+					<td>수동 stop</td>
+					<td>Exited</td>
+					<td>수동 중지됨 → 이 상태를 기억</td>
+			</tr>
+			<tr>
+					<td>policy-on-failure(:3)</td>
+					<td>실행 중</td>
+					<td>Up</td>
+					<td>정상 완료가 아닌 &ldquo;중단&rdquo; 으로 취급</td>
+			</tr>
+			<tr>
+					<td>policy-on-failure-max</td>
+					<td>실행 중</td>
+					<td>Up</td>
+					<td>위와 동일</td>
+			</tr>
+	</tbody>
+</table>
+<h2 id="4-컨테이너-종료-시-자동-삭제">4. 컨테이너 종료 시 자동 삭제<a hidden class="anchor" aria-hidden="true" href="#4-컨테이너-종료-시-자동-삭제">#</a></h2>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>root@docker02:~# docker run -d --name c1 --rm uhub.service.ucloud.cn/dawn/apps:v1 sleep <span style="color:#ae81ff">10</span>
+</span></span><span style="display:flex;"><span>044a33b69fca3265306c1a7c5f78a1dc6b4e7f397fff4444597a573ecf1f0809
+</span></span><span style="display:flex;"><span>root@docker02:~# docker ps -a
+</span></span><span style="display:flex;"><span>CONTAINER ID   IMAGE                                 COMMAND                  CREATED         STATUS         PORTS     NAMES
+</span></span><span style="display:flex;"><span>044a33b69fca   uhub.service.ucloud.cn/dawn/apps:v1   <span style="color:#e6db74">&#34;/docker-entrypoint.…&#34;</span>   <span style="color:#ae81ff">8</span> seconds ago   Up <span style="color:#ae81ff">8</span> seconds   80/tcp    c1
+</span></span><span style="display:flex;"><span>root@docker02:~# docker ps -a
+</span></span><span style="display:flex;"><span>CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+</span></span></code></pre></td></tr></table>
+</div>
+</div>
+
+      </div><div id="giscus-container" style="margin-top: 2rem; padding-top: 1rem; border-top: 1px solid var(--border);">
+  <script src="https://giscus.app/client.js"
+          data-repo="LMDAWN1127/LMDAWN1127.github.io"
+          data-repo-id="R_kgDOTMWmvw"
+          data-category="Announcements"
+          data-category-id="DIC_kwDOTMWmv84DAd3g"
+          data-mapping="pathname"
+          data-strict="0"
+          data-reactions-enabled="1"
+          data-emit-metadata="0"
+          data-input-position="bottom"
+          data-theme="preferred_color_scheme"
+          data-lang="zh-CN"
+          crossorigin="anonymous"
+          async>
+  </script>
+</div>
+
+    </div>
+
+    <aside class="toc-sidebar" id="toc-sidebar">
+    <div class="toc-header">目录</div>
+    <nav class="toc-nav"><ul class="toc-list">
+            <li>
+                <a href="#docker-%ec%8b%a4%ec%a0%84-%ec%bb%a8%ed%85%8c%ec%9d%b4%eb%84%88-%eb%9d%bc%ec%9d%b4%ed%94%84%ec%82%ac%ec%9d%b4%ed%81%b4-%ea%b4%80%eb%a6%ac---%ec%8b%9c%ec%9e%91-%ec%a4%91%ec%a7%80-%ec%9e%ac%ec%8b%9c%ec%9e%91-%ec%a0%95%ec%b1%85" class="toc-link" data-target="docker-실전-컨테이너-라이프사이클-관리---시작-중지-재시작-정책">Docker 실전: 컨테이너 라이프사이클 관리 - 시작, 중지, 재시작 정책</a><ul>
+            <li>
+                <a href="#1-%ec%bb%a8%ed%85%8c%ec%9d%b4%eb%84%88-%ec%8b%9c%ec%9e%91%ea%b3%bc-%ec%a4%91%ec%a7%80" class="toc-link" data-target="1-컨테이너-시작과-중지">1. 컨테이너 시작과 중지</a><ul>
+            <li>
+                <a href="#1-%ec%bb%a8%ed%85%8c%ec%9d%b4%eb%84%88-%ec%a4%91%ec%a7%80" class="toc-link" data-target="1-컨테이너-중지">1. 컨테이너 중지</a></li>
+            <li>
+                <a href="#2-%ec%bb%a8%ed%85%8c%ec%9d%b4%eb%84%88-%ec%8b%9c%ec%9e%91" class="toc-link" data-target="2-컨테이너-시작">2. 컨테이너 시작</a></li>
+            <li>
+                <a href="#3-%ec%bb%a8%ed%85%8c%ec%9d%b4%eb%84%88-%ec%9e%ac%ec%8b%9c%ec%9e%91" class="toc-link" data-target="3-컨테이너-재시작">3. 컨테이너 재시작</a></li></ul>
+            </li>
+            <li>
+                <a href="#2-%ec%bb%a8%ed%85%8c%ec%9d%b4%eb%84%88-%ec%8b%9c%ec%9e%91-%ec%8b%9c-%ec%82%ac%ec%9a%a9%ec%9e%90-%ec%a7%80%ec%a0%95-%eb%aa%85%eb%a0%b9-%ec%a7%80%ec%a0%95" class="toc-link" data-target="2-컨테이너-시작-시-사용자-지정-명령-지정">2. 컨테이너 시작 시 사용자 지정 명령 지정</a><ul>
+            <li>
+                <a href="#1%ec%bb%a8%ed%85%8c%ec%9d%b4%eb%84%88-%ec%8b%9c%ec%9e%91-%eb%aa%85%eb%a0%b9-%ed%99%95%ec%9d%b8" class="toc-link" data-target="1컨테이너-시작-명령-확인">1.컨테이너 시작 명령 확인</a></li>
+            <li>
+                <a href="#2%ec%bb%a8%ed%85%8c%ec%9d%b4%eb%84%88%eb%a5%bc-%ec%82%ac%ec%9a%a9%ec%9e%90-%ec%a7%80%ec%a0%95-%eb%aa%85%eb%a0%b9%ec%9c%bc%eb%a1%9c-%ec%8b%9c%ec%9e%91" class="toc-link" data-target="2컨테이너를-사용자-지정-명령으로-시작">2.컨테이너를 사용자 지정 명령으로 시작</a></li>
+            <li>
+                <a href="#3%ec%bb%a8%ed%85%8c%ec%9d%b4%eb%84%88-%ec%83%9d%ec%84%b1-%ed%9b%84-%ec%97%b0%ea%b2%b0" class="toc-link" data-target="3컨테이너-생성-후-연결">3.컨테이너 생성 후 연결</a></li></ul>
+            </li>
+            <li>
+                <a href="#3-%ec%bb%a8%ed%85%8c%ec%9d%b4%eb%84%88-%ec%9e%ac%ec%8b%9c%ec%9e%91-%ec%a0%95%ec%b1%85" class="toc-link" data-target="3-컨테이너-재시작-정책">3. 컨테이너 재시작 정책</a><ul>
+            <li>
+                <a href="#1%ec%9e%ac%ec%8b%9c%ec%9e%91-%ec%a0%95%ec%b1%85" class="toc-link" data-target="1재시작-정책">1.재시작 정책</a></li>
+            <li>
+                <a href="#2%ec%8b%a4%ec%8a%b5-%ec%82%ac%eb%a1%80" class="toc-link" data-target="2실습-사례">2.실습 사례</a><ul>
+            <li>
+                <a href="#21-%ec%83%81%ec%a3%bc-%ec%84%9c%eb%b9%84%ec%8a%a4-nginx-%eb%b9%84%ec%a0%95%ec%83%81-%ec%a2%85%eb%a3%8c-%ec%9e%ac%ed%98%84" class="toc-link" data-target="21-상주-서비스-nginx-비정상-종료-재현">2.1 상주 서비스 (nginx), 비정상 종료 재현</a></li>
+            <li>
+                <a href="#22-%eb%8b%a8%ea%b8%b0-%ec%9e%91%ec%97%85-sleep-10-%ed%94%84%eb%a1%9c%ea%b7%b8%eb%9e%a8%ec%9d%b4-%ec%8a%a4%ec%8a%a4%eb%a1%9c-%ec%a2%85%eb%a3%8c" class="toc-link" data-target="22-단기-작업-sleep-10-프로그램이-스스로-종료">2.2 단기 작업 (sleep 10), 프로그램이 스스로 종료</a></li>
+            <li>
+                <a href="#23-docker-%ec%84%9c%eb%b9%84%ec%8a%a4-%ec%9e%ac%ec%8b%9c%ec%9e%91-%ed%9b%84-%ec%82%b4%ec%95%84%eb%82%a8%eb%8a%94-%ea%b2%83%ec%9d%80-%eb%ac%b4%ec%97%87%ec%9d%b8%ea%b0%80" class="toc-link" data-target="23-docker-서비스-재시작-후-살아남는-것은-무엇인가">2.3 docker 서비스 재시작 후 살아남는 것은 무엇인가</a></li></ul>
+            </li></ul>
+            </li>
+            <li>
+                <a href="#4-%ec%bb%a8%ed%85%8c%ec%9d%b4%eb%84%88-%ec%a2%85%eb%a3%8c-%ec%8b%9c-%ec%9e%90%eb%8f%99-%ec%82%ad%ec%a0%9c" class="toc-link" data-target="4-컨테이너-종료-시-자동-삭제">4. 컨테이너 종료 시 자동 삭제</a>
+            </li>
+        </ul>
+        </li>
+        </ul>
+    </nav>
+</aside>
+
+  </div>
+</article>
+    </main>
+    
+<a href="#top" id="top-link" class="top-link hidden" aria-label="go to top" title="Go to Top (Alt + G)" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevrons-up">
+        <polyline points="17 11 12 6 7 11"></polyline>
+        <polyline points="17 18 12 13 7 18"></polyline>
+    </svg>
+</a>
+<script defer src="/js/custom.js"></script>
+<div id="algolia-search-modal" class="algolia-modal" style="display: none;">
+  <div class="algolia-modal-overlay"></div>
+  <div class="algolia-modal-content">
+    <div class="algolia-search-header">
+      <div class="algolia-search-input-wrapper">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <input type="text" id="algolia-search-input" placeholder="搜索文章..." autofocus>
+        <kbd class="algolia-esc">Esc</kbd>
+      </div>
+    </div>
+    <div id="algolia-search-results" class="algolia-search-results">
+      <div class="algolia-empty-state">
+        <p>输入关键词开始搜索</p>
+      </div>
+    </div>
+    <div class="algolia-search-footer">
+      <span class="algolia-footer-text">
+        <kbd>↑</kbd> <kbd>↓</kbd> 导航
+        <kbd>↵</kbd> 打开
+        <kbd>Esc</kbd> 关闭
+      </span>
+      <span class="algolia-footer-logo">
+        搜索由 <a href="https://www.algolia.com/" target="_blank" rel="noopener">Algolia</a> 提供
+      </span>
+    </div>
+  </div>
+</div>
+
+<script>
+(function() {
+  'use strict';
+
+  var APP_ID = 'Y0SCRI4LCW';
+  var SEARCH_KEY = '03dda5e44aec7e0dd93b6a3653250b1f';
+  var INDEX_NAME = 'lmdawn1127-blog';
+  var API_URL = 'https://' + APP_ID + '-dsn.algolia.net/1/indexes/' + INDEX_NAME + '/query';
+  var debounceTimer = null;
+  var selectedIndex = -1;
+
+   
+  function doSearch(query) {
+    if (!query || !query.trim()) {
+      showEmpty();
+      return;
+    }
+
+    var body = JSON.stringify({
+      query: query,
+      hitsPerPage: 10,
+      attributesToRetrieve: ['title', 'content', 'url'],
+      attributesToHighlight: ['title', 'content'],
+      highlightPreTag: '<mark class="algolia-highlight">',
+      highlightPostTag: '</mark>'
+    });
+
+    fetch(API_URL, {
+      method: 'POST',
+      headers: {
+        'X-Algolia-Application-Id': APP_ID,
+        'X-Algolia-API-Key': SEARCH_KEY,
+        'Content-Type': 'application/json'
+      },
+      body: body
+    })
+    .then(function(resp) {
+      if (!resp.ok) throw new Error('HTTP ' + resp.status);
+      return resp.json();
+    })
+    .then(function(data) {
+      renderResults(data.hits || [], query);
+    })
+    .catch(function(err) {
+      console.error('Algolia search error:', err);
+      showError(err.message || '未知错误');
+    });
+  }
+
+   
+  function showEmpty() {
+    document.getElementById('algolia-search-results').innerHTML =
+      '<div class="algolia-empty-state"><p>输入关键词开始搜索</p></div>';
+  }
+
+  function showError(detail) {
+    var msg = '搜索出错，请稍后再试';
+    if (detail) msg += '<br><small style="color:#888">错误详情: ' + escapeHtml(detail) + '</small>';
+    document.getElementById('algolia-search-results').innerHTML =
+      '<div class="algolia-empty-state"><p>' + msg + '</p></div>';
+  }
+
+  function showNoResults(query) {
+    document.getElementById('algolia-search-results').innerHTML =
+      '<div class="algolia-empty-state"><p>未找到与「' + escapeHtml(query) + '」相关的结果</p></div>';
+  }
+
+  function escapeHtml(s) {
+    var d = document.createElement('div');
+    d.appendChild(document.createTextNode(s));
+    return d.innerHTML;
+  }
+
+  function getHL(hit, attr) {
+    if (hit._highlightResult && hit._highlightResult[attr]) return hit._highlightResult[attr].value;
+    return hit[attr] || '';
+  }
+
+  function trunc(s, n) {
+    if (!s) return '';
+    s = s.replace(/<[^>]+>/g, '');
+    return s.length > n ? s.substring(0, n) + '…' : s;
+  }
+
+  function renderResults(hits, query) {
+    var box = document.getElementById('algolia-search-results');
+    if (!hits.length) { showNoResults(query); return; }
+
+    var h = '<div class="algolia-results-count">' + hits.length + ' 个结果</div>';
+    hits.forEach(function(hit, i) {
+      var title = getHL(hit, 'title') || '无标题';
+      var content = getHL(hit, 'content');
+      var url = hit.url || '#';
+
+      h += '<a class="algolia-hit" href="' + url + '" data-index="' + i + '">';
+      h += '<div class="algolia-hit-title">' + title + '</div>';
+      h += '<div class="algolia-hit-content">' + trunc(content, 150) + '</div>';
+
+      h += '</a>';
+    });
+    box.innerHTML = h;
+
+    box.querySelectorAll('.algolia-hit').forEach(function(el) {
+      el.addEventListener('click', closeAlgoliaSearch);
+    });
+  }
+
+   
+  function onInput(e) {
+    var q = e.target.value;
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(function() { doSearch(q); }, 200);
+  }
+
+  function onKeydown(e) {
+    var hits = document.querySelectorAll('.algolia-hit');
+    if (!hits.length) return;
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      selectedIndex = Math.min(selectedIndex + 1, hits.length - 1);
+      sel(hits);
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      selectedIndex = Math.max(selectedIndex - 1, 0);
+      sel(hits);
+    } else if (e.key === 'Enter' && selectedIndex >= 0) {
+      e.preventDefault();
+      window.location.href = hits[selectedIndex].getAttribute('href');
+      closeAlgoliaSearch();
+    }
+  }
+
+  function sel(hits) {
+    hits.forEach(function(el, i) {
+      if (i === selectedIndex) { el.classList.add('selected'); el.scrollIntoView({ block: 'nearest' }); }
+      else el.classList.remove('selected');
+    });
+  }
+
+   
+  document.addEventListener('DOMContentLoaded', function() {
+    var input = document.getElementById('algolia-search-input');
+    if (input) {
+      input.addEventListener('input', onInput);
+      input.addEventListener('keydown', onKeydown);
+    }
+  });
+
+  window.openAlgoliaSearch = function() {
+    var modal = document.getElementById('algolia-search-modal');
+    modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+    setTimeout(function() {
+      var input = document.getElementById('algolia-search-input');
+      if (input) { input.value = ''; input.focus(); showEmpty(); }
+    }, 100);
+  };
+
+  window.closeAlgoliaSearch = function() {
+    document.getElementById('algolia-search-modal').style.display = 'none';
+    document.body.style.overflow = '';
+    selectedIndex = -1;
+  };
+})();
+</script>
+
+<style>
+  .algolia-modal{position:fixed;top:0;left:0;width:100%;height:100%;z-index:1000;display:flex;align-items:flex-start;justify-content:center;padding-top:10vh}
+  .algolia-modal-overlay{position:absolute;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.6);backdrop-filter:blur(4px)}
+  .algolia-modal-content{position:relative;width:90%;max-width:600px;background:#1a1a1a;border-radius:12px;box-shadow:0 20px 60px rgba(0,0,0,.5);overflow:hidden;border:1px solid #333}
+  .algolia-search-header{padding:16px;border-bottom:1px solid #333}
+  .algolia-search-input-wrapper{display:flex;align-items:center;gap:12px;background:#2a2a2a;border-radius:8px;padding:12px 16px;border:1px solid #444}
+  .algolia-search-input-wrapper svg{color:#666;flex-shrink:0}
+  #algolia-search-input{flex:1;background:transparent;border:none;outline:none;color:#fff;font-size:16px;font-family:inherit}
+  #algolia-search-input::placeholder{color:#666}
+  .algolia-esc{background:#444;color:#999;padding:2px 6px;border-radius:4px;font-size:11px;font-family:inherit}
+  .algolia-search-results{max-height:400px;overflow-y:auto;padding:8px}
+  .algolia-empty-state{padding:40px 20px;text-align:center;color:#666}
+  .algolia-results-count{padding:8px 12px;font-size:12px;color:#666}
+  .algolia-search-footer{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;border-top:1px solid #333;background:#222;font-size:12px;color:#666}
+  .algolia-footer-text kbd{background:#444;color:#999;padding:2px 4px;border-radius:3px;font-size:10px;margin:0 2px}
+  .algolia-footer-logo a{color:#5EEAD4;text-decoration:none}
+  .algolia-footer-logo a:hover{text-decoration:underline}
+  .algolia-hit{display:block;padding:12px;border-radius:6px;text-decoration:none;color:#fff;transition:background .2s}
+  .algolia-hit:hover,.algolia-hit.selected{background:#2a2a2a}
+  .algolia-hit-title{font-weight:600;color:#5EEAD4;margin-bottom:4px;font-size:15px}
+  .algolia-hit-title mark,.algolia-highlight{background:rgba(94,234,212,.25);color:#5EEAD4;padding:0 2px;border-radius:2px}
+  .algolia-hit-content{font-size:13px;color:#999;line-height:1.5}
+  .algolia-hit-content mark,.algolia-hit-content .algolia-highlight{background:rgba(94,234,212,.2);color:#ccc;padding:0 2px;border-radius:2px}
+  .algolia-hit-meta{display:flex;align-items:center;gap:10px;margin-top:8px}
+  .algolia-hit-date{font-size:12px;color:#666}
+  .algolia-hit-tags{display:flex;gap:6px}
+  .algolia-hit-tag{background:#333;color:#999;padding:2px 8px;border-radius:4px;font-size:11px}
+</style>
+<script>
+  
+  document.addEventListener('keydown', function(e) {
+    
+    if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+      e.preventDefault();
+      if (typeof openAlgoliaSearch === 'function') openAlgoliaSearch();
+    }
+    
+    if (e.key === 'Escape') {
+      if (typeof closeAlgoliaSearch === 'function') closeAlgoliaSearch();
+    }
+    
+    if (e.altKey && e.key === '/') {
+      e.preventDefault();
+      if (typeof openAlgoliaSearch === 'function') openAlgoliaSearch();
+    }
+  });
+
+  
+  document.addEventListener('DOMContentLoaded', function() {
+    var modal = document.getElementById('algolia-search-modal');
+    if (modal) {
+      var overlay = modal.querySelector('.algolia-modal-overlay');
+      if (overlay) {
+        overlay.addEventListener('click', function() {
+          if (typeof closeAlgoliaSearch === 'function') closeAlgoliaSearch();
+        });
+      }
+    }
+  });
+
+  
+  
+  document.addEventListener('DOMContentLoaded', function() {
+    if (document.getElementById('algolia-search-btn')) return;
+    var btn = document.createElement('button');
+    btn.id = 'algolia-search-btn';
+    btn.className = 'theme-toggle search-toggle';
+    btn.type = 'button';
+    btn.title = '搜索 (Ctrl+K)';
+    btn.setAttribute('aria-label', '搜索');
+    btn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>';
+    btn.addEventListener('click', function() {
+      if (typeof openAlgoliaSearch === 'function') openAlgoliaSearch();
+    });
+    var target = document.querySelector('.logo-switches') || document.querySelector('.header-nav');
+    if (target) target.appendChild(btn);
+  });
+</script><script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var cur = (document.documentElement.lang || 'zh').toLowerCase();
+    
+    
+    
+    var rawPath = location.pathname.replace(/\/+$/, '');
+    var pm = rawPath.match(/^\/(en|ko|ja)(?:\/(.*))?$/);
+    var rest = pm ? (pm[2] ? '/' + pm[2] : '') : rawPath; 
+    function langHref(code) {
+      var base = (code === 'zh') ? '' : '/' + code;
+      if (rest === '' || rest === '/') {
+        return base === '' ? '/' : base + '/';
+      }
+      return base + rest + '/';
+    }
+
+    var langs = [
+      { code: 'zh', label: '中文' },
+      { code: 'en', label: 'English' },
+      { code: 'ko', label: '한국어' },
+      { code: 'ja', label: '日本語' }
+    ];
+    var wrap = document.querySelector('.logo-switches') || document.querySelector('.header-nav');
+    if (!wrap || document.getElementById('lang-dropdown')) return;
+
+    var current = langs.find(function(l) { return l.code === cur; }) || langs[0];
+
+    var dd = document.createElement('div');
+    dd.className = 'lang-dropdown';
+    dd.id = 'lang-dropdown';
+
+    var toggle = document.createElement('button');
+    toggle.type = 'button';
+    toggle.className = 'lang-dropdown-toggle';
+    toggle.setAttribute('aria-label', '选择语言');
+    toggle.innerHTML = '<span class="lang-current">' + current.label + '</span><span class="lang-caret">▾</span>';
+
+    var menu = document.createElement('ul');
+    menu.className = 'lang-dropdown-menu';
+    langs.forEach(function(l) {
+      var li = document.createElement('li');
+      if (l.code === cur) li.className = 'active';
+      var a = document.createElement('a');
+      a.href = langHref(l.code);
+      a.textContent = l.label;
+      li.appendChild(a);
+      menu.appendChild(li);
+    });
+
+    dd.appendChild(toggle);
+    dd.appendChild(menu);
+    wrap.appendChild(dd);
+
+    toggle.addEventListener('click', function(e) {
+      e.stopPropagation();
+      dd.classList.toggle('open');
+    });
+    document.addEventListener('click', function(e) {
+      if (!dd.contains(e.target)) dd.classList.remove('open');
+    });
+  });
+</script>
+
+
+<script>
+    let menu = document.getElementById('menu');
+    if (menu) {
+        const scrollPosition = localStorage.getItem("menu-scroll-position");
+        if (scrollPosition) {
+            menu.scrollLeft = parseInt(scrollPosition, 10);
+        }
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+</script>
+<script>
+    var toplink = document.getElementById("top-link");
+    window.onscroll = function () {
+        const scrollThreshold = window.innerHeight;
+        if (document.body.scrollTop > scrollThreshold || document.documentElement.scrollTop > scrollThreshold) {
+            toplink.classList.remove("hidden");
+        } else {
+            toplink.classList.add("hidden");
+        }
+    };
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        const html = document.querySelector("html");
+        if (html.dataset.theme === "dark") {
+            html.dataset.theme = 'light';
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            html.dataset.theme = 'dark';
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = '복사';
+
+        function copyingDone() {
+            copybutton.innerHTML = '복사 완료!';
+            setTimeout(() => {
+                copybutton.innerHTML = '복사';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>

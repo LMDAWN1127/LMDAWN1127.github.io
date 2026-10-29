@@ -163,6 +163,28 @@
 <article class="post-entry tag-entry"> 
   <header class="entry-header">
     <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/ja/posts/docker-chroot-minimal-root/">Docker 実戦：chroot で最小コンテナルートを手作りしてコンテナの本質を理解する</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>Docker コマンドを使わず、chroot で最小コンテナルートをゼロから手作り (bash と動的ライブラリチェーンをコピー) し、ファイルシステム分離の「コンテナ感」を味わいます。さらに 2 つの独立ルートでプロセス/データが互いに見えないことを示し、最後に実コンテナの overlay2 merged ファイルシステムに chroot してファイルを直したりログを読んだりします。</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-26">
+  2026年10月26日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 3 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to Docker 実戦：chroot で最小コンテナルートを手作りしてコンテナの本質を理解する" href="https://LMDAWN1127.github.io/ja/posts/docker-chroot-minimal-root/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
       <a href="https://LMDAWN1127.github.io/ja/posts/docker-wordpress-multinode/">Docker 実戦：WordPress のマルチノード展開と永続化検証</a>
     </h2>
   </header>
@@ -207,11 +229,33 @@
 <article class="post-entry tag-entry"> 
   <header class="entry-header">
     <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/ja/posts/docker-app-deployments/">Docker 実戦：アプリ導入 - Tomcat / MySQL / WordPress / ELK</a>
+      <a href="https://LMDAWN1127.github.io/ja/posts/docker-bind-mount-volume/">Docker 実戦：コンテナのデータ永続化——bind マウントとボリューム（Volume）</a>
     </h2>
   </header>
   <div class="entry-content">
-    <p>docker run で実アプリを導入します。Tomcat、MySQL (20 インスタンスの一括起動と複数インスタンスでの公開を含む)、WordPress、そして ElasticSearch &#43; Kibana スタックを、ポートマッピング・永続ボリューム・パスワード/トークン設定とともに扱います。</p>
+    <p>-v でホストのパスをコンテナにマウントし、1 つのマウントポイントを複数コンテナで共有し、1 つのコンテナに複数のマウントポイントを付け、rw/ro 権限を指定します。さらに docker volume の作成・確認・削除、匿名ボリューム、稼働中コンテナの再マウントまでを扱います。</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-26">
+  2026年10月26日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 7 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to Docker 実戦：コンテナのデータ永続化——bind マウントとボリューム（Volume）" href="https://LMDAWN1127.github.io/ja/posts/docker-bind-mount-volume/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/ja/posts/docker-container-lifecycle/">Docker 実戦：コンテナライフサイクル管理——起動・停止・再起動ポリシー</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>docker stop・start・restart と起動時のコマンド指定、そして 5 つの再起動ポリシーを扱います。ポリシーの異なる 5 つのコンテナを作り、kill -9 で強制終了させて再起動回数を比較し、dockerd 再起動後に復活するコンテナを確認します。</p>
   </div>
   <footer class="entry-footer">
 
@@ -223,51 +267,7 @@
   阅读需 6 分钟
 </span>
 </footer>
-  <a class="entry-link" aria-label="post link to Docker 実戦：アプリ導入 - Tomcat / MySQL / WordPress / ELK" href="https://LMDAWN1127.github.io/ja/posts/docker-app-deployments/"></a>
-</article>
-
-<article class="post-entry tag-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/ja/posts/docker-inspect-pid-id-network/">Docker 実戦：inspect でコンテナの PID・ID・ネットワーク情報を確認</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>docker container inspect -f と Go テンプレートを使って、コンテナの PID・ID・IP アドレス・ゲートウェイ・MAC アドレスを取り出します。</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-26">
-  2026年10月26日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 1 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to Docker 実戦：inspect でコンテナの PID・ID・ネットワーク情報を確認" href="https://LMDAWN1127.github.io/ja/posts/docker-inspect-pid-id-network/"></a>
-</article>
-
-<article class="post-entry tag-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/ja/posts/docker-nginx-load-balancing/">Docker 実戦：Nginx ロードバランシングとコンテナトラフィック分散</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>lb コンテナと web コンテナ 2 つを起動し、lb 上の Nginx default.conf を編集して web01/web02 にリバースプロキシし、lb に 10 回 curl してトラフィックが 2 つのバックエンド間で交互に振り分けられることを確認します。</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-26">
-  2026年10月26日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 3 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to Docker 実戦：Nginx ロードバランシングとコンテナトラフィック分散" href="https://LMDAWN1127.github.io/ja/posts/docker-nginx-load-balancing/"></a>
+  <a class="entry-link" aria-label="post link to Docker 実戦：コンテナライフサイクル管理——起動・停止・再起動ポリシー" href="https://LMDAWN1127.github.io/ja/posts/docker-container-lifecycle/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">

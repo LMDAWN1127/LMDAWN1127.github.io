@@ -49,6 +49,13 @@
       <description>docker ps が表示する 4 つのコンテナ状態がどう発生するかを順に再現します — Up、Exited（終了コードの意味: 0=正常, 137=SIGKILL）、Created（作成済みだが未起動）、Paused（サービス提供を停止、再起動とは異なり状態の時間はリセットされない）。</description>
     </item>
     <item>
+      <title>Docker 実戦：Linux Namespace ネットワーク隔離と CGroup リソース制限</title>
+      <link>https://LMDAWN1127.github.io/ja/posts/docker-namespace-cgroup-resource-limit/</link>
+      <pubDate>Wed, 28 Oct 2026 10:00:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/ja/posts/docker-namespace-cgroup-resource-limit/</guid>
+      <description>ip netns で Linux ネットワーク名前空間を手作業で構築し、veth pair と NAT で外部ネットワークに接続します。さらに Docker コンテナが net namespace を共有する仕組みを確認し、最後に cgroup v2 で CPU・メモリの制限制御と OOM kill の再現までを行い、コンテナの 2 つの基盤機構である隔離 (Namespace) と制限 (CGroup) を一気に通します。</description>
+    </item>
+    <item>
       <title>Docker 実戦：Overlay によるコンテナのクロスホストネットワーク接続と WordPress 実践</title>
       <link>https://LMDAWN1127.github.io/ja/posts/docker-overlay-cross-host-networking/</link>
       <pubDate>Tue, 27 Oct 2026 18:30:00 +0800</pubDate>
@@ -96,6 +103,20 @@
       <pubDate>Mon, 26 Oct 2026 15:20:00 +0800</pubDate>
       <guid>https://LMDAWN1127.github.io/ja/posts/docker-dockerfile-multi-game-image-add/</guid>
       <description>古い全部入りイメージ dawn-games-dawn:v0.6 から中継コンテナ経由で 2 つのゲーム (黄金鉱夫と Flappy Bird) の静的ファイルを取り出し、それぞれ tar.gz に固め、Dockerfile の ADD 命令でビルド時に Alpine+nginx コンテナへ自動展開します。最後にイメージをビルドしてコンテナを起動し、ドメインで 2 つのゲームにアクセスします。さらに ADD と COPY の決定的な違い (ADD は tar.gz を自動展開する) も解説します。</description>
+    </item>
+    <item>
+      <title>Docker 実戦：コンテナのデータ永続化——bind マウントとボリューム（Volume）</title>
+      <link>https://LMDAWN1127.github.io/ja/posts/docker-bind-mount-volume/</link>
+      <pubDate>Mon, 26 Oct 2026 15:00:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/ja/posts/docker-bind-mount-volume/</guid>
+      <description>-v でホストのパスをコンテナにマウントし、1 つのマウントポイントを複数コンテナで共有し、1 つのコンテナに複数のマウントポイントを付け、rw/ro 権限を指定します。さらに docker volume の作成・確認・削除、匿名ボリューム、稼働中コンテナの再マウントまでを扱います。</description>
+    </item>
+    <item>
+      <title>Docker 実戦：コンテナライフサイクル管理——起動・停止・再起動ポリシー</title>
+      <link>https://LMDAWN1127.github.io/ja/posts/docker-container-lifecycle/</link>
+      <pubDate>Mon, 26 Oct 2026 14:20:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/ja/posts/docker-container-lifecycle/</guid>
+      <description>docker stop・start・restart と起動時のコマンド指定、そして 5 つの再起動ポリシーを扱います。ポリシーの異なる 5 つのコンテナを作り、kill -9 で強制終了させて再起動回数を比較し、dockerd 再起動後に復活するコンテナを確認します。</description>
     </item>
     <item>
       <title>Docker 実戦：アプリ導入 - Tomcat / MySQL / WordPress / ELK</title>

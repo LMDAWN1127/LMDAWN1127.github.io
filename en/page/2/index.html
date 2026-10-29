@@ -154,6 +154,28 @@
 <article class="post-entry"> 
   <header class="entry-header">
     <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/en/posts/docker-namespace-cgroup-resource-limit/">Docker in Practice: Linux Namespace Network Isolation and CGroup Resource Limits</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>Build a Linux network namespace by hand with ip netns, connect it to the outside world through a veth pair and NAT, then see how Docker containers share a net namespace; finally stress CPU and memory under cgroup v2 limits and reproduce an OOM kill, tying together the two low-level mechanisms behind containers: isolation (Namespace) and limits (CGroup).</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-28">
+  2026年10月28日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 12 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to Docker in Practice: Linux Namespace Network Isolation and CGroup Resource Limits" href="https://LMDAWN1127.github.io/en/posts/docker-namespace-cgroup-resource-limit/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
       <a href="https://LMDAWN1127.github.io/en/posts/docker-overlay-cross-host-networking/">Docker in Practice: Overlay Cross-Host Container Networking with a WordPress Case</a>
     </h2>
   </header>
@@ -237,28 +259,6 @@
 </span>
 </footer>
   <a class="entry-link" aria-label="post link to Docker in Practice: Container Isolation and Cross-Network Communication with Multiple Bridge Networks" href="https://LMDAWN1127.github.io/en/posts/docker-multi-bridge-network-isolation/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/en/posts/docker-chroot-minimal-root/">Docker in Practice: Hand-Building a Minimal Container Root with chroot to Understand What a Container Is</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>Without Docker commands, use chroot to hand-build a minimal container root from scratch (copying bash and its dynamic-library chain) to feel filesystem isolation; then show two independent roots make processes/data invisible to each other, and finally chroot into a real container’s overlay2 merged filesystem to fix files and read logs.</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-26">
-  2026年10月26日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 4 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to Docker in Practice: Hand-Building a Minimal Container Root with chroot to Understand What a Container Is" href="https://LMDAWN1127.github.io/en/posts/docker-chroot-minimal-root/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">
