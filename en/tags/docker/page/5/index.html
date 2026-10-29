@@ -163,6 +163,28 @@
 <article class="post-entry tag-entry"> 
   <header class="entry-header">
     <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/en/posts/docker-dockerfile-multi-game-image-add/">Docker in Practice: Building a Multi-Game Image with Dockerfile and ADD Auto-Extraction</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>Copy the static files of two games (Gold Miner and Flappy Bird) out of an old all-in-one image dawn-games-dawn:v0.6 using a staging container, pack each into a tar.gz, then let the Dockerfile ADD instruction auto-extract them into an Alpine&#43;nginx container at build time; finally build the image, start the container and visit both games by domain — plus the key difference between ADD and COPY: ADD auto-extracts tar.gz.</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-26">
+  2026年10月26日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 5 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to Docker in Practice: Building a Multi-Game Image with Dockerfile and ADD Auto-Extraction" href="https://LMDAWN1127.github.io/en/posts/docker-dockerfile-multi-game-image-add/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
       <a href="https://LMDAWN1127.github.io/en/posts/docker-bind-mount-volume/">Docker in Practice: Container Data Persistence - bind Mounts and Volumes</a>
     </h2>
   </header>
@@ -246,28 +268,6 @@
 </span>
 </footer>
   <a class="entry-link" aria-label="post link to Docker in Practice: Inspecting Container PID, ID and Network Info with inspect" href="https://LMDAWN1127.github.io/en/posts/docker-inspect-pid-id-network/"></a>
-</article>
-
-<article class="post-entry tag-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/en/posts/docker-nginx-load-balancing/">Docker in Practice: Nginx Load Balancing and Container Traffic Distribution</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>Run an lb container plus two web containers, edit the Nginx default.conf on lb to reverse-proxy to web01/web02, then curl the lb 10 times to see the traffic alternate between the two backends.</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-26">
-  2026年10月26日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 3 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to Docker in Practice: Nginx Load Balancing and Container Traffic Distribution" href="https://LMDAWN1127.github.io/en/posts/docker-nginx-load-balancing/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">

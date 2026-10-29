@@ -163,6 +163,30 @@
 <article class="post-entry tag-entry"> 
   <header class="entry-header">
     <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/posts/docker-app-deployments/">Docker 应用部署实战：Tomcat/MySQL/WordPress/ELK</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>Docker 应用部署实战：Tomcat/MySQL/WordPress/ELK 1. Docker部署Tomcat 创建容器 1 2 root@docker02:~# docker run -d -p 8080:8080 tomcat:9.0-jdk17 root@docker02:~# docker exec goofy_ramanujan sh -c &#39;mv webapps.dist/* webapps/&#39; 访问测试 http://11.0.1.122:8080/
+2. Docker部署MySQL 下载官方的镜像 1 root@docker02:~# docker pull mysql:8.4.1-oracle 启动MySQL 1 2 3 4 5 6 7 8 root@docker02:~# docker images REPOSITORY TAG IMAGE ID CREATED SIZE tomcat 9.0-jdk17 e726f39ab438 6 days ago 471MB uhub.service.ucloud.cn/dawn/nginx 1.30.4 886dbea595a1 2 months ago 161MB uhub.service.ucloud.cn/dawn/nginx latest 4e5db4761e0f 3 months ago 161MB mysql 8.4.1-oracle da8f2a99cf39 2 years ago 583MB root@docker02:~# docker run --name mysql-server -e MYSQL_ROOT_PASSWORD=123456 -d mysql:8.4.1-oracle 3bfde430e3ba58d6589d38014f616847f21c5801723ec48f5f30a0b20bb8ed8c 查看容器 1 2 3 root@docker02:~# docker ps -l CONTAINER ID IMAGE COMMAND CREATED STATUS PORTS NAMES 3bfde430e3ba mysql:8.4.1-oracle &#34;docker-entrypoint.s…&#34; 43 seconds ago Up 43 seconds 3306/tcp, 33060/tcp mysql-server 连接MySQL数据库 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 root@docker02:~# docker exec -it mysql-server mysql -p123456 mysql: [Warning] Using a password on the command line interface can be insecure. Welcome to the MySQL monitor. Commands end with ; or \g. Your MySQL connection id is 8 Server version: 8.4.1 MySQL Community Server - GPL Copyright (c) 2000, 2024, Oracle and/or its affiliates. Oracle is a registered trademark of Oracle Corporation and/or its affiliates. Other names may be trademarks of their respective owners. Type &#39;help;&#39; or &#39;\h&#39; for help. Type &#39;\c&#39; to clear the current input statement. mysql&gt; SHOW DATABASES; &#43;--------------------&#43; | Database | &#43;--------------------&#43; | information_schema | | mysql | | performance_schema | | sys | &#43;--------------------&#43; 4 rows in set (0.00 sec) mysql&gt; 部署数据库指定数据库和用户 1 root@docker02:~# docker run --name mysql-server02 -e MYSQL_ALLOW_EMPTY_PASSWORD=yes -e MYSQL_DATABASE=docker -e MYSQL_USER=dawn -e MYSQL_PASSWORD=123456 -d mysql:8.4.1-oracle 验证测试 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 root@docker02:~# docker exec -it mysql-server02 mysql Welcome to the MySQL monitor. Commands end with ; or \g. Your MySQL connection id is 8 Server version: 8.4.1 MySQL Community Server - GPL Copyright (c) 2000, 2024, Oracle and/or its affiliates. Oracle is a registered trademark of Oracle Corporation and/or its affiliates. Other names may be trademarks of their respective owners. Type &#39;help;&#39; or &#39;\h&#39; for help. Type &#39;\c&#39; to clear the current input statement. mysql&gt; SHOW DATABASES; &#43;--------------------&#43; | Database | &#43;--------------------&#43; | docker | | information_schema | | mysql | | performance_schema | | sys | &#43;--------------------&#43; 5 rows in set (0.00 sec) mysql&gt; SELECT user,host,plugin FROM mysql.user; &#43;------------------&#43;-----------&#43;-----------------------&#43; | user | host | plugin | &#43;------------------&#43;-----------&#43;-----------------------&#43; | dawn | % | caching_sha2_password | | root | % | caching_sha2_password | | mysql.infoschema | localhost | caching_sha2_password | | mysql.session | localhost | caching_sha2_password | | mysql.sys | localhost | caching_sha2_password | | root | localhost | caching_sha2_password | &#43;------------------&#43;-----------&#43;-----------------------&#43; 6 rows in set (0.00 sec) mysql&gt; 批量启动20个数据库实例
+...</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-23">
+  2026年10月23日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 5 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to Docker 应用部署实战：Tomcat/MySQL/WordPress/ELK" href="https://LMDAWN1127.github.io/posts/docker-app-deployments/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
       <a href="https://LMDAWN1127.github.io/posts/docker-env-var-passing/">Docker 实战：容器环境变量传递与查看</a>
     </h2>
   </header>
@@ -251,32 +275,6 @@
 </span>
 </footer>
   <a class="entry-link" aria-label="post link to Docker 实战：容器常用命令与 exec 操作" href="https://LMDAWN1127.github.io/posts/docker-common-commands-exec/"></a>
-</article>
-
-<article class="post-entry tag-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/posts/docker-image-container-flow/">Docker 实战：镜像拉取与容器启动全流程</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>Docker 实战：镜像拉取与容器启动全流程 镜像、容器与镜像仓库是 Docker 的三大核心对象：镜像仓库负责镜像的存储与分发，镜像是由仓库拉取而来的只读模板，容器则是镜像的运行实例。下面按「镜像仓库 → 镜像 → 容器」的顺序，走一遍从查看仓库、拉取镜像，到启动并访问容器的完整流程。
-镜像仓库 镜像仓库是镜像的存储与分发中心，既可以查看本地已有的镜像仓库列表，也可以从远程仓库把镜像拉取到本地。
-1. 查看本地镜像仓库列表 1 2 root@docker02:~# docker image ls REPOSITORY TAG IMAGE ID CREATED SIZE 镜像 镜像是由镜像仓库拉取而来的只读模板，本身不可修改，只能通过重新构建或拉取新版本来更新。
-2. 从远程仓库下载镜像 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 root@docker02:~# docker pull uhub.service.ucloud.cn/dawn/nginx:1.30.4 1.30.4: Pulling from dawn/nginx 26c307b5e35a: Pull complete 7be390ba6238: Pull complete d84ae7b21412: Pull complete c0df8d325117: Pull complete b8b80b9bc028: Pull complete f5de6e85ac74: Pull complete 5a4222b844e8: Pull complete Digest: sha256:9e4b33ead4c69e9845e53a1f175d0aa70a6cea62425b5d08957ba7eee5dc9b1d Status: Downloaded newer image for uhub.service.ucloud.cn/dawn/nginx:1.30.4 uhub.service.ucloud.cn/dawn/nginx:1.30.4 root@docker02:~# docker image ls REPOSITORY TAG IMAGE ID CREATED SIZE uhub.service.ucloud.cn/dawn/nginx 1.30.4 886dbea595a1 2 months ago 161MB 相关字段说明:
-...</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-23">
-  2026年10月23日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 2 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to Docker 实战：镜像拉取与容器启动全流程" href="https://LMDAWN1127.github.io/posts/docker-image-container-flow/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">

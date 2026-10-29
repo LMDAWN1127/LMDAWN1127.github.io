@@ -11,7 +11,7 @@
     </image>
     <generator>Hugo</generator>
     <language>ja</language>
-    <lastBuildDate>Thu, 29 Oct 2026 12:24:00 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 29 Oct 2026 13:30:00 +0800</lastBuildDate>
     <atom:link href="https://LMDAWN1127.github.io/ja/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Harbor アクティブスタンバイデプロイ：インストールからHTTPS・レプリケーションまで</title>
@@ -19,6 +19,13 @@
       <pubDate>Tue, 04 Aug 2026 00:00:00 +0000</pubDate>
       <guid>https://LMDAWN1127.github.io/ja/posts/harbor-master-slave/</guid>
       <description>HarborエンタープライズDockerレジストリのアクティブスタンバイアーキテクチャ、HTTP/HTTPSモード、自己署名証明書、クロスホストレプリケーションを完全にカバーするデプロイガイドです。</description>
+    </item>
+    <item>
+      <title>docker-compose でマルチサービスイメージをビルドしコンテナを起動する事例</title>
+      <link>https://LMDAWN1127.github.io/ja/posts/docker-compose-multi-service/</link>
+      <pubDate>Thu, 29 Oct 2026 13:30:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/ja/posts/docker-compose-multi-service/</guid>
+      <description>docker-compose の事例を通して、1 つの YAML ファイルで 2 つの HTML5 ゲームサービス（doudizhu と motuo）のイメージビルドとコンテナ管理を統合的にオーケストレーションする方法を示す。compose ファイル（ビルドコンテキスト + 各サービスの Dockerfile）と nginx バーチャルホスト、起動スクリプトを作成し、docker-compose build で 2 つのイメージを一度にコンパイル、up -d でバックグラウンド起動、ps/stop/start/restart/down でライフサイクルを管理し、その後固定ポート + restart: always とランダムポートを設定してアクセスと再起動ポリシーを検証し、最後によく使うコマンドの対照表を提示する。</description>
     </item>
     <item>
       <title>Dockerfile マルチステージビルド実戦</title>

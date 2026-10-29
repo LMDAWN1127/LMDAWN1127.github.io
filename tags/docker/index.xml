@@ -11,7 +11,7 @@
     </image>
     <generator>Hugo</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Thu, 29 Oct 2026 12:24:00 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 29 Oct 2026 13:30:00 +0800</lastBuildDate>
     <atom:link href="https://LMDAWN1127.github.io/tags/docker/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Harbor 主备部署实战：从安装到 HTTPS 与主备复制</title>
@@ -19,6 +19,13 @@
       <pubDate>Tue, 04 Aug 2026 00:00:00 +0000</pubDate>
       <guid>https://LMDAWN1127.github.io/posts/harbor-master-slave/</guid>
       <description>完整记录 Harbor 企业级镜像仓库的主备部署过程，涵盖 HTTP/HTTPS 双模式安装、自签名证书配置、跨主机主备复制等核心运维技能。</description>
+    </item>
+    <item>
+      <title>基于 docker-compose 编译多服务镜像并启动容器</title>
+      <link>https://LMDAWN1127.github.io/posts/docker-compose-multi-service/</link>
+      <pubDate>Thu, 29 Oct 2026 13:30:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/posts/docker-compose-multi-service/</guid>
+      <description>通过一个 docker-compose 案例演示如何用一个 YAML 文件统一编排两个 HTML5 游戏服务（斗地主 doudizhu、摩托 motuo）的镜像构建与容器管理：编写 compose 文件（build context + 各自 Dockerfile）与 nginx 虚拟主机、启动脚本，用 docker-compose build 一次编译出两个镜像、up -d 后台启动、ps/stop/start/restart/down 管理生命周期，再配置固定端口加 restart: always 与随机端口并验证访问与重启策略，最后给出常用命令对照表。</description>
     </item>
     <item>
       <title>Dockerfile 多阶段构建镜像实战</title>
