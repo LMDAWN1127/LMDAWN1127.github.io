@@ -11,7 +11,7 @@
     </image>
     <generator>Hugo</generator>
     <language>ko</language>
-    <lastBuildDate>Thu, 29 Oct 2026 10:47:00 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 29 Oct 2026 11:00:00 +0800</lastBuildDate>
     <atom:link href="https://LMDAWN1127.github.io/ko/categories/devops/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Harbor 액티브-스탠바이 배포: 설치부터 HTTPS 및 복제까지</title>
@@ -19,6 +19,13 @@
       <pubDate>Tue, 04 Aug 2026 00:00:00 +0000</pubDate>
       <guid>https://LMDAWN1127.github.io/ko/posts/harbor-master-slave/</guid>
       <description>Harbor 엔터프라이즈 Docker 레지스트리의 액티브-스탠바이 아키텍처, HTTP/HTTPS 모드, 자체 서명 인증서, 크로스 호스트 복제를 완전히 다루는 배포 가이드입니다.</description>
+    </item>
+    <item>
+      <title>Dockerfile ONBUILD 명령 실전</title>
+      <link>https://LMDAWN1127.github.io/ko/posts/docker-dockerfile-onbuild-instruction/</link>
+      <pubDate>Thu, 29 Oct 2026 11:00:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/ko/posts/docker-dockerfile-onbuild-instruction/</guid>
+      <description>You_Jump_I_Jump 게임 이미지로 Dockerfile ONBUILD 명령을 시연한다. 지연 트리거 메커니즘(정의된 명령은 현재 이미지 빌드 시 실행되지 않고, 다른 이미지가 이 이미지를 베이스로 사용할 때만 자동 트리거됨)을 이해하고, 2개의 ONBUILD 명령(RUN 으로 디렉터리/로그 생성, LABEL 로 블로그 URL 추가)을 포함한 베이스 이미지와 자식 이미지 Dockerfile 을 작성한 뒤 v2.19/v2.20 빌드 후 docker inspect 로 OnBuild 와 Labels 를 비교하고 컨테이너로 파일시스템 차이를 비교하며, 마지막으로 -f 로 여러 Dockerfile 을 지정해 다른 이미지를 빌드하는 방법을 설명한다.</description>
     </item>
     <item>
       <title>Dockerfile 일반 사용자로 컨테이너 실행(USER 명령) 실전</title>

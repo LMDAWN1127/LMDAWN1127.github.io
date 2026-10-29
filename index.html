@@ -190,6 +190,28 @@
 <article class="post-entry"> 
   <header class="entry-header">
     <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/posts/docker-dockerfile-onbuild-instruction/">Dockerfile 之 ONBUILD 指令实战</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>通过跳一跳（You_Jump_I_Jump）游戏镜像演示 Dockerfile 的 ONBUILD 指令：理解其延迟触发机制（定义的指令在当前镜像构建时不执行，仅当其它镜像以本镜像为基础镜像时才自动触发），编写含 2 个 ONBUILD 指令（RUN 建目录/日志、LABEL 加博客地址）的基础镜像与子镜像 Dockerfile，构建 v2.19/v2.20 后用 docker inspect 对比 OnBuild 与 Labels、用容器对比文件系统差异，最后说明如何用 -f 指定多个 Dockerfile 构建不同镜像。</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-29">
+  2026年10月29日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 4 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to Dockerfile 之 ONBUILD 指令实战" href="https://LMDAWN1127.github.io/posts/docker-dockerfile-onbuild-instruction/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
       <a href="https://LMDAWN1127.github.io/posts/docker-dockerfile-user-instruction/">Dockerfile 基于普通用户运行容器（USER 指令）实战</a>
     </h2>
   </header>
@@ -251,28 +273,6 @@
 </span>
 </footer>
   <a class="entry-link" aria-label="post link to Docker 实战：镜像打标签 MAINTAINER 与 LABEL 及元数据查看" href="https://LMDAWN1127.github.io/posts/docker-image-tag-maintainer-label-metadata/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/posts/docker-dockerfile-optimization-and-run-tips/">Docker 实战：Dockerfile 优化技巧与容器启动技巧</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>梳理 Docker 实战中的高频提效技巧：构建侧讲清镜像层缓存(Using cache)的命中逻辑、用 .dockerignore 把 1GB 的 build context 砍到约 1.6MB；运行侧演示 docker exec -w 指定工作目录、匿名存储卷在宿主机的落盘路径(/var/lib/docker/volumes//_data)、以及 -p :80 随机端口映射(32768~60999)。</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-28">
-  2026年10月28日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 2 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to Docker 实战：Dockerfile 优化技巧与容器启动技巧" href="https://LMDAWN1127.github.io/posts/docker-dockerfile-optimization-and-run-tips/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">

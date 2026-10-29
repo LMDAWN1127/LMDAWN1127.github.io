@@ -173,6 +173,28 @@
 <article class="post-entry"> 
   <header class="entry-header">
     <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/en/posts/docker-overlayfs-storage-driver/">Docker in Practice: OverlayFS Union Mounts and the Storage Driver Explained</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>How the Docker OverlayFS storage driver works: the lower/upper/work directories and the LowerDir/Upperdir/MergedDir layers (including the init layer), and copy-on-write into the read-write layer; then a manual mount -t overlay demo of layering and read-only behavior, and finally docker run to confirm that a container is backed by overlay2.</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-26">
+  2026年10月26日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 17 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to Docker in Practice: OverlayFS Union Mounts and the Storage Driver Explained" href="https://LMDAWN1127.github.io/en/posts/docker-overlayfs-storage-driver/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
       <a href="https://LMDAWN1127.github.io/en/posts/docker-chroot-minimal-root/">Docker in Practice: Hand-Building a Minimal Container Root with chroot to Understand What a Container Is</a>
     </h2>
   </header>
@@ -256,28 +278,6 @@
 </span>
 </footer>
   <a class="entry-link" aria-label="post link to Docker in Practice: Container Data Persistence - bind Mounts and Volumes" href="https://LMDAWN1127.github.io/en/posts/docker-bind-mount-volume/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/en/posts/docker-container-lifecycle/">Docker in Practice: Container Lifecycle Management - Start, Stop and Restart Policies</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>Walk through container lifecycle management: docker stop, start and restart plus custom startup commands, then the five restart policies - create five containers with different policies, kill them with kill -9 to compare restart counters, and see which ones come back after dockerd restarts.</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-26">
-  2026年10月26日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 8 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to Docker in Practice: Container Lifecycle Management - Start, Stop and Restart Policies" href="https://LMDAWN1127.github.io/en/posts/docker-container-lifecycle/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">

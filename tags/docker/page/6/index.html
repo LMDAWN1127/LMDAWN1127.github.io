@@ -163,6 +163,30 @@
 <article class="post-entry tag-entry"> 
   <header class="entry-header">
     <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/posts/docker-image-migration-tag/">Docker 镜像迁移实战：save/load 离线传输与打标签</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>Docker 镜像迁移实战：save/load 离线传输与打标签 docker的镜像本地迁移及打标签 导出镜像（docker02） 1 2 3 4 5 6 # docker save两种写法等价：-o 文件名 与 &gt; 重定向 root@docker02:~# docker save -o /tmp/nginx-1304.tar uhub.service.ucloud.cn/dawn/nginx:1.30.4 root@docker02:~# ls -lh /tmp/nginx-1304.tar -rw------- 1 root root 158M Oct 23 06:20 nginx-1304.tar root@docker02:~# md5sum /tmp/nginx-1304.tar 43e327d0a216069d3931a2c498fe2e3f nginx-1304.tar 本地迁移（docker02 → docker01） 先配置 SSH 密钥互信
+1 2 root@docker02:~# ssh-keygen root@docker02:~# ssh-copy-id 11.0.1.121 docker02 上 scp 迁移
+...</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-23">
+  2026年10月23日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 2 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to Docker 镜像迁移实战：save/load 离线传输与打标签" href="https://LMDAWN1127.github.io/posts/docker-image-migration-tag/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
       <a href="https://LMDAWN1127.github.io/posts/docker-port-mapping-principle/">Docker 端口映射原理：从 veth 网卡到 iptables DNAT</a>
     </h2>
   </header>
@@ -259,33 +283,12 @@ https://docs.docker.com/engine/install/ubuntu/
 </footer>
   <a class="entry-link" aria-label="post link to Docker 安装实战：二进制部署与一键脚本部署" href="https://LMDAWN1127.github.io/posts/docker-binary-script-install/"></a>
 </article>
-
-<article class="post-entry tag-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/posts/flannel-network-lab/">flannel 实战：从零搭建 Docker 跨主机容器网络</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>flannel 实战：从零搭建 Docker 跨主机容器网络 一、网络环境规划 etcd 主机 IP：192.168.8.88 主机名：docker-network Host1 IP：192.168.8.188 主机名：web01 Host2 IP：192.168.8.99 主机名：web02 二、etcd 主机配置 步骤 1：下载并解压 etcd 从github.com 下载etcd-v3.6.0-linux-amd64.tar.gz 软件包 将软件包复制到 etcd 主机/root 目录并解压： 1 [root@docker-network ~]# tar -zxvf etcd-v3.6.0-linux-amd64.tar.gz 步骤 2：安装 etcd 可执行文件 1 2 [root@docker-network ~]# cd etcd-v3.6.0-linux-amd64 [root@docker-network etcd-v3.6.0-linux-amd64]# cp etcd* /usr/local/bin/ 步骤 3：创建数据目录 1 [root@docker-network ~]# mkdir /var/lib/etcd 步骤 4：配置并启动 etcd 服务 创建etcd.service 文件： 1 [root@docker-network ~]# vim /usr/lib/systemd/system/etcd.service 1 2 3 4 5 6 [Unit] Description=etcd_service [Service] ExecStart=/usr/local/bin/etcd --name etcd1 --data-dir /var/lib/etcd --listen-client-urls http://192.168.8.88:2379,http://127.0.0.1:2379 --advertise-client-urls http://192.168.8.88:2379,http://127.0.0.1:2379 [Install] WantedBy=multi-user.target 重载系统服务配置并启动 etcd： 1 2 3 [root@docker-network ~]# systemctl daemon-reload [root@docker-network ~]# systemctl enable etcd.service [root@docker-network ~]# systemctl restart etcd.service 验证 etcd 监听状态： 1 2 3 [root@docker-network ~]# netstat -tulnp |grep :2379 tcp 0 0 192.168.8.88:2379 0.0.0.0:* LISTEN 1912/etcd tcp 0 0 127.0.0.1:2379 0.0.0.0:* LISTEN 1912/etcd 步骤 5：向 etcd 添加 flannel 网络配置 1 etcdctl --endpoints http://127.0.0.1:2379 put /coreos.com/network/config &#39;{&#34;Network&#34;: &#34;172.16.0.0/16&#34;, &#34;SubnetLen&#34;: 24, &#34;SubnetMin&#34;: &#34;172.16.1.0&#34;,&#34;SubnetMax&#34;: &#34;172.16.10.0&#34;, &#34;Backend&#34;: {&#34;Type&#34;: &#34;vxlan&#34;}}&#39; 1 etcdctl --endpoints http://192.168.8.88:2379 get /coreos.com/network/config 配置说明：
-...</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2025-05-21">
-  2025年5月21日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 3 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to flannel 实战：从零搭建 Docker 跨主机容器网络" href="https://LMDAWN1127.github.io/posts/flannel-network-lab/"></a>
-</article>
 <footer class="page-footer">
   <nav class="pagination">
     <a class="prev" href="https://LMDAWN1127.github.io/tags/docker/page/5/">
       «&nbsp;上一页&nbsp;
+    </a>
+    <a class="next" href="https://LMDAWN1127.github.io/tags/docker/page/7/">下一页&nbsp;&nbsp;»
     </a>
   </nav>
 </footer>

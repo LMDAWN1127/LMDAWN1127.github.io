@@ -11,7 +11,7 @@
     </image>
     <generator>Hugo</generator>
     <language>en</language>
-    <lastBuildDate>Thu, 29 Oct 2026 10:47:00 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 29 Oct 2026 11:00:00 +0800</lastBuildDate>
     <atom:link href="https://LMDAWN1127.github.io/en/categories/devops/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Harbor Active-Standby Deployment: From Installation to HTTPS and Replication</title>
@@ -19,6 +19,13 @@
       <pubDate>Tue, 04 Aug 2026 00:00:00 +0000</pubDate>
       <guid>https://LMDAWN1127.github.io/en/posts/harbor-master-slave/</guid>
       <description>Complete guide to deploying Harbor enterprise Docker registry with active-standby architecture, HTTP/HTTPS modes, self-signed certificates, and cross-host replication.</description>
+    </item>
+    <item>
+      <title>Hands-on with the Dockerfile ONBUILD Instruction</title>
+      <link>https://LMDAWN1127.github.io/en/posts/docker-dockerfile-onbuild-instruction/</link>
+      <pubDate>Thu, 29 Oct 2026 11:00:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/posts/docker-dockerfile-onbuild-instruction/</guid>
+      <description>Use the You_Jump_I_Jump game image to demonstrate the Dockerfile ONBUILD instruction: understand its delayed-trigger mechanism (the defined instructions are not executed when the current image is built; they are only triggered automatically when another image uses this image as its base), write a base image Dockerfile containing two ONBUILD instructions (RUN to create directories/logs, LABEL to add the blog URL) and a child image Dockerfile, then after building v2.19/v2.20 compare OnBuild and Labels with docker inspect and compare the filesystem differences with containers, and finally explain how to use -f to specify multiple Dockerfiles to build different images.</description>
     </item>
     <item>
       <title>Dockerfile: Running Containers as a Non-Root User (USER Instruction)</title>

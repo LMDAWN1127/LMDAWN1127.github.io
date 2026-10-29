@@ -190,6 +190,28 @@
 <article class="post-entry"> 
   <header class="entry-header">
     <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/en/posts/docker-dockerfile-onbuild-instruction/">Hands-on with the Dockerfile ONBUILD Instruction</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>Use the You_Jump_I_Jump game image to demonstrate the Dockerfile ONBUILD instruction: understand its delayed-trigger mechanism (the defined instructions are not executed when the current image is built; they are only triggered automatically when another image uses this image as its base), write a base image Dockerfile containing two ONBUILD instructions (RUN to create directories/logs, LABEL to add the blog URL) and a child image Dockerfile, then after building v2.19/v2.20 compare OnBuild and Labels with docker inspect and compare the filesystem differences with containers, and finally explain how to use -f to specify multiple Dockerfiles to build different images.</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-29">
+  2026年10月29日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 5 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to Hands-on with the Dockerfile ONBUILD Instruction" href="https://LMDAWN1127.github.io/en/posts/docker-dockerfile-onbuild-instruction/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
       <a href="https://LMDAWN1127.github.io/en/posts/docker-dockerfile-user-instruction/">Dockerfile: Running Containers as a Non-Root User (USER Instruction)</a>
     </h2>
   </header>
@@ -251,28 +273,6 @@
 </span>
 </footer>
   <a class="entry-link" aria-label="post link to Docker in Practice: Tag Images with MAINTAINER and LABEL, and Inspect Metadata" href="https://LMDAWN1127.github.io/en/posts/docker-image-tag-maintainer-label-metadata/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/en/posts/docker-dockerfile-optimization-and-run-tips/">Docker in Practice: Dockerfile Optimization Tips and Container Startup Techniques</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>A practical roundup of Docker efficiency tips: build-side image layer caching (Using cache) and .dockerignore to shrink a 1GB build context to 1.6MB; runtime tricks docker exec -w for the working directory, anonymous volume host paths (/var/lib/docker/volumes//_data), and -p :80 random port mapping (3276860999).</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-28">
-  2026年10月28日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 3 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to Docker in Practice: Dockerfile Optimization Tips and Container Startup Techniques" href="https://LMDAWN1127.github.io/en/posts/docker-dockerfile-optimization-and-run-tips/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">

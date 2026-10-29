@@ -11,7 +11,7 @@
     </image>
     <generator>Hugo</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Thu, 29 Oct 2026 10:47:00 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 29 Oct 2026 11:00:00 +0800</lastBuildDate>
     <atom:link href="https://LMDAWN1127.github.io/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Harbor 主备部署实战：从安装到 HTTPS 与主备复制</title>
@@ -19,6 +19,13 @@
       <pubDate>Tue, 04 Aug 2026 00:00:00 +0000</pubDate>
       <guid>https://LMDAWN1127.github.io/posts/harbor-master-slave/</guid>
       <description>完整记录 Harbor 企业级镜像仓库的主备部署过程，涵盖 HTTP/HTTPS 双模式安装、自签名证书配置、跨主机主备复制等核心运维技能。</description>
+    </item>
+    <item>
+      <title>Dockerfile 之 ONBUILD 指令实战</title>
+      <link>https://LMDAWN1127.github.io/posts/docker-dockerfile-onbuild-instruction/</link>
+      <pubDate>Thu, 29 Oct 2026 11:00:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/posts/docker-dockerfile-onbuild-instruction/</guid>
+      <description>通过跳一跳（You_Jump_I_Jump）游戏镜像演示 Dockerfile 的 ONBUILD 指令：理解其延迟触发机制（定义的指令在当前镜像构建时不执行，仅当其它镜像以本镜像为基础镜像时才自动触发），编写含 2 个 ONBUILD 指令（RUN 建目录/日志、LABEL 加博客地址）的基础镜像与子镜像 Dockerfile，构建 v2.19/v2.20 后用 docker inspect 对比 OnBuild 与 Labels、用容器对比文件系统差异，最后说明如何用 -f 指定多个 Dockerfile 构建不同镜像。</description>
     </item>
     <item>
       <title>Dockerfile 基于普通用户运行容器（USER 指令）实战</title>
