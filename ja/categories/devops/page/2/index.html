@@ -163,6 +163,28 @@
 <article class="post-entry tag-entry"> 
   <header class="entry-header">
     <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/ja/posts/docker-chroot-minimal-root/">Docker 実戦：chroot で最小コンテナルートを手作りしてコンテナの本質を理解する</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>Docker コマンドを使わず、chroot で最小コンテナルートをゼロから手作り (bash と動的ライブラリチェーンをコピー) し、ファイルシステム分離の「コンテナ感」を味わいます。さらに 2 つの独立ルートでプロセス/データが互いに見えないことを示し、最後に実コンテナの overlay2 merged ファイルシステムに chroot してファイルを直したりログを読んだりします。</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-26">
+  2026年10月26日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 3 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to Docker 実戦：chroot で最小コンテナルートを手作りしてコンテナの本質を理解する" href="https://LMDAWN1127.github.io/ja/posts/docker-chroot-minimal-root/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
       <a href="https://LMDAWN1127.github.io/ja/posts/docker-inspect-pid-id-network/">Docker 実戦：inspect でコンテナの PID・ID・ネットワーク情報を確認</a>
     </h2>
   </header>
@@ -229,11 +251,11 @@
 <article class="post-entry tag-entry"> 
   <header class="entry-header">
     <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/ja/posts/docker-common-commands-exec/">Docker 実戦：コンテナのよく使うコマンドと exec 操作</a>
+      <a href="https://LMDAWN1127.github.io/ja/posts/docker-port-mapping-principle/">Docker 実戦：ポートマッピングの仕組み - veth NIC から iptables DNAT まで</a>
     </h2>
   </header>
   <div class="entry-content">
-    <p>日常的によく使うコンテナコマンド（一覧/削除/名前変更、-f/–since/–until でのログ追跡、docker cp でのファイルコピー）と、docker exec を使った実行中コンテナ内でのコマンド実行を解説。対象コマンドがイメージに存在する必要があるという注意点も。</p>
+    <p>Docker がコンテナポートをホストにどうマッピングするかを観察します。veth NIC や docker0 ブリッジから、iptables の DNAT ルール、そして外部アクセスを可能にする net.ipv4.ip_forward カーネルスイッチまで。</p>
   </div>
   <footer class="entry-footer">
 
@@ -242,32 +264,10 @@
 </time>
 <span class="meta-separator">·</span>
 <span class="meta-reading-time">
-  阅读需 2 分钟
+  阅读需 4 分钟
 </span>
 </footer>
-  <a class="entry-link" aria-label="post link to Docker 実戦：コンテナのよく使うコマンドと exec 操作" href="https://LMDAWN1127.github.io/ja/posts/docker-common-commands-exec/"></a>
-</article>
-
-<article class="post-entry tag-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/ja/posts/sonarqube-practice/">SonarQube 実践：プライベート導入・トークン設定・コード品質スキャン</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>SonarQube を自前で導入する実践手順：JDK8/MySQL5.6 の導入、プラグイン込みの展開、非 root ユーザーでの起動、Web トークン設定、sonar-scanner クライアントによるコードスキャン。</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-02">
-  2026年10月2日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 5 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to SonarQube 実践：プライベート導入・トークン設定・コード品質スキャン" href="https://LMDAWN1127.github.io/ja/posts/sonarqube-practice/"></a>
+  <a class="entry-link" aria-label="post link to Docker 実戦：ポートマッピングの仕組み - veth NIC から iptables DNAT まで" href="https://LMDAWN1127.github.io/ja/posts/docker-port-mapping-principle/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">

@@ -277,6 +277,31 @@
                 href="https://LMDAWN1127.github.io/ja/posts/docker-container-states/"
                 />
   </url><url>
+    <loc>https://LMDAWN1127.github.io/ja/posts/docker-chroot-minimal-root/</loc>
+    <lastmod>2026-10-26T19:50:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://LMDAWN1127.github.io/posts/docker-chroot-minimal-root/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://LMDAWN1127.github.io/en/posts/docker-chroot-minimal-root/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="ko"
+                href="https://LMDAWN1127.github.io/ko/posts/docker-chroot-minimal-root/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="ja"
+                href="https://LMDAWN1127.github.io/ja/posts/docker-chroot-minimal-root/"
+                />
+  </url><url>
     <loc>https://LMDAWN1127.github.io/ja/posts/docker-inspect-pid-id-network/</loc>
     <lastmod>2026-10-26T13:00:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -352,6 +377,31 @@
                 href="https://LMDAWN1127.github.io/ja/posts/docker-image-migration-tag/"
                 />
   </url><url>
+    <loc>https://LMDAWN1127.github.io/ja/posts/docker-port-mapping-principle/</loc>
+    <lastmod>2026-10-23T15:22:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://LMDAWN1127.github.io/posts/docker-port-mapping-principle/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://LMDAWN1127.github.io/en/posts/docker-port-mapping-principle/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="ko"
+                href="https://LMDAWN1127.github.io/ko/posts/docker-port-mapping-principle/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="ja"
+                href="https://LMDAWN1127.github.io/ja/posts/docker-port-mapping-principle/"
+                />
+  </url><url>
     <loc>https://LMDAWN1127.github.io/ja/posts/docker-common-commands-exec/</loc>
     <lastmod>2026-10-23T15:20:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -375,6 +425,31 @@
                 rel="alternate"
                 hreflang="ja"
                 href="https://LMDAWN1127.github.io/ja/posts/docker-common-commands-exec/"
+                />
+  </url><url>
+    <loc>https://LMDAWN1127.github.io/ja/posts/docker-binary-script-install/</loc>
+    <lastmod>2026-10-23T12:30:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://LMDAWN1127.github.io/posts/docker-binary-script-install/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://LMDAWN1127.github.io/en/posts/docker-binary-script-install/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="ko"
+                href="https://LMDAWN1127.github.io/ko/posts/docker-binary-script-install/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="ja"
+                href="https://LMDAWN1127.github.io/ja/posts/docker-binary-script-install/"
                 />
   </url><url>
     <loc>https://LMDAWN1127.github.io/ja/categories/openstack/</loc>

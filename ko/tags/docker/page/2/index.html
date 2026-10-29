@@ -163,6 +163,28 @@
 <article class="post-entry tag-entry"> 
   <header class="entry-header">
     <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/ko/posts/docker-chroot-minimal-root/">Docker 실전: chroot 로 최소 컨테이너 루트를 직접 만들어 컨테이너 본질 이해하기</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>Docker 명령 없이 chroot 로 최소 컨테이너 루트를 처음부터 직접 만듭니다 (bash 와 동적 라이브러리 체인 복사). 파일시스템 격리의 ‘컨테이너 감각’ 을 느끼고, 두 독립 루트로 프로세스/데이터가 서로 보이지 않음을 보이며, 마지막으로 실제 컨테이너의 overlay2 merged 파일시스템에 chroot 해서 파일을 고치고 로그를 읽습니다.</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-26">
+  2026年10月26日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 4 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to Docker 실전: chroot 로 최소 컨테이너 루트를 직접 만들어 컨테이너 본질 이해하기" href="https://LMDAWN1127.github.io/ko/posts/docker-chroot-minimal-root/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
       <a href="https://LMDAWN1127.github.io/ko/posts/docker-inspect-pid-id-network/">Docker 실전: inspect로 컨테이너 PID・ID・네트워크 정보 확인</a>
     </h2>
   </header>
@@ -229,11 +251,11 @@
 <article class="post-entry tag-entry"> 
   <header class="entry-header">
     <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/ko/posts/docker-common-commands-exec/">Docker 실전: 자주 쓰는 컨테이너 명령과 exec 작업</a>
+      <a href="https://LMDAWN1127.github.io/ko/posts/docker-port-mapping-principle/">Docker 실전: 포트 매핑 원리 - veth NIC 에서 iptables DNAT 까지</a>
     </h2>
   </header>
   <div class="entry-content">
-    <p>매일 쓰는 컨테이너 명령(목록/삭제/이름 변경, -f/–since/–until 로그 추적, docker cp 파일 복사)과 docker exec 로 실행 중인 컨테이너 내부에서 명령을 실행하는 방법을 다룹니다. 대상 명령이 이미지에 존재해야 한다는 주의점도 포함합니다.</p>
+    <p>Docker 가 컨테이너 포트를 호스트에 어떻게 매핑하는지 관찰합니다. veth NIC 와 docker0 브리지에서 iptables DNAT 규칙, 그리고 외부 접근을 가능하게 하는 net.ipv4.ip_forward 커널 스위치까지.</p>
   </div>
   <footer class="entry-footer">
 
@@ -242,38 +264,17 @@
 </time>
 <span class="meta-separator">·</span>
 <span class="meta-reading-time">
-  阅读需 2 分钟
+  阅读需 5 分钟
 </span>
 </footer>
-  <a class="entry-link" aria-label="post link to Docker 실전: 자주 쓰는 컨테이너 명령과 exec 작업" href="https://LMDAWN1127.github.io/ko/posts/docker-common-commands-exec/"></a>
-</article>
-
-<article class="post-entry tag-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/ko/posts/flannel-network-lab/">flannel 실전: Docker 크로스 호스트 컨테이너 네트워크 구축</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>flannel 실전: Docker 크로스 호스트 컨테이너 네트워크 구축 1. 네트워크 환경 계획 etcd 호스트 IP: 192.168.8.88 호스트명: docker-network Host1 IP: 192.168.8.188 호스트명: web01 Host2 IP: 192.168.8.99 호스트명: web02 2. etcd 호스트 구성 단계 1: etcd 다운로드 및 압축 해제 github.com에서 etcd-v3.6.0-linux-amd64.tar.gz 소프트웨어 패키지를 다운로드합니다 소프트웨어 패키지를 etcd 호스트의 /root 디렉토리에 복사하고 압축을 해제합니다: 1 [root@docker-network ~]# tar -zxvf etcd-v3.6.0-linux-amd64.tar.gz 단계 2: etcd 실행 파일 설치 1 2 [root@docker-network ~]# cd etcd-v3.6.0-linux-amd64 [root@docker-network etcd-v3.6.0-linux-amd64]# cp etcd* /usr/local/bin/ 단계 3: 데이터 디렉토리 생성 1 [root@docker-network ~]# mkdir /var/lib/etcd 단계 4: etcd 서비스 구성 및 시작 etcd.service 파일을 생성합니다: 1 [root@docker-network ~]# vim /usr/lib/systemd/system/etcd.service 1 2 3 4 5 6 [Unit] Description=etcd_service [Service] ExecStart=/usr/local/bin/etcd --name etcd1 --data-dir /var/lib/etcd --listen-client-urls http://192.168.8.88:2379,http://127.0.0.1:2379 --advertise-client-urls http://192.168.8.88:2379,http://127.0.0.1:2379 [Install] WantedBy=multi-user.target 시스템 서비스 구성을 다시 로드하고 etcd를 시작합니다: 1 2 3 [root@docker-network ~]# systemctl daemon-reload [root@docker-network ~]# systemctl enable etcd.service [root@docker-network ~]# systemctl restart etcd.service etcd 리스닝 상태를 확인합니다: 1 2 3 [root@docker-network ~]# netstat -tulnp |grep :2379 tcp 0 0 192.168.8.88:2379 0.0.0.0:* LISTEN 1912/etcd tcp 0 0 127.0.0.1:2379 0.0.0.0:* LISTEN 1912/etcd 단계 5: etcd에 flannel 네트워크 구성 추가 1 etcdctl --endpoints http://127.0.0.1:2379 put /coreos.com/network/config &#39;{&#34;Network&#34;: &#34;172.16.0.0/16&#34;, &#34;SubnetLen&#34;: 24, &#34;SubnetMin&#34;: &#34;172.16.1.0&#34;,&#34;SubnetMax&#34;: &#34;172.16.10.0&#34;, &#34;Backend&#34;: {&#34;Type&#34;: &#34;vxlan&#34;}}&#39; 1 etcdctl --endpoints http://192.168.8.88:2379 get /coreos.com/network/config 구성 설명:
-...</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2025-05-21">
-  2025年5月21日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 4 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to flannel 실전: Docker 크로스 호스트 컨테이너 네트워크 구축" href="https://LMDAWN1127.github.io/ko/posts/flannel-network-lab/"></a>
+  <a class="entry-link" aria-label="post link to Docker 실전: 포트 매핑 원리 - veth NIC 에서 iptables DNAT 까지" href="https://LMDAWN1127.github.io/ko/posts/docker-port-mapping-principle/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">
     <a class="prev" href="https://LMDAWN1127.github.io/ko/tags/docker/">
       «&nbsp;이전 페이지&nbsp;
+    </a>
+    <a class="next" href="https://LMDAWN1127.github.io/ko/tags/docker/page/3/">다음 페이지&nbsp;&nbsp;»
     </a>
   </nav>
 </footer>

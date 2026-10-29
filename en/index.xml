@@ -49,6 +49,13 @@
       <description>Reproduce how each of the four container states shown by docker ps is produced — Up, Exited (exit-code semantics: 0 = normal, 137 = SIGKILL), Created (created but not started), and Paused (suspended from serving, and unlike restart it does not reset the status timer).</description>
     </item>
     <item>
+      <title>Docker in Practice: Hand-Building a Minimal Container Root with chroot to Understand What a Container Is</title>
+      <link>https://LMDAWN1127.github.io/en/posts/docker-chroot-minimal-root/</link>
+      <pubDate>Mon, 26 Oct 2026 19:50:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/posts/docker-chroot-minimal-root/</guid>
+      <description>Without Docker commands, use chroot to hand-build a minimal container root from scratch (copying bash and its dynamic-library chain) to feel filesystem isolation; then show two independent roots make processes/data invisible to each other, and finally chroot into a real container&amp;rsquo;s overlay2 merged filesystem to fix files and read logs.</description>
+    </item>
+    <item>
       <title>Docker in Practice: Inspecting Container PID, ID and Network Info with inspect</title>
       <link>https://LMDAWN1127.github.io/en/posts/docker-inspect-pid-id-network/</link>
       <pubDate>Mon, 26 Oct 2026 13:00:00 +0800</pubDate>
@@ -70,11 +77,25 @@
       <description>Export an image with docker save, transfer it offline over SSH, verify integrity with md5sum, then import it with docker load and re-tag it. Shows that save/load preserves the IMAGE ID, how to export multiple images at once, two import forms, and two ways to batch-delete images.</description>
     </item>
     <item>
+      <title>Docker in Practice: How Port Mapping Works - From the veth NIC to iptables DNAT</title>
+      <link>https://LMDAWN1127.github.io/en/posts/docker-port-mapping-principle/</link>
+      <pubDate>Fri, 23 Oct 2026 15:22:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/posts/docker-port-mapping-principle/</guid>
+      <description>Observe how Docker maps a container port to the host: from the veth NIC and the docker0 bridge, to the iptables DNAT rules and the net.ipv4.ip_forward kernel switch that makes external access work.</description>
+    </item>
+    <item>
       <title>Docker in Practice: Common Container Commands and exec Operations</title>
       <link>https://LMDAWN1127.github.io/en/posts/docker-common-commands-exec/</link>
       <pubDate>Fri, 23 Oct 2026 15:20:00 +0800</pubDate>
       <guid>https://LMDAWN1127.github.io/en/posts/docker-common-commands-exec/</guid>
       <description>A roundup of everyday container commands (list/remove/rename containers, follow logs with -f/&amp;ndash;since/&amp;ndash;until, copy files with docker cp) plus running commands inside a running container with docker exec, including the gotcha that the target command must exist in the image.</description>
+    </item>
+    <item>
+      <title>Docker Installation in Practice: Binary Deployment and One-Click Script Deployment</title>
+      <link>https://LMDAWN1127.github.io/en/posts/docker-binary-script-install/</link>
+      <pubDate>Fri, 23 Oct 2026 12:30:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/posts/docker-binary-script-install/</guid>
+      <description>Install Docker three ways: via the apt package manager, from official static binaries (download/extract/copy/start), and with an automation script (install and uninstall). Also covers how to cleanly remove the binary install.</description>
     </item>
     <item>
       <title>OpenStack Cloud OS: Core Architecture and Automated Deployment</title>

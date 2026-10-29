@@ -163,6 +163,28 @@
 <article class="post-entry tag-entry"> 
   <header class="entry-header">
     <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/en/posts/docker-chroot-minimal-root/">Docker in Practice: Hand-Building a Minimal Container Root with chroot to Understand What a Container Is</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>Without Docker commands, use chroot to hand-build a minimal container root from scratch (copying bash and its dynamic-library chain) to feel filesystem isolation; then show two independent roots make processes/data invisible to each other, and finally chroot into a real container’s overlay2 merged filesystem to fix files and read logs.</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-26">
+  2026年10月26日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 4 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to Docker in Practice: Hand-Building a Minimal Container Root with chroot to Understand What a Container Is" href="https://LMDAWN1127.github.io/en/posts/docker-chroot-minimal-root/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
       <a href="https://LMDAWN1127.github.io/en/posts/docker-inspect-pid-id-network/">Docker in Practice: Inspecting Container PID, ID and Network Info with inspect</a>
     </h2>
   </header>
@@ -229,11 +251,11 @@
 <article class="post-entry tag-entry"> 
   <header class="entry-header">
     <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/en/posts/docker-common-commands-exec/">Docker in Practice: Common Container Commands and exec Operations</a>
+      <a href="https://LMDAWN1127.github.io/en/posts/docker-port-mapping-principle/">Docker in Practice: How Port Mapping Works - From the veth NIC to iptables DNAT</a>
     </h2>
   </header>
   <div class="entry-content">
-    <p>A roundup of everyday container commands (list/remove/rename containers, follow logs with -f/–since/–until, copy files with docker cp) plus running commands inside a running container with docker exec, including the gotcha that the target command must exist in the image.</p>
+    <p>Observe how Docker maps a container port to the host: from the veth NIC and the docker0 bridge, to the iptables DNAT rules and the net.ipv4.ip_forward kernel switch that makes external access work.</p>
   </div>
   <footer class="entry-footer">
 
@@ -242,32 +264,10 @@
 </time>
 <span class="meta-separator">·</span>
 <span class="meta-reading-time">
-  阅读需 2 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to Docker in Practice: Common Container Commands and exec Operations" href="https://LMDAWN1127.github.io/en/posts/docker-common-commands-exec/"></a>
-</article>
-
-<article class="post-entry tag-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/en/posts/sonarqube-practice/">SonarQube in Practice: Self-hosted Deployment, Token Setup, and Code Quality Scanning</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>A complete hands-on SonarQube self-hosting guide: JDK 8 and MySQL 5.6 setup, extracting SonarQube with plugins, running as a non-root user, web token configuration, and scanning code with the sonar-scanner client.</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-02">
-  2026年10月2日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
   阅读需 5 分钟
 </span>
 </footer>
-  <a class="entry-link" aria-label="post link to SonarQube in Practice: Self-hosted Deployment, Token Setup, and Code Quality Scanning" href="https://LMDAWN1127.github.io/en/posts/sonarqube-practice/"></a>
+  <a class="entry-link" aria-label="post link to Docker in Practice: How Port Mapping Works - From the veth NIC to iptables DNAT" href="https://LMDAWN1127.github.io/en/posts/docker-port-mapping-principle/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">
