@@ -11,7 +11,7 @@
     </image>
     <generator>Hugo</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Thu, 29 Oct 2026 11:00:00 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 29 Oct 2026 12:24:00 +0800</lastBuildDate>
     <atom:link href="https://LMDAWN1127.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Harbor 主备部署实战：从安装到 HTTPS 与主备复制</title>
@@ -19,6 +19,13 @@
       <pubDate>Tue, 04 Aug 2026 00:00:00 +0000</pubDate>
       <guid>https://LMDAWN1127.github.io/posts/harbor-master-slave/</guid>
       <description>完整记录 Harbor 企业级镜像仓库的主备部署过程，涵盖 HTTP/HTTPS 双模式安装、自签名证书配置、跨主机主备复制等核心运维技能。</description>
+    </item>
+    <item>
+      <title>Dockerfile 多阶段构建镜像实战</title>
+      <link>https://LMDAWN1127.github.io/posts/docker-dockerfile-multistage-build/</link>
+      <pubDate>Thu, 29 Oct 2026 12:24:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/posts/docker-dockerfile-multistage-build/</guid>
+      <description>通过多阶段构建（Multi-Stage Build）演示如何大幅减小 Docker 镜像体积：第一部分用三个 FROM 阶段（xixi/haha/最终）构建 v3.0，前两个阶段生成的 24MB/2048MB 大文件不进入最终镜像，最终只 COPY 两个小日志（7.8MB）；第二部分以 Golang 为例，第一阶段用 Go SDK 编译出 hello 二进制，第二阶段只 COPY &amp;ndash;from=0 拷贝二进制，v3.2 仅 9.71MB，对比单阶段 v3.1 的 259MB，证明多阶段构建的精简镜像完全可用。</description>
     </item>
     <item>
       <title>Dockerfile 之 ONBUILD 指令实战</title>

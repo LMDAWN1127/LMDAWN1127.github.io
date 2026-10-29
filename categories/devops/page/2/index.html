@@ -163,6 +163,28 @@
 <article class="post-entry tag-entry"> 
   <header class="entry-header">
     <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/posts/docker-image-tag-maintainer-label-metadata/">Docker 实战：镜像打标签 MAINTAINER 与 LABEL 及元数据查看</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>以 dawn-games 镜像为例，演示如何在 Dockerfile 中用已弃用的 MAINTAINER 与官方推荐的 LABEL 写入作者/学校/邮箱等元数据，构建后用 docker image inspect -f 读取 .Author 与 .Config.Labels 核对，并用 –network host 直接起容器以 host 网络访问验证；含一张访问截图。</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-28">
+  2026年10月28日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 2 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to Docker 实战：镜像打标签 MAINTAINER 与 LABEL 及元数据查看" href="https://LMDAWN1127.github.io/posts/docker-image-tag-maintainer-label-metadata/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
       <a href="https://LMDAWN1127.github.io/posts/docker-dockerfile-optimization-and-run-tips/">Docker 实战：Dockerfile 优化技巧与容器启动技巧</a>
     </h2>
   </header>
@@ -246,28 +268,6 @@
 </span>
 </footer>
   <a class="entry-link" aria-label="post link to Docker 实战：docker exec 与 docker attach 的区别" href="https://LMDAWN1127.github.io/posts/docker-exec-vs-attach/"></a>
-</article>
-
-<article class="post-entry tag-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/posts/docker-container-states/">Docker 实战：容器状态详解——Up / Exited / Created / Paused</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>逐个复现 docker ps 中四种容器状态的产生方式——Up、Exited（含退出状态码语义：0 为正常退出、137 为被 SIGKILL）、Created（docker create 后尚未 start）、Paused（暂停对外服务，且与 restart 的时间重新计时行为不同）。</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-28">
-  2026年10月28日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 2 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to Docker 实战：容器状态详解——Up / Exited / Created / Paused" href="https://LMDAWN1127.github.io/posts/docker-container-states/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">

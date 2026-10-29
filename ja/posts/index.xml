@@ -11,7 +11,7 @@
     </image>
     <generator>Hugo</generator>
     <language>ja</language>
-    <lastBuildDate>Thu, 29 Oct 2026 11:00:00 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 29 Oct 2026 12:24:00 +0800</lastBuildDate>
     <atom:link href="https://LMDAWN1127.github.io/ja/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Harbor アクティブスタンバイデプロイ：インストールからHTTPS・レプリケーションまで</title>
@@ -19,6 +19,13 @@
       <pubDate>Tue, 04 Aug 2026 00:00:00 +0000</pubDate>
       <guid>https://LMDAWN1127.github.io/ja/posts/harbor-master-slave/</guid>
       <description>HarborエンタープライズDockerレジストリのアクティブスタンバイアーキテクチャ、HTTP/HTTPSモード、自己署名証明書、クロスホストレプリケーションを完全にカバーするデプロイガイドです。</description>
+    </item>
+    <item>
+      <title>Dockerfile マルチステージビルド実戦</title>
+      <link>https://LMDAWN1127.github.io/ja/posts/docker-dockerfile-multistage-build/</link>
+      <pubDate>Thu, 29 Oct 2026 12:24:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/ja/posts/docker-dockerfile-multistage-build/</guid>
+      <description>マルチステージビルド（Multi-Stage Build）で Docker イメージをどうやって大幅に小さくするか実演します。第 1 部では 3 つの FROM ステージ（xixi/haha/最終）で v3.0 をビルドし、最初の 2 ステージが生成した 24MB/2048MB の大きなファイルは最終イメージに入らず、最終イメージは 2 つの小さなログだけを COPY します（7.8MB）。第 2 部では Golang を例に、ステージ 1 で Go SDK を用いて hello バイナリをコンパイルし、ステージ 2 で COPY &amp;ndash;from=0 によってバイナリだけをコピーして v3.2 を 9.71MB に抑え、単一ステージの v3.1（259MB）と比較して、マルチステージビルドのスリムなイメージが完全に使えることを示します。</description>
     </item>
     <item>
       <title>Dockerfile の ONBUILD 命令実戦</title>
