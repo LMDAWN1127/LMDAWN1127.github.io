@@ -190,6 +190,28 @@
 <article class="post-entry"> 
   <header class="entry-header">
     <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/ja/posts/docker-scratch-custom-image/">ベースイメージを指定せずに独自イメージを構築：scratch の活用</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>scratch は Docker の予約語である。FROM のベースイメージとして使うと何のイメージも参照せず、自身の rootfs だけを含む最小イメージをゼロから構築する。本実践ではサードパーティの busybox ルートファイルシステムをダウンロードし、カスタム /etc/os-release を注入して再パッケージ化し、FROM scratch の Dockerfile と docker-compose を作成して Harbor レジストリへビルド・プッシュし、別ホストからプルしてコンテナを起動し、os-release とネットワークを検証する。</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-29">
+  2026年10月29日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 2 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to ベースイメージを指定せずに独自イメージを構築：scratch の活用" href="https://LMDAWN1127.github.io/ja/posts/docker-scratch-custom-image/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
       <a href="https://LMDAWN1127.github.io/ja/posts/docker-harbor-private-registry/">プライベートイメージレジストリ実践：docker registry と VMware Harbor</a>
     </h2>
   </header>
@@ -251,28 +273,6 @@
 </span>
 </footer>
   <a class="entry-link" aria-label="post link to Dockerfile マルチステージビルド実戦" href="https://LMDAWN1127.github.io/ja/posts/docker-dockerfile-multistage-build/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/ja/posts/docker-dockerfile-onbuild-instruction/">Dockerfile の ONBUILD 命令実戦</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>You_Jump_I_Jump ゲームイメージを使って Dockerfile の ONBUILD 命令を実演します。遅延トリガー機構（定義された命令は現在のイメージ構築時には実行されず、他のイメージがこのイメージをベースとして使う場合にのみ自動トリガーされる）を理解し、2 つの ONBUILD 命令（RUN でディレクトリ/ログ作成、LABEL でブログ URL 追加）を含むベースイメージと子イメージの Dockerfile を作成し、v2.19/v2.20 構築後に docker inspect で OnBuild と Labels を比較、コンテナでファイルシステムの差を比較し、最後に -f で複数の Dockerfile を指定して異なるイメージをビルドする方法を説明します。</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-29">
-  2026年10月29日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 4 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to Dockerfile の ONBUILD 命令実戦" href="https://LMDAWN1127.github.io/ja/posts/docker-dockerfile-onbuild-instruction/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">

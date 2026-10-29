@@ -185,6 +185,28 @@
 <article class="post-entry tag-entry"> 
   <header class="entry-header">
     <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/en/posts/docker-scratch-custom-image/">Building a Custom Image Without a Base Image: Using scratch</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>scratch is a reserved name in Docker; when used as the base image in FROM it means no image is referenced, building a minimal image that contains only its own rootfs from scratch. This hands-on walkthrough downloads a third-party busybox root filesystem, injects a custom /etc/os-release, repackages it, writes a FROM scratch Dockerfile and docker-compose, builds and pushes the image to a Harbor registry, then pulls it from another host, starts the container, and verifies os-release and networking.</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-29">
+  2026年10月29日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 3 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to Building a Custom Image Without a Base Image: Using scratch" href="https://LMDAWN1127.github.io/en/posts/docker-scratch-custom-image/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
       <a href="https://LMDAWN1127.github.io/en/posts/docker-harbor-private-registry/">Hands-on with Private Image Registries: docker registry and VMware Harbor</a>
     </h2>
   </header>
@@ -246,28 +268,6 @@
 </span>
 </footer>
   <a class="entry-link" aria-label="post link to Hands-on with Multi-Stage Dockerfile Builds" href="https://LMDAWN1127.github.io/en/posts/docker-dockerfile-multistage-build/"></a>
-</article>
-
-<article class="post-entry tag-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/en/posts/docker-dockerfile-onbuild-instruction/">Hands-on with the Dockerfile ONBUILD Instruction</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>Use the You_Jump_I_Jump game image to demonstrate the Dockerfile ONBUILD instruction: understand its delayed-trigger mechanism (the defined instructions are not executed when the current image is built; they are only triggered automatically when another image uses this image as its base), write a base image Dockerfile containing two ONBUILD instructions (RUN to create directories/logs, LABEL to add the blog URL) and a child image Dockerfile, then after building v2.19/v2.20 compare OnBuild and Labels with docker inspect and compare the filesystem differences with containers, and finally explain how to use -f to specify multiple Dockerfiles to build different images.</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-29">
-  2026年10月29日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 5 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to Hands-on with the Dockerfile ONBUILD Instruction" href="https://LMDAWN1127.github.io/en/posts/docker-dockerfile-onbuild-instruction/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">

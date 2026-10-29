@@ -11,7 +11,7 @@
     </image>
     <generator>Hugo</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Thu, 29 Oct 2026 15:09:00 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 29 Oct 2026 18:28:00 +0800</lastBuildDate>
     <atom:link href="https://LMDAWN1127.github.io/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Harbor 主备部署实战：从安装到 HTTPS 与主备复制</title>
@@ -19,6 +19,13 @@
       <pubDate>Tue, 04 Aug 2026 00:00:00 +0000</pubDate>
       <guid>https://LMDAWN1127.github.io/posts/harbor-master-slave/</guid>
       <description>完整记录 Harbor 企业级镜像仓库的主备部署过程，涵盖 HTTP/HTTPS 双模式安装、自签名证书配置、跨主机主备复制等核心运维技能。</description>
+    </item>
+    <item>
+      <title>不指定基础镜像实现自定义镜像scratch</title>
+      <link>https://LMDAWN1127.github.io/posts/docker-scratch-custom-image/</link>
+      <pubDate>Thu, 29 Oct 2026 18:28:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/posts/docker-scratch-custom-image/</guid>
+      <description>scratch 是 Docker 的保留名称，作为 FROM 的基础镜像时表示不引用任何镜像，从零构建一个仅含自身 rootfs 的最小镜像。本文实战演示：下载第三方 busybox 根文件系统，注入自定义 /etc/os-release 后重新打包，编写 FROM scratch 的 Dockerfile 与 docker-compose，构建并推送到 Harbor 仓库，再从另一台主机拉取镜像、启动容器并验证 os-release 与网络。</description>
     </item>
     <item>
       <title>私有镜像仓库harbor实战</title>

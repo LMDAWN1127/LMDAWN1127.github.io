@@ -11,7 +11,7 @@
     </image>
     <generator>Hugo</generator>
     <language>ja</language>
-    <lastBuildDate>Thu, 29 Oct 2026 15:09:00 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 29 Oct 2026 18:28:00 +0800</lastBuildDate>
     <atom:link href="https://LMDAWN1127.github.io/ja/tags/docker/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Harbor アクティブスタンバイデプロイ：インストールからHTTPS・レプリケーションまで</title>
@@ -19,6 +19,13 @@
       <pubDate>Tue, 04 Aug 2026 00:00:00 +0000</pubDate>
       <guid>https://LMDAWN1127.github.io/ja/posts/harbor-master-slave/</guid>
       <description>HarborエンタープライズDockerレジストリのアクティブスタンバイアーキテクチャ、HTTP/HTTPSモード、自己署名証明書、クロスホストレプリケーションを完全にカバーするデプロイガイドです。</description>
+    </item>
+    <item>
+      <title>ベースイメージを指定せずに独自イメージを構築：scratch の活用</title>
+      <link>https://LMDAWN1127.github.io/ja/posts/docker-scratch-custom-image/</link>
+      <pubDate>Thu, 29 Oct 2026 18:28:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/ja/posts/docker-scratch-custom-image/</guid>
+      <description>scratch は Docker の予約語である。FROM のベースイメージとして使うと何のイメージも参照せず、自身の rootfs だけを含む最小イメージをゼロから構築する。本実践ではサードパーティの busybox ルートファイルシステムをダウンロードし、カスタム /etc/os-release を注入して再パッケージ化し、FROM scratch の Dockerfile と docker-compose を作成して Harbor レジストリへビルド・プッシュし、別ホストからプルしてコンテナを起動し、os-release とネットワークを検証する。</description>
     </item>
     <item>
       <title>プライベートイメージレジストリ実践：docker registry と VMware Harbor</title>

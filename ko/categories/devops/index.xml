@@ -11,7 +11,7 @@
     </image>
     <generator>Hugo</generator>
     <language>ko</language>
-    <lastBuildDate>Thu, 29 Oct 2026 15:09:00 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 29 Oct 2026 18:28:00 +0800</lastBuildDate>
     <atom:link href="https://LMDAWN1127.github.io/ko/categories/devops/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Harbor 액티브-스탠바이 배포: 설치부터 HTTPS 및 복제까지</title>
@@ -19,6 +19,13 @@
       <pubDate>Tue, 04 Aug 2026 00:00:00 +0000</pubDate>
       <guid>https://LMDAWN1127.github.io/ko/posts/harbor-master-slave/</guid>
       <description>Harbor 엔터프라이즈 Docker 레지스트리의 액티브-스탠바이 아키텍처, HTTP/HTTPS 모드, 자체 서명 인증서, 크로스 호스트 복제를 완전히 다루는 배포 가이드입니다.</description>
+    </item>
+    <item>
+      <title>베이스 이미지 없이 커스텀 이미지 만들기: scratch 활용</title>
+      <link>https://LMDAWN1127.github.io/ko/posts/docker-scratch-custom-image/</link>
+      <pubDate>Thu, 29 Oct 2026 18:28:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/ko/posts/docker-scratch-custom-image/</guid>
+      <description>scratch 는 Docker 의 예약어이다. FROM 의 베이스 이미지로 사용하면 어떤 이미지도 참조하지 않고, 자체 rootfs 만 포함하는 최소 이미지를 처음부터 구성한다. 이 실습에서는 서드파티 busybox 루트 파일시스템을 다운로드하고, 커스텀 /etc/os-release 를 주입해 재패키징한 뒤 FROM scratch Dockerfile 과 docker-compose 를 작성해 Harbor 레지스트리로 빌드·푸시하고, 다른 호스트에서 풀하여 컨테이너를 시작한 뒤 os-release 와 네트워킹을 검증한다.</description>
     </item>
     <item>
       <title>프라이빗 이미지 레지스트리 실습: docker registry 와 VMware Harbor</title>

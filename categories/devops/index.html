@@ -185,6 +185,28 @@
 <article class="post-entry tag-entry"> 
   <header class="entry-header">
     <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/posts/docker-scratch-custom-image/">不指定基础镜像实现自定义镜像scratch</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>scratch 是 Docker 的保留名称，作为 FROM 的基础镜像时表示不引用任何镜像，从零构建一个仅含自身 rootfs 的最小镜像。本文实战演示：下载第三方 busybox 根文件系统，注入自定义 /etc/os-release 后重新打包，编写 FROM scratch 的 Dockerfile 与 docker-compose，构建并推送到 Harbor 仓库，再从另一台主机拉取镜像、启动容器并验证 os-release 与网络。</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-29">
+  2026年10月29日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 2 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to 不指定基础镜像实现自定义镜像scratch" href="https://LMDAWN1127.github.io/posts/docker-scratch-custom-image/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
       <a href="https://LMDAWN1127.github.io/posts/docker-harbor-private-registry/">私有镜像仓库harbor实战</a>
     </h2>
   </header>
@@ -246,28 +268,6 @@
 </span>
 </footer>
   <a class="entry-link" aria-label="post link to Dockerfile 多阶段构建镜像实战" href="https://LMDAWN1127.github.io/posts/docker-dockerfile-multistage-build/"></a>
-</article>
-
-<article class="post-entry tag-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/posts/docker-dockerfile-onbuild-instruction/">Dockerfile 之 ONBUILD 指令实战</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>通过跳一跳（You_Jump_I_Jump）游戏镜像演示 Dockerfile 的 ONBUILD 指令：理解其延迟触发机制（定义的指令在当前镜像构建时不执行，仅当其它镜像以本镜像为基础镜像时才自动触发），编写含 2 个 ONBUILD 指令（RUN 建目录/日志、LABEL 加博客地址）的基础镜像与子镜像 Dockerfile，构建 v2.19/v2.20 后用 docker inspect 对比 OnBuild 与 Labels、用容器对比文件系统差异，最后说明如何用 -f 指定多个 Dockerfile 构建不同镜像。</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-29">
-  2026年10月29日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 4 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to Dockerfile 之 ONBUILD 指令实战" href="https://LMDAWN1127.github.io/posts/docker-dockerfile-onbuild-instruction/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">
