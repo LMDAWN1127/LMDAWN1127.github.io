@@ -190,6 +190,28 @@
 <article class="post-entry"> 
   <header class="entry-header">
     <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/ko/posts/docker-registry-to-harbor-migration/">docker registry 에서 Harbor 로 이미지 마이그레이션 및 두 Harbor 간 동기화 실습</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>이 실습에서는 docker registry 의 이미지를 Harbor 로 마이그레이션하고 두 Harbor 인스턴스 간에 이미지를 동기화한다. 1 부는 Harbor 의 pull 레플리케이션 규칙을 사용해 registry 내 dawn-games/** 이미지를 로컬 Harbor 프로젝트로 동기화한다. 2 부는 docker01 과 docker02 노드 모두에 Harbor 를 배포한 뒤 Harbor→Harbor pull 모드 레플리케이션 규칙을 구성해 두 Harbor 이미지 동기화를 구현하고, 마지막으로 클라이언트 daemon.json 을 수정해 검증한다.</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-29">
+  2026年10月29日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 2 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to docker registry 에서 Harbor 로 이미지 마이그레이션 및 두 Harbor 간 동기화 실습" href="https://LMDAWN1127.github.io/ko/posts/docker-registry-to-harbor-migration/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
       <a href="https://LMDAWN1127.github.io/ko/posts/docker-scratch-custom-image/">베이스 이미지 없이 커스텀 이미지 만들기: scratch 활용</a>
     </h2>
   </header>
@@ -251,28 +273,6 @@
 </span>
 </footer>
   <a class="entry-link" aria-label="post link to docker-compose 로 멀티 서비스 이미지 빌드 및 컨테이너 시작 사례" href="https://LMDAWN1127.github.io/ko/posts/docker-compose-multi-service/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/ko/posts/docker-dockerfile-multistage-build/">Dockerfile 멀티 스테이지 빌드 실전</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>멀티 스테이지 빌드(Multi-Stage Build)로 Docker 이미지 크기를 어떻게 크게 줄이는지 시연한다. 1부에서는 3개의 FROM 스테이지(xixi/haha/최종)로 v3.0 을 빌드하며, 처음 두 스테이지가 만든 24MB/2048MB 큰 파일은 최종 이미지에 들어가지 않고 최종 이미지는 작은 로그 2개만 COPY 한다(7.8MB). 2부에서는 Golang 을 예로, 스테이지 1에서 Go SDK 로 hello 바이너리를 컴파일하고 스테이지 2에서 COPY –from=0 으로 바이너리만 복사해 v3.2 를 9.71MB 로 줄이며, 단일 스테이지 v3.1(259MB) 과 비교해 멀티 스테이지 빌드의 슬림한 이미지가 완전히 쓸 수 있음을 보인다.</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-29">
-  2026年10月29日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 5 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to Dockerfile 멀티 스테이지 빌드 실전" href="https://LMDAWN1127.github.io/ko/posts/docker-dockerfile-multistage-build/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">

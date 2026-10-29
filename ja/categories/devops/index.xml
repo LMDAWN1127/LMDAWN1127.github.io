@@ -11,7 +11,7 @@
     </image>
     <generator>Hugo</generator>
     <language>ja</language>
-    <lastBuildDate>Thu, 29 Oct 2026 18:28:00 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 29 Oct 2026 20:04:45 +0800</lastBuildDate>
     <atom:link href="https://LMDAWN1127.github.io/ja/categories/devops/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Harbor アクティブスタンバイデプロイ：インストールからHTTPS・レプリケーションまで</title>
@@ -19,6 +19,13 @@
       <pubDate>Tue, 04 Aug 2026 00:00:00 +0000</pubDate>
       <guid>https://LMDAWN1127.github.io/ja/posts/harbor-master-slave/</guid>
       <description>HarborエンタープライズDockerレジストリのアクティブスタンバイアーキテクチャ、HTTP/HTTPSモード、自己署名証明書、クロスホストレプリケーションを完全にカバーするデプロイガイドです。</description>
+    </item>
+    <item>
+      <title>docker registry から Harbor へのイメージ移行と双 Harbor 間同期の実践</title>
+      <link>https://LMDAWN1127.github.io/ja/posts/docker-registry-to-harbor-migration/</link>
+      <pubDate>Thu, 29 Oct 2026 20:04:45 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/ja/posts/docker-registry-to-harbor-migration/</guid>
+      <description>本実践では docker registry のイメージを Harbor へ移行し、2 つの Harbor 間でイメージを同期する。第 1 部は Harbor の pull レプリケーションルールを使って registry 内の &lt;code&gt;dawn-games/**&lt;/code&gt; イメージをローカルの Harbor プロジェクトに同期する。第 2 部は docker01 と docker02 の両ノードに Harbor を展開し、Harbor→Harbor の pull モードレプリケーションルールを設定して双 Harbor イメージ同期を実現し、最後にクライアントの daemon.json を修正して検証する。</description>
     </item>
     <item>
       <title>ベースイメージを指定せずに独自イメージを構築：scratch の活用</title>

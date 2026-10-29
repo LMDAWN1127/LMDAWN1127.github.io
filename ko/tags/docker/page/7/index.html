@@ -163,6 +163,28 @@
 <article class="post-entry tag-entry"> 
   <header class="entry-header">
     <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/ko/posts/docker-env-var-passing/">Docker 실전: 컨테이너 환경 변수 전달 및 확인</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>컨테이너에 -e 로 환경 변수를 전달하고, 이후 docker exec &lt;컨테이너&gt; env 로 확인하는 방법을 다룹니다.</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-23">
+  2026年10月23日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 1 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to Docker 실전: 컨테이너 환경 변수 전달 및 확인" href="https://LMDAWN1127.github.io/ko/posts/docker-env-var-passing/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
       <a href="https://LMDAWN1127.github.io/ko/posts/docker-image-migration-tag/">Docker 실전: 이미지 마이그레이션 - 오프라인 save/load 전송과 태그 지정</a>
     </h2>
   </header>
@@ -247,33 +269,12 @@
 </footer>
   <a class="entry-link" aria-label="post link to Docker 실전: 바이너리 배포와 원클릭 스크립트 배포" href="https://LMDAWN1127.github.io/ko/posts/docker-binary-script-install/"></a>
 </article>
-
-<article class="post-entry tag-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/ko/posts/flannel-network-lab/">flannel 실전: Docker 크로스 호스트 컨테이너 네트워크 구축</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>flannel 실전: Docker 크로스 호스트 컨테이너 네트워크 구축 1. 네트워크 환경 계획 etcd 호스트 IP: 192.168.8.88 호스트명: docker-network Host1 IP: 192.168.8.188 호스트명: web01 Host2 IP: 192.168.8.99 호스트명: web02 2. etcd 호스트 구성 단계 1: etcd 다운로드 및 압축 해제 github.com에서 etcd-v3.6.0-linux-amd64.tar.gz 소프트웨어 패키지를 다운로드합니다 소프트웨어 패키지를 etcd 호스트의 /root 디렉토리에 복사하고 압축을 해제합니다: 1 [root@docker-network ~]# tar -zxvf etcd-v3.6.0-linux-amd64.tar.gz 단계 2: etcd 실행 파일 설치 1 2 [root@docker-network ~]# cd etcd-v3.6.0-linux-amd64 [root@docker-network etcd-v3.6.0-linux-amd64]# cp etcd* /usr/local/bin/ 단계 3: 데이터 디렉토리 생성 1 [root@docker-network ~]# mkdir /var/lib/etcd 단계 4: etcd 서비스 구성 및 시작 etcd.service 파일을 생성합니다: 1 [root@docker-network ~]# vim /usr/lib/systemd/system/etcd.service 1 2 3 4 5 6 [Unit] Description=etcd_service [Service] ExecStart=/usr/local/bin/etcd --name etcd1 --data-dir /var/lib/etcd --listen-client-urls http://192.168.8.88:2379,http://127.0.0.1:2379 --advertise-client-urls http://192.168.8.88:2379,http://127.0.0.1:2379 [Install] WantedBy=multi-user.target 시스템 서비스 구성을 다시 로드하고 etcd를 시작합니다: 1 2 3 [root@docker-network ~]# systemctl daemon-reload [root@docker-network ~]# systemctl enable etcd.service [root@docker-network ~]# systemctl restart etcd.service etcd 리스닝 상태를 확인합니다: 1 2 3 [root@docker-network ~]# netstat -tulnp |grep :2379 tcp 0 0 192.168.8.88:2379 0.0.0.0:* LISTEN 1912/etcd tcp 0 0 127.0.0.1:2379 0.0.0.0:* LISTEN 1912/etcd 단계 5: etcd에 flannel 네트워크 구성 추가 1 etcdctl --endpoints http://127.0.0.1:2379 put /coreos.com/network/config &#39;{&#34;Network&#34;: &#34;172.16.0.0/16&#34;, &#34;SubnetLen&#34;: 24, &#34;SubnetMin&#34;: &#34;172.16.1.0&#34;,&#34;SubnetMax&#34;: &#34;172.16.10.0&#34;, &#34;Backend&#34;: {&#34;Type&#34;: &#34;vxlan&#34;}}&#39; 1 etcdctl --endpoints http://192.168.8.88:2379 get /coreos.com/network/config 구성 설명:
-...</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2025-05-21">
-  2025年5月21日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 4 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to flannel 실전: Docker 크로스 호스트 컨테이너 네트워크 구축" href="https://LMDAWN1127.github.io/ko/posts/flannel-network-lab/"></a>
-</article>
 <footer class="page-footer">
   <nav class="pagination">
     <a class="prev" href="https://LMDAWN1127.github.io/ko/tags/docker/page/6/">
       «&nbsp;이전 페이지&nbsp;
+    </a>
+    <a class="next" href="https://LMDAWN1127.github.io/ko/tags/docker/page/8/">다음 페이지&nbsp;&nbsp;»
     </a>
   </nav>
 </footer>

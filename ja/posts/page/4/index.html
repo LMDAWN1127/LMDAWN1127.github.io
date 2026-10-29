@@ -173,6 +173,28 @@
 <article class="post-entry"> 
   <header class="entry-header">
     <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/ja/posts/docker-overlay-cross-host-networking/">Docker 実戦：Overlay によるコンテナのクロスホストネットワーク接続と WordPress 実践</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>2 台の Docker ホストで Swarm クラスタを初期化し、attachable な overlay ネットワーク dawn-overlay を作成します。コンテナが IP とコンテナ名でクロスホスト通信することを確認し、docker_gwbridge 経由の外部ネットワーク出口を検証し、VXLAN（UDP 4789）をキャプチャしてデータのカプセル化を観察し、最後に WordPress のクロスホストデプロイで締めくくります。</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-27">
+  2026年10月27日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 6 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to Docker 実戦：Overlay によるコンテナのクロスホストネットワーク接続と WordPress 実践" href="https://LMDAWN1127.github.io/ja/posts/docker-overlay-cross-host-networking/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
       <a href="https://LMDAWN1127.github.io/ja/posts/docker-macvlan-cross-host-networking/">Docker 実戦：macvlan によるコンテナのクロスホストネットワーク接続</a>
     </h2>
   </header>
@@ -256,28 +278,6 @@
 </span>
 </footer>
   <a class="entry-link" aria-label="post link to Docker 実戦：複数 Bridge ネットワークによるコンテナ分離とネットワーク間通信" href="https://LMDAWN1127.github.io/ja/posts/docker-multi-bridge-network-isolation/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/ja/posts/docker-overlayfs-storage-driver/">Docker 実戦：OverlayFS のユニオンマウントとストレージドライバ解析</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>Docker のストレージドライバ OverlayFS の仕組み：lower/upper/work と LowerDir/Upperdir/MergedDir の三層（init 層を含む）と、読み書き層へのコピーオンライト。さらに手動の mount -t overlay で階層化と読み取り専用を実演し、最後に docker run でコンテナの土台が overlay2 であることを確認します。</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-26">
-  2026年10月26日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 15 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to Docker 実戦：OverlayFS のユニオンマウントとストレージドライバ解析" href="https://LMDAWN1127.github.io/ja/posts/docker-overlayfs-storage-driver/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">

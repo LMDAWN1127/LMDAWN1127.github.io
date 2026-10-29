@@ -173,6 +173,28 @@
 <article class="post-entry"> 
   <header class="entry-header">
     <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/ko/posts/docker-dockerfile-multistage-build/">Dockerfile 멀티 스테이지 빌드 실전</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>멀티 스테이지 빌드(Multi-Stage Build)로 Docker 이미지 크기를 어떻게 크게 줄이는지 시연한다. 1부에서는 3개의 FROM 스테이지(xixi/haha/최종)로 v3.0 을 빌드하며, 처음 두 스테이지가 만든 24MB/2048MB 큰 파일은 최종 이미지에 들어가지 않고 최종 이미지는 작은 로그 2개만 COPY 한다(7.8MB). 2부에서는 Golang 을 예로, 스테이지 1에서 Go SDK 로 hello 바이너리를 컴파일하고 스테이지 2에서 COPY –from=0 으로 바이너리만 복사해 v3.2 를 9.71MB 로 줄이며, 단일 스테이지 v3.1(259MB) 과 비교해 멀티 스테이지 빌드의 슬림한 이미지가 완전히 쓸 수 있음을 보인다.</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-29">
+  2026年10月29日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 5 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to Dockerfile 멀티 스테이지 빌드 실전" href="https://LMDAWN1127.github.io/ko/posts/docker-dockerfile-multistage-build/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
       <a href="https://LMDAWN1127.github.io/ko/posts/docker-dockerfile-onbuild-instruction/">Dockerfile ONBUILD 명령 실전</a>
     </h2>
   </header>
@@ -256,28 +278,6 @@
 </span>
 </footer>
   <a class="entry-link" aria-label="post link to Docker 실전: MAINTAINER와 LABEL로 이미지 태그 달기 및 메타데이터 조회" href="https://LMDAWN1127.github.io/ko/posts/docker-image-tag-maintainer-label-metadata/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/ko/posts/docker-dockerfile-optimization-and-run-tips/">Docker 실전: Dockerfile 최적화 팁과 컨테이너 시작 기법</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>Docker 효율화 팁을 정리합니다. 빌드 측면의 이미지 레이어 캐싱(Using cache)과 .dockerignore로 1GB 빌드 컨텍스트를 약 1.6MB로 축소, 실행 측면의 docker exec -w 작업 디렉터리 지정, 익명 볼륨 호스트 경로(/var/lib/docker/volumes//_data), -p :80 임의 포트 매핑(32768~60999)을 다룹니다.</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-28">
-  2026年10月28日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 3 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to Docker 실전: Dockerfile 최적화 팁과 컨테이너 시작 기법" href="https://LMDAWN1127.github.io/ko/posts/docker-dockerfile-optimization-and-run-tips/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">
