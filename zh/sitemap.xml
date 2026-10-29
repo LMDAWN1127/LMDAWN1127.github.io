@@ -206,6 +206,26 @@
     <lastmod>2026-10-28T18:30:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://LMDAWN1127.github.io/posts/docker-dockerfile-multi-game-image-add/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://LMDAWN1127.github.io/en/posts/docker-dockerfile-multi-game-image-add/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="ko"
+                href="https://LMDAWN1127.github.io/ko/posts/docker-dockerfile-multi-game-image-add/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="ja"
+                href="https://LMDAWN1127.github.io/ja/posts/docker-dockerfile-multi-game-image-add/"
+                />
   </url><url>
     <loc>https://LMDAWN1127.github.io/posts/docker-image-manual-and-dockerfile/</loc>
     <lastmod>2026-10-28T14:30:00+08:00</lastmod>
@@ -436,6 +456,26 @@
     <lastmod>2026-10-23T17:28:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://LMDAWN1127.github.io/posts/docker-app-deployments/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://LMDAWN1127.github.io/en/posts/docker-app-deployments/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="ko"
+                href="https://LMDAWN1127.github.io/ko/posts/docker-app-deployments/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="ja"
+                href="https://LMDAWN1127.github.io/ja/posts/docker-app-deployments/"
+                />
   </url><url>
     <loc>https://LMDAWN1127.github.io/posts/docker-env-var-passing/</loc>
     <lastmod>2026-10-23T17:26:00+08:00</lastmod>
@@ -541,6 +581,26 @@
     <lastmod>2026-10-23T14:30:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://LMDAWN1127.github.io/posts/docker-image-container-flow/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://LMDAWN1127.github.io/en/posts/docker-image-container-flow/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="ko"
+                href="https://LMDAWN1127.github.io/ko/posts/docker-image-container-flow/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="ja"
+                href="https://LMDAWN1127.github.io/ja/posts/docker-image-container-flow/"
+                />
   </url><url>
     <loc>https://LMDAWN1127.github.io/posts/docker-binary-script-install/</loc>
     <lastmod>2026-10-23T12:30:00+08:00</lastmod>

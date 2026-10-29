@@ -70,6 +70,20 @@
       <description>WordPress 를 Docker 로 두 노드에 걸쳐 배포 (데이터베이스와 웹 분리) 하고 이름 지정 볼륨으로 데이터를 영속화한 뒤 컨테이너를 삭제·재생성하여 발행된 블로그가 유실되지 않음을 검증합니다.</description>
     </item>
     <item>
+      <title>Docker 실전: Dockerfile 로 멀티 게임 이미지 빌드와 ADD 자동 압축 해제</title>
+      <link>https://LMDAWN1127.github.io/ko/posts/docker-dockerfile-multi-game-image-add/</link>
+      <pubDate>Mon, 26 Oct 2026 15:20:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/ko/posts/docker-dockerfile-multi-game-image-add/</guid>
+      <description>올인원 구형 이미지 dawn-games-dawn:v0.6 에서 중계 컨테이너로 두 게임 (골드 마이너, 플래피 버드) 의 정적 파일을 꺼내 각각 tar.gz 로 묶고, Dockerfile 의 ADD 명령으로 빌드 시 Alpine+nginx 컨테이너에 자동 압축 해제합니다. 마지막으로 이미지를 빌드하고 컨테이너를 띄워 도메인으로 두 게임에 접속하며, ADD 와 COPY 의 핵심 차이 (ADD 는 tar.gz 를 자동 해제) 도 정리합니다.</description>
+    </item>
+    <item>
+      <title>Docker 실전: 애플리케이션 배포 - Tomcat / MySQL / WordPress / ELK</title>
+      <link>https://LMDAWN1127.github.io/ko/posts/docker-app-deployments/</link>
+      <pubDate>Mon, 26 Oct 2026 14:10:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/ko/posts/docker-app-deployments/</guid>
+      <description>docker run 으로 실제 애플리케이션을 배포합니다. Tomcat, MySQL (20 개 인스턴스 일괄 시작과 다중 인스턴스 노출 포함), WordPress, 그리고 ElasticSearch + Kibana 스택을 포트 매핑·영속 볼륨·비밀번호/토큰 설정과 함께 다룹니다.</description>
+    </item>
+    <item>
       <title>Docker 실전: inspect로 컨테이너 PID・ID・네트워크 정보 확인</title>
       <link>https://LMDAWN1127.github.io/ko/posts/docker-inspect-pid-id-network/</link>
       <pubDate>Mon, 26 Oct 2026 13:00:00 +0800</pubDate>
@@ -82,6 +96,13 @@
       <pubDate>Mon, 26 Oct 2026 11:50:00 +0800</pubDate>
       <guid>https://LMDAWN1127.github.io/ko/posts/docker-nginx-load-balancing/</guid>
       <description>lb 컨테이너와 web 컨테이너 2개를 띄우고, lb 의 Nginx default.conf 를 수정해 web01/web02 로 리버스 프록시한 뒤 lb 에 10 회 curl 하여 트래픽이 두 백엔드 사이에서 번갈아 분산되는 것을 확인합니다.</description>
+    </item>
+    <item>
+      <title>Docker 실전: 이미지 풀부터 컨테이너 실행까지 전체 흐름</title>
+      <link>https://LMDAWN1127.github.io/ko/posts/docker-image-container-flow/</link>
+      <pubDate>Mon, 26 Oct 2026 10:20:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/ko/posts/docker-image-container-flow/</guid>
+      <description>Docker 의 3대 핵심 객체인 이미지 레지스트리·이미지·컨테이너를 순서대로 따라갑니다. 로컬 레지스트리 목록을 조회하고 원격 레지스트리에서 이미지를 가져온 뒤 컨테이너를 실행하고 접속 테스트까지 진행합니다.</description>
     </item>
     <item>
       <title>Docker 실전: 컨테이너 환경 변수 전달 및 확인</title>

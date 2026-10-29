@@ -352,6 +352,56 @@
                 href="https://LMDAWN1127.github.io/ja/posts/docker-wordpress-multinode/"
                 />
   </url><url>
+    <loc>https://LMDAWN1127.github.io/ko/posts/docker-dockerfile-multi-game-image-add/</loc>
+    <lastmod>2026-10-26T15:20:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://LMDAWN1127.github.io/posts/docker-dockerfile-multi-game-image-add/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://LMDAWN1127.github.io/en/posts/docker-dockerfile-multi-game-image-add/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="ko"
+                href="https://LMDAWN1127.github.io/ko/posts/docker-dockerfile-multi-game-image-add/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="ja"
+                href="https://LMDAWN1127.github.io/ja/posts/docker-dockerfile-multi-game-image-add/"
+                />
+  </url><url>
+    <loc>https://LMDAWN1127.github.io/ko/posts/docker-app-deployments/</loc>
+    <lastmod>2026-10-26T14:10:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://LMDAWN1127.github.io/posts/docker-app-deployments/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://LMDAWN1127.github.io/en/posts/docker-app-deployments/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="ko"
+                href="https://LMDAWN1127.github.io/ko/posts/docker-app-deployments/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="ja"
+                href="https://LMDAWN1127.github.io/ja/posts/docker-app-deployments/"
+                />
+  </url><url>
     <loc>https://LMDAWN1127.github.io/ko/posts/docker-inspect-pid-id-network/</loc>
     <lastmod>2026-10-26T13:00:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -400,6 +450,31 @@
                 rel="alternate"
                 hreflang="ja"
                 href="https://LMDAWN1127.github.io/ja/posts/docker-nginx-load-balancing/"
+                />
+  </url><url>
+    <loc>https://LMDAWN1127.github.io/ko/posts/docker-image-container-flow/</loc>
+    <lastmod>2026-10-26T10:20:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://LMDAWN1127.github.io/posts/docker-image-container-flow/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://LMDAWN1127.github.io/en/posts/docker-image-container-flow/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="ko"
+                href="https://LMDAWN1127.github.io/ko/posts/docker-image-container-flow/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="ja"
+                href="https://LMDAWN1127.github.io/ja/posts/docker-image-container-flow/"
                 />
   </url><url>
     <loc>https://LMDAWN1127.github.io/ko/posts/docker-env-var-passing/</loc>
