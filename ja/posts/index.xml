@@ -11,7 +11,7 @@
     </image>
     <generator>Hugo</generator>
     <language>ja</language>
-    <lastBuildDate>Wed, 28 Oct 2026 19:40:00 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 28 Oct 2026 21:41:00 +0800</lastBuildDate>
     <atom:link href="https://LMDAWN1127.github.io/ja/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Harbor アクティブスタンバイデプロイ：インストールからHTTPS・レプリケーションまで</title>
@@ -19,6 +19,13 @@
       <pubDate>Tue, 04 Aug 2026 00:00:00 +0000</pubDate>
       <guid>https://LMDAWN1127.github.io/ja/posts/harbor-master-slave/</guid>
       <description>HarborエンタープライズDockerレジストリのアクティブスタンバイアーキテクチャ、HTTP/HTTPSモード、自己署名証明書、クロスホストレプリケーションを完全にカバーするデプロイガイドです。</description>
+    </item>
+    <item>
+      <title>Dockerfile コア命令実戦：WORKDIR/EXPOSE/VOLUME、ENV/ARG、HEALTHCHECK、ENTRYPOINT</title>
+      <link>https://LMDAWN1127.github.io/ja/posts/docker-dockerfile-core-instructions/</link>
+      <pubDate>Wed, 28 Oct 2026 21:41:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/ja/posts/docker-dockerfile-core-instructions/</guid>
+      <description>4 つのウェブゲームを使って 7 つのコア Dockerfile 命令を完全に実演します。WORKDIR/EXPOSE/VOLUME の作業ディレクトリ・ポート公開・永続化の効果、構築時と実行時で異なる ENV と ARG の違いと上書き方法、HEALTHCHECK の健康状態の遷移、そして ENTRYPOINT と CMD の上書き可否の違いと引数受け渡しの仕組み。</description>
     </item>
     <item>
       <title>Docker 実戦：MAINTAINER と LABEL でイメージにタグを付け、メタデータを確認する</title>
