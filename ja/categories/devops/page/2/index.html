@@ -163,6 +163,28 @@
 <article class="post-entry tag-entry"> 
   <header class="entry-header">
     <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/ja/posts/docker-inspect-pid-id-network/">Docker 実戦：inspect でコンテナの PID・ID・ネットワーク情報を確認</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>docker container inspect -f と Go テンプレートを使って、コンテナの PID・ID・IP アドレス・ゲートウェイ・MAC アドレスを取り出します。</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-26">
+  2026年10月26日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 1 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to Docker 実戦：inspect でコンテナの PID・ID・ネットワーク情報を確認" href="https://LMDAWN1127.github.io/ja/posts/docker-inspect-pid-id-network/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
       <a href="https://LMDAWN1127.github.io/ja/posts/docker-env-var-passing/">Docker 実戦：コンテナの環境変数の渡し方と確認方法</a>
     </h2>
   </header>
@@ -180,6 +202,50 @@
 </span>
 </footer>
   <a class="entry-link" aria-label="post link to Docker 実戦：コンテナの環境変数の渡し方と確認方法" href="https://LMDAWN1127.github.io/ja/posts/docker-env-var-passing/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/ja/posts/docker-image-migration-tag/">Docker 実戦：イメージ移行 - save/load でのオフライン転送とタグ付け</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>docker save でイメージをエクスポートし、SSH 経由でオフライン転送、md5sum で整合性を検証してから docker load でインポートし直してタグを付けます。save/load で IMAGE ID が維持されること、複数イメージの一括エクスポート、2 つのインポート形式、イメージの一括削除方法を解説します。</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-23">
+  2026年10月23日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 2 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to Docker 実戦：イメージ移行 - save/load でのオフライン転送とタグ付け" href="https://LMDAWN1127.github.io/ja/posts/docker-image-migration-tag/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/ja/posts/docker-common-commands-exec/">Docker 実戦：コンテナのよく使うコマンドと exec 操作</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>日常的によく使うコンテナコマンド（一覧/削除/名前変更、-f/–since/–until でのログ追跡、docker cp でのファイルコピー）と、docker exec を使った実行中コンテナ内でのコマンド実行を解説。対象コマンドがイメージに存在する必要があるという注意点も。</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-23">
+  2026年10月23日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 2 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to Docker 実戦：コンテナのよく使うコマンドと exec 操作" href="https://LMDAWN1127.github.io/ja/posts/docker-common-commands-exec/"></a>
 </article>
 
 <article class="post-entry tag-entry"> 
@@ -203,76 +269,12 @@
 </footer>
   <a class="entry-link" aria-label="post link to SonarQube 実践：プライベート導入・トークン設定・コード品質スキャン" href="https://LMDAWN1127.github.io/ja/posts/sonarqube-practice/"></a>
 </article>
-
-<article class="post-entry tag-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/ja/posts/jenkins-practice/">Jenkins 実践：プライベート導入・プラグイン導入・GitLab 連携 CI</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>Jenkins を自前で導入する実践手順：JDK/Jenkins の RPM インストール、root 起動、プラグインのオフライン導入、GitLab の SSH 鍵認証と webhook 自動ビルドの連携。</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-01">
-  2026年10月1日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 4 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to Jenkins 実践：プライベート導入・プラグイン導入・GitLab 連携 CI" href="https://LMDAWN1127.github.io/ja/posts/jenkins-practice/"></a>
-</article>
-
-<article class="post-entry tag-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/ja/posts/gitlab-practice/">GitLab 実践：プライベート導入・SSH 鍵認証・リポジトリ管理</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>GitLab を自前で導入する実践手順：RPM インストール、コンポーネント、よく使うコマンド、Web UI 設定、SSH 鍵認証、マルチユーザー連携。</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-01">
-  2026年10月1日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 6 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to GitLab 実践：プライベート導入・SSH 鍵認証・リポジトリ管理" href="https://LMDAWN1127.github.io/ja/posts/gitlab-practice/"></a>
-</article>
-
-<article class="post-entry tag-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/ja/posts/git-practice-notes/">Git 実践ノート：インストール・基本コマンド・ブランチ管理</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>インストールから基本コマンド、ブランチ運用、コンフリクト解決までを網羅した Git 実践メモ。</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-01">
-  2026年10月1日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 7 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to Git 実践ノート：インストール・基本コマンド・ブランチ管理" href="https://LMDAWN1127.github.io/ja/posts/git-practice-notes/"></a>
-</article>
 <footer class="page-footer">
   <nav class="pagination">
     <a class="prev" href="https://LMDAWN1127.github.io/ja/categories/devops/">
       «&nbsp;前へ&nbsp;
+    </a>
+    <a class="next" href="https://LMDAWN1127.github.io/ja/categories/devops/page/3/">次へ&nbsp;&nbsp;»
     </a>
   </nav>
 </footer>

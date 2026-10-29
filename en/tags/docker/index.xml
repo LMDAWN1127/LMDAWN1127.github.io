@@ -35,6 +35,13 @@
       <description>A practical roundup of Docker efficiency tips: build-side image layer caching (Using cache) and .dockerignore to shrink a 1GB build context to &lt;del&gt;1.6MB; runtime tricks docker exec -w for the working directory, anonymous volume host paths (/var/lib/docker/volumes/&lt;hash&gt;/_data), and -p :80 random port mapping (32768&lt;/del&gt;60999).</description>
     </item>
     <item>
+      <title>Docker in Practice: The Difference Between docker exec and docker attach</title>
+      <link>https://LMDAWN1127.github.io/en/posts/docker-exec-vs-attach/</link>
+      <pubDate>Wed, 28 Oct 2026 12:30:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/posts/docker-exec-vs-attach/</guid>
+      <description>Use docker top to compare process trees and see the essential difference between docker exec and docker attach: exec spawns a new process inside the container, while attach only connects your local stdin/stdout/stderr to the container&amp;rsquo;s running main process. Also shows how to detach from attach with ctrl+p then ctrl+q without terminating the container.</description>
+    </item>
+    <item>
       <title>Docker in Practice: A Detailed Look at Container States — Up / Exited / Created / Paused</title>
       <link>https://LMDAWN1127.github.io/en/posts/docker-container-states/</link>
       <pubDate>Wed, 28 Oct 2026 11:30:00 +0800</pubDate>
@@ -54,6 +61,20 @@
       <pubDate>Fri, 23 Oct 2026 17:26:00 +0800</pubDate>
       <guid>https://LMDAWN1127.github.io/en/posts/docker-env-var-passing/</guid>
       <description>How to pass environment variables into a container with -e and how to inspect them afterwards with docker exec &lt;container&gt; env.</description>
+    </item>
+    <item>
+      <title>Docker in Practice: Image Migration - Offline save/load Transfer and Tagging</title>
+      <link>https://LMDAWN1127.github.io/en/posts/docker-image-migration-tag/</link>
+      <pubDate>Fri, 23 Oct 2026 15:24:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/posts/docker-image-migration-tag/</guid>
+      <description>Export an image with docker save, transfer it offline over SSH, verify integrity with md5sum, then import it with docker load and re-tag it. Shows that save/load preserves the IMAGE ID, how to export multiple images at once, two import forms, and two ways to batch-delete images.</description>
+    </item>
+    <item>
+      <title>Docker in Practice: Common Container Commands and exec Operations</title>
+      <link>https://LMDAWN1127.github.io/en/posts/docker-common-commands-exec/</link>
+      <pubDate>Fri, 23 Oct 2026 15:20:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/posts/docker-common-commands-exec/</guid>
+      <description>A roundup of everyday container commands (list/remove/rename containers, follow logs with -f/&amp;ndash;since/&amp;ndash;until, copy files with docker cp) plus running commands inside a running container with docker exec, including the gotcha that the target command must exist in the image.</description>
     </item>
     <item>
       <title>flannel in Action: Building Docker Cross-Host Container Networks from Scratch</title>

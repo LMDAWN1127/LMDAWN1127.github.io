@@ -227,6 +227,31 @@
                 href="https://LMDAWN1127.github.io/ja/posts/docker-dockerfile-optimization-and-run-tips/"
                 />
   </url><url>
+    <loc>https://LMDAWN1127.github.io/en/posts/docker-exec-vs-attach/</loc>
+    <lastmod>2026-10-28T12:30:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://LMDAWN1127.github.io/posts/docker-exec-vs-attach/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://LMDAWN1127.github.io/en/posts/docker-exec-vs-attach/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="ko"
+                href="https://LMDAWN1127.github.io/ko/posts/docker-exec-vs-attach/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="ja"
+                href="https://LMDAWN1127.github.io/ja/posts/docker-exec-vs-attach/"
+                />
+  </url><url>
     <loc>https://LMDAWN1127.github.io/en/posts/docker-container-states/</loc>
     <lastmod>2026-10-28T11:30:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -300,6 +325,56 @@
                 rel="alternate"
                 hreflang="ja"
                 href="https://LMDAWN1127.github.io/ja/posts/docker-env-var-passing/"
+                />
+  </url><url>
+    <loc>https://LMDAWN1127.github.io/en/posts/docker-image-migration-tag/</loc>
+    <lastmod>2026-10-23T15:24:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://LMDAWN1127.github.io/posts/docker-image-migration-tag/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://LMDAWN1127.github.io/en/posts/docker-image-migration-tag/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="ko"
+                href="https://LMDAWN1127.github.io/ko/posts/docker-image-migration-tag/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="ja"
+                href="https://LMDAWN1127.github.io/ja/posts/docker-image-migration-tag/"
+                />
+  </url><url>
+    <loc>https://LMDAWN1127.github.io/en/posts/docker-common-commands-exec/</loc>
+    <lastmod>2026-10-23T15:20:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://LMDAWN1127.github.io/posts/docker-common-commands-exec/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://LMDAWN1127.github.io/en/posts/docker-common-commands-exec/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="ko"
+                href="https://LMDAWN1127.github.io/ko/posts/docker-common-commands-exec/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="ja"
+                href="https://LMDAWN1127.github.io/ja/posts/docker-common-commands-exec/"
                 />
   </url><url>
     <loc>https://LMDAWN1127.github.io/en/tags/automated-deployment/</loc>

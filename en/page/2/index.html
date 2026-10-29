@@ -154,6 +154,28 @@
 <article class="post-entry"> 
   <header class="entry-header">
     <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/en/posts/docker-inspect-pid-id-network/">Docker in Practice: Inspecting Container PID, ID and Network Info with inspect</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>Use docker container inspect -f with Go templates to pull a container’s PID, ID, IP address, gateway and MAC address.</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-26">
+  2026年10月26日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 1 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to Docker in Practice: Inspecting Container PID, ID and Network Info with inspect" href="https://LMDAWN1127.github.io/en/posts/docker-inspect-pid-id-network/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
       <a href="https://LMDAWN1127.github.io/en/posts/docker-env-var-passing/">Docker in Practice: Passing and Inspecting Environment Variables in Containers</a>
     </h2>
   </header>
@@ -176,6 +198,50 @@
 <article class="post-entry"> 
   <header class="entry-header">
     <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/en/posts/docker-image-migration-tag/">Docker in Practice: Image Migration - Offline save/load Transfer and Tagging</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>Export an image with docker save, transfer it offline over SSH, verify integrity with md5sum, then import it with docker load and re-tag it. Shows that save/load preserves the IMAGE ID, how to export multiple images at once, two import forms, and two ways to batch-delete images.</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-23">
+  2026年10月23日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 2 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to Docker in Practice: Image Migration - Offline save/load Transfer and Tagging" href="https://LMDAWN1127.github.io/en/posts/docker-image-migration-tag/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/en/posts/docker-common-commands-exec/">Docker in Practice: Common Container Commands and exec Operations</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>A roundup of everyday container commands (list/remove/rename containers, follow logs with -f/–since/–until, copy files with docker cp) plus running commands inside a running container with docker exec, including the gotcha that the target command must exist in the image.</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-23">
+  2026年10月23日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 2 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to Docker in Practice: Common Container Commands and exec Operations" href="https://LMDAWN1127.github.io/en/posts/docker-common-commands-exec/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
       <a href="https://LMDAWN1127.github.io/en/posts/openstack-core-architecture-deployment/">OpenStack Cloud OS: Core Architecture and Automated Deployment</a>
     </h2>
   </header>
@@ -193,72 +259,6 @@
 </span>
 </footer>
   <a class="entry-link" aria-label="post link to OpenStack Cloud OS: Core Architecture and Automated Deployment" href="https://LMDAWN1127.github.io/en/posts/openstack-core-architecture-deployment/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/en/posts/openstack-cinder-block-storage/">OpenStack Cinder Block Storage Explained: Local LVM &#43; iSCSI Volumes and NFS Backend Integration</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>A walkthrough of OpenStack Cinder block storage: how volume creation and attachment split between Cinder and Nova, the full local LVM &#43; iSCSI path (VG/LV, turning the controller into an iSCSI target with targetcli, attaching via libvirt), plus NFS backend configuration and dashboard operations.</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-05">
-  2026年10月5日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 8 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to OpenStack Cinder Block Storage Explained: Local LVM &#43; iSCSI Volumes and NFS Backend Integration" href="https://LMDAWN1127.github.io/en/posts/openstack-cinder-block-storage/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/en/posts/openstack-keystone-glance-nova/">OpenStack Core Services Explained: Keystone Authentication, Nova Compute, and Glance/Swift Image Storage</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>A walkthrough of OpenStack’s three core services: Keystone multi-domain support, service/endpoint registration and policy-file authorization; Nova’s modules (api/scheduler/conductor/compute/novncproxy), the message queue and the differential disk; and the Glance image service switched to a Swift object-storage backend.</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-05">
-  2026年10月5日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 8 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to OpenStack Core Services Explained: Keystone Authentication, Nova Compute, and Glance/Swift Image Storage" href="https://LMDAWN1127.github.io/en/posts/openstack-keystone-glance-nova/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/en/posts/openstack-provision-cloud-server/">OpenStack Cloud Server Provisioning</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>From the web dashboard to the CLI, a complete walkthrough of provisioning OpenStack cloud servers: creating and deleting tenants/users/images/flavors/networks/routers/security groups/key pairs/floating IPs, plus iptables SNAT/DNAT and Nova cell_v2 discover_hosts troubleshooting.</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-04">
-  2026年10月4日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 8 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to OpenStack Cloud Server Provisioning" href="https://LMDAWN1127.github.io/en/posts/openstack-provision-cloud-server/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">

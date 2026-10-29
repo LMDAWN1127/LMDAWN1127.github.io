@@ -35,6 +35,13 @@
       <description>Docker 효율화 팁을 정리합니다. 빌드 측면의 이미지 레이어 캐싱(Using cache)과 .dockerignore로 1GB 빌드 컨텍스트를 약 1.6MB로 축소, 실행 측면의 docker exec -w 작업 디렉터리 지정, 익명 볼륨 호스트 경로(/var/lib/docker/volumes/&lt;hash&gt;/_data), -p :80 임의 포트 매핑(32768~60999)을 다룹니다.</description>
     </item>
     <item>
+      <title>Docker 실전: docker exec 와 docker attach 의 차이</title>
+      <link>https://LMDAWN1127.github.io/ko/posts/docker-exec-vs-attach/</link>
+      <pubDate>Wed, 28 Oct 2026 12:30:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/ko/posts/docker-exec-vs-attach/</guid>
+      <description>docker top 으로 프로세스 트리를 비교하여 docker exec 와 docker attach 의 본질적 차이를 확인합니다. exec 는 컨테이너 내부에 새 프로세스를 생성하고, attach 는 로컬의 표준 입출력을 실행 중인 메인 프로세스에 연결할 뿐입니다. 또한 attach 를 컨테이너를 종료하지 않고 빠져나오는 방법(ctrl+p 후 ctrl+q)도 다룹니다.</description>
+    </item>
+    <item>
       <title>Docker 실전: 컨테이너 상태 자세히 보기 — Up / Exited / Created / Paused</title>
       <link>https://LMDAWN1127.github.io/ko/posts/docker-container-states/</link>
       <pubDate>Wed, 28 Oct 2026 11:30:00 +0800</pubDate>
@@ -54,6 +61,20 @@
       <pubDate>Fri, 23 Oct 2026 17:26:00 +0800</pubDate>
       <guid>https://LMDAWN1127.github.io/ko/posts/docker-env-var-passing/</guid>
       <description>컨테이너에 -e 로 환경 변수를 전달하고, 이후 docker exec &amp;lt;컨테이너&amp;gt; env 로 확인하는 방법을 다룹니다.</description>
+    </item>
+    <item>
+      <title>Docker 실전: 이미지 마이그레이션 - 오프라인 save/load 전송과 태그 지정</title>
+      <link>https://LMDAWN1127.github.io/ko/posts/docker-image-migration-tag/</link>
+      <pubDate>Fri, 23 Oct 2026 15:24:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/ko/posts/docker-image-migration-tag/</guid>
+      <description>docker save 로 이미지를 내보내고 SSH 로 오프라인 전송한 뒤 md5sum 으로 무결성을 검증하고, docker load 로 가져와 다시 태그를 지정합니다. save/load 가 IMAGE ID 를 유지함을 보이고, 여러 이미지 한 번에 내보내기, 두 가지 가져오기 형식, 이미지 일괄 삭제 방법을 다룹니다.</description>
+    </item>
+    <item>
+      <title>Docker 실전: 자주 쓰는 컨테이너 명령과 exec 작업</title>
+      <link>https://LMDAWN1127.github.io/ko/posts/docker-common-commands-exec/</link>
+      <pubDate>Fri, 23 Oct 2026 15:20:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/ko/posts/docker-common-commands-exec/</guid>
+      <description>매일 쓰는 컨테이너 명령(목록/삭제/이름 변경, -f/&amp;ndash;since/&amp;ndash;until 로그 추적, docker cp 파일 복사)과 docker exec 로 실행 중인 컨테이너 내부에서 명령을 실행하는 방법을 다룹니다. 대상 명령이 이미지에 존재해야 한다는 주의점도 포함합니다.</description>
     </item>
     <item>
       <title>SonarQube 실전: 사설 배포, 토큰 설정, 코드 품질 스캔</title>

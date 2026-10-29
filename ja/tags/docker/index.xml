@@ -35,6 +35,13 @@
       <description>Docker の効率化コツをまとめます。ビルド側はイメージレイヤーキャッシュ(Using cache)と .dockerignore で 1GB のビルドコンテキストを約 1.6MB に削減、実行側は docker exec -w の作業 ディレクトリ指定、匿名ボリュームのホストパス(/var/lib/docker/volumes/&lt;hash&gt;/_data)、-p :80 のランダムポートマッピング(32768~60999)を解説。</description>
     </item>
     <item>
+      <title>Docker 実戦：docker exec と docker attach の違い</title>
+      <link>https://LMDAWN1127.github.io/ja/posts/docker-exec-vs-attach/</link>
+      <pubDate>Wed, 28 Oct 2026 12:30:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/ja/posts/docker-exec-vs-attach/</guid>
+      <description>docker top でプロセスツリーを比較し、docker exec と docker attach の本質的な違いを確認します。exec はコンテナ内で新しいプロセスを生成し、attach はローカルの標準入出力を実行中のメインプロセスに接続するだけです。また、attach を終了せずに抜けるには ctrl+p の直後に ctrl+q を押す方法も紹介します。</description>
+    </item>
+    <item>
       <title>Docker 実戦：コンテナの状態を詳しく — Up / Exited / Created / Paused</title>
       <link>https://LMDAWN1127.github.io/ja/posts/docker-container-states/</link>
       <pubDate>Wed, 28 Oct 2026 11:30:00 +0800</pubDate>
@@ -54,6 +61,20 @@
       <pubDate>Fri, 23 Oct 2026 17:26:00 +0800</pubDate>
       <guid>https://LMDAWN1127.github.io/ja/posts/docker-env-var-passing/</guid>
       <description>コンテナに -e で環境変数を渡し、後から docker exec &amp;lt;コンテナ&amp;gt; env で確認する方法を解説します。</description>
+    </item>
+    <item>
+      <title>Docker 実戦：イメージ移行 - save/load でのオフライン転送とタグ付け</title>
+      <link>https://LMDAWN1127.github.io/ja/posts/docker-image-migration-tag/</link>
+      <pubDate>Fri, 23 Oct 2026 15:24:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/ja/posts/docker-image-migration-tag/</guid>
+      <description>docker save でイメージをエクスポートし、SSH 経由でオフライン転送、md5sum で整合性を検証してから docker load でインポートし直してタグを付けます。save/load で IMAGE ID が維持されること、複数イメージの一括エクスポート、2 つのインポート形式、イメージの一括削除方法を解説します。</description>
+    </item>
+    <item>
+      <title>Docker 実戦：コンテナのよく使うコマンドと exec 操作</title>
+      <link>https://LMDAWN1127.github.io/ja/posts/docker-common-commands-exec/</link>
+      <pubDate>Fri, 23 Oct 2026 15:20:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/ja/posts/docker-common-commands-exec/</guid>
+      <description>日常的によく使うコンテナコマンド（一覧/削除/名前変更、-f/&amp;ndash;since/&amp;ndash;until でのログ追跡、docker cp でのファイルコピー）と、docker exec を使った実行中コンテナ内でのコマンド実行を解説。対象コマンドがイメージに存在する必要があるという注意点も。</description>
     </item>
     <item>
       <title>flannel 実践：Docker クロスホストコンテナネットワークをゼロから構築</title>
