@@ -35,6 +35,13 @@
       <description>Docker 효율화 팁을 정리합니다. 빌드 측면의 이미지 레이어 캐싱(Using cache)과 .dockerignore로 1GB 빌드 컨텍스트를 약 1.6MB로 축소, 실행 측면의 docker exec -w 작업 디렉터리 지정, 익명 볼륨 호스트 경로(/var/lib/docker/volumes/&lt;hash&gt;/_data), -p :80 임의 포트 매핑(32768~60999)을 다룹니다.</description>
     </item>
     <item>
+      <title>Docker 실전: 수동 이미지 생성과 Dockerfile 자동 빌드</title>
+      <link>https://LMDAWN1127.github.io/ko/posts/docker-image-manual-and-dockerfile/</link>
+      <pubDate>Wed, 28 Oct 2026 14:30:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/ko/posts/docker-image-manual-and-dockerfile/</guid>
+      <description>CentOS·Ubuntu·Alpine 세 가지 베이스 이미지로 동일한 nginx 게임 이미지를 수동으로 만들고 docker commit 으로 커밋하며(크기 236MB / 215MB / 9.41MB), Dockerfile 로 같은 이미지를 자동 빌드한 뒤 수동 방식의 세 가지 단점을 정리합니다.</description>
+    </item>
+    <item>
       <title>Docker 실전: docker exec 와 docker attach 의 차이</title>
       <link>https://LMDAWN1127.github.io/ko/posts/docker-exec-vs-attach/</link>
       <pubDate>Wed, 28 Oct 2026 12:30:00 +0800</pubDate>
@@ -77,11 +84,25 @@
       <description>사용자 정의 네트워크가 있는 단일 호스트에서 docker run 으로 Zabbix 스택 (MySQL + Java gateway + Server + Web) 과 WordPress 앱을 배포합니다. 포트 매핑과 영속 볼륨도 포함됩니다.</description>
     </item>
     <item>
+      <title>Docker 실전: 단일 호스트 네트워크 유형과 컨테이너 간 통신 방식 상세</title>
+      <link>https://LMDAWN1127.github.io/ko/posts/docker-single-host-network/</link>
+      <pubDate>Tue, 27 Oct 2026 09:50:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/ko/posts/docker-single-host-network/</guid>
+      <description>Docker 단일 호스트 네트워크: none/bridge/host/container/custom 다섯 가지 유형과 실습, 그리고 컨테이너 간 통신 세 가지 방식 - /etc/hosts 해석, &amp;ndash;link 연결, 사용자 정의 네트워크(생성/inspect/prune/사용자 정의 서브넷/수동 IP 포함).</description>
+    </item>
+    <item>
       <title>Docker 실전: 다중 Bridge 네트워크 기반 컨테이너 격리와 네트워크 간 통신</title>
       <link>https://LMDAWN1127.github.io/ko/posts/docker-multi-bridge-network-isolation/</link>
       <pubDate>Tue, 27 Oct 2026 08:00:00 +0800</pubDate>
       <guid>https://LMDAWN1127.github.io/ko/posts/docker-multi-bridge-network-isolation/</guid>
       <description>xixi 와 haha 두 개의 커스텀 Bridge 네트워크로 Docker 의 기본 네트워크 격리 메커니즘을 시연하고, docker network connect/disconnect 로 컨테이너를 실행 중에 네트워크에 참여시키거나 내보내 크로스 네트워크 통신을 구현하는 가벼운 구성을 보여줍니다.</description>
+    </item>
+    <item>
+      <title>Docker 실전: OverlayFS 유니온 마운트와 스토리지 드라이버 분석</title>
+      <link>https://LMDAWN1127.github.io/ko/posts/docker-overlayfs-storage-driver/</link>
+      <pubDate>Mon, 26 Oct 2026 21:00:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/ko/posts/docker-overlayfs-storage-driver/</guid>
+      <description>Docker 스토리지 드라이버 OverlayFS 의 원리: lower/upper/work 디렉터리와 LowerDir/Upperdir/MergedDir 3계층(init 계층 포함), 읽기-쓰기 계층으로의 쓰기 시 복사. 그리고 mount -t overlay 로 계층화와 읽기 전용을 직접 시연하고, 마지막으로 docker run 으로 컨테이너 하부가 overlay2 임을 확인합니다.</description>
     </item>
     <item>
       <title>Docker 실전: chroot 로 최소 컨테이너 루트를 직접 만들어 컨테이너 본질 이해하기</title>

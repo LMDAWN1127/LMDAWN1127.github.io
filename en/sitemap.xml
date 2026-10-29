@@ -227,6 +227,31 @@
                 href="https://LMDAWN1127.github.io/ja/posts/docker-dockerfile-optimization-and-run-tips/"
                 />
   </url><url>
+    <loc>https://LMDAWN1127.github.io/en/posts/docker-image-manual-and-dockerfile/</loc>
+    <lastmod>2026-10-28T14:30:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://LMDAWN1127.github.io/posts/docker-image-manual-and-dockerfile/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://LMDAWN1127.github.io/en/posts/docker-image-manual-and-dockerfile/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="ko"
+                href="https://LMDAWN1127.github.io/ko/posts/docker-image-manual-and-dockerfile/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="ja"
+                href="https://LMDAWN1127.github.io/ja/posts/docker-image-manual-and-dockerfile/"
+                />
+  </url><url>
     <loc>https://LMDAWN1127.github.io/en/posts/docker-exec-vs-attach/</loc>
     <lastmod>2026-10-28T12:30:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -377,6 +402,31 @@
                 href="https://LMDAWN1127.github.io/ja/posts/docker-zabbix-wordpress-deployment/"
                 />
   </url><url>
+    <loc>https://LMDAWN1127.github.io/en/posts/docker-single-host-network/</loc>
+    <lastmod>2026-10-27T09:50:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://LMDAWN1127.github.io/posts/docker-single-host-network/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://LMDAWN1127.github.io/en/posts/docker-single-host-network/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="ko"
+                href="https://LMDAWN1127.github.io/ko/posts/docker-single-host-network/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="ja"
+                href="https://LMDAWN1127.github.io/ja/posts/docker-single-host-network/"
+                />
+  </url><url>
     <loc>https://LMDAWN1127.github.io/en/posts/docker-multi-bridge-network-isolation/</loc>
     <lastmod>2026-10-27T08:00:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -400,6 +450,31 @@
                 rel="alternate"
                 hreflang="ja"
                 href="https://LMDAWN1127.github.io/ja/posts/docker-multi-bridge-network-isolation/"
+                />
+  </url><url>
+    <loc>https://LMDAWN1127.github.io/en/posts/docker-overlayfs-storage-driver/</loc>
+    <lastmod>2026-10-26T21:00:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://LMDAWN1127.github.io/posts/docker-overlayfs-storage-driver/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://LMDAWN1127.github.io/en/posts/docker-overlayfs-storage-driver/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="ko"
+                href="https://LMDAWN1127.github.io/ko/posts/docker-overlayfs-storage-driver/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="ja"
+                href="https://LMDAWN1127.github.io/ja/posts/docker-overlayfs-storage-driver/"
                 />
   </url><url>
     <loc>https://LMDAWN1127.github.io/en/posts/docker-chroot-minimal-root/</loc>

@@ -173,6 +173,72 @@
 <article class="post-entry"> 
   <header class="entry-header">
     <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/ko/posts/docker-nginx-load-balancing/">Docker 실전: Nginx 로드 밸런싱과 컨테이너 트래픽 분산</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>lb 컨테이너와 web 컨테이너 2개를 띄우고, lb 의 Nginx default.conf 를 수정해 web01/web02 로 리버스 프록시한 뒤 lb 에 10 회 curl 하여 트래픽이 두 백엔드 사이에서 번갈아 분산되는 것을 확인합니다.</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-26">
+  2026年10月26日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 3 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to Docker 실전: Nginx 로드 밸런싱과 컨테이너 트래픽 분산" href="https://LMDAWN1127.github.io/ko/posts/docker-nginx-load-balancing/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/ko/posts/docker-image-container-flow/">Docker 실전: 이미지 풀부터 컨테이너 실행까지 전체 흐름</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>Docker 의 3대 핵심 객체인 이미지 레지스트리·이미지·컨테이너를 순서대로 따라갑니다. 로컬 레지스트리 목록을 조회하고 원격 레지스트리에서 이미지를 가져온 뒤 컨테이너를 실행하고 접속 테스트까지 진행합니다.</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-26">
+  2026年10月26日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 3 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to Docker 실전: 이미지 풀부터 컨테이너 실행까지 전체 흐름" href="https://LMDAWN1127.github.io/ko/posts/docker-image-container-flow/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/ko/posts/docker-env-var-passing/">Docker 실전: 컨테이너 환경 변수 전달 및 확인</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>컨테이너에 -e 로 환경 변수를 전달하고, 이후 docker exec &lt;컨테이너&gt; env 로 확인하는 방법을 다룹니다.</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-23">
+  2026年10月23日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 1 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to Docker 실전: 컨테이너 환경 변수 전달 및 확인" href="https://LMDAWN1127.github.io/ko/posts/docker-env-var-passing/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
       <a href="https://LMDAWN1127.github.io/ko/posts/docker-image-migration-tag/">Docker 실전: 이미지 마이그레이션 - 오프라인 save/load 전송과 태그 지정</a>
     </h2>
   </header>
@@ -212,72 +278,6 @@
 </span>
 </footer>
   <a class="entry-link" aria-label="post link to Docker 실전: 포트 매핑 원리 - veth NIC 에서 iptables DNAT 까지" href="https://LMDAWN1127.github.io/ko/posts/docker-port-mapping-principle/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/ko/posts/docker-common-commands-exec/">Docker 실전: 자주 쓰는 컨테이너 명령과 exec 작업</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>매일 쓰는 컨테이너 명령(목록/삭제/이름 변경, -f/–since/–until 로그 추적, docker cp 파일 복사)과 docker exec 로 실행 중인 컨테이너 내부에서 명령을 실행하는 방법을 다룹니다. 대상 명령이 이미지에 존재해야 한다는 주의점도 포함합니다.</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-23">
-  2026年10月23日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 2 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to Docker 실전: 자주 쓰는 컨테이너 명령과 exec 작업" href="https://LMDAWN1127.github.io/ko/posts/docker-common-commands-exec/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/ko/posts/docker-binary-script-install/">Docker 실전: 바이너리 배포와 원클릭 스크립트 배포</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>Docker 를 세 가지 방법으로 설치합니다. apt 패키지 관리자, 공식 정적 바이너리 (다운로드/압축해제/복사/시작), 그리고 자동화 스크립트 (설치 및 제거). 바이너리 설치를 깔끔하게 제거하는 방법도 다룹니다.</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-23">
-  2026年10月23日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 3 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to Docker 실전: 바이너리 배포와 원클릭 스크립트 배포" href="https://LMDAWN1127.github.io/ko/posts/docker-binary-script-install/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/ko/posts/openstack-core-architecture-deployment/">OpenStack 클라우드 OS: 핵심 아키텍처 및 자동화 배포</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>Nova/Glance/Neutron/Cinder 등 핵심 컴포넌트부터 Packstack 기반 Victoria 릴리스 원클릭 자동 배포, 그리고 Rsyslog 로그 트러블슈팅까지.</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-06">
-  2026年10月6日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 12 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to OpenStack 클라우드 OS: 핵심 아키텍처 및 자동화 배포" href="https://LMDAWN1127.github.io/ko/posts/openstack-core-architecture-deployment/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">

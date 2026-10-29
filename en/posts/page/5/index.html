@@ -173,6 +173,72 @@
 <article class="post-entry"> 
   <header class="entry-header">
     <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/en/posts/docker-nginx-load-balancing/">Docker in Practice: Nginx Load Balancing and Container Traffic Distribution</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>Run an lb container plus two web containers, edit the Nginx default.conf on lb to reverse-proxy to web01/web02, then curl the lb 10 times to see the traffic alternate between the two backends.</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-26">
+  2026年10月26日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 3 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to Docker in Practice: Nginx Load Balancing and Container Traffic Distribution" href="https://LMDAWN1127.github.io/en/posts/docker-nginx-load-balancing/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/en/posts/docker-image-container-flow/">Docker in Practice: The Full Flow of Pulling an Image and Starting a Container</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>Walk through Docker’s three core objects in order — image registry, image, container: inspect the local registry list, pull an image from a remote registry, start a container, and run an access test.</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-26">
+  2026年10月26日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 4 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to Docker in Practice: The Full Flow of Pulling an Image and Starting a Container" href="https://LMDAWN1127.github.io/en/posts/docker-image-container-flow/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/en/posts/docker-env-var-passing/">Docker in Practice: Passing and Inspecting Environment Variables in Containers</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>How to pass environment variables into a container with -e and how to inspect them afterwards with docker exec env.</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-23">
+  2026年10月23日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 1 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to Docker in Practice: Passing and Inspecting Environment Variables in Containers" href="https://LMDAWN1127.github.io/en/posts/docker-env-var-passing/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
       <a href="https://LMDAWN1127.github.io/en/posts/docker-image-migration-tag/">Docker in Practice: Image Migration - Offline save/load Transfer and Tagging</a>
     </h2>
   </header>
@@ -212,72 +278,6 @@
 </span>
 </footer>
   <a class="entry-link" aria-label="post link to Docker in Practice: How Port Mapping Works - From the veth NIC to iptables DNAT" href="https://LMDAWN1127.github.io/en/posts/docker-port-mapping-principle/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/en/posts/docker-common-commands-exec/">Docker in Practice: Common Container Commands and exec Operations</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>A roundup of everyday container commands (list/remove/rename containers, follow logs with -f/–since/–until, copy files with docker cp) plus running commands inside a running container with docker exec, including the gotcha that the target command must exist in the image.</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-23">
-  2026年10月23日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 2 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to Docker in Practice: Common Container Commands and exec Operations" href="https://LMDAWN1127.github.io/en/posts/docker-common-commands-exec/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/en/posts/docker-binary-script-install/">Docker Installation in Practice: Binary Deployment and One-Click Script Deployment</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>Install Docker three ways: via the apt package manager, from official static binaries (download/extract/copy/start), and with an automation script (install and uninstall). Also covers how to cleanly remove the binary install.</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-23">
-  2026年10月23日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 3 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to Docker Installation in Practice: Binary Deployment and One-Click Script Deployment" href="https://LMDAWN1127.github.io/en/posts/docker-binary-script-install/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/en/posts/openstack-core-architecture-deployment/">OpenStack Cloud OS: Core Architecture and Automated Deployment</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>From core components (Nova/Glance/Neutron/Cinder, etc.) to one-click Packstack-based automated deployment of the Victoria release, plus Rsyslog log troubleshooting.</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-06">
-  2026年10月6日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 13 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to OpenStack Cloud OS: Core Architecture and Automated Deployment" href="https://LMDAWN1127.github.io/en/posts/openstack-core-architecture-deployment/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">

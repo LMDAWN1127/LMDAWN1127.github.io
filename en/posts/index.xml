@@ -35,6 +35,13 @@
       <description>A practical roundup of Docker efficiency tips: build-side image layer caching (Using cache) and .dockerignore to shrink a 1GB build context to &lt;del&gt;1.6MB; runtime tricks docker exec -w for the working directory, anonymous volume host paths (/var/lib/docker/volumes/&lt;hash&gt;/_data), and -p :80 random port mapping (32768&lt;/del&gt;60999).</description>
     </item>
     <item>
+      <title>Docker in Practice: Building Docker Images Manually and Automatically with a Dockerfile</title>
+      <link>https://LMDAWN1127.github.io/en/posts/docker-image-manual-and-dockerfile/</link>
+      <pubDate>Wed, 28 Oct 2026 14:30:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/posts/docker-image-manual-and-dockerfile/</guid>
+      <description>Build the same nginx game image manually from three base images - CentOS, Ubuntu and Alpine - and commit it with docker commit (236MB / 215MB / 9.41MB), then rebuild it with a Dockerfile, and summarize the three drawbacks of the manual approach: oversized images, tedious startup-command changes, and no build cache.</description>
+    </item>
+    <item>
       <title>Docker in Practice: The Difference Between docker exec and docker attach</title>
       <link>https://LMDAWN1127.github.io/en/posts/docker-exec-vs-attach/</link>
       <pubDate>Wed, 28 Oct 2026 12:30:00 +0800</pubDate>
@@ -77,11 +84,25 @@
       <description>On a single host with a custom network, deploy the Zabbix stack (MySQL + Java gateway + Server + Web) and a WordPress app with docker run, including port mapping and persistent volumes.</description>
     </item>
     <item>
+      <title>Docker in Practice: Single-Host Network Types and Container Communication Options</title>
+      <link>https://LMDAWN1127.github.io/en/posts/docker-single-host-network/</link>
+      <pubDate>Tue, 27 Oct 2026 09:50:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/posts/docker-single-host-network/</guid>
+      <description>Docker single-host networking: the five network types none, bridge, host, container and custom, with hands-on examples, plus three container-to-container communication options - /etc/hosts resolution, &amp;ndash;link, and custom networks (including create, inspect, prune, custom subnets and manual IP assignment).</description>
+    </item>
+    <item>
       <title>Docker in Practice: Container Isolation and Cross-Network Communication with Multiple Bridge Networks</title>
       <link>https://LMDAWN1127.github.io/en/posts/docker-multi-bridge-network-isolation/</link>
       <pubDate>Tue, 27 Oct 2026 08:00:00 +0800</pubDate>
       <guid>https://LMDAWN1127.github.io/en/posts/docker-multi-bridge-network-isolation/</guid>
       <description>Using two custom Bridge networks, xixi and haha, this walkthrough demonstrates Docker&amp;rsquo;s default network isolation mechanism and shows how docker network connect/disconnect lets a container join or leave a network at runtime to achieve cross-network container communication.</description>
+    </item>
+    <item>
+      <title>Docker in Practice: OverlayFS Union Mounts and the Storage Driver Explained</title>
+      <link>https://LMDAWN1127.github.io/en/posts/docker-overlayfs-storage-driver/</link>
+      <pubDate>Mon, 26 Oct 2026 21:00:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/posts/docker-overlayfs-storage-driver/</guid>
+      <description>How the Docker OverlayFS storage driver works: the lower/upper/work directories and the LowerDir/Upperdir/MergedDir layers (including the init layer), and copy-on-write into the read-write layer; then a manual mount -t overlay demo of layering and read-only behavior, and finally docker run to confirm that a container is backed by overlay2.</description>
     </item>
     <item>
       <title>Docker in Practice: Hand-Building a Minimal Container Root with chroot to Understand What a Container Is</title>

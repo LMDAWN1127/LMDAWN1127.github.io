@@ -35,6 +35,13 @@
       <description>Docker の効率化コツをまとめます。ビルド側はイメージレイヤーキャッシュ(Using cache)と .dockerignore で 1GB のビルドコンテキストを約 1.6MB に削減、実行側は docker exec -w の作業 ディレクトリ指定、匿名ボリュームのホストパス(/var/lib/docker/volumes/&lt;hash&gt;/_data)、-p :80 のランダムポートマッピング(32768~60999)を解説。</description>
     </item>
     <item>
+      <title>Docker 実戦：手動での Docker イメージ作成と Dockerfile による自動ビルド</title>
+      <link>https://LMDAWN1127.github.io/ja/posts/docker-image-manual-and-dockerfile/</link>
+      <pubDate>Wed, 28 Oct 2026 14:30:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/ja/posts/docker-image-manual-and-dockerfile/</guid>
+      <description>CentOS・Ubuntu・Alpine の 3 種類のベースイメージから nginx ゲームイメージを手動で作成し docker commit でコミット（サイズ 236MB / 215MB / 9.41MB）。その後 Dockerfile で同じイメージを自動ビルドし、手動作成の 3 つの欠点をまとめます。</description>
+    </item>
+    <item>
       <title>Docker 実戦：docker exec と docker attach の違い</title>
       <link>https://LMDAWN1127.github.io/ja/posts/docker-exec-vs-attach/</link>
       <pubDate>Wed, 28 Oct 2026 12:30:00 +0800</pubDate>
@@ -77,11 +84,25 @@
       <description>カスタムネットワーク上の単一ホストで、docker run を使って Zabbix スタック (MySQL + Java gateway + Server + Web) と WordPress アプリを導入します。ポートマッピングと永続ボリュームも含みます。</description>
     </item>
     <item>
+      <title>Docker 実戦：単一ホストのネットワーク種別とコンテナ間通信の方式を詳解</title>
+      <link>https://LMDAWN1127.github.io/ja/posts/docker-single-host-network/</link>
+      <pubDate>Tue, 27 Oct 2026 09:50:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/ja/posts/docker-single-host-network/</guid>
+      <description>Docker の単一ホストネットワーク：none/bridge/host/container/custom の 5 種類と事例、そしてコンテナ間通信の 3 方式（/etc/hosts の名前解決、&amp;ndash;link による関連付け、カスタムネットワーク（作成・inspect・prune・カスタムサブネット・手動 IP を含む））。</description>
+    </item>
+    <item>
       <title>Docker 実戦：複数 Bridge ネットワークによるコンテナ分離とネットワーク間通信</title>
       <link>https://LMDAWN1127.github.io/ja/posts/docker-multi-bridge-network-isolation/</link>
       <pubDate>Tue, 27 Oct 2026 08:00:00 +0800</pubDate>
       <guid>https://LMDAWN1127.github.io/ja/posts/docker-multi-bridge-network-isolation/</guid>
       <description>xixi と haha という 2 つのカスタム Bridge ネットワークを使い、Docker の既定のネットワーク分離の仕組みを実演します。さらに docker network connect/disconnect によりコンテナを実行時にネットワークへ参加・離脱させ、ネットワークをまたぐコンテナ間通信を実現する軽量な手法を紹介します。</description>
+    </item>
+    <item>
+      <title>Docker 実戦：OverlayFS のユニオンマウントとストレージドライバ解析</title>
+      <link>https://LMDAWN1127.github.io/ja/posts/docker-overlayfs-storage-driver/</link>
+      <pubDate>Mon, 26 Oct 2026 21:00:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/ja/posts/docker-overlayfs-storage-driver/</guid>
+      <description>Docker のストレージドライバ OverlayFS の仕組み：lower/upper/work と LowerDir/Upperdir/MergedDir の三層（init 層を含む）と、読み書き層へのコピーオンライト。さらに手動の mount -t overlay で階層化と読み取り専用を実演し、最後に docker run でコンテナの土台が overlay2 であることを確認します。</description>
     </item>
     <item>
       <title>Docker 実戦：chroot で最小コンテナルートを手作りしてコンテナの本質を理解する</title>
