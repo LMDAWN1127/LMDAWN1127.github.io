@@ -195,6 +195,28 @@
 <article class="post-entry"> 
   <header class="entry-header">
     <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/posts/docker-harbor-private-registry/">私有镜像仓库harbor实战</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>从零搭建两套私有镜像仓库：先用 docker registry 轻量级方案完成镜像的部署、推送、下载与删除（含手动删元数据 &#43; GC 回收存储），再部署企业级 VMware Harbor（HTTP 模式），演示 hosts 解析、insecure-registries 配置、新建项目、三种 docker login 方式、镜像推送/拉取/删除全流程，最后用对比表总结 registry 与 Harbor 在体积、部署、WebUI、项目管理、删除与适用场景上的差异。</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-29">
+  2026年10月29日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 6 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to 私有镜像仓库harbor实战" href="https://LMDAWN1127.github.io/posts/docker-harbor-private-registry/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
       <a href="https://LMDAWN1127.github.io/posts/docker-compose-multi-service/">基于 docker-compose 编译多服务镜像并启动容器</a>
     </h2>
   </header>
@@ -256,28 +278,6 @@
 </span>
 </footer>
   <a class="entry-link" aria-label="post link to Dockerfile 之 ONBUILD 指令实战" href="https://LMDAWN1127.github.io/posts/docker-dockerfile-onbuild-instruction/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/posts/docker-dockerfile-user-instruction/">Dockerfile 基于普通用户运行容器（USER 指令）实战</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>通过 Space Huggers 游戏演示如何用 Dockerfile 的 USER 指令让容器以普通用户 dawn（uid 2025）运行：先理解普通用户跑 nginx 需要的目录/文件属主调整，再编写 Dockerfile（chown 系统目录后切 USER dawn）、nginx 配置（user dawn）、启动脚本（nginx 后台 &#43; tail 阻塞），构建镜像并验证进程用户、容器配置、访问与健康状态，最后对比普通用户能启动 nginx 但无法启动 sshd 的权限边界。</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-29">
-  2026年10月29日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 4 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to Dockerfile 基于普通用户运行容器（USER 指令）实战" href="https://LMDAWN1127.github.io/posts/docker-dockerfile-user-instruction/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">

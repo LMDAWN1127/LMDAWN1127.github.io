@@ -11,7 +11,7 @@
     </image>
     <generator>Hugo</generator>
     <language>en</language>
-    <lastBuildDate>Thu, 29 Oct 2026 13:30:00 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 29 Oct 2026 15:09:00 +0800</lastBuildDate>
     <atom:link href="https://LMDAWN1127.github.io/en/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Harbor Active-Standby Deployment: From Installation to HTTPS and Replication</title>
@@ -19,6 +19,13 @@
       <pubDate>Tue, 04 Aug 2026 00:00:00 +0000</pubDate>
       <guid>https://LMDAWN1127.github.io/en/posts/harbor-master-slave/</guid>
       <description>Complete guide to deploying Harbor enterprise Docker registry with active-standby architecture, HTTP/HTTPS modes, self-signed certificates, and cross-host replication.</description>
+    </item>
+    <item>
+      <title>Hands-on with Private Image Registries: docker registry and VMware Harbor</title>
+      <link>https://LMDAWN1127.github.io/en/posts/docker-harbor-private-registry/</link>
+      <pubDate>Thu, 29 Oct 2026 15:09:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/posts/docker-harbor-private-registry/</guid>
+      <description>Build two private image registries from scratch: first use the lightweight docker registry to complete image deployment, push, pull, and delete (including manually deleting metadata + GC to reclaim storage); then deploy the enterprise-grade VMware Harbor (HTTP mode), demonstrating hosts resolution, insecure-registries configuration, creating a project, three docker login methods, and the full image push/pull/delete flow; finally summarize the differences between registry and Harbor in size, deployment, WebUI, project management, deletion, and use cases with a comparison table.</description>
     </item>
     <item>
       <title>Building Multi-Service Images and Starting Containers with docker-compose</title>

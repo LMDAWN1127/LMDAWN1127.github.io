@@ -190,6 +190,28 @@
 <article class="post-entry"> 
   <header class="entry-header">
     <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/ja/posts/docker-harbor-private-registry/">プライベートイメージレジストリ実践：docker registry と VMware Harbor</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>2 つのプライベートイメージレジストリをゼロから構築する。まず軽量な docker registry でイメージの展開・プッシュ・プル・削除（メタデータの手動削除 &#43; GC によるストレージ回収を含む）を完了し、次にエンタープライズグレードの VMware Harbor（HTTP モード）を展開する。hosts 解決、insecure-registries 設定、プロジェクト作成、3 つの docker login 方式、イメージのプッシュ/プル/削除の全フローを示し、最後にサイズ・展開・WebUI・プロジェクト管理・削除・適用シナリオの違いを対照表でまとめる。</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-29">
+  2026年10月29日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 7 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to プライベートイメージレジストリ実践：docker registry と VMware Harbor" href="https://LMDAWN1127.github.io/ja/posts/docker-harbor-private-registry/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
       <a href="https://LMDAWN1127.github.io/ja/posts/docker-compose-multi-service/">docker-compose でマルチサービスイメージをビルドしコンテナを起動する事例</a>
     </h2>
   </header>
@@ -251,28 +273,6 @@
 </span>
 </footer>
   <a class="entry-link" aria-label="post link to Dockerfile の ONBUILD 命令実戦" href="https://LMDAWN1127.github.io/ja/posts/docker-dockerfile-onbuild-instruction/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/ja/posts/docker-dockerfile-user-instruction/">Dockerfile 一般ユーザーでのコンテナ実行（USER 命令）実戦</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>Space Huggers ゲームを使って、Dockerfile の USER 命令でコンテナを一般ユーザー dawn (uid 2025) として実行する方法を実演します。一般ユーザーで nginx を実行するために必要なディレクトリ/ファイルの所有権調整をまず理解し、次に Dockerfile (USER dawn に切り替える前にシステムディレクトリを chown)、nginx 設定 (user dawn)、起動スクリプト (nginx バックグラウンド &#43; tail でブロック) を作成し、イメージをビルドしてプロセスユーザー、コンテナ設定、アクセス、健康状態を検証し、最後に一般ユーザーは nginx を起動できるが sshd は起動できないという権限の境界を比較します。</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-29">
-  2026年10月29日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 4 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to Dockerfile 一般ユーザーでのコンテナ実行（USER 命令）実戦" href="https://LMDAWN1127.github.io/ja/posts/docker-dockerfile-user-instruction/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">
