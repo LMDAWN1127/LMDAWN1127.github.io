@@ -190,6 +190,28 @@
 <article class="post-entry"> 
   <header class="entry-header">
     <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/posts/docker-dockerfile-user-instruction/">Dockerfile 基于普通用户运行容器（USER 指令）实战</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>通过 Space Huggers 游戏演示如何用 Dockerfile 的 USER 指令让容器以普通用户 dawn（uid 2025）运行：先理解普通用户跑 nginx 需要的目录/文件属主调整，再编写 Dockerfile（chown 系统目录后切 USER dawn）、nginx 配置（user dawn）、启动脚本（nginx 后台 &#43; tail 阻塞），构建镜像并验证进程用户、容器配置、访问与健康状态，最后对比普通用户能启动 nginx 但无法启动 sshd 的权限边界。</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-29">
+  2026年10月29日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 4 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to Dockerfile 基于普通用户运行容器（USER 指令）实战" href="https://LMDAWN1127.github.io/posts/docker-dockerfile-user-instruction/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
       <a href="https://LMDAWN1127.github.io/posts/docker-dockerfile-core-instructions/">Dockerfile 核心指令实战：WORKDIR/EXPOSE/VOLUME、ENV/ARG、HEALTHCHECK、ENTRYPOINT</a>
     </h2>
   </header>
@@ -251,28 +273,6 @@
 </span>
 </footer>
   <a class="entry-link" aria-label="post link to Docker 实战：Dockerfile 优化技巧与容器启动技巧" href="https://LMDAWN1127.github.io/posts/docker-dockerfile-optimization-and-run-tips/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/posts/docker-dockerfile-multi-game-image-add/">Docker 实战：Dockerfile 多游戏镜像构建与 ADD 自动解压</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>从一份旧的全家桶镜像 dawn-games-dawn:v0.6 里用中转容器拷出黄金矿工与压扁小鸟两个游戏的静态文件，各自打成 tar.gz，再用 Dockerfile 的 ADD 指令在构建时自动解压进 Alpine&#43;nginx 容器，最后构建镜像、起容器并用域名访问两个游戏；并对比 ADD 与 COPY 的关键区别（ADD 自动解压 tar.gz）。</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-28">
-  2026年10月28日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 3 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to Docker 实战：Dockerfile 多游戏镜像构建与 ADD 自动解压" href="https://LMDAWN1127.github.io/posts/docker-dockerfile-multi-game-image-add/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">

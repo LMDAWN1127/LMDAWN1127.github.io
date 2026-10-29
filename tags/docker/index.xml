@@ -11,7 +11,7 @@
     </image>
     <generator>Hugo</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Wed, 28 Oct 2026 21:41:00 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 29 Oct 2026 10:47:00 +0800</lastBuildDate>
     <atom:link href="https://LMDAWN1127.github.io/tags/docker/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Harbor 主备部署实战：从安装到 HTTPS 与主备复制</title>
@@ -19,6 +19,13 @@
       <pubDate>Tue, 04 Aug 2026 00:00:00 +0000</pubDate>
       <guid>https://LMDAWN1127.github.io/posts/harbor-master-slave/</guid>
       <description>完整记录 Harbor 企业级镜像仓库的主备部署过程，涵盖 HTTP/HTTPS 双模式安装、自签名证书配置、跨主机主备复制等核心运维技能。</description>
+    </item>
+    <item>
+      <title>Dockerfile 基于普通用户运行容器（USER 指令）实战</title>
+      <link>https://LMDAWN1127.github.io/posts/docker-dockerfile-user-instruction/</link>
+      <pubDate>Thu, 29 Oct 2026 10:47:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/posts/docker-dockerfile-user-instruction/</guid>
+      <description>通过 Space Huggers 游戏演示如何用 Dockerfile 的 USER 指令让容器以普通用户 dawn（uid 2025）运行：先理解普通用户跑 nginx 需要的目录/文件属主调整，再编写 Dockerfile（chown 系统目录后切 USER dawn）、nginx 配置（user dawn）、启动脚本（nginx 后台 + tail 阻塞），构建镜像并验证进程用户、容器配置、访问与健康状态，最后对比普通用户能启动 nginx 但无法启动 sshd 的权限边界。</description>
     </item>
     <item>
       <title>Dockerfile 核心指令实战：WORKDIR/EXPOSE/VOLUME、ENV/ARG、HEALTHCHECK、ENTRYPOINT</title>

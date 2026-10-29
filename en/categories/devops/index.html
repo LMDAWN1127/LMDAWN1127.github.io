@@ -185,6 +185,28 @@
 <article class="post-entry tag-entry"> 
   <header class="entry-header">
     <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/en/posts/docker-dockerfile-user-instruction/">Dockerfile: Running Containers as a Non-Root User (USER Instruction)</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>Use the Space Huggers game to demonstrate how to run a container as the non-root user dawn (uid 2025) with the Dockerfile USER instruction: first understand the directory/file ownership adjustments needed for nginx to run as a non-root user, then write the Dockerfile (chown system directories before switching to USER dawn), the nginx config (user dawn), and the startup script (nginx in background &#43; tail to block), build the image and verify the process user, container configuration, access and health status, and finally compare the permission boundary where a non-root user can start nginx but cannot start sshd.</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-29">
+  2026年10月29日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 6 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to Dockerfile: Running Containers as a Non-Root User (USER Instruction)" href="https://LMDAWN1127.github.io/en/posts/docker-dockerfile-user-instruction/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
       <a href="https://LMDAWN1127.github.io/en/posts/docker-dockerfile-core-instructions/">Dockerfile Core Instructions in Practice: WORKDIR/EXPOSE/VOLUME, ENV/ARG, HEALTHCHECK, ENTRYPOINT</a>
     </h2>
   </header>
@@ -246,28 +268,6 @@
 </span>
 </footer>
   <a class="entry-link" aria-label="post link to Docker in Practice: Dockerfile Optimization Tips and Container Startup Techniques" href="https://LMDAWN1127.github.io/en/posts/docker-dockerfile-optimization-and-run-tips/"></a>
-</article>
-
-<article class="post-entry tag-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/en/posts/docker-image-manual-and-dockerfile/">Docker in Practice: Building Docker Images Manually and Automatically with a Dockerfile</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>Build the same nginx game image manually from three base images - CentOS, Ubuntu and Alpine - and commit it with docker commit (236MB / 215MB / 9.41MB), then rebuild it with a Dockerfile, and summarize the three drawbacks of the manual approach: oversized images, tedious startup-command changes, and no build cache.</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-28">
-  2026年10月28日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 11 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to Docker in Practice: Building Docker Images Manually and Automatically with a Dockerfile" href="https://LMDAWN1127.github.io/en/posts/docker-image-manual-and-dockerfile/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">

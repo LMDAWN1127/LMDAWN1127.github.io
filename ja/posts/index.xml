@@ -11,7 +11,7 @@
     </image>
     <generator>Hugo</generator>
     <language>ja</language>
-    <lastBuildDate>Wed, 28 Oct 2026 21:41:00 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 29 Oct 2026 10:47:00 +0800</lastBuildDate>
     <atom:link href="https://LMDAWN1127.github.io/ja/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Harbor アクティブスタンバイデプロイ：インストールからHTTPS・レプリケーションまで</title>
@@ -19,6 +19,13 @@
       <pubDate>Tue, 04 Aug 2026 00:00:00 +0000</pubDate>
       <guid>https://LMDAWN1127.github.io/ja/posts/harbor-master-slave/</guid>
       <description>HarborエンタープライズDockerレジストリのアクティブスタンバイアーキテクチャ、HTTP/HTTPSモード、自己署名証明書、クロスホストレプリケーションを完全にカバーするデプロイガイドです。</description>
+    </item>
+    <item>
+      <title>Dockerfile 一般ユーザーでのコンテナ実行（USER 命令）実戦</title>
+      <link>https://LMDAWN1127.github.io/ja/posts/docker-dockerfile-user-instruction/</link>
+      <pubDate>Thu, 29 Oct 2026 10:47:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/ja/posts/docker-dockerfile-user-instruction/</guid>
+      <description>Space Huggers ゲームを使って、Dockerfile の USER 命令でコンテナを一般ユーザー dawn (uid 2025) として実行する方法を実演します。一般ユーザーで nginx を実行するために必要なディレクトリ/ファイルの所有権調整をまず理解し、次に Dockerfile (USER dawn に切り替える前にシステムディレクトリを chown)、nginx 設定 (user dawn)、起動スクリプト (nginx バックグラウンド + tail でブロック) を作成し、イメージをビルドしてプロセスユーザー、コンテナ設定、アクセス、健康状態を検証し、最後に一般ユーザーは nginx を起動できるが sshd は起動できないという権限の境界を比較します。</description>
     </item>
     <item>
       <title>Dockerfile コア命令実戦：WORKDIR/EXPOSE/VOLUME、ENV/ARG、HEALTHCHECK、ENTRYPOINT</title>

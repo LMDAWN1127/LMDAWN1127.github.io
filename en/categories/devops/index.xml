@@ -11,7 +11,7 @@
     </image>
     <generator>Hugo</generator>
     <language>en</language>
-    <lastBuildDate>Wed, 28 Oct 2026 21:41:00 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 29 Oct 2026 10:47:00 +0800</lastBuildDate>
     <atom:link href="https://LMDAWN1127.github.io/en/categories/devops/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Harbor Active-Standby Deployment: From Installation to HTTPS and Replication</title>
@@ -19,6 +19,13 @@
       <pubDate>Tue, 04 Aug 2026 00:00:00 +0000</pubDate>
       <guid>https://LMDAWN1127.github.io/en/posts/harbor-master-slave/</guid>
       <description>Complete guide to deploying Harbor enterprise Docker registry with active-standby architecture, HTTP/HTTPS modes, self-signed certificates, and cross-host replication.</description>
+    </item>
+    <item>
+      <title>Dockerfile: Running Containers as a Non-Root User (USER Instruction)</title>
+      <link>https://LMDAWN1127.github.io/en/posts/docker-dockerfile-user-instruction/</link>
+      <pubDate>Thu, 29 Oct 2026 10:47:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/posts/docker-dockerfile-user-instruction/</guid>
+      <description>Use the Space Huggers game to demonstrate how to run a container as the non-root user dawn (uid 2025) with the Dockerfile USER instruction: first understand the directory/file ownership adjustments needed for nginx to run as a non-root user, then write the Dockerfile (chown system directories before switching to USER dawn), the nginx config (user dawn), and the startup script (nginx in background + tail to block), build the image and verify the process user, container configuration, access and health status, and finally compare the permission boundary where a non-root user can start nginx but cannot start sshd.</description>
     </item>
     <item>
       <title>Dockerfile Core Instructions in Practice: WORKDIR/EXPOSE/VOLUME, ENV/ARG, HEALTHCHECK, ENTRYPOINT</title>

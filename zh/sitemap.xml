@@ -28,7 +28,7 @@
                 />
   </url><url>
     <loc>https://LMDAWN1127.github.io/categories/</loc>
-    <lastmod>2026-10-28T21:41:00+08:00</lastmod>
+    <lastmod>2026-10-29T10:47:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
@@ -53,7 +53,7 @@
                 />
   </url><url>
     <loc>https://LMDAWN1127.github.io/categories/devops/</loc>
-    <lastmod>2026-10-28T21:41:00+08:00</lastmod>
+    <lastmod>2026-10-29T10:47:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
@@ -78,7 +78,7 @@
                 />
   </url><url>
     <loc>https://LMDAWN1127.github.io/tags/docker/</loc>
-    <lastmod>2026-10-28T21:41:00+08:00</lastmod>
+    <lastmod>2026-10-29T10:47:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
@@ -100,6 +100,81 @@
                 rel="alternate"
                 hreflang="ja"
                 href="https://LMDAWN1127.github.io/ja/tags/docker/"
+                />
+  </url><url>
+    <loc>https://LMDAWN1127.github.io/posts/docker-dockerfile-user-instruction/</loc>
+    <lastmod>2026-10-29T10:47:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://LMDAWN1127.github.io/posts/docker-dockerfile-user-instruction/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://LMDAWN1127.github.io/en/posts/docker-dockerfile-user-instruction/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="ko"
+                href="https://LMDAWN1127.github.io/ko/posts/docker-dockerfile-user-instruction/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="ja"
+                href="https://LMDAWN1127.github.io/ja/posts/docker-dockerfile-user-instruction/"
+                />
+  </url><url>
+    <loc>https://LMDAWN1127.github.io/posts/</loc>
+    <lastmod>2026-10-29T10:47:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://LMDAWN1127.github.io/posts/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://LMDAWN1127.github.io/en/posts/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="ko"
+                href="https://LMDAWN1127.github.io/ko/posts/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="ja"
+                href="https://LMDAWN1127.github.io/ja/posts/"
+                />
+  </url><url>
+    <loc>https://LMDAWN1127.github.io/tags/</loc>
+    <lastmod>2026-10-29T10:47:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://LMDAWN1127.github.io/tags/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://LMDAWN1127.github.io/en/tags/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="ko"
+                href="https://LMDAWN1127.github.io/ko/tags/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="ja"
+                href="https://LMDAWN1127.github.io/ja/tags/"
                 />
   </url><url>
     <loc>https://LMDAWN1127.github.io/posts/docker-dockerfile-core-instructions/</loc>
@@ -125,56 +200,6 @@
                 rel="alternate"
                 hreflang="ja"
                 href="https://LMDAWN1127.github.io/ja/posts/docker-dockerfile-core-instructions/"
-                />
-  </url><url>
-    <loc>https://LMDAWN1127.github.io/posts/</loc>
-    <lastmod>2026-10-28T21:41:00+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-    <xhtml:link
-                rel="alternate"
-                hreflang="zh-cn"
-                href="https://LMDAWN1127.github.io/posts/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="https://LMDAWN1127.github.io/en/posts/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="ko"
-                href="https://LMDAWN1127.github.io/ko/posts/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="ja"
-                href="https://LMDAWN1127.github.io/ja/posts/"
-                />
-  </url><url>
-    <loc>https://LMDAWN1127.github.io/tags/</loc>
-    <lastmod>2026-10-28T21:41:00+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-    <xhtml:link
-                rel="alternate"
-                hreflang="zh-cn"
-                href="https://LMDAWN1127.github.io/tags/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="https://LMDAWN1127.github.io/en/tags/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="ko"
-                href="https://LMDAWN1127.github.io/ko/tags/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="ja"
-                href="https://LMDAWN1127.github.io/ja/tags/"
                 />
   </url><url>
     <loc>https://LMDAWN1127.github.io/posts/docker-image-tag-maintainer-label-metadata/</loc>
