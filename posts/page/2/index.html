@@ -173,6 +173,28 @@
 <article class="post-entry"> 
   <header class="entry-header">
     <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/posts/docker-compose-multi-service/">基于 docker-compose 编译多服务镜像并启动容器</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>通过一个 docker-compose 案例演示如何用一个 YAML 文件统一编排两个 HTML5 游戏服务（斗地主 doudizhu、摩托 motuo）的镜像构建与容器管理：编写 compose 文件（build context &#43; 各自 Dockerfile）与 nginx 虚拟主机、启动脚本，用 docker-compose build 一次编译出两个镜像、up -d 后台启动、ps/stop/start/restart/down 管理生命周期，再配置固定端口加 restart: always 与随机端口并验证访问与重启策略，最后给出常用命令对照表。</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-29">
+  2026年10月29日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 8 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to 基于 docker-compose 编译多服务镜像并启动容器" href="https://LMDAWN1127.github.io/posts/docker-compose-multi-service/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
       <a href="https://LMDAWN1127.github.io/posts/docker-dockerfile-multistage-build/">Dockerfile 多阶段构建镜像实战</a>
     </h2>
   </header>
@@ -256,28 +278,6 @@
 </span>
 </footer>
   <a class="entry-link" aria-label="post link to Dockerfile 核心指令实战：WORKDIR/EXPOSE/VOLUME、ENV/ARG、HEALTHCHECK、ENTRYPOINT" href="https://LMDAWN1127.github.io/posts/docker-dockerfile-core-instructions/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/posts/docker-image-tag-maintainer-label-metadata/">Docker 实战：镜像打标签 MAINTAINER 与 LABEL 及元数据查看</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>以 dawn-games 镜像为例，演示如何在 Dockerfile 中用已弃用的 MAINTAINER 与官方推荐的 LABEL 写入作者/学校/邮箱等元数据，构建后用 docker image inspect -f 读取 .Author 与 .Config.Labels 核对，并用 –network host 直接起容器以 host 网络访问验证；含一张访问截图。</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-28">
-  2026年10月28日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 2 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to Docker 实战：镜像打标签 MAINTAINER 与 LABEL 及元数据查看" href="https://LMDAWN1127.github.io/posts/docker-image-tag-maintainer-label-metadata/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">

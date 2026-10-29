@@ -11,7 +11,7 @@
     </image>
     <generator>Hugo</generator>
     <language>ko</language>
-    <lastBuildDate>Thu, 29 Oct 2026 20:04:45 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 29 Oct 2026 20:38:15 +0800</lastBuildDate>
     <atom:link href="https://LMDAWN1127.github.io/ko/categories/devops/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Harbor 액티브-스탠바이 배포: 설치부터 HTTPS 및 복제까지</title>
@@ -19,6 +19,13 @@
       <pubDate>Tue, 04 Aug 2026 00:00:00 +0000</pubDate>
       <guid>https://LMDAWN1127.github.io/ko/posts/harbor-master-slave/</guid>
       <description>Harbor 엔터프라이즈 Docker 레지스트리의 액티브-스탠바이 아키텍처, HTTP/HTTPS 모드, 자체 서명 인증서, 크로스 호스트 복제를 완전히 다루는 배포 가이드입니다.</description>
+    </item>
+    <item>
+      <title>Harbor 고가용성: keepalived 로 VIP 페일오버 구현</title>
+      <link>https://LMDAWN1127.github.io/ko/posts/harbor-keepalived-vip/</link>
+      <pubDate>Thu, 29 Oct 2026 20:38:15 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/ko/posts/harbor-keepalived-vip/</guid>
+      <description>이 실습에서는 keepalived 를 사용한 VIP 페일오버로 Harbor 고가용성 구성을 구축한다. docker01 과 docker02 에 keepalived 를 설치하고 포트 확인 스크립트를 만들어, 가상 IP 11.0.1.250 을 공유하는 VRRP 인스턴스（docker01 을 priority 100 의 MASTER, docker02 를 priority 90 의 BACKUP）를 구성한다. VIP 가 현재 docker01 의 Harbor 를 가리킴을 확인한 후 docker01 의 keepalived 를 수동으로 중지해 VIP 가 docker02 로 이동하고 Harbor 서비스가 전환되는 것을 관찰하여, keepalived HA 구성가 동작함을 증명한다.</description>
     </item>
     <item>
       <title>docker registry 에서 Harbor 로 이미지 마이그레이션 및 두 Harbor 간 동기화 실습</title>

@@ -195,6 +195,28 @@
 <article class="post-entry"> 
   <header class="entry-header">
     <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/posts/harbor-keepalived-vip/">Harbor 高可用方案：用 keepalived 实现 VIP 漂移</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>本文实战演示用 keepalived 为 Harbor 实现 VIP 漂移的高可用方案。在 docker01、docker02 两台节点安装 keepalived，编写端口检测脚本，配置共享虚拟 IP 11.0.1.250 的 VRRP 实例（docker01 为 priority 100 的 MASTER、docker02 为 priority 90 的 BACKUP）。先验证 VIP 当前指向 docker01 的 Harbor，再手动停止 docker01 的 keepalived，观察 VIP 漂移到 docker02、Harbor 服务随之切换，证实 keepalived 高可用方案可行。</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-29">
+  2026年10月29日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 2 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to Harbor 高可用方案：用 keepalived 实现 VIP 漂移" href="https://LMDAWN1127.github.io/posts/harbor-keepalived-vip/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
       <a href="https://LMDAWN1127.github.io/posts/docker-registry-to-harbor-migration/">从 docker registry 迁移镜像到 Harbor 与双 Harbor 同步实战</a>
     </h2>
   </header>
@@ -256,28 +278,6 @@
 </span>
 </footer>
   <a class="entry-link" aria-label="post link to 私有镜像仓库harbor实战" href="https://LMDAWN1127.github.io/posts/docker-harbor-private-registry/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/posts/docker-compose-multi-service/">基于 docker-compose 编译多服务镜像并启动容器</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>通过一个 docker-compose 案例演示如何用一个 YAML 文件统一编排两个 HTML5 游戏服务（斗地主 doudizhu、摩托 motuo）的镜像构建与容器管理：编写 compose 文件（build context &#43; 各自 Dockerfile）与 nginx 虚拟主机、启动脚本，用 docker-compose build 一次编译出两个镜像、up -d 后台启动、ps/stop/start/restart/down 管理生命周期，再配置固定端口加 restart: always 与随机端口并验证访问与重启策略，最后给出常用命令对照表。</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-29">
-  2026年10月29日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 8 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to 基于 docker-compose 编译多服务镜像并启动容器" href="https://LMDAWN1127.github.io/posts/docker-compose-multi-service/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">

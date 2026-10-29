@@ -190,6 +190,28 @@
 <article class="post-entry"> 
   <header class="entry-header">
     <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/en/posts/harbor-keepalived-vip/">Harbor High Availability: Implementing VIP Failover with keepalived</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>This hands-on walkthrough builds a Harbor high-availability solution using keepalived for VIP failover. keepalived is installed on docker01 and docker02, a port-check script is created, and a VRRP instance sharing the virtual IP 11.0.1.250 is configured (docker01 as MASTER with priority 100, docker02 as BACKUP with priority 90). After verifying the VIP currently points to docker01’s Harbor, keepalived on docker01 is stopped manually to observe the VIP drift to docker02 and the Harbor service switch, proving the keepalived HA scheme works.</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-29">
+  2026年10月29日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 3 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to Harbor High Availability: Implementing VIP Failover with keepalived" href="https://LMDAWN1127.github.io/en/posts/harbor-keepalived-vip/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
       <a href="https://LMDAWN1127.github.io/en/posts/docker-registry-to-harbor-migration/">Migrating Images from docker registry to Harbor and Syncing Between Two Harbors</a>
     </h2>
   </header>
@@ -251,28 +273,6 @@
 </span>
 </footer>
   <a class="entry-link" aria-label="post link to Hands-on with Private Image Registries: docker registry and VMware Harbor" href="https://LMDAWN1127.github.io/en/posts/docker-harbor-private-registry/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/en/posts/docker-compose-multi-service/">Building Multi-Service Images and Starting Containers with docker-compose</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>Through a docker-compose case, demonstrate how to use a single YAML file to orchestrate image builds and container management for two HTML5 game services (doudizhu and motuo): write the compose file (build context &#43; each service’s Dockerfile) together with nginx virtual hosts and a startup script, use docker-compose build to compile both images in one go, up -d to start in the background, ps/stop/start/restart/down to manage the lifecycle, then configure a fixed port with restart: always and a random port and verify access and the restart policy, and finally provide a reference table of common commands.</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-29">
-  2026年10月29日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 9 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to Building Multi-Service Images and Starting Containers with docker-compose" href="https://LMDAWN1127.github.io/en/posts/docker-compose-multi-service/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">

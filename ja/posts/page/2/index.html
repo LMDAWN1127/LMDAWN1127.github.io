@@ -173,6 +173,28 @@
 <article class="post-entry"> 
   <header class="entry-header">
     <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/ja/posts/docker-compose-multi-service/">docker-compose でマルチサービスイメージをビルドしコンテナを起動する事例</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>docker-compose の事例を通して、1 つの YAML ファイルで 2 つの HTML5 ゲームサービス（doudizhu と motuo）のイメージビルドとコンテナ管理を統合的にオーケストレーションする方法を示す。compose ファイル（ビルドコンテキスト &#43; 各サービスの Dockerfile）と nginx バーチャルホスト、起動スクリプトを作成し、docker-compose build で 2 つのイメージを一度にコンパイル、up -d でバックグラウンド起動、ps/stop/start/restart/down でライフサイクルを管理し、その後固定ポート &#43; restart: always とランダムポートを設定してアクセスと再起動ポリシーを検証し、最後によく使うコマンドの対照表を提示する。</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-29">
+  2026年10月29日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 8 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to docker-compose でマルチサービスイメージをビルドしコンテナを起動する事例" href="https://LMDAWN1127.github.io/ja/posts/docker-compose-multi-service/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
       <a href="https://LMDAWN1127.github.io/ja/posts/docker-dockerfile-multistage-build/">Dockerfile マルチステージビルド実戦</a>
     </h2>
   </header>
@@ -256,28 +278,6 @@
 </span>
 </footer>
   <a class="entry-link" aria-label="post link to Dockerfile コア命令実戦：WORKDIR/EXPOSE/VOLUME、ENV/ARG、HEALTHCHECK、ENTRYPOINT" href="https://LMDAWN1127.github.io/ja/posts/docker-dockerfile-core-instructions/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/ja/posts/docker-image-tag-maintainer-label-metadata/">Docker 実戦：MAINTAINER と LABEL でイメージにタグを付け、メタデータを確認する</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>実際の dawn-games イメージを例に、Dockerfile に非推奨の MAINTAINER と公式推奨の LABEL で 作成者/学校/メールなどのメタデータを記録し、docker image inspect -f で .Author と .Config.Labels を 読み出して確認、さらに –network host でコンテナを起動してホストネットワーク経由でアクセスします。スクリーンショット付き。</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-28">
-  2026年10月28日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 2 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to Docker 実戦：MAINTAINER と LABEL でイメージにタグを付け、メタデータを確認する" href="https://LMDAWN1127.github.io/ja/posts/docker-image-tag-maintainer-label-metadata/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">

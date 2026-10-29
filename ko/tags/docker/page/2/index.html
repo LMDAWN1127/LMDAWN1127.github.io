@@ -163,6 +163,28 @@
 <article class="post-entry tag-entry"> 
   <header class="entry-header">
     <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/ko/posts/docker-compose-multi-service/">docker-compose 로 멀티 서비스 이미지 빌드 및 컨테이너 시작 사례</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>docker-compose 사례를 통해 단일 YAML 파일로 두 HTML5 게임 서비스(doudizhu 와 motuo)의 이미지 빌드와 컨테이너 관리를 통합 오케스트레이션하는 방법을 보여준다. compose 파일(빌드 컨텍스트 &#43; 각 서비스의 Dockerfile)과 nginx 가상 호스트, 시작 스크립트를 작성하고, docker-compose build 로 두 이미지를 한 번에 컴파일하며, up -d 로 백그라운드 시작, ps/stop/start/restart/down 으로 수명 주기를 관리한다. 그런 다음 고정 포트 &#43; restart: always 와 임의 포트를 구성해 접속과 재시작 정책을 검증하고, 마지막에 자주 쓰는 명령 대조표를 제공한다.</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-29">
+  2026年10月29日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 9 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to docker-compose 로 멀티 서비스 이미지 빌드 및 컨테이너 시작 사례" href="https://LMDAWN1127.github.io/ko/posts/docker-compose-multi-service/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
       <a href="https://LMDAWN1127.github.io/ko/posts/docker-dockerfile-multistage-build/">Dockerfile 멀티 스테이지 빌드 실전</a>
     </h2>
   </header>
@@ -246,28 +268,6 @@
 </span>
 </footer>
   <a class="entry-link" aria-label="post link to Dockerfile 핵심 명령 실전: WORKDIR/EXPOSE/VOLUME, ENV/ARG, HEALTHCHECK, ENTRYPOINT" href="https://LMDAWN1127.github.io/ko/posts/docker-dockerfile-core-instructions/"></a>
-</article>
-
-<article class="post-entry tag-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/ko/posts/docker-image-tag-maintainer-label-metadata/">Docker 실전: MAINTAINER와 LABEL로 이미지 태그 달기 및 메타데이터 조회</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>실제 dawn-games 이미지를 예로 들어, Dockerfile에 비권장 MAINTAINER와 공식 권장 LABEL로 작성자/학교/이메일 메타데이터를 기록하고, docker image inspect -f로 .Author와 .Config.Labels를 읽어 확인한 뒤 –network host로 컨테이너를 시작해 호스트 네트워크로 접근합니다. 스크린샷 포함.</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-28">
-  2026年10月28日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 2 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to Docker 실전: MAINTAINER와 LABEL로 이미지 태그 달기 및 메타데이터 조회" href="https://LMDAWN1127.github.io/ko/posts/docker-image-tag-maintainer-label-metadata/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">

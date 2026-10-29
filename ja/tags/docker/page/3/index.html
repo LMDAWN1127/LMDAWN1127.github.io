@@ -163,6 +163,28 @@
 <article class="post-entry tag-entry"> 
   <header class="entry-header">
     <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/ja/posts/docker-image-tag-maintainer-label-metadata/">Docker 実戦：MAINTAINER と LABEL でイメージにタグを付け、メタデータを確認する</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>実際の dawn-games イメージを例に、Dockerfile に非推奨の MAINTAINER と公式推奨の LABEL で 作成者/学校/メールなどのメタデータを記録し、docker image inspect -f で .Author と .Config.Labels を 読み出して確認、さらに –network host でコンテナを起動してホストネットワーク経由でアクセスします。スクリーンショット付き。</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-28">
+  2026年10月28日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 2 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to Docker 実戦：MAINTAINER と LABEL でイメージにタグを付け、メタデータを確認する" href="https://LMDAWN1127.github.io/ja/posts/docker-image-tag-maintainer-label-metadata/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
       <a href="https://LMDAWN1127.github.io/ja/posts/docker-dockerfile-optimization-and-run-tips/">Docker 実戦：Dockerfile 最適化のコツとコンテナ起動テクニック</a>
     </h2>
   </header>
@@ -246,28 +268,6 @@
 </span>
 </footer>
   <a class="entry-link" aria-label="post link to Docker 実戦：コンテナの状態を詳しく — Up / Exited / Created / Paused" href="https://LMDAWN1127.github.io/ja/posts/docker-container-states/"></a>
-</article>
-
-<article class="post-entry tag-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/ja/posts/docker-namespace-cgroup-resource-limit/">Docker 実戦：Linux Namespace ネットワーク隔離と CGroup リソース制限</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>ip netns で Linux ネットワーク名前空間を手作業で構築し、veth pair と NAT で外部ネットワークに接続します。さらに Docker コンテナが net namespace を共有する仕組みを確認し、最後に cgroup v2 で CPU・メモリの制限制御と OOM kill の再現までを行い、コンテナの 2 つの基盤機構である隔離 (Namespace) と制限 (CGroup) を一気に通します。</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-28">
-  2026年10月28日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 10 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to Docker 実戦：Linux Namespace ネットワーク隔離と CGroup リソース制限" href="https://LMDAWN1127.github.io/ja/posts/docker-namespace-cgroup-resource-limit/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">

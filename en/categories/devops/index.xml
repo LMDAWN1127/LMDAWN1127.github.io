@@ -11,7 +11,7 @@
     </image>
     <generator>Hugo</generator>
     <language>en</language>
-    <lastBuildDate>Thu, 29 Oct 2026 20:04:45 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 29 Oct 2026 20:38:15 +0800</lastBuildDate>
     <atom:link href="https://LMDAWN1127.github.io/en/categories/devops/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Harbor Active-Standby Deployment: From Installation to HTTPS and Replication</title>
@@ -19,6 +19,13 @@
       <pubDate>Tue, 04 Aug 2026 00:00:00 +0000</pubDate>
       <guid>https://LMDAWN1127.github.io/en/posts/harbor-master-slave/</guid>
       <description>Complete guide to deploying Harbor enterprise Docker registry with active-standby architecture, HTTP/HTTPS modes, self-signed certificates, and cross-host replication.</description>
+    </item>
+    <item>
+      <title>Harbor High Availability: Implementing VIP Failover with keepalived</title>
+      <link>https://LMDAWN1127.github.io/en/posts/harbor-keepalived-vip/</link>
+      <pubDate>Thu, 29 Oct 2026 20:38:15 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/posts/harbor-keepalived-vip/</guid>
+      <description>This hands-on walkthrough builds a Harbor high-availability solution using keepalived for VIP failover. keepalived is installed on docker01 and docker02, a port-check script is created, and a VRRP instance sharing the virtual IP 11.0.1.250 is configured (docker01 as MASTER with priority 100, docker02 as BACKUP with priority 90). After verifying the VIP currently points to docker01&amp;rsquo;s Harbor, keepalived on docker01 is stopped manually to observe the VIP drift to docker02 and the Harbor service switch, proving the keepalived HA scheme works.</description>
     </item>
     <item>
       <title>Migrating Images from docker registry to Harbor and Syncing Between Two Harbors</title>

@@ -11,7 +11,7 @@
     </image>
     <generator>Hugo</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Thu, 29 Oct 2026 20:04:45 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 29 Oct 2026 20:38:15 +0800</lastBuildDate>
     <atom:link href="https://LMDAWN1127.github.io/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Harbor 主备部署实战：从安装到 HTTPS 与主备复制</title>
@@ -19,6 +19,13 @@
       <pubDate>Tue, 04 Aug 2026 00:00:00 +0000</pubDate>
       <guid>https://LMDAWN1127.github.io/posts/harbor-master-slave/</guid>
       <description>完整记录 Harbor 企业级镜像仓库的主备部署过程，涵盖 HTTP/HTTPS 双模式安装、自签名证书配置、跨主机主备复制等核心运维技能。</description>
+    </item>
+    <item>
+      <title>Harbor 高可用方案：用 keepalived 实现 VIP 漂移</title>
+      <link>https://LMDAWN1127.github.io/posts/harbor-keepalived-vip/</link>
+      <pubDate>Thu, 29 Oct 2026 20:38:15 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/posts/harbor-keepalived-vip/</guid>
+      <description>本文实战演示用 keepalived 为 Harbor 实现 VIP 漂移的高可用方案。在 docker01、docker02 两台节点安装 keepalived，编写端口检测脚本，配置共享虚拟 IP 11.0.1.250 的 VRRP 实例（docker01 为 priority 100 的 MASTER、docker02 为 priority 90 的 BACKUP）。先验证 VIP 当前指向 docker01 的 Harbor，再手动停止 docker01 的 keepalived，观察 VIP 漂移到 docker02、Harbor 服务随之切换，证实 keepalived 高可用方案可行。</description>
     </item>
     <item>
       <title>从 docker registry 迁移镜像到 Harbor 与双 Harbor 同步实战</title>

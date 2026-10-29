@@ -11,7 +11,7 @@
     </image>
     <generator>Hugo</generator>
     <language>ja</language>
-    <lastBuildDate>Thu, 29 Oct 2026 20:04:45 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 29 Oct 2026 20:38:15 +0800</lastBuildDate>
     <atom:link href="https://LMDAWN1127.github.io/ja/categories/devops/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Harbor アクティブスタンバイデプロイ：インストールからHTTPS・レプリケーションまで</title>
@@ -19,6 +19,13 @@
       <pubDate>Tue, 04 Aug 2026 00:00:00 +0000</pubDate>
       <guid>https://LMDAWN1127.github.io/ja/posts/harbor-master-slave/</guid>
       <description>HarborエンタープライズDockerレジストリのアクティブスタンバイアーキテクチャ、HTTP/HTTPSモード、自己署名証明書、クロスホストレプリケーションを完全にカバーするデプロイガイドです。</description>
+    </item>
+    <item>
+      <title>Harbor 高可用性：keepalived による VIP フェイルオーバーの実現</title>
+      <link>https://LMDAWN1127.github.io/ja/posts/harbor-keepalived-vip/</link>
+      <pubDate>Thu, 29 Oct 2026 20:38:15 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/ja/posts/harbor-keepalived-vip/</guid>
+      <description>本実践では keepalived を用いた VIP フェイルオーバーで Harbor の高可用性構成を構築する。docker01 と docker02 に keepalived をインストールし、ポートチェックスクリプトを作成して、仮想 IP 11.0.1.250 を共有する VRRP インスタンス（docker01 を priority 100 の MASTER、docker02 を priority 90 の BACKUP）を設定する。VIP が現在 docker01 の Harbor を指していることを確認後、docker01 の keepalived を手動で停止し、VIP が docker02 に漂着して Harbor サービスが切り替わることを観察し、keepalived の HA 構成が機能することを証明する。</description>
     </item>
     <item>
       <title>docker registry から Harbor へのイメージ移行と双 Harbor 間同期の実践</title>
