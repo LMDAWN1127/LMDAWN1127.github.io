@@ -221,6 +221,26 @@
     <lastmod>2026-10-28T11:30:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://LMDAWN1127.github.io/posts/docker-container-states/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://LMDAWN1127.github.io/en/posts/docker-container-states/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="ko"
+                href="https://LMDAWN1127.github.io/ko/posts/docker-container-states/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="ja"
+                href="https://LMDAWN1127.github.io/ja/posts/docker-container-states/"
+                />
   </url><url>
     <loc>https://LMDAWN1127.github.io/posts/docker-namespace-cgroup-resource-limit/</loc>
     <lastmod>2026-10-28T10:00:00+08:00</lastmod>
@@ -286,6 +306,26 @@
     <lastmod>2026-10-26T13:00:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://LMDAWN1127.github.io/posts/docker-inspect-pid-id-network/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://LMDAWN1127.github.io/en/posts/docker-inspect-pid-id-network/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="ko"
+                href="https://LMDAWN1127.github.io/ko/posts/docker-inspect-pid-id-network/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="ja"
+                href="https://LMDAWN1127.github.io/ja/posts/docker-inspect-pid-id-network/"
+                />
   </url><url>
     <loc>https://LMDAWN1127.github.io/posts/docker-nginx-load-balancing/</loc>
     <lastmod>2026-10-26T11:50:00+08:00</lastmod>
@@ -301,6 +341,26 @@
     <lastmod>2026-10-23T17:26:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://LMDAWN1127.github.io/posts/docker-env-var-passing/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://LMDAWN1127.github.io/en/posts/docker-env-var-passing/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="ko"
+                href="https://LMDAWN1127.github.io/ko/posts/docker-env-var-passing/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="ja"
+                href="https://LMDAWN1127.github.io/ja/posts/docker-env-var-passing/"
+                />
   </url><url>
     <loc>https://LMDAWN1127.github.io/posts/docker-image-migration-tag/</loc>
     <lastmod>2026-10-23T15:24:00+08:00</lastmod>

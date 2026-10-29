@@ -35,6 +35,27 @@
       <description>Docker 효율화 팁을 정리합니다. 빌드 측면의 이미지 레이어 캐싱(Using cache)과 .dockerignore로 1GB 빌드 컨텍스트를 약 1.6MB로 축소, 실행 측면의 docker exec -w 작업 디렉터리 지정, 익명 볼륨 호스트 경로(/var/lib/docker/volumes/&lt;hash&gt;/_data), -p :80 임의 포트 매핑(32768~60999)을 다룹니다.</description>
     </item>
     <item>
+      <title>Docker 실전: 컨테이너 상태 자세히 보기 — Up / Exited / Created / Paused</title>
+      <link>https://LMDAWN1127.github.io/ko/posts/docker-container-states/</link>
+      <pubDate>Wed, 28 Oct 2026 11:30:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/ko/posts/docker-container-states/</guid>
+      <description>docker ps 가 보여주는 4 가지 컨테이너 상태가 어떻게 발생하는지 하나씩 재현합니다 — Up, Exited(종료 코드 의미: 0=정상, 137=SIGKILL), Created(생성됨 but 미시작), Paused(대외 서비스 중단, 재시작과 달리 상태 시간이 초기화되지 않음).</description>
+    </item>
+    <item>
+      <title>Docker 실전: inspect로 컨테이너 PID・ID・네트워크 정보 확인</title>
+      <link>https://LMDAWN1127.github.io/ko/posts/docker-inspect-pid-id-network/</link>
+      <pubDate>Mon, 26 Oct 2026 13:00:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/ko/posts/docker-inspect-pid-id-network/</guid>
+      <description>docker container inspect -f 와 Go 템플릿을 사용해 컨테이너의 PID・ID・IP 주소・게이트웨이・MAC 주소를 추출합니다.</description>
+    </item>
+    <item>
+      <title>Docker 실전: 컨테이너 환경 변수 전달 및 확인</title>
+      <link>https://LMDAWN1127.github.io/ko/posts/docker-env-var-passing/</link>
+      <pubDate>Fri, 23 Oct 2026 17:26:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/ko/posts/docker-env-var-passing/</guid>
+      <description>컨테이너에 -e 로 환경 변수를 전달하고, 이후 docker exec &amp;lt;컨테이너&amp;gt; env 로 확인하는 방법을 다룹니다.</description>
+    </item>
+    <item>
       <title>SonarQube 실전: 사설 배포, 토큰 설정, 코드 품질 스캔</title>
       <link>https://LMDAWN1127.github.io/ko/posts/sonarqube-practice/</link>
       <pubDate>Fri, 02 Oct 2026 14:12:00 +0800</pubDate>

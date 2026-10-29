@@ -1127,7 +1127,8 @@
 &lt;/div&gt;
 &lt;/div&gt;&lt;h2 id=&#34;3-卸载二进制的docker环境&#34;&gt;3. 卸载二进制的docker环境&lt;/h2&gt;
 &lt;blockquote&gt;
-&lt;p&gt;注意：下面的卸载命令通过遍历当前目录下的 docker 文件夹来删除 /usr/bin 中的相关文件，执行前需先进入当初解压 docker-27.0.3.tgz 时生成的 docker 目录。&lt;/p&gt;</description>
+&lt;p&gt;注意：下面的卸载命令通过遍历当前目录下的 docker 文件夹来删除 /usr/bin 中的相关文件，执行前需先进入当初解压 docker-27.0.3.tgz 时生成的 docker 目录。&lt;/p&gt;
+&lt;/blockquote&gt;</description>
     </item>
     <item>
       <title>flannel 实战：从零搭建 Docker 跨主机容器网络</title>

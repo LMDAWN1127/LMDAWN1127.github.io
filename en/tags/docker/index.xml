@@ -35,6 +35,27 @@
       <description>A practical roundup of Docker efficiency tips: build-side image layer caching (Using cache) and .dockerignore to shrink a 1GB build context to &lt;del&gt;1.6MB; runtime tricks docker exec -w for the working directory, anonymous volume host paths (/var/lib/docker/volumes/&lt;hash&gt;/_data), and -p :80 random port mapping (32768&lt;/del&gt;60999).</description>
     </item>
     <item>
+      <title>Docker in Practice: A Detailed Look at Container States — Up / Exited / Created / Paused</title>
+      <link>https://LMDAWN1127.github.io/en/posts/docker-container-states/</link>
+      <pubDate>Wed, 28 Oct 2026 11:30:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/posts/docker-container-states/</guid>
+      <description>Reproduce how each of the four container states shown by docker ps is produced — Up, Exited (exit-code semantics: 0 = normal, 137 = SIGKILL), Created (created but not started), and Paused (suspended from serving, and unlike restart it does not reset the status timer).</description>
+    </item>
+    <item>
+      <title>Docker in Practice: Inspecting Container PID, ID and Network Info with inspect</title>
+      <link>https://LMDAWN1127.github.io/en/posts/docker-inspect-pid-id-network/</link>
+      <pubDate>Mon, 26 Oct 2026 13:00:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/posts/docker-inspect-pid-id-network/</guid>
+      <description>Use docker container inspect -f with Go templates to pull a container&amp;rsquo;s PID, ID, IP address, gateway and MAC address.</description>
+    </item>
+    <item>
+      <title>Docker in Practice: Passing and Inspecting Environment Variables in Containers</title>
+      <link>https://LMDAWN1127.github.io/en/posts/docker-env-var-passing/</link>
+      <pubDate>Fri, 23 Oct 2026 17:26:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/posts/docker-env-var-passing/</guid>
+      <description>How to pass environment variables into a container with -e and how to inspect them afterwards with docker exec &lt;container&gt; env.</description>
+    </item>
+    <item>
       <title>flannel in Action: Building Docker Cross-Host Container Networks from Scratch</title>
       <link>https://LMDAWN1127.github.io/en/posts/flannel-network-lab/</link>
       <pubDate>Wed, 21 May 2025 00:00:00 +0000</pubDate>
@@ -150,7 +171,8 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;blockquote&gt;
-&lt;p&gt;The above content is all on one line. Verify that the configuration was written successfully&lt;/p&gt;</description>
+&lt;p&gt;The above content is all on one line. Verify that the configuration was written successfully&lt;/p&gt;
+&lt;/blockquote&gt;</description>
     </item>
   </channel>
 </rss>

@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" dir="auto" data-theme="auto">
 
-<head>
-	<meta name="generator" content="Hugo 0.165.0"><meta charset="utf-8">
+<head><meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="robots" content="index, follow">
@@ -95,6 +94,7 @@
   ]
 }
 </script>
+	<meta name="generator" content="Hugo 0.168.0">
 </head>
 <body class="list" id="top">
     <header class="header">
@@ -234,45 +234,45 @@
 <article class="post-entry"> 
   <header class="entry-header">
     <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/en/posts/openstack-core-architecture-deployment/">OpenStack Cloud OS: Core Architecture and Automated Deployment</a>
+      <a href="https://LMDAWN1127.github.io/en/posts/docker-container-states/">Docker in Practice: A Detailed Look at Container States — Up / Exited / Created / Paused</a>
     </h2>
   </header>
   <div class="entry-content">
-    <p>From core components (Nova/Glance/Neutron/Cinder, etc.) to one-click Packstack-based automated deployment of the Victoria release, plus Rsyslog log troubleshooting.</p>
+    <p>Reproduce how each of the four container states shown by docker ps is produced — Up, Exited (exit-code semantics: 0 = normal, 137 = SIGKILL), Created (created but not started), and Paused (suspended from serving, and unlike restart it does not reset the status timer).</p>
   </div>
   <footer class="entry-footer">
 
-<time class="meta-date" datetime="2026-10-06">
-  2026年10月6日
+<time class="meta-date" datetime="2026-10-28">
+  2026年10月28日
 </time>
 <span class="meta-separator">·</span>
 <span class="meta-reading-time">
-  阅读需 13 分钟
+  阅读需 3 分钟
 </span>
 </footer>
-  <a class="entry-link" aria-label="post link to OpenStack Cloud OS: Core Architecture and Automated Deployment" href="https://LMDAWN1127.github.io/en/posts/openstack-core-architecture-deployment/"></a>
+  <a class="entry-link" aria-label="post link to Docker in Practice: A Detailed Look at Container States — Up / Exited / Created / Paused" href="https://LMDAWN1127.github.io/en/posts/docker-container-states/"></a>
 </article>
 
 <article class="post-entry"> 
   <header class="entry-header">
     <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/en/posts/openstack-cinder-block-storage/">OpenStack Cinder Block Storage Explained: Local LVM &#43; iSCSI Volumes and NFS Backend Integration</a>
+      <a href="https://LMDAWN1127.github.io/en/posts/docker-inspect-pid-id-network/">Docker in Practice: Inspecting Container PID, ID and Network Info with inspect</a>
     </h2>
   </header>
   <div class="entry-content">
-    <p>A walkthrough of OpenStack Cinder block storage: how volume creation and attachment split between Cinder and Nova, the full local LVM &#43; iSCSI path (VG/LV, turning the controller into an iSCSI target with targetcli, attaching via libvirt), plus NFS backend configuration and dashboard operations.</p>
+    <p>Use docker container inspect -f with Go templates to pull a container’s PID, ID, IP address, gateway and MAC address.</p>
   </div>
   <footer class="entry-footer">
 
-<time class="meta-date" datetime="2026-10-05">
-  2026年10月5日
+<time class="meta-date" datetime="2026-10-26">
+  2026年10月26日
 </time>
 <span class="meta-separator">·</span>
 <span class="meta-reading-time">
-  阅读需 8 分钟
+  阅读需 1 分钟
 </span>
 </footer>
-  <a class="entry-link" aria-label="post link to OpenStack Cinder Block Storage Explained: Local LVM &#43; iSCSI Volumes and NFS Backend Integration" href="https://LMDAWN1127.github.io/en/posts/openstack-cinder-block-storage/"></a>
+  <a class="entry-link" aria-label="post link to Docker in Practice: Inspecting Container PID, ID and Network Info with inspect" href="https://LMDAWN1127.github.io/en/posts/docker-inspect-pid-id-network/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">

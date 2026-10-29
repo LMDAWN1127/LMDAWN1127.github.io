@@ -239,45 +239,45 @@
 <article class="post-entry"> 
   <header class="entry-header">
     <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/ko/posts/openstack-core-architecture-deployment/">OpenStack 클라우드 OS: 핵심 아키텍처 및 자동화 배포</a>
+      <a href="https://LMDAWN1127.github.io/ko/posts/docker-container-states/">Docker 실전: 컨테이너 상태 자세히 보기 — Up / Exited / Created / Paused</a>
     </h2>
   </header>
   <div class="entry-content">
-    <p>Nova/Glance/Neutron/Cinder 등 핵심 컴포넌트부터 Packstack 기반 Victoria 릴리스 원클릭 자동 배포, 그리고 Rsyslog 로그 트러블슈팅까지.</p>
+    <p>docker ps 가 보여주는 4 가지 컨테이너 상태가 어떻게 발생하는지 하나씩 재현합니다 — Up, Exited(종료 코드 의미: 0=정상, 137=SIGKILL), Created(생성됨 but 미시작), Paused(대외 서비스 중단, 재시작과 달리 상태 시간이 초기화되지 않음).</p>
   </div>
   <footer class="entry-footer">
 
-<time class="meta-date" datetime="2026-10-06">
-  2026年10月6日
+<time class="meta-date" datetime="2026-10-28">
+  2026年10月28日
 </time>
 <span class="meta-separator">·</span>
 <span class="meta-reading-time">
-  阅读需 12 分钟
+  阅读需 3 分钟
 </span>
 </footer>
-  <a class="entry-link" aria-label="post link to OpenStack 클라우드 OS: 핵심 아키텍처 및 자동화 배포" href="https://LMDAWN1127.github.io/ko/posts/openstack-core-architecture-deployment/"></a>
+  <a class="entry-link" aria-label="post link to Docker 실전: 컨테이너 상태 자세히 보기 — Up / Exited / Created / Paused" href="https://LMDAWN1127.github.io/ko/posts/docker-container-states/"></a>
 </article>
 
 <article class="post-entry"> 
   <header class="entry-header">
     <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/ko/posts/openstack-cinder-block-storage/">OpenStack Cinder 블록 스토리지 상세 정리: 로컬 LVM &#43; iSCSI 볼륨과 NFS 백엔드 연동</a>
+      <a href="https://LMDAWN1127.github.io/ko/posts/docker-inspect-pid-id-network/">Docker 실전: inspect로 컨테이너 PID・ID・네트워크 정보 확인</a>
     </h2>
   </header>
   <div class="entry-content">
-    <p>OpenStack Cinder 블록 스토리지 정리: 볼륨 생성과 마운트의 역할 분담(Cinder는 생성, Nova는 마운트), 로컬 LVM &#43; iSCSI로 컨트롤러를 스토리지로 만드는 전체 흐름(VG/LV, targetcli 기반 ISCSI 공유, libvirt 마운트), 그리고 NFS 백엔드 연동과 대시보드 실습.</p>
+    <p>docker container inspect -f 와 Go 템플릿을 사용해 컨테이너의 PID・ID・IP 주소・게이트웨이・MAC 주소를 추출합니다.</p>
   </div>
   <footer class="entry-footer">
 
-<time class="meta-date" datetime="2026-10-05">
-  2026年10月5日
+<time class="meta-date" datetime="2026-10-26">
+  2026年10月26日
 </time>
 <span class="meta-separator">·</span>
 <span class="meta-reading-time">
-  阅读需 7 分钟
+  阅读需 1 分钟
 </span>
 </footer>
-  <a class="entry-link" aria-label="post link to OpenStack Cinder 블록 스토리지 상세 정리: 로컬 LVM &#43; iSCSI 볼륨과 NFS 백엔드 연동" href="https://LMDAWN1127.github.io/ko/posts/openstack-cinder-block-storage/"></a>
+  <a class="entry-link" aria-label="post link to Docker 실전: inspect로 컨테이너 PID・ID・네트워크 정보 확인" href="https://LMDAWN1127.github.io/ko/posts/docker-inspect-pid-id-network/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">

@@ -35,6 +35,27 @@
       <description>Docker の効率化コツをまとめます。ビルド側はイメージレイヤーキャッシュ(Using cache)と .dockerignore で 1GB のビルドコンテキストを約 1.6MB に削減、実行側は docker exec -w の作業 ディレクトリ指定、匿名ボリュームのホストパス(/var/lib/docker/volumes/&lt;hash&gt;/_data)、-p :80 のランダムポートマッピング(32768~60999)を解説。</description>
     </item>
     <item>
+      <title>Docker 実戦：コンテナの状態を詳しく — Up / Exited / Created / Paused</title>
+      <link>https://LMDAWN1127.github.io/ja/posts/docker-container-states/</link>
+      <pubDate>Wed, 28 Oct 2026 11:30:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/ja/posts/docker-container-states/</guid>
+      <description>docker ps が表示する 4 つのコンテナ状態がどう発生するかを順に再現します — Up、Exited（終了コードの意味: 0=正常, 137=SIGKILL）、Created（作成済みだが未起動）、Paused（サービス提供を停止、再起動とは異なり状態の時間はリセットされない）。</description>
+    </item>
+    <item>
+      <title>Docker 実戦：inspect でコンテナの PID・ID・ネットワーク情報を確認</title>
+      <link>https://LMDAWN1127.github.io/ja/posts/docker-inspect-pid-id-network/</link>
+      <pubDate>Mon, 26 Oct 2026 13:00:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/ja/posts/docker-inspect-pid-id-network/</guid>
+      <description>docker container inspect -f と Go テンプレートを使って、コンテナの PID・ID・IP アドレス・ゲートウェイ・MAC アドレスを取り出します。</description>
+    </item>
+    <item>
+      <title>Docker 実戦：コンテナの環境変数の渡し方と確認方法</title>
+      <link>https://LMDAWN1127.github.io/ja/posts/docker-env-var-passing/</link>
+      <pubDate>Fri, 23 Oct 2026 17:26:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/ja/posts/docker-env-var-passing/</guid>
+      <description>コンテナに -e で環境変数を渡し、後から docker exec &amp;lt;コンテナ&amp;gt; env で確認する方法を解説します。</description>
+    </item>
+    <item>
       <title>SonarQube 実践：プライベート導入・トークン設定・コード品質スキャン</title>
       <link>https://LMDAWN1127.github.io/ja/posts/sonarqube-practice/</link>
       <pubDate>Fri, 02 Oct 2026 14:12:00 +0800</pubDate>
