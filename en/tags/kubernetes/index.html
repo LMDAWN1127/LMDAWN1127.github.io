@@ -163,6 +163,28 @@
 <article class="post-entry tag-entry"> 
   <header class="entry-header">
     <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/en/posts/k8s-kubeadm-cluster-harbor-ca/">K8S kubeadm Cluster Deployment in Practice: Harbor with a Self-Built CA and Flannel CNI</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>This hands-on guide builds a K8S kubeadm cluster (v1.23.17, 1 master &#43; 2 workers, 3 nodes in total) from scratch. First install Docker on the harbor node and deploy a Harbor image registry (self-built CA issues the HTTPS certificate, harbor.yml enables port 443). Then install Docker on the three K8S nodes, configure /etc/hosts and the Docker client certificate, and verify docker login against Harbor successfully. Next prepare the nodes (disable swap, check product_uuid, configure iptables bridge traffic and the Aliyun apt repo, and install kubeadm/kubelet/kubectl), run kubeadm init on the master, configure kubeconfig, join the worker nodes, and finally deploy the Flannel CNI plugin so all three nodes become Ready, and verify cross-node Pod connectivity with curl.</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-30">
+  2026年10月30日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 11 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to K8S kubeadm Cluster Deployment in Practice: Harbor with a Self-Built CA and Flannel CNI" href="https://LMDAWN1127.github.io/en/posts/k8s-kubeadm-cluster-harbor-ca/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
       <a href="https://LMDAWN1127.github.io/en/posts/k8s-v1.30-manual-deploy/">Manually Deploying a Kubernetes v1.30 Cluster (via kubeadm)</a>
     </h2>
   </header>

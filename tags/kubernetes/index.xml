@@ -11,8 +11,15 @@
     </image>
     <generator>Hugo</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Fri, 07 Aug 2026 13:52:00 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 30 Oct 2026 14:51:00 +0800</lastBuildDate>
     <atom:link href="https://LMDAWN1127.github.io/tags/kubernetes/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>K8S kubeadm 集群部署实战：Harbor 自建 CA 仓库与 Flannel CNI</title>
+      <link>https://LMDAWN1127.github.io/posts/k8s-kubeadm-cluster-harbor-ca/</link>
+      <pubDate>Fri, 30 Oct 2026 14:51:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/posts/k8s-kubeadm-cluster-harbor-ca/</guid>
+      <description>本文完整实战从零部署 K8S kubeadm 集群（v1.23.17，1 个 master + 2 个 worker 共 3 节点）。先在 harbor 节点安装 Docker 并部署 Harbor 镜像仓库（自建 CA 签发 HTTPS 证书，配置 harbor.yml 开启 443）；再为三个 K8S 节点安装 Docker、配置 /etc/hosts 与 Docker 客户端证书，验证 docker login 成功；随后做节点环境准备（关闭 swap、检查 product_uuid、配置 iptables 桥接与阿里云 apt 源安装 kubeadm/kubelet/kubectl），kubeadm init 初始化 master、配置 kubeconfig、worker 节点 join，最后部署 Flannel CNI 插件使三节点全部 Ready，并跨节点 curl 验证 Pod 网络连通。</description>
+    </item>
     <item>
       <title>手动部署 Kubernetes v1.30 集群（kubeadm 方式）</title>
       <link>https://LMDAWN1127.github.io/posts/k8s-v1.30-manual-deploy/</link>

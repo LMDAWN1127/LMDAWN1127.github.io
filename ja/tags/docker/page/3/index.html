@@ -163,28 +163,6 @@
 <article class="post-entry tag-entry"> 
   <header class="entry-header">
     <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/ja/posts/docker-dockerfile-onbuild-instruction/">Dockerfile の ONBUILD 命令実戦</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>You_Jump_I_Jump ゲームイメージを使って Dockerfile の ONBUILD 命令を実演します。遅延トリガー機構（定義された命令は現在のイメージ構築時には実行されず、他のイメージがこのイメージをベースとして使う場合にのみ自動トリガーされる）を理解し、2 つの ONBUILD 命令（RUN でディレクトリ/ログ作成、LABEL でブログ URL 追加）を含むベースイメージと子イメージの Dockerfile を作成し、v2.19/v2.20 構築後に docker inspect で OnBuild と Labels を比較、コンテナでファイルシステムの差を比較し、最後に -f で複数の Dockerfile を指定して異なるイメージをビルドする方法を説明します。</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-29">
-  2026年10月29日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 4 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to Dockerfile の ONBUILD 命令実戦" href="https://LMDAWN1127.github.io/ja/posts/docker-dockerfile-onbuild-instruction/"></a>
-</article>
-
-<article class="post-entry tag-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
       <a href="https://LMDAWN1127.github.io/ja/posts/docker-dockerfile-user-instruction/">Dockerfile 一般ユーザーでのコンテナ実行（USER 命令）実戦</a>
     </h2>
   </header>
@@ -268,6 +246,28 @@
 </span>
 </footer>
   <a class="entry-link" aria-label="post link to Docker 実戦：Dockerfile 最適化のコツとコンテナ起動テクニック" href="https://LMDAWN1127.github.io/ja/posts/docker-dockerfile-optimization-and-run-tips/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/ja/posts/docker-image-manual-and-dockerfile/">Docker 実戦：手動での Docker イメージ作成と Dockerfile による自動ビルド</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>CentOS・Ubuntu・Alpine の 3 種類のベースイメージから nginx ゲームイメージを手動で作成し docker commit でコミット（サイズ 236MB / 215MB / 9.41MB）。その後 Dockerfile で同じイメージを自動ビルドし、手動作成の 3 つの欠点をまとめます。</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-28">
+  2026年10月28日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 9 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to Docker 実戦：手動での Docker イメージ作成と Dockerfile による自動ビルド" href="https://LMDAWN1127.github.io/ja/posts/docker-image-manual-and-dockerfile/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">

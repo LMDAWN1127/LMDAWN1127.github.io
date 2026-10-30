@@ -163,28 +163,6 @@
 <article class="post-entry tag-entry"> 
   <header class="entry-header">
     <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/posts/docker-overlayfs-storage-driver/">Docker 实战：OverlayFS 联合挂载与存储驱动解析</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>Docker 存储驱动 OverlayFS 原理：lower/upper/work 与 LowerDir/Upperdir/MergedDir 三层（含 init 层）、写时复制到读写层；并手动 mount -t overlay 演示分层与只读，最后用 docker run 印证容器底层即 overlay2。</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-26">
-  2026年10月26日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 14 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to Docker 实战：OverlayFS 联合挂载与存储驱动解析" href="https://LMDAWN1127.github.io/posts/docker-overlayfs-storage-driver/"></a>
-</article>
-
-<article class="post-entry tag-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
       <a href="https://LMDAWN1127.github.io/posts/docker-chroot-minimal-root/">Docker 实战：从 chroot 手搓最小容器根，理解容器本质</a>
     </h2>
   </header>
@@ -272,6 +250,28 @@
 </span>
 </footer>
   <a class="entry-link" aria-label="post link to Docker 实战：容器生命周期管理——启动、停止与重启策略" href="https://LMDAWN1127.github.io/posts/docker-container-lifecycle/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/posts/docker-inspect-pid-id-network/">Docker 实战：用 inspect 查看容器 PID、ID 与网络信息</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>Docker 实战：用 inspect 查看容器 PID、ID 与网络信息 1.查看容器的进程ID 1 2 root@docker02:~# docker container inspect -f &#34;{{ .State.Pid }}&#34; c1 4800 2.查看容器ID 1 2 root@docker02:~# docker container inspect -f &#34;{{ .Id }}&#34; c1 ece223aa9840347b908016a8b665f68ac87185aceea0a8ab3ccd508de90c12b5 3.查看IP地址信息 1 2 3 4 5 6 7 8 9 10 root@docker02:~# docker container inspect -f &#34;{{ .NetworkSettings.IPAddress }}&#34; c1 172.17.0.5 root@docker02:~# docker container inspect -f &#34;{{ .NetworkSettings.Networks.bridge.IPAddress }}&#34; c1 172.17.0.5 root@docker02:~# docker container inspect -f &#34;{{ range .NetworkSettings.Networks }}{{ .IPAddress }}{{end}}&#34; c1 172.17.0.5 root@docker02:~# docker container inspect -f &#34;{{ range .NetworkSettings.Networks }}{{ .Gateway }}{{end}}&#34; c1 172.17.0.1 root@docker02:~# docker container inspect -f &#34;{{ range .NetworkSettings.Networks }}{{ .MacAddress }}{{end}}&#34; c1 02:42:ac:11:00:05 4.查看最近一个容器创建的IP地址 1 2 root@docker02:~# docker container inspect -f &#34;{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}&#34; `docker container ps -lq` 172.17.0.5 </p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-26">
+  2026年10月26日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 1 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to Docker 实战：用 inspect 查看容器 PID、ID 与网络信息" href="https://LMDAWN1127.github.io/posts/docker-inspect-pid-id-network/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">
