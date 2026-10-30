@@ -195,6 +195,28 @@
 <article class="post-entry"> 
   <header class="entry-header">
     <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/en/posts/k8s-core-resources-pod-basics/">K8S Core Resource Management and Pod Basics in Practice: Manifests, Multi-Container Pods, Labels and hostNetwork</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>This article walks through K8S core resource management and Pod basics. It starts with a cheat sheet of common resource short names and a kubectl api-resources overview, then covers routine health checks (worker node list, master components, the flannel interface and the cni0/flannel.1 virtual interfaces on each node). Next it writes single-container and multi-container Pod manifests, compares kubectl create with apply, and uses kubectl exec to enter a specific container. It then explains the difference between the declarative and imperative APIs, label create/read/update/delete plus filtering and deleting resources by label, and kubectl describe for resource details. Finally it demonstrates hostNetwork mode so a Pod shares the host network, and cleans up the lab environment.</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-30">
+  2026年10月30日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 9 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to K8S Core Resource Management and Pod Basics in Practice: Manifests, Multi-Container Pods, Labels and hostNetwork" href="https://LMDAWN1127.github.io/en/posts/k8s-core-resources-pod-basics/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
       <a href="https://LMDAWN1127.github.io/en/posts/k8s-kubeadm-cluster-harbor-ca/">K8S kubeadm Cluster Deployment in Practice: Harbor with a Self-Built CA and Flannel CNI</a>
     </h2>
   </header>
@@ -256,28 +278,6 @@
 </span>
 </footer>
   <a class="entry-link" aria-label="post link to Harbor HTTPS Deployment with a Self-Signed Certificate" href="https://LMDAWN1127.github.io/en/posts/harbor-self-signed-https/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/en/posts/harbor-keepalived-vip/">Harbor High Availability: Implementing VIP Failover with keepalived</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>This hands-on walkthrough builds a Harbor high-availability solution using keepalived for VIP failover. keepalived is installed on docker01 and docker02, a port-check script is created, and a VRRP instance sharing the virtual IP 11.0.1.250 is configured (docker01 as MASTER with priority 100, docker02 as BACKUP with priority 90). After verifying the VIP currently points to docker01’s Harbor, keepalived on docker01 is stopped manually to observe the VIP drift to docker02 and the Harbor service switch, proving the keepalived HA scheme works.</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-29">
-  2026年10月29日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 3 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to Harbor High Availability: Implementing VIP Failover with keepalived" href="https://LMDAWN1127.github.io/en/posts/harbor-keepalived-vip/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">

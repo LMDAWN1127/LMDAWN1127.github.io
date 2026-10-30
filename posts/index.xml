@@ -11,7 +11,7 @@
     </image>
     <generator>Hugo</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Fri, 30 Oct 2026 14:51:00 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 30 Oct 2026 16:29:00 +0800</lastBuildDate>
     <atom:link href="https://LMDAWN1127.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Harbor 主备部署实战：从安装到 HTTPS 与主备复制</title>
@@ -19,6 +19,13 @@
       <pubDate>Tue, 04 Aug 2026 00:00:00 +0000</pubDate>
       <guid>https://LMDAWN1127.github.io/posts/harbor-master-slave/</guid>
       <description>完整记录 Harbor 企业级镜像仓库的主备部署过程，涵盖 HTTP/HTTPS 双模式安装、自签名证书配置、跨主机主备复制等核心运维技能。</description>
+    </item>
+    <item>
+      <title>K8S 核心资源管理与 Pod 基础实战：资源清单、多容器 Pod、标签与 hostNetwork</title>
+      <link>https://LMDAWN1127.github.io/posts/k8s-core-resources-pod-basics/</link>
+      <pubDate>Fri, 30 Oct 2026 16:29:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/posts/k8s-core-resources-pod-basics/</guid>
+      <description>本文系统梳理 K8S 核心资源管理与 Pod 基础操作。先给出常用资源类型缩写速查表并用 kubectl api-resources 概览集群资源；再做日常基础巡检（worker 节点列表、master 组件、flannel 网卡与各节点 cni0/flannel.1 虚拟网卡）；随后编写单容器与多容器 Pod 的资源清单 YAML，对比 kubectl create 与 apply 的差异，并用 kubectl exec 进入指定容器；接着讲声明式 API 与响应式 API 的区别、标签的增删改查与基于标签过滤/删除资源、kubectl describe 查看资源详情，最后演示 hostNetwork 模式让 Pod 共享宿主机网络，并清理实验环境。</description>
     </item>
     <item>
       <title>K8S kubeadm 集群部署实战：Harbor 自建 CA 仓库与 Flannel CNI</title>

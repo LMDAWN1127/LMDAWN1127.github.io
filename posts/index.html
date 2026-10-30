@@ -195,6 +195,28 @@
 <article class="post-entry"> 
   <header class="entry-header">
     <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/posts/k8s-core-resources-pod-basics/">K8S 核心资源管理与 Pod 基础实战：资源清单、多容器 Pod、标签与 hostNetwork</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>本文系统梳理 K8S 核心资源管理与 Pod 基础操作。先给出常用资源类型缩写速查表并用 kubectl api-resources 概览集群资源；再做日常基础巡检（worker 节点列表、master 组件、flannel 网卡与各节点 cni0/flannel.1 虚拟网卡）；随后编写单容器与多容器 Pod 的资源清单 YAML，对比 kubectl create 与 apply 的差异，并用 kubectl exec 进入指定容器；接着讲声明式 API 与响应式 API 的区别、标签的增删改查与基于标签过滤/删除资源、kubectl describe 查看资源详情，最后演示 hostNetwork 模式让 Pod 共享宿主机网络，并清理实验环境。</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-30">
+  2026年10月30日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 8 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to K8S 核心资源管理与 Pod 基础实战：资源清单、多容器 Pod、标签与 hostNetwork" href="https://LMDAWN1127.github.io/posts/k8s-core-resources-pod-basics/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
       <a href="https://LMDAWN1127.github.io/posts/k8s-kubeadm-cluster-harbor-ca/">K8S kubeadm 集群部署实战：Harbor 自建 CA 仓库与 Flannel CNI</a>
     </h2>
   </header>
@@ -256,28 +278,6 @@
 </span>
 </footer>
   <a class="entry-link" aria-label="post link to Harbor 基于自签名证书的 HTTPS 部署实战" href="https://LMDAWN1127.github.io/posts/harbor-self-signed-https/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/posts/harbor-keepalived-vip/">Harbor 高可用方案：用 keepalived 实现 VIP 漂移</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>本文实战演示用 keepalived 为 Harbor 实现 VIP 漂移的高可用方案。在 docker01、docker02 两台节点安装 keepalived，编写端口检测脚本，配置共享虚拟 IP 11.0.1.250 的 VRRP 实例（docker01 为 priority 100 的 MASTER、docker02 为 priority 90 的 BACKUP）。先验证 VIP 当前指向 docker01 的 Harbor，再手动停止 docker01 的 keepalived，观察 VIP 漂移到 docker02、Harbor 服务随之切换，证实 keepalived 高可用方案可行。</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-29">
-  2026年10月29日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 2 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to Harbor 高可用方案：用 keepalived 实现 VIP 漂移" href="https://LMDAWN1127.github.io/posts/harbor-keepalived-vip/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">

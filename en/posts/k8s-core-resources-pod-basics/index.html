@@ -1,0 +1,1682 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto" data-theme="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>K8S Core Resource Management and Pod Basics in Practice: Manifests, Multi-Container Pods, Labels and hostNetwork | DAWN&#39;s Blog</title>
+<meta name="keywords" content="Kubernetes">
+<meta name="description" content="This article walks through K8S core resource management and Pod basics. It starts with a cheat sheet of common resource short names and a kubectl api-resources overview, then covers routine health checks (worker node list, master components, the flannel interface and the cni0/flannel.1 virtual interfaces on each node). Next it writes single-container and multi-container Pod manifests, compares kubectl create with apply, and uses kubectl exec to enter a specific container. It then explains the difference between the declarative and imperative APIs, label create/read/update/delete plus filtering and deleting resources by label, and kubectl describe for resource details. Finally it demonstrates hostNetwork mode so a Pod shares the host network, and cleans up the lab environment.">
+<meta name="author" content="DAWN">
+<link rel="canonical" href="https://LMDAWN1127.github.io/en/posts/k8s-core-resources-pod-basics/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.4bf808bff57bddc46d61c8ae060b00400fc679ab876e37243b11bd3f832f2958.css" integrity="sha256-S/gIv/V73cRtYciuBgsAQA/GeauHbjckOxG9P4MvKVg=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://LMDAWN1127.github.io/images/DAWN.jpg">
+<link rel="icon" type="image/png" sizes="16x16" href="https://LMDAWN1127.github.io/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://LMDAWN1127.github.io/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://LMDAWN1127.github.io/apple-touch-icon.png">
+<link rel="mask-icon" href="https://LMDAWN1127.github.io/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="zh" href="https://LMDAWN1127.github.io/posts/k8s-core-resources-pod-basics/">
+<link rel="alternate" hreflang="en" href="https://LMDAWN1127.github.io/en/posts/k8s-core-resources-pod-basics/">
+<link rel="alternate" hreflang="ko" href="https://LMDAWN1127.github.io/ko/posts/k8s-core-resources-pod-basics/">
+<link rel="alternate" hreflang="ja" href="https://LMDAWN1127.github.io/ja/posts/k8s-core-resources-pod-basics/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+                color-scheme: dark;
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .toc {
+                background: var(--entry);
+            }
+        }
+
+    </style>
+</noscript>
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.querySelector("html").dataset.theme = 'dark';
+    } else if (localStorage.getItem("pref-theme") === "light") {
+       document.querySelector("html").dataset.theme = 'light';
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.querySelector("html").dataset.theme = 'dark';
+    } else {
+        document.querySelector("html").dataset.theme = 'light';
+    }
+
+</script><link rel="stylesheet" href='https://LMDAWN1127.github.io/css/custom.css'>
+<meta property="og:url" content="https://LMDAWN1127.github.io/en/posts/k8s-core-resources-pod-basics/">
+  <meta property="og:site_name" content="DAWN&#39;s Blog">
+  <meta property="og:title" content="K8S Core Resource Management and Pod Basics in Practice: Manifests, Multi-Container Pods, Labels and hostNetwork">
+  <meta property="og:description" content="This article walks through K8S core resource management and Pod basics. It starts with a cheat sheet of common resource short names and a kubectl api-resources overview, then covers routine health checks (worker node list, master components, the flannel interface and the cni0/flannel.1 virtual interfaces on each node). Next it writes single-container and multi-container Pod manifests, compares kubectl create with apply, and uses kubectl exec to enter a specific container. It then explains the difference between the declarative and imperative APIs, label create/read/update/delete plus filtering and deleting resources by label, and kubectl describe for resource details. Finally it demonstrates hostNetwork mode so a Pod shares the host network, and cleans up the lab environment.">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2026-10-30T16:29:00+08:00">
+    <meta property="article:modified_time" content="2026-10-30T16:29:00+08:00">
+    <meta property="article:tag" content="Kubernetes">
+      <meta property="og:image" content="https://LMDAWN1127.github.io/images/DAWN.jpg">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://LMDAWN1127.github.io/images/DAWN.jpg">
+  <meta name="twitter:title" content="K8S Core Resource Management and Pod Basics in Practice: Manifests, Multi-Container Pods, Labels and hostNetwork">
+  <meta name="twitter:description" content="This article walks through K8S core resource management and Pod basics. It starts with a cheat sheet of common resource short names and a kubectl api-resources overview, then covers routine health checks (worker node list, master components, the flannel interface and the cni0/flannel.1 virtual interfaces on each node). Next it writes single-container and multi-container Pod manifests, compares kubectl create with apply, and uses kubectl exec to enter a specific container. It then explains the difference between the declarative and imperative APIs, label create/read/update/delete plus filtering and deleting resources by label, and kubectl describe for resource details. Finally it demonstrates hostNetwork mode so a Pod shares the host network, and cleans up the lab environment.">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://LMDAWN1127.github.io/en/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "K8S Core Resource Management and Pod Basics in Practice: Manifests, Multi-Container Pods, Labels and hostNetwork",
+      "item": "https://LMDAWN1127.github.io/en/posts/k8s-core-resources-pod-basics/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "K8S Core Resource Management and Pod Basics in Practice: Manifests, Multi-Container Pods, Labels and hostNetwork",
+  "name": "K8S Core Resource Management and Pod Basics in Practice: Manifests, Multi-Container Pods, Labels and hostNetwork",
+  "description": "This article walks through K8S core resource management and Pod basics. It starts with a cheat sheet of common resource short names and a kubectl api-resources overview, then covers routine health checks (worker node list, master components, the flannel interface and the cni0/flannel.1 virtual interfaces on each node). Next it writes single-container and multi-container Pod manifests, compares kubectl create with apply, and uses kubectl exec to enter a specific container. It then explains the difference between the declarative and imperative APIs, label create/read/update/delete plus filtering and deleting resources by label, and kubectl describe for resource details. Finally it demonstrates hostNetwork mode so a Pod shares the host network, and cleans up the lab environment.",
+  "keywords": [
+    "Kubernetes"
+  ],
+  "articleBody": "K8S Core Resource Management and Pod Basics in Practice: Manifests, Multi-Container Pods, Labels and hostNetwork 1. Overview of Common K8S Resources Common K8S resource types:\nShort Full name Description po pods A group of containers, at least one svc services Pod service proxy deploy deployments Stateless service deployment ds daemonsets One Pod per node sts statefulsets Stateful service rs replicasets Replica controller (lightweight) cm configmaps Configuration files ns namespaces Resource isolation hpa horizontalpodautoscalers Horizontal autoscaling ing ingresses Layer-7 proxy pv/pvc persistentvolumes/claims Persistent storage kubectl api-resources 1 2 3 4 5 [root@master ~]# kubectl api-resources | wc -l 57 [root@master ~]# kubectl api-resources # Output: 57 resource types (pods, services, deployments, daemonsets, ingresses, ...) 2. Routine K8S Health Checks 1. Check the Worker Node List 1 2 3 4 5 [root@master ~]# kubectl get nodes NAME STATUS ROLES AGE VERSION master Ready control-plane,master 148m v1.23.17 worker01 Ready 147m v1.23.17 worker02 Ready 147m v1.23.17 2. Check the master Components 1 2 3 4 5 6 [root@master ~]# kubectl get cs Warning: v1 ComponentStatus is deprecated in v1.19+ NAME STATUS MESSAGE ERROR controller-manager Healthy ok etcd-0 Healthy {\"health\":\"true\",\"reason\":\"\"} scheduler Healthy ok 3. Check the flannel Interface 1 2 3 4 5 [root@master ~]# kubectl get pods -n kube-flannel -o wide NAME READY STATUS RESTARTS AGE IP NODE kube-flannel-ds-8rmk2 1/1 Running 0 136m 11.0.1.233 worker02 kube-flannel-ds-n6wcv 1/1 Running 0 143m 11.0.1.232 worker01 kube-flannel-ds-tw8f6 1/1 Running 0 143m 11.0.1.231 master 4. Check the cni0 and flannel.1 Virtual Interfaces on Each Node 1 2 3 4 5 6 7 8 9 10 11 12 13 14 [root@master ~]# ip addr show cni0 | grep 'inet ' inet 10.100.0.1/24 brd 10.100.0.255 scope global cni0 [root@master ~]# ip addr show flannel.1 | grep 'inet ' inet 10.100.0.0/32 scope global flannel.1 [root@worker01 ~]# ip addr show cni0 | grep 'inet ' inet 10.100.1.1/24 brd 10.100.1.255 scope global cni0 [root@worker01 ~]# ip addr show flannel.1 | grep 'inet ' inet 10.100.1.0/32 scope global flannel.1 [root@worker02 ~]# ip addr show cni0 | grep 'inet ' inet 10.100.2.1/24 brd 10.100.2.255 scope global cni0 [root@worker02 ~]# ip addr show flannel.1 | grep 'inet ' inet 10.100.2.0/32 scope global flannel.1 The cni0 and flannel.1 subnets match across all three nodes\n3. Writing Pod Manifests, Creating and Deleting 1. Create the Resource Directory 1 2 [root@master ~]# mkdir -pv /dawn/manifests/pods [root@master ~]# cd /dawn/manifests/pods 2. Write a Single-Container Pod YAML 1 [root@master pods]# cat 01-pods-xiuxian-single.yaml 1 2 3 4 5 6 7 8 9 apiVersion: v1 kind: Pod metadata: name: xiuxian-v1 spec: nodeName: worker01 containers: - image: harbor:443/dawn/apps:v1 name: xiuxian 3. kubectl create vs apply Compared 1 2 3 4 5 6 7 8 9 10 11 12 13 14 # create: create the resource [root@master pods]# kubectl create -f 01-pods-xiuxian-single.yaml pod/xiuxian-v1 created # create again -- error AlreadyExists [root@master pods]# kubectl create -f 01-pods-xiuxian-single.yaml Error from server (AlreadyExists): error when creating \"01-pods-xiuxian-single.yaml\": pods \"xiuxian-v1\" already exists # apply -- no error, prints unchanged/configured [root@master pods]# kubectl apply -f 01-pods-xiuxian-single.yaml pod/xiuxian-v1 configured [root@master pods]# kubectl apply -f 01-pods-xiuxian-single.yaml pod/xiuxian-v1 unchanged In production always use kubectl apply: a new resource reports created, while an existing one reports configured/unchanged depending on whether anything changed.\n4. List Pods 1 2 3 [root@master pods]# kubectl get pods -o wide NAME READY STATUS RESTARTS AGE IP NODE NOMINATED NODE READINESS GATES xiuxian-v1 1/1 Running 0 8s 10.100.1.6 worker01 5. Delete Resources 1 2 3 4 5 [root@master pods]# kubectl delete -f 01-pods-xiuxian-single.yaml pod \"xiuxian-v1\" deleted [root@master pods]# kubectl get pods No resources found in default namespace. 6. Recreate 1 2 3 4 5 6 [root@master pods]# kubectl apply -f 01-pods-xiuxian-single.yaml pod/xiuxian-v1 created [root@master pods]# kubectl get pods -o wide NAME READY STATUS RESTARTS AGE IP NODE ... xiuxian-v1 1/1 Running 0 8s 10.100.1.6 worker01 ... 4. Multi-Container Pods and kubectl exec 1. Preparing the alpine Image 1 2 3 4 5 6 7 8 [root@master ~]# docker pull alpine:3.20.2 3.20.2: Pulling from library/alpine Digest: sha256:0a4eaa0eecf5f8c050e5bba433f58c052be7587ee8af3e8b3910ef9ab5fbe9f5 Status: Downloaded newer image for alpine:3.20.2 [root@master ~]# docker tag alpine:3.20.2 harbor:443/dawn-linux/alpine:3.20.2 [root@master ~]# docker push harbor:443/dawn-linux/alpine:3.20.2 3.20.2: digest: sha256:eddacbc7e24bf8799a4ed3cdcfa50d4b88a323695ad80f317b6629883b2c2a78 size: 528 2. Multi-Container Pod YAML 1 [root@master pods]# cat 02-pods-xiuxian-alpine-multiple.yaml 1 2 3 4 5 6 7 8 9 10 11 12 apiVersion: v1 kind: Pod metadata: name: xiuxian-v2 spec: nodeName: worker01 containers: - image: harbor:443/dawn/apps:v2 name: xiuxian - image: harbor:443/dawn-linux/alpine:3.20.2 name: alpine stdin: true 1 2 3 4 5 6 7 [root@master pods]# kubectl apply -f 02-pods-xiuxian-alpine-multiple.yaml pod/xiuxian-v2 created [root@master pods]# kubectl get pods -o wide NAME READY STATUS RESTARTS AGE IP NODE xiuxian-v1 1/1 Running 0 8s 10.100.1.6 worker01 xiuxian-v2 2/2 Running 0 8s 10.100.1.7 worker01 READY shows 2/2 — both containers are ready.\n3. Running Commands Inside a Container with kubectl exec 1 2 3 4 5 6 7 8 9 10 11 12 13 # Single-container Pod, exec directly [root@master pods]# kubectl exec xiuxian-v1 -- ifconfig eth0 Link encap:Ethernet HWaddr D2:D6:0C:13:89:D9 inet addr:10.100.1.6 Bcast:10.100.1.255 Mask:255.255.255.0 # Multi-container Pod, without -c it defaults to container 0 [root@master pods]# kubectl exec xiuxian-v2 -- hostname -i Defaulted container \"xiuxian\" out of: xiuxian, alpine 10.100.1.7 # Specify the container name [root@master pods]# kubectl exec xiuxian-v2 -c alpine -- hostname -i 10.100.1.7 Containers in the same Pod share the network namespace, so they have the same IP\n5. Declarative API vs Imperative API Creating a Pod Imperatively 1 2 3 4 5 6 7 8 [root@master pods]# kubectl run xixi --image=harbor:443/dawn/apps:v2 pod/xixi created [root@master pods]# kubectl get pods -o wide NAME READY STATUS RESTARTS AGE IP NODE xiuxian-v1 1/1 Running 0 30s 10.100.1.6 worker01 xiuxian-v2 2/2 Running 0 30s 10.100.1.7 worker01 xixi 1/1 Running 0 5s 10.100.2.4 worker02 Declarative vs Imperative Queries 1 2 3 4 5 6 7 8 9 10 11 # Declarative: filter through the manifest file [root@master pods]# kubectl get -f 01-pods-xiuxian-single.yaml -o wide NAME READY STATUS RESTARTS AGE IP NODE xiuxian-v1 1/1 Running 0 30s 10.100.1.6 worker01 # Imperative: view globally [root@master pods]# kubectl get pods -o wide --show-labels NAME READY STATUS ... LABELS xiuxian-v1 1/1 Running ... xiuxian-v2 2/2 Running ... xixi 1/1 Running ... run=xixi 6. Label Management 1. Adding Labels Imperatively 1 2 3 4 5 6 7 8 9 10 [root@master pods]# kubectl label -f 01-pods-xiuxian-single.yaml school=czu class=computer01 pod/xiuxian-v1 labeled [root@master pods]# kubectl label pods xiuxian-v1 address=ShaHe pod/xiuxian-v1 labeled [root@master pods]# kubectl get pods -o wide --show-labels NAME ... LABELS xiuxian-v1 ... address=ShaHe,class=computer01,school=czu xixi ... run=xixi 2. Removing Labels Imperatively (append - to the label name) 1 2 3 4 5 6 7 8 9 10 [root@master pods]# kubectl label pods xiuxian-v1 address- pod/xiuxian-v1 unlabeled [root@master pods]# kubectl label -f 01-pods-xiuxian-single.yaml school- pod/xiuxian-v1 unlabeled [root@master pods]# kubectl get pods -o wide --show-labels NAME ... LABELS xiuxian-v1 ... class=computer01 xixi ... run=xixi 3. Modifying Labels Imperatively 1 2 [root@master pods]# kubectl label -f 01-pods-xiuxian-single.yaml class=computer01 --overwrite pod/xiuxian-v1 labeled 4. Imperative Labels Are Temporary 1 2 3 4 5 6 7 8 9 10 11 # Delete and recreate -- labels are lost [root@master pods]# kubectl delete -f 01-pods-xiuxian-single.yaml pod \"xiuxian-v1\" deleted [root@master pods]# kubectl apply -f 01-pods-xiuxian-single.yaml pod/xiuxian-v1 created [root@master pods]# kubectl get pods -o wide --show-labels NAME ... LABELS xiuxian-v1 ... ← labels are gone! xixi ... run=xixi 5. Declarative Labels (declared in YAML, permanent) 1 [root@master pods]# cat 03-pods-labels.yaml 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 apiVersion: v1 kind: Pod metadata: name: xiuxian-labels labels: school: czu class: computer01 spec: nodeName: worker01 containers: - image: harbor:443/dawn/apps:v2 name: xiuxian - image: harbor:443/dawn-linux/alpine:3.20.2 name: alpine stdin: true 1 2 3 4 5 6 7 8 [root@master pods]# kubectl apply -f 03-pods-labels.yaml pod/xiuxian-labels created [root@master pods]# kubectl get pods -o wide --show-labels NAME READY STATUS ... LABELS xiuxian-labels 2/2 Running ... class=computer01,school=czu xiuxian-v1 1/1 Running ... xixi 1/1 Running ... run=xixi 6. Filtering Resources by Label 1 2 3 4 5 6 7 8 9 10 11 12 # Pods that have the class label [root@master pods]# kubectl get pods -l class --show-labels NAME READY STATUS ... LABELS xiuxian-labels 2/2 Running ... class=computer01,school=czu # Exact match on class=computer01 [root@master pods]# kubectl get pods -l class=computer01 --show-labels # run label [root@master pods]# kubectl get pods -l run --show-labels NAME READY STATUS ... LABELS xixi 1/1 Running ... run=xixi 7. Deleting by Label 1 2 3 4 5 6 7 8 [root@master pods]# kubectl delete pods -l class pod \"xiuxian-labels\" deleted [root@master pods]# kubectl get pods --show-labels NAME READY STATUS ... LABELS xiuxian-v1 1/1 Running ... xiuxian-v2 2/2 Running ... xixi 1/1 Running ... run=xixi 7. Inspecting Resource Details with kubectl describe 1. Pod Details 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 [root@master pods]# kubectl describe pods xixi Name: xixi Namespace: default Node: worker02/11.0.1.233 Labels: run=xixi Status: Running IP: 10.100.2.4 Containers: xixi: Image: harbor:443/dawn/apps:v2 State: Running Ready: True Restart Count: 0 Events: Normal Scheduled 90s default-scheduler Successfully assigned default/xixi to worker02 Normal Pulled 89s kubelet Container image \"harbor:443/dawn/apps:v2\" already present on machine Normal Created 89s kubelet Created container xixi Normal Started 89s kubelet Started container xixi 2. Node Details 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 [root@master pods]# kubectl describe nodes master Name: master Roles: control-plane,master Annotations: flannel.alpha.coreos.com/public-ip: 11.0.1.231 flannel.alpha.coreos.com/backend-type: vxlan Capacity: cpu: 2 memory: 3969504Ki pods: 110 Conditions: NetworkUnavailable False FlannelIsUp Flannel is running on this node MemoryPressure False DiskPressure False Ready True System Info: Kernel Version: 5.15.0-202-generic OS Image: Ubuntu 22.04.3 LTS Container Runtime: docker://27.0.3 Kubelet Version: v1.23.17 3. Filtering describe by Label 1 2 3 [root@master pods]# kubectl describe pods -l run=xixi Name: xixi ... 8. hostNetwork Mode (Pod Shares the Host Network) 1 [root@master pods]# cat 04-pods-hostNetwork.yaml 1 2 3 4 5 6 7 8 9 10 11 12 13 14 apiVersion: v1 kind: Pod metadata: name: xiuxian-hostnetwork labels: apps: xiuxian school: czu class: computer01 spec: hostNetwork: true nodeName: worker01 containers: - image: harbor:443/dawn/apps:v1 name: xiuxian 1 2 3 4 5 6 7 8 [root@master pods]# kubectl apply -f 04-pods-hostNetwork.yaml pod/xiuxian-hostnetwork created [root@master pods]# kubectl get pods -o wide --show-labels NAME READY STATUS RESTARTS AGE IP NODE LABELS xiuxian-hostnetwork 1/1 Running 0 5s 11.0.1.232 worker01 apps=xiuxian,class=computer01,school=czu xiuxian-v1 1/1 Running 0 62s 10.100.1.8 worker01 xiuxian-v2 2/2 Running 0 115s 10.100.1.7 worker01 With hostNetwork: true the Pod IP is 11.0.1.232 (the physical IP of host worker01), while a normal Pod gets 10.100.1.x (the Pod network).\n1 2 3 4 5 6 7 # curling the host IP reaches nginx inside the hostNetwork Pod [root@master pods]# curl -s 11.0.1.232 | head -5 \u003c!DOCTYPE html\u003e ",
+  "wordCount" : "1814",
+  "inLanguage": "en",
+  "image": "https://LMDAWN1127.github.io/images/DAWN.jpg","datePublished": "2026-10-30T16:29:00+08:00",
+  "dateModified": "2026-10-30T16:29:00+08:00",
+  "author":{
+    "@type": "Person",
+    "name": "DAWN"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://LMDAWN1127.github.io/en/posts/k8s-core-resources-pod-basics/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "DAWN's Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://LMDAWN1127.github.io/images/DAWN.jpg"
+    }
+  }
+}
+</script>
+</head>
+<body id="top">
+    <header class="header">
+    <nav class="header-nav">
+        <div class="logo">
+            <a href="https://LMDAWN1127.github.io/en/" accesskey="h" title="DAWN&#39;s Blog (Alt + H)">
+                <img src="https://LMDAWN1127.github.io/images/DAWN.jpg" alt="" aria-label="logo"
+                    height="38">DAWN&#39;s Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" class="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
+                    <svg class="moon" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg class="sun" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button><span class="nav-sep">|</span>
+                    <ul class="lang-menu">
+                        <li>
+                            <a href="https://LMDAWN1127.github.io/" title="中文"
+                                aria-label="中文">Zh</a>
+                        </li>
+                        <li>
+                            <a href="https://LMDAWN1127.github.io/ko/" title="한국어"
+                                aria-label="한국어">Ko</a>
+                        </li>
+                        <li>
+                            <a href="https://LMDAWN1127.github.io/ja/" title="日本語"
+                                aria-label="日本語">Ja</a>
+                        </li>
+                    </ul>
+            </div>
+        </div>
+        <ul id="menu" class="menu">
+            <li>
+                <a href="https://LMDAWN1127.github.io/en/archives/" title="Archive">
+                    <span>Archive</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <h1 class="post-title entry-hint-parent">
+      K8S Core Resource Management and Pod Basics in Practice: Manifests, Multi-Container Pods, Labels and hostNetwork
+    </h1>
+  </header>
+
+  <div class="post-layout">
+    <div class="post-content-wrapper"> 
+      <div class="post-content md-content"><h1 id="k8s-core-resource-management-and-pod-basics-in-practice-manifests-multi-container-pods-labels-and-hostnetwork">K8S Core Resource Management and Pod Basics in Practice: Manifests, Multi-Container Pods, Labels and hostNetwork<a hidden class="anchor" aria-hidden="true" href="#k8s-core-resource-management-and-pod-basics-in-practice-manifests-multi-container-pods-labels-and-hostnetwork">#</a></h1>
+<h2 id="1-overview-of-common-k8s-resources">1. Overview of Common K8S Resources<a hidden class="anchor" aria-hidden="true" href="#1-overview-of-common-k8s-resources">#</a></h2>
+<p>Common K8S resource types:</p>
+<table>
+	<thead>
+			<tr>
+					<th>Short</th>
+					<th>Full name</th>
+					<th>Description</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>po</td>
+					<td>pods</td>
+					<td>A group of containers, at least one</td>
+			</tr>
+			<tr>
+					<td>svc</td>
+					<td>services</td>
+					<td>Pod service proxy</td>
+			</tr>
+			<tr>
+					<td>deploy</td>
+					<td>deployments</td>
+					<td>Stateless service deployment</td>
+			</tr>
+			<tr>
+					<td>ds</td>
+					<td>daemonsets</td>
+					<td>One Pod per node</td>
+			</tr>
+			<tr>
+					<td>sts</td>
+					<td>statefulsets</td>
+					<td>Stateful service</td>
+			</tr>
+			<tr>
+					<td>rs</td>
+					<td>replicasets</td>
+					<td>Replica controller (lightweight)</td>
+			</tr>
+			<tr>
+					<td>cm</td>
+					<td>configmaps</td>
+					<td>Configuration files</td>
+			</tr>
+			<tr>
+					<td>ns</td>
+					<td>namespaces</td>
+					<td>Resource isolation</td>
+			</tr>
+			<tr>
+					<td>hpa</td>
+					<td>horizontalpodautoscalers</td>
+					<td>Horizontal autoscaling</td>
+			</tr>
+			<tr>
+					<td>ing</td>
+					<td>ingresses</td>
+					<td>Layer-7 proxy</td>
+			</tr>
+			<tr>
+					<td>pv/pvc</td>
+					<td>persistentvolumes/claims</td>
+					<td>Persistent storage</td>
+			</tr>
+	</tbody>
+</table>
+<h3 id="kubectl-api-resources">kubectl api-resources<a hidden class="anchor" aria-hidden="true" href="#kubectl-api-resources">#</a></h3>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master ~<span style="color:#f92672">]</span><span style="color:#75715e"># kubectl api-resources | wc -l</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">57</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master ~<span style="color:#f92672">]</span><span style="color:#75715e"># kubectl api-resources</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Output: 57 resource types (pods, services, deployments, daemonsets, ingresses, ...)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><hr>
+<h2 id="2-routine-k8s-health-checks">2. Routine K8S Health Checks<a hidden class="anchor" aria-hidden="true" href="#2-routine-k8s-health-checks">#</a></h2>
+<h3 id="1-check-the-worker-node-list">1. Check the Worker Node List<a hidden class="anchor" aria-hidden="true" href="#1-check-the-worker-node-list">#</a></h3>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master ~<span style="color:#f92672">]</span><span style="color:#75715e"># kubectl get nodes</span>
+</span></span><span style="display:flex;"><span>NAME       STATUS   ROLES                  AGE    VERSION
+</span></span><span style="display:flex;"><span>master     Ready    control-plane,master   148m   v1.23.17
+</span></span><span style="display:flex;"><span>worker01   Ready    &lt;none&gt;                 147m   v1.23.17
+</span></span><span style="display:flex;"><span>worker02   Ready    &lt;none&gt;                 147m   v1.23.17
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="2-check-the-master-components">2. Check the master Components<a hidden class="anchor" aria-hidden="true" href="#2-check-the-master-components">#</a></h3>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master ~<span style="color:#f92672">]</span><span style="color:#75715e"># kubectl get cs</span>
+</span></span><span style="display:flex;"><span>Warning: v1 ComponentStatus is deprecated in v1.19+
+</span></span><span style="display:flex;"><span>NAME                 STATUS    MESSAGE                         ERROR
+</span></span><span style="display:flex;"><span>controller-manager   Healthy   ok
+</span></span><span style="display:flex;"><span>etcd-0               Healthy   <span style="color:#f92672">{</span><span style="color:#e6db74">&#34;health&#34;</span>:<span style="color:#e6db74">&#34;true&#34;</span>,<span style="color:#e6db74">&#34;reason&#34;</span>:<span style="color:#e6db74">&#34;&#34;</span><span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>scheduler            Healthy   ok
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="3-check-the-flannel-interface">3. Check the flannel Interface<a hidden class="anchor" aria-hidden="true" href="#3-check-the-flannel-interface">#</a></h3>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master ~<span style="color:#f92672">]</span><span style="color:#75715e"># kubectl get pods -n kube-flannel -o wide</span>
+</span></span><span style="display:flex;"><span>NAME                    READY   STATUS    RESTARTS   AGE    IP           NODE
+</span></span><span style="display:flex;"><span>kube-flannel-ds-8rmk2   1/1     Running   <span style="color:#ae81ff">0</span>          136m   11.0.1.233   worker02
+</span></span><span style="display:flex;"><span>kube-flannel-ds-n6wcv   1/1     Running   <span style="color:#ae81ff">0</span>          143m   11.0.1.232   worker01
+</span></span><span style="display:flex;"><span>kube-flannel-ds-tw8f6   1/1     Running   <span style="color:#ae81ff">0</span>          143m   11.0.1.231   master
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="4-check-the-cni0-and-flannel1-virtual-interfaces-on-each-node">4. Check the cni0 and flannel.1 Virtual Interfaces on Each Node<a hidden class="anchor" aria-hidden="true" href="#4-check-the-cni0-and-flannel1-virtual-interfaces-on-each-node">#</a></h3>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master ~<span style="color:#f92672">]</span><span style="color:#75715e"># ip addr show cni0 | grep &#39;inet &#39;</span>
+</span></span><span style="display:flex;"><span>    inet 10.100.0.1/24 brd 10.100.0.255 scope global cni0
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master ~<span style="color:#f92672">]</span><span style="color:#75715e"># ip addr show flannel.1 | grep &#39;inet &#39;</span>
+</span></span><span style="display:flex;"><span>    inet 10.100.0.0/32 scope global flannel.1
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@worker01 ~<span style="color:#f92672">]</span><span style="color:#75715e"># ip addr show cni0 | grep &#39;inet &#39;</span>
+</span></span><span style="display:flex;"><span>    inet 10.100.1.1/24 brd 10.100.1.255 scope global cni0
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@worker01 ~<span style="color:#f92672">]</span><span style="color:#75715e"># ip addr show flannel.1 | grep &#39;inet &#39;</span>
+</span></span><span style="display:flex;"><span>    inet 10.100.1.0/32 scope global flannel.1
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@worker02 ~<span style="color:#f92672">]</span><span style="color:#75715e"># ip addr show cni0 | grep &#39;inet &#39;</span>
+</span></span><span style="display:flex;"><span>    inet 10.100.2.1/24 brd 10.100.2.255 scope global cni0
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@worker02 ~<span style="color:#f92672">]</span><span style="color:#75715e"># ip addr show flannel.1 | grep &#39;inet &#39;</span>
+</span></span><span style="display:flex;"><span>    inet 10.100.2.0/32 scope global flannel.1
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>The cni0 and flannel.1 subnets match across all three nodes</p>
+<hr>
+<h2 id="3-writing-pod-manifests-creating-and-deleting">3. Writing Pod Manifests, Creating and Deleting<a hidden class="anchor" aria-hidden="true" href="#3-writing-pod-manifests-creating-and-deleting">#</a></h2>
+<h3 id="1-create-the-resource-directory">1. Create the Resource Directory<a hidden class="anchor" aria-hidden="true" href="#1-create-the-resource-directory">#</a></h3>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master ~<span style="color:#f92672">]</span><span style="color:#75715e"># mkdir -pv /dawn/manifests/pods</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master ~<span style="color:#f92672">]</span><span style="color:#75715e"># cd /dawn/manifests/pods</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="2-write-a-single-container-pod-yaml">2. Write a Single-Container Pod YAML<a hidden class="anchor" aria-hidden="true" href="#2-write-a-single-container-pod-yaml">#</a></h3>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master pods<span style="color:#f92672">]</span><span style="color:#75715e"># cat 01-pods-xiuxian-single.yaml</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">9
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">v1</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">kind</span>: <span style="color:#ae81ff">Pod</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">metadata</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">xiuxian-v1</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">spec</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">nodeName</span>: <span style="color:#ae81ff">worker01</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">containers</span>:
+</span></span><span style="display:flex;"><span>  - <span style="color:#f92672">image</span>: <span style="color:#ae81ff">harbor:443/dawn/apps:v1</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">name</span>: <span style="color:#ae81ff">xiuxian</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="3-kubectl-create-vs-apply-compared">3. kubectl create vs apply Compared<a hidden class="anchor" aria-hidden="true" href="#3-kubectl-create-vs-apply-compared">#</a></h3>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># create: create the resource</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master pods<span style="color:#f92672">]</span><span style="color:#75715e"># kubectl create -f 01-pods-xiuxian-single.yaml</span>
+</span></span><span style="display:flex;"><span>pod/xiuxian-v1 created
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># create again -- error AlreadyExists</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master pods<span style="color:#f92672">]</span><span style="color:#75715e"># kubectl create -f 01-pods-xiuxian-single.yaml</span>
+</span></span><span style="display:flex;"><span>Error from server <span style="color:#f92672">(</span>AlreadyExists<span style="color:#f92672">)</span>: error when creating <span style="color:#e6db74">&#34;01-pods-xiuxian-single.yaml&#34;</span>: pods <span style="color:#e6db74">&#34;xiuxian-v1&#34;</span> already exists
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># apply -- no error, prints unchanged/configured</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master pods<span style="color:#f92672">]</span><span style="color:#75715e"># kubectl apply -f 01-pods-xiuxian-single.yaml</span>
+</span></span><span style="display:flex;"><span>pod/xiuxian-v1 configured
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master pods<span style="color:#f92672">]</span><span style="color:#75715e"># kubectl apply -f 01-pods-xiuxian-single.yaml</span>
+</span></span><span style="display:flex;"><span>pod/xiuxian-v1 unchanged
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>In production always use <code>kubectl apply</code>: a new resource reports <code>created</code>, while an existing one reports <code>configured</code>/<code>unchanged</code> depending on whether anything changed.</p>
+<h3 id="4-list-pods">4. List Pods<a hidden class="anchor" aria-hidden="true" href="#4-list-pods">#</a></h3>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master pods<span style="color:#f92672">]</span><span style="color:#75715e"># kubectl get pods -o wide</span>
+</span></span><span style="display:flex;"><span>NAME         READY   STATUS    RESTARTS   AGE   IP           NODE       NOMINATED NODE   READINESS GATES
+</span></span><span style="display:flex;"><span>xiuxian-v1   1/1     Running   <span style="color:#ae81ff">0</span>          8s    10.100.1.6   worker01   &lt;none&gt;           &lt;none&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="5-delete-resources">5. Delete Resources<a hidden class="anchor" aria-hidden="true" href="#5-delete-resources">#</a></h3>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master pods<span style="color:#f92672">]</span><span style="color:#75715e"># kubectl delete -f 01-pods-xiuxian-single.yaml</span>
+</span></span><span style="display:flex;"><span>pod <span style="color:#e6db74">&#34;xiuxian-v1&#34;</span> deleted
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master pods<span style="color:#f92672">]</span><span style="color:#75715e"># kubectl get pods</span>
+</span></span><span style="display:flex;"><span>No resources found in default namespace.
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="6-recreate">6. Recreate<a hidden class="anchor" aria-hidden="true" href="#6-recreate">#</a></h3>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master pods<span style="color:#f92672">]</span><span style="color:#75715e"># kubectl apply -f 01-pods-xiuxian-single.yaml</span>
+</span></span><span style="display:flex;"><span>pod/xiuxian-v1 created
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master pods<span style="color:#f92672">]</span><span style="color:#75715e"># kubectl get pods -o wide</span>
+</span></span><span style="display:flex;"><span>NAME         READY   STATUS    RESTARTS   AGE   IP           NODE       ...
+</span></span><span style="display:flex;"><span>xiuxian-v1   1/1     Running   <span style="color:#ae81ff">0</span>          8s    10.100.1.6   worker01   ...
+</span></span></code></pre></td></tr></table>
+</div>
+</div><hr>
+<h2 id="4-multi-container-pods-and-kubectl-exec">4. Multi-Container Pods and kubectl exec<a hidden class="anchor" aria-hidden="true" href="#4-multi-container-pods-and-kubectl-exec">#</a></h2>
+<h3 id="1-preparing-the-alpine-image">1. Preparing the alpine Image<a hidden class="anchor" aria-hidden="true" href="#1-preparing-the-alpine-image">#</a></h3>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master ~<span style="color:#f92672">]</span><span style="color:#75715e"># docker pull alpine:3.20.2</span>
+</span></span><span style="display:flex;"><span>3.20.2: Pulling from library/alpine
+</span></span><span style="display:flex;"><span>Digest: sha256:0a4eaa0eecf5f8c050e5bba433f58c052be7587ee8af3e8b3910ef9ab5fbe9f5
+</span></span><span style="display:flex;"><span>Status: Downloaded newer image <span style="color:#66d9ef">for</span> alpine:3.20.2
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master ~<span style="color:#f92672">]</span><span style="color:#75715e"># docker tag alpine:3.20.2 harbor:443/dawn-linux/alpine:3.20.2</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master ~<span style="color:#f92672">]</span><span style="color:#75715e"># docker push harbor:443/dawn-linux/alpine:3.20.2</span>
+</span></span><span style="display:flex;"><span>3.20.2: digest: sha256:eddacbc7e24bf8799a4ed3cdcfa50d4b88a323695ad80f317b6629883b2c2a78 size: <span style="color:#ae81ff">528</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="2-multi-container-pod-yaml">2. Multi-Container Pod YAML<a hidden class="anchor" aria-hidden="true" href="#2-multi-container-pod-yaml">#</a></h3>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master pods<span style="color:#f92672">]</span><span style="color:#75715e"># cat 02-pods-xiuxian-alpine-multiple.yaml</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">v1</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">kind</span>: <span style="color:#ae81ff">Pod</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">metadata</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">xiuxian-v2</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">spec</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">nodeName</span>: <span style="color:#ae81ff">worker01</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">containers</span>:
+</span></span><span style="display:flex;"><span>  - <span style="color:#f92672">image</span>: <span style="color:#ae81ff">harbor:443/dawn/apps:v2</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">name</span>: <span style="color:#ae81ff">xiuxian</span>
+</span></span><span style="display:flex;"><span>  - <span style="color:#f92672">image</span>: <span style="color:#ae81ff">harbor:443/dawn-linux/alpine:3.20.2</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">name</span>: <span style="color:#ae81ff">alpine</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">stdin</span>: <span style="color:#66d9ef">true</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master pods<span style="color:#f92672">]</span><span style="color:#75715e"># kubectl apply -f 02-pods-xiuxian-alpine-multiple.yaml</span>
+</span></span><span style="display:flex;"><span>pod/xiuxian-v2 created
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master pods<span style="color:#f92672">]</span><span style="color:#75715e"># kubectl get pods -o wide</span>
+</span></span><span style="display:flex;"><span>NAME         READY   STATUS    RESTARTS   AGE   IP           NODE
+</span></span><span style="display:flex;"><span>xiuxian-v1   1/1     Running   <span style="color:#ae81ff">0</span>          8s    10.100.1.6   worker01
+</span></span><span style="display:flex;"><span>xiuxian-v2   2/2     Running   <span style="color:#ae81ff">0</span>          8s    10.100.1.7   worker01
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>READY shows <code>2/2</code> — both containers are ready.</p>
+<h3 id="3-running-commands-inside-a-container-with-kubectl-exec">3. Running Commands Inside a Container with kubectl exec<a hidden class="anchor" aria-hidden="true" href="#3-running-commands-inside-a-container-with-kubectl-exec">#</a></h3>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># Single-container Pod, exec directly</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master pods<span style="color:#f92672">]</span><span style="color:#75715e"># kubectl exec xiuxian-v1 -- ifconfig</span>
+</span></span><span style="display:flex;"><span>eth0      Link encap:Ethernet  HWaddr D2:D6:0C:13:89:D9
+</span></span><span style="display:flex;"><span>          inet addr:10.100.1.6  Bcast:10.100.1.255  Mask:255.255.255.0
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Multi-container Pod, without -c it defaults to container 0</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master pods<span style="color:#f92672">]</span><span style="color:#75715e"># kubectl exec xiuxian-v2 -- hostname -i</span>
+</span></span><span style="display:flex;"><span>Defaulted container <span style="color:#e6db74">&#34;xiuxian&#34;</span> out of: xiuxian, alpine
+</span></span><span style="display:flex;"><span>10.100.1.7
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Specify the container name</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master pods<span style="color:#f92672">]</span><span style="color:#75715e"># kubectl exec xiuxian-v2 -c alpine -- hostname -i</span>
+</span></span><span style="display:flex;"><span>10.100.1.7
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Containers in the same Pod share the network namespace, so they have the same IP</p>
+<hr>
+<h2 id="5-declarative-api-vs-imperative-api">5. Declarative API vs Imperative API<a hidden class="anchor" aria-hidden="true" href="#5-declarative-api-vs-imperative-api">#</a></h2>
+<h3 id="creating-a-pod-imperatively">Creating a Pod Imperatively<a hidden class="anchor" aria-hidden="true" href="#creating-a-pod-imperatively">#</a></h3>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master pods<span style="color:#f92672">]</span><span style="color:#75715e"># kubectl run xixi --image=harbor:443/dawn/apps:v2</span>
+</span></span><span style="display:flex;"><span>pod/xixi created
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master pods<span style="color:#f92672">]</span><span style="color:#75715e"># kubectl get pods -o wide</span>
+</span></span><span style="display:flex;"><span>NAME         READY   STATUS    RESTARTS   AGE   IP           NODE
+</span></span><span style="display:flex;"><span>xiuxian-v1   1/1     Running   <span style="color:#ae81ff">0</span>          30s   10.100.1.6   worker01
+</span></span><span style="display:flex;"><span>xiuxian-v2   2/2     Running   <span style="color:#ae81ff">0</span>          30s   10.100.1.7   worker01
+</span></span><span style="display:flex;"><span>xixi         1/1     Running   <span style="color:#ae81ff">0</span>          5s    10.100.2.4   worker02
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="declarative-vs-imperative-queries">Declarative vs Imperative Queries<a hidden class="anchor" aria-hidden="true" href="#declarative-vs-imperative-queries">#</a></h3>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># Declarative: filter through the manifest file</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master pods<span style="color:#f92672">]</span><span style="color:#75715e"># kubectl get -f 01-pods-xiuxian-single.yaml -o wide</span>
+</span></span><span style="display:flex;"><span>NAME         READY   STATUS    RESTARTS   AGE   IP           NODE
+</span></span><span style="display:flex;"><span>xiuxian-v1   1/1     Running   <span style="color:#ae81ff">0</span>          30s   10.100.1.6   worker01
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Imperative: view globally</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master pods<span style="color:#f92672">]</span><span style="color:#75715e"># kubectl get pods -o wide --show-labels</span>
+</span></span><span style="display:flex;"><span>NAME         READY   STATUS    ...  LABELS
+</span></span><span style="display:flex;"><span>xiuxian-v1   1/1     Running   ...  &lt;none&gt;
+</span></span><span style="display:flex;"><span>xiuxian-v2   2/2     Running   ...  &lt;none&gt;
+</span></span><span style="display:flex;"><span>xixi         1/1     Running   ...  run<span style="color:#f92672">=</span>xixi
+</span></span></code></pre></td></tr></table>
+</div>
+</div><hr>
+<h2 id="6-label-management">6. Label Management<a hidden class="anchor" aria-hidden="true" href="#6-label-management">#</a></h2>
+<h3 id="1-adding-labels-imperatively">1. Adding Labels Imperatively<a hidden class="anchor" aria-hidden="true" href="#1-adding-labels-imperatively">#</a></h3>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master pods<span style="color:#f92672">]</span><span style="color:#75715e"># kubectl label -f 01-pods-xiuxian-single.yaml school=czu class=computer01</span>
+</span></span><span style="display:flex;"><span>pod/xiuxian-v1 labeled
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master pods<span style="color:#f92672">]</span><span style="color:#75715e"># kubectl label pods xiuxian-v1 address=ShaHe</span>
+</span></span><span style="display:flex;"><span>pod/xiuxian-v1 labeled
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master pods<span style="color:#f92672">]</span><span style="color:#75715e"># kubectl get pods -o wide --show-labels</span>
+</span></span><span style="display:flex;"><span>NAME         ...  LABELS
+</span></span><span style="display:flex;"><span>xiuxian-v1   ...  address<span style="color:#f92672">=</span>ShaHe,class<span style="color:#f92672">=</span>computer01,school<span style="color:#f92672">=</span>czu
+</span></span><span style="display:flex;"><span>xixi         ...  run<span style="color:#f92672">=</span>xixi
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="2-removing-labels-imperatively-append---to-the-label-name">2. Removing Labels Imperatively (append <code>-</code> to the label name)<a hidden class="anchor" aria-hidden="true" href="#2-removing-labels-imperatively-append---to-the-label-name">#</a></h3>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master pods<span style="color:#f92672">]</span><span style="color:#75715e"># kubectl label pods xiuxian-v1 address-</span>
+</span></span><span style="display:flex;"><span>pod/xiuxian-v1 unlabeled
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master pods<span style="color:#f92672">]</span><span style="color:#75715e"># kubectl label -f 01-pods-xiuxian-single.yaml school-</span>
+</span></span><span style="display:flex;"><span>pod/xiuxian-v1 unlabeled
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master pods<span style="color:#f92672">]</span><span style="color:#75715e"># kubectl get pods -o wide --show-labels</span>
+</span></span><span style="display:flex;"><span>NAME         ...  LABELS
+</span></span><span style="display:flex;"><span>xiuxian-v1   ...  class<span style="color:#f92672">=</span>computer01
+</span></span><span style="display:flex;"><span>xixi         ...  run<span style="color:#f92672">=</span>xixi
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="3-modifying-labels-imperatively">3. Modifying Labels Imperatively<a hidden class="anchor" aria-hidden="true" href="#3-modifying-labels-imperatively">#</a></h3>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master pods<span style="color:#f92672">]</span><span style="color:#75715e"># kubectl label -f 01-pods-xiuxian-single.yaml class=computer01 --overwrite</span>
+</span></span><span style="display:flex;"><span>pod/xiuxian-v1 labeled
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="4-imperative-labels-are-temporary">4. Imperative Labels Are Temporary<a hidden class="anchor" aria-hidden="true" href="#4-imperative-labels-are-temporary">#</a></h3>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># Delete and recreate -- labels are lost</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master pods<span style="color:#f92672">]</span><span style="color:#75715e"># kubectl delete -f 01-pods-xiuxian-single.yaml</span>
+</span></span><span style="display:flex;"><span>pod <span style="color:#e6db74">&#34;xiuxian-v1&#34;</span> deleted
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master pods<span style="color:#f92672">]</span><span style="color:#75715e"># kubectl apply -f 01-pods-xiuxian-single.yaml</span>
+</span></span><span style="display:flex;"><span>pod/xiuxian-v1 created
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master pods<span style="color:#f92672">]</span><span style="color:#75715e"># kubectl get pods -o wide --show-labels</span>
+</span></span><span style="display:flex;"><span>NAME         ...  LABELS
+</span></span><span style="display:flex;"><span>xiuxian-v1   ...  &lt;none&gt;        ← labels are gone!
+</span></span><span style="display:flex;"><span>xixi         ...  run<span style="color:#f92672">=</span>xixi
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="5-declarative-labels-declared-in-yaml-permanent">5. Declarative Labels (declared in YAML, permanent)<a hidden class="anchor" aria-hidden="true" href="#5-declarative-labels-declared-in-yaml-permanent">#</a></h3>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master pods<span style="color:#f92672">]</span><span style="color:#75715e"># cat 03-pods-labels.yaml</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">v1</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">kind</span>: <span style="color:#ae81ff">Pod</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">metadata</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">xiuxian-labels</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">labels</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">school</span>: <span style="color:#ae81ff">czu</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">class</span>: <span style="color:#ae81ff">computer01</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">spec</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">nodeName</span>: <span style="color:#ae81ff">worker01</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">containers</span>:
+</span></span><span style="display:flex;"><span>  - <span style="color:#f92672">image</span>: <span style="color:#ae81ff">harbor:443/dawn/apps:v2</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">name</span>: <span style="color:#ae81ff">xiuxian</span>
+</span></span><span style="display:flex;"><span>  - <span style="color:#f92672">image</span>: <span style="color:#ae81ff">harbor:443/dawn-linux/alpine:3.20.2</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">name</span>: <span style="color:#ae81ff">alpine</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">stdin</span>: <span style="color:#66d9ef">true</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master pods<span style="color:#f92672">]</span><span style="color:#75715e"># kubectl apply -f 03-pods-labels.yaml</span>
+</span></span><span style="display:flex;"><span>pod/xiuxian-labels created
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master pods<span style="color:#f92672">]</span><span style="color:#75715e"># kubectl get pods -o wide --show-labels</span>
+</span></span><span style="display:flex;"><span>NAME             READY   STATUS    ...  LABELS
+</span></span><span style="display:flex;"><span>xiuxian-labels   2/2     Running   ...  class<span style="color:#f92672">=</span>computer01,school<span style="color:#f92672">=</span>czu
+</span></span><span style="display:flex;"><span>xiuxian-v1       1/1     Running   ...  &lt;none&gt;
+</span></span><span style="display:flex;"><span>xixi             1/1     Running   ...  run<span style="color:#f92672">=</span>xixi
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="6-filtering-resources-by-label">6. Filtering Resources by Label<a hidden class="anchor" aria-hidden="true" href="#6-filtering-resources-by-label">#</a></h3>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># Pods that have the class label</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master pods<span style="color:#f92672">]</span><span style="color:#75715e"># kubectl get pods -l class --show-labels</span>
+</span></span><span style="display:flex;"><span>NAME             READY   STATUS    ...  LABELS
+</span></span><span style="display:flex;"><span>xiuxian-labels   2/2     Running   ...  class<span style="color:#f92672">=</span>computer01,school<span style="color:#f92672">=</span>czu
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Exact match on class=computer01</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master pods<span style="color:#f92672">]</span><span style="color:#75715e"># kubectl get pods -l class=computer01 --show-labels</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># run label</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master pods<span style="color:#f92672">]</span><span style="color:#75715e"># kubectl get pods -l run --show-labels</span>
+</span></span><span style="display:flex;"><span>NAME   READY   STATUS    ...  LABELS
+</span></span><span style="display:flex;"><span>xixi   1/1     Running   ...  run<span style="color:#f92672">=</span>xixi
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="7-deleting-by-label">7. Deleting by Label<a hidden class="anchor" aria-hidden="true" href="#7-deleting-by-label">#</a></h3>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master pods<span style="color:#f92672">]</span><span style="color:#75715e"># kubectl delete pods -l class</span>
+</span></span><span style="display:flex;"><span>pod <span style="color:#e6db74">&#34;xiuxian-labels&#34;</span> deleted
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master pods<span style="color:#f92672">]</span><span style="color:#75715e"># kubectl get pods --show-labels</span>
+</span></span><span style="display:flex;"><span>NAME         READY   STATUS    ...  LABELS
+</span></span><span style="display:flex;"><span>xiuxian-v1   1/1     Running   ...  &lt;none&gt;
+</span></span><span style="display:flex;"><span>xiuxian-v2   2/2     Running   ...  &lt;none&gt;
+</span></span><span style="display:flex;"><span>xixi         1/1     Running   ...  run<span style="color:#f92672">=</span>xixi
+</span></span></code></pre></td></tr></table>
+</div>
+</div><hr>
+<h2 id="7-inspecting-resource-details-with-kubectl-describe">7. Inspecting Resource Details with kubectl describe<a hidden class="anchor" aria-hidden="true" href="#7-inspecting-resource-details-with-kubectl-describe">#</a></h2>
+<h3 id="1-pod-details">1. Pod Details<a hidden class="anchor" aria-hidden="true" href="#1-pod-details">#</a></h3>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master pods<span style="color:#f92672">]</span><span style="color:#75715e"># kubectl describe pods xixi</span>
+</span></span><span style="display:flex;"><span>Name:         xixi
+</span></span><span style="display:flex;"><span>Namespace:    default
+</span></span><span style="display:flex;"><span>Node:         worker02/11.0.1.233
+</span></span><span style="display:flex;"><span>Labels:       run<span style="color:#f92672">=</span>xixi
+</span></span><span style="display:flex;"><span>Status:       Running
+</span></span><span style="display:flex;"><span>IP:           10.100.2.4
+</span></span><span style="display:flex;"><span>Containers:
+</span></span><span style="display:flex;"><span>  xixi:
+</span></span><span style="display:flex;"><span>    Image:          harbor:443/dawn/apps:v2
+</span></span><span style="display:flex;"><span>    State:          Running
+</span></span><span style="display:flex;"><span>    Ready:          True
+</span></span><span style="display:flex;"><span>    Restart Count:  <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>Events:
+</span></span><span style="display:flex;"><span>  Normal  Scheduled  90s   default-scheduler  Successfully assigned default/xixi to worker02
+</span></span><span style="display:flex;"><span>  Normal  Pulled     89s   kubelet            Container image <span style="color:#e6db74">&#34;harbor:443/dawn/apps:v2&#34;</span> already present on machine
+</span></span><span style="display:flex;"><span>  Normal  Created    89s   kubelet            Created container xixi
+</span></span><span style="display:flex;"><span>  Normal  Started    89s   kubelet            Started container xixi
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="2-node-details">2. Node Details<a hidden class="anchor" aria-hidden="true" href="#2-node-details">#</a></h3>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master pods<span style="color:#f92672">]</span><span style="color:#75715e"># kubectl describe nodes master</span>
+</span></span><span style="display:flex;"><span>Name:               master
+</span></span><span style="display:flex;"><span>Roles:              control-plane,master
+</span></span><span style="display:flex;"><span>Annotations:        flannel.alpha.coreos.com/public-ip: 11.0.1.231
+</span></span><span style="display:flex;"><span>                    flannel.alpha.coreos.com/backend-type: vxlan
+</span></span><span style="display:flex;"><span>Capacity:
+</span></span><span style="display:flex;"><span>  cpu:                <span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>  memory:             3969504Ki
+</span></span><span style="display:flex;"><span>  pods:               <span style="color:#ae81ff">110</span>
+</span></span><span style="display:flex;"><span>Conditions:
+</span></span><span style="display:flex;"><span>  NetworkUnavailable   False    FlannelIsUp    Flannel is running on this node
+</span></span><span style="display:flex;"><span>  MemoryPressure       False
+</span></span><span style="display:flex;"><span>  DiskPressure         False
+</span></span><span style="display:flex;"><span>  Ready                True
+</span></span><span style="display:flex;"><span>System Info:
+</span></span><span style="display:flex;"><span>  Kernel Version:     5.15.0-202-generic
+</span></span><span style="display:flex;"><span>  OS Image:           Ubuntu 22.04.3 LTS
+</span></span><span style="display:flex;"><span>  Container Runtime:  docker://27.0.3
+</span></span><span style="display:flex;"><span>  Kubelet Version:    v1.23.17
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="3-filtering-describe-by-label">3. Filtering describe by Label<a hidden class="anchor" aria-hidden="true" href="#3-filtering-describe-by-label">#</a></h3>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master pods<span style="color:#f92672">]</span><span style="color:#75715e"># kubectl describe pods -l run=xixi</span>
+</span></span><span style="display:flex;"><span>Name:         xixi
+</span></span><span style="display:flex;"><span>...
+</span></span></code></pre></td></tr></table>
+</div>
+</div><hr>
+<h2 id="8-hostnetwork-mode-pod-shares-the-host-network">8. hostNetwork Mode (Pod Shares the Host Network)<a hidden class="anchor" aria-hidden="true" href="#8-hostnetwork-mode-pod-shares-the-host-network">#</a></h2>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master pods<span style="color:#f92672">]</span><span style="color:#75715e"># cat 04-pods-hostNetwork.yaml</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">v1</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">kind</span>: <span style="color:#ae81ff">Pod</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">metadata</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">xiuxian-hostnetwork</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">labels</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">apps</span>: <span style="color:#ae81ff">xiuxian</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">school</span>: <span style="color:#ae81ff">czu</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">class</span>: <span style="color:#ae81ff">computer01</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">spec</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">hostNetwork</span>: <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">nodeName</span>: <span style="color:#ae81ff">worker01</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">containers</span>:
+</span></span><span style="display:flex;"><span>  - <span style="color:#f92672">image</span>: <span style="color:#ae81ff">harbor:443/dawn/apps:v1</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">name</span>: <span style="color:#ae81ff">xiuxian</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master pods<span style="color:#f92672">]</span><span style="color:#75715e"># kubectl apply -f 04-pods-hostNetwork.yaml</span>
+</span></span><span style="display:flex;"><span>pod/xiuxian-hostnetwork created
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master pods<span style="color:#f92672">]</span><span style="color:#75715e"># kubectl get pods -o wide --show-labels</span>
+</span></span><span style="display:flex;"><span>NAME                  READY   STATUS    RESTARTS   AGE   IP           NODE       LABELS
+</span></span><span style="display:flex;"><span>xiuxian-hostnetwork   1/1     Running   <span style="color:#ae81ff">0</span>          5s    11.0.1.232   worker01   apps<span style="color:#f92672">=</span>xiuxian,class<span style="color:#f92672">=</span>computer01,school<span style="color:#f92672">=</span>czu
+</span></span><span style="display:flex;"><span>xiuxian-v1            1/1     Running   <span style="color:#ae81ff">0</span>          62s   10.100.1.8   worker01   &lt;none&gt;
+</span></span><span style="display:flex;"><span>xiuxian-v2            2/2     Running   <span style="color:#ae81ff">0</span>          115s  10.100.1.7   worker01   &lt;none&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>With <code>hostNetwork: true</code> the Pod IP is <code>11.0.1.232</code> (the physical IP of host worker01), while a normal Pod gets <code>10.100.1.x</code> (the Pod network).</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># curling the host IP reaches nginx inside the hostNetwork Pod</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master pods<span style="color:#f92672">]</span><span style="color:#75715e"># curl -s 11.0.1.232 | head -5</span>
+</span></span><span style="display:flex;"><span>&lt;!DOCTYPE html&gt;
+</span></span><span style="display:flex;"><span>&lt;html&gt;
+</span></span><span style="display:flex;"><span>  &lt;head&gt;
+</span></span><span style="display:flex;"><span>    &lt;meta charset<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;utf-8&#34;</span>/&gt;
+</span></span><span style="display:flex;"><span>    &lt;title&gt;DAWN apps v1&lt;/title&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><hr>
+<h2 id="9-cleaning-up">9. Cleaning Up<a hidden class="anchor" aria-hidden="true" href="#9-cleaning-up">#</a></h2>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master pods<span style="color:#f92672">]</span><span style="color:#75715e"># kubectl delete pods --all</span>
+</span></span><span style="display:flex;"><span>pod <span style="color:#e6db74">&#34;xiuxian-hostnetwork&#34;</span> deleted
+</span></span><span style="display:flex;"><span>pod <span style="color:#e6db74">&#34;xiuxian-v1&#34;</span> deleted
+</span></span><span style="display:flex;"><span>pod <span style="color:#e6db74">&#34;xiuxian-v2&#34;</span> deleted
+</span></span><span style="display:flex;"><span>pod <span style="color:#e6db74">&#34;xixi&#34;</span> deleted
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master pods<span style="color:#f92672">]</span><span style="color:#75715e"># kubectl get pods</span>
+</span></span><span style="display:flex;"><span>No resources found in default namespace.
+</span></span></code></pre></td></tr></table>
+</div>
+</div>
+
+      </div><div id="giscus-container" style="margin-top: 2rem; padding-top: 1rem; border-top: 1px solid var(--border);">
+  <script src="https://giscus.app/client.js"
+          data-repo="LMDAWN1127/LMDAWN1127.github.io"
+          data-repo-id="R_kgDOTMWmvw"
+          data-category="Announcements"
+          data-category-id="DIC_kwDOTMWmv84DAd3g"
+          data-mapping="pathname"
+          data-strict="0"
+          data-reactions-enabled="1"
+          data-emit-metadata="0"
+          data-input-position="bottom"
+          data-theme="preferred_color_scheme"
+          data-lang="zh-CN"
+          crossorigin="anonymous"
+          async>
+  </script>
+</div>
+
+    </div>
+
+    <aside class="toc-sidebar" id="toc-sidebar">
+    <div class="toc-header">目录</div>
+    <nav class="toc-nav"><ul class="toc-list">
+            <li>
+                <a href="#k8s-core-resource-management-and-pod-basics-in-practice-manifests-multi-container-pods-labels-and-hostnetwork" class="toc-link" data-target="k8s-core-resource-management-and-pod-basics-in-practice-manifests-multi-container-pods-labels-and-hostnetwork">K8S Core Resource Management and Pod Basics in Practice: Manifests, Multi-Container Pods, Labels and hostNetwork</a><ul>
+            <li>
+                <a href="#1-overview-of-common-k8s-resources" class="toc-link" data-target="1-overview-of-common-k8s-resources">1. Overview of Common K8S Resources</a><ul>
+            <li>
+                <a href="#kubectl-api-resources" class="toc-link" data-target="kubectl-api-resources">kubectl api-resources</a></li></ul>
+            </li>
+            <li>
+                <a href="#2-routine-k8s-health-checks" class="toc-link" data-target="2-routine-k8s-health-checks">2. Routine K8S Health Checks</a><ul>
+            <li>
+                <a href="#1-check-the-worker-node-list" class="toc-link" data-target="1-check-the-worker-node-list">1. Check the Worker Node List</a></li>
+            <li>
+                <a href="#2-check-the-master-components" class="toc-link" data-target="2-check-the-master-components">2. Check the master Components</a></li>
+            <li>
+                <a href="#3-check-the-flannel-interface" class="toc-link" data-target="3-check-the-flannel-interface">3. Check the flannel Interface</a></li>
+            <li>
+                <a href="#4-check-the-cni0-and-flannel1-virtual-interfaces-on-each-node" class="toc-link" data-target="4-check-the-cni0-and-flannel1-virtual-interfaces-on-each-node">4. Check the cni0 and flannel.1 Virtual Interfaces on Each Node</a></li></ul>
+            </li>
+            <li>
+                <a href="#3-writing-pod-manifests-creating-and-deleting" class="toc-link" data-target="3-writing-pod-manifests-creating-and-deleting">3. Writing Pod Manifests, Creating and Deleting</a><ul>
+            <li>
+                <a href="#1-create-the-resource-directory" class="toc-link" data-target="1-create-the-resource-directory">1. Create the Resource Directory</a></li>
+            <li>
+                <a href="#2-write-a-single-container-pod-yaml" class="toc-link" data-target="2-write-a-single-container-pod-yaml">2. Write a Single-Container Pod YAML</a></li>
+            <li>
+                <a href="#3-kubectl-create-vs-apply-compared" class="toc-link" data-target="3-kubectl-create-vs-apply-compared">3. kubectl create vs apply Compared</a></li>
+            <li>
+                <a href="#4-list-pods" class="toc-link" data-target="4-list-pods">4. List Pods</a></li>
+            <li>
+                <a href="#5-delete-resources" class="toc-link" data-target="5-delete-resources">5. Delete Resources</a></li>
+            <li>
+                <a href="#6-recreate" class="toc-link" data-target="6-recreate">6. Recreate</a></li></ul>
+            </li>
+            <li>
+                <a href="#4-multi-container-pods-and-kubectl-exec" class="toc-link" data-target="4-multi-container-pods-and-kubectl-exec">4. Multi-Container Pods and kubectl exec</a><ul>
+            <li>
+                <a href="#1-preparing-the-alpine-image" class="toc-link" data-target="1-preparing-the-alpine-image">1. Preparing the alpine Image</a></li>
+            <li>
+                <a href="#2-multi-container-pod-yaml" class="toc-link" data-target="2-multi-container-pod-yaml">2. Multi-Container Pod YAML</a></li>
+            <li>
+                <a href="#3-running-commands-inside-a-container-with-kubectl-exec" class="toc-link" data-target="3-running-commands-inside-a-container-with-kubectl-exec">3. Running Commands Inside a Container with kubectl exec</a></li></ul>
+            </li>
+            <li>
+                <a href="#5-declarative-api-vs-imperative-api" class="toc-link" data-target="5-declarative-api-vs-imperative-api">5. Declarative API vs Imperative API</a><ul>
+            <li>
+                <a href="#creating-a-pod-imperatively" class="toc-link" data-target="creating-a-pod-imperatively">Creating a Pod Imperatively</a></li>
+            <li>
+                <a href="#declarative-vs-imperative-queries" class="toc-link" data-target="declarative-vs-imperative-queries">Declarative vs Imperative Queries</a></li></ul>
+            </li>
+            <li>
+                <a href="#6-label-management" class="toc-link" data-target="6-label-management">6. Label Management</a><ul>
+            <li>
+                <a href="#1-adding-labels-imperatively" class="toc-link" data-target="1-adding-labels-imperatively">1. Adding Labels Imperatively</a></li>
+            <li>
+                <a href="#2-removing-labels-imperatively-append---to-the-label-name" class="toc-link" data-target="2-removing-labels-imperatively-append---to-the-label-name">2. Removing Labels Imperatively (append - to the label name)</a></li>
+            <li>
+                <a href="#3-modifying-labels-imperatively" class="toc-link" data-target="3-modifying-labels-imperatively">3. Modifying Labels Imperatively</a></li>
+            <li>
+                <a href="#4-imperative-labels-are-temporary" class="toc-link" data-target="4-imperative-labels-are-temporary">4. Imperative Labels Are Temporary</a></li>
+            <li>
+                <a href="#5-declarative-labels-declared-in-yaml-permanent" class="toc-link" data-target="5-declarative-labels-declared-in-yaml-permanent">5. Declarative Labels (declared in YAML, permanent)</a></li>
+            <li>
+                <a href="#6-filtering-resources-by-label" class="toc-link" data-target="6-filtering-resources-by-label">6. Filtering Resources by Label</a></li>
+            <li>
+                <a href="#7-deleting-by-label" class="toc-link" data-target="7-deleting-by-label">7. Deleting by Label</a></li></ul>
+            </li>
+            <li>
+                <a href="#7-inspecting-resource-details-with-kubectl-describe" class="toc-link" data-target="7-inspecting-resource-details-with-kubectl-describe">7. Inspecting Resource Details with kubectl describe</a><ul>
+            <li>
+                <a href="#1-pod-details" class="toc-link" data-target="1-pod-details">1. Pod Details</a></li>
+            <li>
+                <a href="#2-node-details" class="toc-link" data-target="2-node-details">2. Node Details</a></li>
+            <li>
+                <a href="#3-filtering-describe-by-label" class="toc-link" data-target="3-filtering-describe-by-label">3. Filtering describe by Label</a></li></ul>
+            </li>
+            <li>
+                <a href="#8-hostnetwork-mode-pod-shares-the-host-network" class="toc-link" data-target="8-hostnetwork-mode-pod-shares-the-host-network">8. hostNetwork Mode (Pod Shares the Host Network)</a></li>
+            <li>
+                <a href="#9-cleaning-up" class="toc-link" data-target="9-cleaning-up">9. Cleaning Up</a>
+            </li>
+        </ul>
+        </li>
+        </ul>
+    </nav>
+</aside>
+
+  </div>
+</article>
+    </main>
+    
+<a href="#top" id="top-link" class="top-link hidden" aria-label="go to top" title="Go to Top (Alt + G)" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevrons-up">
+        <polyline points="17 11 12 6 7 11"></polyline>
+        <polyline points="17 18 12 13 7 18"></polyline>
+    </svg>
+</a>
+<script defer src="/js/custom.js"></script>
+<div id="algolia-search-modal" class="algolia-modal" style="display: none;">
+  <div class="algolia-modal-overlay"></div>
+  <div class="algolia-modal-content">
+    <div class="algolia-search-header">
+      <div class="algolia-search-input-wrapper">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <input type="text" id="algolia-search-input" placeholder="搜索文章..." autofocus>
+        <kbd class="algolia-esc">Esc</kbd>
+      </div>
+    </div>
+    <div id="algolia-search-results" class="algolia-search-results">
+      <div class="algolia-empty-state">
+        <p>输入关键词开始搜索</p>
+      </div>
+    </div>
+    <div class="algolia-search-footer">
+      <span class="algolia-footer-text">
+        <kbd>↑</kbd> <kbd>↓</kbd> 导航
+        <kbd>↵</kbd> 打开
+        <kbd>Esc</kbd> 关闭
+      </span>
+      <span class="algolia-footer-logo">
+        搜索由 <a href="https://www.algolia.com/" target="_blank" rel="noopener">Algolia</a> 提供
+      </span>
+    </div>
+  </div>
+</div>
+
+<script>
+(function() {
+  'use strict';
+
+  var APP_ID = 'Y0SCRI4LCW';
+  var SEARCH_KEY = '03dda5e44aec7e0dd93b6a3653250b1f';
+  var INDEX_NAME = 'lmdawn1127-blog';
+  var API_URL = 'https://' + APP_ID + '-dsn.algolia.net/1/indexes/' + INDEX_NAME + '/query';
+  var debounceTimer = null;
+  var selectedIndex = -1;
+
+   
+  function doSearch(query) {
+    if (!query || !query.trim()) {
+      showEmpty();
+      return;
+    }
+
+    var body = JSON.stringify({
+      query: query,
+      hitsPerPage: 10,
+      attributesToRetrieve: ['title', 'content', 'url'],
+      attributesToHighlight: ['title', 'content'],
+      highlightPreTag: '<mark class="algolia-highlight">',
+      highlightPostTag: '</mark>'
+    });
+
+    fetch(API_URL, {
+      method: 'POST',
+      headers: {
+        'X-Algolia-Application-Id': APP_ID,
+        'X-Algolia-API-Key': SEARCH_KEY,
+        'Content-Type': 'application/json'
+      },
+      body: body
+    })
+    .then(function(resp) {
+      if (!resp.ok) throw new Error('HTTP ' + resp.status);
+      return resp.json();
+    })
+    .then(function(data) {
+      renderResults(data.hits || [], query);
+    })
+    .catch(function(err) {
+      console.error('Algolia search error:', err);
+      showError(err.message || '未知错误');
+    });
+  }
+
+   
+  function showEmpty() {
+    document.getElementById('algolia-search-results').innerHTML =
+      '<div class="algolia-empty-state"><p>输入关键词开始搜索</p></div>';
+  }
+
+  function showError(detail) {
+    var msg = '搜索出错，请稍后再试';
+    if (detail) msg += '<br><small style="color:#888">错误详情: ' + escapeHtml(detail) + '</small>';
+    document.getElementById('algolia-search-results').innerHTML =
+      '<div class="algolia-empty-state"><p>' + msg + '</p></div>';
+  }
+
+  function showNoResults(query) {
+    document.getElementById('algolia-search-results').innerHTML =
+      '<div class="algolia-empty-state"><p>未找到与「' + escapeHtml(query) + '」相关的结果</p></div>';
+  }
+
+  function escapeHtml(s) {
+    var d = document.createElement('div');
+    d.appendChild(document.createTextNode(s));
+    return d.innerHTML;
+  }
+
+  function getHL(hit, attr) {
+    if (hit._highlightResult && hit._highlightResult[attr]) return hit._highlightResult[attr].value;
+    return hit[attr] || '';
+  }
+
+  function trunc(s, n) {
+    if (!s) return '';
+    s = s.replace(/<[^>]+>/g, '');
+    return s.length > n ? s.substring(0, n) + '…' : s;
+  }
+
+  function renderResults(hits, query) {
+    var box = document.getElementById('algolia-search-results');
+    if (!hits.length) { showNoResults(query); return; }
+
+    var h = '<div class="algolia-results-count">' + hits.length + ' 个结果</div>';
+    hits.forEach(function(hit, i) {
+      var title = getHL(hit, 'title') || '无标题';
+      var content = getHL(hit, 'content');
+      var url = hit.url || '#';
+
+      h += '<a class="algolia-hit" href="' + url + '" data-index="' + i + '">';
+      h += '<div class="algolia-hit-title">' + title + '</div>';
+      h += '<div class="algolia-hit-content">' + trunc(content, 150) + '</div>';
+
+      h += '</a>';
+    });
+    box.innerHTML = h;
+
+    box.querySelectorAll('.algolia-hit').forEach(function(el) {
+      el.addEventListener('click', closeAlgoliaSearch);
+    });
+  }
+
+   
+  function onInput(e) {
+    var q = e.target.value;
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(function() { doSearch(q); }, 200);
+  }
+
+  function onKeydown(e) {
+    var hits = document.querySelectorAll('.algolia-hit');
+    if (!hits.length) return;
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      selectedIndex = Math.min(selectedIndex + 1, hits.length - 1);
+      sel(hits);
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      selectedIndex = Math.max(selectedIndex - 1, 0);
+      sel(hits);
+    } else if (e.key === 'Enter' && selectedIndex >= 0) {
+      e.preventDefault();
+      window.location.href = hits[selectedIndex].getAttribute('href');
+      closeAlgoliaSearch();
+    }
+  }
+
+  function sel(hits) {
+    hits.forEach(function(el, i) {
+      if (i === selectedIndex) { el.classList.add('selected'); el.scrollIntoView({ block: 'nearest' }); }
+      else el.classList.remove('selected');
+    });
+  }
+
+   
+  document.addEventListener('DOMContentLoaded', function() {
+    var input = document.getElementById('algolia-search-input');
+    if (input) {
+      input.addEventListener('input', onInput);
+      input.addEventListener('keydown', onKeydown);
+    }
+  });
+
+  window.openAlgoliaSearch = function() {
+    var modal = document.getElementById('algolia-search-modal');
+    modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+    setTimeout(function() {
+      var input = document.getElementById('algolia-search-input');
+      if (input) { input.value = ''; input.focus(); showEmpty(); }
+    }, 100);
+  };
+
+  window.closeAlgoliaSearch = function() {
+    document.getElementById('algolia-search-modal').style.display = 'none';
+    document.body.style.overflow = '';
+    selectedIndex = -1;
+  };
+})();
+</script>
+
+<style>
+  .algolia-modal{position:fixed;top:0;left:0;width:100%;height:100%;z-index:1000;display:flex;align-items:flex-start;justify-content:center;padding-top:10vh}
+  .algolia-modal-overlay{position:absolute;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.6);backdrop-filter:blur(4px)}
+  .algolia-modal-content{position:relative;width:90%;max-width:600px;background:#1a1a1a;border-radius:12px;box-shadow:0 20px 60px rgba(0,0,0,.5);overflow:hidden;border:1px solid #333}
+  .algolia-search-header{padding:16px;border-bottom:1px solid #333}
+  .algolia-search-input-wrapper{display:flex;align-items:center;gap:12px;background:#2a2a2a;border-radius:8px;padding:12px 16px;border:1px solid #444}
+  .algolia-search-input-wrapper svg{color:#666;flex-shrink:0}
+  #algolia-search-input{flex:1;background:transparent;border:none;outline:none;color:#fff;font-size:16px;font-family:inherit}
+  #algolia-search-input::placeholder{color:#666}
+  .algolia-esc{background:#444;color:#999;padding:2px 6px;border-radius:4px;font-size:11px;font-family:inherit}
+  .algolia-search-results{max-height:400px;overflow-y:auto;padding:8px}
+  .algolia-empty-state{padding:40px 20px;text-align:center;color:#666}
+  .algolia-results-count{padding:8px 12px;font-size:12px;color:#666}
+  .algolia-search-footer{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;border-top:1px solid #333;background:#222;font-size:12px;color:#666}
+  .algolia-footer-text kbd{background:#444;color:#999;padding:2px 4px;border-radius:3px;font-size:10px;margin:0 2px}
+  .algolia-footer-logo a{color:#5EEAD4;text-decoration:none}
+  .algolia-footer-logo a:hover{text-decoration:underline}
+  .algolia-hit{display:block;padding:12px;border-radius:6px;text-decoration:none;color:#fff;transition:background .2s}
+  .algolia-hit:hover,.algolia-hit.selected{background:#2a2a2a}
+  .algolia-hit-title{font-weight:600;color:#5EEAD4;margin-bottom:4px;font-size:15px}
+  .algolia-hit-title mark,.algolia-highlight{background:rgba(94,234,212,.25);color:#5EEAD4;padding:0 2px;border-radius:2px}
+  .algolia-hit-content{font-size:13px;color:#999;line-height:1.5}
+  .algolia-hit-content mark,.algolia-hit-content .algolia-highlight{background:rgba(94,234,212,.2);color:#ccc;padding:0 2px;border-radius:2px}
+  .algolia-hit-meta{display:flex;align-items:center;gap:10px;margin-top:8px}
+  .algolia-hit-date{font-size:12px;color:#666}
+  .algolia-hit-tags{display:flex;gap:6px}
+  .algolia-hit-tag{background:#333;color:#999;padding:2px 8px;border-radius:4px;font-size:11px}
+</style>
+<script>
+  
+  document.addEventListener('keydown', function(e) {
+    
+    if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+      e.preventDefault();
+      if (typeof openAlgoliaSearch === 'function') openAlgoliaSearch();
+    }
+    
+    if (e.key === 'Escape') {
+      if (typeof closeAlgoliaSearch === 'function') closeAlgoliaSearch();
+    }
+    
+    if (e.altKey && e.key === '/') {
+      e.preventDefault();
+      if (typeof openAlgoliaSearch === 'function') openAlgoliaSearch();
+    }
+  });
+
+  
+  document.addEventListener('DOMContentLoaded', function() {
+    var modal = document.getElementById('algolia-search-modal');
+    if (modal) {
+      var overlay = modal.querySelector('.algolia-modal-overlay');
+      if (overlay) {
+        overlay.addEventListener('click', function() {
+          if (typeof closeAlgoliaSearch === 'function') closeAlgoliaSearch();
+        });
+      }
+    }
+  });
+
+  
+  
+  document.addEventListener('DOMContentLoaded', function() {
+    if (document.getElementById('algolia-search-btn')) return;
+    var btn = document.createElement('button');
+    btn.id = 'algolia-search-btn';
+    btn.className = 'theme-toggle search-toggle';
+    btn.type = 'button';
+    btn.title = '搜索 (Ctrl+K)';
+    btn.setAttribute('aria-label', '搜索');
+    btn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>';
+    btn.addEventListener('click', function() {
+      if (typeof openAlgoliaSearch === 'function') openAlgoliaSearch();
+    });
+    var target = document.querySelector('.logo-switches') || document.querySelector('.header-nav');
+    if (target) target.appendChild(btn);
+  });
+</script><script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var cur = (document.documentElement.lang || 'zh').toLowerCase();
+    
+    
+    
+    var rawPath = location.pathname.replace(/\/+$/, '');
+    var pm = rawPath.match(/^\/(en|ko|ja)(?:\/(.*))?$/);
+    var rest = pm ? (pm[2] ? '/' + pm[2] : '') : rawPath; 
+    function langHref(code) {
+      var base = (code === 'zh') ? '' : '/' + code;
+      if (rest === '' || rest === '/') {
+        return base === '' ? '/' : base + '/';
+      }
+      return base + rest + '/';
+    }
+
+    var langs = [
+      { code: 'zh', label: '中文' },
+      { code: 'en', label: 'English' },
+      { code: 'ko', label: '한국어' },
+      { code: 'ja', label: '日本語' }
+    ];
+    var wrap = document.querySelector('.logo-switches') || document.querySelector('.header-nav');
+    if (!wrap || document.getElementById('lang-dropdown')) return;
+
+    var current = langs.find(function(l) { return l.code === cur; }) || langs[0];
+
+    var dd = document.createElement('div');
+    dd.className = 'lang-dropdown';
+    dd.id = 'lang-dropdown';
+
+    var toggle = document.createElement('button');
+    toggle.type = 'button';
+    toggle.className = 'lang-dropdown-toggle';
+    toggle.setAttribute('aria-label', '选择语言');
+    toggle.innerHTML = '<span class="lang-current">' + current.label + '</span><span class="lang-caret">▾</span>';
+
+    var menu = document.createElement('ul');
+    menu.className = 'lang-dropdown-menu';
+    langs.forEach(function(l) {
+      var li = document.createElement('li');
+      if (l.code === cur) li.className = 'active';
+      var a = document.createElement('a');
+      a.href = langHref(l.code);
+      a.textContent = l.label;
+      li.appendChild(a);
+      menu.appendChild(li);
+    });
+
+    dd.appendChild(toggle);
+    dd.appendChild(menu);
+    wrap.appendChild(dd);
+
+    toggle.addEventListener('click', function(e) {
+      e.stopPropagation();
+      dd.classList.toggle('open');
+    });
+    document.addEventListener('click', function(e) {
+      if (!dd.contains(e.target)) dd.classList.remove('open');
+    });
+  });
+</script>
+
+
+<script>
+    let menu = document.getElementById('menu');
+    if (menu) {
+        const scrollPosition = localStorage.getItem("menu-scroll-position");
+        if (scrollPosition) {
+            menu.scrollLeft = parseInt(scrollPosition, 10);
+        }
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+</script>
+<script>
+    var toplink = document.getElementById("top-link");
+    window.onscroll = function () {
+        const scrollThreshold = window.innerHeight;
+        if (document.body.scrollTop > scrollThreshold || document.documentElement.scrollTop > scrollThreshold) {
+            toplink.classList.remove("hidden");
+        } else {
+            toplink.classList.add("hidden");
+        }
+    };
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        const html = document.querySelector("html");
+        if (html.dataset.theme === "dark") {
+            html.dataset.theme = 'light';
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            html.dataset.theme = 'dark';
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>

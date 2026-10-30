@@ -154,6 +154,30 @@
 <article class="post-entry"> 
   <header class="entry-header">
     <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/posts/docker-image-migration-tag/">Docker 镜像迁移实战：save/load 离线传输与打标签</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>Docker 镜像迁移实战：save/load 离线传输与打标签 docker的镜像本地迁移及打标签 导出镜像（docker02） 1 2 3 4 5 6 # docker save两种写法等价：-o 文件名 与 &gt; 重定向 root@docker02:~# docker save -o /tmp/nginx-1304.tar uhub.service.ucloud.cn/dawn/nginx:1.30.4 root@docker02:~# ls -lh /tmp/nginx-1304.tar -rw------- 1 root root 158M Oct 23 06:20 nginx-1304.tar root@docker02:~# md5sum /tmp/nginx-1304.tar 43e327d0a216069d3931a2c498fe2e3f nginx-1304.tar 本地迁移（docker02 → docker01） 先配置 SSH 密钥互信
+1 2 root@docker02:~# ssh-keygen root@docker02:~# ssh-copy-id 11.0.1.121 docker02 上 scp 迁移
+...</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-23">
+  2026年10月23日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 2 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to Docker 镜像迁移实战：save/load 离线传输与打标签" href="https://LMDAWN1127.github.io/posts/docker-image-migration-tag/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
       <a href="https://LMDAWN1127.github.io/posts/docker-port-mapping-principle/">Docker 端口映射原理：从 veth 网卡到 iptables DNAT</a>
     </h2>
   </header>
@@ -249,28 +273,6 @@ https://docs.docker.com/engine/install/ubuntu/
 </span>
 </footer>
   <a class="entry-link" aria-label="post link to Docker 安装实战：二进制部署与一键脚本部署" href="https://LMDAWN1127.github.io/posts/docker-binary-script-install/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/posts/elfk-kafka-pipeline/">ELFK 实战：Filebeat 经 Kafka 到 Logstash 再到 ES 的数据管道</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>打通 ELFK 与 Kafka 的数据管道：Filebeat tcp 输入经 output.kafka 写入集群，Logstash 以 kafka input &#43; json filter 消费并按天写入 ES 索引，Kibana 端到端验证。</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-22">
-  2026年10月22日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 1 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to ELFK 实战：Filebeat 经 Kafka 到 Logstash 再到 ES 的数据管道" href="https://LMDAWN1127.github.io/posts/elfk-kafka-pipeline/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">
