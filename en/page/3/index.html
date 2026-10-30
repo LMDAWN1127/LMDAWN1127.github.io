@@ -154,6 +154,72 @@
 <article class="post-entry"> 
   <header class="entry-header">
     <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/en/posts/docker-scratch-custom-image/">Building a Custom Image Without a Base Image: Using scratch</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>scratch is a reserved name in Docker; when used as the base image in FROM it means no image is referenced, building a minimal image that contains only its own rootfs from scratch. This hands-on walkthrough downloads a third-party busybox root filesystem, injects a custom /etc/os-release, repackages it, writes a FROM scratch Dockerfile and docker-compose, builds and pushes the image to a Harbor registry, then pulls it from another host, starts the container, and verifies os-release and networking.</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-29">
+  2026年10月29日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 3 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to Building a Custom Image Without a Base Image: Using scratch" href="https://LMDAWN1127.github.io/en/posts/docker-scratch-custom-image/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/en/posts/docker-harbor-private-registry/">Hands-on with Private Image Registries: docker registry and VMware Harbor</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>Build two private image registries from scratch: first use the lightweight docker registry to complete image deployment, push, pull, and delete (including manually deleting metadata &#43; GC to reclaim storage); then deploy the enterprise-grade VMware Harbor (HTTP mode), demonstrating hosts resolution, insecure-registries configuration, creating a project, three docker login methods, and the full image push/pull/delete flow; finally summarize the differences between registry and Harbor in size, deployment, WebUI, project management, deletion, and use cases with a comparison table.</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-29">
+  2026年10月29日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 8 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to Hands-on with Private Image Registries: docker registry and VMware Harbor" href="https://LMDAWN1127.github.io/en/posts/docker-harbor-private-registry/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/en/posts/docker-compose-multi-service/">Building Multi-Service Images and Starting Containers with docker-compose</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>Through a docker-compose case, demonstrate how to use a single YAML file to orchestrate image builds and container management for two HTML5 game services (doudizhu and motuo): write the compose file (build context &#43; each service’s Dockerfile) together with nginx virtual hosts and a startup script, use docker-compose build to compile both images in one go, up -d to start in the background, ps/stop/start/restart/down to manage the lifecycle, then configure a fixed port with restart: always and a random port and verify access and the restart policy, and finally provide a reference table of common commands.</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-29">
+  2026年10月29日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 9 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to Building Multi-Service Images and Starting Containers with docker-compose" href="https://LMDAWN1127.github.io/en/posts/docker-compose-multi-service/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
       <a href="https://LMDAWN1127.github.io/en/posts/docker-dockerfile-multistage-build/">Hands-on with Multi-Stage Dockerfile Builds</a>
     </h2>
   </header>
@@ -193,72 +259,6 @@
 </span>
 </footer>
   <a class="entry-link" aria-label="post link to Hands-on with the Dockerfile ONBUILD Instruction" href="https://LMDAWN1127.github.io/en/posts/docker-dockerfile-onbuild-instruction/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/en/posts/docker-dockerfile-user-instruction/">Dockerfile: Running Containers as a Non-Root User (USER Instruction)</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>Use the Space Huggers game to demonstrate how to run a container as the non-root user dawn (uid 2025) with the Dockerfile USER instruction: first understand the directory/file ownership adjustments needed for nginx to run as a non-root user, then write the Dockerfile (chown system directories before switching to USER dawn), the nginx config (user dawn), and the startup script (nginx in background &#43; tail to block), build the image and verify the process user, container configuration, access and health status, and finally compare the permission boundary where a non-root user can start nginx but cannot start sshd.</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-29">
-  2026年10月29日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 6 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to Dockerfile: Running Containers as a Non-Root User (USER Instruction)" href="https://LMDAWN1127.github.io/en/posts/docker-dockerfile-user-instruction/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/en/posts/docker-dockerfile-core-instructions/">Dockerfile Core Instructions in Practice: WORKDIR/EXPOSE/VOLUME, ENV/ARG, HEALTHCHECK, ENTRYPOINT</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>Use 4 web games to demonstrate 7 core Dockerfile instructions in full: the working directory, port exposure and persistence effects of WORKDIR/EXPOSE/VOLUME; the difference between ENV and ARG at build time vs. run time and how to override them; the HEALTHCHECK health-status transitions; and the non-overridable/overridable distinction between ENTRYPOINT and CMD plus the argument-passing mechanism.</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-28">
-  2026年10月28日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 9 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to Dockerfile Core Instructions in Practice: WORKDIR/EXPOSE/VOLUME, ENV/ARG, HEALTHCHECK, ENTRYPOINT" href="https://LMDAWN1127.github.io/en/posts/docker-dockerfile-core-instructions/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/en/posts/docker-image-tag-maintainer-label-metadata/">Docker in Practice: Tag Images with MAINTAINER and LABEL, and Inspect Metadata</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>Using a real dawn-games image, demonstrate writing author/school/email metadata into the Dockerfile with the deprecated MAINTAINER and the officially recommended LABEL, then reading .Author and .Config.Labels back with docker image inspect -f to verify, and starting the container with –network host to access over the host network. Includes a screenshot.</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-28">
-  2026年10月28日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 3 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to Docker in Practice: Tag Images with MAINTAINER and LABEL, and Inspect Metadata" href="https://LMDAWN1127.github.io/en/posts/docker-image-tag-maintainer-label-metadata/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">

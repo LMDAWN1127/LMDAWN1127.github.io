@@ -163,6 +163,72 @@
 <article class="post-entry tag-entry"> 
   <header class="entry-header">
     <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/ja/posts/k8s-rc-svc-replicas-service-discovery/">K8S レプリカ制御とサービスディスカバリ実践：RC、ClusterIP と NodePort</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>本記事は K8S のレプリカ制御とサービスディスカバリを実践する。ReplicationController でレプリカ 3 を宣言し、自己修復（Pod を削除すると自動で補われる）と、RC 削除時に管理下の Pod が連鎖的に削除されることを検証する。続いて ClusterIP タイプの Service で、2 ノードに分散した 3 つの Pod に単一の固定エントリを与え、各 Pod の nginx に自分の Pod 名を返させて 5 回連続リクエストすることでラウンドロビンのロードバランスを確認する。最後に NodePort タイプで全ノードの 30080 ポートに公開し、クラスタ外からアクセスして同様にロードバランスされることを確かめる。</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-30">
+  2026年10月30日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 3 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to K8S レプリカ制御とサービスディスカバリ実践：RC、ClusterIP と NodePort" href="https://LMDAWN1127.github.io/ja/posts/k8s-rc-svc-replicas-service-discovery/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/ja/posts/k8s-troubleshooting-explain-cp-logs/">K8S トラブルシューティング三種の神器実践：kubectl explain、cp、logs</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>本記事は K8S の日常トラブルシューティングで最もよく使う 3 つのコマンドをまとめた。まず実行すると即座に終了する troubleshooting 用テストイメージをビルドし、次に kubectl explain で API Server の OpenAPI Schema を直接読んでフィールドの所属を調べる（ネットワーク不要）。続いて Pod 定義の command &#43; args でイメージのデフォルト CMD を上書きし、一度きりで終了するコンテナを常駐させ exec で調査できるようにする。最後に kubectl cp でホストと Pod 間を双方向にファイルコピーし（設定を入れ、ログを出す）、Pod 異常時に最初に見るべき kubectl logs —— CrashLoopBackOff はこれで特定する。</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-30">
+  2026年10月30日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 2 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to K8S トラブルシューティング三種の神器実践：kubectl explain、cp、logs" href="https://LMDAWN1127.github.io/ja/posts/k8s-troubleshooting-explain-cp-logs/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/ja/posts/k8s-volumes-emptydir-hostpath-nfs/">K8S ストレージボリューム実践：emptyDir、hostPath と NFS</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>本記事は K8S の 3 種類のボリュームを実践する。emptyDir は Pod のライフサイクルに紐づき、マルチコンテナ Pod で同じボリュームを各コンテナにマウントすると両方から同じデータが見えることを検証する。hostPath はホストのディレクトリを直接 Pod にマウントする。Elasticsearch 7.17.16 を使い、Pod を削除して再作成してもインデックスが残ることで単一ノードの永続化を証明する。NFS はノード間共有を解決する。master で nfs-kernel-server を構成し、3 ノードに nfs-common を入れ、MySQL 8.3.0 をデプロイしてテストデータを書き込み、Pod を worker01 から worker02 へ漂移させてもデータが完全に残ることを確認する。最後に選択基準をまとめる。Pod 内の共有は emptyDir、単一ノードの永続化は hostPath、ノード間の漂移が必要なら NFS（または分散ストレージ）。</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-30">
+  2026年10月30日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 4 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to K8S ストレージボリューム実践：emptyDir、hostPath と NFS" href="https://LMDAWN1127.github.io/ja/posts/k8s-volumes-emptydir-hostpath-nfs/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
       <a href="https://LMDAWN1127.github.io/ja/posts/k8s-core-resources-pod-basics/">K8S コアリソース管理と Pod 基礎実践：マニフェスト、マルチコンテナ Pod、ラベルと hostNetwork</a>
     </h2>
   </header>
@@ -203,28 +269,12 @@
 </footer>
   <a class="entry-link" aria-label="post link to K8S kubeadm クラスタ構築実践：自己構築 CA の Harbor と Flannel CNI" href="https://LMDAWN1127.github.io/ja/posts/k8s-kubeadm-cluster-harbor-ca/"></a>
 </article>
-
-<article class="post-entry tag-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/ja/posts/k8s-v1.30-manual-deploy/">Kubernetes v1.30 クラスタを手動デプロイする（kubeadm 方式）</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>kubeadm を用いて Kubernetes v1.30 クラスタを手動でデプロイする手順を解説します。ファイアウォール/SELinux、スワップ、カーネルモジュール、Containerd、kubeadm init、ワーカー参加、Calico、IPVS 追加まで網羅。</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-08-07">
-  2026年8月7日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 4 分钟
-</span>
+<footer class="page-footer">
+  <nav class="pagination">
+    <a class="next" href="https://LMDAWN1127.github.io/ja/tags/kubernetes/page/2/">次へ&nbsp;&nbsp;»
+    </a>
+  </nav>
 </footer>
-  <a class="entry-link" aria-label="post link to Kubernetes v1.30 クラスタを手動デプロイする（kubeadm 方式）" href="https://LMDAWN1127.github.io/ja/posts/k8s-v1.30-manual-deploy/"></a>
-</article>
     </main>
     
 <a href="#top" id="top-link" class="top-link hidden" aria-label="go to top" title="Go to Top (Alt + G)" accesskey="g">

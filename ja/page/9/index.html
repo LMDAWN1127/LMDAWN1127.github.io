@@ -154,6 +154,72 @@
 <article class="post-entry"> 
   <header class="entry-header">
     <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/ja/posts/docker-port-mapping-principle/">Docker 実戦：ポートマッピングの仕組み - veth NIC から iptables DNAT まで</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>Docker がコンテナポートをホストにどうマッピングするかを観察します。veth NIC や docker0 ブリッジから、iptables の DNAT ルール、そして外部アクセスを可能にする net.ipv4.ip_forward カーネルスイッチまで。</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-23">
+  2026年10月23日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 4 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to Docker 実戦：ポートマッピングの仕組み - veth NIC から iptables DNAT まで" href="https://LMDAWN1127.github.io/ja/posts/docker-port-mapping-principle/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/ja/posts/docker-common-commands-exec/">Docker 実戦：コンテナのよく使うコマンドと exec 操作</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>日常的によく使うコンテナコマンド（一覧/削除/名前変更、-f/–since/–until でのログ追跡、docker cp でのファイルコピー）と、docker exec を使った実行中コンテナ内でのコマンド実行を解説。対象コマンドがイメージに存在する必要があるという注意点も。</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-23">
+  2026年10月23日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 2 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to Docker 実戦：コンテナのよく使うコマンドと exec 操作" href="https://LMDAWN1127.github.io/ja/posts/docker-common-commands-exec/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/ja/posts/docker-binary-script-install/">Docker 実戦：バイナリでの導入とワンクリックスクリプト導入</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>Docker を 3 つの方法で導入します。apt パッケージマネージャー、公式の静的バイナリ (ダウンロード/展開/コピー/起動)、および自动化スクリプト (導入とアンインストール)。バイナリ導入のきれいな削除方法も解説します。</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-23">
+  2026年10月23日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 2 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to Docker 実戦：バイナリでの導入とワンクリックスクリプト導入" href="https://LMDAWN1127.github.io/ja/posts/docker-binary-script-install/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
       <a href="https://LMDAWN1127.github.io/ja/posts/openstack-core-architecture-deployment/">OpenStack クラウド OS：コアアーキテクチャと自動化デプロイ</a>
     </h2>
   </header>
@@ -193,72 +259,6 @@
 </span>
 </footer>
   <a class="entry-link" aria-label="post link to OpenStack Cinder ブロックストレージ詳細解説：ローカル LVM &#43; iSCSI ボリュームと NFS バックエンド連携" href="https://LMDAWN1127.github.io/ja/posts/openstack-cinder-block-storage/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/ja/posts/openstack-keystone-glance-nova/">OpenStack 中核サービス詳細解説：Keystone 認証・Nova コンピュート・Glance/Swift イメージストレージ</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>OpenStack の 3 大中核サービスを整理：Keystone のマルチドメイン対応・service/endpoint 登録・ポリシーファイルによる権限制御、Nova の各モジュール（api/scheduler/conductor/compute/novncproxy）とメッセージキュー・差分ディスク、そして Glance イメージサービスの Swift オブジェクトストレージ化。</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-05">
-  2026年10月5日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 5 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to OpenStack 中核サービス詳細解説：Keystone 認証・Nova コンピュート・Glance/Swift イメージストレージ" href="https://LMDAWN1127.github.io/ja/posts/openstack-keystone-glance-nova/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/ja/posts/openstack-provision-cloud-server/">OpenStack でのクラウドサーバー提供</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>GUI から CLI まで、OpenStack でのクラウドサーバー提供の全体フローを完全解説：テナント・ユーザー・イメージ・フレーバー・ネットワーク・ルーター・セキュリティグループ・キーペア・浮动 IP の作成と削除、および iptables SNAT/DNAT と Nova cell_v2 discover_hosts のトラブルシューティング。</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-04">
-  2026年10月4日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 6 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to OpenStack でのクラウドサーバー提供" href="https://LMDAWN1127.github.io/ja/posts/openstack-provision-cloud-server/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/ja/posts/systemd-mysql-multiversion/">systemd サービス管理と MySQL マルチバージョン導入</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>systemd Unit 管理と MySQL 5.6/5.7 のマルチバージョン・マルチインスタンス導入実戦：2 種類の本番デーモン設定、アーカイブ入手、初期化、インスタンス別設定ファイル作成、および起動/停止と 3 サービス状態確認。</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-03">
-  2026年10月3日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 3 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to systemd サービス管理と MySQL マルチバージョン導入" href="https://LMDAWN1127.github.io/ja/posts/systemd-mysql-multiversion/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">

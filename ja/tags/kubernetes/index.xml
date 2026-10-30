@@ -11,8 +11,29 @@
     </image>
     <generator>Hugo</generator>
     <language>ja</language>
-    <lastBuildDate>Fri, 30 Oct 2026 16:29:00 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 30 Oct 2026 20:04:00 +0800</lastBuildDate>
     <atom:link href="https://LMDAWN1127.github.io/ja/tags/kubernetes/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>K8S レプリカ制御とサービスディスカバリ実践：RC、ClusterIP と NodePort</title>
+      <link>https://LMDAWN1127.github.io/ja/posts/k8s-rc-svc-replicas-service-discovery/</link>
+      <pubDate>Fri, 30 Oct 2026 20:04:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/ja/posts/k8s-rc-svc-replicas-service-discovery/</guid>
+      <description>本記事は K8S のレプリカ制御とサービスディスカバリを実践する。ReplicationController でレプリカ 3 を宣言し、自己修復（Pod を削除すると自動で補われる）と、RC 削除時に管理下の Pod が連鎖的に削除されることを検証する。続いて ClusterIP タイプの Service で、2 ノードに分散した 3 つの Pod に単一の固定エントリを与え、各 Pod の nginx に自分の Pod 名を返させて 5 回連続リクエストすることでラウンドロビンのロードバランスを確認する。最後に NodePort タイプで全ノードの 30080 ポートに公開し、クラスタ外からアクセスして同様にロードバランスされることを確かめる。</description>
+    </item>
+    <item>
+      <title>K8S トラブルシューティング三種の神器実践：kubectl explain、cp、logs</title>
+      <link>https://LMDAWN1127.github.io/ja/posts/k8s-troubleshooting-explain-cp-logs/</link>
+      <pubDate>Fri, 30 Oct 2026 19:44:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/ja/posts/k8s-troubleshooting-explain-cp-logs/</guid>
+      <description>本記事は K8S の日常トラブルシューティングで最もよく使う 3 つのコマンドをまとめた。まず実行すると即座に終了する troubleshooting 用テストイメージをビルドし、次に kubectl explain で API Server の OpenAPI Schema を直接読んでフィールドの所属を調べる（ネットワーク不要）。続いて Pod 定義の command + args でイメージのデフォルト CMD を上書きし、一度きりで終了するコンテナを常駐させ exec で調査できるようにする。最後に kubectl cp でホストと Pod 間を双方向にファイルコピーし（設定を入れ、ログを出す）、Pod 異常時に最初に見るべき kubectl logs —— CrashLoopBackOff はこれで特定する。</description>
+    </item>
+    <item>
+      <title>K8S ストレージボリューム実践：emptyDir、hostPath と NFS</title>
+      <link>https://LMDAWN1127.github.io/ja/posts/k8s-volumes-emptydir-hostpath-nfs/</link>
+      <pubDate>Fri, 30 Oct 2026 19:28:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/ja/posts/k8s-volumes-emptydir-hostpath-nfs/</guid>
+      <description>本記事は K8S の 3 種類のボリュームを実践する。emptyDir は Pod のライフサイクルに紐づき、マルチコンテナ Pod で同じボリュームを各コンテナにマウントすると両方から同じデータが見えることを検証する。hostPath はホストのディレクトリを直接 Pod にマウントする。Elasticsearch 7.17.16 を使い、Pod を削除して再作成してもインデックスが残ることで単一ノードの永続化を証明する。NFS はノード間共有を解決する。master で nfs-kernel-server を構成し、3 ノードに nfs-common を入れ、MySQL 8.3.0 をデプロイしてテストデータを書き込み、Pod を worker01 から worker02 へ漂移させてもデータが完全に残ることを確認する。最後に選択基準をまとめる。Pod 内の共有は emptyDir、単一ノードの永続化は hostPath、ノード間の漂移が必要なら NFS（または分散ストレージ）。</description>
+    </item>
     <item>
       <title>K8S コアリソース管理と Pod 基礎実践：マニフェスト、マルチコンテナ Pod、ラベルと hostNetwork</title>
       <link>https://LMDAWN1127.github.io/ja/posts/k8s-core-resources-pod-basics/</link>

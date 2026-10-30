@@ -163,6 +163,72 @@
 <article class="post-entry tag-entry"> 
   <header class="entry-header">
     <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/en/posts/k8s-rc-svc-replicas-service-discovery/">K8S Replica Control and Service Discovery in Practice: RC, ClusterIP and NodePort</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>This article works through replica control and service discovery in K8S. A ReplicationController declares 3 replicas; we verify its self-healing (deleting a Pod is automatically replenished) and that deleting the RC cascades to clean up the Pods it manages. Then a ClusterIP Service gives the 3 Pods spread across two nodes a single fixed entry point; with each Pod’s nginx returning its own Pod name, five consecutive requests reveal round-robin load balancing. Finally a NodePort Service exposes the workload on port 30080 of every node, reachable from outside the cluster and load balanced the same way.</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-30">
+  2026年10月30日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 4 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to K8S Replica Control and Service Discovery in Practice: RC, ClusterIP and NodePort" href="https://LMDAWN1127.github.io/en/posts/k8s-rc-svc-replicas-service-discovery/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/en/posts/k8s-troubleshooting-explain-cp-logs/">K8S Troubleshooting Trio in Practice: kubectl explain, cp and logs</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>This article covers the three commands I reach for most when troubleshooting K8S. First build a troubleshooting test image that exits immediately, then use kubectl explain to read the OpenAPI Schema straight from the API Server and find out where a field belongs (no internet needed). Next, override the image’s default CMD with command &#43; args in the Pod definition so a one-shot container stays running and can be inspected with exec. Finally, kubectl cp copies files both ways between the host and a Pod (config in, logs out), and kubectl logs is the first thing to check when a Pod misbehaves — it is how you track down CrashLoopBackOff.</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-30">
+  2026年10月30日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 3 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to K8S Troubleshooting Trio in Practice: kubectl explain, cp and logs" href="https://LMDAWN1127.github.io/en/posts/k8s-troubleshooting-explain-cp-logs/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/en/posts/k8s-volumes-emptydir-hostpath-nfs/">K8S Volumes in Practice: emptyDir, hostPath and NFS</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>This article puts three K8S volume types to work. emptyDir is tied to the Pod lifecycle — a multi-container Pod shows both containers seeing the same data when the volume is mounted into each. hostPath mounts a host directory directly into the Pod; using Elasticsearch 7.17.16, indices survive deleting and recreating the Pod, proving single-node persistence. NFS solves cross-node sharing: configure nfs-kernel-server on the master, install nfs-common on all three nodes, deploy MySQL 8.3.0, write test data, then drift the Pod from worker01 to worker02 with the data fully intact. It closes with the selection rule: emptyDir for sharing inside a Pod, hostPath for single-node persistence, NFS (or distributed storage) when the workload must move across nodes.</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-30">
+  2026年10月30日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 5 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to K8S Volumes in Practice: emptyDir, hostPath and NFS" href="https://LMDAWN1127.github.io/en/posts/k8s-volumes-emptydir-hostpath-nfs/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
       <a href="https://LMDAWN1127.github.io/en/posts/k8s-core-resources-pod-basics/">K8S Core Resource Management and Pod Basics in Practice: Manifests, Multi-Container Pods, Labels and hostNetwork</a>
     </h2>
   </header>
@@ -203,28 +269,12 @@
 </footer>
   <a class="entry-link" aria-label="post link to K8S kubeadm Cluster Deployment in Practice: Harbor with a Self-Built CA and Flannel CNI" href="https://LMDAWN1127.github.io/en/posts/k8s-kubeadm-cluster-harbor-ca/"></a>
 </article>
-
-<article class="post-entry tag-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/en/posts/k8s-v1.30-manual-deploy/">Manually Deploying a Kubernetes v1.30 Cluster (via kubeadm)</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>A step-by-step guide to manually deploying a Kubernetes v1.30 cluster with kubeadm — covering firewall/SELinux, swap, kernel modules, Containerd, kubeadm init, worker join, Calico, and an IPVS add-on.</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-08-07">
-  2026年8月7日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 6 分钟
-</span>
+<footer class="page-footer">
+  <nav class="pagination">
+    <a class="next" href="https://LMDAWN1127.github.io/en/tags/kubernetes/page/2/">Next&nbsp;&nbsp;»
+    </a>
+  </nav>
 </footer>
-  <a class="entry-link" aria-label="post link to Manually Deploying a Kubernetes v1.30 Cluster (via kubeadm)" href="https://LMDAWN1127.github.io/en/posts/k8s-v1.30-manual-deploy/"></a>
-</article>
     </main>
     
 <a href="#top" id="top-link" class="top-link hidden" aria-label="go to top" title="Go to Top (Alt + G)" accesskey="g">

@@ -195,6 +195,72 @@
 <article class="post-entry"> 
   <header class="entry-header">
     <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/en/posts/k8s-rc-svc-replicas-service-discovery/">K8S Replica Control and Service Discovery in Practice: RC, ClusterIP and NodePort</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>This article works through replica control and service discovery in K8S. A ReplicationController declares 3 replicas; we verify its self-healing (deleting a Pod is automatically replenished) and that deleting the RC cascades to clean up the Pods it manages. Then a ClusterIP Service gives the 3 Pods spread across two nodes a single fixed entry point; with each Pod’s nginx returning its own Pod name, five consecutive requests reveal round-robin load balancing. Finally a NodePort Service exposes the workload on port 30080 of every node, reachable from outside the cluster and load balanced the same way.</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-30">
+  2026年10月30日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 4 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to K8S Replica Control and Service Discovery in Practice: RC, ClusterIP and NodePort" href="https://LMDAWN1127.github.io/en/posts/k8s-rc-svc-replicas-service-discovery/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/en/posts/k8s-troubleshooting-explain-cp-logs/">K8S Troubleshooting Trio in Practice: kubectl explain, cp and logs</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>This article covers the three commands I reach for most when troubleshooting K8S. First build a troubleshooting test image that exits immediately, then use kubectl explain to read the OpenAPI Schema straight from the API Server and find out where a field belongs (no internet needed). Next, override the image’s default CMD with command &#43; args in the Pod definition so a one-shot container stays running and can be inspected with exec. Finally, kubectl cp copies files both ways between the host and a Pod (config in, logs out), and kubectl logs is the first thing to check when a Pod misbehaves — it is how you track down CrashLoopBackOff.</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-30">
+  2026年10月30日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 3 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to K8S Troubleshooting Trio in Practice: kubectl explain, cp and logs" href="https://LMDAWN1127.github.io/en/posts/k8s-troubleshooting-explain-cp-logs/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/en/posts/k8s-volumes-emptydir-hostpath-nfs/">K8S Volumes in Practice: emptyDir, hostPath and NFS</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>This article puts three K8S volume types to work. emptyDir is tied to the Pod lifecycle — a multi-container Pod shows both containers seeing the same data when the volume is mounted into each. hostPath mounts a host directory directly into the Pod; using Elasticsearch 7.17.16, indices survive deleting and recreating the Pod, proving single-node persistence. NFS solves cross-node sharing: configure nfs-kernel-server on the master, install nfs-common on all three nodes, deploy MySQL 8.3.0, write test data, then drift the Pod from worker01 to worker02 with the data fully intact. It closes with the selection rule: emptyDir for sharing inside a Pod, hostPath for single-node persistence, NFS (or distributed storage) when the workload must move across nodes.</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-30">
+  2026年10月30日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 5 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to K8S Volumes in Practice: emptyDir, hostPath and NFS" href="https://LMDAWN1127.github.io/en/posts/k8s-volumes-emptydir-hostpath-nfs/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
       <a href="https://LMDAWN1127.github.io/en/posts/k8s-core-resources-pod-basics/">K8S Core Resource Management and Pod Basics in Practice: Manifests, Multi-Container Pods, Labels and hostNetwork</a>
     </h2>
   </header>
@@ -212,72 +278,6 @@
 </span>
 </footer>
   <a class="entry-link" aria-label="post link to K8S Core Resource Management and Pod Basics in Practice: Manifests, Multi-Container Pods, Labels and hostNetwork" href="https://LMDAWN1127.github.io/en/posts/k8s-core-resources-pod-basics/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/en/posts/k8s-kubeadm-cluster-harbor-ca/">K8S kubeadm Cluster Deployment in Practice: Harbor with a Self-Built CA and Flannel CNI</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>This hands-on guide builds a K8S kubeadm cluster (v1.23.17, 1 master &#43; 2 workers, 3 nodes in total) from scratch. First install Docker on the harbor node and deploy a Harbor image registry (self-built CA issues the HTTPS certificate, harbor.yml enables port 443). Then install Docker on the three K8S nodes, configure /etc/hosts and the Docker client certificate, and verify docker login against Harbor successfully. Next prepare the nodes (disable swap, check product_uuid, configure iptables bridge traffic and the Aliyun apt repo, and install kubeadm/kubelet/kubectl), run kubeadm init on the master, configure kubeconfig, join the worker nodes, and finally deploy the Flannel CNI plugin so all three nodes become Ready, and verify cross-node Pod connectivity with curl.</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-30">
-  2026年10月30日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 11 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to K8S kubeadm Cluster Deployment in Practice: Harbor with a Self-Built CA and Flannel CNI" href="https://LMDAWN1127.github.io/en/posts/k8s-kubeadm-cluster-harbor-ca/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/en/posts/containerd-runc-ctr-management/">Deploying containerd Runtime and Managing with runc/ctr in Practice</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>This hands-on walkthrough first uninstalls the Docker binaries on the docker02 node, then deploys the containerd 1.7.20 runtime (extracting cri-containerd-cni, installing the systemd unit, and editing config.toml to enable SystemdCgroup and replace the sandbox_image), and installs runc 1.1.12 along with the ctr client. It then demonstrates the full ctr workflow: pulling and tagging images, creating/starting/pausing/resuming/removing containers, namespace management, and pushing to and pulling from the docker01 Harbor (HTTP, non-TLS).</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-30">
-  2026年10月30日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 5 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to Deploying containerd Runtime and Managing with runc/ctr in Practice" href="https://LMDAWN1127.github.io/en/posts/containerd-runc-ctr-management/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/en/posts/harbor-self-signed-https/">Harbor HTTPS Deployment with a Self-Signed Certificate</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>This hands-on walkthrough configures Harbor with HTTPS using a self-signed certificate. We create the certificate directory, generate a self-signed certificate with openssl (domain harbor.dawn.com, SAN covering both DNS and IP 11.0.1.122), edit harbor.yml to enable HTTPS on port 443, and reinstall with install.sh. Finally we use ss and curl to confirm that port 80 is automatically redirected to 443 and the WebUI is accessible. Self-signed certificates require client trust; in production, use a certificate issued by an official CA to avoid warnings.</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-29">
-  2026年10月29日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 2 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to Harbor HTTPS Deployment with a Self-Signed Certificate" href="https://LMDAWN1127.github.io/en/posts/harbor-self-signed-https/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">

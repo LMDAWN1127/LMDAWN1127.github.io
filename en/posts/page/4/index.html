@@ -173,6 +173,72 @@
 <article class="post-entry"> 
   <header class="entry-header">
     <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/en/posts/docker-dockerfile-user-instruction/">Dockerfile: Running Containers as a Non-Root User (USER Instruction)</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>Use the Space Huggers game to demonstrate how to run a container as the non-root user dawn (uid 2025) with the Dockerfile USER instruction: first understand the directory/file ownership adjustments needed for nginx to run as a non-root user, then write the Dockerfile (chown system directories before switching to USER dawn), the nginx config (user dawn), and the startup script (nginx in background &#43; tail to block), build the image and verify the process user, container configuration, access and health status, and finally compare the permission boundary where a non-root user can start nginx but cannot start sshd.</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-29">
+  2026年10月29日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 6 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to Dockerfile: Running Containers as a Non-Root User (USER Instruction)" href="https://LMDAWN1127.github.io/en/posts/docker-dockerfile-user-instruction/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/en/posts/docker-dockerfile-core-instructions/">Dockerfile Core Instructions in Practice: WORKDIR/EXPOSE/VOLUME, ENV/ARG, HEALTHCHECK, ENTRYPOINT</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>Use 4 web games to demonstrate 7 core Dockerfile instructions in full: the working directory, port exposure and persistence effects of WORKDIR/EXPOSE/VOLUME; the difference between ENV and ARG at build time vs. run time and how to override them; the HEALTHCHECK health-status transitions; and the non-overridable/overridable distinction between ENTRYPOINT and CMD plus the argument-passing mechanism.</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-28">
+  2026年10月28日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 9 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to Dockerfile Core Instructions in Practice: WORKDIR/EXPOSE/VOLUME, ENV/ARG, HEALTHCHECK, ENTRYPOINT" href="https://LMDAWN1127.github.io/en/posts/docker-dockerfile-core-instructions/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/en/posts/docker-image-tag-maintainer-label-metadata/">Docker in Practice: Tag Images with MAINTAINER and LABEL, and Inspect Metadata</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>Using a real dawn-games image, demonstrate writing author/school/email metadata into the Dockerfile with the deprecated MAINTAINER and the officially recommended LABEL, then reading .Author and .Config.Labels back with docker image inspect -f to verify, and starting the container with –network host to access over the host network. Includes a screenshot.</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-28">
+  2026年10月28日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 3 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to Docker in Practice: Tag Images with MAINTAINER and LABEL, and Inspect Metadata" href="https://LMDAWN1127.github.io/en/posts/docker-image-tag-maintainer-label-metadata/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
       <a href="https://LMDAWN1127.github.io/en/posts/docker-dockerfile-optimization-and-run-tips/">Docker in Practice: Dockerfile Optimization Tips and Container Startup Techniques</a>
     </h2>
   </header>
@@ -212,72 +278,6 @@
 </span>
 </footer>
   <a class="entry-link" aria-label="post link to Docker in Practice: Building Docker Images Manually and Automatically with a Dockerfile" href="https://LMDAWN1127.github.io/en/posts/docker-image-manual-and-dockerfile/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/en/posts/docker-exec-vs-attach/">Docker in Practice: The Difference Between docker exec and docker attach</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>Use docker top to compare process trees and see the essential difference between docker exec and docker attach: exec spawns a new process inside the container, while attach only connects your local stdin/stdout/stderr to the container’s running main process. Also shows how to detach from attach with ctrl&#43;p then ctrl&#43;q without terminating the container.</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-28">
-  2026年10月28日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 3 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to Docker in Practice: The Difference Between docker exec and docker attach" href="https://LMDAWN1127.github.io/en/posts/docker-exec-vs-attach/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/en/posts/docker-container-states/">Docker in Practice: A Detailed Look at Container States — Up / Exited / Created / Paused</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>Reproduce how each of the four container states shown by docker ps is produced — Up, Exited (exit-code semantics: 0 = normal, 137 = SIGKILL), Created (created but not started), and Paused (suspended from serving, and unlike restart it does not reset the status timer).</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-28">
-  2026年10月28日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 3 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to Docker in Practice: A Detailed Look at Container States — Up / Exited / Created / Paused" href="https://LMDAWN1127.github.io/en/posts/docker-container-states/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/en/posts/docker-namespace-cgroup-resource-limit/">Docker in Practice: Linux Namespace Network Isolation and CGroup Resource Limits</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>Build a Linux network namespace by hand with ip netns, connect it to the outside world through a veth pair and NAT, then see how Docker containers share a net namespace; finally stress CPU and memory under cgroup v2 limits and reproduce an OOM kill, tying together the two low-level mechanisms behind containers: isolation (Namespace) and limits (CGroup).</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-28">
-  2026年10月28日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 12 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to Docker in Practice: Linux Namespace Network Isolation and CGroup Resource Limits" href="https://LMDAWN1127.github.io/en/posts/docker-namespace-cgroup-resource-limit/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">

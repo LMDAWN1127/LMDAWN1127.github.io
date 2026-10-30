@@ -163,6 +163,72 @@
 <article class="post-entry tag-entry"> 
   <header class="entry-header">
     <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/posts/k8s-kubeadm-cluster-harbor-ca/">K8S kubeadm 集群部署实战：Harbor 自建 CA 仓库与 Flannel CNI</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>本文完整实战从零部署 K8S kubeadm 集群（v1.23.17，1 个 master &#43; 2 个 worker 共 3 节点）。先在 harbor 节点安装 Docker 并部署 Harbor 镜像仓库（自建 CA 签发 HTTPS 证书，配置 harbor.yml 开启 443）；再为三个 K8S 节点安装 Docker、配置 /etc/hosts 与 Docker 客户端证书，验证 docker login 成功；随后做节点环境准备（关闭 swap、检查 product_uuid、配置 iptables 桥接与阿里云 apt 源安装 kubeadm/kubelet/kubectl），kubeadm init 初始化 master、配置 kubeconfig、worker 节点 join，最后部署 Flannel CNI 插件使三节点全部 Ready，并跨节点 curl 验证 Pod 网络连通。</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-30">
+  2026年10月30日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 10 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to K8S kubeadm 集群部署实战：Harbor 自建 CA 仓库与 Flannel CNI" href="https://LMDAWN1127.github.io/posts/k8s-kubeadm-cluster-harbor-ca/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/posts/containerd-runc-ctr-management/">containerd 容器运行时部署与 runc/ctr 管理实战</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>本文实战演示在 docker02 节点卸载 Docker 二进制后，部署 containerd 1.7.20 容器运行时（含 cri-containerd-cni 解压、systemd 服务、config.toml 开启 SystemdCgroup 与替换 sandbox_image），并安装 runc 1.1.12 与 ctr 客户端；随后用 ctr 完成镜像拉取/打 tag、容器创建/启动/暂停恢复/删除、命名空间管理，以及向 docker01 的 Harbor（HTTP 非 TLS）推送与拉取镜像的完整操作。</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-30">
+  2026年10月30日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 4 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to containerd 容器运行时部署与 runc/ctr 管理实战" href="https://LMDAWN1127.github.io/posts/containerd-runc-ctr-management/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/posts/harbor-self-signed-https/">Harbor 基于自签名证书的 HTTPS 部署实战</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>本文实战演示为 Harbor 配置基于自签名证书的 HTTPS 访问。依次创建证书目录、用 openssl 生成自签名证书（域名 harbor.dawn.com，SAN 同时包含 DNS 与 IP 11.0.1.122）、修改 harbor.yml 启用 443 端口 HTTPS、重新执行 install.sh 安装，最后通过 ss 与 curl 验证 80 端口已自动重定向到 443、WebUI 可正常访问。自签名证书需客户端信任，生产环境建议改用官方 CA 签发的证书以避免告警。</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-29">
+  2026年10月29日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 1 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to Harbor 基于自签名证书的 HTTPS 部署实战" href="https://LMDAWN1127.github.io/posts/harbor-self-signed-https/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
       <a href="https://LMDAWN1127.github.io/posts/harbor-keepalived-vip/">Harbor 高可用方案：用 keepalived 实现 VIP 漂移</a>
     </h2>
   </header>
@@ -202,72 +268,6 @@
 </span>
 </footer>
   <a class="entry-link" aria-label="post link to 从 docker registry 迁移镜像到 Harbor 与双 Harbor 同步实战" href="https://LMDAWN1127.github.io/posts/docker-registry-to-harbor-migration/"></a>
-</article>
-
-<article class="post-entry tag-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/posts/docker-scratch-custom-image/">不指定基础镜像实现自定义镜像scratch</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>scratch 是 Docker 的保留名称，作为 FROM 的基础镜像时表示不引用任何镜像，从零构建一个仅含自身 rootfs 的最小镜像。本文实战演示：下载第三方 busybox 根文件系统，注入自定义 /etc/os-release 后重新打包，编写 FROM scratch 的 Dockerfile 与 docker-compose，构建并推送到 Harbor 仓库，再从另一台主机拉取镜像、启动容器并验证 os-release 与网络。</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-29">
-  2026年10月29日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 2 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to 不指定基础镜像实现自定义镜像scratch" href="https://LMDAWN1127.github.io/posts/docker-scratch-custom-image/"></a>
-</article>
-
-<article class="post-entry tag-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/posts/docker-harbor-private-registry/">私有镜像仓库harbor实战</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>从零搭建两套私有镜像仓库：先用 docker registry 轻量级方案完成镜像的部署、推送、下载与删除（含手动删元数据 &#43; GC 回收存储），再部署企业级 VMware Harbor（HTTP 模式），演示 hosts 解析、insecure-registries 配置、新建项目、三种 docker login 方式、镜像推送/拉取/删除全流程，最后用对比表总结 registry 与 Harbor 在体积、部署、WebUI、项目管理、删除与适用场景上的差异。</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-29">
-  2026年10月29日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 6 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to 私有镜像仓库harbor实战" href="https://LMDAWN1127.github.io/posts/docker-harbor-private-registry/"></a>
-</article>
-
-<article class="post-entry tag-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/posts/docker-compose-multi-service/">基于 docker-compose 编译多服务镜像并启动容器</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>通过一个 docker-compose 案例演示如何用一个 YAML 文件统一编排两个 HTML5 游戏服务（斗地主 doudizhu、摩托 motuo）的镜像构建与容器管理：编写 compose 文件（build context &#43; 各自 Dockerfile）与 nginx 虚拟主机、启动脚本，用 docker-compose build 一次编译出两个镜像、up -d 后台启动、ps/stop/start/restart/down 管理生命周期，再配置固定端口加 restart: always 与随机端口并验证访问与重启策略，最后给出常用命令对照表。</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-29">
-  2026年10月29日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 8 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to 基于 docker-compose 编译多服务镜像并启动容器" href="https://LMDAWN1127.github.io/posts/docker-compose-multi-service/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">

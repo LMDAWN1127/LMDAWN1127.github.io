@@ -11,7 +11,7 @@
     </image>
     <generator>Hugo</generator>
     <language>en</language>
-    <lastBuildDate>Fri, 30 Oct 2026 16:29:00 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 30 Oct 2026 20:04:00 +0800</lastBuildDate>
     <atom:link href="https://LMDAWN1127.github.io/en/categories/devops/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Harbor Active-Standby Deployment: From Installation to HTTPS and Replication</title>
@@ -19,6 +19,27 @@
       <pubDate>Tue, 04 Aug 2026 00:00:00 +0000</pubDate>
       <guid>https://LMDAWN1127.github.io/en/posts/harbor-master-slave/</guid>
       <description>Complete guide to deploying Harbor enterprise Docker registry with active-standby architecture, HTTP/HTTPS modes, self-signed certificates, and cross-host replication.</description>
+    </item>
+    <item>
+      <title>K8S Replica Control and Service Discovery in Practice: RC, ClusterIP and NodePort</title>
+      <link>https://LMDAWN1127.github.io/en/posts/k8s-rc-svc-replicas-service-discovery/</link>
+      <pubDate>Fri, 30 Oct 2026 20:04:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/posts/k8s-rc-svc-replicas-service-discovery/</guid>
+      <description>This article works through replica control and service discovery in K8S. A ReplicationController declares 3 replicas; we verify its self-healing (deleting a Pod is automatically replenished) and that deleting the RC cascades to clean up the Pods it manages. Then a ClusterIP Service gives the 3 Pods spread across two nodes a single fixed entry point; with each Pod&amp;rsquo;s nginx returning its own Pod name, five consecutive requests reveal round-robin load balancing. Finally a NodePort Service exposes the workload on port 30080 of every node, reachable from outside the cluster and load balanced the same way.</description>
+    </item>
+    <item>
+      <title>K8S Troubleshooting Trio in Practice: kubectl explain, cp and logs</title>
+      <link>https://LMDAWN1127.github.io/en/posts/k8s-troubleshooting-explain-cp-logs/</link>
+      <pubDate>Fri, 30 Oct 2026 19:44:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/posts/k8s-troubleshooting-explain-cp-logs/</guid>
+      <description>This article covers the three commands I reach for most when troubleshooting K8S. First build a troubleshooting test image that exits immediately, then use kubectl explain to read the OpenAPI Schema straight from the API Server and find out where a field belongs (no internet needed). Next, override the image&amp;rsquo;s default CMD with command + args in the Pod definition so a one-shot container stays running and can be inspected with exec. Finally, kubectl cp copies files both ways between the host and a Pod (config in, logs out), and kubectl logs is the first thing to check when a Pod misbehaves — it is how you track down CrashLoopBackOff.</description>
+    </item>
+    <item>
+      <title>K8S Volumes in Practice: emptyDir, hostPath and NFS</title>
+      <link>https://LMDAWN1127.github.io/en/posts/k8s-volumes-emptydir-hostpath-nfs/</link>
+      <pubDate>Fri, 30 Oct 2026 19:28:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/posts/k8s-volumes-emptydir-hostpath-nfs/</guid>
+      <description>This article puts three K8S volume types to work. emptyDir is tied to the Pod lifecycle — a multi-container Pod shows both containers seeing the same data when the volume is mounted into each. hostPath mounts a host directory directly into the Pod; using Elasticsearch 7.17.16, indices survive deleting and recreating the Pod, proving single-node persistence. NFS solves cross-node sharing: configure nfs-kernel-server on the master, install nfs-common on all three nodes, deploy MySQL 8.3.0, write test data, then drift the Pod from worker01 to worker02 with the data fully intact. It closes with the selection rule: emptyDir for sharing inside a Pod, hostPath for single-node persistence, NFS (or distributed storage) when the workload must move across nodes.</description>
     </item>
     <item>
       <title>K8S Core Resource Management and Pod Basics in Practice: Manifests, Multi-Container Pods, Labels and hostNetwork</title>

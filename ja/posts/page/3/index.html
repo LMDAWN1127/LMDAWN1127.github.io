@@ -173,6 +173,72 @@
 <article class="post-entry"> 
   <header class="entry-header">
     <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/ja/posts/docker-scratch-custom-image/">ベースイメージを指定せずに独自イメージを構築：scratch の活用</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>scratch は Docker の予約語である。FROM のベースイメージとして使うと何のイメージも参照せず、自身の rootfs だけを含む最小イメージをゼロから構築する。本実践ではサードパーティの busybox ルートファイルシステムをダウンロードし、カスタム /etc/os-release を注入して再パッケージ化し、FROM scratch の Dockerfile と docker-compose を作成して Harbor レジストリへビルド・プッシュし、別ホストからプルしてコンテナを起動し、os-release とネットワークを検証する。</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-29">
+  2026年10月29日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 2 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to ベースイメージを指定せずに独自イメージを構築：scratch の活用" href="https://LMDAWN1127.github.io/ja/posts/docker-scratch-custom-image/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/ja/posts/docker-harbor-private-registry/">プライベートイメージレジストリ実践：docker registry と VMware Harbor</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>2 つのプライベートイメージレジストリをゼロから構築する。まず軽量な docker registry でイメージの展開・プッシュ・プル・削除（メタデータの手動削除 &#43; GC によるストレージ回収を含む）を完了し、次にエンタープライズグレードの VMware Harbor（HTTP モード）を展開する。hosts 解決、insecure-registries 設定、プロジェクト作成、3 つの docker login 方式、イメージのプッシュ/プル/削除の全フローを示し、最後にサイズ・展開・WebUI・プロジェクト管理・削除・適用シナリオの違いを対照表でまとめる。</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-29">
+  2026年10月29日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 7 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to プライベートイメージレジストリ実践：docker registry と VMware Harbor" href="https://LMDAWN1127.github.io/ja/posts/docker-harbor-private-registry/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/ja/posts/docker-compose-multi-service/">docker-compose でマルチサービスイメージをビルドしコンテナを起動する事例</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>docker-compose の事例を通して、1 つの YAML ファイルで 2 つの HTML5 ゲームサービス（doudizhu と motuo）のイメージビルドとコンテナ管理を統合的にオーケストレーションする方法を示す。compose ファイル（ビルドコンテキスト &#43; 各サービスの Dockerfile）と nginx バーチャルホスト、起動スクリプトを作成し、docker-compose build で 2 つのイメージを一度にコンパイル、up -d でバックグラウンド起動、ps/stop/start/restart/down でライフサイクルを管理し、その後固定ポート &#43; restart: always とランダムポートを設定してアクセスと再起動ポリシーを検証し、最後によく使うコマンドの対照表を提示する。</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-29">
+  2026年10月29日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 8 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to docker-compose でマルチサービスイメージをビルドしコンテナを起動する事例" href="https://LMDAWN1127.github.io/ja/posts/docker-compose-multi-service/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
       <a href="https://LMDAWN1127.github.io/ja/posts/docker-dockerfile-multistage-build/">Dockerfile マルチステージビルド実戦</a>
     </h2>
   </header>
@@ -212,72 +278,6 @@
 </span>
 </footer>
   <a class="entry-link" aria-label="post link to Dockerfile の ONBUILD 命令実戦" href="https://LMDAWN1127.github.io/ja/posts/docker-dockerfile-onbuild-instruction/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/ja/posts/docker-dockerfile-user-instruction/">Dockerfile 一般ユーザーでのコンテナ実行（USER 命令）実戦</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>Space Huggers ゲームを使って、Dockerfile の USER 命令でコンテナを一般ユーザー dawn (uid 2025) として実行する方法を実演します。一般ユーザーで nginx を実行するために必要なディレクトリ/ファイルの所有権調整をまず理解し、次に Dockerfile (USER dawn に切り替える前にシステムディレクトリを chown)、nginx 設定 (user dawn)、起動スクリプト (nginx バックグラウンド &#43; tail でブロック) を作成し、イメージをビルドしてプロセスユーザー、コンテナ設定、アクセス、健康状態を検証し、最後に一般ユーザーは nginx を起動できるが sshd は起動できないという権限の境界を比較します。</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-29">
-  2026年10月29日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 4 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to Dockerfile 一般ユーザーでのコンテナ実行（USER 命令）実戦" href="https://LMDAWN1127.github.io/ja/posts/docker-dockerfile-user-instruction/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/ja/posts/docker-dockerfile-core-instructions/">Dockerfile コア命令実戦：WORKDIR/EXPOSE/VOLUME、ENV/ARG、HEALTHCHECK、ENTRYPOINT</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>4 つのウェブゲームを使って 7 つのコア Dockerfile 命令を完全に実演します。WORKDIR/EXPOSE/VOLUME の作業ディレクトリ・ポート公開・永続化の効果、構築時と実行時で異なる ENV と ARG の違いと上書き方法、HEALTHCHECK の健康状態の遷移、そして ENTRYPOINT と CMD の上書き可否の違いと引数受け渡しの仕組み。</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-28">
-  2026年10月28日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 7 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to Dockerfile コア命令実戦：WORKDIR/EXPOSE/VOLUME、ENV/ARG、HEALTHCHECK、ENTRYPOINT" href="https://LMDAWN1127.github.io/ja/posts/docker-dockerfile-core-instructions/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/ja/posts/docker-image-tag-maintainer-label-metadata/">Docker 実戦：MAINTAINER と LABEL でイメージにタグを付け、メタデータを確認する</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>実際の dawn-games イメージを例に、Dockerfile に非推奨の MAINTAINER と公式推奨の LABEL で 作成者/学校/メールなどのメタデータを記録し、docker image inspect -f で .Author と .Config.Labels を 読み出して確認、さらに –network host でコンテナを起動してホストネットワーク経由でアクセスします。スクリーンショット付き。</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-28">
-  2026年10月28日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 2 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to Docker 実戦：MAINTAINER と LABEL でイメージにタグを付け、メタデータを確認する" href="https://LMDAWN1127.github.io/ja/posts/docker-image-tag-maintainer-label-metadata/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">
