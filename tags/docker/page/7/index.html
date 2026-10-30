@@ -163,6 +163,28 @@
 <article class="post-entry tag-entry"> 
   <header class="entry-header">
     <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/posts/docker-inspect-pid-id-network/">Docker 实战：用 inspect 查看容器 PID、ID 与网络信息</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>Docker 实战：用 inspect 查看容器 PID、ID 与网络信息 1.查看容器的进程ID 1 2 root@docker02:~# docker container inspect -f &#34;{{ .State.Pid }}&#34; c1 4800 2.查看容器ID 1 2 root@docker02:~# docker container inspect -f &#34;{{ .Id }}&#34; c1 ece223aa9840347b908016a8b665f68ac87185aceea0a8ab3ccd508de90c12b5 3.查看IP地址信息 1 2 3 4 5 6 7 8 9 10 root@docker02:~# docker container inspect -f &#34;{{ .NetworkSettings.IPAddress }}&#34; c1 172.17.0.5 root@docker02:~# docker container inspect -f &#34;{{ .NetworkSettings.Networks.bridge.IPAddress }}&#34; c1 172.17.0.5 root@docker02:~# docker container inspect -f &#34;{{ range .NetworkSettings.Networks }}{{ .IPAddress }}{{end}}&#34; c1 172.17.0.5 root@docker02:~# docker container inspect -f &#34;{{ range .NetworkSettings.Networks }}{{ .Gateway }}{{end}}&#34; c1 172.17.0.1 root@docker02:~# docker container inspect -f &#34;{{ range .NetworkSettings.Networks }}{{ .MacAddress }}{{end}}&#34; c1 02:42:ac:11:00:05 4.查看最近一个容器创建的IP地址 1 2 root@docker02:~# docker container inspect -f &#34;{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}&#34; `docker container ps -lq` 172.17.0.5 </p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-26">
+  2026年10月26日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 1 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to Docker 实战：用 inspect 查看容器 PID、ID 与网络信息" href="https://LMDAWN1127.github.io/posts/docker-inspect-pid-id-network/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
       <a href="https://LMDAWN1127.github.io/posts/docker-nginx-load-balancing/">Docker 实战：Nginx 负载均衡与容器流量分发</a>
     </h2>
   </header>
@@ -250,29 +272,6 @@
 </span>
 </footer>
   <a class="entry-link" aria-label="post link to Docker 镜像迁移实战：save/load 离线传输与打标签" href="https://LMDAWN1127.github.io/posts/docker-image-migration-tag/"></a>
-</article>
-
-<article class="post-entry tag-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/posts/docker-port-mapping-principle/">Docker 端口映射原理：从 veth 网卡到 iptables DNAT</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>Docker 端口映射原理：从 veth 网卡到 iptables DNAT docker映射原理 初始环境 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 root@docker02:~# ifconfig docker0: flags=4099&lt;UP,BROADCAST,MULTICAST&gt; mtu 1500 inet 172.17.0.1 netmask 255.255.0.0 broadcast 172.17.255.255 inet6 fe80::42:60ff:fe35:b74d prefixlen 64 scopeid 0x20&lt;link&gt; ether 02:42:60:35:b7:4d txqueuelen 0 (Ethernet) RX packets 26 bytes 4752 (4.7 KB) RX errors 0 dropped 0 overruns 0 frame 0 TX packets 49 bytes 5226 (5.2 KB) TX errors 0 dropped 0 overruns 0 carrier 0 collisions 0 ens33: flags=4163&lt;UP,BROADCAST,RUNNING,MULTICAST&gt; mtu 1500 inet 11.0.1.122 netmask 255.255.255.0 broadcast 11.0.1.255 inet6 fe80::20c:29ff:fe41:61df prefixlen 64 scopeid 0x20&lt;link&gt; ether 00:0c:29:41:61:df txqueuelen 1000 (Ethernet) RX packets 314249 bytes 448056676 (448.0 MB) RX errors 0 dropped 0 overruns 0 frame 0 TX packets 32424 bytes 2514167 (2.5 MB) TX errors 0 dropped 0 overruns 0 carrier 0 collisions 0 lo: flags=73&lt;UP,LOOPBACK,RUNNING&gt; mtu 65536 inet 127.0.0.1 netmask 255.0.0.0 inet6 ::1 prefixlen 128 scopeid 0x10&lt;host&gt; loop txqueuelen 1000 (Local Loopback) RX packets 436 bytes 37594 (37.5 KB) RX errors 0 dropped 0 overruns 0 frame 0 TX packets 436 bytes 37594 (37.5 KB) TX errors 0 dropped 0 overruns 0 carrier 0 collisions 0 创建2个容器 1 2 3 4 root@docker02:~# docker run -d -p 81:80 --name c1 uhub.service.ucloud.cn/dawn/nginx:1.30.4 53efc7e7cfcbd3d23bc0eed398e20b56c61ef0b64911eee4dafa71407c581f8f root@docker02:~# docker run -d -p 82:80 --name c2 uhub.service.ucloud.cn/dawn/nginx:latest ff10508a36b1b9f78e1875503f4dbd17a4fdd3ad35e7fcb445f6f1834e02ce0a –name
-...</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-23">
-  2026年10月23日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 4 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to Docker 端口映射原理：从 veth 网卡到 iptables DNAT" href="https://LMDAWN1127.github.io/posts/docker-port-mapping-principle/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">

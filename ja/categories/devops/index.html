@@ -185,6 +185,28 @@
 <article class="post-entry tag-entry"> 
   <header class="entry-header">
     <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/ja/posts/k8s-kubeadm-cluster-harbor-ca/">K8S kubeadm クラスタ構築実践：自己構築 CA の Harbor と Flannel CNI</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>本実践ガイドでは K8S kubeadm クラスタ（v1.23.17、master 1 &#43; worker 2 の計 3 ノード）をゼロから構築する。まず harbor ノードに Docker をインストールし Harbor イメージレジストリをデプロイする（自己構築 CA が HTTPS 証明書を発行、harbor.yml で 443 を有効化）。次に 3 つの K8S ノードに Docker をインストールし、/etc/hosts と Docker クライアント証明書を設定して、Harbor への docker login を検証する。続いてノード環境を準備し（swap 無効化、product_uuid 確認、iptables ブリッジ通信と Aliyun apt リポジトリ設定、kubeadm/kubelet/kubectl のインストール）、master で kubeadm init、kubeconfig 設定、worker ノードの join を実施、最後に Flannel CNI プラグインをデプロイして 3 ノードすべてを Ready にし、curl でノード間 Pod 通信を検証する。</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-30">
+  2026年10月30日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 10 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to K8S kubeadm クラスタ構築実践：自己構築 CA の Harbor と Flannel CNI" href="https://LMDAWN1127.github.io/ja/posts/k8s-kubeadm-cluster-harbor-ca/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
       <a href="https://LMDAWN1127.github.io/ja/posts/containerd-runc-ctr-management/">containerd コンテナランタイムの導入と runc/ctr による管理実践</a>
     </h2>
   </header>
@@ -246,28 +268,6 @@
 </span>
 </footer>
   <a class="entry-link" aria-label="post link to Harbor 高可用性：keepalived による VIP フェイルオーバーの実現" href="https://LMDAWN1127.github.io/ja/posts/harbor-keepalived-vip/"></a>
-</article>
-
-<article class="post-entry tag-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/ja/posts/docker-registry-to-harbor-migration/">docker registry から Harbor へのイメージ移行と双 Harbor 間同期の実践</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>本実践では docker registry のイメージを Harbor へ移行し、2 つの Harbor 間でイメージを同期する。第 1 部は Harbor の pull レプリケーションルールを使って registry 内の dawn-games/** イメージをローカルの Harbor プロジェクトに同期する。第 2 部は docker01 と docker02 の両ノードに Harbor を展開し、Harbor→Harbor の pull モードレプリケーションルールを設定して双 Harbor イメージ同期を実現し、最後にクライアントの daemon.json を修正して検証する。</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-29">
-  2026年10月29日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 2 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to docker registry から Harbor へのイメージ移行と双 Harbor 間同期の実践" href="https://LMDAWN1127.github.io/ja/posts/docker-registry-to-harbor-migration/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">

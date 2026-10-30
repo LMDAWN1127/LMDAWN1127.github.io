@@ -11,7 +11,7 @@
     </image>
     <generator>Hugo</generator>
     <language>ja</language>
-    <lastBuildDate>Fri, 30 Oct 2026 10:31:00 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 30 Oct 2026 14:51:00 +0800</lastBuildDate>
     <atom:link href="https://LMDAWN1127.github.io/ja/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Harbor アクティブスタンバイデプロイ：インストールからHTTPS・レプリケーションまで</title>
@@ -19,6 +19,13 @@
       <pubDate>Tue, 04 Aug 2026 00:00:00 +0000</pubDate>
       <guid>https://LMDAWN1127.github.io/ja/posts/harbor-master-slave/</guid>
       <description>HarborエンタープライズDockerレジストリのアクティブスタンバイアーキテクチャ、HTTP/HTTPSモード、自己署名証明書、クロスホストレプリケーションを完全にカバーするデプロイガイドです。</description>
+    </item>
+    <item>
+      <title>K8S kubeadm クラスタ構築実践：自己構築 CA の Harbor と Flannel CNI</title>
+      <link>https://LMDAWN1127.github.io/ja/posts/k8s-kubeadm-cluster-harbor-ca/</link>
+      <pubDate>Fri, 30 Oct 2026 14:51:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/ja/posts/k8s-kubeadm-cluster-harbor-ca/</guid>
+      <description>本実践ガイドでは K8S kubeadm クラスタ（v1.23.17、master 1 + worker 2 の計 3 ノード）をゼロから構築する。まず harbor ノードに Docker をインストールし Harbor イメージレジストリをデプロイする（自己構築 CA が HTTPS 証明書を発行、harbor.yml で 443 を有効化）。次に 3 つの K8S ノードに Docker をインストールし、/etc/hosts と Docker クライアント証明書を設定して、Harbor への docker login を検証する。続いてノード環境を準備し（swap 無効化、product_uuid 確認、iptables ブリッジ通信と Aliyun apt リポジトリ設定、kubeadm/kubelet/kubectl のインストール）、master で kubeadm init、kubeconfig 設定、worker ノードの join を実施、最後に Flannel CNI プラグインをデプロイして 3 ノードすべてを Ready にし、curl でノード間 Pod 通信を検証する。</description>
     </item>
     <item>
       <title>containerd コンテナランタイムの導入と runc/ctr による管理実践</title>
