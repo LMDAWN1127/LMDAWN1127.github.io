@@ -3,7 +3,7 @@ title: "K8S kubeadm 集群部署实战：Harbor 自建 CA 仓库与 Flannel CNI"
 date: 2026-10-30T14:51:00+08:00
 draft: false
 categories: ["DevOps"]
-tags: ["Docker"]
+tags: ["Kubernetes"]
 showToc: true
 summary: "本文完整实战从零部署 K8S kubeadm 集群（v1.23.17，1 个 master + 2 个 worker 共 3 节点）。先在 harbor 节点安装 Docker 并部署 Harbor 镜像仓库（自建 CA 签发 HTTPS 证书，配置 harbor.yml 开启 443）；再为三个 K8S 节点安装 Docker、配置 /etc/hosts 与 Docker 客户端证书，验证 docker login 成功；随后做节点环境准备（关闭 swap、检查 product_uuid、配置 iptables 桥接与阿里云 apt 源安装 kubeadm/kubelet/kubectl），kubeadm init 初始化 master、配置 kubeconfig、worker 节点 join，最后部署 Flannel CNI 插件使三节点全部 Ready，并跨节点 curl 验证 Pod 网络连通。"
 ---

@@ -3,7 +3,7 @@ title: "K8S kubeadm クラスタ構築実践：自己構築 CA の Harbor と Fl
 date: 2026-10-30T14:51:00+08:00
 draft: false
 categories: ["DevOps"]
-tags: ["Docker"]
+tags: ["Kubernetes"]
 showToc: true
 summary: "本実践ガイドでは K8S kubeadm クラスタ（v1.23.17、master 1 + worker 2 の計 3 ノード）をゼロから構築する。まず harbor ノードに Docker をインストールし Harbor イメージレジストリをデプロイする（自己構築 CA が HTTPS 証明書を発行、harbor.yml で 443 を有効化）。次に 3 つの K8S ノードに Docker をインストールし、/etc/hosts と Docker クライアント証明書を設定して、Harbor への docker login を検証する。続いてノード環境を準備し（swap 無効化、product_uuid 確認、iptables ブリッジ通信と Aliyun apt リポジトリ設定、kubeadm/kubelet/kubectl のインストール）、master で kubeadm init、kubeconfig 設定、worker ノードの join を実施、最後に Flannel CNI プラグインをデプロイして 3 ノードすべてを Ready にし、curl でノード間 Pod 通信を検証する。"
 ---

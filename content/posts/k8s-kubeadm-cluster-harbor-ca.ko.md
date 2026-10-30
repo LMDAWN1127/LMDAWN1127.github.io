@@ -3,7 +3,7 @@ title: "K8S kubeadm 클러스터 구축 실전: 자체 CA Harbor 와 Flannel CNI
 date: 2026-10-30T14:51:00+08:00
 draft: false
 categories: ["DevOps"]
-tags: ["Docker"]
+tags: ["Kubernetes"]
 showToc: true
 summary: "이 실습 가이드는 K8S kubeadm 클러스터（v1.23.17, master 1 + worker 2, 총 3 노드）를 처음부터 구축한다. 먼저 harbor 노드에 Docker 를 설치하고 Harbor 이미지 레지스트리를 배포한다（자체 CA 가 HTTPS 인증서를 발급하고, harbor.yml 에서 443 을 활성화）. 다음으로 세 K8S 노드에 Docker 를 설치하고, /etc/hosts 와 Docker 클라이언트 인증서를 구성해 Harbor 에 대한 docker login 을 검증한다. 이어 노드 환경을 준비하고（swap 비활성화, product_uuid 확인, iptables 브리지 통신 및 Aliyun apt 저장소 설정, kubeadm/kubelet/kubectl 설치）, master 에서 kubeadm init, kubeconfig 구성, worker 노드 join 을 수행한 뒤, 마지막으로 Flannel CNI 플러그인을 배포해 세 노드를 모두 Ready 로 만들고 curl 로 노드 간 Pod 통신을 검증한다."
 ---

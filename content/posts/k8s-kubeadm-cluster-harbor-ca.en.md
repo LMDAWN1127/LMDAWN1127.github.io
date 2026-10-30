@@ -3,7 +3,7 @@ title: "K8S kubeadm Cluster Deployment in Practice: Harbor with a Self-Built CA 
 date: 2026-10-30T14:51:00+08:00
 draft: false
 categories: ["DevOps"]
-tags: ["Docker"]
+tags: ["Kubernetes"]
 showToc: true
 summary: "This hands-on guide builds a K8S kubeadm cluster (v1.23.17, 1 master + 2 workers, 3 nodes in total) from scratch. First install Docker on the harbor node and deploy a Harbor image registry (self-built CA issues the HTTPS certificate, harbor.yml enables port 443). Then install Docker on the three K8S nodes, configure /etc/hosts and the Docker client certificate, and verify docker login against Harbor successfully. Next prepare the nodes (disable swap, check product_uuid, configure iptables bridge traffic and the Aliyun apt repo, and install kubeadm/kubelet/kubectl), run kubeadm init on the master, configure kubeconfig, join the worker nodes, and finally deploy the Flannel CNI plugin so all three nodes become Ready, and verify cross-node Pod connectivity with curl."
 ---
