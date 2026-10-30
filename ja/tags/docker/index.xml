@@ -11,7 +11,7 @@
     </image>
     <generator>Hugo</generator>
     <language>ja</language>
-    <lastBuildDate>Thu, 29 Oct 2026 20:57:00 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 30 Oct 2026 10:31:00 +0800</lastBuildDate>
     <atom:link href="https://LMDAWN1127.github.io/ja/tags/docker/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Harbor アクティブスタンバイデプロイ：インストールからHTTPS・レプリケーションまで</title>
@@ -19,6 +19,13 @@
       <pubDate>Tue, 04 Aug 2026 00:00:00 +0000</pubDate>
       <guid>https://LMDAWN1127.github.io/ja/posts/harbor-master-slave/</guid>
       <description>HarborエンタープライズDockerレジストリのアクティブスタンバイアーキテクチャ、HTTP/HTTPSモード、自己署名証明書、クロスホストレプリケーションを完全にカバーするデプロイガイドです。</description>
+    </item>
+    <item>
+      <title>containerd コンテナランタイムの導入と runc/ctr による管理実践</title>
+      <link>https://LMDAWN1127.github.io/ja/posts/containerd-runc-ctr-management/</link>
+      <pubDate>Fri, 30 Oct 2026 10:31:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/ja/posts/containerd-runc-ctr-management/</guid>
+      <description>本実践ではまず docker02 ノードの Docker バイナリをアンインストールし、containerd 1.7.20 ランタイム（cri-containerd-cni の展開、systemd ユニットの設置、config.toml で SystemdCgroup を有効化し sandbox_image を置換）を導入、さらに runc 1.1.12 と ctr クライアントをインストールする。その後、ctr によるイメージのプルとタグ付け、コンテナの作成/起動/一時停止/再開/削除、名前空間管理、および docker01 の Harbor（HTTP、非 TLS）へのプッシュとプルの一連の操作を実演する。</description>
     </item>
     <item>
       <title>Harbor 自己署名証明書による HTTPS デプロイ実践</title>

@@ -11,7 +11,7 @@
     </image>
     <generator>Hugo</generator>
     <language>ko</language>
-    <lastBuildDate>Thu, 29 Oct 2026 20:57:00 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 30 Oct 2026 10:31:00 +0800</lastBuildDate>
     <atom:link href="https://LMDAWN1127.github.io/ko/categories/devops/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Harbor 액티브-스탠바이 배포: 설치부터 HTTPS 및 복제까지</title>
@@ -19,6 +19,13 @@
       <pubDate>Tue, 04 Aug 2026 00:00:00 +0000</pubDate>
       <guid>https://LMDAWN1127.github.io/ko/posts/harbor-master-slave/</guid>
       <description>Harbor 엔터프라이즈 Docker 레지스트리의 액티브-스탠바이 아키텍처, HTTP/HTTPS 모드, 자체 서명 인증서, 크로스 호스트 복제를 완전히 다루는 배포 가이드입니다.</description>
+    </item>
+    <item>
+      <title>containerd 컨테이너 런타임 구축과 runc/ctr 관리 실전</title>
+      <link>https://LMDAWN1127.github.io/ko/posts/containerd-runc-ctr-management/</link>
+      <pubDate>Fri, 30 Oct 2026 10:31:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/ko/posts/containerd-runc-ctr-management/</guid>
+      <description>이 실습에서는 먼저 docker02 노드의 Docker 바이너리를 제거한 뒤, containerd 1.7.20 런타임（cri-containerd-cni 압축 해제, systemd 유닛 설치, config.toml 에서 SystemdCgroup 활성화 및 sandbox_image 교체）을 구축하고 runc 1.1.12 와 ctr 클라이언트를 설치한다. 이후 ctr 로 이미지 풀/태그, 컨테이너 생성/시작/일시정지/재개/삭제, 네임스페이스 관리, 그리고 docker01 Harbor（HTTP, 비 TLS）로의 이미지 푸시 및 풀 전체 작업을 시연한다.</description>
     </item>
     <item>
       <title>Harbor 자체 서명 인증서 HTTPS 배포 실전</title>

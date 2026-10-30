@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh" dir="auto" data-theme="auto">
 
-<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
+<head><meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="robots" content="index, follow">
@@ -9,19 +9,19 @@
 <meta name="keywords" content="Docker">
 <meta name="description" content="本文实战演示为 Harbor 配置基于自签名证书的 HTTPS 访问。依次创建证书目录、用 openssl 生成自签名证书（域名 harbor.dawn.com，SAN 同时包含 DNS 与 IP 11.0.1.122）、修改 harbor.yml 启用 443 端口 HTTPS、重新执行 install.sh 安装，最后通过 ss 与 curl 验证 80 端口已自动重定向到 443、WebUI 可正常访问。自签名证书需客户端信任，生产环境建议改用官方 CA 签发的证书以避免告警。">
 <meta name="author" content="DAWN">
-<link rel="canonical" href="http://192.168.100.30:1313/posts/harbor-self-signed-https/">
+<link rel="canonical" href="https://LMDAWN1127.github.io/posts/harbor-self-signed-https/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.4bf808bff57bddc46d61c8ae060b00400fc679ab876e37243b11bd3f832f2958.css" integrity="sha256-S/gIv/V73cRtYciuBgsAQA/GeauHbjckOxG9P4MvKVg=" rel="preload stylesheet" as="style">
-<link rel="icon" href="http://192.168.100.30:1313/images/DAWN.jpg">
-<link rel="icon" type="image/png" sizes="16x16" href="http://192.168.100.30:1313/favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="http://192.168.100.30:1313/favicon-32x32.png">
-<link rel="apple-touch-icon" href="http://192.168.100.30:1313/apple-touch-icon.png">
-<link rel="mask-icon" href="http://192.168.100.30:1313/safari-pinned-tab.svg">
+<link rel="icon" href="https://LMDAWN1127.github.io/images/DAWN.jpg">
+<link rel="icon" type="image/png" sizes="16x16" href="https://LMDAWN1127.github.io/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://LMDAWN1127.github.io/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://LMDAWN1127.github.io/apple-touch-icon.png">
+<link rel="mask-icon" href="https://LMDAWN1127.github.io/safari-pinned-tab.svg">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
-<link rel="alternate" hreflang="zh" href="http://192.168.100.30:1313/posts/harbor-self-signed-https/">
-<link rel="alternate" hreflang="en" href="http://192.168.100.30:1313/en/posts/harbor-self-signed-https/">
-<link rel="alternate" hreflang="ko" href="http://192.168.100.30:1313/ko/posts/harbor-self-signed-https/">
-<link rel="alternate" hreflang="ja" href="http://192.168.100.30:1313/ja/posts/harbor-self-signed-https/">
+<link rel="alternate" hreflang="zh" href="https://LMDAWN1127.github.io/posts/harbor-self-signed-https/">
+<link rel="alternate" hreflang="en" href="https://LMDAWN1127.github.io/en/posts/harbor-self-signed-https/">
+<link rel="alternate" hreflang="ko" href="https://LMDAWN1127.github.io/ko/posts/harbor-self-signed-https/">
+<link rel="alternate" hreflang="ja" href="https://LMDAWN1127.github.io/ja/posts/harbor-self-signed-https/">
 <noscript>
     <style>
         #theme-toggle,
@@ -67,8 +67,8 @@
         document.querySelector("html").dataset.theme = 'light';
     }
 
-</script><link rel="stylesheet" href='http://192.168.100.30:1313/css/custom.css'>
-<meta property="og:url" content="http://192.168.100.30:1313/posts/harbor-self-signed-https/">
+</script><link rel="stylesheet" href='https://LMDAWN1127.github.io/css/custom.css'>
+<meta property="og:url" content="https://LMDAWN1127.github.io/posts/harbor-self-signed-https/">
   <meta property="og:site_name" content="DAWN&#39;s Blog">
   <meta property="og:title" content="Harbor 基于自签名证书的 HTTPS 部署实战">
   <meta property="og:description" content="本文实战演示为 Harbor 配置基于自签名证书的 HTTPS 访问。依次创建证书目录、用 openssl 生成自签名证书（域名 harbor.dawn.com，SAN 同时包含 DNS 与 IP 11.0.1.122）、修改 harbor.yml 启用 443 端口 HTTPS、重新执行 install.sh 安装，最后通过 ss 与 curl 验证 80 端口已自动重定向到 443、WebUI 可正常访问。自签名证书需客户端信任，生产环境建议改用官方 CA 签发的证书以避免告警。">
@@ -78,10 +78,10 @@
     <meta property="article:published_time" content="2026-10-29T20:57:00+08:00">
     <meta property="article:modified_time" content="2026-10-29T20:57:00+08:00">
     <meta property="article:tag" content="Docker">
-      <meta property="og:image" content="http://192.168.100.30:1313/images/DAWN.jpg">
+      <meta property="og:image" content="https://LMDAWN1127.github.io/images/DAWN.jpg">
 
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:image" content="http://192.168.100.30:1313/images/DAWN.jpg">
+  <meta name="twitter:image" content="https://LMDAWN1127.github.io/images/DAWN.jpg">
   <meta name="twitter:title" content="Harbor 基于自签名证书的 HTTPS 部署实战">
   <meta name="twitter:description" content="本文实战演示为 Harbor 配置基于自签名证书的 HTTPS 访问。依次创建证书目录、用 openssl 生成自签名证书（域名 harbor.dawn.com，SAN 同时包含 DNS 与 IP 11.0.1.122）、修改 harbor.yml 启用 443 端口 HTTPS、重新执行 install.sh 安装，最后通过 ss 与 curl 验证 80 端口已自动重定向到 443、WebUI 可正常访问。自签名证书需客户端信任，生产环境建议改用官方 CA 签发的证书以避免告警。">
 
@@ -95,13 +95,13 @@
       "@type": "ListItem",
       "position":  1 ,
       "name": "Posts",
-      "item": "http://192.168.100.30:1313/posts/"
+      "item": "https://LMDAWN1127.github.io/posts/"
     }, 
     {
       "@type": "ListItem",
       "position":  2 ,
       "name": "Harbor 基于自签名证书的 HTTPS 部署实战",
-      "item": "http://192.168.100.30:1313/posts/harbor-self-signed-https/"
+      "item": "https://LMDAWN1127.github.io/posts/harbor-self-signed-https/"
     }
   ]
 }
@@ -119,7 +119,7 @@
   "articleBody": "Harbor 基于自签名证书的 HTTPS 部署实战 1. 创建存放证书目录 1 2 root@docker02:~# cd /dawn/softwares/harbor/ root@docker02:/dawn/softwares/harbor# mkdir certs \u0026\u0026 cd certs 2. 生成自签名证书 1 2 3 4 5 6 7 root@docker02:/dawn/softwares/harbor/certs# openssl req -x509 -nodes -newkey rsa:2048 -days 3650 \\ -keyout harbor.dawn.com.key -out harbor.dawn.com.crt \\ -subj '/CN=harbor.dawn.com' \\ -addext 'subjectAltName=DNS:harbor.dawn.com,IP:11.0.1.122' root@docker02:/dawn/softwares/harbor/certs# ls -la -rw-r--r-- 1 root root 1176 Oct 29 09:37 harbor.dawn.com.crt -rw------- 1 root root 1704 Oct 29 09:37 harbor.dawn.com.key 3. 修改 harbor 配置文件启用 https 1 2 3 4 5 6 7 8 # 指定和你的证书域名要完全相同 hostname: harbor.dawn.com # 配置 https 证书，要求证书路径指定正确 https: port: 443 certificate: /dawn/softwares/harbor/certs/harbor.dawn.com.crt private_key: /dawn/softwares/harbor/certs/harbor.dawn.com.key 4. 重新安装 harbor 1 2 root@docker02:/dawn/softwares/harbor# ./install.sh --with-chartmuseum ✔ ----Harbor has been installed and started successfully.---- 5. 访问 WebUI 测试验证 1 2 3 4 5 6 7 8 root@docker02:~# ss -lnt | grep -E ':80 |:443 ' LISTEN 0 4096 0.0.0.0:80 0.0.0.0:* LISTEN 0 4096 0.0.0.0:443 0.0.0.0:* root@docker02:~# curl -sk -o /dev/null -w '%{http_code}\\n' https://harbor.dawn.com/ 200 root@docker02:~# curl -sk -o /dev/null -w '%{http_code}\\n' https://11.0.1.122/ 200 harbor 成功从 HTTP 切换到 HTTPS（80 端口自动重定向到 443），自签名证书需客户端信任，生产环境使用官方 CA 签发的证书即可避免告警\n",
   "wordCount" : "169",
   "inLanguage": "zh",
-  "image": "http://192.168.100.30:1313/images/DAWN.jpg","datePublished": "2026-10-29T20:57:00+08:00",
+  "image": "https://LMDAWN1127.github.io/images/DAWN.jpg","datePublished": "2026-10-29T20:57:00+08:00",
   "dateModified": "2026-10-29T20:57:00+08:00",
   "author":{
     "@type": "Person",
@@ -127,14 +127,14 @@
   },
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "http://192.168.100.30:1313/posts/harbor-self-signed-https/"
+    "@id": "https://LMDAWN1127.github.io/posts/harbor-self-signed-https/"
   },
   "publisher": {
     "@type": "Organization",
     "name": "DAWN's Blog",
     "logo": {
       "@type": "ImageObject",
-      "url": "http://192.168.100.30:1313/images/DAWN.jpg"
+      "url": "https://LMDAWN1127.github.io/images/DAWN.jpg"
     }
   }
 }
@@ -144,8 +144,8 @@
     <header class="header">
     <nav class="header-nav">
         <div class="logo">
-            <a href="http://192.168.100.30:1313/" accesskey="h" title="DAWN&#39;s Blog (Alt + H)">
-                <img src="http://192.168.100.30:1313/images/DAWN.jpg" alt="" aria-label="logo"
+            <a href="https://LMDAWN1127.github.io/" accesskey="h" title="DAWN&#39;s Blog (Alt + H)">
+                <img src="https://LMDAWN1127.github.io/images/DAWN.jpg" alt="" aria-label="logo"
                     height="38">DAWN&#39;s Blog</a>
             <div class="logo-switches">
                 <button id="theme-toggle" class="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
@@ -170,15 +170,15 @@
                 </button><span class="nav-sep">|</span>
                     <ul class="lang-menu">
                         <li>
-                            <a href="http://192.168.100.30:1313/en/" title="English"
+                            <a href="https://LMDAWN1127.github.io/en/" title="English"
                                 aria-label="English">En</a>
                         </li>
                         <li>
-                            <a href="http://192.168.100.30:1313/ko/" title="한국어"
+                            <a href="https://LMDAWN1127.github.io/ko/" title="한국어"
                                 aria-label="한국어">Ko</a>
                         </li>
                         <li>
-                            <a href="http://192.168.100.30:1313/ja/" title="日本語"
+                            <a href="https://LMDAWN1127.github.io/ja/" title="日本語"
                                 aria-label="日本語">Ja</a>
                         </li>
                     </ul>
@@ -186,7 +186,7 @@
         </div>
         <ul id="menu" class="menu">
             <li>
-                <a href="http://192.168.100.30:1313/archives/" title="归档">
+                <a href="https://LMDAWN1127.github.io/archives/" title="归档">
                     <span>归档</span>
                 </a>
             </li>

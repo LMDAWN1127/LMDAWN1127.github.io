@@ -11,7 +11,7 @@
     </image>
     <generator>Hugo</generator>
     <language>en</language>
-    <lastBuildDate>Thu, 29 Oct 2026 20:57:00 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 30 Oct 2026 10:31:00 +0800</lastBuildDate>
     <atom:link href="https://LMDAWN1127.github.io/en/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Harbor Active-Standby Deployment: From Installation to HTTPS and Replication</title>
@@ -19,6 +19,13 @@
       <pubDate>Tue, 04 Aug 2026 00:00:00 +0000</pubDate>
       <guid>https://LMDAWN1127.github.io/en/posts/harbor-master-slave/</guid>
       <description>Complete guide to deploying Harbor enterprise Docker registry with active-standby architecture, HTTP/HTTPS modes, self-signed certificates, and cross-host replication.</description>
+    </item>
+    <item>
+      <title>Deploying containerd Runtime and Managing with runc/ctr in Practice</title>
+      <link>https://LMDAWN1127.github.io/en/posts/containerd-runc-ctr-management/</link>
+      <pubDate>Fri, 30 Oct 2026 10:31:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/posts/containerd-runc-ctr-management/</guid>
+      <description>This hands-on walkthrough first uninstalls the Docker binaries on the docker02 node, then deploys the containerd 1.7.20 runtime (extracting cri-containerd-cni, installing the systemd unit, and editing config.toml to enable SystemdCgroup and replace the sandbox_image), and installs runc 1.1.12 along with the ctr client. It then demonstrates the full ctr workflow: pulling and tagging images, creating/starting/pausing/resuming/removing containers, namespace management, and pushing to and pulling from the docker01 Harbor (HTTP, non-TLS).</description>
     </item>
     <item>
       <title>Harbor HTTPS Deployment with a Self-Signed Certificate</title>

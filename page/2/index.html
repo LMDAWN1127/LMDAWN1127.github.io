@@ -154,6 +154,28 @@
 <article class="post-entry"> 
   <header class="entry-header">
     <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/posts/docker-scratch-custom-image/">不指定基础镜像实现自定义镜像scratch</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>scratch 是 Docker 的保留名称，作为 FROM 的基础镜像时表示不引用任何镜像，从零构建一个仅含自身 rootfs 的最小镜像。本文实战演示：下载第三方 busybox 根文件系统，注入自定义 /etc/os-release 后重新打包，编写 FROM scratch 的 Dockerfile 与 docker-compose，构建并推送到 Harbor 仓库，再从另一台主机拉取镜像、启动容器并验证 os-release 与网络。</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-29">
+  2026年10月29日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 2 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to 不指定基础镜像实现自定义镜像scratch" href="https://LMDAWN1127.github.io/posts/docker-scratch-custom-image/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
       <a href="https://LMDAWN1127.github.io/posts/docker-harbor-private-registry/">私有镜像仓库harbor实战</a>
     </h2>
   </header>
@@ -237,28 +259,6 @@
 </span>
 </footer>
   <a class="entry-link" aria-label="post link to Dockerfile 之 ONBUILD 指令实战" href="https://LMDAWN1127.github.io/posts/docker-dockerfile-onbuild-instruction/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/posts/docker-dockerfile-user-instruction/">Dockerfile 基于普通用户运行容器（USER 指令）实战</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>通过 Space Huggers 游戏演示如何用 Dockerfile 的 USER 指令让容器以普通用户 dawn（uid 2025）运行：先理解普通用户跑 nginx 需要的目录/文件属主调整，再编写 Dockerfile（chown 系统目录后切 USER dawn）、nginx 配置（user dawn）、启动脚本（nginx 后台 &#43; tail 阻塞），构建镜像并验证进程用户、容器配置、访问与健康状态，最后对比普通用户能启动 nginx 但无法启动 sshd 的权限边界。</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-29">
-  2026年10月29日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 4 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to Dockerfile 基于普通用户运行容器（USER 指令）实战" href="https://LMDAWN1127.github.io/posts/docker-dockerfile-user-instruction/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">

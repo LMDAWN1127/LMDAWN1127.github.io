@@ -163,6 +163,28 @@
 <article class="post-entry tag-entry"> 
   <header class="entry-header">
     <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/ko/posts/docker-dockerfile-user-instruction/">Dockerfile 일반 사용자로 컨테이너 실행(USER 명령) 실전</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>Space Huggers 게임으로 Dockerfile USER 명령을 사용해 컨테이너를 일반 사용자 dawn(uid 2025) 으로 실행하는 방법을 시연합니다. 일반 사용자로 nginx 를 실행하는 데 필요한 디렉터리/파일 소유권 조정을 먼저 이해하고, Dockerfile(USER dawn 으로 전환하기 전 시스템 디렉터리 chown), nginx 설정(user dawn), 시작 스크립트(nginx 백그라운드 &#43; tail 블록) 를 작성한 뒤 이미지를 빌드하여 프로세스 사용자, 컨테이너 설정, 접속, 건강 상태를 검증하고, 마지막으로 일반 사용자는 nginx 를 시작할 수 있지만 sshd 는 시작할 수 없는 권한 경계를 비교합니다.</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-29">
+  2026年10月29日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 5 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to Dockerfile 일반 사용자로 컨테이너 실행(USER 명령) 실전" href="https://LMDAWN1127.github.io/ko/posts/docker-dockerfile-user-instruction/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
       <a href="https://LMDAWN1127.github.io/ko/posts/docker-dockerfile-core-instructions/">Dockerfile 핵심 명령 실전: WORKDIR/EXPOSE/VOLUME, ENV/ARG, HEALTHCHECK, ENTRYPOINT</a>
     </h2>
   </header>
@@ -246,28 +268,6 @@
 </span>
 </footer>
   <a class="entry-link" aria-label="post link to Docker 실전: 수동 이미지 생성과 Dockerfile 자동 빌드" href="https://LMDAWN1127.github.io/ko/posts/docker-image-manual-and-dockerfile/"></a>
-</article>
-
-<article class="post-entry tag-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/ko/posts/docker-exec-vs-attach/">Docker 실전: docker exec 와 docker attach 의 차이</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>docker top 으로 프로세스 트리를 비교하여 docker exec 와 docker attach 의 본질적 차이를 확인합니다. exec 는 컨테이너 내부에 새 프로세스를 생성하고, attach 는 로컬의 표준 입출력을 실행 중인 메인 프로세스에 연결할 뿐입니다. 또한 attach 를 컨테이너를 종료하지 않고 빠져나오는 방법(ctrl&#43;p 후 ctrl&#43;q)도 다룹니다.</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-28">
-  2026年10月28日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 3 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to Docker 실전: docker exec 와 docker attach 의 차이" href="https://LMDAWN1127.github.io/ko/posts/docker-exec-vs-attach/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">

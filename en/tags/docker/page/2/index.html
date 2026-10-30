@@ -163,6 +163,28 @@
 <article class="post-entry tag-entry"> 
   <header class="entry-header">
     <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/en/posts/docker-scratch-custom-image/">Building a Custom Image Without a Base Image: Using scratch</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>scratch is a reserved name in Docker; when used as the base image in FROM it means no image is referenced, building a minimal image that contains only its own rootfs from scratch. This hands-on walkthrough downloads a third-party busybox root filesystem, injects a custom /etc/os-release, repackages it, writes a FROM scratch Dockerfile and docker-compose, builds and pushes the image to a Harbor registry, then pulls it from another host, starts the container, and verifies os-release and networking.</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-29">
+  2026年10月29日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 3 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to Building a Custom Image Without a Base Image: Using scratch" href="https://LMDAWN1127.github.io/en/posts/docker-scratch-custom-image/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
       <a href="https://LMDAWN1127.github.io/en/posts/docker-harbor-private-registry/">Hands-on with Private Image Registries: docker registry and VMware Harbor</a>
     </h2>
   </header>
@@ -246,28 +268,6 @@
 </span>
 </footer>
   <a class="entry-link" aria-label="post link to Hands-on with the Dockerfile ONBUILD Instruction" href="https://LMDAWN1127.github.io/en/posts/docker-dockerfile-onbuild-instruction/"></a>
-</article>
-
-<article class="post-entry tag-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/en/posts/docker-dockerfile-user-instruction/">Dockerfile: Running Containers as a Non-Root User (USER Instruction)</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>Use the Space Huggers game to demonstrate how to run a container as the non-root user dawn (uid 2025) with the Dockerfile USER instruction: first understand the directory/file ownership adjustments needed for nginx to run as a non-root user, then write the Dockerfile (chown system directories before switching to USER dawn), the nginx config (user dawn), and the startup script (nginx in background &#43; tail to block), build the image and verify the process user, container configuration, access and health status, and finally compare the permission boundary where a non-root user can start nginx but cannot start sshd.</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-29">
-  2026年10月29日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 6 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to Dockerfile: Running Containers as a Non-Root User (USER Instruction)" href="https://LMDAWN1127.github.io/en/posts/docker-dockerfile-user-instruction/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">

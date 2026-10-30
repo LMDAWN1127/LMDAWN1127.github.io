@@ -11,7 +11,7 @@
     </image>
     <generator>Hugo</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Thu, 29 Oct 2026 20:57:00 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 30 Oct 2026 10:31:00 +0800</lastBuildDate>
     <atom:link href="https://LMDAWN1127.github.io/tags/docker/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Harbor 主备部署实战：从安装到 HTTPS 与主备复制</title>
@@ -19,6 +19,13 @@
       <pubDate>Tue, 04 Aug 2026 00:00:00 +0000</pubDate>
       <guid>https://LMDAWN1127.github.io/posts/harbor-master-slave/</guid>
       <description>完整记录 Harbor 企业级镜像仓库的主备部署过程，涵盖 HTTP/HTTPS 双模式安装、自签名证书配置、跨主机主备复制等核心运维技能。</description>
+    </item>
+    <item>
+      <title>containerd 容器运行时部署与 runc/ctr 管理实战</title>
+      <link>https://LMDAWN1127.github.io/posts/containerd-runc-ctr-management/</link>
+      <pubDate>Fri, 30 Oct 2026 10:31:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/posts/containerd-runc-ctr-management/</guid>
+      <description>本文实战演示在 docker02 节点卸载 Docker 二进制后，部署 containerd 1.7.20 容器运行时（含 cri-containerd-cni 解压、systemd 服务、config.toml 开启 SystemdCgroup 与替换 sandbox_image），并安装 runc 1.1.12 与 ctr 客户端；随后用 ctr 完成镜像拉取/打 tag、容器创建/启动/暂停恢复/删除、命名空间管理，以及向 docker01 的 Harbor（HTTP 非 TLS）推送与拉取镜像的完整操作。</description>
     </item>
     <item>
       <title>Harbor 基于自签名证书的 HTTPS 部署实战</title>

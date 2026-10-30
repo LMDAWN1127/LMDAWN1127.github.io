@@ -185,6 +185,28 @@
 <article class="post-entry tag-entry"> 
   <header class="entry-header">
     <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/posts/containerd-runc-ctr-management/">containerd 容器运行时部署与 runc/ctr 管理实战</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>本文实战演示在 docker02 节点卸载 Docker 二进制后，部署 containerd 1.7.20 容器运行时（含 cri-containerd-cni 解压、systemd 服务、config.toml 开启 SystemdCgroup 与替换 sandbox_image），并安装 runc 1.1.12 与 ctr 客户端；随后用 ctr 完成镜像拉取/打 tag、容器创建/启动/暂停恢复/删除、命名空间管理，以及向 docker01 的 Harbor（HTTP 非 TLS）推送与拉取镜像的完整操作。</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-30">
+  2026年10月30日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 4 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to containerd 容器运行时部署与 runc/ctr 管理实战" href="https://LMDAWN1127.github.io/posts/containerd-runc-ctr-management/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
       <a href="https://LMDAWN1127.github.io/posts/harbor-self-signed-https/">Harbor 基于自签名证书的 HTTPS 部署实战</a>
     </h2>
   </header>
@@ -246,28 +268,6 @@
 </span>
 </footer>
   <a class="entry-link" aria-label="post link to 从 docker registry 迁移镜像到 Harbor 与双 Harbor 同步实战" href="https://LMDAWN1127.github.io/posts/docker-registry-to-harbor-migration/"></a>
-</article>
-
-<article class="post-entry tag-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/posts/docker-scratch-custom-image/">不指定基础镜像实现自定义镜像scratch</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>scratch 是 Docker 的保留名称，作为 FROM 的基础镜像时表示不引用任何镜像，从零构建一个仅含自身 rootfs 的最小镜像。本文实战演示：下载第三方 busybox 根文件系统，注入自定义 /etc/os-release 后重新打包，编写 FROM scratch 的 Dockerfile 与 docker-compose，构建并推送到 Harbor 仓库，再从另一台主机拉取镜像、启动容器并验证 os-release 与网络。</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-29">
-  2026年10月29日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 2 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to 不指定基础镜像实现自定义镜像scratch" href="https://LMDAWN1127.github.io/posts/docker-scratch-custom-image/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">
