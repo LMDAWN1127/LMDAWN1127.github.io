@@ -1,5 +1,5 @@
 ---
-title: "RC Resources Do Not Support Declarative Updates"
+title: "K8S ReplicationController Declarative Update Limitations: Why Pods Do Not Auto-Update on Template Changes"
 date: 2026-10-31T19:10:00+08:00
 draft: false
 categories: ["DevOps"]
@@ -8,7 +8,7 @@ showToc: true
 summary: "Hands-on verification of RC resources not supporting declarative updates: modifying the RC Pod image template, observing that running Pods do not update after kubectl apply, verifying that old Pods must be manually deleted to trigger new template recreation, and noting the risks of deleting all Pods directly in production."
 ---
 
-## RC Resources Do Not Support Declarative Updates
+# K8S ReplicationController Declarative Update Limitations: Why Pods Do Not Auto-Update on Template Changes
 
 ### 1. Prepare the Environment
 

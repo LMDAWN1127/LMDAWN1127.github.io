@@ -1,5 +1,5 @@
 ---
-title: "RC 리소스는 선언적 업데이트를 지원하지 않음"
+title: "K8S ReplicationController 선언적 업데이트 제한 실전: 템플릿을 변경해도 Pod가 자동 갱신되지 않는 이유"
 date: 2026-10-31T19:10:00+08:00
 draft: false
 categories: ["DevOps"]
@@ -8,7 +8,7 @@ showToc: true
 summary: "RC 리소스의 선언적 업데이트 미지원 실전 검증: RC의 Pod 이미지 템플릿을 수정한 후 kubectl apply를 실행해도 실행 중인 Pod가 갱신되지 않는 현상을 확인하고, 기존 Pod를 수동 삭제해야 새 템플릿으로 재생성됨을 검증하며 운영 환경에서 모든 Pod를 일괄 삭제하는 위험성을 짚어봅니다."
 ---
 
-## RC 리소스는 선언적 업데이트를 지원하지 않음
+# K8S ReplicationController 선언적 업데이트 제한 실전: 템플릿을 변경해도 Pod가 자동 갱신되지 않는 이유
 
 ### 1. 환경 준비
 

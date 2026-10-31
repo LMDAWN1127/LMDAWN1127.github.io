@@ -1,5 +1,5 @@
 ---
-title: "RC 资源不支持声明式更新"
+title: "K8S ReplicationController 声明式更新局限实战：为什么改了 RC 模板 Pod 却不更新？"
 date: 2026-10-31T19:10:00+08:00
 draft: false
 categories: ["DevOps"]
@@ -8,7 +8,7 @@ showToc: true
 summary: "RC 资源不支持声明式更新实战记录：通过修改 RC 的 Pod 镜像模板，观察 kubectl apply 后运行中的 Pod 并不更新的现象，验证必须手动删除旧 Pod 才能触发新模板拉起，并指出生产环境中直接删除所有 Pod 的风险。"
 ---
 
-## RC 资源不支持声明式更新
+# K8S ReplicationController 声明式更新局限实战：为什么改了 RC 模板 Pod 却不更新？
 
 ### 1. 准备环境
 

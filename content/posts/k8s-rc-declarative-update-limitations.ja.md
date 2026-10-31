@@ -1,5 +1,5 @@
 ---
-title: "RC リソースは宣言的更新をサポートしない"
+title: "K8S ReplicationController 宣言的更新の制限と実践：テンプレートを変更しても Pod が更新されない理由"
 date: 2026-10-31T19:10:00+08:00
 draft: false
 categories: ["DevOps"]
@@ -8,7 +8,7 @@ showToc: true
 summary: "RC リソースが宣言的更新をサポートしないことの実践検証：RC の Pod イメージテンプレートを変更し、kubectl apply 後も稼働中の Pod が更新されない挙動を確認。古い Pod を手動削除して初めて新テンプレートが反映されることを検証し、本番環境で全 Pod を直接削除するリスクについても言及。"
 ---
 
-## RC リソースは宣言的更新をサポートしない
+# K8S ReplicationController 宣言的更新の制限と実践：テンプレートを変更しても Pod が更新されない理由
 
 ### 1. 環境準備
 
