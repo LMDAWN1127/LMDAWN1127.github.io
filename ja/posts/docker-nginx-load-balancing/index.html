@@ -1,873 +1,162 @@
-<!DOCTYPE html>
-<html lang="ja" dir="auto" data-theme="auto">
-
-<head><meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="robots" content="index, follow">
-<title>Docker 実戦：Nginx ロードバランシングとコンテナトラフィック分散 | DAWN&#39;s Blog</title>
-<meta name="keywords" content="Docker">
-<meta name="description" content="lb コンテナと web コンテナ 2 つを起動し、lb 上の Nginx default.conf を編集して web01/web02 にリバースプロキシし、lb に 10 回 curl してトラフィックが 2 つのバックエンド間で交互に振り分けられることを確認します。">
-<meta name="author" content="DAWN">
-<link rel="canonical" href="https://LMDAWN1127.github.io/ja/posts/docker-nginx-load-balancing/">
-<link crossorigin="anonymous" href="/assets/css/stylesheet.4bf808bff57bddc46d61c8ae060b00400fc679ab876e37243b11bd3f832f2958.css" integrity="sha256-S/gIv/V73cRtYciuBgsAQA/GeauHbjckOxG9P4MvKVg=" rel="preload stylesheet" as="style">
-<link rel="icon" href="https://LMDAWN1127.github.io/images/DAWN.jpg">
-<link rel="icon" type="image/png" sizes="16x16" href="https://LMDAWN1127.github.io/favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="https://LMDAWN1127.github.io/favicon-32x32.png">
-<link rel="apple-touch-icon" href="https://LMDAWN1127.github.io/apple-touch-icon.png">
-<link rel="mask-icon" href="https://LMDAWN1127.github.io/safari-pinned-tab.svg">
-<meta name="theme-color" content="#2e2e33">
-<meta name="msapplication-TileColor" content="#2e2e33">
-<link rel="alternate" hreflang="zh" href="https://LMDAWN1127.github.io/posts/docker-nginx-load-balancing/">
-<link rel="alternate" hreflang="en" href="https://LMDAWN1127.github.io/en/posts/docker-nginx-load-balancing/">
-<link rel="alternate" hreflang="ko" href="https://LMDAWN1127.github.io/ko/posts/docker-nginx-load-balancing/">
-<link rel="alternate" hreflang="ja" href="https://LMDAWN1127.github.io/ja/posts/docker-nginx-load-balancing/">
-<noscript>
-    <style>
-        #theme-toggle,
-        .top-link {
-            display: none;
-        }
-
-    </style>
-    <style>
-        @media (prefers-color-scheme: dark) {
-            :root {
-                --theme: rgb(29, 30, 32);
-                --entry: rgb(46, 46, 51);
-                --primary: rgb(218, 218, 219);
-                --secondary: rgb(155, 156, 157);
-                --tertiary: rgb(65, 66, 68);
-                --content: rgb(196, 196, 197);
-                --code-block-bg: rgb(46, 46, 51);
-                --code-bg: rgb(55, 56, 62);
-                --border: rgb(51, 51, 51);
-                color-scheme: dark;
-            }
-
-            .list {
-                background: var(--theme);
-            }
-
-            .toc {
-                background: var(--entry);
-            }
-        }
-
-    </style>
-</noscript>
-<script>
-    if (localStorage.getItem("pref-theme") === "dark") {
-        document.querySelector("html").dataset.theme = 'dark';
-    } else if (localStorage.getItem("pref-theme") === "light") {
-       document.querySelector("html").dataset.theme = 'light';
-    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-        document.querySelector("html").dataset.theme = 'dark';
-    } else {
-        document.querySelector("html").dataset.theme = 'light';
-    }
-
-</script><link rel="stylesheet" href='https://LMDAWN1127.github.io/css/custom.css'>
-<meta property="og:url" content="https://LMDAWN1127.github.io/ja/posts/docker-nginx-load-balancing/">
-  <meta property="og:site_name" content="DAWN&#39;s Blog">
-  <meta property="og:title" content="Docker 実戦：Nginx ロードバランシングとコンテナトラフィック分散">
-  <meta property="og:description" content="lb コンテナと web コンテナ 2 つを起動し、lb 上の Nginx default.conf を編集して web01/web02 にリバースプロキシし、lb に 10 回 curl してトラフィックが 2 つのバックエンド間で交互に振り分けられることを確認します。">
-  <meta property="og:locale" content="ja">
-  <meta property="og:type" content="article">
-    <meta property="article:section" content="posts">
-    <meta property="article:published_time" content="2026-10-26T11:50:00+08:00">
-    <meta property="article:modified_time" content="2026-10-26T11:50:00+08:00">
-    <meta property="article:tag" content="Docker">
-      <meta property="og:image" content="https://LMDAWN1127.github.io/images/DAWN.jpg">
-
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:image" content="https://LMDAWN1127.github.io/images/DAWN.jpg">
-  <meta name="twitter:title" content="Docker 実戦：Nginx ロードバランシングとコンテナトラフィック分散">
-  <meta name="twitter:description" content="lb コンテナと web コンテナ 2 つを起動し、lb 上の Nginx default.conf を編集して web01/web02 にリバースプロキシし、lb に 10 回 curl してトラフィックが 2 つのバックエンド間で交互に振り分けられることを確認します。">
-
-
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  "itemListElement": [
-    {
-      "@type": "ListItem",
-      "position":  1 ,
-      "name": "Posts",
-      "item": "https://LMDAWN1127.github.io/ja/posts/"
-    }, 
-    {
-      "@type": "ListItem",
-      "position":  2 ,
-      "name": "Docker 実戦：Nginx ロードバランシングとコンテナトラフィック分散",
-      "item": "https://LMDAWN1127.github.io/ja/posts/docker-nginx-load-balancing/"
-    }
-  ]
-}
-</script>
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "BlogPosting",
-  "headline": "Docker 実戦：Nginx ロードバランシングとコンテナトラフィック分散",
-  "name": "Docker 実戦：Nginx ロードバランシングとコンテナトラフィック分散",
-  "description": "lb コンテナと web コンテナ 2 つを起動し、lb 上の Nginx default.conf を編集して web01/web02 にリバースプロキシし、lb に 10 回 curl してトラフィックが 2 つのバックエンド間で交互に振り分けられることを確認します。",
-  "keywords": [
-    "Docker"
-  ],
-  "articleBody": "Docker 実戦：Nginx ロードバランシングとコンテナトラフィック分散 1. コンテナ lb、web01、web02 を 3 つ起動 1 2 3 4 5 6 root@docker02:~# docker run -d --name web01 uhub.service.ucloud.cn/dawn/apps:v1 03f912ea4eb722403408e5a4ed7014398131ae3fc55bd411f572ac72ae656b05 root@docker02:~# docker run -d --name web02 uhub.service.ucloud.cn/dawn/apps:v1 9b54bfd5df24bb64f49f69f9dc417667602c9c244fdb2278faf7ade52f7ed605 root@docker02:~# docker run -d --name lb -p 88:80 uhub.service.ucloud.cn/dawn/apps:v1 36b2783a8f4c7f05bc7e012ea2fd00dfa7a2a5ec78d3bf5c078a3d772fc8dbae 2. lb の IP にアクセスし、web01 と web02 のテストページにプロキシ 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 root@docker02:~# docker exec -it web01 sh / # echo web01 \u003e /usr/share/nginx/html/index.html / # ifconfig eth0 Link encap:Ethernet HWaddr 02:42:AC:11:00:02 inet addr:172.17.0.2 Bcast:172.17.255.255 Mask:255.255.0.0 UP BROADCAST RUNNING MULTICAST MTU:1500 Metric:1 RX packets:12 errors:0 dropped:0 overruns:0 frame:0 TX packets:0 errors:0 dropped:0 overruns:0 carrier:0 collisions:0 txqueuelen:0 RX bytes:1016 (1016.0 B) TX bytes:0 (0.0 B) lo Link encap:Local Loopback inet addr:127.0.0.1 Mask:255.0.0.0 inet6 addr: ::1/128 Scope:Host UP LOOPBACK RUNNING MTU:65536 Metric:1 RX packets:0 errors:0 dropped:0 overruns:0 frame:0 TX packets:0 errors:0 dropped:0 overruns:0 carrier:0 collisions:0 txqueuelen:1000 RX bytes:0 (0.0 B) TX bytes:0 (0.0 B) / # exit root@docker02:~# docker exec -it web02 sh / # echo web02 \u003e /usr/share/nginx/html/index.html / # ifconfig eth0 Link encap:Ethernet HWaddr 02:42:AC:11:00:03 inet addr:172.17.0.3 Bcast:172.17.255.255 Mask:255.255.0.0 UP BROADCAST RUNNING MULTICAST MTU:1500 Metric:1 RX packets:11 errors:0 dropped:0 overruns:0 frame:0 TX packets:0 errors:0 dropped:0 overruns:0 carrier:0 collisions:0 txqueuelen:0 RX bytes:866 (866.0 B) TX bytes:0 (0.0 B) lo Link encap:Local Loopback inet addr:127.0.0.1 Mask:255.0.0.0 inet6 addr: ::1/128 Scope:Host UP LOOPBACK RUNNING MTU:65536 Metric:1 RX packets:0 errors:0 dropped:0 overruns:0 frame:0 TX packets:0 errors:0 dropped:0 overruns:0 carrier:0 collisions:0 txqueuelen:1000 RX bytes:0 (0.0 B) TX bytes:0 (0.0 B) / # exit root@docker02:~# docker exec -it lb sh / # vi /etc/nginx/conf.d/default.conf / # / # / # nginx -t nginx: the configuration file /etc/nginx/nginx.conf syntax is ok nginx: configuration file /etc/nginx/nginx.conf test is successful / # nginx -s reload 2026/10/26 03:58:03 [notice] 42#42: signal process started / # exit root@docker02:~# docker restart lb lb root@docker02:~# docker ps CONTAINER ID IMAGE COMMAND CREATED STATUS PORTS NAMES 36b2783a8f4c uhub.service.ucloud.cn/dawn/apps:v1 \"/docker-entrypoint.…\" 8 minutes ago Up 10 seconds 0.0.0.0:88-\u003e80/tcp, :::88-\u003e80/tcp lb 9b54bfd5df24 uhub.service.ucloud.cn/dawn/apps:v1 \"/docker-entrypoint.…\" 8 minutes ago Up 8 minutes 80/tcp web02 03f912ea4eb7 uhub.service.ucloud.cn/dawn/apps:v1 \"/docker-entrypoint.…\" 9 minutes ago Up 9 minutes 80/tcp web01 3. lb コンテナに 10 回アクセスした結果は以下の通り 1 2 3 4 5 6 7 8 9 10 11 root@docker02:~# for i in `seq 10`;do curl 11.0.1.122:88;done web01 web02 web01 web02 web01 web02 web01 web02 web01 web02 ",
-  "wordCount" : "426",
-  "inLanguage": "ja",
-  "image": "https://LMDAWN1127.github.io/images/DAWN.jpg","datePublished": "2026-10-26T11:50:00+08:00",
-  "dateModified": "2026-10-26T11:50:00+08:00",
-  "author":{
-    "@type": "Person",
-    "name": "DAWN"
-  },
-  "mainEntityOfPage": {
-    "@type": "WebPage",
-    "@id": "https://LMDAWN1127.github.io/ja/posts/docker-nginx-load-balancing/"
-  },
-  "publisher": {
-    "@type": "Organization",
-    "name": "DAWN's Blog",
-    "logo": {
-      "@type": "ImageObject",
-      "url": "https://LMDAWN1127.github.io/images/DAWN.jpg"
-    }
-  }
-}
-</script>
-</head>
-<body id="top">
-    <header class="header">
-    <nav class="header-nav">
-        <div class="logo">
-            <a href="https://LMDAWN1127.github.io/ja/" accesskey="h" title="DAWN&#39;s Blog (Alt + H)">
-                <img src="https://LMDAWN1127.github.io/images/DAWN.jpg" alt="" aria-label="logo"
-                    height="38">DAWN&#39;s Blog</a>
-            <div class="logo-switches">
-                <button id="theme-toggle" class="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
-                    <svg class="moon" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24"
-                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                        stroke-linejoin="round">
-                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-                    </svg>
-                    <svg class="sun" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24"
-                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                        stroke-linejoin="round">
-                        <circle cx="12" cy="12" r="5"></circle>
-                        <line x1="12" y1="1" x2="12" y2="3"></line>
-                        <line x1="12" y1="21" x2="12" y2="23"></line>
-                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-                        <line x1="1" y1="12" x2="3" y2="12"></line>
-                        <line x1="21" y1="12" x2="23" y2="12"></line>
-                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-                    </svg>
-                </button><span class="nav-sep">|</span>
-                    <ul class="lang-menu">
-                        <li>
-                            <a href="https://LMDAWN1127.github.io/" title="中文"
-                                aria-label="中文">Zh</a>
-                        </li>
-                        <li>
-                            <a href="https://LMDAWN1127.github.io/en/" title="English"
-                                aria-label="English">En</a>
-                        </li>
-                        <li>
-                            <a href="https://LMDAWN1127.github.io/ko/" title="한국어"
-                                aria-label="한국어">Ko</a>
-                        </li>
-                    </ul>
-            </div>
-        </div>
-        <ul id="menu" class="menu">
-            <li>
-                <a href="https://LMDAWN1127.github.io/ja/archives/" title="アーカイブ">
-                    <span>アーカイブ</span>
-                </a>
-            </li>
-        </ul>
-    </nav>
-</header>
-<main class="main">
-
-<article class="post-single">
-  <header class="post-header">
-    <h1 class="post-title entry-hint-parent">
-      Docker 実戦：Nginx ロードバランシングとコンテナトラフィック分散
-    </h1>
-  </header>
-
-  <div class="post-layout">
-    <div class="post-content-wrapper"> 
-      <div class="post-content md-content"><h1 id="docker-実戦nginx-ロードバランシングとコンテナトラフィック分散">Docker 実戦：Nginx ロードバランシングとコンテナトラフィック分散<a hidden class="anchor" aria-hidden="true" href="#docker-実戦nginx-ロードバランシングとコンテナトラフィック分散">#</a></h1>
-<h2 id="1-コンテナ-lbweb01web02-を-3-つ起動">1. コンテナ lb、web01、web02 を 3 つ起動<a hidden class="anchor" aria-hidden="true" href="#1-コンテナ-lbweb01web02-を-3-つ起動">#</a></h2>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>root@docker02:~# docker run -d --name web01 uhub.service.ucloud.cn/dawn/apps:v1
-</span></span><span style="display:flex;"><span>03f912ea4eb722403408e5a4ed7014398131ae3fc55bd411f572ac72ae656b05
-</span></span><span style="display:flex;"><span>root@docker02:~# docker run -d --name web02 uhub.service.ucloud.cn/dawn/apps:v1
-</span></span><span style="display:flex;"><span>9b54bfd5df24bb64f49f69f9dc417667602c9c244fdb2278faf7ade52f7ed605
-</span></span><span style="display:flex;"><span>root@docker02:~# docker run -d --name lb -p 88:80 uhub.service.ucloud.cn/dawn/apps:v1
-</span></span><span style="display:flex;"><span>36b2783a8f4c7f05bc7e012ea2fd00dfa7a2a5ec78d3bf5c078a3d772fc8dbae
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h2 id="2-lb-の-ip-にアクセスしweb01-と-web02-のテストページにプロキシ">2. lb の IP にアクセスし、web01 と web02 のテストページにプロキシ<a hidden class="anchor" aria-hidden="true" href="#2-lb-の-ip-にアクセスしweb01-と-web02-のテストページにプロキシ">#</a></h2>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">36
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">37
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">38
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">39
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">40
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">41
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">42
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">43
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">44
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">45
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">46
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">47
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">48
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">49
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">50
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">51
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">52
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">53
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">54
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">55
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">56
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">57
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">58
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">59
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>root@docker02:~# docker exec -it web01 sh
-</span></span><span style="display:flex;"><span>/ <span style="color:#75715e"># echo web01 &gt; /usr/share/nginx/html/index.html</span>
-</span></span><span style="display:flex;"><span>/ <span style="color:#75715e"># ifconfig</span>
-</span></span><span style="display:flex;"><span>eth0      Link encap:Ethernet  HWaddr 02:42:AC:11:00:02
-</span></span><span style="display:flex;"><span>          inet addr:172.17.0.2  Bcast:172.17.255.255  Mask:255.255.0.0
-</span></span><span style="display:flex;"><span>          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
-</span></span><span style="display:flex;"><span>          RX packets:12 errors:0 dropped:0 overruns:0 frame:0
-</span></span><span style="display:flex;"><span>          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
-</span></span><span style="display:flex;"><span>          collisions:0 txqueuelen:0
-</span></span><span style="display:flex;"><span>          RX bytes:1016 <span style="color:#f92672">(</span>1016.0 B<span style="color:#f92672">)</span>  TX bytes:0 <span style="color:#f92672">(</span>0.0 B<span style="color:#f92672">)</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>lo        Link encap:Local Loopback
-</span></span><span style="display:flex;"><span>          inet addr:127.0.0.1  Mask:255.0.0.0
-</span></span><span style="display:flex;"><span>          inet6 addr: ::1/128 Scope:Host
-</span></span><span style="display:flex;"><span>          UP LOOPBACK RUNNING  MTU:65536  Metric:1
-</span></span><span style="display:flex;"><span>          RX packets:0 errors:0 dropped:0 overruns:0 frame:0
-</span></span><span style="display:flex;"><span>          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
-</span></span><span style="display:flex;"><span>          collisions:0 txqueuelen:1000
-</span></span><span style="display:flex;"><span>          RX bytes:0 <span style="color:#f92672">(</span>0.0 B<span style="color:#f92672">)</span>  TX bytes:0 <span style="color:#f92672">(</span>0.0 B<span style="color:#f92672">)</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>/ <span style="color:#75715e"># exit</span>
-</span></span><span style="display:flex;"><span>root@docker02:~# docker exec -it web02 sh
-</span></span><span style="display:flex;"><span>/ <span style="color:#75715e"># echo web02 &gt; /usr/share/nginx/html/index.html</span>
-</span></span><span style="display:flex;"><span>/ <span style="color:#75715e"># ifconfig</span>
-</span></span><span style="display:flex;"><span>eth0      Link encap:Ethernet  HWaddr 02:42:AC:11:00:03
-</span></span><span style="display:flex;"><span>          inet addr:172.17.0.3  Bcast:172.17.255.255  Mask:255.255.0.0
-</span></span><span style="display:flex;"><span>          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
-</span></span><span style="display:flex;"><span>          RX packets:11 errors:0 dropped:0 overruns:0 frame:0
-</span></span><span style="display:flex;"><span>          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
-</span></span><span style="display:flex;"><span>          collisions:0 txqueuelen:0
-</span></span><span style="display:flex;"><span>          RX bytes:866 <span style="color:#f92672">(</span>866.0 B<span style="color:#f92672">)</span>  TX bytes:0 <span style="color:#f92672">(</span>0.0 B<span style="color:#f92672">)</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>lo        Link encap:Local Loopback
-</span></span><span style="display:flex;"><span>          inet addr:127.0.0.1  Mask:255.0.0.0
-</span></span><span style="display:flex;"><span>          inet6 addr: ::1/128 Scope:Host
-</span></span><span style="display:flex;"><span>          UP LOOPBACK RUNNING  MTU:65536  Metric:1
-</span></span><span style="display:flex;"><span>          RX packets:0 errors:0 dropped:0 overruns:0 frame:0
-</span></span><span style="display:flex;"><span>          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
-</span></span><span style="display:flex;"><span>          collisions:0 txqueuelen:1000
-</span></span><span style="display:flex;"><span>          RX bytes:0 <span style="color:#f92672">(</span>0.0 B<span style="color:#f92672">)</span>  TX bytes:0 <span style="color:#f92672">(</span>0.0 B<span style="color:#f92672">)</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>/ <span style="color:#75715e"># exit</span>
-</span></span><span style="display:flex;"><span>root@docker02:~# docker exec -it lb sh
-</span></span><span style="display:flex;"><span>/ <span style="color:#75715e"># vi /etc/nginx/conf.d/default.conf</span>
-</span></span><span style="display:flex;"><span>/ <span style="color:#75715e">#</span>
-</span></span><span style="display:flex;"><span>/ <span style="color:#75715e">#</span>
-</span></span><span style="display:flex;"><span>/ <span style="color:#75715e"># nginx -t</span>
-</span></span><span style="display:flex;"><span>nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
-</span></span><span style="display:flex;"><span>nginx: configuration file /etc/nginx/nginx.conf test is successful
-</span></span><span style="display:flex;"><span>/ <span style="color:#75715e"># nginx -s reload</span>
-</span></span><span style="display:flex;"><span>2026/10/26 03:58:03 <span style="color:#f92672">[</span>notice<span style="color:#f92672">]</span> 42#42: signal process started
-</span></span><span style="display:flex;"><span>/ <span style="color:#75715e"># exit</span>
-</span></span><span style="display:flex;"><span>root@docker02:~# docker restart lb
-</span></span><span style="display:flex;"><span>lb
-</span></span><span style="display:flex;"><span>root@docker02:~# docker ps
-</span></span><span style="display:flex;"><span>CONTAINER ID   IMAGE                                 COMMAND                  CREATED         STATUS          PORTS                               NAMES
-</span></span><span style="display:flex;"><span>36b2783a8f4c   uhub.service.ucloud.cn/dawn/apps:v1   <span style="color:#e6db74">&#34;/docker-entrypoint.…&#34;</span>   <span style="color:#ae81ff">8</span> minutes ago   Up <span style="color:#ae81ff">10</span> seconds   0.0.0.0:88-&gt;80/tcp, :::88-&gt;80/tcp   lb
-</span></span><span style="display:flex;"><span>9b54bfd5df24   uhub.service.ucloud.cn/dawn/apps:v1   <span style="color:#e6db74">&#34;/docker-entrypoint.…&#34;</span>   <span style="color:#ae81ff">8</span> minutes ago   Up <span style="color:#ae81ff">8</span> minutes    80/tcp                              web02
-</span></span><span style="display:flex;"><span>03f912ea4eb7   uhub.service.ucloud.cn/dawn/apps:v1   <span style="color:#e6db74">&#34;/docker-entrypoint.…&#34;</span>   <span style="color:#ae81ff">9</span> minutes ago   Up <span style="color:#ae81ff">9</span> minutes    80/tcp                              web01
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h2 id="3-lb-コンテナに-10-回アクセスした結果は以下の通り">3. lb コンテナに 10 回アクセスした結果は以下の通り<a hidden class="anchor" aria-hidden="true" href="#3-lb-コンテナに-10-回アクセスした結果は以下の通り">#</a></h2>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>root@docker02:~# <span style="color:#66d9ef">for</span> i in <span style="color:#e6db74">`</span>seq 10<span style="color:#e6db74">`</span>;<span style="color:#66d9ef">do</span> curl 11.0.1.122:88;<span style="color:#66d9ef">done</span>
-</span></span><span style="display:flex;"><span>web01
-</span></span><span style="display:flex;"><span>web02
-</span></span><span style="display:flex;"><span>web01
-</span></span><span style="display:flex;"><span>web02
-</span></span><span style="display:flex;"><span>web01
-</span></span><span style="display:flex;"><span>web02
-</span></span><span style="display:flex;"><span>web01
-</span></span><span style="display:flex;"><span>web02
-</span></span><span style="display:flex;"><span>web01
-</span></span><span style="display:flex;"><span>web02
-</span></span></code></pre></td></tr></table>
-</div>
-</div>
-
-      </div><div id="giscus-container" style="margin-top: 2rem; padding-top: 1rem; border-top: 1px solid var(--border);">
-  <script src="https://giscus.app/client.js"
-          data-repo="LMDAWN1127/LMDAWN1127.github.io"
-          data-repo-id="R_kgDOTMWmvw"
-          data-category="Announcements"
-          data-category-id="DIC_kwDOTMWmv84DAd3g"
-          data-mapping="pathname"
-          data-strict="0"
-          data-reactions-enabled="1"
-          data-emit-metadata="0"
-          data-input-position="bottom"
-          data-theme="preferred_color_scheme"
-          data-lang="zh-CN"
-          crossorigin="anonymous"
-          async>
-  </script>
-</div>
-
-    </div>
-
-    <aside class="toc-sidebar" id="toc-sidebar">
-    <div class="toc-header">目录</div>
-    <nav class="toc-nav"><ul class="toc-list">
-            <li>
-                <a href="#docker-%e5%ae%9f%e6%88%a6nginx-%e3%83%ad%e3%83%bc%e3%83%89%e3%83%90%e3%83%a9%e3%83%b3%e3%82%b7%e3%83%b3%e3%82%b0%e3%81%a8%e3%82%b3%e3%83%b3%e3%83%86%e3%83%8a%e3%83%88%e3%83%a9%e3%83%95%e3%82%a3%e3%83%83%e3%82%af%e5%88%86%e6%95%a3" class="toc-link" data-target="docker-実戦nginx-ロードバランシングとコンテナトラフィック分散">Docker 実戦：Nginx ロードバランシングとコンテナトラフィック分散</a><ul>
-            <li>
-                <a href="#1-%e3%82%b3%e3%83%b3%e3%83%86%e3%83%8a-lbweb01web02-%e3%82%92-3-%e3%81%a4%e8%b5%b7%e5%8b%95" class="toc-link" data-target="1-コンテナ-lbweb01web02-を-3-つ起動">1. コンテナ lb、web01、web02 を 3 つ起動</a></li>
-            <li>
-                <a href="#2-lb-%e3%81%ae-ip-%e3%81%ab%e3%82%a2%e3%82%af%e3%82%bb%e3%82%b9%e3%81%97web01-%e3%81%a8-web02-%e3%81%ae%e3%83%86%e3%82%b9%e3%83%88%e3%83%9a%e3%83%bc%e3%82%b8%e3%81%ab%e3%83%97%e3%83%ad%e3%82%ad%e3%82%b7" class="toc-link" data-target="2-lb-の-ip-にアクセスしweb01-と-web02-のテストページにプロキシ">2. lb の IP にアクセスし、web01 と web02 のテストページにプロキシ</a></li>
-            <li>
-                <a href="#3-lb-%e3%82%b3%e3%83%b3%e3%83%86%e3%83%8a%e3%81%ab-10-%e5%9b%9e%e3%82%a2%e3%82%af%e3%82%bb%e3%82%b9%e3%81%97%e3%81%9f%e7%b5%90%e6%9e%9c%e3%81%af%e4%bb%a5%e4%b8%8b%e3%81%ae%e9%80%9a%e3%82%8a" class="toc-link" data-target="3-lb-コンテナに-10-回アクセスした結果は以下の通り">3. lb コンテナに 10 回アクセスした結果は以下の通り</a>
-            </li>
-        </ul>
-        </li>
-        </ul>
-    </nav>
-</aside>
-
-  </div>
-</article>
-    </main>
-    
-<a href="#top" id="top-link" class="top-link hidden" aria-label="go to top" title="Go to Top (Alt + G)" accesskey="g">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-        stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevrons-up">
-        <polyline points="17 11 12 6 7 11"></polyline>
-        <polyline points="17 18 12 13 7 18"></polyline>
-    </svg>
-</a>
-<script defer src="/js/custom.js"></script>
-<div id="algolia-search-modal" class="algolia-modal" style="display: none;">
-  <div class="algolia-modal-overlay"></div>
-  <div class="algolia-modal-content">
-    <div class="algolia-search-header">
-      <div class="algolia-search-input-wrapper">
-        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="11" cy="11" r="8"></circle>
-          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-        </svg>
-        <input type="text" id="algolia-search-input" placeholder="搜索文章..." autofocus>
-        <kbd class="algolia-esc">Esc</kbd>
-      </div>
-    </div>
-    <div id="algolia-search-results" class="algolia-search-results">
-      <div class="algolia-empty-state">
-        <p>输入关键词开始搜索</p>
-      </div>
-    </div>
-    <div class="algolia-search-footer">
-      <span class="algolia-footer-text">
-        <kbd>↑</kbd> <kbd>↓</kbd> 导航
-        <kbd>↵</kbd> 打开
-        <kbd>Esc</kbd> 关闭
-      </span>
-      <span class="algolia-footer-logo">
-        搜索由 <a href="https://www.algolia.com/" target="_blank" rel="noopener">Algolia</a> 提供
-      </span>
-    </div>
-  </div>
-</div>
-
-<script>
-(function() {
-  'use strict';
-
-  var APP_ID = 'Y0SCRI4LCW';
-  var SEARCH_KEY = '03dda5e44aec7e0dd93b6a3653250b1f';
-  var INDEX_NAME = 'lmdawn1127-blog';
-  var API_URL = 'https://' + APP_ID + '-dsn.algolia.net/1/indexes/' + INDEX_NAME + '/query';
-  var debounceTimer = null;
-  var selectedIndex = -1;
-
-   
-  function doSearch(query) {
-    if (!query || !query.trim()) {
-      showEmpty();
-      return;
-    }
-
-    var body = JSON.stringify({
-      query: query,
-      hitsPerPage: 10,
-      attributesToRetrieve: ['title', 'content', 'url'],
-      attributesToHighlight: ['title', 'content'],
-      highlightPreTag: '<mark class="algolia-highlight">',
-      highlightPostTag: '</mark>'
-    });
-
-    fetch(API_URL, {
-      method: 'POST',
-      headers: {
-        'X-Algolia-Application-Id': APP_ID,
-        'X-Algolia-API-Key': SEARCH_KEY,
-        'Content-Type': 'application/json'
-      },
-      body: body
-    })
-    .then(function(resp) {
-      if (!resp.ok) throw new Error('HTTP ' + resp.status);
-      return resp.json();
-    })
-    .then(function(data) {
-      renderResults(data.hits || [], query);
-    })
-    .catch(function(err) {
-      console.error('Algolia search error:', err);
-      showError(err.message || '未知错误');
-    });
-  }
-
-   
-  function showEmpty() {
-    document.getElementById('algolia-search-results').innerHTML =
-      '<div class="algolia-empty-state"><p>输入关键词开始搜索</p></div>';
-  }
-
-  function showError(detail) {
-    var msg = '搜索出错，请稍后再试';
-    if (detail) msg += '<br><small style="color:#888">错误详情: ' + escapeHtml(detail) + '</small>';
-    document.getElementById('algolia-search-results').innerHTML =
-      '<div class="algolia-empty-state"><p>' + msg + '</p></div>';
-  }
-
-  function showNoResults(query) {
-    document.getElementById('algolia-search-results').innerHTML =
-      '<div class="algolia-empty-state"><p>未找到与「' + escapeHtml(query) + '」相关的结果</p></div>';
-  }
-
-  function escapeHtml(s) {
-    var d = document.createElement('div');
-    d.appendChild(document.createTextNode(s));
-    return d.innerHTML;
-  }
-
-  function getHL(hit, attr) {
-    if (hit._highlightResult && hit._highlightResult[attr]) return hit._highlightResult[attr].value;
-    return hit[attr] || '';
-  }
-
-  function trunc(s, n) {
-    if (!s) return '';
-    s = s.replace(/<[^>]+>/g, '');
-    return s.length > n ? s.substring(0, n) + '…' : s;
-  }
-
-  function renderResults(hits, query) {
-    var box = document.getElementById('algolia-search-results');
-    if (!hits.length) { showNoResults(query); return; }
-
-    var h = '<div class="algolia-results-count">' + hits.length + ' 个结果</div>';
-    hits.forEach(function(hit, i) {
-      var title = getHL(hit, 'title') || '无标题';
-      var content = getHL(hit, 'content');
-      var url = hit.url || '#';
-
-      h += '<a class="algolia-hit" href="' + url + '" data-index="' + i + '">';
-      h += '<div class="algolia-hit-title">' + title + '</div>';
-      h += '<div class="algolia-hit-content">' + trunc(content, 150) + '</div>';
-
-      h += '</a>';
-    });
-    box.innerHTML = h;
-
-    box.querySelectorAll('.algolia-hit').forEach(function(el) {
-      el.addEventListener('click', closeAlgoliaSearch);
-    });
-  }
-
-   
-  function onInput(e) {
-    var q = e.target.value;
-    clearTimeout(debounceTimer);
-    debounceTimer = setTimeout(function() { doSearch(q); }, 200);
-  }
-
-  function onKeydown(e) {
-    var hits = document.querySelectorAll('.algolia-hit');
-    if (!hits.length) return;
-    if (e.key === 'ArrowDown') {
-      e.preventDefault();
-      selectedIndex = Math.min(selectedIndex + 1, hits.length - 1);
-      sel(hits);
-    } else if (e.key === 'ArrowUp') {
-      e.preventDefault();
-      selectedIndex = Math.max(selectedIndex - 1, 0);
-      sel(hits);
-    } else if (e.key === 'Enter' && selectedIndex >= 0) {
-      e.preventDefault();
-      window.location.href = hits[selectedIndex].getAttribute('href');
-      closeAlgoliaSearch();
-    }
-  }
-
-  function sel(hits) {
-    hits.forEach(function(el, i) {
-      if (i === selectedIndex) { el.classList.add('selected'); el.scrollIntoView({ block: 'nearest' }); }
-      else el.classList.remove('selected');
-    });
-  }
-
-   
-  document.addEventListener('DOMContentLoaded', function() {
-    var input = document.getElementById('algolia-search-input');
-    if (input) {
-      input.addEventListener('input', onInput);
-      input.addEventListener('keydown', onKeydown);
-    }
-  });
-
-  window.openAlgoliaSearch = function() {
-    var modal = document.getElementById('algolia-search-modal');
-    modal.style.display = 'flex';
-    document.body.style.overflow = 'hidden';
-    setTimeout(function() {
-      var input = document.getElementById('algolia-search-input');
-      if (input) { input.value = ''; input.focus(); showEmpty(); }
-    }, 100);
-  };
-
-  window.closeAlgoliaSearch = function() {
-    document.getElementById('algolia-search-modal').style.display = 'none';
-    document.body.style.overflow = '';
-    selectedIndex = -1;
-  };
-})();
-</script>
-
-<style>
-  .algolia-modal{position:fixed;top:0;left:0;width:100%;height:100%;z-index:1000;display:flex;align-items:flex-start;justify-content:center;padding-top:10vh}
-  .algolia-modal-overlay{position:absolute;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.6);backdrop-filter:blur(4px)}
-  .algolia-modal-content{position:relative;width:90%;max-width:600px;background:#1a1a1a;border-radius:12px;box-shadow:0 20px 60px rgba(0,0,0,.5);overflow:hidden;border:1px solid #333}
-  .algolia-search-header{padding:16px;border-bottom:1px solid #333}
-  .algolia-search-input-wrapper{display:flex;align-items:center;gap:12px;background:#2a2a2a;border-radius:8px;padding:12px 16px;border:1px solid #444}
-  .algolia-search-input-wrapper svg{color:#666;flex-shrink:0}
-  #algolia-search-input{flex:1;background:transparent;border:none;outline:none;color:#fff;font-size:16px;font-family:inherit}
-  #algolia-search-input::placeholder{color:#666}
-  .algolia-esc{background:#444;color:#999;padding:2px 6px;border-radius:4px;font-size:11px;font-family:inherit}
-  .algolia-search-results{max-height:400px;overflow-y:auto;padding:8px}
-  .algolia-empty-state{padding:40px 20px;text-align:center;color:#666}
-  .algolia-results-count{padding:8px 12px;font-size:12px;color:#666}
-  .algolia-search-footer{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;border-top:1px solid #333;background:#222;font-size:12px;color:#666}
-  .algolia-footer-text kbd{background:#444;color:#999;padding:2px 4px;border-radius:3px;font-size:10px;margin:0 2px}
-  .algolia-footer-logo a{color:#5EEAD4;text-decoration:none}
-  .algolia-footer-logo a:hover{text-decoration:underline}
-  .algolia-hit{display:block;padding:12px;border-radius:6px;text-decoration:none;color:#fff;transition:background .2s}
-  .algolia-hit:hover,.algolia-hit.selected{background:#2a2a2a}
-  .algolia-hit-title{font-weight:600;color:#5EEAD4;margin-bottom:4px;font-size:15px}
-  .algolia-hit-title mark,.algolia-highlight{background:rgba(94,234,212,.25);color:#5EEAD4;padding:0 2px;border-radius:2px}
-  .algolia-hit-content{font-size:13px;color:#999;line-height:1.5}
-  .algolia-hit-content mark,.algolia-hit-content .algolia-highlight{background:rgba(94,234,212,.2);color:#ccc;padding:0 2px;border-radius:2px}
-  .algolia-hit-meta{display:flex;align-items:center;gap:10px;margin-top:8px}
-  .algolia-hit-date{font-size:12px;color:#666}
-  .algolia-hit-tags{display:flex;gap:6px}
-  .algolia-hit-tag{background:#333;color:#999;padding:2px 8px;border-radius:4px;font-size:11px}
-</style>
-<script>
-  
-  document.addEventListener('keydown', function(e) {
-    
-    if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
-      e.preventDefault();
-      if (typeof openAlgoliaSearch === 'function') openAlgoliaSearch();
-    }
-    
-    if (e.key === 'Escape') {
-      if (typeof closeAlgoliaSearch === 'function') closeAlgoliaSearch();
-    }
-    
-    if (e.altKey && e.key === '/') {
-      e.preventDefault();
-      if (typeof openAlgoliaSearch === 'function') openAlgoliaSearch();
-    }
-  });
-
-  
-  document.addEventListener('DOMContentLoaded', function() {
-    var modal = document.getElementById('algolia-search-modal');
-    if (modal) {
-      var overlay = modal.querySelector('.algolia-modal-overlay');
-      if (overlay) {
-        overlay.addEventListener('click', function() {
-          if (typeof closeAlgoliaSearch === 'function') closeAlgoliaSearch();
-        });
-      }
-    }
-  });
-
-  
-  
-  document.addEventListener('DOMContentLoaded', function() {
-    if (document.getElementById('algolia-search-btn')) return;
-    var btn = document.createElement('button');
-    btn.id = 'algolia-search-btn';
-    btn.className = 'theme-toggle search-toggle';
-    btn.type = 'button';
-    btn.title = '搜索 (Ctrl+K)';
-    btn.setAttribute('aria-label', '搜索');
-    btn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>';
-    btn.addEventListener('click', function() {
-      if (typeof openAlgoliaSearch === 'function') openAlgoliaSearch();
-    });
-    var target = document.querySelector('.logo-switches') || document.querySelector('.header-nav');
-    if (target) target.appendChild(btn);
-  });
-</script><script>
-  document.addEventListener('DOMContentLoaded', function() {
-    var cur = (document.documentElement.lang || 'zh').toLowerCase();
-    
-    
-    
-    var rawPath = location.pathname.replace(/\/+$/, '');
-    var pm = rawPath.match(/^\/(en|ko|ja)(?:\/(.*))?$/);
-    var rest = pm ? (pm[2] ? '/' + pm[2] : '') : rawPath; 
-    function langHref(code) {
-      var base = (code === 'zh') ? '' : '/' + code;
-      if (rest === '' || rest === '/') {
-        return base === '' ? '/' : base + '/';
-      }
-      return base + rest + '/';
-    }
-
-    var langs = [
-      { code: 'zh', label: '中文' },
-      { code: 'en', label: 'English' },
-      { code: 'ko', label: '한국어' },
-      { code: 'ja', label: '日本語' }
-    ];
-    var wrap = document.querySelector('.logo-switches') || document.querySelector('.header-nav');
-    if (!wrap || document.getElementById('lang-dropdown')) return;
-
-    var current = langs.find(function(l) { return l.code === cur; }) || langs[0];
-
-    var dd = document.createElement('div');
-    dd.className = 'lang-dropdown';
-    dd.id = 'lang-dropdown';
-
-    var toggle = document.createElement('button');
-    toggle.type = 'button';
-    toggle.className = 'lang-dropdown-toggle';
-    toggle.setAttribute('aria-label', '选择语言');
-    toggle.innerHTML = '<span class="lang-current">' + current.label + '</span><span class="lang-caret">▾</span>';
-
-    var menu = document.createElement('ul');
-    menu.className = 'lang-dropdown-menu';
-    langs.forEach(function(l) {
-      var li = document.createElement('li');
-      if (l.code === cur) li.className = 'active';
-      var a = document.createElement('a');
-      a.href = langHref(l.code);
-      a.textContent = l.label;
-      li.appendChild(a);
-      menu.appendChild(li);
-    });
-
-    dd.appendChild(toggle);
-    dd.appendChild(menu);
-    wrap.appendChild(dd);
-
-    toggle.addEventListener('click', function(e) {
-      e.stopPropagation();
-      dd.classList.toggle('open');
-    });
-    document.addEventListener('click', function(e) {
-      if (!dd.contains(e.target)) dd.classList.remove('open');
-    });
-  });
-</script>
-
-
-<script>
-    let menu = document.getElementById('menu');
-    if (menu) {
-        const scrollPosition = localStorage.getItem("menu-scroll-position");
-        if (scrollPosition) {
-            menu.scrollLeft = parseInt(scrollPosition, 10);
-        }
-        menu.onscroll = function () {
-            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
-        }
-    }
-
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener("click", function (e) {
-            e.preventDefault();
-            var id = this.getAttribute("href").substr(1);
-            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
-                    behavior: "smooth"
-                });
-            } else {
-                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
-            }
-            if (id === "top") {
-                history.replaceState(null, null, " ");
-            } else {
-                history.pushState(null, null, `#${id}`);
-            }
-        });
-    });
-</script>
-<script>
-    var toplink = document.getElementById("top-link");
-    window.onscroll = function () {
-        const scrollThreshold = window.innerHeight;
-        if (document.body.scrollTop > scrollThreshold || document.documentElement.scrollTop > scrollThreshold) {
-            toplink.classList.remove("hidden");
-        } else {
-            toplink.classList.add("hidden");
-        }
-    };
-</script>
-<script>
-    document.getElementById("theme-toggle").addEventListener("click", () => {
-        const html = document.querySelector("html");
-        if (html.dataset.theme === "dark") {
-            html.dataset.theme = 'light';
-            localStorage.setItem("pref-theme", 'light');
-        } else {
-            html.dataset.theme = 'dark';
-            localStorage.setItem("pref-theme", 'dark');
-        }
-    })
-</script>
-<script>
-    document.querySelectorAll('pre > code').forEach((codeblock) => {
-        const container = codeblock.parentNode.parentNode;
-
-        const copybutton = document.createElement('button');
-        copybutton.classList.add('copy-code');
-        copybutton.innerHTML = 'コピー';
-
-        function copyingDone() {
-            copybutton.innerHTML = 'コピーされました!';
-            setTimeout(() => {
-                copybutton.innerHTML = 'コピー';
-            }, 2000);
-        }
-
-        copybutton.addEventListener('click', (cb) => {
-            if ('clipboard' in navigator) {
-                navigator.clipboard.writeText(codeblock.textContent);
-                copyingDone();
-                return;
-            }
-
-            const range = document.createRange();
-            range.selectNodeContents(codeblock);
-            const selection = window.getSelection();
-            selection.removeAllRanges();
-            selection.addRange(range);
-            try {
-                document.execCommand('copy');
-                copyingDone();
-            } catch (e) { };
-            selection.removeRange(range);
-        });
-
-        if (container.classList.contains("highlight")) {
-            container.appendChild(copybutton);
-        } else if (container.parentNode.firstChild == container) {
-            
-        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
-            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
-        } else {
-            codeblock.parentNode.appendChild(copybutton);
-        }
-    });
-</script>
-</body>
-
-</html>
+<!doctype html><html lang=ja dir=auto data-theme=auto><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><meta name=robots content="index, follow"><title>Docker 実戦：Nginx ロードバランシングとコンテナトラフィック分散 | DAWN's Blog</title><meta name=keywords content="Docker"><meta name=description content="lb コンテナと web コンテナ 2 つを起動し、lb 上の Nginx default.conf を編集して web01/web02 にリバースプロキシし、lb に 10 回 curl してトラフィックが 2 つのバックエンド間で交互に振り分けられることを確認します。"><meta name=author content="DAWN"><link rel=canonical href=https://LMDAWN1127.github.io/ja/posts/docker-nginx-load-balancing/><link crossorigin=anonymous href=/assets/css/stylesheet.4bf808bff57bddc46d61c8ae060b00400fc679ab876e37243b11bd3f832f2958.css integrity="sha256-S/gIv/V73cRtYciuBgsAQA/GeauHbjckOxG9P4MvKVg=" rel="preload stylesheet" as=style><link rel=icon href=https://LMDAWN1127.github.io/images/DAWN.jpg><link rel=icon type=image/png sizes=16x16 href=https://LMDAWN1127.github.io/favicon-16x16.png><link rel=icon type=image/png sizes=32x32 href=https://LMDAWN1127.github.io/favicon-32x32.png><link rel=apple-touch-icon href=https://LMDAWN1127.github.io/apple-touch-icon.png><link rel=mask-icon href=https://LMDAWN1127.github.io/safari-pinned-tab.svg><meta name=theme-color content="#2e2e33"><meta name=msapplication-TileColor content="#2e2e33"><link rel=alternate hreflang=zh href=https://LMDAWN1127.github.io/posts/docker-nginx-load-balancing/><link rel=alternate hreflang=en href=https://LMDAWN1127.github.io/en/posts/docker-nginx-load-balancing/><link rel=alternate hreflang=ko href=https://LMDAWN1127.github.io/ko/posts/docker-nginx-load-balancing/><link rel=alternate hreflang=ja href=https://LMDAWN1127.github.io/ja/posts/docker-nginx-load-balancing/><noscript><style>#theme-toggle,.top-link{display:none}</style><style>@media(prefers-color-scheme:dark){:root{--theme:rgb(29, 30, 32);--entry:rgb(46, 46, 51);--primary:rgb(218, 218, 219);--secondary:rgb(155, 156, 157);--tertiary:rgb(65, 66, 68);--content:rgb(196, 196, 197);--code-block-bg:rgb(46, 46, 51);--code-bg:rgb(55, 56, 62);--border:rgb(51, 51, 51);color-scheme:dark}.list{background:var(--theme)}.toc{background:var(--entry)}}</style></noscript><script>localStorage.getItem("pref-theme")==="dark"?document.querySelector("html").dataset.theme="dark":localStorage.getItem("pref-theme")==="light"?document.querySelector("html").dataset.theme="light":window.matchMedia("(prefers-color-scheme: dark)").matches?document.querySelector("html").dataset.theme="dark":document.querySelector("html").dataset.theme="light"</script><link rel=stylesheet href=https://LMDAWN1127.github.io/css/custom.css><meta property="og:url" content="https://LMDAWN1127.github.io/ja/posts/docker-nginx-load-balancing/"><meta property="og:site_name" content="DAWN's Blog"><meta property="og:title" content="Docker 実戦：Nginx ロードバランシングとコンテナトラフィック分散"><meta property="og:description" content="lb コンテナと web コンテナ 2 つを起動し、lb 上の Nginx default.conf を編集して web01/web02 にリバースプロキシし、lb に 10 回 curl してトラフィックが 2 つのバックエンド間で交互に振り分けられることを確認します。"><meta property="og:locale" content="ja"><meta property="og:type" content="article"><meta property="article:section" content="posts"><meta property="article:published_time" content="2026-10-26T11:50:00+08:00"><meta property="article:modified_time" content="2026-10-26T11:50:00+08:00"><meta property="article:tag" content="Docker"><meta property="og:image" content="https://LMDAWN1127.github.io/images/DAWN.jpg"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="https://LMDAWN1127.github.io/images/DAWN.jpg"><meta name=twitter:title content="Docker 実戦：Nginx ロードバランシングとコンテナトラフィック分散"><meta name=twitter:description content="lb コンテナと web コンテナ 2 つを起動し、lb 上の Nginx default.conf を編集して web01/web02 にリバースプロキシし、lb に 10 回 curl してトラフィックが 2 つのバックエンド間で交互に振り分けられることを確認します。"><script type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Posts","item":"https://LMDAWN1127.github.io/ja/posts/"},{"@type":"ListItem","position":2,"name":"Docker 実戦：Nginx ロードバランシングとコンテナトラフィック分散","item":"https://LMDAWN1127.github.io/ja/posts/docker-nginx-load-balancing/"}]}</script><script type=application/ld+json>{"@context":"https://schema.org","@type":"BlogPosting","headline":"Docker 実戦：Nginx ロードバランシングとコンテナトラフィック分散","name":"Docker 実戦：Nginx ロードバランシングとコンテナトラフィック分散","description":"lb コンテナと web コンテナ 2 つを起動し、lb 上の Nginx default.conf を編集して web01/web02 にリバースプロキシし、lb に 10 回 curl してトラフィックが 2 つのバックエンド間で交互に振り分けられることを確認します。","keywords":["Docker"],"articleBody":"Docker 実戦：Nginx ロードバランシングとコンテナトラフィック分散 1. コンテナ lb、web01、web02 を 3 つ起動 1 2 3 4 5 6 root@docker02:~# docker run -d --name web01 uhub.service.ucloud.cn/dawn/apps:v1 03f912ea4eb722403408e5a4ed7014398131ae3fc55bd411f572ac72ae656b05 root@docker02:~# docker run -d --name web02 uhub.service.ucloud.cn/dawn/apps:v1 9b54bfd5df24bb64f49f69f9dc417667602c9c244fdb2278faf7ade52f7ed605 root@docker02:~# docker run -d --name lb -p 88:80 uhub.service.ucloud.cn/dawn/apps:v1 36b2783a8f4c7f05bc7e012ea2fd00dfa7a2a5ec78d3bf5c078a3d772fc8dbae 2. lb の IP にアクセスし、web01 と web02 のテストページにプロキシ 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 root@docker02:~# docker exec -it web01 sh / # echo web01 \u003e /usr/share/nginx/html/index.html / # ifconfig eth0 Link encap:Ethernet HWaddr 02:42:AC:11:00:02 inet addr:172.17.0.2 Bcast:172.17.255.255 Mask:255.255.0.0 UP BROADCAST RUNNING MULTICAST MTU:1500 Metric:1 RX packets:12 errors:0 dropped:0 overruns:0 frame:0 TX packets:0 errors:0 dropped:0 overruns:0 carrier:0 collisions:0 txqueuelen:0 RX bytes:1016 (1016.0 B) TX bytes:0 (0.0 B) lo Link encap:Local Loopback inet addr:127.0.0.1 Mask:255.0.0.0 inet6 addr: ::1/128 Scope:Host UP LOOPBACK RUNNING MTU:65536 Metric:1 RX packets:0 errors:0 dropped:0 overruns:0 frame:0 TX packets:0 errors:0 dropped:0 overruns:0 carrier:0 collisions:0 txqueuelen:1000 RX bytes:0 (0.0 B) TX bytes:0 (0.0 B) / # exit root@docker02:~# docker exec -it web02 sh / # echo web02 \u003e /usr/share/nginx/html/index.html / # ifconfig eth0 Link encap:Ethernet HWaddr 02:42:AC:11:00:03 inet addr:172.17.0.3 Bcast:172.17.255.255 Mask:255.255.0.0 UP BROADCAST RUNNING MULTICAST MTU:1500 Metric:1 RX packets:11 errors:0 dropped:0 overruns:0 frame:0 TX packets:0 errors:0 dropped:0 overruns:0 carrier:0 collisions:0 txqueuelen:0 RX bytes:866 (866.0 B) TX bytes:0 (0.0 B) lo Link encap:Local Loopback inet addr:127.0.0.1 Mask:255.0.0.0 inet6 addr: ::1/128 Scope:Host UP LOOPBACK RUNNING MTU:65536 Metric:1 RX packets:0 errors:0 dropped:0 overruns:0 frame:0 TX packets:0 errors:0 dropped:0 overruns:0 carrier:0 collisions:0 txqueuelen:1000 RX bytes:0 (0.0 B) TX bytes:0 (0.0 B) / # exit root@docker02:~# docker exec -it lb sh / # vi /etc/nginx/conf.d/default.conf / # / # / # nginx -t nginx: the configuration file /etc/nginx/nginx.conf syntax is ok nginx: configuration file /etc/nginx/nginx.conf test is successful / # nginx -s reload 2026/10/26 03:58:03 [notice] 42#42: signal process started / # exit root@docker02:~# docker restart lb lb root@docker02:~# docker ps CONTAINER ID IMAGE COMMAND CREATED STATUS PORTS NAMES 36b2783a8f4c uhub.service.ucloud.cn/dawn/apps:v1 \"/docker-entrypoint.…\" 8 minutes ago Up 10 seconds 0.0.0.0:88-\u003e80/tcp, :::88-\u003e80/tcp lb 9b54bfd5df24 uhub.service.ucloud.cn/dawn/apps:v1 \"/docker-entrypoint.…\" 8 minutes ago Up 8 minutes 80/tcp web02 03f912ea4eb7 uhub.service.ucloud.cn/dawn/apps:v1 \"/docker-entrypoint.…\" 9 minutes ago Up 9 minutes 80/tcp web01 3. lb コンテナに 10 回アクセスした結果は以下の通り 1 2 3 4 5 6 7 8 9 10 11 root@docker02:~# for i in `seq 10`;do curl 11.0.1.122:88;done web01 web02 web01 web02 web01 web02 web01 web02 web01 web02 ","wordCount":"426","inLanguage":"ja","image":"https://LMDAWN1127.github.io/images/DAWN.jpg","datePublished":"2026-10-26T11:50:00+08:00","dateModified":"2026-10-26T11:50:00+08:00","author":{"@type":"Person","name":"DAWN"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://LMDAWN1127.github.io/ja/posts/docker-nginx-load-balancing/"},"publisher":{"@type":"Organization","name":"DAWN's Blog","logo":{"@type":"ImageObject","url":"https://LMDAWN1127.github.io/images/DAWN.jpg"}}}</script></head><body id=top><header class=header><nav class=header-nav><div class=logo><a href=https://LMDAWN1127.github.io/ja/ accesskey=h title="DAWN's Blog (Alt + H)"><img src=https://LMDAWN1127.github.io/images/DAWN.jpg alt aria-label=logo height=38>DAWN's Blog</a><div class=logo-switches><button id=theme-toggle class=theme-toggle accesskey=t title="(Alt + T)" aria-label="Toggle theme">
+<svg class="moon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+<svg class="sun" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+</button><span class=nav-sep>|</span><ul class=lang-menu><li><a href=https://LMDAWN1127.github.io/ title=中文 aria-label=中文>Zh</a></li><li><a href=https://LMDAWN1127.github.io/en/ title=English aria-label=English>En</a></li><li><a href=https://LMDAWN1127.github.io/ko/ title=한국어 aria-label=한국어>Ko</a></li></ul></div></div><ul id=menu class=menu><li><a href=https://LMDAWN1127.github.io/ja/archives/ title=アーカイブ><span>アーカイブ</span></a></li></ul></nav></header><main class=main><article class=post-single><header class=post-header><h1 class="post-title entry-hint-parent">Docker 実戦：Nginx ロードバランシングとコンテナトラフィック分散</h1></header><div class=post-layout><div class=post-content-wrapper><div class="post-content md-content"><h1 id=docker-実戦nginx-ロードバランシングとコンテナトラフィック分散>Docker 実戦：Nginx ロードバランシングとコンテナトラフィック分散<a hidden class=anchor aria-hidden=true href=#docker-実戦nginx-ロードバランシングとコンテナトラフィック分散>#</a></h1><h2 id=1-コンテナ-lbweb01web02-を-3-つ起動>1. コンテナ lb、web01、web02 を 3 つ起動<a hidden class=anchor aria-hidden=true href=#1-コンテナ-lbweb01web02-を-3-つ起動>#</a></h2><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-bash data-lang=bash><span style=display:flex><span>root@docker02:~# docker run -d --name web01 uhub.service.ucloud.cn/dawn/apps:v1
+</span></span><span style=display:flex><span>03f912ea4eb722403408e5a4ed7014398131ae3fc55bd411f572ac72ae656b05
+</span></span><span style=display:flex><span>root@docker02:~# docker run -d --name web02 uhub.service.ucloud.cn/dawn/apps:v1
+</span></span><span style=display:flex><span>9b54bfd5df24bb64f49f69f9dc417667602c9c244fdb2278faf7ade52f7ed605
+</span></span><span style=display:flex><span>root@docker02:~# docker run -d --name lb -p 88:80 uhub.service.ucloud.cn/dawn/apps:v1
+</span></span><span style=display:flex><span>36b2783a8f4c7f05bc7e012ea2fd00dfa7a2a5ec78d3bf5c078a3d772fc8dbae
+</span></span></code></pre></td></tr></table></div></div><h2 id=2-lb-の-ip-にアクセスしweb01-と-web02-のテストページにプロキシ>2. lb の IP にアクセスし、web01 と web02 のテストページにプロキシ<a hidden class=anchor aria-hidden=true href=#2-lb-の-ip-にアクセスしweb01-と-web02-のテストページにプロキシ>#</a></h2><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">30
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">31
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">32
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">33
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">34
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">35
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">36
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">37
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">38
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">39
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">40
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">41
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">42
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">43
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">44
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">45
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">46
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">47
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">48
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">49
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">50
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">51
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">52
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">53
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">54
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">55
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">56
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">57
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">58
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">59
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-bash data-lang=bash><span style=display:flex><span>root@docker02:~# docker exec -it web01 sh
+</span></span><span style=display:flex><span>/ <span style=color:#75715e># echo web01 &gt; /usr/share/nginx/html/index.html</span>
+</span></span><span style=display:flex><span>/ <span style=color:#75715e># ifconfig</span>
+</span></span><span style=display:flex><span>eth0      Link encap:Ethernet  HWaddr 02:42:AC:11:00:02
+</span></span><span style=display:flex><span>          inet addr:172.17.0.2  Bcast:172.17.255.255  Mask:255.255.0.0
+</span></span><span style=display:flex><span>          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+</span></span><span style=display:flex><span>          RX packets:12 errors:0 dropped:0 overruns:0 frame:0
+</span></span><span style=display:flex><span>          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
+</span></span><span style=display:flex><span>          collisions:0 txqueuelen:0
+</span></span><span style=display:flex><span>          RX bytes:1016 <span style=color:#f92672>(</span>1016.0 B<span style=color:#f92672>)</span>  TX bytes:0 <span style=color:#f92672>(</span>0.0 B<span style=color:#f92672>)</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>lo        Link encap:Local Loopback
+</span></span><span style=display:flex><span>          inet addr:127.0.0.1  Mask:255.0.0.0
+</span></span><span style=display:flex><span>          inet6 addr: ::1/128 Scope:Host
+</span></span><span style=display:flex><span>          UP LOOPBACK RUNNING  MTU:65536  Metric:1
+</span></span><span style=display:flex><span>          RX packets:0 errors:0 dropped:0 overruns:0 frame:0
+</span></span><span style=display:flex><span>          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
+</span></span><span style=display:flex><span>          collisions:0 txqueuelen:1000
+</span></span><span style=display:flex><span>          RX bytes:0 <span style=color:#f92672>(</span>0.0 B<span style=color:#f92672>)</span>  TX bytes:0 <span style=color:#f92672>(</span>0.0 B<span style=color:#f92672>)</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>/ <span style=color:#75715e># exit</span>
+</span></span><span style=display:flex><span>root@docker02:~# docker exec -it web02 sh
+</span></span><span style=display:flex><span>/ <span style=color:#75715e># echo web02 &gt; /usr/share/nginx/html/index.html</span>
+</span></span><span style=display:flex><span>/ <span style=color:#75715e># ifconfig</span>
+</span></span><span style=display:flex><span>eth0      Link encap:Ethernet  HWaddr 02:42:AC:11:00:03
+</span></span><span style=display:flex><span>          inet addr:172.17.0.3  Bcast:172.17.255.255  Mask:255.255.0.0
+</span></span><span style=display:flex><span>          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+</span></span><span style=display:flex><span>          RX packets:11 errors:0 dropped:0 overruns:0 frame:0
+</span></span><span style=display:flex><span>          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
+</span></span><span style=display:flex><span>          collisions:0 txqueuelen:0
+</span></span><span style=display:flex><span>          RX bytes:866 <span style=color:#f92672>(</span>866.0 B<span style=color:#f92672>)</span>  TX bytes:0 <span style=color:#f92672>(</span>0.0 B<span style=color:#f92672>)</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>lo        Link encap:Local Loopback
+</span></span><span style=display:flex><span>          inet addr:127.0.0.1  Mask:255.0.0.0
+</span></span><span style=display:flex><span>          inet6 addr: ::1/128 Scope:Host
+</span></span><span style=display:flex><span>          UP LOOPBACK RUNNING  MTU:65536  Metric:1
+</span></span><span style=display:flex><span>          RX packets:0 errors:0 dropped:0 overruns:0 frame:0
+</span></span><span style=display:flex><span>          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
+</span></span><span style=display:flex><span>          collisions:0 txqueuelen:1000
+</span></span><span style=display:flex><span>          RX bytes:0 <span style=color:#f92672>(</span>0.0 B<span style=color:#f92672>)</span>  TX bytes:0 <span style=color:#f92672>(</span>0.0 B<span style=color:#f92672>)</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>/ <span style=color:#75715e># exit</span>
+</span></span><span style=display:flex><span>root@docker02:~# docker exec -it lb sh
+</span></span><span style=display:flex><span>/ <span style=color:#75715e># vi /etc/nginx/conf.d/default.conf</span>
+</span></span><span style=display:flex><span>/ <span style=color:#75715e>#</span>
+</span></span><span style=display:flex><span>/ <span style=color:#75715e>#</span>
+</span></span><span style=display:flex><span>/ <span style=color:#75715e># nginx -t</span>
+</span></span><span style=display:flex><span>nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
+</span></span><span style=display:flex><span>nginx: configuration file /etc/nginx/nginx.conf test is successful
+</span></span><span style=display:flex><span>/ <span style=color:#75715e># nginx -s reload</span>
+</span></span><span style=display:flex><span>2026/10/26 03:58:03 <span style=color:#f92672>[</span>notice<span style=color:#f92672>]</span> 42#42: signal process started
+</span></span><span style=display:flex><span>/ <span style=color:#75715e># exit</span>
+</span></span><span style=display:flex><span>root@docker02:~# docker restart lb
+</span></span><span style=display:flex><span>lb
+</span></span><span style=display:flex><span>root@docker02:~# docker ps
+</span></span><span style=display:flex><span>CONTAINER ID   IMAGE                                 COMMAND                  CREATED         STATUS          PORTS                               NAMES
+</span></span><span style=display:flex><span>36b2783a8f4c   uhub.service.ucloud.cn/dawn/apps:v1   <span style=color:#e6db74>&#34;/docker-entrypoint.…&#34;</span>   <span style=color:#ae81ff>8</span> minutes ago   Up <span style=color:#ae81ff>10</span> seconds   0.0.0.0:88-&gt;80/tcp, :::88-&gt;80/tcp   lb
+</span></span><span style=display:flex><span>9b54bfd5df24   uhub.service.ucloud.cn/dawn/apps:v1   <span style=color:#e6db74>&#34;/docker-entrypoint.…&#34;</span>   <span style=color:#ae81ff>8</span> minutes ago   Up <span style=color:#ae81ff>8</span> minutes    80/tcp                              web02
+</span></span><span style=display:flex><span>03f912ea4eb7   uhub.service.ucloud.cn/dawn/apps:v1   <span style=color:#e6db74>&#34;/docker-entrypoint.…&#34;</span>   <span style=color:#ae81ff>9</span> minutes ago   Up <span style=color:#ae81ff>9</span> minutes    80/tcp                              web01
+</span></span></code></pre></td></tr></table></div></div><h2 id=3-lb-コンテナに-10-回アクセスした結果は以下の通り>3. lb コンテナに 10 回アクセスした結果は以下の通り<a hidden class=anchor aria-hidden=true href=#3-lb-コンテナに-10-回アクセスした結果は以下の通り>#</a></h2><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-bash data-lang=bash><span style=display:flex><span>root@docker02:~# <span style=color:#66d9ef>for</span> i in <span style=color:#e6db74>`</span>seq 10<span style=color:#e6db74>`</span>;<span style=color:#66d9ef>do</span> curl 11.0.1.122:88;<span style=color:#66d9ef>done</span>
+</span></span><span style=display:flex><span>web01
+</span></span><span style=display:flex><span>web02
+</span></span><span style=display:flex><span>web01
+</span></span><span style=display:flex><span>web02
+</span></span><span style=display:flex><span>web01
+</span></span><span style=display:flex><span>web02
+</span></span><span style=display:flex><span>web01
+</span></span><span style=display:flex><span>web02
+</span></span><span style=display:flex><span>web01
+</span></span><span style=display:flex><span>web02
+</span></span></code></pre></td></tr></table></div></div></div><div id=giscus-container style="margin-top:2rem;padding-top:1rem;border-top:1px solid var(--border)"><script src=https://giscus.app/client.js data-repo=LMDAWN1127/LMDAWN1127.github.io data-repo-id=R_kgDOTMWmvw data-category=Announcements data-category-id=DIC_kwDOTMWmv84DAd3g data-mapping=pathname data-strict=0 data-reactions-enabled=1 data-emit-metadata=0 data-input-position=bottom data-theme=preferred_color_scheme data-lang=zh-CN crossorigin=anonymous async></script></div></div><aside class=toc-sidebar id=toc-sidebar><div class=toc-header>目录</div><nav class=toc-nav><ul class=toc-list><li><a href=#docker-%e5%ae%9f%e6%88%a6nginx-%e3%83%ad%e3%83%bc%e3%83%89%e3%83%90%e3%83%a9%e3%83%b3%e3%82%b7%e3%83%b3%e3%82%b0%e3%81%a8%e3%82%b3%e3%83%b3%e3%83%86%e3%83%8a%e3%83%88%e3%83%a9%e3%83%95%e3%82%a3%e3%83%83%e3%82%af%e5%88%86%e6%95%a3 class=toc-link data-target=docker-実戦nginx-ロードバランシングとコンテナトラフィック分散>Docker 実戦：Nginx ロードバランシングとコンテナトラフィック分散</a><ul><li><a href=#1-%e3%82%b3%e3%83%b3%e3%83%86%e3%83%8a-lbweb01web02-%e3%82%92-3-%e3%81%a4%e8%b5%b7%e5%8b%95 class=toc-link data-target=1-コンテナ-lbweb01web02-を-3-つ起動>1. コンテナ lb、web01、web02 を 3 つ起動</a></li><li><a href=#2-lb-%e3%81%ae-ip-%e3%81%ab%e3%82%a2%e3%82%af%e3%82%bb%e3%82%b9%e3%81%97web01-%e3%81%a8-web02-%e3%81%ae%e3%83%86%e3%82%b9%e3%83%88%e3%83%9a%e3%83%bc%e3%82%b8%e3%81%ab%e3%83%97%e3%83%ad%e3%82%ad%e3%82%b7 class=toc-link data-target=2-lb-の-ip-にアクセスしweb01-と-web02-のテストページにプロキシ>2. lb の IP にアクセスし、web01 と web02 のテストページにプロキシ</a></li><li><a href=#3-lb-%e3%82%b3%e3%83%b3%e3%83%86%e3%83%8a%e3%81%ab-10-%e5%9b%9e%e3%82%a2%e3%82%af%e3%82%bb%e3%82%b9%e3%81%97%e3%81%9f%e7%b5%90%e6%9e%9c%e3%81%af%e4%bb%a5%e4%b8%8b%e3%81%ae%e9%80%9a%e3%82%8a class=toc-link data-target=3-lb-コンテナに-10-回アクセスした結果は以下の通り>3. lb コンテナに 10 回アクセスした結果は以下の通り</a></li></ul></li></ul></nav></aside></div></article></main><a href=#top id=top-link class="top-link hidden" aria-label="go to top" title="Go to Top (Alt + G)" accesskey=g><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevrons-up"><polyline points="17 11 12 6 7 11"/><polyline points="17 18 12 13 7 18"/></svg>
+</a><script defer src=/js/custom.js></script><div id=algolia-search-modal class=algolia-modal style=display:none><div class=algolia-modal-overlay></div><div class=algolia-modal-content><div class=algolia-search-header><div class=algolia-search-input-wrapper><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+<input type=text id=algolia-search-input placeholder=搜索文章... autofocus>
+<kbd class=algolia-esc>Esc</kbd></div></div><div id=algolia-search-results class=algolia-search-results><div class=algolia-empty-state><p>输入关键词开始搜索</p></div></div><div class=algolia-search-footer><span class=algolia-footer-text><kbd>↑</kbd> <kbd>↓</kbd> 导航
+<kbd>↵</kbd> 打开
+<kbd>Esc</kbd> 关闭
+</span><span class=algolia-footer-logo>搜索由 <a href=https://www.algolia.com/ target=_blank rel=noopener>Algolia</a> 提供</span></div></div></div><script>(function(){"use strict";var a="Y0SCRI4LCW",g="03dda5e44aec7e0dd93b6a3653250b1f",u="lmdawn1127-blog",d="https://"+a+"-dsn.algolia.net/1/indexes/"+u+"/query",i=null,e=-1;function c(e){if(!e||!e.trim()){t();return}var n=JSON.stringify({query:e,hitsPerPage:10,attributesToRetrieve:["title","content","url"],attributesToHighlight:["title","content"],highlightPreTag:'<mark class="algolia-highlight">',highlightPostTag:"</mark>"});fetch(d,{method:"POST",headers:{"X-Algolia-Application-Id":a,"X-Algolia-API-Key":g,"Content-Type":"application/json"},body:n}).then(function(e){if(!e.ok)throw new Error("HTTP "+e.status);return e.json()}).then(function(t){m(t.hits||[],e)}).catch(function(e){console.error("Algolia search error:",e),r(e.message||"未知错误")})}function t(){document.getElementById("algolia-search-results").innerHTML='<div class="algolia-empty-state"><p>输入关键词开始搜索</p></div>'}function r(e){var t="搜索出错，请稍后再试";e&&(t+='<br><small style="color:#888">错误详情: '+o(e)+"</small>"),document.getElementById("algolia-search-results").innerHTML='<div class="algolia-empty-state"><p>'+t+"</p></div>"}function l(e){document.getElementById("algolia-search-results").innerHTML='<div class="algolia-empty-state"><p>未找到与「'+o(e)+"」相关的结果</p></div>"}function o(e){var t=document.createElement("div");return t.appendChild(document.createTextNode(e)),t.innerHTML}function s(e,t){return e._highlightResult&&e._highlightResult[t]?e._highlightResult[t].value:e[t]||""}function h(e,t){return e?(e=e.replace(/<[^>]+>/g,""),e.length>t?e.substring(0,t)+"…":e):""}function m(e,t){var n,o=document.getElementById("algolia-search-results");if(!e.length){l(t);return}n='<div class="algolia-results-count">'+e.length+" 个结果</div>",e.forEach(function(e,t){var o=s(e,"title")||"无标题",i=s(e,"content"),a=e.url||"#";n+='<a class="algolia-hit" href="'+a+'" data-index="'+t+'">',n+='<div class="algolia-hit-title">'+o+"</div>",n+='<div class="algolia-hit-content">'+h(i,150)+"</div>",n+="</a>"}),o.innerHTML=n,o.querySelectorAll(".algolia-hit").forEach(function(e){e.addEventListener("click",closeAlgoliaSearch)})}function f(e){var t=e.target.value;clearTimeout(i),i=setTimeout(function(){c(t)},200)}function p(t){var s=document.querySelectorAll(".algolia-hit");if(!s.length)return;t.key==="ArrowDown"?(t.preventDefault(),e=Math.min(e+1,s.length-1),n(s)):t.key==="ArrowUp"?(t.preventDefault(),e=Math.max(e-1,0),n(s)):t.key==="Enter"&&e>=0&&(t.preventDefault(),window.location.href=s[e].getAttribute("href"),closeAlgoliaSearch())}function n(t){t.forEach(function(t,n){n===e?(t.classList.add("selected"),t.scrollIntoView({block:"nearest"})):t.classList.remove("selected")})}document.addEventListener("DOMContentLoaded",function(){var e=document.getElementById("algolia-search-input");e&&(e.addEventListener("input",f),e.addEventListener("keydown",p))}),window.openAlgoliaSearch=function(){var e=document.getElementById("algolia-search-modal");e.style.display="flex",document.body.style.overflow="hidden",setTimeout(function(){var e=document.getElementById("algolia-search-input");e&&(e.value="",e.focus(),t())},100)},window.closeAlgoliaSearch=function(){document.getElementById("algolia-search-modal").style.display="none",document.body.style.overflow="",e=-1}})()</script><style>.algolia-modal{position:fixed;top:0;left:0;width:100%;height:100%;z-index:1000;display:flex;align-items:flex-start;justify-content:center;padding-top:10vh}.algolia-modal-overlay{position:absolute;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.6);backdrop-filter:blur(4px)}.algolia-modal-content{position:relative;width:90%;max-width:600px;background:#1a1a1a;border-radius:12px;box-shadow:0 20px 60px rgba(0,0,0,.5);overflow:hidden;border:1px solid #333}.algolia-search-header{padding:16px;border-bottom:1px solid #333}.algolia-search-input-wrapper{display:flex;align-items:center;gap:12px;background:#2a2a2a;border-radius:8px;padding:12px 16px;border:1px solid #444}.algolia-search-input-wrapper svg{color:#666;flex-shrink:0}#algolia-search-input{flex:1;background:0 0;border:none;outline:none;color:#fff;font-size:16px;font-family:inherit}#algolia-search-input::placeholder{color:#666}.algolia-esc{background:#444;color:#999;padding:2px 6px;border-radius:4px;font-size:11px;font-family:inherit}.algolia-search-results{max-height:400px;overflow-y:auto;padding:8px}.algolia-empty-state{padding:40px 20px;text-align:center;color:#666}.algolia-results-count{padding:8px 12px;font-size:12px;color:#666}.algolia-search-footer{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;border-top:1px solid #333;background:#222;font-size:12px;color:#666}.algolia-footer-text kbd{background:#444;color:#999;padding:2px 4px;border-radius:3px;font-size:10px;margin:0 2px}.algolia-footer-logo a{color:#5eead4;text-decoration:none}.algolia-footer-logo a:hover{text-decoration:underline}.algolia-hit{display:block;padding:12px;border-radius:6px;text-decoration:none;color:#fff;transition:background .2s}.algolia-hit:hover,.algolia-hit.selected{background:#2a2a2a}.algolia-hit-title{font-weight:600;color:#5eead4;margin-bottom:4px;font-size:15px}.algolia-hit-title mark,.algolia-highlight{background:rgba(94,234,212,.25);color:#5eead4;padding:0 2px;border-radius:2px}.algolia-hit-content{font-size:13px;color:#999;line-height:1.5}.algolia-hit-content mark,.algolia-hit-content .algolia-highlight{background:rgba(94,234,212,.2);color:#ccc;padding:0 2px;border-radius:2px}.algolia-hit-meta{display:flex;align-items:center;gap:10px;margin-top:8px}.algolia-hit-date{font-size:12px;color:#666}.algolia-hit-tags{display:flex;gap:6px}.algolia-hit-tag{background:#333;color:#999;padding:2px 8px;border-radius:4px;font-size:11px}</style><script>document.addEventListener("keydown",function(e){(e.metaKey||e.ctrlKey)&&e.key==="k"&&(e.preventDefault(),typeof openAlgoliaSearch=="function"&&openAlgoliaSearch()),e.key==="Escape"&&typeof closeAlgoliaSearch=="function"&&closeAlgoliaSearch(),e.altKey&&e.key==="/"&&(e.preventDefault(),typeof openAlgoliaSearch=="function"&&openAlgoliaSearch())}),document.addEventListener("DOMContentLoaded",function(){var e,t=document.getElementById("algolia-search-modal");t&&(e=t.querySelector(".algolia-modal-overlay"),e&&e.addEventListener("click",function(){typeof closeAlgoliaSearch=="function"&&closeAlgoliaSearch()}))}),document.addEventListener("DOMContentLoaded",function(){if(document.getElementById("algolia-search-btn"))return;var t,e=document.createElement("button");e.id="algolia-search-btn",e.className="theme-toggle search-toggle",e.type="button",e.title="搜索 (Ctrl+K)",e.setAttribute("aria-label","搜索"),e.innerHTML='<svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',e.addEventListener("click",function(){typeof openAlgoliaSearch=="function"&&openAlgoliaSearch()}),t=document.querySelector(".logo-switches")||document.querySelector(".header-nav"),t&&t.appendChild(e)})</script><script>document.addEventListener("DOMContentLoaded",function(){var e,t,n,s,a,l,r=(document.documentElement.lang||"zh").toLowerCase(),c=location.pathname.replace(/\/+$/,""),o=c.match(/^\/(en|ko|ja)(?:\/(.*))?$/),i=o?o[2]?"/"+o[2]:"":c;function d(e){var t=e==="zh"?"":"/"+e;return i===""||i==="/"?t===""?"/":t+"/":t+i+"/"}if(n=[{code:"zh",label:"中文"},{code:"en",label:"English"},{code:"ko",label:"한국어"},{code:"ja",label:"日本語"}],a=document.querySelector(".logo-switches")||document.querySelector(".header-nav"),!a||document.getElementById("lang-dropdown"))return;l=n.find(function(e){return e.code===r})||n[0],e=document.createElement("div"),e.className="lang-dropdown",e.id="lang-dropdown",t=document.createElement("button"),t.type="button",t.className="lang-dropdown-toggle",t.setAttribute("aria-label","选择语言"),t.innerHTML='<span class="lang-current">'+l.label+'</span><span class="lang-caret">▾</span>',s=document.createElement("ul"),s.className="lang-dropdown-menu",n.forEach(function(e){var t,n=document.createElement("li");e.code===r&&(n.className="active"),t=document.createElement("a"),t.href=d(e.code),t.textContent=e.label,n.appendChild(t),s.appendChild(n)}),e.appendChild(t),e.appendChild(s),a.appendChild(e),t.addEventListener("click",function(t){t.stopPropagation(),e.classList.toggle("open")}),document.addEventListener("click",function(t){e.contains(t.target)||e.classList.remove("open")})})</script><script>let menu=document.getElementById("menu");if(menu){const e=localStorage.getItem("menu-scroll-position");e&&(menu.scrollLeft=parseInt(e,10)),menu.onscroll=function(){localStorage.setItem("menu-scroll-position",menu.scrollLeft)}}document.querySelectorAll('a[href^="#"]').forEach(e=>{e.addEventListener("click",function(e){e.preventDefault();var t=this.getAttribute("href").substr(1);window.matchMedia("(prefers-reduced-motion: reduce)").matches?document.querySelector(`[id='${decodeURIComponent(t)}']`).scrollIntoView():document.querySelector(`[id='${decodeURIComponent(t)}']`).scrollIntoView({behavior:"smooth"}),t==="top"?history.replaceState(null,null," "):history.pushState(null,null,`#${t}`)})})</script><script>var toplink=document.getElementById("top-link");window.onscroll=function(){const e=window.innerHeight;document.body.scrollTop>e||document.documentElement.scrollTop>e?toplink.classList.remove("hidden"):toplink.classList.add("hidden")}</script><script>document.getElementById("theme-toggle").addEventListener("click",()=>{const e=document.querySelector("html");e.dataset.theme==="dark"?(e.dataset.theme="light",localStorage.setItem("pref-theme","light")):(e.dataset.theme="dark",localStorage.setItem("pref-theme","dark"))})</script><script>document.querySelectorAll("pre > code").forEach(e=>{const n=e.parentNode.parentNode,t=document.createElement("button");t.classList.add("copy-code"),t.innerHTML="コピー";function s(){t.innerHTML="コピーされました!",setTimeout(()=>{t.innerHTML="コピー"},2e3)}t.addEventListener("click",t=>{if("clipboard"in navigator){navigator.clipboard.writeText(e.textContent),s();return}const n=document.createRange();n.selectNodeContents(e);const o=window.getSelection();o.removeAllRanges(),o.addRange(n);try{document.execCommand("copy"),s()}catch{}o.removeRange(n)}),n.classList.contains("highlight")?n.appendChild(t):n.parentNode.firstChild==n||(e.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName=="TABLE"?e.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(t):e.parentNode.appendChild(t))})</script></body></html>

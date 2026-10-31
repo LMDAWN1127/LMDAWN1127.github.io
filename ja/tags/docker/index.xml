@@ -1,408 +1,119 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
-  <channel>
-    <title>Docker on DAWN&#39;s Blog</title>
-    <link>https://LMDAWN1127.github.io/ja/tags/docker/</link>
-    <description>Recent content in Docker on DAWN&#39;s Blog</description>
-    <image>
-      <title>DAWN&#39;s Blog</title>
-      <url>https://LMDAWN1127.github.io/images/DAWN.jpg</url>
-      <link>https://LMDAWN1127.github.io/images/DAWN.jpg</link>
-    </image>
-    <generator>Hugo</generator>
-    <language>ja</language>
-    <lastBuildDate>Fri, 30 Oct 2026 10:31:00 +0800</lastBuildDate>
-    <atom:link href="https://LMDAWN1127.github.io/ja/tags/docker/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>Harbor アクティブスタンバイデプロイ：インストールからHTTPS・レプリケーションまで</title>
-      <link>https://LMDAWN1127.github.io/ja/posts/harbor-master-slave/</link>
-      <pubDate>Tue, 04 Aug 2026 00:00:00 +0000</pubDate>
-      <guid>https://LMDAWN1127.github.io/ja/posts/harbor-master-slave/</guid>
-      <description>HarborエンタープライズDockerレジストリのアクティブスタンバイアーキテクチャ、HTTP/HTTPSモード、自己署名証明書、クロスホストレプリケーションを完全にカバーするデプロイガイドです。</description>
-    </item>
-    <item>
-      <title>containerd コンテナランタイムの導入と runc/ctr による管理実践</title>
-      <link>https://LMDAWN1127.github.io/ja/posts/containerd-runc-ctr-management/</link>
-      <pubDate>Fri, 30 Oct 2026 10:31:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/ja/posts/containerd-runc-ctr-management/</guid>
-      <description>本実践ではまず docker02 ノードの Docker バイナリをアンインストールし、containerd 1.7.20 ランタイム（cri-containerd-cni の展開、systemd ユニットの設置、config.toml で SystemdCgroup を有効化し sandbox_image を置換）を導入、さらに runc 1.1.12 と ctr クライアントをインストールする。その後、ctr によるイメージのプルとタグ付け、コンテナの作成/起動/一時停止/再開/削除、名前空間管理、および docker01 の Harbor（HTTP、非 TLS）へのプッシュとプルの一連の操作を実演する。</description>
-    </item>
-    <item>
-      <title>Harbor 自己署名証明書による HTTPS デプロイ実践</title>
-      <link>https://LMDAWN1127.github.io/ja/posts/harbor-self-signed-https/</link>
-      <pubDate>Thu, 29 Oct 2026 20:57:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/ja/posts/harbor-self-signed-https/</guid>
-      <description>本実践では自己署名証明書を用いた HTTPS で Harbor を構成する。証明書ディレクトリを作成し、openssl で自己署名証明書（ドメイン harbor.dawn.com、SAN に DNS と IP 11.0.1.122 を含む）を生成、harbor.yml を編集して 443 ポートの HTTPS を有効化、install.sh で再インストールする。最後に ss と curl で 80 ポートが自動的に 443 へリダイレクトされ WebUI にアクセスできることを確認する。自己署名証明書はクライアント側の信頼が必要で、本番環境では公式 CA が発行した証明書を使用して警告を回避すべきである。</description>
-    </item>
-    <item>
-      <title>Harbor 高可用性：keepalived による VIP フェイルオーバーの実現</title>
-      <link>https://LMDAWN1127.github.io/ja/posts/harbor-keepalived-vip/</link>
-      <pubDate>Thu, 29 Oct 2026 20:38:15 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/ja/posts/harbor-keepalived-vip/</guid>
-      <description>本実践では keepalived を用いた VIP フェイルオーバーで Harbor の高可用性構成を構築する。docker01 と docker02 に keepalived をインストールし、ポートチェックスクリプトを作成して、仮想 IP 11.0.1.250 を共有する VRRP インスタンス（docker01 を priority 100 の MASTER、docker02 を priority 90 の BACKUP）を設定する。VIP が現在 docker01 の Harbor を指していることを確認後、docker01 の keepalived を手動で停止し、VIP が docker02 に漂着して Harbor サービスが切り替わることを観察し、keepalived の HA 構成が機能することを証明する。</description>
-    </item>
-    <item>
-      <title>docker registry から Harbor へのイメージ移行と双 Harbor 間同期の実践</title>
-      <link>https://LMDAWN1127.github.io/ja/posts/docker-registry-to-harbor-migration/</link>
-      <pubDate>Thu, 29 Oct 2026 20:04:45 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/ja/posts/docker-registry-to-harbor-migration/</guid>
-      <description>本実践では docker registry のイメージを Harbor へ移行し、2 つの Harbor 間でイメージを同期する。第 1 部は Harbor の pull レプリケーションルールを使って registry 内の &lt;code&gt;dawn-games/**&lt;/code&gt; イメージをローカルの Harbor プロジェクトに同期する。第 2 部は docker01 と docker02 の両ノードに Harbor を展開し、Harbor→Harbor の pull モードレプリケーションルールを設定して双 Harbor イメージ同期を実現し、最後にクライアントの daemon.json を修正して検証する。</description>
-    </item>
-    <item>
-      <title>ベースイメージを指定せずに独自イメージを構築：scratch の活用</title>
-      <link>https://LMDAWN1127.github.io/ja/posts/docker-scratch-custom-image/</link>
-      <pubDate>Thu, 29 Oct 2026 18:28:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/ja/posts/docker-scratch-custom-image/</guid>
-      <description>scratch は Docker の予約語である。FROM のベースイメージとして使うと何のイメージも参照せず、自身の rootfs だけを含む最小イメージをゼロから構築する。本実践ではサードパーティの busybox ルートファイルシステムをダウンロードし、カスタム /etc/os-release を注入して再パッケージ化し、FROM scratch の Dockerfile と docker-compose を作成して Harbor レジストリへビルド・プッシュし、別ホストからプルしてコンテナを起動し、os-release とネットワークを検証する。</description>
-    </item>
-    <item>
-      <title>プライベートイメージレジストリ実践：docker registry と VMware Harbor</title>
-      <link>https://LMDAWN1127.github.io/ja/posts/docker-harbor-private-registry/</link>
-      <pubDate>Thu, 29 Oct 2026 15:09:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/ja/posts/docker-harbor-private-registry/</guid>
-      <description>2 つのプライベートイメージレジストリをゼロから構築する。まず軽量な docker registry でイメージの展開・プッシュ・プル・削除（メタデータの手動削除 + GC によるストレージ回収を含む）を完了し、次にエンタープライズグレードの VMware Harbor（HTTP モード）を展開する。hosts 解決、insecure-registries 設定、プロジェクト作成、3 つの docker login 方式、イメージのプッシュ/プル/削除の全フローを示し、最後にサイズ・展開・WebUI・プロジェクト管理・削除・適用シナリオの違いを対照表でまとめる。</description>
-    </item>
-    <item>
-      <title>docker-compose でマルチサービスイメージをビルドしコンテナを起動する事例</title>
-      <link>https://LMDAWN1127.github.io/ja/posts/docker-compose-multi-service/</link>
-      <pubDate>Thu, 29 Oct 2026 13:30:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/ja/posts/docker-compose-multi-service/</guid>
-      <description>docker-compose の事例を通して、1 つの YAML ファイルで 2 つの HTML5 ゲームサービス（doudizhu と motuo）のイメージビルドとコンテナ管理を統合的にオーケストレーションする方法を示す。compose ファイル（ビルドコンテキスト + 各サービスの Dockerfile）と nginx バーチャルホスト、起動スクリプトを作成し、docker-compose build で 2 つのイメージを一度にコンパイル、up -d でバックグラウンド起動、ps/stop/start/restart/down でライフサイクルを管理し、その後固定ポート + restart: always とランダムポートを設定してアクセスと再起動ポリシーを検証し、最後によく使うコマンドの対照表を提示する。</description>
-    </item>
-    <item>
-      <title>Dockerfile マルチステージビルド実戦</title>
-      <link>https://LMDAWN1127.github.io/ja/posts/docker-dockerfile-multistage-build/</link>
-      <pubDate>Thu, 29 Oct 2026 12:24:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/ja/posts/docker-dockerfile-multistage-build/</guid>
-      <description>マルチステージビルド（Multi-Stage Build）で Docker イメージをどうやって大幅に小さくするか実演します。第 1 部では 3 つの FROM ステージ（xixi/haha/最終）で v3.0 をビルドし、最初の 2 ステージが生成した 24MB/2048MB の大きなファイルは最終イメージに入らず、最終イメージは 2 つの小さなログだけを COPY します（7.8MB）。第 2 部では Golang を例に、ステージ 1 で Go SDK を用いて hello バイナリをコンパイルし、ステージ 2 で COPY &amp;ndash;from=0 によってバイナリだけをコピーして v3.2 を 9.71MB に抑え、単一ステージの v3.1（259MB）と比較して、マルチステージビルドのスリムなイメージが完全に使えることを示します。</description>
-    </item>
-    <item>
-      <title>Dockerfile の ONBUILD 命令実戦</title>
-      <link>https://LMDAWN1127.github.io/ja/posts/docker-dockerfile-onbuild-instruction/</link>
-      <pubDate>Thu, 29 Oct 2026 11:00:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/ja/posts/docker-dockerfile-onbuild-instruction/</guid>
-      <description>You_Jump_I_Jump ゲームイメージを使って Dockerfile の ONBUILD 命令を実演します。遅延トリガー機構（定義された命令は現在のイメージ構築時には実行されず、他のイメージがこのイメージをベースとして使う場合にのみ自動トリガーされる）を理解し、2 つの ONBUILD 命令（RUN でディレクトリ/ログ作成、LABEL でブログ URL 追加）を含むベースイメージと子イメージの Dockerfile を作成し、v2.19/v2.20 構築後に docker inspect で OnBuild と Labels を比較、コンテナでファイルシステムの差を比較し、最後に -f で複数の Dockerfile を指定して異なるイメージをビルドする方法を説明します。</description>
-    </item>
-    <item>
-      <title>Dockerfile 一般ユーザーでのコンテナ実行（USER 命令）実戦</title>
-      <link>https://LMDAWN1127.github.io/ja/posts/docker-dockerfile-user-instruction/</link>
-      <pubDate>Thu, 29 Oct 2026 10:47:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/ja/posts/docker-dockerfile-user-instruction/</guid>
-      <description>Space Huggers ゲームを使って、Dockerfile の USER 命令でコンテナを一般ユーザー dawn (uid 2025) として実行する方法を実演します。一般ユーザーで nginx を実行するために必要なディレクトリ/ファイルの所有権調整をまず理解し、次に Dockerfile (USER dawn に切り替える前にシステムディレクトリを chown)、nginx 設定 (user dawn)、起動スクリプト (nginx バックグラウンド + tail でブロック) を作成し、イメージをビルドしてプロセスユーザー、コンテナ設定、アクセス、健康状態を検証し、最後に一般ユーザーは nginx を起動できるが sshd は起動できないという権限の境界を比較します。</description>
-    </item>
-    <item>
-      <title>Dockerfile コア命令実戦：WORKDIR/EXPOSE/VOLUME、ENV/ARG、HEALTHCHECK、ENTRYPOINT</title>
-      <link>https://LMDAWN1127.github.io/ja/posts/docker-dockerfile-core-instructions/</link>
-      <pubDate>Wed, 28 Oct 2026 21:41:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/ja/posts/docker-dockerfile-core-instructions/</guid>
-      <description>4 つのウェブゲームを使って 7 つのコア Dockerfile 命令を完全に実演します。WORKDIR/EXPOSE/VOLUME の作業ディレクトリ・ポート公開・永続化の効果、構築時と実行時で異なる ENV と ARG の違いと上書き方法、HEALTHCHECK の健康状態の遷移、そして ENTRYPOINT と CMD の上書き可否の違いと引数受け渡しの仕組み。</description>
-    </item>
-    <item>
-      <title>Docker 実戦：MAINTAINER と LABEL でイメージにタグを付け、メタデータを確認する</title>
-      <link>https://LMDAWN1127.github.io/ja/posts/docker-image-tag-maintainer-label-metadata/</link>
-      <pubDate>Wed, 28 Oct 2026 19:40:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/ja/posts/docker-image-tag-maintainer-label-metadata/</guid>
-      <description>実際の dawn-games イメージを例に、Dockerfile に非推奨の MAINTAINER と公式推奨の LABEL で 作成者/学校/メールなどのメタデータを記録し、docker image inspect -f で .Author と .Config.Labels を 読み出して確認、さらに &amp;ndash;network host でコンテナを起動してホストネットワーク経由でアクセスします。スクリーンショット付き。</description>
-    </item>
-    <item>
-      <title>Docker 実戦：Dockerfile 最適化のコツとコンテナ起動テクニック</title>
-      <link>https://LMDAWN1127.github.io/ja/posts/docker-dockerfile-optimization-and-run-tips/</link>
-      <pubDate>Wed, 28 Oct 2026 19:30:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/ja/posts/docker-dockerfile-optimization-and-run-tips/</guid>
-      <description>Docker の効率化コツをまとめます。ビルド側はイメージレイヤーキャッシュ(Using cache)と .dockerignore で 1GB のビルドコンテキストを約 1.6MB に削減、実行側は docker exec -w の作業 ディレクトリ指定、匿名ボリュームのホストパス(/var/lib/docker/volumes/&lt;hash&gt;/_data)、-p :80 のランダムポートマッピング(32768~60999)を解説。</description>
-    </item>
-    <item>
-      <title>Docker 実戦：手動での Docker イメージ作成と Dockerfile による自動ビルド</title>
-      <link>https://LMDAWN1127.github.io/ja/posts/docker-image-manual-and-dockerfile/</link>
-      <pubDate>Wed, 28 Oct 2026 14:30:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/ja/posts/docker-image-manual-and-dockerfile/</guid>
-      <description>CentOS・Ubuntu・Alpine の 3 種類のベースイメージから nginx ゲームイメージを手動で作成し docker commit でコミット（サイズ 236MB / 215MB / 9.41MB）。その後 Dockerfile で同じイメージを自動ビルドし、手動作成の 3 つの欠点をまとめます。</description>
-    </item>
-    <item>
-      <title>Docker 実戦：docker exec と docker attach の違い</title>
-      <link>https://LMDAWN1127.github.io/ja/posts/docker-exec-vs-attach/</link>
-      <pubDate>Wed, 28 Oct 2026 12:30:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/ja/posts/docker-exec-vs-attach/</guid>
-      <description>docker top でプロセスツリーを比較し、docker exec と docker attach の本質的な違いを確認します。exec はコンテナ内で新しいプロセスを生成し、attach はローカルの標準入出力を実行中のメインプロセスに接続するだけです。また、attach を終了せずに抜けるには ctrl+p の直後に ctrl+q を押す方法も紹介します。</description>
-    </item>
-    <item>
-      <title>Docker 実戦：コンテナの状態を詳しく — Up / Exited / Created / Paused</title>
-      <link>https://LMDAWN1127.github.io/ja/posts/docker-container-states/</link>
-      <pubDate>Wed, 28 Oct 2026 11:30:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/ja/posts/docker-container-states/</guid>
-      <description>docker ps が表示する 4 つのコンテナ状態がどう発生するかを順に再現します — Up、Exited（終了コードの意味: 0=正常, 137=SIGKILL）、Created（作成済みだが未起動）、Paused（サービス提供を停止、再起動とは異なり状態の時間はリセットされない）。</description>
-    </item>
-    <item>
-      <title>Docker 実戦：Linux Namespace ネットワーク隔離と CGroup リソース制限</title>
-      <link>https://LMDAWN1127.github.io/ja/posts/docker-namespace-cgroup-resource-limit/</link>
-      <pubDate>Wed, 28 Oct 2026 10:00:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/ja/posts/docker-namespace-cgroup-resource-limit/</guid>
-      <description>ip netns で Linux ネットワーク名前空間を手作業で構築し、veth pair と NAT で外部ネットワークに接続します。さらに Docker コンテナが net namespace を共有する仕組みを確認し、最後に cgroup v2 で CPU・メモリの制限制御と OOM kill の再現までを行い、コンテナの 2 つの基盤機構である隔離 (Namespace) と制限 (CGroup) を一気に通します。</description>
-    </item>
-    <item>
-      <title>Docker 実戦：Overlay によるコンテナのクロスホストネットワーク接続と WordPress 実践</title>
-      <link>https://LMDAWN1127.github.io/ja/posts/docker-overlay-cross-host-networking/</link>
-      <pubDate>Tue, 27 Oct 2026 18:30:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/ja/posts/docker-overlay-cross-host-networking/</guid>
-      <description>2 台の Docker ホストで Swarm クラスタを初期化し、attachable な overlay ネットワーク dawn-overlay を作成します。コンテナが IP とコンテナ名でクロスホスト通信することを確認し、docker_gwbridge 経由の外部ネットワーク出口を検証し、VXLAN（UDP 4789）をキャプチャしてデータのカプセル化を観察し、最後に WordPress のクロスホストデプロイで締めくくります。</description>
-    </item>
-    <item>
-      <title>Docker 実戦：macvlan によるコンテナのクロスホストネットワーク接続</title>
-      <link>https://LMDAWN1127.github.io/ja/posts/docker-macvlan-cross-host-networking/</link>
-      <pubDate>Tue, 27 Oct 2026 14:30:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/ja/posts/docker-macvlan-cross-host-networking/</guid>
-      <description>2 台の Docker ホストで macvlan ドライバにより同一セグメントのカスタムネットワークを作成し、コンテナのクロスホスト L2 接続を実演します。さらに macvlan が既定ではホストや外部ネットワークに接続できない問題の解決策を示し、最後に WordPress のマルチノードデプロイで締めくくります。</description>
-    </item>
-    <item>
-      <title>Docker 実戦：Docker で Zabbix 監視と WordPress アプリを導入</title>
-      <link>https://LMDAWN1127.github.io/ja/posts/docker-zabbix-wordpress-deployment/</link>
-      <pubDate>Tue, 27 Oct 2026 12:19:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/ja/posts/docker-zabbix-wordpress-deployment/</guid>
-      <description>カスタムネットワーク上の単一ホストで、docker run を使って Zabbix スタック (MySQL + Java gateway + Server + Web) と WordPress アプリを導入します。ポートマッピングと永続ボリュームも含みます。</description>
-    </item>
-    <item>
-      <title>Docker 実戦：単一ホストのネットワーク種別とコンテナ間通信の方式を詳解</title>
-      <link>https://LMDAWN1127.github.io/ja/posts/docker-single-host-network/</link>
-      <pubDate>Tue, 27 Oct 2026 09:50:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/ja/posts/docker-single-host-network/</guid>
-      <description>Docker の単一ホストネットワーク：none/bridge/host/container/custom の 5 種類と事例、そしてコンテナ間通信の 3 方式（/etc/hosts の名前解決、&amp;ndash;link による関連付け、カスタムネットワーク（作成・inspect・prune・カスタムサブネット・手動 IP を含む））。</description>
-    </item>
-    <item>
-      <title>Docker 実戦：複数 Bridge ネットワークによるコンテナ分離とネットワーク間通信</title>
-      <link>https://LMDAWN1127.github.io/ja/posts/docker-multi-bridge-network-isolation/</link>
-      <pubDate>Tue, 27 Oct 2026 08:00:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/ja/posts/docker-multi-bridge-network-isolation/</guid>
-      <description>xixi と haha という 2 つのカスタム Bridge ネットワークを使い、Docker の既定のネットワーク分離の仕組みを実演します。さらに docker network connect/disconnect によりコンテナを実行時にネットワークへ参加・離脱させ、ネットワークをまたぐコンテナ間通信を実現する軽量な手法を紹介します。</description>
-    </item>
-    <item>
-      <title>Docker 実戦：OverlayFS のユニオンマウントとストレージドライバ解析</title>
-      <link>https://LMDAWN1127.github.io/ja/posts/docker-overlayfs-storage-driver/</link>
-      <pubDate>Mon, 26 Oct 2026 21:00:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/ja/posts/docker-overlayfs-storage-driver/</guid>
-      <description>Docker のストレージドライバ OverlayFS の仕組み：lower/upper/work と LowerDir/Upperdir/MergedDir の三層（init 層を含む）と、読み書き層へのコピーオンライト。さらに手動の mount -t overlay で階層化と読み取り専用を実演し、最後に docker run でコンテナの土台が overlay2 であることを確認します。</description>
-    </item>
-    <item>
-      <title>Docker 実戦：chroot で最小コンテナルートを手作りしてコンテナの本質を理解する</title>
-      <link>https://LMDAWN1127.github.io/ja/posts/docker-chroot-minimal-root/</link>
-      <pubDate>Mon, 26 Oct 2026 19:50:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/ja/posts/docker-chroot-minimal-root/</guid>
-      <description>Docker コマンドを使わず、chroot で最小コンテナルートをゼロから手作り (bash と動的ライブラリチェーンをコピー) し、ファイルシステム分離の「コンテナ感」を味わいます。さらに 2 つの独立ルートでプロセス/データが互いに見えないことを示し、最後に実コンテナの overlay2 merged ファイルシステムに chroot してファイルを直したりログを読んだりします。</description>
-    </item>
-    <item>
-      <title>Docker 実戦：WordPress のマルチノード展開と永続化検証</title>
-      <link>https://LMDAWN1127.github.io/ja/posts/docker-wordpress-multinode/</link>
-      <pubDate>Mon, 26 Oct 2026 16:30:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/ja/posts/docker-wordpress-multinode/</guid>
-      <description>WordPress を Docker で 2 ノードにまたがって展開 (データベースと Web を分離) し、名前付きボリュームでデータを永続化した上で、コンテナを削除して再作成し、公開済みブログが失われないことを検証します。</description>
-    </item>
-    <item>
-      <title>Docker 実戦：Dockerfile でマルチゲームイメージをビルドし ADD で自動展開</title>
-      <link>https://LMDAWN1127.github.io/ja/posts/docker-dockerfile-multi-game-image-add/</link>
-      <pubDate>Mon, 26 Oct 2026 15:20:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/ja/posts/docker-dockerfile-multi-game-image-add/</guid>
-      <description>古い全部入りイメージ dawn-games-dawn:v0.6 から中継コンテナ経由で 2 つのゲーム (黄金鉱夫と Flappy Bird) の静的ファイルを取り出し、それぞれ tar.gz に固め、Dockerfile の ADD 命令でビルド時に Alpine+nginx コンテナへ自動展開します。最後にイメージをビルドしてコンテナを起動し、ドメインで 2 つのゲームにアクセスします。さらに ADD と COPY の決定的な違い (ADD は tar.gz を自動展開する) も解説します。</description>
-    </item>
-    <item>
-      <title>Docker 実戦：コンテナのデータ永続化——bind マウントとボリューム（Volume）</title>
-      <link>https://LMDAWN1127.github.io/ja/posts/docker-bind-mount-volume/</link>
-      <pubDate>Mon, 26 Oct 2026 15:00:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/ja/posts/docker-bind-mount-volume/</guid>
-      <description>-v でホストのパスをコンテナにマウントし、1 つのマウントポイントを複数コンテナで共有し、1 つのコンテナに複数のマウントポイントを付け、rw/ro 権限を指定します。さらに docker volume の作成・確認・削除、匿名ボリューム、稼働中コンテナの再マウントまでを扱います。</description>
-    </item>
-    <item>
-      <title>Docker 実戦：コンテナライフサイクル管理——起動・停止・再起動ポリシー</title>
-      <link>https://LMDAWN1127.github.io/ja/posts/docker-container-lifecycle/</link>
-      <pubDate>Mon, 26 Oct 2026 14:20:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/ja/posts/docker-container-lifecycle/</guid>
-      <description>docker stop・start・restart と起動時のコマンド指定、そして 5 つの再起動ポリシーを扱います。ポリシーの異なる 5 つのコンテナを作り、kill -9 で強制終了させて再起動回数を比較し、dockerd 再起動後に復活するコンテナを確認します。</description>
-    </item>
-    <item>
-      <title>Docker 実戦：アプリ導入 - Tomcat / MySQL / WordPress / ELK</title>
-      <link>https://LMDAWN1127.github.io/ja/posts/docker-app-deployments/</link>
-      <pubDate>Mon, 26 Oct 2026 14:10:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/ja/posts/docker-app-deployments/</guid>
-      <description>docker run で実アプリを導入します。Tomcat、MySQL (20 インスタンスの一括起動と複数インスタンスでの公開を含む)、WordPress、そして ElasticSearch + Kibana スタックを、ポートマッピング・永続ボリューム・パスワード/トークン設定とともに扱います。</description>
-    </item>
-    <item>
-      <title>Docker 実戦：inspect でコンテナの PID・ID・ネットワーク情報を確認</title>
-      <link>https://LMDAWN1127.github.io/ja/posts/docker-inspect-pid-id-network/</link>
-      <pubDate>Mon, 26 Oct 2026 13:00:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/ja/posts/docker-inspect-pid-id-network/</guid>
-      <description>docker container inspect -f と Go テンプレートを使って、コンテナの PID・ID・IP アドレス・ゲートウェイ・MAC アドレスを取り出します。</description>
-    </item>
-    <item>
-      <title>Docker 実戦：Nginx ロードバランシングとコンテナトラフィック分散</title>
-      <link>https://LMDAWN1127.github.io/ja/posts/docker-nginx-load-balancing/</link>
-      <pubDate>Mon, 26 Oct 2026 11:50:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/ja/posts/docker-nginx-load-balancing/</guid>
-      <description>lb コンテナと web コンテナ 2 つを起動し、lb 上の Nginx default.conf を編集して web01/web02 にリバースプロキシし、lb に 10 回 curl してトラフィックが 2 つのバックエンド間で交互に振り分けられることを確認します。</description>
-    </item>
-    <item>
-      <title>Docker 実戦：イメージ取得からコンテナ起動までの全体フロー</title>
-      <link>https://LMDAWN1127.github.io/ja/posts/docker-image-container-flow/</link>
-      <pubDate>Mon, 26 Oct 2026 10:20:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/ja/posts/docker-image-container-flow/</guid>
-      <description>Docker の三大コアオブジェクト、イメージレジストリ・イメージ・コンテナを順にたどります。ローカルのレジストリ一覧を確認し、リモートレジストリからイメージを取得し、コンテナを起動してアクセステストまで行います。</description>
-    </item>
-    <item>
-      <title>Docker 実戦：コンテナの環境変数の渡し方と確認方法</title>
-      <link>https://LMDAWN1127.github.io/ja/posts/docker-env-var-passing/</link>
-      <pubDate>Fri, 23 Oct 2026 17:26:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/ja/posts/docker-env-var-passing/</guid>
-      <description>コンテナに -e で環境変数を渡し、後から docker exec &amp;lt;コンテナ&amp;gt; env で確認する方法を解説します。</description>
-    </item>
-    <item>
-      <title>Docker 実戦：イメージ移行 - save/load でのオフライン転送とタグ付け</title>
-      <link>https://LMDAWN1127.github.io/ja/posts/docker-image-migration-tag/</link>
-      <pubDate>Fri, 23 Oct 2026 15:24:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/ja/posts/docker-image-migration-tag/</guid>
-      <description>docker save でイメージをエクスポートし、SSH 経由でオフライン転送、md5sum で整合性を検証してから docker load でインポートし直してタグを付けます。save/load で IMAGE ID が維持されること、複数イメージの一括エクスポート、2 つのインポート形式、イメージの一括削除方法を解説します。</description>
-    </item>
-    <item>
-      <title>Docker 実戦：ポートマッピングの仕組み - veth NIC から iptables DNAT まで</title>
-      <link>https://LMDAWN1127.github.io/ja/posts/docker-port-mapping-principle/</link>
-      <pubDate>Fri, 23 Oct 2026 15:22:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/ja/posts/docker-port-mapping-principle/</guid>
-      <description>Docker がコンテナポートをホストにどうマッピングするかを観察します。veth NIC や docker0 ブリッジから、iptables の DNAT ルール、そして外部アクセスを可能にする net.ipv4.ip_forward カーネルスイッチまで。</description>
-    </item>
-    <item>
-      <title>Docker 実戦：コンテナのよく使うコマンドと exec 操作</title>
-      <link>https://LMDAWN1127.github.io/ja/posts/docker-common-commands-exec/</link>
-      <pubDate>Fri, 23 Oct 2026 15:20:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/ja/posts/docker-common-commands-exec/</guid>
-      <description>日常的によく使うコンテナコマンド（一覧/削除/名前変更、-f/&amp;ndash;since/&amp;ndash;until でのログ追跡、docker cp でのファイルコピー）と、docker exec を使った実行中コンテナ内でのコマンド実行を解説。対象コマンドがイメージに存在する必要があるという注意点も。</description>
-    </item>
-    <item>
-      <title>Docker 実戦：バイナリでの導入とワンクリックスクリプト導入</title>
-      <link>https://LMDAWN1127.github.io/ja/posts/docker-binary-script-install/</link>
-      <pubDate>Fri, 23 Oct 2026 12:30:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/ja/posts/docker-binary-script-install/</guid>
-      <description>Docker を 3 つの方法で導入します。apt パッケージマネージャー、公式の静的バイナリ (ダウンロード/展開/コピー/起動)、および自动化スクリプト (導入とアンインストール)。バイナリ導入のきれいな削除方法も解説します。</description>
-    </item>
-    <item>
-      <title>flannel 実践：Docker クロスホストコンテナネットワークをゼロから構築</title>
-      <link>https://LMDAWN1127.github.io/ja/posts/flannel-network-lab/</link>
-      <pubDate>Wed, 21 May 2025 00:00:00 +0000</pubDate>
-      <guid>https://LMDAWN1127.github.io/ja/posts/flannel-network-lab/</guid>
-      <description>&lt;h1 id=&#34;flannel-実践docker-クロスホストコンテナネットワークをゼロから構築&#34;&gt;flannel 実践：Docker クロスホストコンテナネットワークをゼロから構築&lt;/h1&gt;
-&lt;h2 id=&#34;一ネットワーク環境の計画&#34;&gt;一、ネットワーク環境の計画&lt;/h2&gt;
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Docker on DAWN's Blog</title><link>https://LMDAWN1127.github.io/ja/tags/docker/</link><description>Recent content in Docker on DAWN's Blog</description><image><title>DAWN's Blog</title><url>https://LMDAWN1127.github.io/images/DAWN.jpg</url><link>https://LMDAWN1127.github.io/images/DAWN.jpg</link></image><generator>Hugo</generator><language>ja</language><lastBuildDate>Fri, 30 Oct 2026 10:31:00 +0800</lastBuildDate><atom:link href="https://LMDAWN1127.github.io/ja/tags/docker/index.xml" rel="self" type="application/rss+xml"/><item><title>Harbor アクティブスタンバイデプロイ：インストールからHTTPS・レプリケーションまで</title><link>https://LMDAWN1127.github.io/ja/posts/harbor-master-slave/</link><pubDate>Tue, 04 Aug 2026 00:00:00 +0000</pubDate><guid>https://LMDAWN1127.github.io/ja/posts/harbor-master-slave/</guid><description>HarborエンタープライズDockerレジストリのアクティブスタンバイアーキテクチャ、HTTP/HTTPSモード、自己署名証明書、クロスホストレプリケーションを完全にカバーするデプロイガイドです。</description></item><item><title>containerd コンテナランタイムの導入と runc/ctr による管理実践</title><link>https://LMDAWN1127.github.io/ja/posts/containerd-runc-ctr-management/</link><pubDate>Fri, 30 Oct 2026 10:31:00 +0800</pubDate><guid>https://LMDAWN1127.github.io/ja/posts/containerd-runc-ctr-management/</guid><description>本実践ではまず docker02 ノードの Docker バイナリをアンインストールし、containerd 1.7.20 ランタイム（cri-containerd-cni の展開、systemd ユニットの設置、config.toml で SystemdCgroup を有効化し sandbox_image を置換）を導入、さらに runc 1.1.12 と ctr クライアントをインストールする。その後、ctr によるイメージのプルとタグ付け、コンテナの作成/起動/一時停止/再開/削除、名前空間管理、および docker01 の Harbor（HTTP、非 TLS）へのプッシュとプルの一連の操作を実演する。</description></item><item><title>Harbor 自己署名証明書による HTTPS デプロイ実践</title><link>https://LMDAWN1127.github.io/ja/posts/harbor-self-signed-https/</link><pubDate>Thu, 29 Oct 2026 20:57:00 +0800</pubDate><guid>https://LMDAWN1127.github.io/ja/posts/harbor-self-signed-https/</guid><description>本実践では自己署名証明書を用いた HTTPS で Harbor を構成する。証明書ディレクトリを作成し、openssl で自己署名証明書（ドメイン harbor.dawn.com、SAN に DNS と IP 11.0.1.122 を含む）を生成、harbor.yml を編集して 443 ポートの HTTPS を有効化、install.sh で再インストールする。最後に ss と curl で 80 ポートが自動的に 443 へリダイレクトされ WebUI にアクセスできることを確認する。自己署名証明書はクライアント側の信頼が必要で、本番環境では公式 CA が発行した証明書を使用して警告を回避すべきである。</description></item><item><title>Harbor 高可用性：keepalived による VIP フェイルオーバーの実現</title><link>https://LMDAWN1127.github.io/ja/posts/harbor-keepalived-vip/</link><pubDate>Thu, 29 Oct 2026 20:38:15 +0800</pubDate><guid>https://LMDAWN1127.github.io/ja/posts/harbor-keepalived-vip/</guid><description>本実践では keepalived を用いた VIP フェイルオーバーで Harbor の高可用性構成を構築する。docker01 と docker02 に keepalived をインストールし、ポートチェックスクリプトを作成して、仮想 IP 11.0.1.250 を共有する VRRP インスタンス（docker01 を priority 100 の MASTER、docker02 を priority 90 の BACKUP）を設定する。VIP が現在 docker01 の Harbor を指していることを確認後、docker01 の keepalived を手動で停止し、VIP が docker02 に漂着して Harbor サービスが切り替わることを観察し、keepalived の HA 構成が機能することを証明する。</description></item><item><title>docker registry から Harbor へのイメージ移行と双 Harbor 間同期の実践</title><link>https://LMDAWN1127.github.io/ja/posts/docker-registry-to-harbor-migration/</link><pubDate>Thu, 29 Oct 2026 20:04:45 +0800</pubDate><guid>https://LMDAWN1127.github.io/ja/posts/docker-registry-to-harbor-migration/</guid><description>本実践では docker registry のイメージを Harbor へ移行し、2 つの Harbor 間でイメージを同期する。第 1 部は Harbor の pull レプリケーションルールを使って registry 内の &lt;code&gt;dawn-games/**&lt;/code&gt; イメージをローカルの Harbor プロジェクトに同期する。第 2 部は docker01 と docker02 の両ノードに Harbor を展開し、Harbor→Harbor の pull モードレプリケーションルールを設定して双 Harbor イメージ同期を実現し、最後にクライアントの daemon.json を修正して検証する。</description></item><item><title>ベースイメージを指定せずに独自イメージを構築：scratch の活用</title><link>https://LMDAWN1127.github.io/ja/posts/docker-scratch-custom-image/</link><pubDate>Thu, 29 Oct 2026 18:28:00 +0800</pubDate><guid>https://LMDAWN1127.github.io/ja/posts/docker-scratch-custom-image/</guid><description>scratch は Docker の予約語である。FROM のベースイメージとして使うと何のイメージも参照せず、自身の rootfs だけを含む最小イメージをゼロから構築する。本実践ではサードパーティの busybox ルートファイルシステムをダウンロードし、カスタム /etc/os-release を注入して再パッケージ化し、FROM scratch の Dockerfile と docker-compose を作成して Harbor レジストリへビルド・プッシュし、別ホストからプルしてコンテナを起動し、os-release とネットワークを検証する。</description></item><item><title>プライベートイメージレジストリ実践：docker registry と VMware Harbor</title><link>https://LMDAWN1127.github.io/ja/posts/docker-harbor-private-registry/</link><pubDate>Thu, 29 Oct 2026 15:09:00 +0800</pubDate><guid>https://LMDAWN1127.github.io/ja/posts/docker-harbor-private-registry/</guid><description>2 つのプライベートイメージレジストリをゼロから構築する。まず軽量な docker registry でイメージの展開・プッシュ・プル・削除（メタデータの手動削除 + GC によるストレージ回収を含む）を完了し、次にエンタープライズグレードの VMware Harbor（HTTP モード）を展開する。hosts 解決、insecure-registries 設定、プロジェクト作成、3 つの docker login 方式、イメージのプッシュ/プル/削除の全フローを示し、最後にサイズ・展開・WebUI・プロジェクト管理・削除・適用シナリオの違いを対照表でまとめる。</description></item><item><title>docker-compose でマルチサービスイメージをビルドしコンテナを起動する事例</title><link>https://LMDAWN1127.github.io/ja/posts/docker-compose-multi-service/</link><pubDate>Thu, 29 Oct 2026 13:30:00 +0800</pubDate><guid>https://LMDAWN1127.github.io/ja/posts/docker-compose-multi-service/</guid><description>docker-compose の事例を通して、1 つの YAML ファイルで 2 つの HTML5 ゲームサービス（doudizhu と motuo）のイメージビルドとコンテナ管理を統合的にオーケストレーションする方法を示す。compose ファイル（ビルドコンテキスト + 各サービスの Dockerfile）と nginx バーチャルホスト、起動スクリプトを作成し、docker-compose build で 2 つのイメージを一度にコンパイル、up -d でバックグラウンド起動、ps/stop/start/restart/down でライフサイクルを管理し、その後固定ポート + restart: always とランダムポートを設定してアクセスと再起動ポリシーを検証し、最後によく使うコマンドの対照表を提示する。</description></item><item><title>Dockerfile マルチステージビルド実戦</title><link>https://LMDAWN1127.github.io/ja/posts/docker-dockerfile-multistage-build/</link><pubDate>Thu, 29 Oct 2026 12:24:00 +0800</pubDate><guid>https://LMDAWN1127.github.io/ja/posts/docker-dockerfile-multistage-build/</guid><description>マルチステージビルド（Multi-Stage Build）で Docker イメージをどうやって大幅に小さくするか実演します。第 1 部では 3 つの FROM ステージ（xixi/haha/最終）で v3.0 をビルドし、最初の 2 ステージが生成した 24MB/2048MB の大きなファイルは最終イメージに入らず、最終イメージは 2 つの小さなログだけを COPY します（7.8MB）。第 2 部では Golang を例に、ステージ 1 で Go SDK を用いて hello バイナリをコンパイルし、ステージ 2 で COPY &amp;ndash;from=0 によってバイナリだけをコピーして v3.2 を 9.71MB に抑え、単一ステージの v3.1（259MB）と比較して、マルチステージビルドのスリムなイメージが完全に使えることを示します。</description></item><item><title>Dockerfile の ONBUILD 命令実戦</title><link>https://LMDAWN1127.github.io/ja/posts/docker-dockerfile-onbuild-instruction/</link><pubDate>Thu, 29 Oct 2026 11:00:00 +0800</pubDate><guid>https://LMDAWN1127.github.io/ja/posts/docker-dockerfile-onbuild-instruction/</guid><description>You_Jump_I_Jump ゲームイメージを使って Dockerfile の ONBUILD 命令を実演します。遅延トリガー機構（定義された命令は現在のイメージ構築時には実行されず、他のイメージがこのイメージをベースとして使う場合にのみ自動トリガーされる）を理解し、2 つの ONBUILD 命令（RUN でディレクトリ/ログ作成、LABEL でブログ URL 追加）を含むベースイメージと子イメージの Dockerfile を作成し、v2.19/v2.20 構築後に docker inspect で OnBuild と Labels を比較、コンテナでファイルシステムの差を比較し、最後に -f で複数の Dockerfile を指定して異なるイメージをビルドする方法を説明します。</description></item><item><title>Dockerfile 一般ユーザーでのコンテナ実行（USER 命令）実戦</title><link>https://LMDAWN1127.github.io/ja/posts/docker-dockerfile-user-instruction/</link><pubDate>Thu, 29 Oct 2026 10:47:00 +0800</pubDate><guid>https://LMDAWN1127.github.io/ja/posts/docker-dockerfile-user-instruction/</guid><description>Space Huggers ゲームを使って、Dockerfile の USER 命令でコンテナを一般ユーザー dawn (uid 2025) として実行する方法を実演します。一般ユーザーで nginx を実行するために必要なディレクトリ/ファイルの所有権調整をまず理解し、次に Dockerfile (USER dawn に切り替える前にシステムディレクトリを chown)、nginx 設定 (user dawn)、起動スクリプト (nginx バックグラウンド + tail でブロック) を作成し、イメージをビルドしてプロセスユーザー、コンテナ設定、アクセス、健康状態を検証し、最後に一般ユーザーは nginx を起動できるが sshd は起動できないという権限の境界を比較します。</description></item><item><title>Dockerfile コア命令実戦：WORKDIR/EXPOSE/VOLUME、ENV/ARG、HEALTHCHECK、ENTRYPOINT</title><link>https://LMDAWN1127.github.io/ja/posts/docker-dockerfile-core-instructions/</link><pubDate>Wed, 28 Oct 2026 21:41:00 +0800</pubDate><guid>https://LMDAWN1127.github.io/ja/posts/docker-dockerfile-core-instructions/</guid><description>4 つのウェブゲームを使って 7 つのコア Dockerfile 命令を完全に実演します。WORKDIR/EXPOSE/VOLUME の作業ディレクトリ・ポート公開・永続化の効果、構築時と実行時で異なる ENV と ARG の違いと上書き方法、HEALTHCHECK の健康状態の遷移、そして ENTRYPOINT と CMD の上書き可否の違いと引数受け渡しの仕組み。</description></item><item><title>Docker 実戦：MAINTAINER と LABEL でイメージにタグを付け、メタデータを確認する</title><link>https://LMDAWN1127.github.io/ja/posts/docker-image-tag-maintainer-label-metadata/</link><pubDate>Wed, 28 Oct 2026 19:40:00 +0800</pubDate><guid>https://LMDAWN1127.github.io/ja/posts/docker-image-tag-maintainer-label-metadata/</guid><description>実際の dawn-games イメージを例に、Dockerfile に非推奨の MAINTAINER と公式推奨の LABEL で 作成者/学校/メールなどのメタデータを記録し、docker image inspect -f で .Author と .Config.Labels を 読み出して確認、さらに &amp;ndash;network host でコンテナを起動してホストネットワーク経由でアクセスします。スクリーンショット付き。</description></item><item><title>Docker 実戦：Dockerfile 最適化のコツとコンテナ起動テクニック</title><link>https://LMDAWN1127.github.io/ja/posts/docker-dockerfile-optimization-and-run-tips/</link><pubDate>Wed, 28 Oct 2026 19:30:00 +0800</pubDate><guid>https://LMDAWN1127.github.io/ja/posts/docker-dockerfile-optimization-and-run-tips/</guid><description>Docker の効率化コツをまとめます。ビルド側はイメージレイヤーキャッシュ(Using cache)と .dockerignore で 1GB のビルドコンテキストを約 1.6MB に削減、実行側は docker exec -w の作業 ディレクトリ指定、匿名ボリュームのホストパス(/var/lib/docker/volumes/&lt;hash&gt;/_data)、-p :80 のランダムポートマッピング(32768~60999)を解説。</description></item><item><title>Docker 実戦：手動での Docker イメージ作成と Dockerfile による自動ビルド</title><link>https://LMDAWN1127.github.io/ja/posts/docker-image-manual-and-dockerfile/</link><pubDate>Wed, 28 Oct 2026 14:30:00 +0800</pubDate><guid>https://LMDAWN1127.github.io/ja/posts/docker-image-manual-and-dockerfile/</guid><description>CentOS・Ubuntu・Alpine の 3 種類のベースイメージから nginx ゲームイメージを手動で作成し docker commit でコミット（サイズ 236MB / 215MB / 9.41MB）。その後 Dockerfile で同じイメージを自動ビルドし、手動作成の 3 つの欠点をまとめます。</description></item><item><title>Docker 実戦：docker exec と docker attach の違い</title><link>https://LMDAWN1127.github.io/ja/posts/docker-exec-vs-attach/</link><pubDate>Wed, 28 Oct 2026 12:30:00 +0800</pubDate><guid>https://LMDAWN1127.github.io/ja/posts/docker-exec-vs-attach/</guid><description>docker top でプロセスツリーを比較し、docker exec と docker attach の本質的な違いを確認します。exec はコンテナ内で新しいプロセスを生成し、attach はローカルの標準入出力を実行中のメインプロセスに接続するだけです。また、attach を終了せずに抜けるには ctrl+p の直後に ctrl+q を押す方法も紹介します。</description></item><item><title>Docker 実戦：コンテナの状態を詳しく — Up / Exited / Created / Paused</title><link>https://LMDAWN1127.github.io/ja/posts/docker-container-states/</link><pubDate>Wed, 28 Oct 2026 11:30:00 +0800</pubDate><guid>https://LMDAWN1127.github.io/ja/posts/docker-container-states/</guid><description>docker ps が表示する 4 つのコンテナ状態がどう発生するかを順に再現します — Up、Exited（終了コードの意味: 0=正常, 137=SIGKILL）、Created（作成済みだが未起動）、Paused（サービス提供を停止、再起動とは異なり状態の時間はリセットされない）。</description></item><item><title>Docker 実戦：Linux Namespace ネットワーク隔離と CGroup リソース制限</title><link>https://LMDAWN1127.github.io/ja/posts/docker-namespace-cgroup-resource-limit/</link><pubDate>Wed, 28 Oct 2026 10:00:00 +0800</pubDate><guid>https://LMDAWN1127.github.io/ja/posts/docker-namespace-cgroup-resource-limit/</guid><description>ip netns で Linux ネットワーク名前空間を手作業で構築し、veth pair と NAT で外部ネットワークに接続します。さらに Docker コンテナが net namespace を共有する仕組みを確認し、最後に cgroup v2 で CPU・メモリの制限制御と OOM kill の再現までを行い、コンテナの 2 つの基盤機構である隔離 (Namespace) と制限 (CGroup) を一気に通します。</description></item><item><title>Docker 実戦：Overlay によるコンテナのクロスホストネットワーク接続と WordPress 実践</title><link>https://LMDAWN1127.github.io/ja/posts/docker-overlay-cross-host-networking/</link><pubDate>Tue, 27 Oct 2026 18:30:00 +0800</pubDate><guid>https://LMDAWN1127.github.io/ja/posts/docker-overlay-cross-host-networking/</guid><description>2 台の Docker ホストで Swarm クラスタを初期化し、attachable な overlay ネットワーク dawn-overlay を作成します。コンテナが IP とコンテナ名でクロスホスト通信することを確認し、docker_gwbridge 経由の外部ネットワーク出口を検証し、VXLAN（UDP 4789）をキャプチャしてデータのカプセル化を観察し、最後に WordPress のクロスホストデプロイで締めくくります。</description></item><item><title>Docker 実戦：macvlan によるコンテナのクロスホストネットワーク接続</title><link>https://LMDAWN1127.github.io/ja/posts/docker-macvlan-cross-host-networking/</link><pubDate>Tue, 27 Oct 2026 14:30:00 +0800</pubDate><guid>https://LMDAWN1127.github.io/ja/posts/docker-macvlan-cross-host-networking/</guid><description>2 台の Docker ホストで macvlan ドライバにより同一セグメントのカスタムネットワークを作成し、コンテナのクロスホスト L2 接続を実演します。さらに macvlan が既定ではホストや外部ネットワークに接続できない問題の解決策を示し、最後に WordPress のマルチノードデプロイで締めくくります。</description></item><item><title>Docker 実戦：Docker で Zabbix 監視と WordPress アプリを導入</title><link>https://LMDAWN1127.github.io/ja/posts/docker-zabbix-wordpress-deployment/</link><pubDate>Tue, 27 Oct 2026 12:19:00 +0800</pubDate><guid>https://LMDAWN1127.github.io/ja/posts/docker-zabbix-wordpress-deployment/</guid><description>カスタムネットワーク上の単一ホストで、docker run を使って Zabbix スタック (MySQL + Java gateway + Server + Web) と WordPress アプリを導入します。ポートマッピングと永続ボリュームも含みます。</description></item><item><title>Docker 実戦：単一ホストのネットワーク種別とコンテナ間通信の方式を詳解</title><link>https://LMDAWN1127.github.io/ja/posts/docker-single-host-network/</link><pubDate>Tue, 27 Oct 2026 09:50:00 +0800</pubDate><guid>https://LMDAWN1127.github.io/ja/posts/docker-single-host-network/</guid><description>Docker の単一ホストネットワーク：none/bridge/host/container/custom の 5 種類と事例、そしてコンテナ間通信の 3 方式（/etc/hosts の名前解決、&amp;ndash;link による関連付け、カスタムネットワーク（作成・inspect・prune・カスタムサブネット・手動 IP を含む））。</description></item><item><title>Docker 実戦：複数 Bridge ネットワークによるコンテナ分離とネットワーク間通信</title><link>https://LMDAWN1127.github.io/ja/posts/docker-multi-bridge-network-isolation/</link><pubDate>Tue, 27 Oct 2026 08:00:00 +0800</pubDate><guid>https://LMDAWN1127.github.io/ja/posts/docker-multi-bridge-network-isolation/</guid><description>xixi と haha という 2 つのカスタム Bridge ネットワークを使い、Docker の既定のネットワーク分離の仕組みを実演します。さらに docker network connect/disconnect によりコンテナを実行時にネットワークへ参加・離脱させ、ネットワークをまたぐコンテナ間通信を実現する軽量な手法を紹介します。</description></item><item><title>Docker 実戦：OverlayFS のユニオンマウントとストレージドライバ解析</title><link>https://LMDAWN1127.github.io/ja/posts/docker-overlayfs-storage-driver/</link><pubDate>Mon, 26 Oct 2026 21:00:00 +0800</pubDate><guid>https://LMDAWN1127.github.io/ja/posts/docker-overlayfs-storage-driver/</guid><description>Docker のストレージドライバ OverlayFS の仕組み：lower/upper/work と LowerDir/Upperdir/MergedDir の三層（init 層を含む）と、読み書き層へのコピーオンライト。さらに手動の mount -t overlay で階層化と読み取り専用を実演し、最後に docker run でコンテナの土台が overlay2 であることを確認します。</description></item><item><title>Docker 実戦：chroot で最小コンテナルートを手作りしてコンテナの本質を理解する</title><link>https://LMDAWN1127.github.io/ja/posts/docker-chroot-minimal-root/</link><pubDate>Mon, 26 Oct 2026 19:50:00 +0800</pubDate><guid>https://LMDAWN1127.github.io/ja/posts/docker-chroot-minimal-root/</guid><description>Docker コマンドを使わず、chroot で最小コンテナルートをゼロから手作り (bash と動的ライブラリチェーンをコピー) し、ファイルシステム分離の「コンテナ感」を味わいます。さらに 2 つの独立ルートでプロセス/データが互いに見えないことを示し、最後に実コンテナの overlay2 merged ファイルシステムに chroot してファイルを直したりログを読んだりします。</description></item><item><title>Docker 実戦：WordPress のマルチノード展開と永続化検証</title><link>https://LMDAWN1127.github.io/ja/posts/docker-wordpress-multinode/</link><pubDate>Mon, 26 Oct 2026 16:30:00 +0800</pubDate><guid>https://LMDAWN1127.github.io/ja/posts/docker-wordpress-multinode/</guid><description>WordPress を Docker で 2 ノードにまたがって展開 (データベースと Web を分離) し、名前付きボリュームでデータを永続化した上で、コンテナを削除して再作成し、公開済みブログが失われないことを検証します。</description></item><item><title>Docker 実戦：Dockerfile でマルチゲームイメージをビルドし ADD で自動展開</title><link>https://LMDAWN1127.github.io/ja/posts/docker-dockerfile-multi-game-image-add/</link><pubDate>Mon, 26 Oct 2026 15:20:00 +0800</pubDate><guid>https://LMDAWN1127.github.io/ja/posts/docker-dockerfile-multi-game-image-add/</guid><description>古い全部入りイメージ dawn-games-dawn:v0.6 から中継コンテナ経由で 2 つのゲーム (黄金鉱夫と Flappy Bird) の静的ファイルを取り出し、それぞれ tar.gz に固め、Dockerfile の ADD 命令でビルド時に Alpine+nginx コンテナへ自動展開します。最後にイメージをビルドしてコンテナを起動し、ドメインで 2 つのゲームにアクセスします。さらに ADD と COPY の決定的な違い (ADD は tar.gz を自動展開する) も解説します。</description></item><item><title>Docker 実戦：コンテナのデータ永続化——bind マウントとボリューム（Volume）</title><link>https://LMDAWN1127.github.io/ja/posts/docker-bind-mount-volume/</link><pubDate>Mon, 26 Oct 2026 15:00:00 +0800</pubDate><guid>https://LMDAWN1127.github.io/ja/posts/docker-bind-mount-volume/</guid><description>-v でホストのパスをコンテナにマウントし、1 つのマウントポイントを複数コンテナで共有し、1 つのコンテナに複数のマウントポイントを付け、rw/ro 権限を指定します。さらに docker volume の作成・確認・削除、匿名ボリューム、稼働中コンテナの再マウントまでを扱います。</description></item><item><title>Docker 実戦：コンテナライフサイクル管理——起動・停止・再起動ポリシー</title><link>https://LMDAWN1127.github.io/ja/posts/docker-container-lifecycle/</link><pubDate>Mon, 26 Oct 2026 14:20:00 +0800</pubDate><guid>https://LMDAWN1127.github.io/ja/posts/docker-container-lifecycle/</guid><description>docker stop・start・restart と起動時のコマンド指定、そして 5 つの再起動ポリシーを扱います。ポリシーの異なる 5 つのコンテナを作り、kill -9 で強制終了させて再起動回数を比較し、dockerd 再起動後に復活するコンテナを確認します。</description></item><item><title>Docker 実戦：アプリ導入 - Tomcat / MySQL / WordPress / ELK</title><link>https://LMDAWN1127.github.io/ja/posts/docker-app-deployments/</link><pubDate>Mon, 26 Oct 2026 14:10:00 +0800</pubDate><guid>https://LMDAWN1127.github.io/ja/posts/docker-app-deployments/</guid><description>docker run で実アプリを導入します。Tomcat、MySQL (20 インスタンスの一括起動と複数インスタンスでの公開を含む)、WordPress、そして ElasticSearch + Kibana スタックを、ポートマッピング・永続ボリューム・パスワード/トークン設定とともに扱います。</description></item><item><title>Docker 実戦：inspect でコンテナの PID・ID・ネットワーク情報を確認</title><link>https://LMDAWN1127.github.io/ja/posts/docker-inspect-pid-id-network/</link><pubDate>Mon, 26 Oct 2026 13:00:00 +0800</pubDate><guid>https://LMDAWN1127.github.io/ja/posts/docker-inspect-pid-id-network/</guid><description>docker container inspect -f と Go テンプレートを使って、コンテナの PID・ID・IP アドレス・ゲートウェイ・MAC アドレスを取り出します。</description></item><item><title>Docker 実戦：Nginx ロードバランシングとコンテナトラフィック分散</title><link>https://LMDAWN1127.github.io/ja/posts/docker-nginx-load-balancing/</link><pubDate>Mon, 26 Oct 2026 11:50:00 +0800</pubDate><guid>https://LMDAWN1127.github.io/ja/posts/docker-nginx-load-balancing/</guid><description>lb コンテナと web コンテナ 2 つを起動し、lb 上の Nginx default.conf を編集して web01/web02 にリバースプロキシし、lb に 10 回 curl してトラフィックが 2 つのバックエンド間で交互に振り分けられることを確認します。</description></item><item><title>Docker 実戦：イメージ取得からコンテナ起動までの全体フロー</title><link>https://LMDAWN1127.github.io/ja/posts/docker-image-container-flow/</link><pubDate>Mon, 26 Oct 2026 10:20:00 +0800</pubDate><guid>https://LMDAWN1127.github.io/ja/posts/docker-image-container-flow/</guid><description>Docker の三大コアオブジェクト、イメージレジストリ・イメージ・コンテナを順にたどります。ローカルのレジストリ一覧を確認し、リモートレジストリからイメージを取得し、コンテナを起動してアクセステストまで行います。</description></item><item><title>Docker 実戦：コンテナの環境変数の渡し方と確認方法</title><link>https://LMDAWN1127.github.io/ja/posts/docker-env-var-passing/</link><pubDate>Fri, 23 Oct 2026 17:26:00 +0800</pubDate><guid>https://LMDAWN1127.github.io/ja/posts/docker-env-var-passing/</guid><description>コンテナに -e で環境変数を渡し、後から docker exec &amp;lt;コンテナ&amp;gt; env で確認する方法を解説します。</description></item><item><title>Docker 実戦：イメージ移行 - save/load でのオフライン転送とタグ付け</title><link>https://LMDAWN1127.github.io/ja/posts/docker-image-migration-tag/</link><pubDate>Fri, 23 Oct 2026 15:24:00 +0800</pubDate><guid>https://LMDAWN1127.github.io/ja/posts/docker-image-migration-tag/</guid><description>docker save でイメージをエクスポートし、SSH 経由でオフライン転送、md5sum で整合性を検証してから docker load でインポートし直してタグを付けます。save/load で IMAGE ID が維持されること、複数イメージの一括エクスポート、2 つのインポート形式、イメージの一括削除方法を解説します。</description></item><item><title>Docker 実戦：ポートマッピングの仕組み - veth NIC から iptables DNAT まで</title><link>https://LMDAWN1127.github.io/ja/posts/docker-port-mapping-principle/</link><pubDate>Fri, 23 Oct 2026 15:22:00 +0800</pubDate><guid>https://LMDAWN1127.github.io/ja/posts/docker-port-mapping-principle/</guid><description>Docker がコンテナポートをホストにどうマッピングするかを観察します。veth NIC や docker0 ブリッジから、iptables の DNAT ルール、そして外部アクセスを可能にする net.ipv4.ip_forward カーネルスイッチまで。</description></item><item><title>Docker 実戦：コンテナのよく使うコマンドと exec 操作</title><link>https://LMDAWN1127.github.io/ja/posts/docker-common-commands-exec/</link><pubDate>Fri, 23 Oct 2026 15:20:00 +0800</pubDate><guid>https://LMDAWN1127.github.io/ja/posts/docker-common-commands-exec/</guid><description>日常的によく使うコンテナコマンド（一覧/削除/名前変更、-f/&amp;ndash;since/&amp;ndash;until でのログ追跡、docker cp でのファイルコピー）と、docker exec を使った実行中コンテナ内でのコマンド実行を解説。対象コマンドがイメージに存在する必要があるという注意点も。</description></item><item><title>Docker 実戦：バイナリでの導入とワンクリックスクリプト導入</title><link>https://LMDAWN1127.github.io/ja/posts/docker-binary-script-install/</link><pubDate>Fri, 23 Oct 2026 12:30:00 +0800</pubDate><guid>https://LMDAWN1127.github.io/ja/posts/docker-binary-script-install/</guid><description>Docker を 3 つの方法で導入します。apt パッケージマネージャー、公式の静的バイナリ (ダウンロード/展開/コピー/起動)、および自动化スクリプト (導入とアンインストール)。バイナリ導入のきれいな削除方法も解説します。</description></item><item><title>flannel 実践：Docker クロスホストコンテナネットワークをゼロから構築</title><link>https://LMDAWN1127.github.io/ja/posts/flannel-network-lab/</link><pubDate>Wed, 21 May 2025 00:00:00 +0000</pubDate><guid>https://LMDAWN1127.github.io/ja/posts/flannel-network-lab/</guid><description>&lt;h1 id="flannel-実践docker-クロスホストコンテナネットワークをゼロから構築"&gt;flannel 実践：Docker クロスホストコンテナネットワークをゼロから構築&lt;/h1&gt;
+&lt;h2 id="一ネットワーク環境の計画"&gt;一、ネットワーク環境の計画&lt;/h2&gt;
 &lt;ol&gt;
 &lt;li&gt;etcd ホスト IP：192.168.8.88 ホスト名：docker-network&lt;/li&gt;
 &lt;li&gt;Host1 IP：192.168.8.188 ホスト名：web01&lt;/li&gt;
 &lt;li&gt;Host2 IP：192.168.8.99 ホスト名：web02&lt;/li&gt;
 &lt;/ol&gt;
-&lt;h2 id=&#34;二etcd-ホストの設定&#34;&gt;二、etcd ホストの設定&lt;/h2&gt;
-&lt;h3 id=&#34;ステップ-1etcd-のダウンロードと解凍&#34;&gt;ステップ 1：etcd のダウンロードと解凍&lt;/h3&gt;
+&lt;h2 id="二etcd-ホストの設定"&gt;二、etcd ホストの設定&lt;/h2&gt;
+&lt;h3 id="ステップ-1etcd-のダウンロードと解凍"&gt;ステップ 1：etcd のダウンロードと解凍&lt;/h3&gt;
 &lt;ol&gt;
 &lt;li&gt;github.com から etcd-v3.6.0-linux-amd64.tar.gz パッケージをダウンロードします&lt;/li&gt;
 &lt;li&gt;パッケージを etcd ホストの /root ディレクトリにコピーして解凍します：&lt;/li&gt;
 &lt;/ol&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;
-&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;1
+&lt;div class="highlight"&gt;&lt;div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;
+&lt;table style="border-spacing:0;padding:0;margin:0;border:0;"&gt;&lt;tr&gt;&lt;td style="vertical-align:top;padding:0;margin:0;border:0;"&gt;
+&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code&gt;&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"&gt;1
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;root@docker-network ~&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# tar -zxvf etcd-v3.6.0-linux-amd64.tar.gz&lt;/span&gt;
+&lt;td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%"&gt;
+&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;[&lt;/span&gt;root@docker-network ~&lt;span style="color:#f92672"&gt;]&lt;/span&gt;&lt;span style="color:#75715e"&gt;# tar -zxvf etcd-v3.6.0-linux-amd64.tar.gz&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;h3 id=&#34;ステップ-2etcd-実行ファイルのインストール&#34;&gt;ステップ 2：etcd 実行ファイルのインストール&lt;/h3&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;
-&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;1
-&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;2
+&lt;/div&gt;&lt;h3 id="ステップ-2etcd-実行ファイルのインストール"&gt;ステップ 2：etcd 実行ファイルのインストール&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;
+&lt;table style="border-spacing:0;padding:0;margin:0;border:0;"&gt;&lt;tr&gt;&lt;td style="vertical-align:top;padding:0;margin:0;border:0;"&gt;
+&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code&gt;&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"&gt;1
+&lt;/span&gt;&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"&gt;2
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;root@docker-network ~&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# cd etcd-v3.6.0-linux-amd64&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;root@docker-network etcd-v3.6.0-linux-amd64&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# cp etcd* /usr/local/bin/&lt;/span&gt;
+&lt;td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%"&gt;
+&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;[&lt;/span&gt;root@docker-network ~&lt;span style="color:#f92672"&gt;]&lt;/span&gt;&lt;span style="color:#75715e"&gt;# cd etcd-v3.6.0-linux-amd64&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;[&lt;/span&gt;root@docker-network etcd-v3.6.0-linux-amd64&lt;span style="color:#f92672"&gt;]&lt;/span&gt;&lt;span style="color:#75715e"&gt;# cp etcd* /usr/local/bin/&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;h3 id=&#34;ステップ-3データディレクトリの作成&#34;&gt;ステップ 3：データディレクトリの作成&lt;/h3&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;
-&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;1
+&lt;/div&gt;&lt;h3 id="ステップ-3データディレクトリの作成"&gt;ステップ 3：データディレクトリの作成&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;
+&lt;table style="border-spacing:0;padding:0;margin:0;border:0;"&gt;&lt;tr&gt;&lt;td style="vertical-align:top;padding:0;margin:0;border:0;"&gt;
+&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code&gt;&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"&gt;1
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;root@docker-network ~&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# mkdir /var/lib/etcd&lt;/span&gt;
+&lt;td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%"&gt;
+&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;[&lt;/span&gt;root@docker-network ~&lt;span style="color:#f92672"&gt;]&lt;/span&gt;&lt;span style="color:#75715e"&gt;# mkdir /var/lib/etcd&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;h3 id=&#34;ステップ-4etcd-サービスの設定と起動&#34;&gt;ステップ 4：etcd サービスの設定と起動&lt;/h3&gt;
+&lt;/div&gt;&lt;h3 id="ステップ-4etcd-サービスの設定と起動"&gt;ステップ 4：etcd サービスの設定と起動&lt;/h3&gt;
 &lt;ol&gt;
 &lt;li&gt;etcd.service ファイルを作成します：&lt;/li&gt;
 &lt;/ol&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;
-&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;1
+&lt;div class="highlight"&gt;&lt;div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;
+&lt;table style="border-spacing:0;padding:0;margin:0;border:0;"&gt;&lt;tr&gt;&lt;td style="vertical-align:top;padding:0;margin:0;border:0;"&gt;
+&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code&gt;&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"&gt;1
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;root@docker-network ~&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# vim /usr/lib/systemd/system/etcd.service&lt;/span&gt;
+&lt;td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%"&gt;
+&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;[&lt;/span&gt;root@docker-network ~&lt;span style="color:#f92672"&gt;]&lt;/span&gt;&lt;span style="color:#75715e"&gt;# vim /usr/lib/systemd/system/etcd.service&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;
-&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;1
-&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;2
-&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;3
-&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;4
-&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;5
-&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;6
+&lt;/div&gt;&lt;div class="highlight"&gt;&lt;div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;
+&lt;table style="border-spacing:0;padding:0;margin:0;border:0;"&gt;&lt;tr&gt;&lt;td style="vertical-align:top;padding:0;margin:0;border:0;"&gt;
+&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code&gt;&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"&gt;1
+&lt;/span&gt;&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"&gt;2
+&lt;/span&gt;&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"&gt;3
+&lt;/span&gt;&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"&gt;4
+&lt;/span&gt;&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"&gt;5
+&lt;/span&gt;&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"&gt;6
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-ini&#34; data-lang=&#34;ini&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;[Unit]&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;Description&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;etcd_service&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;[Service]&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;ExecStart&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;/usr/local/bin/etcd --name etcd1 --data-dir /var/lib/etcd --listen-client-urls http://192.168.8.88:2379,http://127.0.0.1:2379 --advertise-client-urls http://192.168.8.88:2379,http://127.0.0.1:2379&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;[Install]&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;WantedBy&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;multi-user.target&lt;/span&gt;
+&lt;td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%"&gt;
+&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-ini" data-lang="ini"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;[Unit]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#a6e22e"&gt;Description&lt;/span&gt;&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;etcd_service&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;[Service]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#a6e22e"&gt;ExecStart&lt;/span&gt;&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;/usr/local/bin/etcd --name etcd1 --data-dir /var/lib/etcd --listen-client-urls http://192.168.8.88:2379,http://127.0.0.1:2379 --advertise-client-urls http://192.168.8.88:2379,http://127.0.0.1:2379&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;[Install]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#a6e22e"&gt;WantedBy&lt;/span&gt;&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;multi-user.target&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;ol start=&#34;2&#34;&gt;
+&lt;/div&gt;&lt;ol start="2"&gt;
 &lt;li&gt;システムサービス設定をリロードして etcd を起動します：&lt;/li&gt;
 &lt;/ol&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;
-&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;1
-&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;2
-&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;3
+&lt;div class="highlight"&gt;&lt;div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;
+&lt;table style="border-spacing:0;padding:0;margin:0;border:0;"&gt;&lt;tr&gt;&lt;td style="vertical-align:top;padding:0;margin:0;border:0;"&gt;
+&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code&gt;&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"&gt;1
+&lt;/span&gt;&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"&gt;2
+&lt;/span&gt;&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"&gt;3
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;root@docker-network ~&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# systemctl daemon-reload&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;root@docker-network ~&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# systemctl enable etcd.service&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;root@docker-network ~&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# systemctl restart etcd.service&lt;/span&gt;
+&lt;td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%"&gt;
+&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;[&lt;/span&gt;root@docker-network ~&lt;span style="color:#f92672"&gt;]&lt;/span&gt;&lt;span style="color:#75715e"&gt;# systemctl daemon-reload&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;[&lt;/span&gt;root@docker-network ~&lt;span style="color:#f92672"&gt;]&lt;/span&gt;&lt;span style="color:#75715e"&gt;# systemctl enable etcd.service&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;[&lt;/span&gt;root@docker-network ~&lt;span style="color:#f92672"&gt;]&lt;/span&gt;&lt;span style="color:#75715e"&gt;# systemctl restart etcd.service&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;ol start=&#34;3&#34;&gt;
+&lt;/div&gt;&lt;ol start="3"&gt;
 &lt;li&gt;etcd のリスニング状態を確認します：&lt;/li&gt;
 &lt;/ol&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;
-&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;1
-&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;2
-&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;3
+&lt;div class="highlight"&gt;&lt;div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;
+&lt;table style="border-spacing:0;padding:0;margin:0;border:0;"&gt;&lt;tr&gt;&lt;td style="vertical-align:top;padding:0;margin:0;border:0;"&gt;
+&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code&gt;&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"&gt;1
+&lt;/span&gt;&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"&gt;2
+&lt;/span&gt;&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"&gt;3
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;root@docker-network ~&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# netstat -tulnp |grep :2379&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;tcp        &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;      &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt; 192.168.8.88:2379       0.0.0.0:*               LISTEN      1912/etcd
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;tcp        &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;      &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt; 127.0.0.1:2379          0.0.0.0:*               LISTEN      1912/etcd
+&lt;td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%"&gt;
+&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;[&lt;/span&gt;root@docker-network ~&lt;span style="color:#f92672"&gt;]&lt;/span&gt;&lt;span style="color:#75715e"&gt;# netstat -tulnp |grep :2379&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;tcp &lt;span style="color:#ae81ff"&gt;0&lt;/span&gt; &lt;span style="color:#ae81ff"&gt;0&lt;/span&gt; 192.168.8.88:2379 0.0.0.0:* LISTEN 1912/etcd
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;tcp &lt;span style="color:#ae81ff"&gt;0&lt;/span&gt; &lt;span style="color:#ae81ff"&gt;0&lt;/span&gt; 127.0.0.1:2379 0.0.0.0:* LISTEN 1912/etcd
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;h3 id=&#34;ステップ-5etcd-に-flannel-ネットワーク設定を追加&#34;&gt;ステップ 5：etcd に flannel ネットワーク設定を追加&lt;/h3&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;
-&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;1
+&lt;/div&gt;&lt;h3 id="ステップ-5etcd-に-flannel-ネットワーク設定を追加"&gt;ステップ 5：etcd に flannel ネットワーク設定を追加&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;
+&lt;table style="border-spacing:0;padding:0;margin:0;border:0;"&gt;&lt;tr&gt;&lt;td style="vertical-align:top;padding:0;margin:0;border:0;"&gt;
+&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code&gt;&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"&gt;1
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;etcdctl --endpoints http://127.0.0.1:2379 put /coreos.com/network/config &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;{&amp;#34;Network&amp;#34;: &amp;#34;172.16.0.0/16&amp;#34;, &amp;#34;SubnetLen&amp;#34;: 24, &amp;#34;SubnetMin&amp;#34;: &amp;#34;172.16.1.0&amp;#34;,&amp;#34;SubnetMax&amp;#34;: &amp;#34;172.16.10.0&amp;#34;, &amp;#34;Backend&amp;#34;: {&amp;#34;Type&amp;#34;: &amp;#34;vxlan&amp;#34;}}&amp;#39;&lt;/span&gt;
+&lt;td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%"&gt;
+&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;etcdctl --endpoints http://127.0.0.1:2379 put /coreos.com/network/config &lt;span style="color:#e6db74"&gt;&amp;#39;{&amp;#34;Network&amp;#34;: &amp;#34;172.16.0.0/16&amp;#34;, &amp;#34;SubnetLen&amp;#34;: 24, &amp;#34;SubnetMin&amp;#34;: &amp;#34;172.16.1.0&amp;#34;,&amp;#34;SubnetMax&amp;#34;: &amp;#34;172.16.10.0&amp;#34;, &amp;#34;Backend&amp;#34;: {&amp;#34;Type&amp;#34;: &amp;#34;vxlan&amp;#34;}}&amp;#39;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;
-&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;1
+&lt;/div&gt;&lt;div class="highlight"&gt;&lt;div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;
+&lt;table style="border-spacing:0;padding:0;margin:0;border:0;"&gt;&lt;tr&gt;&lt;td style="vertical-align:top;padding:0;margin:0;border:0;"&gt;
+&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code&gt;&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"&gt;1
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;etcdctl --endpoints http://192.168.8.88:2379 get /coreos.com/network/config
+&lt;td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%"&gt;
+&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;etcdctl --endpoints http://192.168.8.88:2379 get /coreos.com/network/config
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;設定の説明：&lt;/p&gt;</description>
-    </item>
-  </channel>
-</rss>
+&lt;/div&gt;&lt;p&gt;設定の説明：&lt;/p&gt;</description></item></channel></rss>

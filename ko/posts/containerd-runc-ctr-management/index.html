@@ -1,1115 +1,248 @@
-<!DOCTYPE html>
-<html lang="ko" dir="auto" data-theme="auto">
-
-<head><meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="robots" content="index, follow">
-<title>containerd 컨테이너 런타임 구축과 runc/ctr 관리 실전 | DAWN&#39;s Blog</title>
-<meta name="keywords" content="Docker">
-<meta name="description" content="이 실습에서는 먼저 docker02 노드의 Docker 바이너리를 제거한 뒤, containerd 1.7.20 런타임（cri-containerd-cni 압축 해제, systemd 유닛 설치, config.toml 에서 SystemdCgroup 활성화 및 sandbox_image 교체）을 구축하고 runc 1.1.12 와 ctr 클라이언트를 설치한다. 이후 ctr 로 이미지 풀/태그, 컨테이너 생성/시작/일시정지/재개/삭제, 네임스페이스 관리, 그리고 docker01 Harbor（HTTP, 비 TLS）로의 이미지 푸시 및 풀 전체 작업을 시연한다.">
-<meta name="author" content="DAWN">
-<link rel="canonical" href="https://LMDAWN1127.github.io/ko/posts/containerd-runc-ctr-management/">
-<link crossorigin="anonymous" href="/assets/css/stylesheet.4bf808bff57bddc46d61c8ae060b00400fc679ab876e37243b11bd3f832f2958.css" integrity="sha256-S/gIv/V73cRtYciuBgsAQA/GeauHbjckOxG9P4MvKVg=" rel="preload stylesheet" as="style">
-<link rel="icon" href="https://LMDAWN1127.github.io/images/DAWN.jpg">
-<link rel="icon" type="image/png" sizes="16x16" href="https://LMDAWN1127.github.io/favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="https://LMDAWN1127.github.io/favicon-32x32.png">
-<link rel="apple-touch-icon" href="https://LMDAWN1127.github.io/apple-touch-icon.png">
-<link rel="mask-icon" href="https://LMDAWN1127.github.io/safari-pinned-tab.svg">
-<meta name="theme-color" content="#2e2e33">
-<meta name="msapplication-TileColor" content="#2e2e33">
-<link rel="alternate" hreflang="zh" href="https://LMDAWN1127.github.io/posts/containerd-runc-ctr-management/">
-<link rel="alternate" hreflang="en" href="https://LMDAWN1127.github.io/en/posts/containerd-runc-ctr-management/">
-<link rel="alternate" hreflang="ko" href="https://LMDAWN1127.github.io/ko/posts/containerd-runc-ctr-management/">
-<link rel="alternate" hreflang="ja" href="https://LMDAWN1127.github.io/ja/posts/containerd-runc-ctr-management/">
-<noscript>
-    <style>
-        #theme-toggle,
-        .top-link {
-            display: none;
-        }
-
-    </style>
-    <style>
-        @media (prefers-color-scheme: dark) {
-            :root {
-                --theme: rgb(29, 30, 32);
-                --entry: rgb(46, 46, 51);
-                --primary: rgb(218, 218, 219);
-                --secondary: rgb(155, 156, 157);
-                --tertiary: rgb(65, 66, 68);
-                --content: rgb(196, 196, 197);
-                --code-block-bg: rgb(46, 46, 51);
-                --code-bg: rgb(55, 56, 62);
-                --border: rgb(51, 51, 51);
-                color-scheme: dark;
-            }
-
-            .list {
-                background: var(--theme);
-            }
-
-            .toc {
-                background: var(--entry);
-            }
-        }
-
-    </style>
-</noscript>
-<script>
-    if (localStorage.getItem("pref-theme") === "dark") {
-        document.querySelector("html").dataset.theme = 'dark';
-    } else if (localStorage.getItem("pref-theme") === "light") {
-       document.querySelector("html").dataset.theme = 'light';
-    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-        document.querySelector("html").dataset.theme = 'dark';
-    } else {
-        document.querySelector("html").dataset.theme = 'light';
-    }
-
-</script><link rel="stylesheet" href='https://LMDAWN1127.github.io/css/custom.css'>
-<meta property="og:url" content="https://LMDAWN1127.github.io/ko/posts/containerd-runc-ctr-management/">
-  <meta property="og:site_name" content="DAWN&#39;s Blog">
-  <meta property="og:title" content="containerd 컨테이너 런타임 구축과 runc/ctr 관리 실전">
-  <meta property="og:description" content="이 실습에서는 먼저 docker02 노드의 Docker 바이너리를 제거한 뒤, containerd 1.7.20 런타임（cri-containerd-cni 압축 해제, systemd 유닛 설치, config.toml 에서 SystemdCgroup 활성화 및 sandbox_image 교체）을 구축하고 runc 1.1.12 와 ctr 클라이언트를 설치한다. 이후 ctr 로 이미지 풀/태그, 컨테이너 생성/시작/일시정지/재개/삭제, 네임스페이스 관리, 그리고 docker01 Harbor（HTTP, 비 TLS）로의 이미지 푸시 및 풀 전체 작업을 시연한다.">
-  <meta property="og:locale" content="ko">
-  <meta property="og:type" content="article">
-    <meta property="article:section" content="posts">
-    <meta property="article:published_time" content="2026-10-30T10:31:00+08:00">
-    <meta property="article:modified_time" content="2026-10-30T10:31:00+08:00">
-    <meta property="article:tag" content="Docker">
-      <meta property="og:image" content="https://LMDAWN1127.github.io/images/DAWN.jpg">
-
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:image" content="https://LMDAWN1127.github.io/images/DAWN.jpg">
-  <meta name="twitter:title" content="containerd 컨테이너 런타임 구축과 runc/ctr 관리 실전">
-  <meta name="twitter:description" content="이 실습에서는 먼저 docker02 노드의 Docker 바이너리를 제거한 뒤, containerd 1.7.20 런타임（cri-containerd-cni 압축 해제, systemd 유닛 설치, config.toml 에서 SystemdCgroup 활성화 및 sandbox_image 교체）을 구축하고 runc 1.1.12 와 ctr 클라이언트를 설치한다. 이후 ctr 로 이미지 풀/태그, 컨테이너 생성/시작/일시정지/재개/삭제, 네임스페이스 관리, 그리고 docker01 Harbor（HTTP, 비 TLS）로의 이미지 푸시 및 풀 전체 작업을 시연한다.">
-
-
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  "itemListElement": [
-    {
-      "@type": "ListItem",
-      "position":  1 ,
-      "name": "Posts",
-      "item": "https://LMDAWN1127.github.io/ko/posts/"
-    }, 
-    {
-      "@type": "ListItem",
-      "position":  2 ,
-      "name": "containerd 컨테이너 런타임 구축과 runc/ctr 관리 실전",
-      "item": "https://LMDAWN1127.github.io/ko/posts/containerd-runc-ctr-management/"
-    }
-  ]
-}
-</script>
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "BlogPosting",
-  "headline": "containerd 컨테이너 런타임 구축과 runc/ctr 관리 실전",
-  "name": "containerd 컨테이너 런타임 구축과 runc\/ctr 관리 실전",
-  "description": "이 실습에서는 먼저 docker02 노드의 Docker 바이너리를 제거한 뒤, containerd 1.7.20 런타임（cri-containerd-cni 압축 해제, systemd 유닛 설치, config.toml 에서 SystemdCgroup 활성화 및 sandbox_image 교체）을 구축하고 runc 1.1.12 와 ctr 클라이언트를 설치한다. 이후 ctr 로 이미지 풀/태그, 컨테이너 생성/시작/일시정지/재개/삭제, 네임스페이스 관리, 그리고 docker01 Harbor（HTTP, 비 TLS）로의 이미지 푸시 및 풀 전체 작업을 시연한다.",
-  "keywords": [
-    "Docker"
-  ],
-  "articleBody": "containerd 컨테이너 런타임 구축과 runc/ctr 관리 실전 제1부 containerd 컨테이너 관리 도구 Docker 제거\n1 2 3 4 5 6 7 root@docker02:~# systemctl stop docker root@docker02:~# rm -f /lib/systemd/system/docker.service /etc/systemd/system/docker.service root@docker02:~# systemctl daemon-reload root@docker02:~# rm -f /usr/bin/docker /usr/bin/dockerd /usr/bin/docker-init /usr/bin/docker-proxy /usr/bin/docker-compose root@docker02:~# rm -f /usr/bin/containerd /usr/bin/ctr /usr/bin/runc root@docker02:~# which docker dockerd containerd ctr runc (비어 있음, 모두 제거됨) Docker 는 바이너리 방식으로 설치되었으며（/dawn/softwares/docker/ 에 심볼릭 링크）. 제거란 심볼릭 링크와 systemd 서비스를 삭제하는 것입니다. 원본 바이너리는 /dawn/softwares/docker/ 에 백업으로 보관됩니다.\n1. containerd 다운로드 1 2 3 root@docker02:~# wget https://github.com/containerd/containerd/releases/download/v1.7.20/cri-containerd-cni-1.7.20-linux-amd64.tar.gz root@docker02:~# ls -lh cri-containerd-cni-1.7.20-linux-amd64.tar.gz -rw-r--r-- 1 root root 143M Jul 18 2024 cri-containerd-cni-1.7.20-linux-amd64.tar.gz 2. 패키지 압축 해제 1 root@docker02:~# tar xf cri-containerd-cni-1.7.20-linux-amd64.tar.gz 3. containerd 런타임 파일을 호스트 지정 경로로 복사 1 2 3 4 5 6 7 8 root@docker02:~# cp usr/local/bin/containerd /usr/local/bin/ root@docker02:~# cp usr/local/bin/containerd-shim /usr/local/bin/ root@docker02:~# cp usr/local/bin/containerd-shim-runc-v1 /usr/local/bin/ root@docker02:~# cp usr/local/bin/containerd-shim-runc-v2 /usr/local/bin/ root@docker02:~# cp usr/local/bin/ctr /usr/bin/ root@docker02:~# cp usr/local/bin/crictl /usr/bin/ root@docker02:~# containerd --version containerd github.com/containerd/containerd v1.7.20 8fc6bcff51318944179630522a095cc9dbf9f353 4. containerd systemd 유닛 파일 복사 1 root@docker02:~# cp etc/systemd/system/containerd.service /usr/lib/systemd/system/ 5. containerd 설정 파일 생성 및 수정 1 2 3 4 5 6 7 8 root@docker02:~# mkdir -p /etc/containerd root@docker02:~# containerd config default \u003e /etc/containerd/config.toml root@docker02:~# sed -ri 's#(SystemdCgroup = )false#\\1true#' /etc/containerd/config.toml root@docker02:~# sed -i 's#registry.k8s.io/pause:3.8#uhub.service.ucloud.cn/dawn/pause:3.8#' /etc/containerd/config.toml root@docker02:~# grep SystemdCgroup /etc/containerd/config.toml SystemdCgroup = true root@docker02:~# grep sandbox_image /etc/containerd/config.toml sandbox_image = \"uhub.service.ucloud.cn/dawn/pause:3.8\" 6. containerd 서비스 시작 1 2 3 4 5 6 root@docker02:~# systemctl enable --now containerd Created symlink /etc/systemd/system/multi-user.target.wants/containerd.service → /lib/systemd/system/containerd.service. root@docker02:~# systemctl status containerd | head -4 ● containerd.service - containerd container runtime Loaded: loaded (/lib/systemd/system/containerd.service; enabled; vendor preset: enabled) Active: active (running) 7. ctr 클라이언트 도구 복사 및 버전 확인 1 2 3 4 5 6 7 8 9 10 11 root@docker02:~# ctr --version ctr github.com/containerd/containerd v1.7.20 root@docker02:~# ctr version Client: Version: v1.7.20 Revision: 8fc6bcff51318944179630522a095cc9dbf9f353 Go version: go1.21.12 Server: Version: v1.7.20 Revision: 8fc6bcff51318944179630522a095cc9dbf9f353 UUID: 732b5e18-1bb3-4792-a7ef-2e6687016e2e 제2부 runc 설치와 ctr 도구 관리 실전 1. runc 다운로드 1 2 3 root@docker02:~# wget https://github.com/opencontainers/runc/releases/download/v1.1.12/runc.amd64 root@docker02:~# ls -lh runc.amd64 -rw-r--r-- 1 root root 11M Jan 23 2024 runc.amd64 2. runc 를 PATH 로 이동하고 실행 권한 부여 1 2 3 4 5 6 7 8 root@docker02:~# mv runc.amd64 /usr/bin/runc root@docker02:~# chmod +x /usr/bin/runc root@docker02:~# runc --version runc version 1.1.12 commit: v1.1.12-0-g51d5e946 spec: 1.0.2-dev go: go1.20.13 libseccomp: 2.5.4 3. ctr 기본: 이미지 관리 3.1 이미지 목록 조회（초기 비어 있음）\n1 2 root@docker02:~# ctr images ls REF TYPE DIGEST SIZE PLATFORMS LABELS 3.2 이미지 풀\n1 2 3 4 5 6 7 8 9 root@docker02:~# ctr images pull uhub.service.ucloud.cn/dawn/apps:v1 ... elapsed: 3.5 s total: 8.9 Mi (2.5 MiB/s) unpacking linux/amd64 sha256:3bee216f250cfd2dbda1744d6849e27118845b8f4d55dda3ca3c6c1227cc2e5c... done: 585.870274ms root@docker02:~# ctr images ls REF TYPE DIGEST SIZE PLATFORMS LABELS uhub.service.ucloud.cn/dawn/apps:v1 application/vnd.docker.distribution.manifest.v2+json sha256:3bee216f250cfd2dbda1744d6849e27118845b8f4d55dda3ca3c6c1227cc2e5c 9.6 MiB linux/amd64 - 4. ctr 실전: 컨테이너 관리 4.1 컨테이너 생성 및 시작\n1 2 3 4 5 6 7 8 9 root@docker02:~# ctr containers create uhub.service.ucloud.cn/dawn/apps:v1 xiuxian root@docker02:~# ctr containers ls CONTAINER IMAGE RUNTIME xiuxian uhub.service.ucloud.cn/dawn/apps:v1 io.containerd.runc.v2 root@docker02:~# ctr task start -d xiuxian root@docker02:~# ctr task ls TASK PID STATUS xiuxian 64464 RUNNING 4.2 컨테이너의 호스트 PID 확인\n1 2 3 4 root@docker02:~# ps -ef | grep 64464 | grep -v grep root 64464 64444 0 09:47 ? 00:00:00 nginx: master process nginx -g daemon off; systemd+ 64502 64464 0 09:47 ? 00:00:00 nginx: worker process systemd+ 64503 64464 0 09:47 ? 00:00:00 nginx: worker process 4.3 컨테이너 내 명령 실행\n1 2 3 4 5 6 root@docker02:~# ctr task exec --exec-id 1 xiuxian ps -ef PID USER TIME COMMAND 1 root 0:00 nginx: master process nginx -g daemon off; 33 nginx 0:00 nginx: worker process 34 nginx 0:00 nginx: worker process 35 root 0:00 ps -ef 4.4 컨테이너 일시정지 및 재개\n1 2 3 4 5 6 7 8 9 root@docker02:~# ctr tasks pause xiuxian root@docker02:~# ctr task ls TASK PID STATUS xiuxian 64464 PAUSED root@docker02:~# ctr tasks resume xiuxian root@docker02:~# ctr task ls TASK PID STATUS xiuxian 64464 RUNNING 4.5 컨테이너 중지 및 삭제\n1 2 3 4 5 root@docker02:~# ctr task kill xiuxian root@docker02:~# ctr task rm xiuxian root@docker02:~# ctr containers rm xiuxian root@docker02:~# ctr task ls TASK PID STATUS 실행 중인 컨테이너를 삭제하려면 먼저 ctr task kill（또는 ctr task rm -f）로 태스크를 중지한 다음, ctr task rm 로 태스크를, ctr containers rm 로 컨테이너를 삭제해야 합니다. 순서를 바꾸면 task must be stopped before deletion 오류가 발생합니다.\n5. ctr 네임스페이스 관리 1 2 3 4 5 6 7 8 9 root@docker02:~# ctr namespaces ls NAME LABELS default root@docker02:~# ctr ns create dawn-dawn root@docker02:~# ctr ns ls NAME LABELS dawn-dawn default 네임스페이스를 삭제하기 전에 그 안이 비어 있어야 합니다（이미지 없음, 컨테이너 없음）. 그렇지 않으면 must be empty 오류가 발생합니다.\n6. ctr 로 Harbor 에서 이미지 푸시/풀 6.1 이미지에 태그 부여 및 docker01 Harbor 로 푸시\n1 2 3 4 5 root@docker02:~# ctr images tag uhub.service.ucloud.cn/dawn/apps:v1 11.0.1.121/dawn-games/xiuxian:v1 root@docker02:~# ctr images push --platform linux/amd64 --plain-http -u admin:1 11.0.1.121/dawn-games/xiuxian:v1 manifest-sha256:3bee216f250cfd2dbda1744d6849e27118845b8f4d55dda3ca3c6c1227cc2e5c: done config-sha256:f28fd43be4ad41fc768dcc3629f8479d1443df01ada10ac9a771314e4fdef599: done elapsed: 0.8 s total: 9.4 Ki (11.7 KiB/s) 6.2 Harbor 에서 이미지 풀하여 검증\n1 2 3 4 5 root@docker02:~# ctr images rm 11.0.1.121/dawn-games/xiuxian:v1 root@docker02:~# ctr images pull --plain-http 11.0.1.121/dawn-games/xiuxian:v1 ... unpacking linux/amd64 sha256:3bee216f250cfd2dbda1744d6849e27118845b8f4d55dda3ca3c6c1227cc2e5c... done: 6.182696ms ctr 에서 HTTP（비 TLS）레지스트리로 푸시/풀하려면 명시적으로 --plain-http 플래그가 필요하며, 인증은 -u admin:1 을 사용합니다. ctr 은 Docker 와 달리 로컬에 없는 이미지를 원격에서 자동으로 풀어오지 않습니다.\n",
-  "wordCount" : "866",
-  "inLanguage": "ko",
-  "image": "https://LMDAWN1127.github.io/images/DAWN.jpg","datePublished": "2026-10-30T10:31:00+08:00",
-  "dateModified": "2026-10-30T10:31:00+08:00",
-  "author":{
-    "@type": "Person",
-    "name": "DAWN"
-  },
-  "mainEntityOfPage": {
-    "@type": "WebPage",
-    "@id": "https://LMDAWN1127.github.io/ko/posts/containerd-runc-ctr-management/"
-  },
-  "publisher": {
-    "@type": "Organization",
-    "name": "DAWN's Blog",
-    "logo": {
-      "@type": "ImageObject",
-      "url": "https://LMDAWN1127.github.io/images/DAWN.jpg"
-    }
-  }
-}
-</script>
-</head>
-<body id="top">
-    <header class="header">
-    <nav class="header-nav">
-        <div class="logo">
-            <a href="https://LMDAWN1127.github.io/ko/" accesskey="h" title="DAWN&#39;s Blog (Alt + H)">
-                <img src="https://LMDAWN1127.github.io/images/DAWN.jpg" alt="" aria-label="logo"
-                    height="38">DAWN&#39;s Blog</a>
-            <div class="logo-switches">
-                <button id="theme-toggle" class="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
-                    <svg class="moon" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24"
-                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                        stroke-linejoin="round">
-                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-                    </svg>
-                    <svg class="sun" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24"
-                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                        stroke-linejoin="round">
-                        <circle cx="12" cy="12" r="5"></circle>
-                        <line x1="12" y1="1" x2="12" y2="3"></line>
-                        <line x1="12" y1="21" x2="12" y2="23"></line>
-                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-                        <line x1="1" y1="12" x2="3" y2="12"></line>
-                        <line x1="21" y1="12" x2="23" y2="12"></line>
-                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-                    </svg>
-                </button><span class="nav-sep">|</span>
-                    <ul class="lang-menu">
-                        <li>
-                            <a href="https://LMDAWN1127.github.io/" title="中文"
-                                aria-label="中文">Zh</a>
-                        </li>
-                        <li>
-                            <a href="https://LMDAWN1127.github.io/en/" title="English"
-                                aria-label="English">En</a>
-                        </li>
-                        <li>
-                            <a href="https://LMDAWN1127.github.io/ja/" title="日本語"
-                                aria-label="日本語">Ja</a>
-                        </li>
-                    </ul>
-            </div>
-        </div>
-        <ul id="menu" class="menu">
-            <li>
-                <a href="https://LMDAWN1127.github.io/ko/archives/" title="아카이브">
-                    <span>아카이브</span>
-                </a>
-            </li>
-        </ul>
-    </nav>
-</header>
-<main class="main">
-
-<article class="post-single">
-  <header class="post-header">
-    <h1 class="post-title entry-hint-parent">
-      containerd 컨테이너 런타임 구축과 runc/ctr 관리 실전
-    </h1>
-  </header>
-
-  <div class="post-layout">
-    <div class="post-content-wrapper"> 
-      <div class="post-content md-content"><h1 id="containerd-컨테이너-런타임-구축과-runcctr-관리-실전">containerd 컨테이너 런타임 구축과 runc/ctr 관리 실전<a hidden class="anchor" aria-hidden="true" href="#containerd-컨테이너-런타임-구축과-runcctr-관리-실전">#</a></h1>
-<h2 id="제1부-containerd-컨테이너-관리-도구">제1부 containerd 컨테이너 관리 도구<a hidden class="anchor" aria-hidden="true" href="#제1부-containerd-컨테이너-관리-도구">#</a></h2>
-<p>Docker 제거</p>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>root@docker02:~# systemctl stop docker
-</span></span><span style="display:flex;"><span>root@docker02:~# rm -f /lib/systemd/system/docker.service /etc/systemd/system/docker.service
-</span></span><span style="display:flex;"><span>root@docker02:~# systemctl daemon-reload
-</span></span><span style="display:flex;"><span>root@docker02:~# rm -f /usr/bin/docker /usr/bin/dockerd /usr/bin/docker-init /usr/bin/docker-proxy /usr/bin/docker-compose
-</span></span><span style="display:flex;"><span>root@docker02:~# rm -f /usr/bin/containerd /usr/bin/ctr /usr/bin/runc
-</span></span><span style="display:flex;"><span>root@docker02:~# which docker dockerd containerd ctr runc
-</span></span><span style="display:flex;"><span><span style="color:#f92672">(</span>비어 있음, 모두 제거됨<span style="color:#f92672">)</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>Docker 는 바이너리 방식으로 설치되었으며（<code>/dawn/softwares/docker/</code> 에 심볼릭 링크）. 제거란 심볼릭 링크와 systemd 서비스를 삭제하는 것입니다. 원본 바이너리는 <code>/dawn/softwares/docker/</code> 에 백업으로 보관됩니다.</p>
-<h3 id="1-containerd-다운로드">1. containerd 다운로드<a hidden class="anchor" aria-hidden="true" href="#1-containerd-다운로드">#</a></h3>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>root@docker02:~# wget https://github.com/containerd/containerd/releases/download/v1.7.20/cri-containerd-cni-1.7.20-linux-amd64.tar.gz
-</span></span><span style="display:flex;"><span>root@docker02:~# ls -lh cri-containerd-cni-1.7.20-linux-amd64.tar.gz
-</span></span><span style="display:flex;"><span>-rw-r--r-- <span style="color:#ae81ff">1</span> root root 143M Jul <span style="color:#ae81ff">18</span> <span style="color:#ae81ff">2024</span> cri-containerd-cni-1.7.20-linux-amd64.tar.gz
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h3 id="2-패키지-압축-해제">2. 패키지 압축 해제<a hidden class="anchor" aria-hidden="true" href="#2-패키지-압축-해제">#</a></h3>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>root@docker02:~# tar xf cri-containerd-cni-1.7.20-linux-amd64.tar.gz
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h3 id="3-containerd-런타임-파일을-호스트-지정-경로로-복사">3. containerd 런타임 파일을 호스트 지정 경로로 복사<a hidden class="anchor" aria-hidden="true" href="#3-containerd-런타임-파일을-호스트-지정-경로로-복사">#</a></h3>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>root@docker02:~# cp usr/local/bin/containerd /usr/local/bin/
-</span></span><span style="display:flex;"><span>root@docker02:~# cp usr/local/bin/containerd-shim /usr/local/bin/
-</span></span><span style="display:flex;"><span>root@docker02:~# cp usr/local/bin/containerd-shim-runc-v1 /usr/local/bin/
-</span></span><span style="display:flex;"><span>root@docker02:~# cp usr/local/bin/containerd-shim-runc-v2 /usr/local/bin/
-</span></span><span style="display:flex;"><span>root@docker02:~# cp usr/local/bin/ctr /usr/bin/
-</span></span><span style="display:flex;"><span>root@docker02:~# cp usr/local/bin/crictl /usr/bin/
-</span></span><span style="display:flex;"><span>root@docker02:~# containerd --version
-</span></span><span style="display:flex;"><span>containerd github.com/containerd/containerd v1.7.20 8fc6bcff51318944179630522a095cc9dbf9f353
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h3 id="4-containerd-systemd-유닛-파일-복사">4. containerd systemd 유닛 파일 복사<a hidden class="anchor" aria-hidden="true" href="#4-containerd-systemd-유닛-파일-복사">#</a></h3>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>root@docker02:~# cp etc/systemd/system/containerd.service /usr/lib/systemd/system/
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h3 id="5-containerd-설정-파일-생성-및-수정">5. containerd 설정 파일 생성 및 수정<a hidden class="anchor" aria-hidden="true" href="#5-containerd-설정-파일-생성-및-수정">#</a></h3>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>root@docker02:~# mkdir -p /etc/containerd
-</span></span><span style="display:flex;"><span>root@docker02:~# containerd config default &gt; /etc/containerd/config.toml
-</span></span><span style="display:flex;"><span>root@docker02:~# sed -ri <span style="color:#e6db74">&#39;s#(SystemdCgroup = )false#\1true#&#39;</span> /etc/containerd/config.toml
-</span></span><span style="display:flex;"><span>root@docker02:~# sed -i <span style="color:#e6db74">&#39;s#registry.k8s.io/pause:3.8#uhub.service.ucloud.cn/dawn/pause:3.8#&#39;</span> /etc/containerd/config.toml
-</span></span><span style="display:flex;"><span>root@docker02:~# grep SystemdCgroup /etc/containerd/config.toml
-</span></span><span style="display:flex;"><span>            SystemdCgroup <span style="color:#f92672">=</span> true
-</span></span><span style="display:flex;"><span>root@docker02:~# grep sandbox_image /etc/containerd/config.toml
-</span></span><span style="display:flex;"><span>    sandbox_image <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;uhub.service.ucloud.cn/dawn/pause:3.8&#34;</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h3 id="6-containerd-서비스-시작">6. containerd 서비스 시작<a hidden class="anchor" aria-hidden="true" href="#6-containerd-서비스-시작">#</a></h3>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>root@docker02:~# systemctl enable --now containerd
-</span></span><span style="display:flex;"><span>Created symlink /etc/systemd/system/multi-user.target.wants/containerd.service → /lib/systemd/system/containerd.service.
-</span></span><span style="display:flex;"><span>root@docker02:~# systemctl status containerd | head -4
-</span></span><span style="display:flex;"><span>● containerd.service - containerd container runtime
-</span></span><span style="display:flex;"><span>   Loaded: loaded <span style="color:#f92672">(</span>/lib/systemd/system/containerd.service; enabled; vendor preset: enabled<span style="color:#f92672">)</span>
-</span></span><span style="display:flex;"><span>   Active: active <span style="color:#f92672">(</span>running<span style="color:#f92672">)</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h3 id="7-ctr-클라이언트-도구-복사-및-버전-확인">7. ctr 클라이언트 도구 복사 및 버전 확인<a hidden class="anchor" aria-hidden="true" href="#7-ctr-클라이언트-도구-복사-및-버전-확인">#</a></h3>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>root@docker02:~# ctr --version
-</span></span><span style="display:flex;"><span>ctr github.com/containerd/containerd v1.7.20
-</span></span><span style="display:flex;"><span>root@docker02:~# ctr version
-</span></span><span style="display:flex;"><span>Client:
-</span></span><span style="display:flex;"><span>  Version:  v1.7.20
-</span></span><span style="display:flex;"><span>  Revision: 8fc6bcff51318944179630522a095cc9dbf9f353
-</span></span><span style="display:flex;"><span>  Go version: go1.21.12
-</span></span><span style="display:flex;"><span>Server:
-</span></span><span style="display:flex;"><span>  Version:  v1.7.20
-</span></span><span style="display:flex;"><span>  Revision: 8fc6bcff51318944179630522a095cc9dbf9f353
-</span></span><span style="display:flex;"><span>  UUID: 732b5e18-1bb3-4792-a7ef-2e6687016e2e
-</span></span></code></pre></td></tr></table>
-</div>
-</div><hr>
-<h2 id="제2부-runc-설치와-ctr-도구-관리-실전">제2부 runc 설치와 ctr 도구 관리 실전<a hidden class="anchor" aria-hidden="true" href="#제2부-runc-설치와-ctr-도구-관리-실전">#</a></h2>
-<h3 id="1-runc-다운로드">1. runc 다운로드<a hidden class="anchor" aria-hidden="true" href="#1-runc-다운로드">#</a></h3>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>root@docker02:~# wget https://github.com/opencontainers/runc/releases/download/v1.1.12/runc.amd64
-</span></span><span style="display:flex;"><span>root@docker02:~# ls -lh runc.amd64
-</span></span><span style="display:flex;"><span>-rw-r--r-- <span style="color:#ae81ff">1</span> root root 11M Jan <span style="color:#ae81ff">23</span> <span style="color:#ae81ff">2024</span> runc.amd64
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h3 id="2-runc-를-path-로-이동하고-실행-권한-부여">2. runc 를 PATH 로 이동하고 실행 권한 부여<a hidden class="anchor" aria-hidden="true" href="#2-runc-를-path-로-이동하고-실행-권한-부여">#</a></h3>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>root@docker02:~# mv runc.amd64 /usr/bin/runc
-</span></span><span style="display:flex;"><span>root@docker02:~# chmod +x /usr/bin/runc
-</span></span><span style="display:flex;"><span>root@docker02:~# runc --version
-</span></span><span style="display:flex;"><span>runc version 1.1.12
-</span></span><span style="display:flex;"><span>commit: v1.1.12-0-g51d5e946
-</span></span><span style="display:flex;"><span>spec: 1.0.2-dev
-</span></span><span style="display:flex;"><span>go: go1.20.13
-</span></span><span style="display:flex;"><span>libseccomp: 2.5.4
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h3 id="3-ctr-기본-이미지-관리">3. ctr 기본: 이미지 관리<a hidden class="anchor" aria-hidden="true" href="#3-ctr-기본-이미지-관리">#</a></h3>
-<p><strong>3.1 이미지 목록 조회（초기 비어 있음）</strong></p>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>root@docker02:~# ctr images ls
-</span></span><span style="display:flex;"><span>REF TYPE DIGEST SIZE PLATFORMS LABELS
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p><strong>3.2 이미지 풀</strong></p>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">9
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>root@docker02:~# ctr images pull uhub.service.ucloud.cn/dawn/apps:v1
-</span></span><span style="display:flex;"><span>...
-</span></span><span style="display:flex;"><span>elapsed: 3.5 s  total: 8.9 Mi <span style="color:#f92672">(</span>2.5 MiB/s<span style="color:#f92672">)</span>
-</span></span><span style="display:flex;"><span>unpacking linux/amd64 sha256:3bee216f250cfd2dbda1744d6849e27118845b8f4d55dda3ca3c6c1227cc2e5c...
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">done</span>: 585.870274ms
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>root@docker02:~# ctr images ls
-</span></span><span style="display:flex;"><span>REF                                                       TYPE                                                 DIGEST                                                                  SIZE    PLATFORMS   LABELS
-</span></span><span style="display:flex;"><span>uhub.service.ucloud.cn/dawn/apps:v1 application/vnd.docker.distribution.manifest.v2+json sha256:3bee216f250cfd2dbda1744d6849e27118845b8f4d55dda3ca3c6c1227cc2e5c 9.6 MiB linux/amd64 -
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h3 id="4-ctr-실전-컨테이너-관리">4. ctr 실전: 컨테이너 관리<a hidden class="anchor" aria-hidden="true" href="#4-ctr-실전-컨테이너-관리">#</a></h3>
-<p><strong>4.1 컨테이너 생성 및 시작</strong></p>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">9
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>root@docker02:~# ctr containers create uhub.service.ucloud.cn/dawn/apps:v1 xiuxian
-</span></span><span style="display:flex;"><span>root@docker02:~# ctr containers ls
-</span></span><span style="display:flex;"><span>CONTAINER    IMAGE                                                        RUNTIME
-</span></span><span style="display:flex;"><span>xiuxian      uhub.service.ucloud.cn/dawn/apps:v1    io.containerd.runc.v2
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>root@docker02:~# ctr task start -d xiuxian
-</span></span><span style="display:flex;"><span>root@docker02:~# ctr task ls
-</span></span><span style="display:flex;"><span>TASK       PID      STATUS
-</span></span><span style="display:flex;"><span>xiuxian    <span style="color:#ae81ff">64464</span>    RUNNING
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p><strong>4.2 컨테이너의 호스트 PID 확인</strong></p>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>root@docker02:~# ps -ef | grep <span style="color:#ae81ff">64464</span> | grep -v grep
-</span></span><span style="display:flex;"><span>root       <span style="color:#ae81ff">64464</span>   <span style="color:#ae81ff">64444</span>  <span style="color:#ae81ff">0</span> 09:47 ?  00:00:00 nginx: master process nginx -g daemon off;
-</span></span><span style="display:flex;"><span>systemd+   <span style="color:#ae81ff">64502</span>   <span style="color:#ae81ff">64464</span>  <span style="color:#ae81ff">0</span> 09:47 ?  00:00:00 nginx: worker process
-</span></span><span style="display:flex;"><span>systemd+   <span style="color:#ae81ff">64503</span>   <span style="color:#ae81ff">64464</span>  <span style="color:#ae81ff">0</span> 09:47 ?  00:00:00 nginx: worker process
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p><strong>4.3 컨테이너 내 명령 실행</strong></p>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>root@docker02:~# ctr task exec --exec-id <span style="color:#ae81ff">1</span> xiuxian ps -ef
-</span></span><span style="display:flex;"><span>PID   USER     TIME  COMMAND
-</span></span><span style="display:flex;"><span>    <span style="color:#ae81ff">1</span> root      0:00 nginx: master process nginx -g daemon off;
-</span></span><span style="display:flex;"><span>   <span style="color:#ae81ff">33</span> nginx     0:00 nginx: worker process
-</span></span><span style="display:flex;"><span>   <span style="color:#ae81ff">34</span> nginx     0:00 nginx: worker process
-</span></span><span style="display:flex;"><span>   <span style="color:#ae81ff">35</span> root      0:00 ps -ef
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p><strong>4.4 컨테이너 일시정지 및 재개</strong></p>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">9
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>root@docker02:~# ctr tasks pause xiuxian
-</span></span><span style="display:flex;"><span>root@docker02:~# ctr task ls
-</span></span><span style="display:flex;"><span>TASK       PID      STATUS
-</span></span><span style="display:flex;"><span>xiuxian    <span style="color:#ae81ff">64464</span>    PAUSED
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>root@docker02:~# ctr tasks resume xiuxian
-</span></span><span style="display:flex;"><span>root@docker02:~# ctr task ls
-</span></span><span style="display:flex;"><span>TASK       PID      STATUS
-</span></span><span style="display:flex;"><span>xiuxian    <span style="color:#ae81ff">64464</span>    RUNNING
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p><strong>4.5 컨테이너 중지 및 삭제</strong></p>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>root@docker02:~# ctr task kill xiuxian
-</span></span><span style="display:flex;"><span>root@docker02:~# ctr task rm xiuxian
-</span></span><span style="display:flex;"><span>root@docker02:~# ctr containers rm xiuxian
-</span></span><span style="display:flex;"><span>root@docker02:~# ctr task ls
-</span></span><span style="display:flex;"><span>TASK    PID    STATUS
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>실행 중인 컨테이너를 삭제하려면 먼저 <code>ctr task kill</code>（또는 <code>ctr task rm -f</code>）로 태스크를 중지한 다음, <code>ctr task rm</code> 로 태스크를, <code>ctr containers rm</code> 로 컨테이너를 삭제해야 합니다. 순서를 바꾸면 <code>task must be stopped before deletion</code> 오류가 발생합니다.</p>
-<h3 id="5-ctr-네임스페이스-관리">5. ctr 네임스페이스 관리<a hidden class="anchor" aria-hidden="true" href="#5-ctr-네임스페이스-관리">#</a></h3>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">9
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>root@docker02:~# ctr namespaces ls
-</span></span><span style="display:flex;"><span>NAME    LABELS
-</span></span><span style="display:flex;"><span>default
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>root@docker02:~# ctr ns create dawn-dawn
-</span></span><span style="display:flex;"><span>root@docker02:~# ctr ns ls
-</span></span><span style="display:flex;"><span>NAME      LABELS
-</span></span><span style="display:flex;"><span>dawn-dawn
-</span></span><span style="display:flex;"><span>default
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>네임스페이스를 삭제하기 전에 그 안이 비어 있어야 합니다（이미지 없음, 컨테이너 없음）. 그렇지 않으면 <code>must be empty</code> 오류가 발생합니다.</p>
-<h3 id="6-ctr-로-harbor-에서-이미지-푸시풀">6. ctr 로 Harbor 에서 이미지 푸시/풀<a hidden class="anchor" aria-hidden="true" href="#6-ctr-로-harbor-에서-이미지-푸시풀">#</a></h3>
-<p><strong>6.1 이미지에 태그 부여 및 docker01 Harbor 로 푸시</strong></p>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>root@docker02:~# ctr images tag uhub.service.ucloud.cn/dawn/apps:v1 11.0.1.121/dawn-games/xiuxian:v1
-</span></span><span style="display:flex;"><span>root@docker02:~# ctr images push --platform linux/amd64 --plain-http -u admin:1 11.0.1.121/dawn-games/xiuxian:v1
-</span></span><span style="display:flex;"><span>manifest-sha256:3bee216f250cfd2dbda1744d6849e27118845b8f4d55dda3ca3c6c1227cc2e5c: <span style="color:#66d9ef">done</span>
-</span></span><span style="display:flex;"><span>config-sha256:f28fd43be4ad41fc768dcc3629f8479d1443df01ada10ac9a771314e4fdef599: <span style="color:#66d9ef">done</span>
-</span></span><span style="display:flex;"><span>elapsed: 0.8 s  total: 9.4 Ki <span style="color:#f92672">(</span>11.7 KiB/s<span style="color:#f92672">)</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p><strong>6.2 Harbor 에서 이미지 풀하여 검증</strong></p>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>root@docker02:~# ctr images rm 11.0.1.121/dawn-games/xiuxian:v1
-</span></span><span style="display:flex;"><span>root@docker02:~# ctr images pull --plain-http 11.0.1.121/dawn-games/xiuxian:v1
-</span></span><span style="display:flex;"><span>...
-</span></span><span style="display:flex;"><span>unpacking linux/amd64 sha256:3bee216f250cfd2dbda1744d6849e27118845b8f4d55dda3ca3c6c1227cc2e5c...
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">done</span>: 6.182696ms
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>ctr 에서 HTTP（비 TLS）레지스트리로 푸시/풀하려면 명시적으로 <code>--plain-http</code> 플래그가 필요하며, 인증은 <code>-u admin:1</code> 을 사용합니다. ctr 은 Docker 와 달리 로컬에 없는 이미지를 원격에서 자동으로 풀어오지 않습니다.</p>
-
-
-      </div><div id="giscus-container" style="margin-top: 2rem; padding-top: 1rem; border-top: 1px solid var(--border);">
-  <script src="https://giscus.app/client.js"
-          data-repo="LMDAWN1127/LMDAWN1127.github.io"
-          data-repo-id="R_kgDOTMWmvw"
-          data-category="Announcements"
-          data-category-id="DIC_kwDOTMWmv84DAd3g"
-          data-mapping="pathname"
-          data-strict="0"
-          data-reactions-enabled="1"
-          data-emit-metadata="0"
-          data-input-position="bottom"
-          data-theme="preferred_color_scheme"
-          data-lang="zh-CN"
-          crossorigin="anonymous"
-          async>
-  </script>
-</div>
-
-    </div>
-
-    <aside class="toc-sidebar" id="toc-sidebar">
-    <div class="toc-header">目录</div>
-    <nav class="toc-nav"><ul class="toc-list">
-            <li>
-                <a href="#containerd-%ec%bb%a8%ed%85%8c%ec%9d%b4%eb%84%88-%eb%9f%b0%ed%83%80%ec%9e%84-%ea%b5%ac%ec%b6%95%ea%b3%bc-runcctr-%ea%b4%80%eb%a6%ac-%ec%8b%a4%ec%a0%84" class="toc-link" data-target="containerd-컨테이너-런타임-구축과-runcctr-관리-실전">containerd 컨테이너 런타임 구축과 runc/ctr 관리 실전</a><ul>
-            <li>
-                <a href="#%ec%a0%9c1%eb%b6%80-containerd-%ec%bb%a8%ed%85%8c%ec%9d%b4%eb%84%88-%ea%b4%80%eb%a6%ac-%eb%8f%84%ea%b5%ac" class="toc-link" data-target="제1부-containerd-컨테이너-관리-도구">제1부 containerd 컨테이너 관리 도구</a><ul>
-            <li>
-                <a href="#1-containerd-%eb%8b%a4%ec%9a%b4%eb%a1%9c%eb%93%9c" class="toc-link" data-target="1-containerd-다운로드">1. containerd 다운로드</a></li>
-            <li>
-                <a href="#2-%ed%8c%a8%ed%82%a4%ec%a7%80-%ec%95%95%ec%b6%95-%ed%95%b4%ec%a0%9c" class="toc-link" data-target="2-패키지-압축-해제">2. 패키지 압축 해제</a></li>
-            <li>
-                <a href="#3-containerd-%eb%9f%b0%ed%83%80%ec%9e%84-%ed%8c%8c%ec%9d%bc%ec%9d%84-%ed%98%b8%ec%8a%a4%ed%8a%b8-%ec%a7%80%ec%a0%95-%ea%b2%bd%eb%a1%9c%eb%a1%9c-%eb%b3%b5%ec%82%ac" class="toc-link" data-target="3-containerd-런타임-파일을-호스트-지정-경로로-복사">3. containerd 런타임 파일을 호스트 지정 경로로 복사</a></li>
-            <li>
-                <a href="#4-containerd-systemd-%ec%9c%a0%eb%8b%9b-%ed%8c%8c%ec%9d%bc-%eb%b3%b5%ec%82%ac" class="toc-link" data-target="4-containerd-systemd-유닛-파일-복사">4. containerd systemd 유닛 파일 복사</a></li>
-            <li>
-                <a href="#5-containerd-%ec%84%a4%ec%a0%95-%ed%8c%8c%ec%9d%bc-%ec%83%9d%ec%84%b1-%eb%b0%8f-%ec%88%98%ec%a0%95" class="toc-link" data-target="5-containerd-설정-파일-생성-및-수정">5. containerd 설정 파일 생성 및 수정</a></li>
-            <li>
-                <a href="#6-containerd-%ec%84%9c%eb%b9%84%ec%8a%a4-%ec%8b%9c%ec%9e%91" class="toc-link" data-target="6-containerd-서비스-시작">6. containerd 서비스 시작</a></li>
-            <li>
-                <a href="#7-ctr-%ed%81%b4%eb%9d%bc%ec%9d%b4%ec%96%b8%ed%8a%b8-%eb%8f%84%ea%b5%ac-%eb%b3%b5%ec%82%ac-%eb%b0%8f-%eb%b2%84%ec%a0%84-%ed%99%95%ec%9d%b8" class="toc-link" data-target="7-ctr-클라이언트-도구-복사-및-버전-확인">7. ctr 클라이언트 도구 복사 및 버전 확인</a></li></ul>
-            </li>
-            <li>
-                <a href="#%ec%a0%9c2%eb%b6%80-runc-%ec%84%a4%ec%b9%98%ec%99%80-ctr-%eb%8f%84%ea%b5%ac-%ea%b4%80%eb%a6%ac-%ec%8b%a4%ec%a0%84" class="toc-link" data-target="제2부-runc-설치와-ctr-도구-관리-실전">제2부 runc 설치와 ctr 도구 관리 실전</a><ul>
-            <li>
-                <a href="#1-runc-%eb%8b%a4%ec%9a%b4%eb%a1%9c%eb%93%9c" class="toc-link" data-target="1-runc-다운로드">1. runc 다운로드</a></li>
-            <li>
-                <a href="#2-runc-%eb%a5%bc-path-%eb%a1%9c-%ec%9d%b4%eb%8f%99%ed%95%98%ea%b3%a0-%ec%8b%a4%ed%96%89-%ea%b6%8c%ed%95%9c-%eb%b6%80%ec%97%ac" class="toc-link" data-target="2-runc-를-path-로-이동하고-실행-권한-부여">2. runc 를 PATH 로 이동하고 실행 권한 부여</a></li>
-            <li>
-                <a href="#3-ctr-%ea%b8%b0%eb%b3%b8-%ec%9d%b4%eb%af%b8%ec%a7%80-%ea%b4%80%eb%a6%ac" class="toc-link" data-target="3-ctr-기본-이미지-관리">3. ctr 기본: 이미지 관리</a></li>
-            <li>
-                <a href="#4-ctr-%ec%8b%a4%ec%a0%84-%ec%bb%a8%ed%85%8c%ec%9d%b4%eb%84%88-%ea%b4%80%eb%a6%ac" class="toc-link" data-target="4-ctr-실전-컨테이너-관리">4. ctr 실전: 컨테이너 관리</a></li>
-            <li>
-                <a href="#5-ctr-%eb%84%a4%ec%9e%84%ec%8a%a4%ed%8e%98%ec%9d%b4%ec%8a%a4-%ea%b4%80%eb%a6%ac" class="toc-link" data-target="5-ctr-네임스페이스-관리">5. ctr 네임스페이스 관리</a></li>
-            <li>
-                <a href="#6-ctr-%eb%a1%9c-harbor-%ec%97%90%ec%84%9c-%ec%9d%b4%eb%af%b8%ec%a7%80-%ed%91%b8%ec%8b%9c%ed%92%80" class="toc-link" data-target="6-ctr-로-harbor-에서-이미지-푸시풀">6. ctr 로 Harbor 에서 이미지 푸시/풀</a>
-            </li>
-        </ul>
-        </li>
-        </ul>
-        </li>
-        </ul>
-    </nav>
-</aside>
-
-  </div>
-</article>
-    </main>
-    
-<a href="#top" id="top-link" class="top-link hidden" aria-label="go to top" title="Go to Top (Alt + G)" accesskey="g">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-        stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevrons-up">
-        <polyline points="17 11 12 6 7 11"></polyline>
-        <polyline points="17 18 12 13 7 18"></polyline>
-    </svg>
-</a>
-<script defer src="/js/custom.js"></script>
-<div id="algolia-search-modal" class="algolia-modal" style="display: none;">
-  <div class="algolia-modal-overlay"></div>
-  <div class="algolia-modal-content">
-    <div class="algolia-search-header">
-      <div class="algolia-search-input-wrapper">
-        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="11" cy="11" r="8"></circle>
-          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-        </svg>
-        <input type="text" id="algolia-search-input" placeholder="搜索文章..." autofocus>
-        <kbd class="algolia-esc">Esc</kbd>
-      </div>
-    </div>
-    <div id="algolia-search-results" class="algolia-search-results">
-      <div class="algolia-empty-state">
-        <p>输入关键词开始搜索</p>
-      </div>
-    </div>
-    <div class="algolia-search-footer">
-      <span class="algolia-footer-text">
-        <kbd>↑</kbd> <kbd>↓</kbd> 导航
-        <kbd>↵</kbd> 打开
-        <kbd>Esc</kbd> 关闭
-      </span>
-      <span class="algolia-footer-logo">
-        搜索由 <a href="https://www.algolia.com/" target="_blank" rel="noopener">Algolia</a> 提供
-      </span>
-    </div>
-  </div>
-</div>
-
-<script>
-(function() {
-  'use strict';
-
-  var APP_ID = 'Y0SCRI4LCW';
-  var SEARCH_KEY = '03dda5e44aec7e0dd93b6a3653250b1f';
-  var INDEX_NAME = 'lmdawn1127-blog';
-  var API_URL = 'https://' + APP_ID + '-dsn.algolia.net/1/indexes/' + INDEX_NAME + '/query';
-  var debounceTimer = null;
-  var selectedIndex = -1;
-
-   
-  function doSearch(query) {
-    if (!query || !query.trim()) {
-      showEmpty();
-      return;
-    }
-
-    var body = JSON.stringify({
-      query: query,
-      hitsPerPage: 10,
-      attributesToRetrieve: ['title', 'content', 'url'],
-      attributesToHighlight: ['title', 'content'],
-      highlightPreTag: '<mark class="algolia-highlight">',
-      highlightPostTag: '</mark>'
-    });
-
-    fetch(API_URL, {
-      method: 'POST',
-      headers: {
-        'X-Algolia-Application-Id': APP_ID,
-        'X-Algolia-API-Key': SEARCH_KEY,
-        'Content-Type': 'application/json'
-      },
-      body: body
-    })
-    .then(function(resp) {
-      if (!resp.ok) throw new Error('HTTP ' + resp.status);
-      return resp.json();
-    })
-    .then(function(data) {
-      renderResults(data.hits || [], query);
-    })
-    .catch(function(err) {
-      console.error('Algolia search error:', err);
-      showError(err.message || '未知错误');
-    });
-  }
-
-   
-  function showEmpty() {
-    document.getElementById('algolia-search-results').innerHTML =
-      '<div class="algolia-empty-state"><p>输入关键词开始搜索</p></div>';
-  }
-
-  function showError(detail) {
-    var msg = '搜索出错，请稍后再试';
-    if (detail) msg += '<br><small style="color:#888">错误详情: ' + escapeHtml(detail) + '</small>';
-    document.getElementById('algolia-search-results').innerHTML =
-      '<div class="algolia-empty-state"><p>' + msg + '</p></div>';
-  }
-
-  function showNoResults(query) {
-    document.getElementById('algolia-search-results').innerHTML =
-      '<div class="algolia-empty-state"><p>未找到与「' + escapeHtml(query) + '」相关的结果</p></div>';
-  }
-
-  function escapeHtml(s) {
-    var d = document.createElement('div');
-    d.appendChild(document.createTextNode(s));
-    return d.innerHTML;
-  }
-
-  function getHL(hit, attr) {
-    if (hit._highlightResult && hit._highlightResult[attr]) return hit._highlightResult[attr].value;
-    return hit[attr] || '';
-  }
-
-  function trunc(s, n) {
-    if (!s) return '';
-    s = s.replace(/<[^>]+>/g, '');
-    return s.length > n ? s.substring(0, n) + '…' : s;
-  }
-
-  function renderResults(hits, query) {
-    var box = document.getElementById('algolia-search-results');
-    if (!hits.length) { showNoResults(query); return; }
-
-    var h = '<div class="algolia-results-count">' + hits.length + ' 个结果</div>';
-    hits.forEach(function(hit, i) {
-      var title = getHL(hit, 'title') || '无标题';
-      var content = getHL(hit, 'content');
-      var url = hit.url || '#';
-
-      h += '<a class="algolia-hit" href="' + url + '" data-index="' + i + '">';
-      h += '<div class="algolia-hit-title">' + title + '</div>';
-      h += '<div class="algolia-hit-content">' + trunc(content, 150) + '</div>';
-
-      h += '</a>';
-    });
-    box.innerHTML = h;
-
-    box.querySelectorAll('.algolia-hit').forEach(function(el) {
-      el.addEventListener('click', closeAlgoliaSearch);
-    });
-  }
-
-   
-  function onInput(e) {
-    var q = e.target.value;
-    clearTimeout(debounceTimer);
-    debounceTimer = setTimeout(function() { doSearch(q); }, 200);
-  }
-
-  function onKeydown(e) {
-    var hits = document.querySelectorAll('.algolia-hit');
-    if (!hits.length) return;
-    if (e.key === 'ArrowDown') {
-      e.preventDefault();
-      selectedIndex = Math.min(selectedIndex + 1, hits.length - 1);
-      sel(hits);
-    } else if (e.key === 'ArrowUp') {
-      e.preventDefault();
-      selectedIndex = Math.max(selectedIndex - 1, 0);
-      sel(hits);
-    } else if (e.key === 'Enter' && selectedIndex >= 0) {
-      e.preventDefault();
-      window.location.href = hits[selectedIndex].getAttribute('href');
-      closeAlgoliaSearch();
-    }
-  }
-
-  function sel(hits) {
-    hits.forEach(function(el, i) {
-      if (i === selectedIndex) { el.classList.add('selected'); el.scrollIntoView({ block: 'nearest' }); }
-      else el.classList.remove('selected');
-    });
-  }
-
-   
-  document.addEventListener('DOMContentLoaded', function() {
-    var input = document.getElementById('algolia-search-input');
-    if (input) {
-      input.addEventListener('input', onInput);
-      input.addEventListener('keydown', onKeydown);
-    }
-  });
-
-  window.openAlgoliaSearch = function() {
-    var modal = document.getElementById('algolia-search-modal');
-    modal.style.display = 'flex';
-    document.body.style.overflow = 'hidden';
-    setTimeout(function() {
-      var input = document.getElementById('algolia-search-input');
-      if (input) { input.value = ''; input.focus(); showEmpty(); }
-    }, 100);
-  };
-
-  window.closeAlgoliaSearch = function() {
-    document.getElementById('algolia-search-modal').style.display = 'none';
-    document.body.style.overflow = '';
-    selectedIndex = -1;
-  };
-})();
-</script>
-
-<style>
-  .algolia-modal{position:fixed;top:0;left:0;width:100%;height:100%;z-index:1000;display:flex;align-items:flex-start;justify-content:center;padding-top:10vh}
-  .algolia-modal-overlay{position:absolute;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.6);backdrop-filter:blur(4px)}
-  .algolia-modal-content{position:relative;width:90%;max-width:600px;background:#1a1a1a;border-radius:12px;box-shadow:0 20px 60px rgba(0,0,0,.5);overflow:hidden;border:1px solid #333}
-  .algolia-search-header{padding:16px;border-bottom:1px solid #333}
-  .algolia-search-input-wrapper{display:flex;align-items:center;gap:12px;background:#2a2a2a;border-radius:8px;padding:12px 16px;border:1px solid #444}
-  .algolia-search-input-wrapper svg{color:#666;flex-shrink:0}
-  #algolia-search-input{flex:1;background:transparent;border:none;outline:none;color:#fff;font-size:16px;font-family:inherit}
-  #algolia-search-input::placeholder{color:#666}
-  .algolia-esc{background:#444;color:#999;padding:2px 6px;border-radius:4px;font-size:11px;font-family:inherit}
-  .algolia-search-results{max-height:400px;overflow-y:auto;padding:8px}
-  .algolia-empty-state{padding:40px 20px;text-align:center;color:#666}
-  .algolia-results-count{padding:8px 12px;font-size:12px;color:#666}
-  .algolia-search-footer{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;border-top:1px solid #333;background:#222;font-size:12px;color:#666}
-  .algolia-footer-text kbd{background:#444;color:#999;padding:2px 4px;border-radius:3px;font-size:10px;margin:0 2px}
-  .algolia-footer-logo a{color:#5EEAD4;text-decoration:none}
-  .algolia-footer-logo a:hover{text-decoration:underline}
-  .algolia-hit{display:block;padding:12px;border-radius:6px;text-decoration:none;color:#fff;transition:background .2s}
-  .algolia-hit:hover,.algolia-hit.selected{background:#2a2a2a}
-  .algolia-hit-title{font-weight:600;color:#5EEAD4;margin-bottom:4px;font-size:15px}
-  .algolia-hit-title mark,.algolia-highlight{background:rgba(94,234,212,.25);color:#5EEAD4;padding:0 2px;border-radius:2px}
-  .algolia-hit-content{font-size:13px;color:#999;line-height:1.5}
-  .algolia-hit-content mark,.algolia-hit-content .algolia-highlight{background:rgba(94,234,212,.2);color:#ccc;padding:0 2px;border-radius:2px}
-  .algolia-hit-meta{display:flex;align-items:center;gap:10px;margin-top:8px}
-  .algolia-hit-date{font-size:12px;color:#666}
-  .algolia-hit-tags{display:flex;gap:6px}
-  .algolia-hit-tag{background:#333;color:#999;padding:2px 8px;border-radius:4px;font-size:11px}
-</style>
-<script>
-  
-  document.addEventListener('keydown', function(e) {
-    
-    if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
-      e.preventDefault();
-      if (typeof openAlgoliaSearch === 'function') openAlgoliaSearch();
-    }
-    
-    if (e.key === 'Escape') {
-      if (typeof closeAlgoliaSearch === 'function') closeAlgoliaSearch();
-    }
-    
-    if (e.altKey && e.key === '/') {
-      e.preventDefault();
-      if (typeof openAlgoliaSearch === 'function') openAlgoliaSearch();
-    }
-  });
-
-  
-  document.addEventListener('DOMContentLoaded', function() {
-    var modal = document.getElementById('algolia-search-modal');
-    if (modal) {
-      var overlay = modal.querySelector('.algolia-modal-overlay');
-      if (overlay) {
-        overlay.addEventListener('click', function() {
-          if (typeof closeAlgoliaSearch === 'function') closeAlgoliaSearch();
-        });
-      }
-    }
-  });
-
-  
-  
-  document.addEventListener('DOMContentLoaded', function() {
-    if (document.getElementById('algolia-search-btn')) return;
-    var btn = document.createElement('button');
-    btn.id = 'algolia-search-btn';
-    btn.className = 'theme-toggle search-toggle';
-    btn.type = 'button';
-    btn.title = '搜索 (Ctrl+K)';
-    btn.setAttribute('aria-label', '搜索');
-    btn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>';
-    btn.addEventListener('click', function() {
-      if (typeof openAlgoliaSearch === 'function') openAlgoliaSearch();
-    });
-    var target = document.querySelector('.logo-switches') || document.querySelector('.header-nav');
-    if (target) target.appendChild(btn);
-  });
-</script><script>
-  document.addEventListener('DOMContentLoaded', function() {
-    var cur = (document.documentElement.lang || 'zh').toLowerCase();
-    
-    
-    
-    var rawPath = location.pathname.replace(/\/+$/, '');
-    var pm = rawPath.match(/^\/(en|ko|ja)(?:\/(.*))?$/);
-    var rest = pm ? (pm[2] ? '/' + pm[2] : '') : rawPath; 
-    function langHref(code) {
-      var base = (code === 'zh') ? '' : '/' + code;
-      if (rest === '' || rest === '/') {
-        return base === '' ? '/' : base + '/';
-      }
-      return base + rest + '/';
-    }
-
-    var langs = [
-      { code: 'zh', label: '中文' },
-      { code: 'en', label: 'English' },
-      { code: 'ko', label: '한국어' },
-      { code: 'ja', label: '日本語' }
-    ];
-    var wrap = document.querySelector('.logo-switches') || document.querySelector('.header-nav');
-    if (!wrap || document.getElementById('lang-dropdown')) return;
-
-    var current = langs.find(function(l) { return l.code === cur; }) || langs[0];
-
-    var dd = document.createElement('div');
-    dd.className = 'lang-dropdown';
-    dd.id = 'lang-dropdown';
-
-    var toggle = document.createElement('button');
-    toggle.type = 'button';
-    toggle.className = 'lang-dropdown-toggle';
-    toggle.setAttribute('aria-label', '选择语言');
-    toggle.innerHTML = '<span class="lang-current">' + current.label + '</span><span class="lang-caret">▾</span>';
-
-    var menu = document.createElement('ul');
-    menu.className = 'lang-dropdown-menu';
-    langs.forEach(function(l) {
-      var li = document.createElement('li');
-      if (l.code === cur) li.className = 'active';
-      var a = document.createElement('a');
-      a.href = langHref(l.code);
-      a.textContent = l.label;
-      li.appendChild(a);
-      menu.appendChild(li);
-    });
-
-    dd.appendChild(toggle);
-    dd.appendChild(menu);
-    wrap.appendChild(dd);
-
-    toggle.addEventListener('click', function(e) {
-      e.stopPropagation();
-      dd.classList.toggle('open');
-    });
-    document.addEventListener('click', function(e) {
-      if (!dd.contains(e.target)) dd.classList.remove('open');
-    });
-  });
-</script>
-
-
-<script>
-    let menu = document.getElementById('menu');
-    if (menu) {
-        const scrollPosition = localStorage.getItem("menu-scroll-position");
-        if (scrollPosition) {
-            menu.scrollLeft = parseInt(scrollPosition, 10);
-        }
-        menu.onscroll = function () {
-            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
-        }
-    }
-
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener("click", function (e) {
-            e.preventDefault();
-            var id = this.getAttribute("href").substr(1);
-            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
-                    behavior: "smooth"
-                });
-            } else {
-                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
-            }
-            if (id === "top") {
-                history.replaceState(null, null, " ");
-            } else {
-                history.pushState(null, null, `#${id}`);
-            }
-        });
-    });
-</script>
-<script>
-    var toplink = document.getElementById("top-link");
-    window.onscroll = function () {
-        const scrollThreshold = window.innerHeight;
-        if (document.body.scrollTop > scrollThreshold || document.documentElement.scrollTop > scrollThreshold) {
-            toplink.classList.remove("hidden");
-        } else {
-            toplink.classList.add("hidden");
-        }
-    };
-</script>
-<script>
-    document.getElementById("theme-toggle").addEventListener("click", () => {
-        const html = document.querySelector("html");
-        if (html.dataset.theme === "dark") {
-            html.dataset.theme = 'light';
-            localStorage.setItem("pref-theme", 'light');
-        } else {
-            html.dataset.theme = 'dark';
-            localStorage.setItem("pref-theme", 'dark');
-        }
-    })
-</script>
-<script>
-    document.querySelectorAll('pre > code').forEach((codeblock) => {
-        const container = codeblock.parentNode.parentNode;
-
-        const copybutton = document.createElement('button');
-        copybutton.classList.add('copy-code');
-        copybutton.innerHTML = '복사';
-
-        function copyingDone() {
-            copybutton.innerHTML = '복사 완료!';
-            setTimeout(() => {
-                copybutton.innerHTML = '복사';
-            }, 2000);
-        }
-
-        copybutton.addEventListener('click', (cb) => {
-            if ('clipboard' in navigator) {
-                navigator.clipboard.writeText(codeblock.textContent);
-                copyingDone();
-                return;
-            }
-
-            const range = document.createRange();
-            range.selectNodeContents(codeblock);
-            const selection = window.getSelection();
-            selection.removeAllRanges();
-            selection.addRange(range);
-            try {
-                document.execCommand('copy');
-                copyingDone();
-            } catch (e) { };
-            selection.removeRange(range);
-        });
-
-        if (container.classList.contains("highlight")) {
-            container.appendChild(copybutton);
-        } else if (container.parentNode.firstChild == container) {
-            
-        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
-            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
-        } else {
-            codeblock.parentNode.appendChild(copybutton);
-        }
-    });
-</script>
-</body>
-
-</html>
+<!doctype html><html lang=ko dir=auto data-theme=auto><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><meta name=robots content="index, follow"><title>containerd 컨테이너 런타임 구축과 runc/ctr 관리 실전 | DAWN's Blog</title><meta name=keywords content="Docker"><meta name=description content="이 실습에서는 먼저 docker02 노드의 Docker 바이너리를 제거한 뒤, containerd 1.7.20 런타임（cri-containerd-cni 압축 해제, systemd 유닛 설치, config.toml 에서 SystemdCgroup 활성화 및 sandbox_image 교체）을 구축하고 runc 1.1.12 와 ctr 클라이언트를 설치한다. 이후 ctr 로 이미지 풀/태그, 컨테이너 생성/시작/일시정지/재개/삭제, 네임스페이스 관리, 그리고 docker01 Harbor（HTTP, 비 TLS）로의 이미지 푸시 및 풀 전체 작업을 시연한다."><meta name=author content="DAWN"><link rel=canonical href=https://LMDAWN1127.github.io/ko/posts/containerd-runc-ctr-management/><link crossorigin=anonymous href=/assets/css/stylesheet.4bf808bff57bddc46d61c8ae060b00400fc679ab876e37243b11bd3f832f2958.css integrity="sha256-S/gIv/V73cRtYciuBgsAQA/GeauHbjckOxG9P4MvKVg=" rel="preload stylesheet" as=style><link rel=icon href=https://LMDAWN1127.github.io/images/DAWN.jpg><link rel=icon type=image/png sizes=16x16 href=https://LMDAWN1127.github.io/favicon-16x16.png><link rel=icon type=image/png sizes=32x32 href=https://LMDAWN1127.github.io/favicon-32x32.png><link rel=apple-touch-icon href=https://LMDAWN1127.github.io/apple-touch-icon.png><link rel=mask-icon href=https://LMDAWN1127.github.io/safari-pinned-tab.svg><meta name=theme-color content="#2e2e33"><meta name=msapplication-TileColor content="#2e2e33"><link rel=alternate hreflang=zh href=https://LMDAWN1127.github.io/posts/containerd-runc-ctr-management/><link rel=alternate hreflang=en href=https://LMDAWN1127.github.io/en/posts/containerd-runc-ctr-management/><link rel=alternate hreflang=ko href=https://LMDAWN1127.github.io/ko/posts/containerd-runc-ctr-management/><link rel=alternate hreflang=ja href=https://LMDAWN1127.github.io/ja/posts/containerd-runc-ctr-management/><noscript><style>#theme-toggle,.top-link{display:none}</style><style>@media(prefers-color-scheme:dark){:root{--theme:rgb(29, 30, 32);--entry:rgb(46, 46, 51);--primary:rgb(218, 218, 219);--secondary:rgb(155, 156, 157);--tertiary:rgb(65, 66, 68);--content:rgb(196, 196, 197);--code-block-bg:rgb(46, 46, 51);--code-bg:rgb(55, 56, 62);--border:rgb(51, 51, 51);color-scheme:dark}.list{background:var(--theme)}.toc{background:var(--entry)}}</style></noscript><script>localStorage.getItem("pref-theme")==="dark"?document.querySelector("html").dataset.theme="dark":localStorage.getItem("pref-theme")==="light"?document.querySelector("html").dataset.theme="light":window.matchMedia("(prefers-color-scheme: dark)").matches?document.querySelector("html").dataset.theme="dark":document.querySelector("html").dataset.theme="light"</script><link rel=stylesheet href=https://LMDAWN1127.github.io/css/custom.css><meta property="og:url" content="https://LMDAWN1127.github.io/ko/posts/containerd-runc-ctr-management/"><meta property="og:site_name" content="DAWN's Blog"><meta property="og:title" content="containerd 컨테이너 런타임 구축과 runc/ctr 관리 실전"><meta property="og:description" content="이 실습에서는 먼저 docker02 노드의 Docker 바이너리를 제거한 뒤, containerd 1.7.20 런타임（cri-containerd-cni 압축 해제, systemd 유닛 설치, config.toml 에서 SystemdCgroup 활성화 및 sandbox_image 교체）을 구축하고 runc 1.1.12 와 ctr 클라이언트를 설치한다. 이후 ctr 로 이미지 풀/태그, 컨테이너 생성/시작/일시정지/재개/삭제, 네임스페이스 관리, 그리고 docker01 Harbor（HTTP, 비 TLS）로의 이미지 푸시 및 풀 전체 작업을 시연한다."><meta property="og:locale" content="ko"><meta property="og:type" content="article"><meta property="article:section" content="posts"><meta property="article:published_time" content="2026-10-30T10:31:00+08:00"><meta property="article:modified_time" content="2026-10-30T10:31:00+08:00"><meta property="article:tag" content="Docker"><meta property="og:image" content="https://LMDAWN1127.github.io/images/DAWN.jpg"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="https://LMDAWN1127.github.io/images/DAWN.jpg"><meta name=twitter:title content="containerd 컨테이너 런타임 구축과 runc/ctr 관리 실전"><meta name=twitter:description content="이 실습에서는 먼저 docker02 노드의 Docker 바이너리를 제거한 뒤, containerd 1.7.20 런타임（cri-containerd-cni 압축 해제, systemd 유닛 설치, config.toml 에서 SystemdCgroup 활성화 및 sandbox_image 교체）을 구축하고 runc 1.1.12 와 ctr 클라이언트를 설치한다. 이후 ctr 로 이미지 풀/태그, 컨테이너 생성/시작/일시정지/재개/삭제, 네임스페이스 관리, 그리고 docker01 Harbor（HTTP, 비 TLS）로의 이미지 푸시 및 풀 전체 작업을 시연한다."><script type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Posts","item":"https://LMDAWN1127.github.io/ko/posts/"},{"@type":"ListItem","position":2,"name":"containerd 컨테이너 런타임 구축과 runc/ctr 관리 실전","item":"https://LMDAWN1127.github.io/ko/posts/containerd-runc-ctr-management/"}]}</script><script type=application/ld+json>{"@context":"https://schema.org","@type":"BlogPosting","headline":"containerd 컨테이너 런타임 구축과 runc/ctr 관리 실전","name":"containerd 컨테이너 런타임 구축과 runc\/ctr 관리 실전","description":"이 실습에서는 먼저 docker02 노드의 Docker 바이너리를 제거한 뒤, containerd 1.7.20 런타임（cri-containerd-cni 압축 해제, systemd 유닛 설치, config.toml 에서 SystemdCgroup 활성화 및 sandbox_image 교체）을 구축하고 runc 1.1.12 와 ctr 클라이언트를 설치한다. 이후 ctr 로 이미지 풀/태그, 컨테이너 생성/시작/일시정지/재개/삭제, 네임스페이스 관리, 그리고 docker01 Harbor（HTTP, 비 TLS）로의 이미지 푸시 및 풀 전체 작업을 시연한다.","keywords":["Docker"],"articleBody":"containerd 컨테이너 런타임 구축과 runc/ctr 관리 실전 제1부 containerd 컨테이너 관리 도구 Docker 제거\n1 2 3 4 5 6 7 root@docker02:~# systemctl stop docker root@docker02:~# rm -f /lib/systemd/system/docker.service /etc/systemd/system/docker.service root@docker02:~# systemctl daemon-reload root@docker02:~# rm -f /usr/bin/docker /usr/bin/dockerd /usr/bin/docker-init /usr/bin/docker-proxy /usr/bin/docker-compose root@docker02:~# rm -f /usr/bin/containerd /usr/bin/ctr /usr/bin/runc root@docker02:~# which docker dockerd containerd ctr runc (비어 있음, 모두 제거됨) Docker 는 바이너리 방식으로 설치되었으며（/dawn/softwares/docker/ 에 심볼릭 링크）. 제거란 심볼릭 링크와 systemd 서비스를 삭제하는 것입니다. 원본 바이너리는 /dawn/softwares/docker/ 에 백업으로 보관됩니다.\n1. containerd 다운로드 1 2 3 root@docker02:~# wget https://github.com/containerd/containerd/releases/download/v1.7.20/cri-containerd-cni-1.7.20-linux-amd64.tar.gz root@docker02:~# ls -lh cri-containerd-cni-1.7.20-linux-amd64.tar.gz -rw-r--r-- 1 root root 143M Jul 18 2024 cri-containerd-cni-1.7.20-linux-amd64.tar.gz 2. 패키지 압축 해제 1 root@docker02:~# tar xf cri-containerd-cni-1.7.20-linux-amd64.tar.gz 3. containerd 런타임 파일을 호스트 지정 경로로 복사 1 2 3 4 5 6 7 8 root@docker02:~# cp usr/local/bin/containerd /usr/local/bin/ root@docker02:~# cp usr/local/bin/containerd-shim /usr/local/bin/ root@docker02:~# cp usr/local/bin/containerd-shim-runc-v1 /usr/local/bin/ root@docker02:~# cp usr/local/bin/containerd-shim-runc-v2 /usr/local/bin/ root@docker02:~# cp usr/local/bin/ctr /usr/bin/ root@docker02:~# cp usr/local/bin/crictl /usr/bin/ root@docker02:~# containerd --version containerd github.com/containerd/containerd v1.7.20 8fc6bcff51318944179630522a095cc9dbf9f353 4. containerd systemd 유닛 파일 복사 1 root@docker02:~# cp etc/systemd/system/containerd.service /usr/lib/systemd/system/ 5. containerd 설정 파일 생성 및 수정 1 2 3 4 5 6 7 8 root@docker02:~# mkdir -p /etc/containerd root@docker02:~# containerd config default \u003e /etc/containerd/config.toml root@docker02:~# sed -ri 's#(SystemdCgroup = )false#\\1true#' /etc/containerd/config.toml root@docker02:~# sed -i 's#registry.k8s.io/pause:3.8#uhub.service.ucloud.cn/dawn/pause:3.8#' /etc/containerd/config.toml root@docker02:~# grep SystemdCgroup /etc/containerd/config.toml SystemdCgroup = true root@docker02:~# grep sandbox_image /etc/containerd/config.toml sandbox_image = \"uhub.service.ucloud.cn/dawn/pause:3.8\" 6. containerd 서비스 시작 1 2 3 4 5 6 root@docker02:~# systemctl enable --now containerd Created symlink /etc/systemd/system/multi-user.target.wants/containerd.service → /lib/systemd/system/containerd.service. root@docker02:~# systemctl status containerd | head -4 ● containerd.service - containerd container runtime Loaded: loaded (/lib/systemd/system/containerd.service; enabled; vendor preset: enabled) Active: active (running) 7. ctr 클라이언트 도구 복사 및 버전 확인 1 2 3 4 5 6 7 8 9 10 11 root@docker02:~# ctr --version ctr github.com/containerd/containerd v1.7.20 root@docker02:~# ctr version Client: Version: v1.7.20 Revision: 8fc6bcff51318944179630522a095cc9dbf9f353 Go version: go1.21.12 Server: Version: v1.7.20 Revision: 8fc6bcff51318944179630522a095cc9dbf9f353 UUID: 732b5e18-1bb3-4792-a7ef-2e6687016e2e 제2부 runc 설치와 ctr 도구 관리 실전 1. runc 다운로드 1 2 3 root@docker02:~# wget https://github.com/opencontainers/runc/releases/download/v1.1.12/runc.amd64 root@docker02:~# ls -lh runc.amd64 -rw-r--r-- 1 root root 11M Jan 23 2024 runc.amd64 2. runc 를 PATH 로 이동하고 실행 권한 부여 1 2 3 4 5 6 7 8 root@docker02:~# mv runc.amd64 /usr/bin/runc root@docker02:~# chmod +x /usr/bin/runc root@docker02:~# runc --version runc version 1.1.12 commit: v1.1.12-0-g51d5e946 spec: 1.0.2-dev go: go1.20.13 libseccomp: 2.5.4 3. ctr 기본: 이미지 관리 3.1 이미지 목록 조회（초기 비어 있음）\n1 2 root@docker02:~# ctr images ls REF TYPE DIGEST SIZE PLATFORMS LABELS 3.2 이미지 풀\n1 2 3 4 5 6 7 8 9 root@docker02:~# ctr images pull uhub.service.ucloud.cn/dawn/apps:v1 ... elapsed: 3.5 s total: 8.9 Mi (2.5 MiB/s) unpacking linux/amd64 sha256:3bee216f250cfd2dbda1744d6849e27118845b8f4d55dda3ca3c6c1227cc2e5c... done: 585.870274ms root@docker02:~# ctr images ls REF TYPE DIGEST SIZE PLATFORMS LABELS uhub.service.ucloud.cn/dawn/apps:v1 application/vnd.docker.distribution.manifest.v2+json sha256:3bee216f250cfd2dbda1744d6849e27118845b8f4d55dda3ca3c6c1227cc2e5c 9.6 MiB linux/amd64 - 4. ctr 실전: 컨테이너 관리 4.1 컨테이너 생성 및 시작\n1 2 3 4 5 6 7 8 9 root@docker02:~# ctr containers create uhub.service.ucloud.cn/dawn/apps:v1 xiuxian root@docker02:~# ctr containers ls CONTAINER IMAGE RUNTIME xiuxian uhub.service.ucloud.cn/dawn/apps:v1 io.containerd.runc.v2 root@docker02:~# ctr task start -d xiuxian root@docker02:~# ctr task ls TASK PID STATUS xiuxian 64464 RUNNING 4.2 컨테이너의 호스트 PID 확인\n1 2 3 4 root@docker02:~# ps -ef | grep 64464 | grep -v grep root 64464 64444 0 09:47 ? 00:00:00 nginx: master process nginx -g daemon off; systemd+ 64502 64464 0 09:47 ? 00:00:00 nginx: worker process systemd+ 64503 64464 0 09:47 ? 00:00:00 nginx: worker process 4.3 컨테이너 내 명령 실행\n1 2 3 4 5 6 root@docker02:~# ctr task exec --exec-id 1 xiuxian ps -ef PID USER TIME COMMAND 1 root 0:00 nginx: master process nginx -g daemon off; 33 nginx 0:00 nginx: worker process 34 nginx 0:00 nginx: worker process 35 root 0:00 ps -ef 4.4 컨테이너 일시정지 및 재개\n1 2 3 4 5 6 7 8 9 root@docker02:~# ctr tasks pause xiuxian root@docker02:~# ctr task ls TASK PID STATUS xiuxian 64464 PAUSED root@docker02:~# ctr tasks resume xiuxian root@docker02:~# ctr task ls TASK PID STATUS xiuxian 64464 RUNNING 4.5 컨테이너 중지 및 삭제\n1 2 3 4 5 root@docker02:~# ctr task kill xiuxian root@docker02:~# ctr task rm xiuxian root@docker02:~# ctr containers rm xiuxian root@docker02:~# ctr task ls TASK PID STATUS 실행 중인 컨테이너를 삭제하려면 먼저 ctr task kill（또는 ctr task rm -f）로 태스크를 중지한 다음, ctr task rm 로 태스크를, ctr containers rm 로 컨테이너를 삭제해야 합니다. 순서를 바꾸면 task must be stopped before deletion 오류가 발생합니다.\n5. ctr 네임스페이스 관리 1 2 3 4 5 6 7 8 9 root@docker02:~# ctr namespaces ls NAME LABELS default root@docker02:~# ctr ns create dawn-dawn root@docker02:~# ctr ns ls NAME LABELS dawn-dawn default 네임스페이스를 삭제하기 전에 그 안이 비어 있어야 합니다（이미지 없음, 컨테이너 없음）. 그렇지 않으면 must be empty 오류가 발생합니다.\n6. ctr 로 Harbor 에서 이미지 푸시/풀 6.1 이미지에 태그 부여 및 docker01 Harbor 로 푸시\n1 2 3 4 5 root@docker02:~# ctr images tag uhub.service.ucloud.cn/dawn/apps:v1 11.0.1.121/dawn-games/xiuxian:v1 root@docker02:~# ctr images push --platform linux/amd64 --plain-http -u admin:1 11.0.1.121/dawn-games/xiuxian:v1 manifest-sha256:3bee216f250cfd2dbda1744d6849e27118845b8f4d55dda3ca3c6c1227cc2e5c: done config-sha256:f28fd43be4ad41fc768dcc3629f8479d1443df01ada10ac9a771314e4fdef599: done elapsed: 0.8 s total: 9.4 Ki (11.7 KiB/s) 6.2 Harbor 에서 이미지 풀하여 검증\n1 2 3 4 5 root@docker02:~# ctr images rm 11.0.1.121/dawn-games/xiuxian:v1 root@docker02:~# ctr images pull --plain-http 11.0.1.121/dawn-games/xiuxian:v1 ... unpacking linux/amd64 sha256:3bee216f250cfd2dbda1744d6849e27118845b8f4d55dda3ca3c6c1227cc2e5c... done: 6.182696ms ctr 에서 HTTP（비 TLS）레지스트리로 푸시/풀하려면 명시적으로 --plain-http 플래그가 필요하며, 인증은 -u admin:1 을 사용합니다. ctr 은 Docker 와 달리 로컬에 없는 이미지를 원격에서 자동으로 풀어오지 않습니다.\n","wordCount":"866","inLanguage":"ko","image":"https://LMDAWN1127.github.io/images/DAWN.jpg","datePublished":"2026-10-30T10:31:00+08:00","dateModified":"2026-10-30T10:31:00+08:00","author":{"@type":"Person","name":"DAWN"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://LMDAWN1127.github.io/ko/posts/containerd-runc-ctr-management/"},"publisher":{"@type":"Organization","name":"DAWN's Blog","logo":{"@type":"ImageObject","url":"https://LMDAWN1127.github.io/images/DAWN.jpg"}}}</script></head><body id=top><header class=header><nav class=header-nav><div class=logo><a href=https://LMDAWN1127.github.io/ko/ accesskey=h title="DAWN's Blog (Alt + H)"><img src=https://LMDAWN1127.github.io/images/DAWN.jpg alt aria-label=logo height=38>DAWN's Blog</a><div class=logo-switches><button id=theme-toggle class=theme-toggle accesskey=t title="(Alt + T)" aria-label="Toggle theme">
+<svg class="moon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+<svg class="sun" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+</button><span class=nav-sep>|</span><ul class=lang-menu><li><a href=https://LMDAWN1127.github.io/ title=中文 aria-label=中文>Zh</a></li><li><a href=https://LMDAWN1127.github.io/en/ title=English aria-label=English>En</a></li><li><a href=https://LMDAWN1127.github.io/ja/ title=日本語 aria-label=日本語>Ja</a></li></ul></div></div><ul id=menu class=menu><li><a href=https://LMDAWN1127.github.io/ko/archives/ title=아카이브><span>아카이브</span></a></li></ul></nav></header><main class=main><article class=post-single><header class=post-header><h1 class="post-title entry-hint-parent">containerd 컨테이너 런타임 구축과 runc/ctr 관리 실전</h1></header><div class=post-layout><div class=post-content-wrapper><div class="post-content md-content"><h1 id=containerd-컨테이너-런타임-구축과-runcctr-관리-실전>containerd 컨테이너 런타임 구축과 runc/ctr 관리 실전<a hidden class=anchor aria-hidden=true href=#containerd-컨테이너-런타임-구축과-runcctr-관리-실전>#</a></h1><h2 id=제1부-containerd-컨테이너-관리-도구>제1부 containerd 컨테이너 관리 도구<a hidden class=anchor aria-hidden=true href=#제1부-containerd-컨테이너-관리-도구>#</a></h2><p>Docker 제거</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-bash data-lang=bash><span style=display:flex><span>root@docker02:~# systemctl stop docker
+</span></span><span style=display:flex><span>root@docker02:~# rm -f /lib/systemd/system/docker.service /etc/systemd/system/docker.service
+</span></span><span style=display:flex><span>root@docker02:~# systemctl daemon-reload
+</span></span><span style=display:flex><span>root@docker02:~# rm -f /usr/bin/docker /usr/bin/dockerd /usr/bin/docker-init /usr/bin/docker-proxy /usr/bin/docker-compose
+</span></span><span style=display:flex><span>root@docker02:~# rm -f /usr/bin/containerd /usr/bin/ctr /usr/bin/runc
+</span></span><span style=display:flex><span>root@docker02:~# which docker dockerd containerd ctr runc
+</span></span><span style=display:flex><span><span style=color:#f92672>(</span>비어 있음, 모두 제거됨<span style=color:#f92672>)</span>
+</span></span></code></pre></td></tr></table></div></div><p>Docker 는 바이너리 방식으로 설치되었으며（<code>/dawn/softwares/docker/</code> 에 심볼릭 링크）. 제거란 심볼릭 링크와 systemd 서비스를 삭제하는 것입니다. 원본 바이너리는 <code>/dawn/softwares/docker/</code> 에 백업으로 보관됩니다.</p><h3 id=1-containerd-다운로드>1. containerd 다운로드<a hidden class=anchor aria-hidden=true href=#1-containerd-다운로드>#</a></h3><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-bash data-lang=bash><span style=display:flex><span>root@docker02:~# wget https://github.com/containerd/containerd/releases/download/v1.7.20/cri-containerd-cni-1.7.20-linux-amd64.tar.gz
+</span></span><span style=display:flex><span>root@docker02:~# ls -lh cri-containerd-cni-1.7.20-linux-amd64.tar.gz
+</span></span><span style=display:flex><span>-rw-r--r-- <span style=color:#ae81ff>1</span> root root 143M Jul <span style=color:#ae81ff>18</span> <span style=color:#ae81ff>2024</span> cri-containerd-cni-1.7.20-linux-amd64.tar.gz
+</span></span></code></pre></td></tr></table></div></div><h3 id=2-패키지-압축-해제>2. 패키지 압축 해제<a hidden class=anchor aria-hidden=true href=#2-패키지-압축-해제>#</a></h3><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-bash data-lang=bash><span style=display:flex><span>root@docker02:~# tar xf cri-containerd-cni-1.7.20-linux-amd64.tar.gz
+</span></span></code></pre></td></tr></table></div></div><h3 id=3-containerd-런타임-파일을-호스트-지정-경로로-복사>3. containerd 런타임 파일을 호스트 지정 경로로 복사<a hidden class=anchor aria-hidden=true href=#3-containerd-런타임-파일을-호스트-지정-경로로-복사>#</a></h3><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">8
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-bash data-lang=bash><span style=display:flex><span>root@docker02:~# cp usr/local/bin/containerd /usr/local/bin/
+</span></span><span style=display:flex><span>root@docker02:~# cp usr/local/bin/containerd-shim /usr/local/bin/
+</span></span><span style=display:flex><span>root@docker02:~# cp usr/local/bin/containerd-shim-runc-v1 /usr/local/bin/
+</span></span><span style=display:flex><span>root@docker02:~# cp usr/local/bin/containerd-shim-runc-v2 /usr/local/bin/
+</span></span><span style=display:flex><span>root@docker02:~# cp usr/local/bin/ctr /usr/bin/
+</span></span><span style=display:flex><span>root@docker02:~# cp usr/local/bin/crictl /usr/bin/
+</span></span><span style=display:flex><span>root@docker02:~# containerd --version
+</span></span><span style=display:flex><span>containerd github.com/containerd/containerd v1.7.20 8fc6bcff51318944179630522a095cc9dbf9f353
+</span></span></code></pre></td></tr></table></div></div><h3 id=4-containerd-systemd-유닛-파일-복사>4. containerd systemd 유닛 파일 복사<a hidden class=anchor aria-hidden=true href=#4-containerd-systemd-유닛-파일-복사>#</a></h3><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-bash data-lang=bash><span style=display:flex><span>root@docker02:~# cp etc/systemd/system/containerd.service /usr/lib/systemd/system/
+</span></span></code></pre></td></tr></table></div></div><h3 id=5-containerd-설정-파일-생성-및-수정>5. containerd 설정 파일 생성 및 수정<a hidden class=anchor aria-hidden=true href=#5-containerd-설정-파일-생성-및-수정>#</a></h3><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">8
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-bash data-lang=bash><span style=display:flex><span>root@docker02:~# mkdir -p /etc/containerd
+</span></span><span style=display:flex><span>root@docker02:~# containerd config default &gt; /etc/containerd/config.toml
+</span></span><span style=display:flex><span>root@docker02:~# sed -ri <span style=color:#e6db74>&#39;s#(SystemdCgroup = )false#\1true#&#39;</span> /etc/containerd/config.toml
+</span></span><span style=display:flex><span>root@docker02:~# sed -i <span style=color:#e6db74>&#39;s#registry.k8s.io/pause:3.8#uhub.service.ucloud.cn/dawn/pause:3.8#&#39;</span> /etc/containerd/config.toml
+</span></span><span style=display:flex><span>root@docker02:~# grep SystemdCgroup /etc/containerd/config.toml
+</span></span><span style=display:flex><span>            SystemdCgroup <span style=color:#f92672>=</span> true
+</span></span><span style=display:flex><span>root@docker02:~# grep sandbox_image /etc/containerd/config.toml
+</span></span><span style=display:flex><span>    sandbox_image <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;uhub.service.ucloud.cn/dawn/pause:3.8&#34;</span>
+</span></span></code></pre></td></tr></table></div></div><h3 id=6-containerd-서비스-시작>6. containerd 서비스 시작<a hidden class=anchor aria-hidden=true href=#6-containerd-서비스-시작>#</a></h3><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-bash data-lang=bash><span style=display:flex><span>root@docker02:~# systemctl enable --now containerd
+</span></span><span style=display:flex><span>Created symlink /etc/systemd/system/multi-user.target.wants/containerd.service → /lib/systemd/system/containerd.service.
+</span></span><span style=display:flex><span>root@docker02:~# systemctl status containerd | head -4
+</span></span><span style=display:flex><span>● containerd.service - containerd container runtime
+</span></span><span style=display:flex><span>   Loaded: loaded <span style=color:#f92672>(</span>/lib/systemd/system/containerd.service; enabled; vendor preset: enabled<span style=color:#f92672>)</span>
+</span></span><span style=display:flex><span>   Active: active <span style=color:#f92672>(</span>running<span style=color:#f92672>)</span>
+</span></span></code></pre></td></tr></table></div></div><h3 id=7-ctr-클라이언트-도구-복사-및-버전-확인>7. ctr 클라이언트 도구 복사 및 버전 확인<a hidden class=anchor aria-hidden=true href=#7-ctr-클라이언트-도구-복사-및-버전-확인>#</a></h3><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-bash data-lang=bash><span style=display:flex><span>root@docker02:~# ctr --version
+</span></span><span style=display:flex><span>ctr github.com/containerd/containerd v1.7.20
+</span></span><span style=display:flex><span>root@docker02:~# ctr version
+</span></span><span style=display:flex><span>Client:
+</span></span><span style=display:flex><span>  Version:  v1.7.20
+</span></span><span style=display:flex><span>  Revision: 8fc6bcff51318944179630522a095cc9dbf9f353
+</span></span><span style=display:flex><span>  Go version: go1.21.12
+</span></span><span style=display:flex><span>Server:
+</span></span><span style=display:flex><span>  Version:  v1.7.20
+</span></span><span style=display:flex><span>  Revision: 8fc6bcff51318944179630522a095cc9dbf9f353
+</span></span><span style=display:flex><span>  UUID: 732b5e18-1bb3-4792-a7ef-2e6687016e2e
+</span></span></code></pre></td></tr></table></div></div><hr><h2 id=제2부-runc-설치와-ctr-도구-관리-실전>제2부 runc 설치와 ctr 도구 관리 실전<a hidden class=anchor aria-hidden=true href=#제2부-runc-설치와-ctr-도구-관리-실전>#</a></h2><h3 id=1-runc-다운로드>1. runc 다운로드<a hidden class=anchor aria-hidden=true href=#1-runc-다운로드>#</a></h3><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-bash data-lang=bash><span style=display:flex><span>root@docker02:~# wget https://github.com/opencontainers/runc/releases/download/v1.1.12/runc.amd64
+</span></span><span style=display:flex><span>root@docker02:~# ls -lh runc.amd64
+</span></span><span style=display:flex><span>-rw-r--r-- <span style=color:#ae81ff>1</span> root root 11M Jan <span style=color:#ae81ff>23</span> <span style=color:#ae81ff>2024</span> runc.amd64
+</span></span></code></pre></td></tr></table></div></div><h3 id=2-runc-를-path-로-이동하고-실행-권한-부여>2. runc 를 PATH 로 이동하고 실행 권한 부여<a hidden class=anchor aria-hidden=true href=#2-runc-를-path-로-이동하고-실행-권한-부여>#</a></h3><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">8
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-bash data-lang=bash><span style=display:flex><span>root@docker02:~# mv runc.amd64 /usr/bin/runc
+</span></span><span style=display:flex><span>root@docker02:~# chmod +x /usr/bin/runc
+</span></span><span style=display:flex><span>root@docker02:~# runc --version
+</span></span><span style=display:flex><span>runc version 1.1.12
+</span></span><span style=display:flex><span>commit: v1.1.12-0-g51d5e946
+</span></span><span style=display:flex><span>spec: 1.0.2-dev
+</span></span><span style=display:flex><span>go: go1.20.13
+</span></span><span style=display:flex><span>libseccomp: 2.5.4
+</span></span></code></pre></td></tr></table></div></div><h3 id=3-ctr-기본-이미지-관리>3. ctr 기본: 이미지 관리<a hidden class=anchor aria-hidden=true href=#3-ctr-기본-이미지-관리>#</a></h3><p><strong>3.1 이미지 목록 조회（초기 비어 있음）</strong></p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-bash data-lang=bash><span style=display:flex><span>root@docker02:~# ctr images ls
+</span></span><span style=display:flex><span>REF TYPE DIGEST SIZE PLATFORMS LABELS
+</span></span></code></pre></td></tr></table></div></div><p><strong>3.2 이미지 풀</strong></p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">9
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-bash data-lang=bash><span style=display:flex><span>root@docker02:~# ctr images pull uhub.service.ucloud.cn/dawn/apps:v1
+</span></span><span style=display:flex><span>...
+</span></span><span style=display:flex><span>elapsed: 3.5 s  total: 8.9 Mi <span style=color:#f92672>(</span>2.5 MiB/s<span style=color:#f92672>)</span>
+</span></span><span style=display:flex><span>unpacking linux/amd64 sha256:3bee216f250cfd2dbda1744d6849e27118845b8f4d55dda3ca3c6c1227cc2e5c...
+</span></span><span style=display:flex><span><span style=color:#66d9ef>done</span>: 585.870274ms
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>root@docker02:~# ctr images ls
+</span></span><span style=display:flex><span>REF                                                       TYPE                                                 DIGEST                                                                  SIZE    PLATFORMS   LABELS
+</span></span><span style=display:flex><span>uhub.service.ucloud.cn/dawn/apps:v1 application/vnd.docker.distribution.manifest.v2+json sha256:3bee216f250cfd2dbda1744d6849e27118845b8f4d55dda3ca3c6c1227cc2e5c 9.6 MiB linux/amd64 -
+</span></span></code></pre></td></tr></table></div></div><h3 id=4-ctr-실전-컨테이너-관리>4. ctr 실전: 컨테이너 관리<a hidden class=anchor aria-hidden=true href=#4-ctr-실전-컨테이너-관리>#</a></h3><p><strong>4.1 컨테이너 생성 및 시작</strong></p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">9
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-bash data-lang=bash><span style=display:flex><span>root@docker02:~# ctr containers create uhub.service.ucloud.cn/dawn/apps:v1 xiuxian
+</span></span><span style=display:flex><span>root@docker02:~# ctr containers ls
+</span></span><span style=display:flex><span>CONTAINER    IMAGE                                                        RUNTIME
+</span></span><span style=display:flex><span>xiuxian      uhub.service.ucloud.cn/dawn/apps:v1    io.containerd.runc.v2
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>root@docker02:~# ctr task start -d xiuxian
+</span></span><span style=display:flex><span>root@docker02:~# ctr task ls
+</span></span><span style=display:flex><span>TASK       PID      STATUS
+</span></span><span style=display:flex><span>xiuxian    <span style=color:#ae81ff>64464</span>    RUNNING
+</span></span></code></pre></td></tr></table></div></div><p><strong>4.2 컨테이너의 호스트 PID 확인</strong></p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-bash data-lang=bash><span style=display:flex><span>root@docker02:~# ps -ef | grep <span style=color:#ae81ff>64464</span> | grep -v grep
+</span></span><span style=display:flex><span>root       <span style=color:#ae81ff>64464</span>   <span style=color:#ae81ff>64444</span>  <span style=color:#ae81ff>0</span> 09:47 ?  00:00:00 nginx: master process nginx -g daemon off;
+</span></span><span style=display:flex><span>systemd+   <span style=color:#ae81ff>64502</span>   <span style=color:#ae81ff>64464</span>  <span style=color:#ae81ff>0</span> 09:47 ?  00:00:00 nginx: worker process
+</span></span><span style=display:flex><span>systemd+   <span style=color:#ae81ff>64503</span>   <span style=color:#ae81ff>64464</span>  <span style=color:#ae81ff>0</span> 09:47 ?  00:00:00 nginx: worker process
+</span></span></code></pre></td></tr></table></div></div><p><strong>4.3 컨테이너 내 명령 실행</strong></p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-bash data-lang=bash><span style=display:flex><span>root@docker02:~# ctr task exec --exec-id <span style=color:#ae81ff>1</span> xiuxian ps -ef
+</span></span><span style=display:flex><span>PID   USER     TIME  COMMAND
+</span></span><span style=display:flex><span>    <span style=color:#ae81ff>1</span> root      0:00 nginx: master process nginx -g daemon off;
+</span></span><span style=display:flex><span>   <span style=color:#ae81ff>33</span> nginx     0:00 nginx: worker process
+</span></span><span style=display:flex><span>   <span style=color:#ae81ff>34</span> nginx     0:00 nginx: worker process
+</span></span><span style=display:flex><span>   <span style=color:#ae81ff>35</span> root      0:00 ps -ef
+</span></span></code></pre></td></tr></table></div></div><p><strong>4.4 컨테이너 일시정지 및 재개</strong></p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">9
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-bash data-lang=bash><span style=display:flex><span>root@docker02:~# ctr tasks pause xiuxian
+</span></span><span style=display:flex><span>root@docker02:~# ctr task ls
+</span></span><span style=display:flex><span>TASK       PID      STATUS
+</span></span><span style=display:flex><span>xiuxian    <span style=color:#ae81ff>64464</span>    PAUSED
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>root@docker02:~# ctr tasks resume xiuxian
+</span></span><span style=display:flex><span>root@docker02:~# ctr task ls
+</span></span><span style=display:flex><span>TASK       PID      STATUS
+</span></span><span style=display:flex><span>xiuxian    <span style=color:#ae81ff>64464</span>    RUNNING
+</span></span></code></pre></td></tr></table></div></div><p><strong>4.5 컨테이너 중지 및 삭제</strong></p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-bash data-lang=bash><span style=display:flex><span>root@docker02:~# ctr task kill xiuxian
+</span></span><span style=display:flex><span>root@docker02:~# ctr task rm xiuxian
+</span></span><span style=display:flex><span>root@docker02:~# ctr containers rm xiuxian
+</span></span><span style=display:flex><span>root@docker02:~# ctr task ls
+</span></span><span style=display:flex><span>TASK    PID    STATUS
+</span></span></code></pre></td></tr></table></div></div><p>실행 중인 컨테이너를 삭제하려면 먼저 <code>ctr task kill</code>（또는 <code>ctr task rm -f</code>）로 태스크를 중지한 다음, <code>ctr task rm</code> 로 태스크를, <code>ctr containers rm</code> 로 컨테이너를 삭제해야 합니다. 순서를 바꾸면 <code>task must be stopped before deletion</code> 오류가 발생합니다.</p><h3 id=5-ctr-네임스페이스-관리>5. ctr 네임스페이스 관리<a hidden class=anchor aria-hidden=true href=#5-ctr-네임스페이스-관리>#</a></h3><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">9
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-bash data-lang=bash><span style=display:flex><span>root@docker02:~# ctr namespaces ls
+</span></span><span style=display:flex><span>NAME    LABELS
+</span></span><span style=display:flex><span>default
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>root@docker02:~# ctr ns create dawn-dawn
+</span></span><span style=display:flex><span>root@docker02:~# ctr ns ls
+</span></span><span style=display:flex><span>NAME      LABELS
+</span></span><span style=display:flex><span>dawn-dawn
+</span></span><span style=display:flex><span>default
+</span></span></code></pre></td></tr></table></div></div><p>네임스페이스를 삭제하기 전에 그 안이 비어 있어야 합니다（이미지 없음, 컨테이너 없음）. 그렇지 않으면 <code>must be empty</code> 오류가 발생합니다.</p><h3 id=6-ctr-로-harbor-에서-이미지-푸시풀>6. ctr 로 Harbor 에서 이미지 푸시/풀<a hidden class=anchor aria-hidden=true href=#6-ctr-로-harbor-에서-이미지-푸시풀>#</a></h3><p><strong>6.1 이미지에 태그 부여 및 docker01 Harbor 로 푸시</strong></p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-bash data-lang=bash><span style=display:flex><span>root@docker02:~# ctr images tag uhub.service.ucloud.cn/dawn/apps:v1 11.0.1.121/dawn-games/xiuxian:v1
+</span></span><span style=display:flex><span>root@docker02:~# ctr images push --platform linux/amd64 --plain-http -u admin:1 11.0.1.121/dawn-games/xiuxian:v1
+</span></span><span style=display:flex><span>manifest-sha256:3bee216f250cfd2dbda1744d6849e27118845b8f4d55dda3ca3c6c1227cc2e5c: <span style=color:#66d9ef>done</span>
+</span></span><span style=display:flex><span>config-sha256:f28fd43be4ad41fc768dcc3629f8479d1443df01ada10ac9a771314e4fdef599: <span style=color:#66d9ef>done</span>
+</span></span><span style=display:flex><span>elapsed: 0.8 s  total: 9.4 Ki <span style=color:#f92672>(</span>11.7 KiB/s<span style=color:#f92672>)</span>
+</span></span></code></pre></td></tr></table></div></div><p><strong>6.2 Harbor 에서 이미지 풀하여 검증</strong></p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-bash data-lang=bash><span style=display:flex><span>root@docker02:~# ctr images rm 11.0.1.121/dawn-games/xiuxian:v1
+</span></span><span style=display:flex><span>root@docker02:~# ctr images pull --plain-http 11.0.1.121/dawn-games/xiuxian:v1
+</span></span><span style=display:flex><span>...
+</span></span><span style=display:flex><span>unpacking linux/amd64 sha256:3bee216f250cfd2dbda1744d6849e27118845b8f4d55dda3ca3c6c1227cc2e5c...
+</span></span><span style=display:flex><span><span style=color:#66d9ef>done</span>: 6.182696ms
+</span></span></code></pre></td></tr></table></div></div><p>ctr 에서 HTTP（비 TLS）레지스트리로 푸시/풀하려면 명시적으로 <code>--plain-http</code> 플래그가 필요하며, 인증은 <code>-u admin:1</code> 을 사용합니다. ctr 은 Docker 와 달리 로컬에 없는 이미지를 원격에서 자동으로 풀어오지 않습니다.</p></div><div id=giscus-container style="margin-top:2rem;padding-top:1rem;border-top:1px solid var(--border)"><script src=https://giscus.app/client.js data-repo=LMDAWN1127/LMDAWN1127.github.io data-repo-id=R_kgDOTMWmvw data-category=Announcements data-category-id=DIC_kwDOTMWmv84DAd3g data-mapping=pathname data-strict=0 data-reactions-enabled=1 data-emit-metadata=0 data-input-position=bottom data-theme=preferred_color_scheme data-lang=zh-CN crossorigin=anonymous async></script></div></div><aside class=toc-sidebar id=toc-sidebar><div class=toc-header>目录</div><nav class=toc-nav><ul class=toc-list><li><a href=#containerd-%ec%bb%a8%ed%85%8c%ec%9d%b4%eb%84%88-%eb%9f%b0%ed%83%80%ec%9e%84-%ea%b5%ac%ec%b6%95%ea%b3%bc-runcctr-%ea%b4%80%eb%a6%ac-%ec%8b%a4%ec%a0%84 class=toc-link data-target=containerd-컨테이너-런타임-구축과-runcctr-관리-실전>containerd 컨테이너 런타임 구축과 runc/ctr 관리 실전</a><ul><li><a href=#%ec%a0%9c1%eb%b6%80-containerd-%ec%bb%a8%ed%85%8c%ec%9d%b4%eb%84%88-%ea%b4%80%eb%a6%ac-%eb%8f%84%ea%b5%ac class=toc-link data-target=제1부-containerd-컨테이너-관리-도구>제1부 containerd 컨테이너 관리 도구</a><ul><li><a href=#1-containerd-%eb%8b%a4%ec%9a%b4%eb%a1%9c%eb%93%9c class=toc-link data-target=1-containerd-다운로드>1. containerd 다운로드</a></li><li><a href=#2-%ed%8c%a8%ed%82%a4%ec%a7%80-%ec%95%95%ec%b6%95-%ed%95%b4%ec%a0%9c class=toc-link data-target=2-패키지-압축-해제>2. 패키지 압축 해제</a></li><li><a href=#3-containerd-%eb%9f%b0%ed%83%80%ec%9e%84-%ed%8c%8c%ec%9d%bc%ec%9d%84-%ed%98%b8%ec%8a%a4%ed%8a%b8-%ec%a7%80%ec%a0%95-%ea%b2%bd%eb%a1%9c%eb%a1%9c-%eb%b3%b5%ec%82%ac class=toc-link data-target=3-containerd-런타임-파일을-호스트-지정-경로로-복사>3. containerd 런타임 파일을 호스트 지정 경로로 복사</a></li><li><a href=#4-containerd-systemd-%ec%9c%a0%eb%8b%9b-%ed%8c%8c%ec%9d%bc-%eb%b3%b5%ec%82%ac class=toc-link data-target=4-containerd-systemd-유닛-파일-복사>4. containerd systemd 유닛 파일 복사</a></li><li><a href=#5-containerd-%ec%84%a4%ec%a0%95-%ed%8c%8c%ec%9d%bc-%ec%83%9d%ec%84%b1-%eb%b0%8f-%ec%88%98%ec%a0%95 class=toc-link data-target=5-containerd-설정-파일-생성-및-수정>5. containerd 설정 파일 생성 및 수정</a></li><li><a href=#6-containerd-%ec%84%9c%eb%b9%84%ec%8a%a4-%ec%8b%9c%ec%9e%91 class=toc-link data-target=6-containerd-서비스-시작>6. containerd 서비스 시작</a></li><li><a href=#7-ctr-%ed%81%b4%eb%9d%bc%ec%9d%b4%ec%96%b8%ed%8a%b8-%eb%8f%84%ea%b5%ac-%eb%b3%b5%ec%82%ac-%eb%b0%8f-%eb%b2%84%ec%a0%84-%ed%99%95%ec%9d%b8 class=toc-link data-target=7-ctr-클라이언트-도구-복사-및-버전-확인>7. ctr 클라이언트 도구 복사 및 버전 확인</a></li></ul></li><li><a href=#%ec%a0%9c2%eb%b6%80-runc-%ec%84%a4%ec%b9%98%ec%99%80-ctr-%eb%8f%84%ea%b5%ac-%ea%b4%80%eb%a6%ac-%ec%8b%a4%ec%a0%84 class=toc-link data-target=제2부-runc-설치와-ctr-도구-관리-실전>제2부 runc 설치와 ctr 도구 관리 실전</a><ul><li><a href=#1-runc-%eb%8b%a4%ec%9a%b4%eb%a1%9c%eb%93%9c class=toc-link data-target=1-runc-다운로드>1. runc 다운로드</a></li><li><a href=#2-runc-%eb%a5%bc-path-%eb%a1%9c-%ec%9d%b4%eb%8f%99%ed%95%98%ea%b3%a0-%ec%8b%a4%ed%96%89-%ea%b6%8c%ed%95%9c-%eb%b6%80%ec%97%ac class=toc-link data-target=2-runc-를-path-로-이동하고-실행-권한-부여>2. runc 를 PATH 로 이동하고 실행 권한 부여</a></li><li><a href=#3-ctr-%ea%b8%b0%eb%b3%b8-%ec%9d%b4%eb%af%b8%ec%a7%80-%ea%b4%80%eb%a6%ac class=toc-link data-target=3-ctr-기본-이미지-관리>3. ctr 기본: 이미지 관리</a></li><li><a href=#4-ctr-%ec%8b%a4%ec%a0%84-%ec%bb%a8%ed%85%8c%ec%9d%b4%eb%84%88-%ea%b4%80%eb%a6%ac class=toc-link data-target=4-ctr-실전-컨테이너-관리>4. ctr 실전: 컨테이너 관리</a></li><li><a href=#5-ctr-%eb%84%a4%ec%9e%84%ec%8a%a4%ed%8e%98%ec%9d%b4%ec%8a%a4-%ea%b4%80%eb%a6%ac class=toc-link data-target=5-ctr-네임스페이스-관리>5. ctr 네임스페이스 관리</a></li><li><a href=#6-ctr-%eb%a1%9c-harbor-%ec%97%90%ec%84%9c-%ec%9d%b4%eb%af%b8%ec%a7%80-%ed%91%b8%ec%8b%9c%ed%92%80 class=toc-link data-target=6-ctr-로-harbor-에서-이미지-푸시풀>6. ctr 로 Harbor 에서 이미지 푸시/풀</a></li></ul></li></ul></li></ul></nav></aside></div></article></main><a href=#top id=top-link class="top-link hidden" aria-label="go to top" title="Go to Top (Alt + G)" accesskey=g><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevrons-up"><polyline points="17 11 12 6 7 11"/><polyline points="17 18 12 13 7 18"/></svg>
+</a><script defer src=/js/custom.js></script><div id=algolia-search-modal class=algolia-modal style=display:none><div class=algolia-modal-overlay></div><div class=algolia-modal-content><div class=algolia-search-header><div class=algolia-search-input-wrapper><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+<input type=text id=algolia-search-input placeholder=搜索文章... autofocus>
+<kbd class=algolia-esc>Esc</kbd></div></div><div id=algolia-search-results class=algolia-search-results><div class=algolia-empty-state><p>输入关键词开始搜索</p></div></div><div class=algolia-search-footer><span class=algolia-footer-text><kbd>↑</kbd> <kbd>↓</kbd> 导航
+<kbd>↵</kbd> 打开
+<kbd>Esc</kbd> 关闭
+</span><span class=algolia-footer-logo>搜索由 <a href=https://www.algolia.com/ target=_blank rel=noopener>Algolia</a> 提供</span></div></div></div><script>(function(){"use strict";var a="Y0SCRI4LCW",g="03dda5e44aec7e0dd93b6a3653250b1f",u="lmdawn1127-blog",d="https://"+a+"-dsn.algolia.net/1/indexes/"+u+"/query",i=null,e=-1;function c(e){if(!e||!e.trim()){t();return}var n=JSON.stringify({query:e,hitsPerPage:10,attributesToRetrieve:["title","content","url"],attributesToHighlight:["title","content"],highlightPreTag:'<mark class="algolia-highlight">',highlightPostTag:"</mark>"});fetch(d,{method:"POST",headers:{"X-Algolia-Application-Id":a,"X-Algolia-API-Key":g,"Content-Type":"application/json"},body:n}).then(function(e){if(!e.ok)throw new Error("HTTP "+e.status);return e.json()}).then(function(t){m(t.hits||[],e)}).catch(function(e){console.error("Algolia search error:",e),r(e.message||"未知错误")})}function t(){document.getElementById("algolia-search-results").innerHTML='<div class="algolia-empty-state"><p>输入关键词开始搜索</p></div>'}function r(e){var t="搜索出错，请稍后再试";e&&(t+='<br><small style="color:#888">错误详情: '+o(e)+"</small>"),document.getElementById("algolia-search-results").innerHTML='<div class="algolia-empty-state"><p>'+t+"</p></div>"}function l(e){document.getElementById("algolia-search-results").innerHTML='<div class="algolia-empty-state"><p>未找到与「'+o(e)+"」相关的结果</p></div>"}function o(e){var t=document.createElement("div");return t.appendChild(document.createTextNode(e)),t.innerHTML}function s(e,t){return e._highlightResult&&e._highlightResult[t]?e._highlightResult[t].value:e[t]||""}function h(e,t){return e?(e=e.replace(/<[^>]+>/g,""),e.length>t?e.substring(0,t)+"…":e):""}function m(e,t){var n,o=document.getElementById("algolia-search-results");if(!e.length){l(t);return}n='<div class="algolia-results-count">'+e.length+" 个结果</div>",e.forEach(function(e,t){var o=s(e,"title")||"无标题",i=s(e,"content"),a=e.url||"#";n+='<a class="algolia-hit" href="'+a+'" data-index="'+t+'">',n+='<div class="algolia-hit-title">'+o+"</div>",n+='<div class="algolia-hit-content">'+h(i,150)+"</div>",n+="</a>"}),o.innerHTML=n,o.querySelectorAll(".algolia-hit").forEach(function(e){e.addEventListener("click",closeAlgoliaSearch)})}function f(e){var t=e.target.value;clearTimeout(i),i=setTimeout(function(){c(t)},200)}function p(t){var s=document.querySelectorAll(".algolia-hit");if(!s.length)return;t.key==="ArrowDown"?(t.preventDefault(),e=Math.min(e+1,s.length-1),n(s)):t.key==="ArrowUp"?(t.preventDefault(),e=Math.max(e-1,0),n(s)):t.key==="Enter"&&e>=0&&(t.preventDefault(),window.location.href=s[e].getAttribute("href"),closeAlgoliaSearch())}function n(t){t.forEach(function(t,n){n===e?(t.classList.add("selected"),t.scrollIntoView({block:"nearest"})):t.classList.remove("selected")})}document.addEventListener("DOMContentLoaded",function(){var e=document.getElementById("algolia-search-input");e&&(e.addEventListener("input",f),e.addEventListener("keydown",p))}),window.openAlgoliaSearch=function(){var e=document.getElementById("algolia-search-modal");e.style.display="flex",document.body.style.overflow="hidden",setTimeout(function(){var e=document.getElementById("algolia-search-input");e&&(e.value="",e.focus(),t())},100)},window.closeAlgoliaSearch=function(){document.getElementById("algolia-search-modal").style.display="none",document.body.style.overflow="",e=-1}})()</script><style>.algolia-modal{position:fixed;top:0;left:0;width:100%;height:100%;z-index:1000;display:flex;align-items:flex-start;justify-content:center;padding-top:10vh}.algolia-modal-overlay{position:absolute;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.6);backdrop-filter:blur(4px)}.algolia-modal-content{position:relative;width:90%;max-width:600px;background:#1a1a1a;border-radius:12px;box-shadow:0 20px 60px rgba(0,0,0,.5);overflow:hidden;border:1px solid #333}.algolia-search-header{padding:16px;border-bottom:1px solid #333}.algolia-search-input-wrapper{display:flex;align-items:center;gap:12px;background:#2a2a2a;border-radius:8px;padding:12px 16px;border:1px solid #444}.algolia-search-input-wrapper svg{color:#666;flex-shrink:0}#algolia-search-input{flex:1;background:0 0;border:none;outline:none;color:#fff;font-size:16px;font-family:inherit}#algolia-search-input::placeholder{color:#666}.algolia-esc{background:#444;color:#999;padding:2px 6px;border-radius:4px;font-size:11px;font-family:inherit}.algolia-search-results{max-height:400px;overflow-y:auto;padding:8px}.algolia-empty-state{padding:40px 20px;text-align:center;color:#666}.algolia-results-count{padding:8px 12px;font-size:12px;color:#666}.algolia-search-footer{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;border-top:1px solid #333;background:#222;font-size:12px;color:#666}.algolia-footer-text kbd{background:#444;color:#999;padding:2px 4px;border-radius:3px;font-size:10px;margin:0 2px}.algolia-footer-logo a{color:#5eead4;text-decoration:none}.algolia-footer-logo a:hover{text-decoration:underline}.algolia-hit{display:block;padding:12px;border-radius:6px;text-decoration:none;color:#fff;transition:background .2s}.algolia-hit:hover,.algolia-hit.selected{background:#2a2a2a}.algolia-hit-title{font-weight:600;color:#5eead4;margin-bottom:4px;font-size:15px}.algolia-hit-title mark,.algolia-highlight{background:rgba(94,234,212,.25);color:#5eead4;padding:0 2px;border-radius:2px}.algolia-hit-content{font-size:13px;color:#999;line-height:1.5}.algolia-hit-content mark,.algolia-hit-content .algolia-highlight{background:rgba(94,234,212,.2);color:#ccc;padding:0 2px;border-radius:2px}.algolia-hit-meta{display:flex;align-items:center;gap:10px;margin-top:8px}.algolia-hit-date{font-size:12px;color:#666}.algolia-hit-tags{display:flex;gap:6px}.algolia-hit-tag{background:#333;color:#999;padding:2px 8px;border-radius:4px;font-size:11px}</style><script>document.addEventListener("keydown",function(e){(e.metaKey||e.ctrlKey)&&e.key==="k"&&(e.preventDefault(),typeof openAlgoliaSearch=="function"&&openAlgoliaSearch()),e.key==="Escape"&&typeof closeAlgoliaSearch=="function"&&closeAlgoliaSearch(),e.altKey&&e.key==="/"&&(e.preventDefault(),typeof openAlgoliaSearch=="function"&&openAlgoliaSearch())}),document.addEventListener("DOMContentLoaded",function(){var e,t=document.getElementById("algolia-search-modal");t&&(e=t.querySelector(".algolia-modal-overlay"),e&&e.addEventListener("click",function(){typeof closeAlgoliaSearch=="function"&&closeAlgoliaSearch()}))}),document.addEventListener("DOMContentLoaded",function(){if(document.getElementById("algolia-search-btn"))return;var t,e=document.createElement("button");e.id="algolia-search-btn",e.className="theme-toggle search-toggle",e.type="button",e.title="搜索 (Ctrl+K)",e.setAttribute("aria-label","搜索"),e.innerHTML='<svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',e.addEventListener("click",function(){typeof openAlgoliaSearch=="function"&&openAlgoliaSearch()}),t=document.querySelector(".logo-switches")||document.querySelector(".header-nav"),t&&t.appendChild(e)})</script><script>document.addEventListener("DOMContentLoaded",function(){var e,t,n,s,a,l,r=(document.documentElement.lang||"zh").toLowerCase(),c=location.pathname.replace(/\/+$/,""),o=c.match(/^\/(en|ko|ja)(?:\/(.*))?$/),i=o?o[2]?"/"+o[2]:"":c;function d(e){var t=e==="zh"?"":"/"+e;return i===""||i==="/"?t===""?"/":t+"/":t+i+"/"}if(n=[{code:"zh",label:"中文"},{code:"en",label:"English"},{code:"ko",label:"한국어"},{code:"ja",label:"日本語"}],a=document.querySelector(".logo-switches")||document.querySelector(".header-nav"),!a||document.getElementById("lang-dropdown"))return;l=n.find(function(e){return e.code===r})||n[0],e=document.createElement("div"),e.className="lang-dropdown",e.id="lang-dropdown",t=document.createElement("button"),t.type="button",t.className="lang-dropdown-toggle",t.setAttribute("aria-label","选择语言"),t.innerHTML='<span class="lang-current">'+l.label+'</span><span class="lang-caret">▾</span>',s=document.createElement("ul"),s.className="lang-dropdown-menu",n.forEach(function(e){var t,n=document.createElement("li");e.code===r&&(n.className="active"),t=document.createElement("a"),t.href=d(e.code),t.textContent=e.label,n.appendChild(t),s.appendChild(n)}),e.appendChild(t),e.appendChild(s),a.appendChild(e),t.addEventListener("click",function(t){t.stopPropagation(),e.classList.toggle("open")}),document.addEventListener("click",function(t){e.contains(t.target)||e.classList.remove("open")})})</script><script>let menu=document.getElementById("menu");if(menu){const e=localStorage.getItem("menu-scroll-position");e&&(menu.scrollLeft=parseInt(e,10)),menu.onscroll=function(){localStorage.setItem("menu-scroll-position",menu.scrollLeft)}}document.querySelectorAll('a[href^="#"]').forEach(e=>{e.addEventListener("click",function(e){e.preventDefault();var t=this.getAttribute("href").substr(1);window.matchMedia("(prefers-reduced-motion: reduce)").matches?document.querySelector(`[id='${decodeURIComponent(t)}']`).scrollIntoView():document.querySelector(`[id='${decodeURIComponent(t)}']`).scrollIntoView({behavior:"smooth"}),t==="top"?history.replaceState(null,null," "):history.pushState(null,null,`#${t}`)})})</script><script>var toplink=document.getElementById("top-link");window.onscroll=function(){const e=window.innerHeight;document.body.scrollTop>e||document.documentElement.scrollTop>e?toplink.classList.remove("hidden"):toplink.classList.add("hidden")}</script><script>document.getElementById("theme-toggle").addEventListener("click",()=>{const e=document.querySelector("html");e.dataset.theme==="dark"?(e.dataset.theme="light",localStorage.setItem("pref-theme","light")):(e.dataset.theme="dark",localStorage.setItem("pref-theme","dark"))})</script><script>document.querySelectorAll("pre > code").forEach(e=>{const n=e.parentNode.parentNode,t=document.createElement("button");t.classList.add("copy-code"),t.innerHTML="복사";function s(){t.innerHTML="복사 완료!",setTimeout(()=>{t.innerHTML="복사"},2e3)}t.addEventListener("click",t=>{if("clipboard"in navigator){navigator.clipboard.writeText(e.textContent),s();return}const n=document.createRange();n.selectNodeContents(e);const o=window.getSelection();o.removeAllRanges(),o.addRange(n);try{document.execCommand("copy"),s()}catch{}o.removeRange(n)}),n.classList.contains("highlight")?n.appendChild(t):n.parentNode.firstChild==n||(e.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName=="TABLE"?e.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(t):e.parentNode.appendChild(t))})</script></body></html>

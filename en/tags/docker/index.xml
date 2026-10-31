@@ -1,402 +1,113 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
-  <channel>
-    <title>Docker on DAWN&#39;s Blog</title>
-    <link>https://LMDAWN1127.github.io/en/tags/docker/</link>
-    <description>Recent content in Docker on DAWN&#39;s Blog</description>
-    <image>
-      <title>DAWN&#39;s Blog</title>
-      <url>https://LMDAWN1127.github.io/images/DAWN.jpg</url>
-      <link>https://LMDAWN1127.github.io/images/DAWN.jpg</link>
-    </image>
-    <generator>Hugo</generator>
-    <language>en</language>
-    <lastBuildDate>Fri, 30 Oct 2026 10:31:00 +0800</lastBuildDate>
-    <atom:link href="https://LMDAWN1127.github.io/en/tags/docker/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>Harbor Active-Standby Deployment: From Installation to HTTPS and Replication</title>
-      <link>https://LMDAWN1127.github.io/en/posts/harbor-master-slave/</link>
-      <pubDate>Tue, 04 Aug 2026 00:00:00 +0000</pubDate>
-      <guid>https://LMDAWN1127.github.io/en/posts/harbor-master-slave/</guid>
-      <description>Complete guide to deploying Harbor enterprise Docker registry with active-standby architecture, HTTP/HTTPS modes, self-signed certificates, and cross-host replication.</description>
-    </item>
-    <item>
-      <title>Deploying containerd Runtime and Managing with runc/ctr in Practice</title>
-      <link>https://LMDAWN1127.github.io/en/posts/containerd-runc-ctr-management/</link>
-      <pubDate>Fri, 30 Oct 2026 10:31:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/en/posts/containerd-runc-ctr-management/</guid>
-      <description>This hands-on walkthrough first uninstalls the Docker binaries on the docker02 node, then deploys the containerd 1.7.20 runtime (extracting cri-containerd-cni, installing the systemd unit, and editing config.toml to enable SystemdCgroup and replace the sandbox_image), and installs runc 1.1.12 along with the ctr client. It then demonstrates the full ctr workflow: pulling and tagging images, creating/starting/pausing/resuming/removing containers, namespace management, and pushing to and pulling from the docker01 Harbor (HTTP, non-TLS).</description>
-    </item>
-    <item>
-      <title>Harbor HTTPS Deployment with a Self-Signed Certificate</title>
-      <link>https://LMDAWN1127.github.io/en/posts/harbor-self-signed-https/</link>
-      <pubDate>Thu, 29 Oct 2026 20:57:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/en/posts/harbor-self-signed-https/</guid>
-      <description>This hands-on walkthrough configures Harbor with HTTPS using a self-signed certificate. We create the certificate directory, generate a self-signed certificate with openssl (domain harbor.dawn.com, SAN covering both DNS and IP 11.0.1.122), edit harbor.yml to enable HTTPS on port 443, and reinstall with install.sh. Finally we use ss and curl to confirm that port 80 is automatically redirected to 443 and the WebUI is accessible. Self-signed certificates require client trust; in production, use a certificate issued by an official CA to avoid warnings.</description>
-    </item>
-    <item>
-      <title>Harbor High Availability: Implementing VIP Failover with keepalived</title>
-      <link>https://LMDAWN1127.github.io/en/posts/harbor-keepalived-vip/</link>
-      <pubDate>Thu, 29 Oct 2026 20:38:15 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/en/posts/harbor-keepalived-vip/</guid>
-      <description>This hands-on walkthrough builds a Harbor high-availability solution using keepalived for VIP failover. keepalived is installed on docker01 and docker02, a port-check script is created, and a VRRP instance sharing the virtual IP 11.0.1.250 is configured (docker01 as MASTER with priority 100, docker02 as BACKUP with priority 90). After verifying the VIP currently points to docker01&amp;rsquo;s Harbor, keepalived on docker01 is stopped manually to observe the VIP drift to docker02 and the Harbor service switch, proving the keepalived HA scheme works.</description>
-    </item>
-    <item>
-      <title>Migrating Images from docker registry to Harbor and Syncing Between Two Harbors</title>
-      <link>https://LMDAWN1127.github.io/en/posts/docker-registry-to-harbor-migration/</link>
-      <pubDate>Thu, 29 Oct 2026 20:04:45 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/en/posts/docker-registry-to-harbor-migration/</guid>
-      <description>This hands-on walkthrough migrates images from a docker registry into a Harbor registry and syncs images between two Harbor instances. Part 1 uses Harbor&amp;rsquo;s pull replication rule to sync the &lt;code&gt;dawn-games/**&lt;/code&gt; images from the registry into a local Harbor project. Part 2 deploys Harbor on both the docker01 and docker02 nodes, then configures a Harbor-to-Harbor pull-mode replication rule to achieve two-Harbor image sync, finally modifying the client daemon.json and verifying.</description>
-    </item>
-    <item>
-      <title>Building a Custom Image Without a Base Image: Using scratch</title>
-      <link>https://LMDAWN1127.github.io/en/posts/docker-scratch-custom-image/</link>
-      <pubDate>Thu, 29 Oct 2026 18:28:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/en/posts/docker-scratch-custom-image/</guid>
-      <description>scratch is a reserved name in Docker; when used as the base image in FROM it means no image is referenced, building a minimal image that contains only its own rootfs from scratch. This hands-on walkthrough downloads a third-party busybox root filesystem, injects a custom /etc/os-release, repackages it, writes a FROM scratch Dockerfile and docker-compose, builds and pushes the image to a Harbor registry, then pulls it from another host, starts the container, and verifies os-release and networking.</description>
-    </item>
-    <item>
-      <title>Hands-on with Private Image Registries: docker registry and VMware Harbor</title>
-      <link>https://LMDAWN1127.github.io/en/posts/docker-harbor-private-registry/</link>
-      <pubDate>Thu, 29 Oct 2026 15:09:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/en/posts/docker-harbor-private-registry/</guid>
-      <description>Build two private image registries from scratch: first use the lightweight docker registry to complete image deployment, push, pull, and delete (including manually deleting metadata + GC to reclaim storage); then deploy the enterprise-grade VMware Harbor (HTTP mode), demonstrating hosts resolution, insecure-registries configuration, creating a project, three docker login methods, and the full image push/pull/delete flow; finally summarize the differences between registry and Harbor in size, deployment, WebUI, project management, deletion, and use cases with a comparison table.</description>
-    </item>
-    <item>
-      <title>Building Multi-Service Images and Starting Containers with docker-compose</title>
-      <link>https://LMDAWN1127.github.io/en/posts/docker-compose-multi-service/</link>
-      <pubDate>Thu, 29 Oct 2026 13:30:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/en/posts/docker-compose-multi-service/</guid>
-      <description>Through a docker-compose case, demonstrate how to use a single YAML file to orchestrate image builds and container management for two HTML5 game services (doudizhu and motuo): write the compose file (build context + each service&amp;rsquo;s Dockerfile) together with nginx virtual hosts and a startup script, use docker-compose build to compile both images in one go, up -d to start in the background, ps/stop/start/restart/down to manage the lifecycle, then configure a fixed port with restart: always and a random port and verify access and the restart policy, and finally provide a reference table of common commands.</description>
-    </item>
-    <item>
-      <title>Hands-on with Multi-Stage Dockerfile Builds</title>
-      <link>https://LMDAWN1127.github.io/en/posts/docker-dockerfile-multistage-build/</link>
-      <pubDate>Thu, 29 Oct 2026 12:24:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/en/posts/docker-dockerfile-multistage-build/</guid>
-      <description>Demonstrate how multi-stage builds (Multi-Stage Build) drastically shrink Docker image size: Part 1 builds v3.0 with three FROM stages (xixi/haha/final); the 24MB/2048MB large files generated by the first two stages do not enter the final image, which only COPYs two small logs (7.8MB). Part 2 uses Golang as an example: stage one compiles the hello binary with the Go SDK, stage two only COPYs the binary with COPY &amp;ndash;from=0, yielding v3.2 at just 9.71MB versus 259MB for the single-stage v3.1, proving the slim multi-stage image is fully usable.</description>
-    </item>
-    <item>
-      <title>Hands-on with the Dockerfile ONBUILD Instruction</title>
-      <link>https://LMDAWN1127.github.io/en/posts/docker-dockerfile-onbuild-instruction/</link>
-      <pubDate>Thu, 29 Oct 2026 11:00:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/en/posts/docker-dockerfile-onbuild-instruction/</guid>
-      <description>Use the You_Jump_I_Jump game image to demonstrate the Dockerfile ONBUILD instruction: understand its delayed-trigger mechanism (the defined instructions are not executed when the current image is built; they are only triggered automatically when another image uses this image as its base), write a base image Dockerfile containing two ONBUILD instructions (RUN to create directories/logs, LABEL to add the blog URL) and a child image Dockerfile, then after building v2.19/v2.20 compare OnBuild and Labels with docker inspect and compare the filesystem differences with containers, and finally explain how to use -f to specify multiple Dockerfiles to build different images.</description>
-    </item>
-    <item>
-      <title>Dockerfile: Running Containers as a Non-Root User (USER Instruction)</title>
-      <link>https://LMDAWN1127.github.io/en/posts/docker-dockerfile-user-instruction/</link>
-      <pubDate>Thu, 29 Oct 2026 10:47:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/en/posts/docker-dockerfile-user-instruction/</guid>
-      <description>Use the Space Huggers game to demonstrate how to run a container as the non-root user dawn (uid 2025) with the Dockerfile USER instruction: first understand the directory/file ownership adjustments needed for nginx to run as a non-root user, then write the Dockerfile (chown system directories before switching to USER dawn), the nginx config (user dawn), and the startup script (nginx in background + tail to block), build the image and verify the process user, container configuration, access and health status, and finally compare the permission boundary where a non-root user can start nginx but cannot start sshd.</description>
-    </item>
-    <item>
-      <title>Dockerfile Core Instructions in Practice: WORKDIR/EXPOSE/VOLUME, ENV/ARG, HEALTHCHECK, ENTRYPOINT</title>
-      <link>https://LMDAWN1127.github.io/en/posts/docker-dockerfile-core-instructions/</link>
-      <pubDate>Wed, 28 Oct 2026 21:41:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/en/posts/docker-dockerfile-core-instructions/</guid>
-      <description>Use 4 web games to demonstrate 7 core Dockerfile instructions in full: the working directory, port exposure and persistence effects of WORKDIR/EXPOSE/VOLUME; the difference between ENV and ARG at build time vs. run time and how to override them; the HEALTHCHECK health-status transitions; and the non-overridable/overridable distinction between ENTRYPOINT and CMD plus the argument-passing mechanism.</description>
-    </item>
-    <item>
-      <title>Docker in Practice: Tag Images with MAINTAINER and LABEL, and Inspect Metadata</title>
-      <link>https://LMDAWN1127.github.io/en/posts/docker-image-tag-maintainer-label-metadata/</link>
-      <pubDate>Wed, 28 Oct 2026 19:40:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/en/posts/docker-image-tag-maintainer-label-metadata/</guid>
-      <description>Using a real dawn-games image, demonstrate writing author/school/email metadata into the Dockerfile with the deprecated MAINTAINER and the officially recommended LABEL, then reading .Author and .Config.Labels back with docker image inspect -f to verify, and starting the container with &amp;ndash;network host to access over the host network. Includes a screenshot.</description>
-    </item>
-    <item>
-      <title>Docker in Practice: Dockerfile Optimization Tips and Container Startup Techniques</title>
-      <link>https://LMDAWN1127.github.io/en/posts/docker-dockerfile-optimization-and-run-tips/</link>
-      <pubDate>Wed, 28 Oct 2026 19:30:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/en/posts/docker-dockerfile-optimization-and-run-tips/</guid>
-      <description>A practical roundup of Docker efficiency tips: build-side image layer caching (Using cache) and .dockerignore to shrink a 1GB build context to &lt;del&gt;1.6MB; runtime tricks docker exec -w for the working directory, anonymous volume host paths (/var/lib/docker/volumes/&lt;hash&gt;/_data), and -p :80 random port mapping (32768&lt;/del&gt;60999).</description>
-    </item>
-    <item>
-      <title>Docker in Practice: Building Docker Images Manually and Automatically with a Dockerfile</title>
-      <link>https://LMDAWN1127.github.io/en/posts/docker-image-manual-and-dockerfile/</link>
-      <pubDate>Wed, 28 Oct 2026 14:30:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/en/posts/docker-image-manual-and-dockerfile/</guid>
-      <description>Build the same nginx game image manually from three base images - CentOS, Ubuntu and Alpine - and commit it with docker commit (236MB / 215MB / 9.41MB), then rebuild it with a Dockerfile, and summarize the three drawbacks of the manual approach: oversized images, tedious startup-command changes, and no build cache.</description>
-    </item>
-    <item>
-      <title>Docker in Practice: The Difference Between docker exec and docker attach</title>
-      <link>https://LMDAWN1127.github.io/en/posts/docker-exec-vs-attach/</link>
-      <pubDate>Wed, 28 Oct 2026 12:30:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/en/posts/docker-exec-vs-attach/</guid>
-      <description>Use docker top to compare process trees and see the essential difference between docker exec and docker attach: exec spawns a new process inside the container, while attach only connects your local stdin/stdout/stderr to the container&amp;rsquo;s running main process. Also shows how to detach from attach with ctrl+p then ctrl+q without terminating the container.</description>
-    </item>
-    <item>
-      <title>Docker in Practice: A Detailed Look at Container States — Up / Exited / Created / Paused</title>
-      <link>https://LMDAWN1127.github.io/en/posts/docker-container-states/</link>
-      <pubDate>Wed, 28 Oct 2026 11:30:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/en/posts/docker-container-states/</guid>
-      <description>Reproduce how each of the four container states shown by docker ps is produced — Up, Exited (exit-code semantics: 0 = normal, 137 = SIGKILL), Created (created but not started), and Paused (suspended from serving, and unlike restart it does not reset the status timer).</description>
-    </item>
-    <item>
-      <title>Docker in Practice: Linux Namespace Network Isolation and CGroup Resource Limits</title>
-      <link>https://LMDAWN1127.github.io/en/posts/docker-namespace-cgroup-resource-limit/</link>
-      <pubDate>Wed, 28 Oct 2026 10:00:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/en/posts/docker-namespace-cgroup-resource-limit/</guid>
-      <description>Build a Linux network namespace by hand with ip netns, connect it to the outside world through a veth pair and NAT, then see how Docker containers share a net namespace; finally stress CPU and memory under cgroup v2 limits and reproduce an OOM kill, tying together the two low-level mechanisms behind containers: isolation (Namespace) and limits (CGroup).</description>
-    </item>
-    <item>
-      <title>Docker in Practice: Overlay Cross-Host Container Networking with a WordPress Case</title>
-      <link>https://LMDAWN1127.github.io/en/posts/docker-overlay-cross-host-networking/</link>
-      <pubDate>Tue, 27 Oct 2026 18:30:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/en/posts/docker-overlay-cross-host-networking/</guid>
-      <description>Initialize a Swarm cluster on two Docker hosts, create the attachable overlay network dawn-overlay, demonstrate cross-host container communication by IP and container name, verify Internet egress via docker_gwbridge, observe encapsulation by capturing VXLAN (UDP 4789) packets, and finish with a cross-host WordPress deployment.</description>
-    </item>
-    <item>
-      <title>Docker in Practice: macvlan for Cross-Host Container Networking</title>
-      <link>https://LMDAWN1127.github.io/en/posts/docker-macvlan-cross-host-networking/</link>
-      <pubDate>Tue, 27 Oct 2026 14:30:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/en/posts/docker-macvlan-cross-host-networking/</guid>
-      <description>Create same-subnet custom networks with the macvlan driver on two Docker hosts and demonstrate cross-host Layer-2 container connectivity; also cover the fix for macvlan&amp;rsquo;s default inability to reach the host or the Internet, and finish with a multi-node WordPress deployment.</description>
-    </item>
-    <item>
-      <title>Docker in Practice: Deploying Zabbix Monitoring and a WordPress App with Docker</title>
-      <link>https://LMDAWN1127.github.io/en/posts/docker-zabbix-wordpress-deployment/</link>
-      <pubDate>Tue, 27 Oct 2026 12:19:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/en/posts/docker-zabbix-wordpress-deployment/</guid>
-      <description>On a single host with a custom network, deploy the Zabbix stack (MySQL + Java gateway + Server + Web) and a WordPress app with docker run, including port mapping and persistent volumes.</description>
-    </item>
-    <item>
-      <title>Docker in Practice: Single-Host Network Types and Container Communication Options</title>
-      <link>https://LMDAWN1127.github.io/en/posts/docker-single-host-network/</link>
-      <pubDate>Tue, 27 Oct 2026 09:50:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/en/posts/docker-single-host-network/</guid>
-      <description>Docker single-host networking: the five network types none, bridge, host, container and custom, with hands-on examples, plus three container-to-container communication options - /etc/hosts resolution, &amp;ndash;link, and custom networks (including create, inspect, prune, custom subnets and manual IP assignment).</description>
-    </item>
-    <item>
-      <title>Docker in Practice: Container Isolation and Cross-Network Communication with Multiple Bridge Networks</title>
-      <link>https://LMDAWN1127.github.io/en/posts/docker-multi-bridge-network-isolation/</link>
-      <pubDate>Tue, 27 Oct 2026 08:00:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/en/posts/docker-multi-bridge-network-isolation/</guid>
-      <description>Using two custom Bridge networks, xixi and haha, this walkthrough demonstrates Docker&amp;rsquo;s default network isolation mechanism and shows how docker network connect/disconnect lets a container join or leave a network at runtime to achieve cross-network container communication.</description>
-    </item>
-    <item>
-      <title>Docker in Practice: OverlayFS Union Mounts and the Storage Driver Explained</title>
-      <link>https://LMDAWN1127.github.io/en/posts/docker-overlayfs-storage-driver/</link>
-      <pubDate>Mon, 26 Oct 2026 21:00:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/en/posts/docker-overlayfs-storage-driver/</guid>
-      <description>How the Docker OverlayFS storage driver works: the lower/upper/work directories and the LowerDir/Upperdir/MergedDir layers (including the init layer), and copy-on-write into the read-write layer; then a manual mount -t overlay demo of layering and read-only behavior, and finally docker run to confirm that a container is backed by overlay2.</description>
-    </item>
-    <item>
-      <title>Docker in Practice: Hand-Building a Minimal Container Root with chroot to Understand What a Container Is</title>
-      <link>https://LMDAWN1127.github.io/en/posts/docker-chroot-minimal-root/</link>
-      <pubDate>Mon, 26 Oct 2026 19:50:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/en/posts/docker-chroot-minimal-root/</guid>
-      <description>Without Docker commands, use chroot to hand-build a minimal container root from scratch (copying bash and its dynamic-library chain) to feel filesystem isolation; then show two independent roots make processes/data invisible to each other, and finally chroot into a real container&amp;rsquo;s overlay2 merged filesystem to fix files and read logs.</description>
-    </item>
-    <item>
-      <title>Docker in Practice: WordPress Multi-Node Deployment and Persistence Verification</title>
-      <link>https://LMDAWN1127.github.io/en/posts/docker-wordpress-multinode/</link>
-      <pubDate>Mon, 26 Oct 2026 16:30:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/en/posts/docker-wordpress-multinode/</guid>
-      <description>Deploy WordPress with Docker across two nodes (database and web separated), persist data with named volumes, then delete and recreate the containers to verify the published blog is not lost.</description>
-    </item>
-    <item>
-      <title>Docker in Practice: Building a Multi-Game Image with Dockerfile and ADD Auto-Extraction</title>
-      <link>https://LMDAWN1127.github.io/en/posts/docker-dockerfile-multi-game-image-add/</link>
-      <pubDate>Mon, 26 Oct 2026 15:20:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/en/posts/docker-dockerfile-multi-game-image-add/</guid>
-      <description>Copy the static files of two games (Gold Miner and Flappy Bird) out of an old all-in-one image dawn-games-dawn:v0.6 using a staging container, pack each into a tar.gz, then let the Dockerfile ADD instruction auto-extract them into an Alpine+nginx container at build time; finally build the image, start the container and visit both games by domain — plus the key difference between ADD and COPY: ADD auto-extracts tar.gz.</description>
-    </item>
-    <item>
-      <title>Docker in Practice: Container Data Persistence - bind Mounts and Volumes</title>
-      <link>https://LMDAWN1127.github.io/en/posts/docker-bind-mount-volume/</link>
-      <pubDate>Mon, 26 Oct 2026 15:00:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/en/posts/docker-bind-mount-volume/</guid>
-      <description>Mount host paths into containers with -v, share one mount point across containers, attach several mount points to a single container and set rw/ro permissions, then cover the whole docker volume workflow: create, inspect, delete, anonymous volumes and re-mounting a running container.</description>
-    </item>
-    <item>
-      <title>Docker in Practice: Container Lifecycle Management - Start, Stop and Restart Policies</title>
-      <link>https://LMDAWN1127.github.io/en/posts/docker-container-lifecycle/</link>
-      <pubDate>Mon, 26 Oct 2026 14:20:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/en/posts/docker-container-lifecycle/</guid>
-      <description>Walk through container lifecycle management: docker stop, start and restart plus custom startup commands, then the five restart policies - create five containers with different policies, kill them with kill -9 to compare restart counters, and see which ones come back after dockerd restarts.</description>
-    </item>
-    <item>
-      <title>Docker in Practice: Deploying Applications - Tomcat / MySQL / WordPress / ELK</title>
-      <link>https://LMDAWN1127.github.io/en/posts/docker-app-deployments/</link>
-      <pubDate>Mon, 26 Oct 2026 14:10:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/en/posts/docker-app-deployments/</guid>
-      <description>Deploy real applications with docker run: Tomcat, MySQL (including bulk 20-instance startup and multi-instance exposure), WordPress and the ElasticSearch + Kibana stack, with port mapping, persistent volumes and password/token setup.</description>
-    </item>
-    <item>
-      <title>Docker in Practice: Inspecting Container PID, ID and Network Info with inspect</title>
-      <link>https://LMDAWN1127.github.io/en/posts/docker-inspect-pid-id-network/</link>
-      <pubDate>Mon, 26 Oct 2026 13:00:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/en/posts/docker-inspect-pid-id-network/</guid>
-      <description>Use docker container inspect -f with Go templates to pull a container&amp;rsquo;s PID, ID, IP address, gateway and MAC address.</description>
-    </item>
-    <item>
-      <title>Docker in Practice: Nginx Load Balancing and Container Traffic Distribution</title>
-      <link>https://LMDAWN1127.github.io/en/posts/docker-nginx-load-balancing/</link>
-      <pubDate>Mon, 26 Oct 2026 11:50:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/en/posts/docker-nginx-load-balancing/</guid>
-      <description>Run an lb container plus two web containers, edit the Nginx default.conf on lb to reverse-proxy to web01/web02, then curl the lb 10 times to see the traffic alternate between the two backends.</description>
-    </item>
-    <item>
-      <title>Docker in Practice: The Full Flow of Pulling an Image and Starting a Container</title>
-      <link>https://LMDAWN1127.github.io/en/posts/docker-image-container-flow/</link>
-      <pubDate>Mon, 26 Oct 2026 10:20:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/en/posts/docker-image-container-flow/</guid>
-      <description>Walk through Docker&amp;rsquo;s three core objects in order — image registry, image, container: inspect the local registry list, pull an image from a remote registry, start a container, and run an access test.</description>
-    </item>
-    <item>
-      <title>Docker in Practice: Passing and Inspecting Environment Variables in Containers</title>
-      <link>https://LMDAWN1127.github.io/en/posts/docker-env-var-passing/</link>
-      <pubDate>Fri, 23 Oct 2026 17:26:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/en/posts/docker-env-var-passing/</guid>
-      <description>How to pass environment variables into a container with -e and how to inspect them afterwards with docker exec &lt;container&gt; env.</description>
-    </item>
-    <item>
-      <title>Docker in Practice: Image Migration - Offline save/load Transfer and Tagging</title>
-      <link>https://LMDAWN1127.github.io/en/posts/docker-image-migration-tag/</link>
-      <pubDate>Fri, 23 Oct 2026 15:24:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/en/posts/docker-image-migration-tag/</guid>
-      <description>Export an image with docker save, transfer it offline over SSH, verify integrity with md5sum, then import it with docker load and re-tag it. Shows that save/load preserves the IMAGE ID, how to export multiple images at once, two import forms, and two ways to batch-delete images.</description>
-    </item>
-    <item>
-      <title>Docker in Practice: How Port Mapping Works - From the veth NIC to iptables DNAT</title>
-      <link>https://LMDAWN1127.github.io/en/posts/docker-port-mapping-principle/</link>
-      <pubDate>Fri, 23 Oct 2026 15:22:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/en/posts/docker-port-mapping-principle/</guid>
-      <description>Observe how Docker maps a container port to the host: from the veth NIC and the docker0 bridge, to the iptables DNAT rules and the net.ipv4.ip_forward kernel switch that makes external access work.</description>
-    </item>
-    <item>
-      <title>Docker in Practice: Common Container Commands and exec Operations</title>
-      <link>https://LMDAWN1127.github.io/en/posts/docker-common-commands-exec/</link>
-      <pubDate>Fri, 23 Oct 2026 15:20:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/en/posts/docker-common-commands-exec/</guid>
-      <description>A roundup of everyday container commands (list/remove/rename containers, follow logs with -f/&amp;ndash;since/&amp;ndash;until, copy files with docker cp) plus running commands inside a running container with docker exec, including the gotcha that the target command must exist in the image.</description>
-    </item>
-    <item>
-      <title>Docker Installation in Practice: Binary Deployment and One-Click Script Deployment</title>
-      <link>https://LMDAWN1127.github.io/en/posts/docker-binary-script-install/</link>
-      <pubDate>Fri, 23 Oct 2026 12:30:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/en/posts/docker-binary-script-install/</guid>
-      <description>Install Docker three ways: via the apt package manager, from official static binaries (download/extract/copy/start), and with an automation script (install and uninstall). Also covers how to cleanly remove the binary install.</description>
-    </item>
-    <item>
-      <title>flannel in Action: Building Docker Cross-Host Container Networks from Scratch</title>
-      <link>https://LMDAWN1127.github.io/en/posts/flannel-network-lab/</link>
-      <pubDate>Wed, 21 May 2025 00:00:00 +0000</pubDate>
-      <guid>https://LMDAWN1127.github.io/en/posts/flannel-network-lab/</guid>
-      <description>&lt;h1 id=&#34;flannel-in-action-building-docker-cross-host-container-networks-from-scratch&#34;&gt;flannel in Action: Building Docker Cross-Host Container Networks from Scratch&lt;/h1&gt;
-&lt;h2 id=&#34;i-network-environment-planning&#34;&gt;I. Network Environment Planning&lt;/h2&gt;
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Docker on DAWN's Blog</title><link>https://LMDAWN1127.github.io/en/tags/docker/</link><description>Recent content in Docker on DAWN's Blog</description><image><title>DAWN's Blog</title><url>https://LMDAWN1127.github.io/images/DAWN.jpg</url><link>https://LMDAWN1127.github.io/images/DAWN.jpg</link></image><generator>Hugo</generator><language>en</language><lastBuildDate>Fri, 30 Oct 2026 10:31:00 +0800</lastBuildDate><atom:link href="https://LMDAWN1127.github.io/en/tags/docker/index.xml" rel="self" type="application/rss+xml"/><item><title>Harbor Active-Standby Deployment: From Installation to HTTPS and Replication</title><link>https://LMDAWN1127.github.io/en/posts/harbor-master-slave/</link><pubDate>Tue, 04 Aug 2026 00:00:00 +0000</pubDate><guid>https://LMDAWN1127.github.io/en/posts/harbor-master-slave/</guid><description>Complete guide to deploying Harbor enterprise Docker registry with active-standby architecture, HTTP/HTTPS modes, self-signed certificates, and cross-host replication.</description></item><item><title>Deploying containerd Runtime and Managing with runc/ctr in Practice</title><link>https://LMDAWN1127.github.io/en/posts/containerd-runc-ctr-management/</link><pubDate>Fri, 30 Oct 2026 10:31:00 +0800</pubDate><guid>https://LMDAWN1127.github.io/en/posts/containerd-runc-ctr-management/</guid><description>This hands-on walkthrough first uninstalls the Docker binaries on the docker02 node, then deploys the containerd 1.7.20 runtime (extracting cri-containerd-cni, installing the systemd unit, and editing config.toml to enable SystemdCgroup and replace the sandbox_image), and installs runc 1.1.12 along with the ctr client. It then demonstrates the full ctr workflow: pulling and tagging images, creating/starting/pausing/resuming/removing containers, namespace management, and pushing to and pulling from the docker01 Harbor (HTTP, non-TLS).</description></item><item><title>Harbor HTTPS Deployment with a Self-Signed Certificate</title><link>https://LMDAWN1127.github.io/en/posts/harbor-self-signed-https/</link><pubDate>Thu, 29 Oct 2026 20:57:00 +0800</pubDate><guid>https://LMDAWN1127.github.io/en/posts/harbor-self-signed-https/</guid><description>This hands-on walkthrough configures Harbor with HTTPS using a self-signed certificate. We create the certificate directory, generate a self-signed certificate with openssl (domain harbor.dawn.com, SAN covering both DNS and IP 11.0.1.122), edit harbor.yml to enable HTTPS on port 443, and reinstall with install.sh. Finally we use ss and curl to confirm that port 80 is automatically redirected to 443 and the WebUI is accessible. Self-signed certificates require client trust; in production, use a certificate issued by an official CA to avoid warnings.</description></item><item><title>Harbor High Availability: Implementing VIP Failover with keepalived</title><link>https://LMDAWN1127.github.io/en/posts/harbor-keepalived-vip/</link><pubDate>Thu, 29 Oct 2026 20:38:15 +0800</pubDate><guid>https://LMDAWN1127.github.io/en/posts/harbor-keepalived-vip/</guid><description>This hands-on walkthrough builds a Harbor high-availability solution using keepalived for VIP failover. keepalived is installed on docker01 and docker02, a port-check script is created, and a VRRP instance sharing the virtual IP 11.0.1.250 is configured (docker01 as MASTER with priority 100, docker02 as BACKUP with priority 90). After verifying the VIP currently points to docker01&amp;rsquo;s Harbor, keepalived on docker01 is stopped manually to observe the VIP drift to docker02 and the Harbor service switch, proving the keepalived HA scheme works.</description></item><item><title>Migrating Images from docker registry to Harbor and Syncing Between Two Harbors</title><link>https://LMDAWN1127.github.io/en/posts/docker-registry-to-harbor-migration/</link><pubDate>Thu, 29 Oct 2026 20:04:45 +0800</pubDate><guid>https://LMDAWN1127.github.io/en/posts/docker-registry-to-harbor-migration/</guid><description>This hands-on walkthrough migrates images from a docker registry into a Harbor registry and syncs images between two Harbor instances. Part 1 uses Harbor&amp;rsquo;s pull replication rule to sync the &lt;code&gt;dawn-games/**&lt;/code&gt; images from the registry into a local Harbor project. Part 2 deploys Harbor on both the docker01 and docker02 nodes, then configures a Harbor-to-Harbor pull-mode replication rule to achieve two-Harbor image sync, finally modifying the client daemon.json and verifying.</description></item><item><title>Building a Custom Image Without a Base Image: Using scratch</title><link>https://LMDAWN1127.github.io/en/posts/docker-scratch-custom-image/</link><pubDate>Thu, 29 Oct 2026 18:28:00 +0800</pubDate><guid>https://LMDAWN1127.github.io/en/posts/docker-scratch-custom-image/</guid><description>scratch is a reserved name in Docker; when used as the base image in FROM it means no image is referenced, building a minimal image that contains only its own rootfs from scratch. This hands-on walkthrough downloads a third-party busybox root filesystem, injects a custom /etc/os-release, repackages it, writes a FROM scratch Dockerfile and docker-compose, builds and pushes the image to a Harbor registry, then pulls it from another host, starts the container, and verifies os-release and networking.</description></item><item><title>Hands-on with Private Image Registries: docker registry and VMware Harbor</title><link>https://LMDAWN1127.github.io/en/posts/docker-harbor-private-registry/</link><pubDate>Thu, 29 Oct 2026 15:09:00 +0800</pubDate><guid>https://LMDAWN1127.github.io/en/posts/docker-harbor-private-registry/</guid><description>Build two private image registries from scratch: first use the lightweight docker registry to complete image deployment, push, pull, and delete (including manually deleting metadata + GC to reclaim storage); then deploy the enterprise-grade VMware Harbor (HTTP mode), demonstrating hosts resolution, insecure-registries configuration, creating a project, three docker login methods, and the full image push/pull/delete flow; finally summarize the differences between registry and Harbor in size, deployment, WebUI, project management, deletion, and use cases with a comparison table.</description></item><item><title>Building Multi-Service Images and Starting Containers with docker-compose</title><link>https://LMDAWN1127.github.io/en/posts/docker-compose-multi-service/</link><pubDate>Thu, 29 Oct 2026 13:30:00 +0800</pubDate><guid>https://LMDAWN1127.github.io/en/posts/docker-compose-multi-service/</guid><description>Through a docker-compose case, demonstrate how to use a single YAML file to orchestrate image builds and container management for two HTML5 game services (doudizhu and motuo): write the compose file (build context + each service&amp;rsquo;s Dockerfile) together with nginx virtual hosts and a startup script, use docker-compose build to compile both images in one go, up -d to start in the background, ps/stop/start/restart/down to manage the lifecycle, then configure a fixed port with restart: always and a random port and verify access and the restart policy, and finally provide a reference table of common commands.</description></item><item><title>Hands-on with Multi-Stage Dockerfile Builds</title><link>https://LMDAWN1127.github.io/en/posts/docker-dockerfile-multistage-build/</link><pubDate>Thu, 29 Oct 2026 12:24:00 +0800</pubDate><guid>https://LMDAWN1127.github.io/en/posts/docker-dockerfile-multistage-build/</guid><description>Demonstrate how multi-stage builds (Multi-Stage Build) drastically shrink Docker image size: Part 1 builds v3.0 with three FROM stages (xixi/haha/final); the 24MB/2048MB large files generated by the first two stages do not enter the final image, which only COPYs two small logs (7.8MB). Part 2 uses Golang as an example: stage one compiles the hello binary with the Go SDK, stage two only COPYs the binary with COPY &amp;ndash;from=0, yielding v3.2 at just 9.71MB versus 259MB for the single-stage v3.1, proving the slim multi-stage image is fully usable.</description></item><item><title>Hands-on with the Dockerfile ONBUILD Instruction</title><link>https://LMDAWN1127.github.io/en/posts/docker-dockerfile-onbuild-instruction/</link><pubDate>Thu, 29 Oct 2026 11:00:00 +0800</pubDate><guid>https://LMDAWN1127.github.io/en/posts/docker-dockerfile-onbuild-instruction/</guid><description>Use the You_Jump_I_Jump game image to demonstrate the Dockerfile ONBUILD instruction: understand its delayed-trigger mechanism (the defined instructions are not executed when the current image is built; they are only triggered automatically when another image uses this image as its base), write a base image Dockerfile containing two ONBUILD instructions (RUN to create directories/logs, LABEL to add the blog URL) and a child image Dockerfile, then after building v2.19/v2.20 compare OnBuild and Labels with docker inspect and compare the filesystem differences with containers, and finally explain how to use -f to specify multiple Dockerfiles to build different images.</description></item><item><title>Dockerfile: Running Containers as a Non-Root User (USER Instruction)</title><link>https://LMDAWN1127.github.io/en/posts/docker-dockerfile-user-instruction/</link><pubDate>Thu, 29 Oct 2026 10:47:00 +0800</pubDate><guid>https://LMDAWN1127.github.io/en/posts/docker-dockerfile-user-instruction/</guid><description>Use the Space Huggers game to demonstrate how to run a container as the non-root user dawn (uid 2025) with the Dockerfile USER instruction: first understand the directory/file ownership adjustments needed for nginx to run as a non-root user, then write the Dockerfile (chown system directories before switching to USER dawn), the nginx config (user dawn), and the startup script (nginx in background + tail to block), build the image and verify the process user, container configuration, access and health status, and finally compare the permission boundary where a non-root user can start nginx but cannot start sshd.</description></item><item><title>Dockerfile Core Instructions in Practice: WORKDIR/EXPOSE/VOLUME, ENV/ARG, HEALTHCHECK, ENTRYPOINT</title><link>https://LMDAWN1127.github.io/en/posts/docker-dockerfile-core-instructions/</link><pubDate>Wed, 28 Oct 2026 21:41:00 +0800</pubDate><guid>https://LMDAWN1127.github.io/en/posts/docker-dockerfile-core-instructions/</guid><description>Use 4 web games to demonstrate 7 core Dockerfile instructions in full: the working directory, port exposure and persistence effects of WORKDIR/EXPOSE/VOLUME; the difference between ENV and ARG at build time vs. run time and how to override them; the HEALTHCHECK health-status transitions; and the non-overridable/overridable distinction between ENTRYPOINT and CMD plus the argument-passing mechanism.</description></item><item><title>Docker in Practice: Tag Images with MAINTAINER and LABEL, and Inspect Metadata</title><link>https://LMDAWN1127.github.io/en/posts/docker-image-tag-maintainer-label-metadata/</link><pubDate>Wed, 28 Oct 2026 19:40:00 +0800</pubDate><guid>https://LMDAWN1127.github.io/en/posts/docker-image-tag-maintainer-label-metadata/</guid><description>Using a real dawn-games image, demonstrate writing author/school/email metadata into the Dockerfile with the deprecated MAINTAINER and the officially recommended LABEL, then reading .Author and .Config.Labels back with docker image inspect -f to verify, and starting the container with &amp;ndash;network host to access over the host network. Includes a screenshot.</description></item><item><title>Docker in Practice: Dockerfile Optimization Tips and Container Startup Techniques</title><link>https://LMDAWN1127.github.io/en/posts/docker-dockerfile-optimization-and-run-tips/</link><pubDate>Wed, 28 Oct 2026 19:30:00 +0800</pubDate><guid>https://LMDAWN1127.github.io/en/posts/docker-dockerfile-optimization-and-run-tips/</guid><description>A practical roundup of Docker efficiency tips: build-side image layer caching (Using cache) and .dockerignore to shrink a 1GB build context to &lt;del&gt;1.6MB; runtime tricks docker exec -w for the working directory, anonymous volume host paths (/var/lib/docker/volumes/&lt;hash&gt;/_data), and -p :80 random port mapping (32768&lt;/del&gt;60999).</description></item><item><title>Docker in Practice: Building Docker Images Manually and Automatically with a Dockerfile</title><link>https://LMDAWN1127.github.io/en/posts/docker-image-manual-and-dockerfile/</link><pubDate>Wed, 28 Oct 2026 14:30:00 +0800</pubDate><guid>https://LMDAWN1127.github.io/en/posts/docker-image-manual-and-dockerfile/</guid><description>Build the same nginx game image manually from three base images - CentOS, Ubuntu and Alpine - and commit it with docker commit (236MB / 215MB / 9.41MB), then rebuild it with a Dockerfile, and summarize the three drawbacks of the manual approach: oversized images, tedious startup-command changes, and no build cache.</description></item><item><title>Docker in Practice: The Difference Between docker exec and docker attach</title><link>https://LMDAWN1127.github.io/en/posts/docker-exec-vs-attach/</link><pubDate>Wed, 28 Oct 2026 12:30:00 +0800</pubDate><guid>https://LMDAWN1127.github.io/en/posts/docker-exec-vs-attach/</guid><description>Use docker top to compare process trees and see the essential difference between docker exec and docker attach: exec spawns a new process inside the container, while attach only connects your local stdin/stdout/stderr to the container&amp;rsquo;s running main process. Also shows how to detach from attach with ctrl+p then ctrl+q without terminating the container.</description></item><item><title>Docker in Practice: A Detailed Look at Container States — Up / Exited / Created / Paused</title><link>https://LMDAWN1127.github.io/en/posts/docker-container-states/</link><pubDate>Wed, 28 Oct 2026 11:30:00 +0800</pubDate><guid>https://LMDAWN1127.github.io/en/posts/docker-container-states/</guid><description>Reproduce how each of the four container states shown by docker ps is produced — Up, Exited (exit-code semantics: 0 = normal, 137 = SIGKILL), Created (created but not started), and Paused (suspended from serving, and unlike restart it does not reset the status timer).</description></item><item><title>Docker in Practice: Linux Namespace Network Isolation and CGroup Resource Limits</title><link>https://LMDAWN1127.github.io/en/posts/docker-namespace-cgroup-resource-limit/</link><pubDate>Wed, 28 Oct 2026 10:00:00 +0800</pubDate><guid>https://LMDAWN1127.github.io/en/posts/docker-namespace-cgroup-resource-limit/</guid><description>Build a Linux network namespace by hand with ip netns, connect it to the outside world through a veth pair and NAT, then see how Docker containers share a net namespace; finally stress CPU and memory under cgroup v2 limits and reproduce an OOM kill, tying together the two low-level mechanisms behind containers: isolation (Namespace) and limits (CGroup).</description></item><item><title>Docker in Practice: Overlay Cross-Host Container Networking with a WordPress Case</title><link>https://LMDAWN1127.github.io/en/posts/docker-overlay-cross-host-networking/</link><pubDate>Tue, 27 Oct 2026 18:30:00 +0800</pubDate><guid>https://LMDAWN1127.github.io/en/posts/docker-overlay-cross-host-networking/</guid><description>Initialize a Swarm cluster on two Docker hosts, create the attachable overlay network dawn-overlay, demonstrate cross-host container communication by IP and container name, verify Internet egress via docker_gwbridge, observe encapsulation by capturing VXLAN (UDP 4789) packets, and finish with a cross-host WordPress deployment.</description></item><item><title>Docker in Practice: macvlan for Cross-Host Container Networking</title><link>https://LMDAWN1127.github.io/en/posts/docker-macvlan-cross-host-networking/</link><pubDate>Tue, 27 Oct 2026 14:30:00 +0800</pubDate><guid>https://LMDAWN1127.github.io/en/posts/docker-macvlan-cross-host-networking/</guid><description>Create same-subnet custom networks with the macvlan driver on two Docker hosts and demonstrate cross-host Layer-2 container connectivity; also cover the fix for macvlan&amp;rsquo;s default inability to reach the host or the Internet, and finish with a multi-node WordPress deployment.</description></item><item><title>Docker in Practice: Deploying Zabbix Monitoring and a WordPress App with Docker</title><link>https://LMDAWN1127.github.io/en/posts/docker-zabbix-wordpress-deployment/</link><pubDate>Tue, 27 Oct 2026 12:19:00 +0800</pubDate><guid>https://LMDAWN1127.github.io/en/posts/docker-zabbix-wordpress-deployment/</guid><description>On a single host with a custom network, deploy the Zabbix stack (MySQL + Java gateway + Server + Web) and a WordPress app with docker run, including port mapping and persistent volumes.</description></item><item><title>Docker in Practice: Single-Host Network Types and Container Communication Options</title><link>https://LMDAWN1127.github.io/en/posts/docker-single-host-network/</link><pubDate>Tue, 27 Oct 2026 09:50:00 +0800</pubDate><guid>https://LMDAWN1127.github.io/en/posts/docker-single-host-network/</guid><description>Docker single-host networking: the five network types none, bridge, host, container and custom, with hands-on examples, plus three container-to-container communication options - /etc/hosts resolution, &amp;ndash;link, and custom networks (including create, inspect, prune, custom subnets and manual IP assignment).</description></item><item><title>Docker in Practice: Container Isolation and Cross-Network Communication with Multiple Bridge Networks</title><link>https://LMDAWN1127.github.io/en/posts/docker-multi-bridge-network-isolation/</link><pubDate>Tue, 27 Oct 2026 08:00:00 +0800</pubDate><guid>https://LMDAWN1127.github.io/en/posts/docker-multi-bridge-network-isolation/</guid><description>Using two custom Bridge networks, xixi and haha, this walkthrough demonstrates Docker&amp;rsquo;s default network isolation mechanism and shows how docker network connect/disconnect lets a container join or leave a network at runtime to achieve cross-network container communication.</description></item><item><title>Docker in Practice: OverlayFS Union Mounts and the Storage Driver Explained</title><link>https://LMDAWN1127.github.io/en/posts/docker-overlayfs-storage-driver/</link><pubDate>Mon, 26 Oct 2026 21:00:00 +0800</pubDate><guid>https://LMDAWN1127.github.io/en/posts/docker-overlayfs-storage-driver/</guid><description>How the Docker OverlayFS storage driver works: the lower/upper/work directories and the LowerDir/Upperdir/MergedDir layers (including the init layer), and copy-on-write into the read-write layer; then a manual mount -t overlay demo of layering and read-only behavior, and finally docker run to confirm that a container is backed by overlay2.</description></item><item><title>Docker in Practice: Hand-Building a Minimal Container Root with chroot to Understand What a Container Is</title><link>https://LMDAWN1127.github.io/en/posts/docker-chroot-minimal-root/</link><pubDate>Mon, 26 Oct 2026 19:50:00 +0800</pubDate><guid>https://LMDAWN1127.github.io/en/posts/docker-chroot-minimal-root/</guid><description>Without Docker commands, use chroot to hand-build a minimal container root from scratch (copying bash and its dynamic-library chain) to feel filesystem isolation; then show two independent roots make processes/data invisible to each other, and finally chroot into a real container&amp;rsquo;s overlay2 merged filesystem to fix files and read logs.</description></item><item><title>Docker in Practice: WordPress Multi-Node Deployment and Persistence Verification</title><link>https://LMDAWN1127.github.io/en/posts/docker-wordpress-multinode/</link><pubDate>Mon, 26 Oct 2026 16:30:00 +0800</pubDate><guid>https://LMDAWN1127.github.io/en/posts/docker-wordpress-multinode/</guid><description>Deploy WordPress with Docker across two nodes (database and web separated), persist data with named volumes, then delete and recreate the containers to verify the published blog is not lost.</description></item><item><title>Docker in Practice: Building a Multi-Game Image with Dockerfile and ADD Auto-Extraction</title><link>https://LMDAWN1127.github.io/en/posts/docker-dockerfile-multi-game-image-add/</link><pubDate>Mon, 26 Oct 2026 15:20:00 +0800</pubDate><guid>https://LMDAWN1127.github.io/en/posts/docker-dockerfile-multi-game-image-add/</guid><description>Copy the static files of two games (Gold Miner and Flappy Bird) out of an old all-in-one image dawn-games-dawn:v0.6 using a staging container, pack each into a tar.gz, then let the Dockerfile ADD instruction auto-extract them into an Alpine+nginx container at build time; finally build the image, start the container and visit both games by domain — plus the key difference between ADD and COPY: ADD auto-extracts tar.gz.</description></item><item><title>Docker in Practice: Container Data Persistence - bind Mounts and Volumes</title><link>https://LMDAWN1127.github.io/en/posts/docker-bind-mount-volume/</link><pubDate>Mon, 26 Oct 2026 15:00:00 +0800</pubDate><guid>https://LMDAWN1127.github.io/en/posts/docker-bind-mount-volume/</guid><description>Mount host paths into containers with -v, share one mount point across containers, attach several mount points to a single container and set rw/ro permissions, then cover the whole docker volume workflow: create, inspect, delete, anonymous volumes and re-mounting a running container.</description></item><item><title>Docker in Practice: Container Lifecycle Management - Start, Stop and Restart Policies</title><link>https://LMDAWN1127.github.io/en/posts/docker-container-lifecycle/</link><pubDate>Mon, 26 Oct 2026 14:20:00 +0800</pubDate><guid>https://LMDAWN1127.github.io/en/posts/docker-container-lifecycle/</guid><description>Walk through container lifecycle management: docker stop, start and restart plus custom startup commands, then the five restart policies - create five containers with different policies, kill them with kill -9 to compare restart counters, and see which ones come back after dockerd restarts.</description></item><item><title>Docker in Practice: Deploying Applications - Tomcat / MySQL / WordPress / ELK</title><link>https://LMDAWN1127.github.io/en/posts/docker-app-deployments/</link><pubDate>Mon, 26 Oct 2026 14:10:00 +0800</pubDate><guid>https://LMDAWN1127.github.io/en/posts/docker-app-deployments/</guid><description>Deploy real applications with docker run: Tomcat, MySQL (including bulk 20-instance startup and multi-instance exposure), WordPress and the ElasticSearch + Kibana stack, with port mapping, persistent volumes and password/token setup.</description></item><item><title>Docker in Practice: Inspecting Container PID, ID and Network Info with inspect</title><link>https://LMDAWN1127.github.io/en/posts/docker-inspect-pid-id-network/</link><pubDate>Mon, 26 Oct 2026 13:00:00 +0800</pubDate><guid>https://LMDAWN1127.github.io/en/posts/docker-inspect-pid-id-network/</guid><description>Use docker container inspect -f with Go templates to pull a container&amp;rsquo;s PID, ID, IP address, gateway and MAC address.</description></item><item><title>Docker in Practice: Nginx Load Balancing and Container Traffic Distribution</title><link>https://LMDAWN1127.github.io/en/posts/docker-nginx-load-balancing/</link><pubDate>Mon, 26 Oct 2026 11:50:00 +0800</pubDate><guid>https://LMDAWN1127.github.io/en/posts/docker-nginx-load-balancing/</guid><description>Run an lb container plus two web containers, edit the Nginx default.conf on lb to reverse-proxy to web01/web02, then curl the lb 10 times to see the traffic alternate between the two backends.</description></item><item><title>Docker in Practice: The Full Flow of Pulling an Image and Starting a Container</title><link>https://LMDAWN1127.github.io/en/posts/docker-image-container-flow/</link><pubDate>Mon, 26 Oct 2026 10:20:00 +0800</pubDate><guid>https://LMDAWN1127.github.io/en/posts/docker-image-container-flow/</guid><description>Walk through Docker&amp;rsquo;s three core objects in order — image registry, image, container: inspect the local registry list, pull an image from a remote registry, start a container, and run an access test.</description></item><item><title>Docker in Practice: Passing and Inspecting Environment Variables in Containers</title><link>https://LMDAWN1127.github.io/en/posts/docker-env-var-passing/</link><pubDate>Fri, 23 Oct 2026 17:26:00 +0800</pubDate><guid>https://LMDAWN1127.github.io/en/posts/docker-env-var-passing/</guid><description>How to pass environment variables into a container with -e and how to inspect them afterwards with docker exec &lt;container&gt; env.</description></item><item><title>Docker in Practice: Image Migration - Offline save/load Transfer and Tagging</title><link>https://LMDAWN1127.github.io/en/posts/docker-image-migration-tag/</link><pubDate>Fri, 23 Oct 2026 15:24:00 +0800</pubDate><guid>https://LMDAWN1127.github.io/en/posts/docker-image-migration-tag/</guid><description>Export an image with docker save, transfer it offline over SSH, verify integrity with md5sum, then import it with docker load and re-tag it. Shows that save/load preserves the IMAGE ID, how to export multiple images at once, two import forms, and two ways to batch-delete images.</description></item><item><title>Docker in Practice: How Port Mapping Works - From the veth NIC to iptables DNAT</title><link>https://LMDAWN1127.github.io/en/posts/docker-port-mapping-principle/</link><pubDate>Fri, 23 Oct 2026 15:22:00 +0800</pubDate><guid>https://LMDAWN1127.github.io/en/posts/docker-port-mapping-principle/</guid><description>Observe how Docker maps a container port to the host: from the veth NIC and the docker0 bridge, to the iptables DNAT rules and the net.ipv4.ip_forward kernel switch that makes external access work.</description></item><item><title>Docker in Practice: Common Container Commands and exec Operations</title><link>https://LMDAWN1127.github.io/en/posts/docker-common-commands-exec/</link><pubDate>Fri, 23 Oct 2026 15:20:00 +0800</pubDate><guid>https://LMDAWN1127.github.io/en/posts/docker-common-commands-exec/</guid><description>A roundup of everyday container commands (list/remove/rename containers, follow logs with -f/&amp;ndash;since/&amp;ndash;until, copy files with docker cp) plus running commands inside a running container with docker exec, including the gotcha that the target command must exist in the image.</description></item><item><title>Docker Installation in Practice: Binary Deployment and One-Click Script Deployment</title><link>https://LMDAWN1127.github.io/en/posts/docker-binary-script-install/</link><pubDate>Fri, 23 Oct 2026 12:30:00 +0800</pubDate><guid>https://LMDAWN1127.github.io/en/posts/docker-binary-script-install/</guid><description>Install Docker three ways: via the apt package manager, from official static binaries (download/extract/copy/start), and with an automation script (install and uninstall). Also covers how to cleanly remove the binary install.</description></item><item><title>flannel in Action: Building Docker Cross-Host Container Networks from Scratch</title><link>https://LMDAWN1127.github.io/en/posts/flannel-network-lab/</link><pubDate>Wed, 21 May 2025 00:00:00 +0000</pubDate><guid>https://LMDAWN1127.github.io/en/posts/flannel-network-lab/</guid><description>&lt;h1 id="flannel-in-action-building-docker-cross-host-container-networks-from-scratch"&gt;flannel in Action: Building Docker Cross-Host Container Networks from Scratch&lt;/h1&gt;
+&lt;h2 id="i-network-environment-planning"&gt;I. Network Environment Planning&lt;/h2&gt;
 &lt;ol&gt;
 &lt;li&gt;etcd host IP: 192.168.8.88 hostname: docker-network&lt;/li&gt;
 &lt;li&gt;Host1 IP: 192.168.8.188 hostname: web01&lt;/li&gt;
 &lt;li&gt;Host2 IP: 192.168.8.99 hostname: web02&lt;/li&gt;
 &lt;/ol&gt;
-&lt;h2 id=&#34;ii-etcd-host-configuration&#34;&gt;II. etcd Host Configuration&lt;/h2&gt;
-&lt;h3 id=&#34;step-1-download-and-extract-etcd&#34;&gt;Step 1: Download and Extract etcd&lt;/h3&gt;
+&lt;h2 id="ii-etcd-host-configuration"&gt;II. etcd Host Configuration&lt;/h2&gt;
+&lt;h3 id="step-1-download-and-extract-etcd"&gt;Step 1: Download and Extract etcd&lt;/h3&gt;
 &lt;ol&gt;
 &lt;li&gt;Download etcd-v3.6.0-linux-amd64.tar.gz package from github.com&lt;/li&gt;
 &lt;li&gt;Copy the package to the etcd host /root directory and extract:&lt;/li&gt;
 &lt;/ol&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;
-&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;1
+&lt;div class="highlight"&gt;&lt;div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;
+&lt;table style="border-spacing:0;padding:0;margin:0;border:0;"&gt;&lt;tr&gt;&lt;td style="vertical-align:top;padding:0;margin:0;border:0;"&gt;
+&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code&gt;&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"&gt;1
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;root@docker-network ~&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# tar -zxvf etcd-v3.6.0-linux-amd64.tar.gz&lt;/span&gt;
+&lt;td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%"&gt;
+&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;[&lt;/span&gt;root@docker-network ~&lt;span style="color:#f92672"&gt;]&lt;/span&gt;&lt;span style="color:#75715e"&gt;# tar -zxvf etcd-v3.6.0-linux-amd64.tar.gz&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;h3 id=&#34;step-2-install-etcd-executable-files&#34;&gt;Step 2: Install etcd Executable Files&lt;/h3&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;
-&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;1
-&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;2
+&lt;/div&gt;&lt;h3 id="step-2-install-etcd-executable-files"&gt;Step 2: Install etcd Executable Files&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;
+&lt;table style="border-spacing:0;padding:0;margin:0;border:0;"&gt;&lt;tr&gt;&lt;td style="vertical-align:top;padding:0;margin:0;border:0;"&gt;
+&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code&gt;&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"&gt;1
+&lt;/span&gt;&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"&gt;2
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;root@docker-network ~&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# cd etcd-v3.6.0-linux-amd64&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;root@docker-network etcd-v3.6.0-linux-amd64&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# cp etcd* /usr/local/bin/&lt;/span&gt;
+&lt;td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%"&gt;
+&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;[&lt;/span&gt;root@docker-network ~&lt;span style="color:#f92672"&gt;]&lt;/span&gt;&lt;span style="color:#75715e"&gt;# cd etcd-v3.6.0-linux-amd64&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;[&lt;/span&gt;root@docker-network etcd-v3.6.0-linux-amd64&lt;span style="color:#f92672"&gt;]&lt;/span&gt;&lt;span style="color:#75715e"&gt;# cp etcd* /usr/local/bin/&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;h3 id=&#34;step-3-create-data-directory&#34;&gt;Step 3: Create Data Directory&lt;/h3&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;
-&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;1
+&lt;/div&gt;&lt;h3 id="step-3-create-data-directory"&gt;Step 3: Create Data Directory&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;
+&lt;table style="border-spacing:0;padding:0;margin:0;border:0;"&gt;&lt;tr&gt;&lt;td style="vertical-align:top;padding:0;margin:0;border:0;"&gt;
+&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code&gt;&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"&gt;1
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;root@docker-network ~&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# mkdir /var/lib/etcd&lt;/span&gt;
+&lt;td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%"&gt;
+&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;[&lt;/span&gt;root@docker-network ~&lt;span style="color:#f92672"&gt;]&lt;/span&gt;&lt;span style="color:#75715e"&gt;# mkdir /var/lib/etcd&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;h3 id=&#34;step-4-configure-and-start-etcd-service&#34;&gt;Step 4: Configure and Start etcd Service&lt;/h3&gt;
+&lt;/div&gt;&lt;h3 id="step-4-configure-and-start-etcd-service"&gt;Step 4: Configure and Start etcd Service&lt;/h3&gt;
 &lt;ol&gt;
 &lt;li&gt;Create etcd.service file:&lt;/li&gt;
 &lt;/ol&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;
-&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;1
+&lt;div class="highlight"&gt;&lt;div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;
+&lt;table style="border-spacing:0;padding:0;margin:0;border:0;"&gt;&lt;tr&gt;&lt;td style="vertical-align:top;padding:0;margin:0;border:0;"&gt;
+&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code&gt;&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"&gt;1
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;root@docker-network ~&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# vim /usr/lib/systemd/system/etcd.service&lt;/span&gt;
+&lt;td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%"&gt;
+&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;[&lt;/span&gt;root@docker-network ~&lt;span style="color:#f92672"&gt;]&lt;/span&gt;&lt;span style="color:#75715e"&gt;# vim /usr/lib/systemd/system/etcd.service&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;
-&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;1
-&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;2
-&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;3
-&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;4
-&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;5
-&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;6
+&lt;/div&gt;&lt;div class="highlight"&gt;&lt;div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;
+&lt;table style="border-spacing:0;padding:0;margin:0;border:0;"&gt;&lt;tr&gt;&lt;td style="vertical-align:top;padding:0;margin:0;border:0;"&gt;
+&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code&gt;&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"&gt;1
+&lt;/span&gt;&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"&gt;2
+&lt;/span&gt;&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"&gt;3
+&lt;/span&gt;&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"&gt;4
+&lt;/span&gt;&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"&gt;5
+&lt;/span&gt;&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"&gt;6
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-ini&#34; data-lang=&#34;ini&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;[Unit]&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;Description&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;etcd_service&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;[Service]&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;ExecStart&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;/usr/local/bin/etcd --name etcd1 --data-dir /var/lib/etcd --listen-client-urls http://192.168.8.88:2379,http://127.0.0.1:2379 --advertise-client-urls http://192.168.8.88:2379,http://127.0.0.1:2379&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;[Install]&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;WantedBy&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;multi-user.target&lt;/span&gt;
+&lt;td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%"&gt;
+&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-ini" data-lang="ini"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;[Unit]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#a6e22e"&gt;Description&lt;/span&gt;&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;etcd_service&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;[Service]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#a6e22e"&gt;ExecStart&lt;/span&gt;&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;/usr/local/bin/etcd --name etcd1 --data-dir /var/lib/etcd --listen-client-urls http://192.168.8.88:2379,http://127.0.0.1:2379 --advertise-client-urls http://192.168.8.88:2379,http://127.0.0.1:2379&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;[Install]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#a6e22e"&gt;WantedBy&lt;/span&gt;&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;multi-user.target&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;ol start=&#34;2&#34;&gt;
+&lt;/div&gt;&lt;ol start="2"&gt;
 &lt;li&gt;Reload system service configuration and start etcd:&lt;/li&gt;
 &lt;/ol&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;
-&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;1
-&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;2
-&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;3
+&lt;div class="highlight"&gt;&lt;div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;
+&lt;table style="border-spacing:0;padding:0;margin:0;border:0;"&gt;&lt;tr&gt;&lt;td style="vertical-align:top;padding:0;margin:0;border:0;"&gt;
+&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code&gt;&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"&gt;1
+&lt;/span&gt;&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"&gt;2
+&lt;/span&gt;&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"&gt;3
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;root@docker-network ~&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# systemctl daemon-reload&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;root@docker-network ~&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# systemctl enable etcd.service&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;root@docker-network ~&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# systemctl restart etcd.service&lt;/span&gt;
+&lt;td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%"&gt;
+&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;[&lt;/span&gt;root@docker-network ~&lt;span style="color:#f92672"&gt;]&lt;/span&gt;&lt;span style="color:#75715e"&gt;# systemctl daemon-reload&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;[&lt;/span&gt;root@docker-network ~&lt;span style="color:#f92672"&gt;]&lt;/span&gt;&lt;span style="color:#75715e"&gt;# systemctl enable etcd.service&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;[&lt;/span&gt;root@docker-network ~&lt;span style="color:#f92672"&gt;]&lt;/span&gt;&lt;span style="color:#75715e"&gt;# systemctl restart etcd.service&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;ol start=&#34;3&#34;&gt;
+&lt;/div&gt;&lt;ol start="3"&gt;
 &lt;li&gt;Verify etcd listening status:&lt;/li&gt;
 &lt;/ol&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;
-&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;1
-&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;2
-&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;3
+&lt;div class="highlight"&gt;&lt;div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;
+&lt;table style="border-spacing:0;padding:0;margin:0;border:0;"&gt;&lt;tr&gt;&lt;td style="vertical-align:top;padding:0;margin:0;border:0;"&gt;
+&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code&gt;&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"&gt;1
+&lt;/span&gt;&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"&gt;2
+&lt;/span&gt;&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"&gt;3
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;root@docker-network ~&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# netstat -tulnp |grep :2379&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;tcp        &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;      &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt; 192.168.8.88:2379       0.0.0.0:*               LISTEN      1912/etcd
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;tcp        &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;      &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt; 127.0.0.1:2379          0.0.0.0:*               LISTEN      1912/etcd
+&lt;td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%"&gt;
+&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;[&lt;/span&gt;root@docker-network ~&lt;span style="color:#f92672"&gt;]&lt;/span&gt;&lt;span style="color:#75715e"&gt;# netstat -tulnp |grep :2379&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;tcp &lt;span style="color:#ae81ff"&gt;0&lt;/span&gt; &lt;span style="color:#ae81ff"&gt;0&lt;/span&gt; 192.168.8.88:2379 0.0.0.0:* LISTEN 1912/etcd
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;tcp &lt;span style="color:#ae81ff"&gt;0&lt;/span&gt; &lt;span style="color:#ae81ff"&gt;0&lt;/span&gt; 127.0.0.1:2379 0.0.0.0:* LISTEN 1912/etcd
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;h3 id=&#34;step-5-add-flannel-network-configuration-to-etcd&#34;&gt;Step 5: Add flannel Network Configuration to etcd&lt;/h3&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;
-&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;1
+&lt;/div&gt;&lt;h3 id="step-5-add-flannel-network-configuration-to-etcd"&gt;Step 5: Add flannel Network Configuration to etcd&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;
+&lt;table style="border-spacing:0;padding:0;margin:0;border:0;"&gt;&lt;tr&gt;&lt;td style="vertical-align:top;padding:0;margin:0;border:0;"&gt;
+&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code&gt;&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"&gt;1
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;etcdctl --endpoints http://127.0.0.1:2379 put /coreos.com/network/config &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;{&amp;#34;Network&amp;#34;: &amp;#34;172.16.0.0/16&amp;#34;, &amp;#34;SubnetLen&amp;#34;: 24, &amp;#34;SubnetMin&amp;#34;: &amp;#34;172.16.1.0&amp;#34;,&amp;#34;SubnetMax&amp;#34;: &amp;#34;172.16.10.0&amp;#34;, &amp;#34;Backend&amp;#34;: {&amp;#34;Type&amp;#34;: &amp;#34;vxlan&amp;#34;}}&amp;#39;&lt;/span&gt;
+&lt;td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%"&gt;
+&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;etcdctl --endpoints http://127.0.0.1:2379 put /coreos.com/network/config &lt;span style="color:#e6db74"&gt;&amp;#39;{&amp;#34;Network&amp;#34;: &amp;#34;172.16.0.0/16&amp;#34;, &amp;#34;SubnetLen&amp;#34;: 24, &amp;#34;SubnetMin&amp;#34;: &amp;#34;172.16.1.0&amp;#34;,&amp;#34;SubnetMax&amp;#34;: &amp;#34;172.16.10.0&amp;#34;, &amp;#34;Backend&amp;#34;: {&amp;#34;Type&amp;#34;: &amp;#34;vxlan&amp;#34;}}&amp;#39;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;blockquote&gt;
 &lt;p&gt;The above content is all on one line. Verify that the configuration was written successfully&lt;/p&gt;
-&lt;/blockquote&gt;</description>
-    </item>
-  </channel>
-</rss>
+&lt;/blockquote&gt;</description></item></channel></rss>

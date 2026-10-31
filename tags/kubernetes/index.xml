@@ -1,150 +1,64 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
-  <channel>
-    <title>Kubernetes on DAWN&#39;s Blog</title>
-    <link>https://LMDAWN1127.github.io/tags/kubernetes/</link>
-    <description>Recent content in Kubernetes on DAWN&#39;s Blog</description>
-    <image>
-      <title>DAWN&#39;s Blog</title>
-      <url>https://LMDAWN1127.github.io/images/DAWN.jpg</url>
-      <link>https://LMDAWN1127.github.io/images/DAWN.jpg</link>
-    </image>
-    <generator>Hugo</generator>
-    <language>zh-cn</language>
-    <lastBuildDate>Sat, 31 Oct 2026 18:29:00 +0800</lastBuildDate>
-    <atom:link href="https://LMDAWN1127.github.io/tags/kubernetes/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>K8S Pod 端口暴露与 SVC 多端口映射实战：hostPort、多端口映射与 targetPort 名称匹配</title>
-      <link>https://LMDAWN1127.github.io/posts/k8s-pod-ports-svc-multiport/</link>
-      <pubDate>Sat, 31 Oct 2026 18:29:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/posts/k8s-pod-ports-svc-multiport/</guid>
-      <description>本文讲 K8S 里 Pod 端口暴露与 SVC 多端口映射两件事。前半段用 hostPort 把容器 80 端口直接映射到 Pod 所在节点的 8888，外部绕过 SVC 直达容器，Windows 上实测访问成功，并对比 hostPort 与 NodePort 的差异（hostPort 只在 Pod 所在节点生效、Pod 漂移地址跟着变；NodePort 在所有节点开同一端口、漂移不影响访问）；后半段写一个同时暴露 80/TCP 与 53/UDP 的 Pod，配套 SVC 做多端口映射，观察 PORT(S) 列与 describe 的 TargetPort/Endpoints，最后用 kubectl patch 把 targetPort 改成按端口名称匹配，验证即便容器端口号变化，只要名称不变 SVC 仍能自动跟踪。</description>
-    </item>
-    <item>
-      <title>K8S 名称空间管理实战：响应式与声明式管理、跨命名空间服务访问</title>
-      <link>https://LMDAWN1127.github.io/posts/k8s-namespace-management/</link>
-      <pubDate>Sat, 31 Oct 2026 16:22:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/posts/k8s-namespace-management/</guid>
-      <description>本文系统讲 K8S 名称空间管理。先介绍名称空间的作用与局部资源/全局资源的区分方法（看 kubectl api-resources 的 NAMESPACED 列）；再用响应式命令完成名称空间的创建、查看、打标签、删除，并用同名 Pod 在 default 与 dawn 两个名称空间各建一个，直观验证隔离效果与删除名称空间时的级联清理；随后切到声明式管理：先从已有资源导出 yaml 做减法，再用 apply 创建带标签的名称空间；最后把 MySQL 放进 dawn、WordPress 放进 kube-public，用跨命名空间短写 &lt;code&gt;db-svc.dawn&lt;/code&gt; 连通数据库，并给出跨命名空间 A 记录的三种写法与实测结果。</description>
-    </item>
-    <item>
-      <title>K8S Pod DNS 策略与 hostNetwork 实战：dnsPolicy 对照实验</title>
-      <link>https://LMDAWN1127.github.io/posts/k8s-pod-dns-policy-hostnetwork/</link>
-      <pubDate>Sat, 31 Oct 2026 16:21:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/posts/k8s-pod-dns-policy-hostnetwork/</guid>
-      <description>本文用一组对照实验讲清 K8S Pod 的 dnsPolicy 与 hostNetwork 的关系。实验组把 Pod 设为 hostNetwork: true 并显式指定 dnsPolicy: ClusterFirstWithHostNet，进容器看 /etc/resolv.conf 指向集群 CoreDNS 且带 svc 搜索域，能解析 db-svc、kubernetes、kube-dns 等名称；对照组只开 hostNetwork、不改 dnsPolicy（默认 ClusterFirst），resolv.conf 变成节点自己的 DNS 且没有搜索域，db-svc 直接解析失败。结论：Pod 一旦使用宿主机网络，就必须把 dnsPolicy 改成 ClusterFirstWithHostNet。</description>
-    </item>
-    <item>
-      <title>K8S 实战：WordPress 部署、NFS 持久化与 CoreDNS 域名解析</title>
-      <link>https://LMDAWN1127.github.io/posts/k8s-wordpress-deploy-coredns/</link>
-      <pubDate>Sat, 31 Oct 2026 15:13:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/posts/k8s-wordpress-deploy-coredns/</guid>
-      <description>本文在 K8S 集群上完整部署 WordPress，分三个版本递进演进。v1 先用 ReplicationController + Service 跑通基础链路：MySQL RC → SVC ClusterIP 固定 VIP → WordPress RC → SVC NodePort，浏览器完成安装初始化；随后把 WordPress 副本扩到 3，暴露出没有持久化时数据不一致的问题。v2 引入 NFS 共享存储，把 MySQL 数据与 WordPress 上传目录都落到 NFS 上，删掉 RC 让其自动重建 3 个新 Pod 后标记文件仍在，验证多副本共享同一份数据。v3 部署 CoreDNS 附加组件，让 WordPress 直接用 SVC 名称访问数据库，并从资源清单、Pod 内 ping SVC 名称、dig 查 A 记录三个角度验证集群域名解析链路打通。</description>
-    </item>
-    <item>
-      <title>K8S 副本控制与服务发现实战：RC、ClusterIP 与 NodePort</title>
-      <link>https://LMDAWN1127.github.io/posts/k8s-rc-svc-replicas-service-discovery/</link>
-      <pubDate>Fri, 30 Oct 2026 20:04:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/posts/k8s-rc-svc-replicas-service-discovery/</guid>
-      <description>本文实战 K8S 的副本控制与服务发现。先用 ReplicationController 声明 3 个副本，验证 RC 的自愈能力（删掉一个 Pod 会自动补齐）以及删除 RC 时其管理的 Pod 被级联清理；再用 ClusterIP 类型的 Service 为分散在两个节点上的 3 个 Pod 提供固定入口，让每个 Pod 的 nginx 返回自己的 Pod 名，连续请求 5 次观察到轮询负载均衡；最后用 NodePort 类型在每个节点的 30080 端口暴露服务，从集群外访问并同样实现负载均衡。</description>
-    </item>
-    <item>
-      <title>K8S 排障三板斧实战：kubectl explain、cp 与 logs</title>
-      <link>https://LMDAWN1127.github.io/posts/k8s-troubleshooting-explain-cp-logs/</link>
-      <pubDate>Fri, 30 Oct 2026 19:44:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/posts/k8s-troubleshooting-explain-cp-logs/</guid>
-      <description>本文总结 K8S 日常排障最常用的三个命令。先构建一个执行完立即退出的 troubleshooting 测试镜像，再用 kubectl explain 直接读取 API Server 的 OpenAPI Schema 查字段归属（无需联网查文档）；随后用 Pod 定义中的 command + args 覆盖镜像默认 CMD，把一次性退出的容器改成长驻运行以便 exec 排查；最后演示 kubectl cp 在宿主机与 Pod 之间双向拷贝文件（拷配置进去、拷日志出来），以及 Pod 异常时第一手要看的 kubectl logs——CrashLoopBackOff 就靠它定位。</description>
-    </item>
-    <item>
-      <title>K8S 存储卷实战：emptyDir、hostPath 与 NFS</title>
-      <link>https://LMDAWN1127.github.io/posts/k8s-volumes-emptydir-hostpath-nfs/</link>
-      <pubDate>Fri, 30 Oct 2026 19:28:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/posts/k8s-volumes-emptydir-hostpath-nfs/</guid>
-      <description>本文实战 K8S 三类存储卷。emptyDir 生命周期与 Pod 绑定，用多容器 Pod 验证同一卷挂载到两个容器后数据共享；hostPath 把宿主机目录直接挂进 Pod，以 Elasticsearch 7.17.16 为例建索引后删除 Pod 重建，验证单节点持久化；NFS 解决跨节点共享问题，master 上配 nfs-kernel-server、三节点装 nfs-common，部署 MySQL 8.3.0 写入测试数据后把 Pod 从 worker01 漂移到 worker02，数据完整保留。最后给出选型结论：Pod 内共享用 emptyDir，单节点持久化用 hostPath，需要跨节点漂移用 NFS 或分布式存储。</description>
-    </item>
-    <item>
-      <title>K8S 核心资源管理与 Pod 基础实战：资源清单、多容器 Pod、标签与 hostNetwork</title>
-      <link>https://LMDAWN1127.github.io/posts/k8s-core-resources-pod-basics/</link>
-      <pubDate>Fri, 30 Oct 2026 16:29:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/posts/k8s-core-resources-pod-basics/</guid>
-      <description>本文系统梳理 K8S 核心资源管理与 Pod 基础操作。先给出常用资源类型缩写速查表并用 kubectl api-resources 概览集群资源；再做日常基础巡检（worker 节点列表、master 组件、flannel 网卡与各节点 cni0/flannel.1 虚拟网卡）；随后编写单容器与多容器 Pod 的资源清单 YAML，对比 kubectl create 与 apply 的差异，并用 kubectl exec 进入指定容器；接着讲声明式 API 与响应式 API 的区别、标签的增删改查与基于标签过滤/删除资源、kubectl describe 查看资源详情，最后演示 hostNetwork 模式让 Pod 共享宿主机网络，并清理实验环境。</description>
-    </item>
-    <item>
-      <title>K8S kubeadm 集群部署实战：Harbor 自建 CA 仓库与 Flannel CNI</title>
-      <link>https://LMDAWN1127.github.io/posts/k8s-kubeadm-cluster-harbor-ca/</link>
-      <pubDate>Fri, 30 Oct 2026 14:51:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/posts/k8s-kubeadm-cluster-harbor-ca/</guid>
-      <description>本文完整实战从零部署 K8S kubeadm 集群（v1.23.17，1 个 master + 2 个 worker 共 3 节点）。先在 harbor 节点安装 Docker 并部署 Harbor 镜像仓库（自建 CA 签发 HTTPS 证书，配置 harbor.yml 开启 443）；再为三个 K8S 节点安装 Docker、配置 /etc/hosts 与 Docker 客户端证书，验证 docker login 成功；随后做节点环境准备（关闭 swap、检查 product_uuid、配置 iptables 桥接与阿里云 apt 源安装 kubeadm/kubelet/kubectl），kubeadm init 初始化 master、配置 kubeconfig、worker 节点 join，最后部署 Flannel CNI 插件使三节点全部 Ready，并跨节点 curl 验证 Pod 网络连通。</description>
-    </item>
-    <item>
-      <title>手动部署 Kubernetes v1.30 集群（kubeadm 方式）</title>
-      <link>https://LMDAWN1127.github.io/posts/k8s-v1.30-manual-deploy/</link>
-      <pubDate>Fri, 07 Aug 2026 13:52:00 +0800</pubDate>
-      <guid>https://LMDAWN1127.github.io/posts/k8s-v1.30-manual-deploy/</guid>
-      <description>&lt;p&gt;规划如下：&lt;/p&gt;
-&lt;p&gt;master节点：   计算机名： master   IP地址：192.168.8.30&lt;/p&gt;
-&lt;p&gt;worker01节点： 计算机名： node1   IP地址： 192.168.8.31&lt;/p&gt;
-&lt;p&gt;worker02节点： 计算机名： node2   IP地址： 192.168.8.32&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Kubernetes on DAWN's Blog</title><link>https://LMDAWN1127.github.io/tags/kubernetes/</link><description>Recent content in Kubernetes on DAWN's Blog</description><image><title>DAWN's Blog</title><url>https://LMDAWN1127.github.io/images/DAWN.jpg</url><link>https://LMDAWN1127.github.io/images/DAWN.jpg</link></image><generator>Hugo</generator><language>zh-cn</language><lastBuildDate>Sat, 31 Oct 2026 19:10:00 +0800</lastBuildDate><atom:link href="https://LMDAWN1127.github.io/tags/kubernetes/index.xml" rel="self" type="application/rss+xml"/><item><title>K8S ReplicationController 声明式更新局限实战：为什么改了 RC 模板 Pod 却不更新？</title><link>https://LMDAWN1127.github.io/posts/k8s-rc-declarative-update-limitations/</link><pubDate>Sat, 31 Oct 2026 19:10:00 +0800</pubDate><guid>https://LMDAWN1127.github.io/posts/k8s-rc-declarative-update-limitations/</guid><description>本文通过实战验证 K8S 中 ReplicationController (RC) 对声明式更新的支持局限。首先部署 3 副本的 RC 与 ClusterIP Service，访问验证 v1 版本；接着修改 YAML 中的镜像版本为 v2 并执行 kubectl apply，观察到 RC 本身配置已更新为 v2，但运行中的 Pod 镜像与页面并未发生变化；随后手动删除 Pod 触发 RC 按照新模板重建出 v2 Pod；最后深入总结 RC 不支持滚动更新的底层控制机制，对比 RC 与 Deployment 在发布更新上的核心区别。</description></item><item><title>K8S Pod 端口暴露与 SVC 多端口映射实战：hostPort、多端口映射与 targetPort 名称匹配</title><link>https://LMDAWN1127.github.io/posts/k8s-pod-ports-svc-multiport/</link><pubDate>Sat, 31 Oct 2026 18:29:00 +0800</pubDate><guid>https://LMDAWN1127.github.io/posts/k8s-pod-ports-svc-multiport/</guid><description>本文讲 K8S 里 Pod 端口暴露与 SVC 多端口映射两件事。前半段用 hostPort 把容器 80 端口直接映射到 Pod 所在节点的 8888，外部绕过 SVC 直达容器，Windows 上实测访问成功，并对比 hostPort 与 NodePort 的差异（hostPort 只在 Pod 所在节点生效、Pod 漂移地址跟着变；NodePort 在所有节点开同一端口、漂移不影响访问）；后半段写一个同时暴露 80/TCP 与 53/UDP 的 Pod，配套 SVC 做多端口映射，观察 PORT(S) 列与 describe 的 TargetPort/Endpoints，最后用 kubectl patch 把 targetPort 改成按端口名称匹配，验证即便容器端口号变化，只要名称不变 SVC 仍能自动跟踪。</description></item><item><title>K8S 名称空间管理实战：响应式与声明式管理、跨命名空间服务访问</title><link>https://LMDAWN1127.github.io/posts/k8s-namespace-management/</link><pubDate>Sat, 31 Oct 2026 16:22:00 +0800</pubDate><guid>https://LMDAWN1127.github.io/posts/k8s-namespace-management/</guid><description>本文系统讲 K8S 名称空间管理。先介绍名称空间的作用与局部资源/全局资源的区分方法（看 kubectl api-resources 的 NAMESPACED 列）；再用响应式命令完成名称空间的创建、查看、打标签、删除，并用同名 Pod 在 default 与 dawn 两个名称空间各建一个，直观验证隔离效果与删除名称空间时的级联清理；随后切到声明式管理：先从已有资源导出 yaml 做减法，再用 apply 创建带标签的名称空间；最后把 MySQL 放进 dawn、WordPress 放进 kube-public，用跨命名空间短写 &lt;code&gt;db-svc.dawn&lt;/code&gt; 连通数据库，并给出跨命名空间 A 记录的三种写法与实测结果。</description></item><item><title>K8S Pod DNS 策略与 hostNetwork 实战：dnsPolicy 对照实验</title><link>https://LMDAWN1127.github.io/posts/k8s-pod-dns-policy-hostnetwork/</link><pubDate>Sat, 31 Oct 2026 16:21:00 +0800</pubDate><guid>https://LMDAWN1127.github.io/posts/k8s-pod-dns-policy-hostnetwork/</guid><description>本文用一组对照实验讲清 K8S Pod 的 dnsPolicy 与 hostNetwork 的关系。实验组把 Pod 设为 hostNetwork: true 并显式指定 dnsPolicy: ClusterFirstWithHostNet，进容器看 /etc/resolv.conf 指向集群 CoreDNS 且带 svc 搜索域，能解析 db-svc、kubernetes、kube-dns 等名称；对照组只开 hostNetwork、不改 dnsPolicy（默认 ClusterFirst），resolv.conf 变成节点自己的 DNS 且没有搜索域，db-svc 直接解析失败。结论：Pod 一旦使用宿主机网络，就必须把 dnsPolicy 改成 ClusterFirstWithHostNet。</description></item><item><title>K8S 实战：WordPress 部署、NFS 持久化与 CoreDNS 域名解析</title><link>https://LMDAWN1127.github.io/posts/k8s-wordpress-deploy-coredns/</link><pubDate>Sat, 31 Oct 2026 15:13:00 +0800</pubDate><guid>https://LMDAWN1127.github.io/posts/k8s-wordpress-deploy-coredns/</guid><description>本文在 K8S 集群上完整部署 WordPress，分三个版本递进演进。v1 先用 ReplicationController + Service 跑通基础链路：MySQL RC → SVC ClusterIP 固定 VIP → WordPress RC → SVC NodePort，浏览器完成安装初始化；随后把 WordPress 副本扩到 3，暴露出没有持久化时数据不一致的问题。v2 引入 NFS 共享存储，把 MySQL 数据与 WordPress 上传目录都落到 NFS 上，删掉 RC 让其自动重建 3 个新 Pod 后标记文件仍在，验证多副本共享同一份数据。v3 部署 CoreDNS 附加组件，让 WordPress 直接用 SVC 名称访问数据库，并从资源清单、Pod 内 ping SVC 名称、dig 查 A 记录三个角度验证集群域名解析链路打通。</description></item><item><title>K8S 副本控制与服务发现实战：RC、ClusterIP 与 NodePort</title><link>https://LMDAWN1127.github.io/posts/k8s-rc-svc-replicas-service-discovery/</link><pubDate>Fri, 30 Oct 2026 20:04:00 +0800</pubDate><guid>https://LMDAWN1127.github.io/posts/k8s-rc-svc-replicas-service-discovery/</guid><description>本文实战 K8S 的副本控制与服务发现。先用 ReplicationController 声明 3 个副本，验证 RC 的自愈能力（删掉一个 Pod 会自动补齐）以及删除 RC 时其管理的 Pod 被级联清理；再用 ClusterIP 类型的 Service 为分散在两个节点上的 3 个 Pod 提供固定入口，让每个 Pod 的 nginx 返回自己的 Pod 名，连续请求 5 次观察到轮询负载均衡；最后用 NodePort 类型在每个节点的 30080 端口暴露服务，从集群外访问并同样实现负载均衡。</description></item><item><title>K8S 排障三板斧实战：kubectl explain、cp 与 logs</title><link>https://LMDAWN1127.github.io/posts/k8s-troubleshooting-explain-cp-logs/</link><pubDate>Fri, 30 Oct 2026 19:44:00 +0800</pubDate><guid>https://LMDAWN1127.github.io/posts/k8s-troubleshooting-explain-cp-logs/</guid><description>本文总结 K8S 日常排障最常用的三个命令。先构建一个执行完立即退出的 troubleshooting 测试镜像，再用 kubectl explain 直接读取 API Server 的 OpenAPI Schema 查字段归属（无需联网查文档）；随后用 Pod 定义中的 command + args 覆盖镜像默认 CMD，把一次性退出的容器改成长驻运行以便 exec 排查；最后演示 kubectl cp 在宿主机与 Pod 之间双向拷贝文件（拷配置进去、拷日志出来），以及 Pod 异常时第一手要看的 kubectl logs——CrashLoopBackOff 就靠它定位。</description></item><item><title>K8S 存储卷实战：emptyDir、hostPath 与 NFS</title><link>https://LMDAWN1127.github.io/posts/k8s-volumes-emptydir-hostpath-nfs/</link><pubDate>Fri, 30 Oct 2026 19:28:00 +0800</pubDate><guid>https://LMDAWN1127.github.io/posts/k8s-volumes-emptydir-hostpath-nfs/</guid><description>本文实战 K8S 三类存储卷。emptyDir 生命周期与 Pod 绑定，用多容器 Pod 验证同一卷挂载到两个容器后数据共享；hostPath 把宿主机目录直接挂进 Pod，以 Elasticsearch 7.17.16 为例建索引后删除 Pod 重建，验证单节点持久化；NFS 解决跨节点共享问题，master 上配 nfs-kernel-server、三节点装 nfs-common，部署 MySQL 8.3.0 写入测试数据后把 Pod 从 worker01 漂移到 worker02，数据完整保留。最后给出选型结论：Pod 内共享用 emptyDir，单节点持久化用 hostPath，需要跨节点漂移用 NFS 或分布式存储。</description></item><item><title>K8S 核心资源管理与 Pod 基础实战：资源清单、多容器 Pod、标签与 hostNetwork</title><link>https://LMDAWN1127.github.io/posts/k8s-core-resources-pod-basics/</link><pubDate>Fri, 30 Oct 2026 16:29:00 +0800</pubDate><guid>https://LMDAWN1127.github.io/posts/k8s-core-resources-pod-basics/</guid><description>本文系统梳理 K8S 核心资源管理与 Pod 基础操作。先给出常用资源类型缩写速查表并用 kubectl api-resources 概览集群资源；再做日常基础巡检（worker 节点列表、master 组件、flannel 网卡与各节点 cni0/flannel.1 虚拟网卡）；随后编写单容器与多容器 Pod 的资源清单 YAML，对比 kubectl create 与 apply 的差异，并用 kubectl exec 进入指定容器；接着讲声明式 API 与响应式 API 的区别、标签的增删改查与基于标签过滤/删除资源、kubectl describe 查看资源详情，最后演示 hostNetwork 模式让 Pod 共享宿主机网络，并清理实验环境。</description></item><item><title>K8S kubeadm 集群部署实战：Harbor 自建 CA 仓库与 Flannel CNI</title><link>https://LMDAWN1127.github.io/posts/k8s-kubeadm-cluster-harbor-ca/</link><pubDate>Fri, 30 Oct 2026 14:51:00 +0800</pubDate><guid>https://LMDAWN1127.github.io/posts/k8s-kubeadm-cluster-harbor-ca/</guid><description>本文完整实战从零部署 K8S kubeadm 集群（v1.23.17，1 个 master + 2 个 worker 共 3 节点）。先在 harbor 节点安装 Docker 并部署 Harbor 镜像仓库（自建 CA 签发 HTTPS 证书，配置 harbor.yml 开启 443）；再为三个 K8S 节点安装 Docker、配置 /etc/hosts 与 Docker 客户端证书，验证 docker login 成功；随后做节点环境准备（关闭 swap、检查 product_uuid、配置 iptables 桥接与阿里云 apt 源安装 kubeadm/kubelet/kubectl），kubeadm init 初始化 master、配置 kubeconfig、worker 节点 join，最后部署 Flannel CNI 插件使三节点全部 Ready，并跨节点 curl 验证 Pod 网络连通。</description></item><item><title>手动部署 Kubernetes v1.30 集群（kubeadm 方式）</title><link>https://LMDAWN1127.github.io/posts/k8s-v1.30-manual-deploy/</link><pubDate>Fri, 07 Aug 2026 13:52:00 +0800</pubDate><guid>https://LMDAWN1127.github.io/posts/k8s-v1.30-manual-deploy/</guid><description>&lt;p&gt;规划如下：&lt;/p&gt;
+&lt;p&gt;master节点： 计算机名： master IP地址：192.168.8.30&lt;/p&gt;
+&lt;p&gt;worker01节点： 计算机名： node1 IP地址： 192.168.8.31&lt;/p&gt;
+&lt;p&gt;worker02节点： 计算机名： node2 IP地址： 192.168.8.32&lt;/p&gt;
 &lt;p&gt;在三个节点上均完成以下步骤，并且保证三个节点时间均一致。&lt;/p&gt;
-&lt;h2 id=&#34;1-关闭防火墙和selinux&#34;&gt;1. 关闭防火墙和SELinux&lt;/h2&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;
-&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;1
-&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;2
-&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;3
-&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;4
+&lt;h2 id="1-关闭防火墙和selinux"&gt;1. 关闭防火墙和SELinux&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;
+&lt;table style="border-spacing:0;padding:0;margin:0;border:0;"&gt;&lt;tr&gt;&lt;td style="vertical-align:top;padding:0;margin:0;border:0;"&gt;
+&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code&gt;&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"&gt;1
+&lt;/span&gt;&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"&gt;2
+&lt;/span&gt;&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"&gt;3
+&lt;/span&gt;&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"&gt;4
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;root@master ~&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# systemctl disable firewalld.service --now&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;root@master ~&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# vim /etc/selinux/config&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;SELINUX&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;disabled
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;root@master ~&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# setenforce 0&lt;/span&gt;
+&lt;td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%"&gt;
+&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;[&lt;/span&gt;root@master ~&lt;span style="color:#f92672"&gt;]&lt;/span&gt;&lt;span style="color:#75715e"&gt;# systemctl disable firewalld.service --now&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;[&lt;/span&gt;root@master ~&lt;span style="color:#f92672"&gt;]&lt;/span&gt;&lt;span style="color:#75715e"&gt;# vim /etc/selinux/config&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;SELINUX&lt;span style="color:#f92672"&gt;=&lt;/span&gt;disabled
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;[&lt;/span&gt;root@master ~&lt;span style="color:#f92672"&gt;]&lt;/span&gt;&lt;span style="color:#75715e"&gt;# setenforce 0&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;h2 id=&#34;2-关闭swap&#34;&gt;2. 关闭swap&lt;/h2&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;
-&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;1
-&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;2
+&lt;/div&gt;&lt;h2 id="2-关闭swap"&gt;2. 关闭swap&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;
+&lt;table style="border-spacing:0;padding:0;margin:0;border:0;"&gt;&lt;tr&gt;&lt;td style="vertical-align:top;padding:0;margin:0;border:0;"&gt;
+&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code&gt;&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"&gt;1
+&lt;/span&gt;&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"&gt;2
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;root@master ~&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#sed -i &amp;#39;/swap/s/^/#/&amp;#39; /etc/fstab&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;root@master ~&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# swapoff -a&lt;/span&gt;
+&lt;td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%"&gt;
+&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;[&lt;/span&gt;root@master ~&lt;span style="color:#f92672"&gt;]&lt;/span&gt;&lt;span style="color:#75715e"&gt;#sed -i &amp;#39;/swap/s/^/#/&amp;#39; /etc/fstab&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;[&lt;/span&gt;root@master ~&lt;span style="color:#f92672"&gt;]&lt;/span&gt;&lt;span style="color:#75715e"&gt;# swapoff -a&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;h2 id=&#34;3-设置系统参数加载内核模块&#34;&gt;3. 设置系统参数，加载内核模块&lt;/h2&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;
-&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 1
-&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 2
-&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 3
-&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 4
-&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 5
-&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 6
-&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 7
-&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 8
-&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 9
-&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;10
-&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;11
-&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;12
+&lt;/div&gt;&lt;h2 id="3-设置系统参数加载内核模块"&gt;3. 设置系统参数，加载内核模块&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;
+&lt;table style="border-spacing:0;padding:0;margin:0;border:0;"&gt;&lt;tr&gt;&lt;td style="vertical-align:top;padding:0;margin:0;border:0;"&gt;
+&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code&gt;&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"&gt; 1
+&lt;/span&gt;&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"&gt; 2
+&lt;/span&gt;&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"&gt; 3
+&lt;/span&gt;&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"&gt; 4
+&lt;/span&gt;&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"&gt; 5
+&lt;/span&gt;&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"&gt; 6
+&lt;/span&gt;&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"&gt; 7
+&lt;/span&gt;&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"&gt; 8
+&lt;/span&gt;&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"&gt; 9
+&lt;/span&gt;&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"&gt;10
+&lt;/span&gt;&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"&gt;11
+&lt;/span&gt;&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"&gt;12
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;root@master ~&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# cat &amp;gt; /etc/modules-load.d/k8s.conf &amp;lt;&amp;lt; EOF&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;overlay
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;br_netfilter
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;EOF
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;root@master ~&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#modprobe overlay&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;root@master ~&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#modprobe br_netfilter&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;root@master ~&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# cat &amp;gt; /etc/sysctl.d/k8s.conf &amp;lt;&amp;lt; EOF&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;net.bridge.bridge-nf-call-iptables  &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;net.bridge.bridge-nf-call-ip6tables &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;net.ipv4.ip_forward                 &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;EOF
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;root@master ~&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# sysctl --system&lt;/span&gt;
+&lt;td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%"&gt;
+&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;[&lt;/span&gt;root@master ~&lt;span style="color:#f92672"&gt;]&lt;/span&gt;&lt;span style="color:#75715e"&gt;# cat &amp;gt; /etc/modules-load.d/k8s.conf &amp;lt;&amp;lt; EOF&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;overlay
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;br_netfilter
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;EOF
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;[&lt;/span&gt;root@master ~&lt;span style="color:#f92672"&gt;]&lt;/span&gt;&lt;span style="color:#75715e"&gt;#modprobe overlay&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;[&lt;/span&gt;root@master ~&lt;span style="color:#f92672"&gt;]&lt;/span&gt;&lt;span style="color:#75715e"&gt;#modprobe br_netfilter&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;[&lt;/span&gt;root@master ~&lt;span style="color:#f92672"&gt;]&lt;/span&gt;&lt;span style="color:#75715e"&gt;# cat &amp;gt; /etc/sysctl.d/k8s.conf &amp;lt;&amp;lt; EOF&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;net.bridge.bridge-nf-call-iptables &lt;span style="color:#f92672"&gt;=&lt;/span&gt; &lt;span style="color:#ae81ff"&gt;1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;net.bridge.bridge-nf-call-ip6tables &lt;span style="color:#f92672"&gt;=&lt;/span&gt; &lt;span style="color:#ae81ff"&gt;1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;net.ipv4.ip_forward &lt;span style="color:#f92672"&gt;=&lt;/span&gt; &lt;span style="color:#ae81ff"&gt;1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;EOF
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;[&lt;/span&gt;root@master ~&lt;span style="color:#f92672"&gt;]&lt;/span&gt;&lt;span style="color:#75715e"&gt;# sysctl --system&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;h2 id=&#34;4-安装容器运行时containerd&#34;&gt;4. 安装容器运行时（Containerd）&lt;/h2&gt;
-&lt;p&gt;Kubernetes v1.30 推荐使用 Containerd 作为容器运行时：&lt;/p&gt;</description>
-    </item>
-  </channel>
-</rss>
+&lt;/div&gt;&lt;h2 id="4-安装容器运行时containerd"&gt;4. 安装容器运行时（Containerd）&lt;/h2&gt;
+&lt;p&gt;Kubernetes v1.30 推荐使用 Containerd 作为容器运行时：&lt;/p&gt;</description></item></channel></rss>
