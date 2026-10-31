@@ -11,7 +11,7 @@
     </image>
     <generator>Hugo</generator>
     <language>en</language>
-    <lastBuildDate>Fri, 30 Oct 2026 20:04:00 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 31 Oct 2026 15:13:00 +0800</lastBuildDate>
     <atom:link href="https://LMDAWN1127.github.io/en/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Harbor Active-Standby Deployment: From Installation to HTTPS and Replication</title>
@@ -19,6 +19,13 @@
       <pubDate>Tue, 04 Aug 2026 00:00:00 +0000</pubDate>
       <guid>https://LMDAWN1127.github.io/en/posts/harbor-master-slave/</guid>
       <description>Complete guide to deploying Harbor enterprise Docker registry with active-standby architecture, HTTP/HTTPS modes, self-signed certificates, and cross-host replication.</description>
+    </item>
+    <item>
+      <title>K8S in Practice: WordPress Deployment, NFS Persistence and CoreDNS Name Resolution</title>
+      <link>https://LMDAWN1127.github.io/en/posts/k8s-wordpress-deploy-coredns/</link>
+      <pubDate>Sat, 31 Oct 2026 15:13:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/posts/k8s-wordpress-deploy-coredns/</guid>
+      <description>This article deploys WordPress on a K8S cluster and evolves it through three versions. v1 gets the basic chain working with ReplicationControllers and Services: MySQL RC to SVC ClusterIP with a pinned VIP, to WordPress RC, to SVC NodePort, finishing the installer in a browser; scaling WordPress to 3 replicas then exposes the data inconsistency caused by the lack of persistence. v2 introduces NFS shared storage so both MySQL data and the WordPress uploads directory land on NFS — after deleting the RC and letting it rebuild 3 fresh Pods, the marker files are still there, proving all replicas share the same data. v3 deploys the CoreDNS add-on so WordPress reaches the database by SVC name, and validates cluster DNS resolution three ways: from the manifests, by pinging SVC names inside a Pod, and with dig A-record lookups.</description>
     </item>
     <item>
       <title>K8S Replica Control and Service Discovery in Practice: RC, ClusterIP and NodePort</title>

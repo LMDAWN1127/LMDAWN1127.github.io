@@ -11,8 +11,15 @@
     </image>
     <generator>Hugo</generator>
     <language>ja</language>
-    <lastBuildDate>Fri, 30 Oct 2026 20:04:00 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 31 Oct 2026 15:13:00 +0800</lastBuildDate>
     <atom:link href="https://LMDAWN1127.github.io/ja/tags/kubernetes/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>K8S 実践：WordPress デプロイ、NFS 永続化と CoreDNS 名前解決</title>
+      <link>https://LMDAWN1127.github.io/ja/posts/k8s-wordpress-deploy-coredns/</link>
+      <pubDate>Sat, 31 Oct 2026 15:13:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/ja/posts/k8s-wordpress-deploy-coredns/</guid>
+      <description>本記事は K8S クラスタ上で WordPress をデプロイし、3 つのバージョンに分けて段階的に進化させる。v1 は ReplicationController と Service で基本の流れを通す。MySQL RC → SVC ClusterIP（VIP 固定）→ WordPress RC → SVC NodePort まで構築し、ブラウザでインストールを完了させる。その後 WordPress のレプリカを 3 に増やすと、永続化がないことによるデータ不整合が露呈する。v2 は NFS 共有ストレージを導入し、MySQL のデータと WordPress のアップロードディレクトリを NFS 上に置く。RC を削除して 3 つの新 Pod を自動再作成させてもマーカーファイルが残り、全レプリカが同じデータを共有していることを証明する。v3 は CoreDNS アドオンを導入し、WordPress が SVC 名で DB に接続できるようにする。そして manifests の確認、Pod 内から SVC 名への ping、dig による A レコード照会という 3 つの角度からクラスタの名前解決経路が通っていることを検証する。</description>
+    </item>
     <item>
       <title>K8S レプリカ制御とサービスディスカバリ実践：RC、ClusterIP と NodePort</title>
       <link>https://LMDAWN1127.github.io/ja/posts/k8s-rc-svc-replicas-service-discovery/</link>

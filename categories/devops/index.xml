@@ -11,7 +11,7 @@
     </image>
     <generator>Hugo</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Fri, 30 Oct 2026 20:04:00 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 31 Oct 2026 15:13:00 +0800</lastBuildDate>
     <atom:link href="https://LMDAWN1127.github.io/categories/devops/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Harbor 主备部署实战：从安装到 HTTPS 与主备复制</title>
@@ -19,6 +19,13 @@
       <pubDate>Tue, 04 Aug 2026 00:00:00 +0000</pubDate>
       <guid>https://LMDAWN1127.github.io/posts/harbor-master-slave/</guid>
       <description>完整记录 Harbor 企业级镜像仓库的主备部署过程，涵盖 HTTP/HTTPS 双模式安装、自签名证书配置、跨主机主备复制等核心运维技能。</description>
+    </item>
+    <item>
+      <title>K8S 实战：WordPress 部署、NFS 持久化与 CoreDNS 域名解析</title>
+      <link>https://LMDAWN1127.github.io/posts/k8s-wordpress-deploy-coredns/</link>
+      <pubDate>Sat, 31 Oct 2026 15:13:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/posts/k8s-wordpress-deploy-coredns/</guid>
+      <description>本文在 K8S 集群上完整部署 WordPress，分三个版本递进演进。v1 先用 ReplicationController + Service 跑通基础链路：MySQL RC → SVC ClusterIP 固定 VIP → WordPress RC → SVC NodePort，浏览器完成安装初始化；随后把 WordPress 副本扩到 3，暴露出没有持久化时数据不一致的问题。v2 引入 NFS 共享存储，把 MySQL 数据与 WordPress 上传目录都落到 NFS 上，删掉 RC 让其自动重建 3 个新 Pod 后标记文件仍在，验证多副本共享同一份数据。v3 部署 CoreDNS 附加组件，让 WordPress 直接用 SVC 名称访问数据库，并从资源清单、Pod 内 ping SVC 名称、dig 查 A 记录三个角度验证集群域名解析链路打通。</description>
     </item>
     <item>
       <title>K8S 副本控制与服务发现实战：RC、ClusterIP 与 NodePort</title>

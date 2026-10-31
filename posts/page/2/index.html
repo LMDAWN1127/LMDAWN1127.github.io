@@ -173,6 +173,28 @@
 <article class="post-entry"> 
   <header class="entry-header">
     <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/posts/k8s-core-resources-pod-basics/">K8S 核心资源管理与 Pod 基础实战：资源清单、多容器 Pod、标签与 hostNetwork</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>本文系统梳理 K8S 核心资源管理与 Pod 基础操作。先给出常用资源类型缩写速查表并用 kubectl api-resources 概览集群资源；再做日常基础巡检（worker 节点列表、master 组件、flannel 网卡与各节点 cni0/flannel.1 虚拟网卡）；随后编写单容器与多容器 Pod 的资源清单 YAML，对比 kubectl create 与 apply 的差异，并用 kubectl exec 进入指定容器；接着讲声明式 API 与响应式 API 的区别、标签的增删改查与基于标签过滤/删除资源、kubectl describe 查看资源详情，最后演示 hostNetwork 模式让 Pod 共享宿主机网络，并清理实验环境。</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-30">
+  2026年10月30日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 8 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to K8S 核心资源管理与 Pod 基础实战：资源清单、多容器 Pod、标签与 hostNetwork" href="https://LMDAWN1127.github.io/posts/k8s-core-resources-pod-basics/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
       <a href="https://LMDAWN1127.github.io/posts/k8s-kubeadm-cluster-harbor-ca/">K8S kubeadm 集群部署实战：Harbor 自建 CA 仓库与 Flannel CNI</a>
     </h2>
   </header>
@@ -256,28 +278,6 @@
 </span>
 </footer>
   <a class="entry-link" aria-label="post link to Harbor 高可用方案：用 keepalived 实现 VIP 漂移" href="https://LMDAWN1127.github.io/posts/harbor-keepalived-vip/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/posts/docker-registry-to-harbor-migration/">从 docker registry 迁移镜像到 Harbor 与双 Harbor 同步实战</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>本文实战演示将 docker registry 中的镜像迁移到 Harbor 仓库，以及两个 Harbor 之间的镜像同步。第一部分通过 Harbor 的 pull 复制规则，把 registry 里的 dawn-games/** 镜像同步到本地 Harbor 项目；第二部分在 docker01、docker02 两个节点分别部署 Harbor，并配置 Harbor→Harbor 的 pull 模式复制规则，实现双 Harbor 镜像同步，最后修改客户端 daemon.json 并验证。</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-29">
-  2026年10月29日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 2 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to 从 docker registry 迁移镜像到 Harbor 与双 Harbor 同步实战" href="https://LMDAWN1127.github.io/posts/docker-registry-to-harbor-migration/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">

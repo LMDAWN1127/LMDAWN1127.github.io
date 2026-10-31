@@ -11,8 +11,15 @@
     </image>
     <generator>Hugo</generator>
     <language>ko</language>
-    <lastBuildDate>Fri, 30 Oct 2026 20:04:00 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 31 Oct 2026 15:13:00 +0800</lastBuildDate>
     <atom:link href="https://LMDAWN1127.github.io/ko/tags/kubernetes/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>K8S 실전: WordPress 배포, NFS 영속화 그리고 CoreDNS 이름 해석</title>
+      <link>https://LMDAWN1127.github.io/ko/posts/k8s-wordpress-deploy-coredns/</link>
+      <pubDate>Sat, 31 Oct 2026 15:13:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/ko/posts/k8s-wordpress-deploy-coredns/</guid>
+      <description>이 글은 K8S 클러스터에 WordPress 를 배포하고 세 버전으로 단계적으로 발전시킨다. v1 은 ReplicationController 와 Service 로 기본 흐름을 뚫는다. MySQL RC → SVC ClusterIP（VIP 고정）→ WordPress RC → SVC NodePort 까지 구성하고 브라우저에서 설치를 마친다. 이어 WordPress 레플리카를 3으로 늘리면 영속화가 없어 생기는 데이터 불일치가 드러난다. v2 는 NFS 공유 스토리지를 도입해 MySQL 데이터와 WordPress 업로드 디렉터리를 NFS 에 올린다. RC 를 삭제해 새 Pod 3개가 자동 재생성되게 해도 마커 파일이 남아 있어 모든 레플리카가 같은 데이터를 공유함을 입증한다. v3 는 CoreDNS 애드온을 도입해 WordPress 가 SVC 이름으로 DB 에 접근하게 하고, 매니페스트 확인, Pod 안에서 SVC 이름으로 ping, dig A 레코드 조회라는 세 가지 관점에서 클러스터 이름 해석 경로가 뚫렸는지 검증한다.</description>
+    </item>
     <item>
       <title>K8S 레플리카 제어와 서비스 디스커버리 실전: RC, ClusterIP 그리고 NodePort</title>
       <link>https://LMDAWN1127.github.io/ko/posts/k8s-rc-svc-replicas-service-discovery/</link>

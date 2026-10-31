@@ -163,6 +163,28 @@
 <article class="post-entry tag-entry"> 
   <header class="entry-header">
     <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/en/posts/k8s-wordpress-deploy-coredns/">K8S in Practice: WordPress Deployment, NFS Persistence and CoreDNS Name Resolution</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>This article deploys WordPress on a K8S cluster and evolves it through three versions. v1 gets the basic chain working with ReplicationControllers and Services: MySQL RC to SVC ClusterIP with a pinned VIP, to WordPress RC, to SVC NodePort, finishing the installer in a browser; scaling WordPress to 3 replicas then exposes the data inconsistency caused by the lack of persistence. v2 introduces NFS shared storage so both MySQL data and the WordPress uploads directory land on NFS — after deleting the RC and letting it rebuild 3 fresh Pods, the marker files are still there, proving all replicas share the same data. v3 deploys the CoreDNS add-on so WordPress reaches the database by SVC name, and validates cluster DNS resolution three ways: from the manifests, by pinging SVC names inside a Pod, and with dig A-record lookups.</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-31">
+  2026年10月31日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 13 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to K8S in Practice: WordPress Deployment, NFS Persistence and CoreDNS Name Resolution" href="https://LMDAWN1127.github.io/en/posts/k8s-wordpress-deploy-coredns/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
       <a href="https://LMDAWN1127.github.io/en/posts/k8s-rc-svc-replicas-service-discovery/">K8S Replica Control and Service Discovery in Practice: RC, ClusterIP and NodePort</a>
     </h2>
   </header>
@@ -246,28 +268,6 @@
 </span>
 </footer>
   <a class="entry-link" aria-label="post link to K8S Core Resource Management and Pod Basics in Practice: Manifests, Multi-Container Pods, Labels and hostNetwork" href="https://LMDAWN1127.github.io/en/posts/k8s-core-resources-pod-basics/"></a>
-</article>
-
-<article class="post-entry tag-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/en/posts/k8s-kubeadm-cluster-harbor-ca/">K8S kubeadm Cluster Deployment in Practice: Harbor with a Self-Built CA and Flannel CNI</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>This hands-on guide builds a K8S kubeadm cluster (v1.23.17, 1 master &#43; 2 workers, 3 nodes in total) from scratch. First install Docker on the harbor node and deploy a Harbor image registry (self-built CA issues the HTTPS certificate, harbor.yml enables port 443). Then install Docker on the three K8S nodes, configure /etc/hosts and the Docker client certificate, and verify docker login against Harbor successfully. Next prepare the nodes (disable swap, check product_uuid, configure iptables bridge traffic and the Aliyun apt repo, and install kubeadm/kubelet/kubectl), run kubeadm init on the master, configure kubeconfig, join the worker nodes, and finally deploy the Flannel CNI plugin so all three nodes become Ready, and verify cross-node Pod connectivity with curl.</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-30">
-  2026年10月30日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 11 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to K8S kubeadm Cluster Deployment in Practice: Harbor with a Self-Built CA and Flannel CNI" href="https://LMDAWN1127.github.io/en/posts/k8s-kubeadm-cluster-harbor-ca/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">
