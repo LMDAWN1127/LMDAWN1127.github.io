@@ -11,7 +11,7 @@
     </image>
     <generator>Hugo</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sat, 31 Oct 2026 15:13:00 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 31 Oct 2026 16:22:00 +0800</lastBuildDate>
     <atom:link href="https://LMDAWN1127.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Harbor 主备部署实战：从安装到 HTTPS 与主备复制</title>
@@ -19,6 +19,20 @@
       <pubDate>Tue, 04 Aug 2026 00:00:00 +0000</pubDate>
       <guid>https://LMDAWN1127.github.io/posts/harbor-master-slave/</guid>
       <description>完整记录 Harbor 企业级镜像仓库的主备部署过程，涵盖 HTTP/HTTPS 双模式安装、自签名证书配置、跨主机主备复制等核心运维技能。</description>
+    </item>
+    <item>
+      <title>K8S 名称空间管理实战：响应式与声明式管理、跨命名空间服务访问</title>
+      <link>https://LMDAWN1127.github.io/posts/k8s-namespace-management/</link>
+      <pubDate>Sat, 31 Oct 2026 16:22:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/posts/k8s-namespace-management/</guid>
+      <description>本文系统讲 K8S 名称空间管理。先介绍名称空间的作用与局部资源/全局资源的区分方法（看 kubectl api-resources 的 NAMESPACED 列）；再用响应式命令完成名称空间的创建、查看、打标签、删除，并用同名 Pod 在 default 与 dawn 两个名称空间各建一个，直观验证隔离效果与删除名称空间时的级联清理；随后切到声明式管理：先从已有资源导出 yaml 做减法，再用 apply 创建带标签的名称空间；最后把 MySQL 放进 dawn、WordPress 放进 kube-public，用跨命名空间短写 &lt;code&gt;db-svc.dawn&lt;/code&gt; 连通数据库，并给出跨命名空间 A 记录的三种写法与实测结果。</description>
+    </item>
+    <item>
+      <title>K8S Pod DNS 策略与 hostNetwork 实战：dnsPolicy 对照实验</title>
+      <link>https://LMDAWN1127.github.io/posts/k8s-pod-dns-policy-hostnetwork/</link>
+      <pubDate>Sat, 31 Oct 2026 16:21:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/posts/k8s-pod-dns-policy-hostnetwork/</guid>
+      <description>本文用一组对照实验讲清 K8S Pod 的 dnsPolicy 与 hostNetwork 的关系。实验组把 Pod 设为 hostNetwork: true 并显式指定 dnsPolicy: ClusterFirstWithHostNet，进容器看 /etc/resolv.conf 指向集群 CoreDNS 且带 svc 搜索域，能解析 db-svc、kubernetes、kube-dns 等名称；对照组只开 hostNetwork、不改 dnsPolicy（默认 ClusterFirst），resolv.conf 变成节点自己的 DNS 且没有搜索域，db-svc 直接解析失败。结论：Pod 一旦使用宿主机网络，就必须把 dnsPolicy 改成 ClusterFirstWithHostNet。</description>
     </item>
     <item>
       <title>K8S 实战：WordPress 部署、NFS 持久化与 CoreDNS 域名解析</title>

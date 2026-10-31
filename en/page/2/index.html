@@ -154,6 +154,50 @@
 <article class="post-entry"> 
   <header class="entry-header">
     <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/en/posts/k8s-troubleshooting-explain-cp-logs/">K8S Troubleshooting Trio in Practice: kubectl explain, cp and logs</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>This article covers the three commands I reach for most when troubleshooting K8S. First build a troubleshooting test image that exits immediately, then use kubectl explain to read the OpenAPI Schema straight from the API Server and find out where a field belongs (no internet needed). Next, override the image’s default CMD with command &#43; args in the Pod definition so a one-shot container stays running and can be inspected with exec. Finally, kubectl cp copies files both ways between the host and a Pod (config in, logs out), and kubectl logs is the first thing to check when a Pod misbehaves — it is how you track down CrashLoopBackOff.</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-30">
+  2026年10月30日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 3 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to K8S Troubleshooting Trio in Practice: kubectl explain, cp and logs" href="https://LMDAWN1127.github.io/en/posts/k8s-troubleshooting-explain-cp-logs/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/en/posts/k8s-volumes-emptydir-hostpath-nfs/">K8S Volumes in Practice: emptyDir, hostPath and NFS</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>This article puts three K8S volume types to work. emptyDir is tied to the Pod lifecycle — a multi-container Pod shows both containers seeing the same data when the volume is mounted into each. hostPath mounts a host directory directly into the Pod; using Elasticsearch 7.17.16, indices survive deleting and recreating the Pod, proving single-node persistence. NFS solves cross-node sharing: configure nfs-kernel-server on the master, install nfs-common on all three nodes, deploy MySQL 8.3.0, write test data, then drift the Pod from worker01 to worker02 with the data fully intact. It closes with the selection rule: emptyDir for sharing inside a Pod, hostPath for single-node persistence, NFS (or distributed storage) when the workload must move across nodes.</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-30">
+  2026年10月30日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 5 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to K8S Volumes in Practice: emptyDir, hostPath and NFS" href="https://LMDAWN1127.github.io/en/posts/k8s-volumes-emptydir-hostpath-nfs/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
       <a href="https://LMDAWN1127.github.io/en/posts/k8s-core-resources-pod-basics/">K8S Core Resource Management and Pod Basics in Practice: Manifests, Multi-Container Pods, Labels and hostNetwork</a>
     </h2>
   </header>
@@ -215,50 +259,6 @@
 </span>
 </footer>
   <a class="entry-link" aria-label="post link to Deploying containerd Runtime and Managing with runc/ctr in Practice" href="https://LMDAWN1127.github.io/en/posts/containerd-runc-ctr-management/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/en/posts/harbor-self-signed-https/">Harbor HTTPS Deployment with a Self-Signed Certificate</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>This hands-on walkthrough configures Harbor with HTTPS using a self-signed certificate. We create the certificate directory, generate a self-signed certificate with openssl (domain harbor.dawn.com, SAN covering both DNS and IP 11.0.1.122), edit harbor.yml to enable HTTPS on port 443, and reinstall with install.sh. Finally we use ss and curl to confirm that port 80 is automatically redirected to 443 and the WebUI is accessible. Self-signed certificates require client trust; in production, use a certificate issued by an official CA to avoid warnings.</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-29">
-  2026年10月29日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 2 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to Harbor HTTPS Deployment with a Self-Signed Certificate" href="https://LMDAWN1127.github.io/en/posts/harbor-self-signed-https/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/en/posts/harbor-keepalived-vip/">Harbor High Availability: Implementing VIP Failover with keepalived</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>This hands-on walkthrough builds a Harbor high-availability solution using keepalived for VIP failover. keepalived is installed on docker01 and docker02, a port-check script is created, and a VRRP instance sharing the virtual IP 11.0.1.250 is configured (docker01 as MASTER with priority 100, docker02 as BACKUP with priority 90). After verifying the VIP currently points to docker01’s Harbor, keepalived on docker01 is stopped manually to observe the VIP drift to docker02 and the Harbor service switch, proving the keepalived HA scheme works.</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-29">
-  2026年10月29日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 3 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to Harbor High Availability: Implementing VIP Failover with keepalived" href="https://LMDAWN1127.github.io/en/posts/harbor-keepalived-vip/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">

@@ -173,6 +173,50 @@
 <article class="post-entry"> 
   <header class="entry-header">
     <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/ja/posts/harbor-self-signed-https/">Harbor 自己署名証明書による HTTPS デプロイ実践</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>本実践では自己署名証明書を用いた HTTPS で Harbor を構成する。証明書ディレクトリを作成し、openssl で自己署名証明書（ドメイン harbor.dawn.com、SAN に DNS と IP 11.0.1.122 を含む）を生成、harbor.yml を編集して 443 ポートの HTTPS を有効化、install.sh で再インストールする。最後に ss と curl で 80 ポートが自動的に 443 へリダイレクトされ WebUI にアクセスできることを確認する。自己署名証明書はクライアント側の信頼が必要で、本番環境では公式 CA が発行した証明書を使用して警告を回避すべきである。</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-29">
+  2026年10月29日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 1 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to Harbor 自己署名証明書による HTTPS デプロイ実践" href="https://LMDAWN1127.github.io/ja/posts/harbor-self-signed-https/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/ja/posts/harbor-keepalived-vip/">Harbor 高可用性：keepalived による VIP フェイルオーバーの実現</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>本実践では keepalived を用いた VIP フェイルオーバーで Harbor の高可用性構成を構築する。docker01 と docker02 に keepalived をインストールし、ポートチェックスクリプトを作成して、仮想 IP 11.0.1.250 を共有する VRRP インスタンス（docker01 を priority 100 の MASTER、docker02 を priority 90 の BACKUP）を設定する。VIP が現在 docker01 の Harbor を指していることを確認後、docker01 の keepalived を手動で停止し、VIP が docker02 に漂着して Harbor サービスが切り替わることを観察し、keepalived の HA 構成が機能することを証明する。</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-29">
+  2026年10月29日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 2 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to Harbor 高可用性：keepalived による VIP フェイルオーバーの実現" href="https://LMDAWN1127.github.io/ja/posts/harbor-keepalived-vip/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
       <a href="https://LMDAWN1127.github.io/ja/posts/docker-registry-to-harbor-migration/">docker registry から Harbor へのイメージ移行と双 Harbor 間同期の実践</a>
     </h2>
   </header>
@@ -234,50 +278,6 @@
 </span>
 </footer>
   <a class="entry-link" aria-label="post link to プライベートイメージレジストリ実践：docker registry と VMware Harbor" href="https://LMDAWN1127.github.io/ja/posts/docker-harbor-private-registry/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/ja/posts/docker-compose-multi-service/">docker-compose でマルチサービスイメージをビルドしコンテナを起動する事例</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>docker-compose の事例を通して、1 つの YAML ファイルで 2 つの HTML5 ゲームサービス（doudizhu と motuo）のイメージビルドとコンテナ管理を統合的にオーケストレーションする方法を示す。compose ファイル（ビルドコンテキスト &#43; 各サービスの Dockerfile）と nginx バーチャルホスト、起動スクリプトを作成し、docker-compose build で 2 つのイメージを一度にコンパイル、up -d でバックグラウンド起動、ps/stop/start/restart/down でライフサイクルを管理し、その後固定ポート &#43; restart: always とランダムポートを設定してアクセスと再起動ポリシーを検証し、最後によく使うコマンドの対照表を提示する。</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-29">
-  2026年10月29日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 8 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to docker-compose でマルチサービスイメージをビルドしコンテナを起動する事例" href="https://LMDAWN1127.github.io/ja/posts/docker-compose-multi-service/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/ja/posts/docker-dockerfile-multistage-build/">Dockerfile マルチステージビルド実戦</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>マルチステージビルド（Multi-Stage Build）で Docker イメージをどうやって大幅に小さくするか実演します。第 1 部では 3 つの FROM ステージ（xixi/haha/最終）で v3.0 をビルドし、最初の 2 ステージが生成した 24MB/2048MB の大きなファイルは最終イメージに入らず、最終イメージは 2 つの小さなログだけを COPY します（7.8MB）。第 2 部では Golang を例に、ステージ 1 で Go SDK を用いて hello バイナリをコンパイルし、ステージ 2 で COPY –from=0 によってバイナリだけをコピーして v3.2 を 9.71MB に抑え、単一ステージの v3.1（259MB）と比較して、マルチステージビルドのスリムなイメージが完全に使えることを示します。</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-29">
-  2026年10月29日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 4 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to Dockerfile マルチステージビルド実戦" href="https://LMDAWN1127.github.io/ja/posts/docker-dockerfile-multistage-build/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">

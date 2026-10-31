@@ -163,6 +163,50 @@
 <article class="post-entry tag-entry"> 
   <header class="entry-header">
     <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/posts/es-jvm-logstash/">ElasticStack 实战：ES JVM 优化与 Logstash 环境搭建及日志处理</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>围绕 ElasticStack 中 ES 与 Logstash 两个组件展开实战：一是 ES 的 JVM 基础环境优化，调整堆内存（-Xms/-Xmx，生产建议物理内存一半且不超 32GB），将 jvm.options 经 scp 分发至 11.0.1.112/113 并三节点重启生效；二是 Logstash 环境搭建，下载安装 logstash-7.17.22、加入 PATH、用 stdin-to-stdout 配置跑通管道；三是用 Logstash 处理自定义业务日志，编写 generate_log.py 造数，借助 mutate 过滤器（split 切分、add_field 加字段、convert 类型转换）将文本日志结构化后写入 Elasticsearch。</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-19">
+  2026年10月19日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 3 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to ElasticStack 实战：ES JVM 优化与 Logstash 环境搭建及日志处理" href="https://LMDAWN1127.github.io/posts/es-jvm-logstash/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/posts/filebeat-modules/">Filebeat 模块（modules）使用实战：启用与 nginx 日志采集</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>围绕 Filebeat 官方 modules 模块展开实战：先介绍模块概念，演示还原 Nginx 访问日志格式并热加载生效；再通过 filebeat modules enable/disable/list 启用 nginx、tomcat 模块（本质是 modules.d 下 *.yml.disabled 重命名为 *.yml）；最后用 nginx 模块采集访问/错误日志写入 Elasticsearch（索引 dawn-log-modules-nginx，模板名 dawn-modules），并在 Kibana 查看数据。</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-18">
+  2026年10月18日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 3 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to Filebeat 模块（modules）使用实战：启用与 nginx 日志采集" href="https://LMDAWN1127.github.io/posts/filebeat-modules/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
       <a href="https://LMDAWN1127.github.io/posts/filebeat-filestream/">Filebeat filestream 采集实战：ndjson 解析、multiline 多行匹配与综合案例</a>
     </h2>
   </header>
@@ -224,50 +268,6 @@
 </span>
 </footer>
   <a class="entry-link" aria-label="post link to Filebeat 多 Input 写入不同 ES 索引与多实例部署实战" href="https://LMDAWN1127.github.io/posts/filebeat-multi-input-multi-instance/"></a>
-</article>
-
-<article class="post-entry tag-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/posts/kibana-query-dashboard/">Kibana 查询与 Dashboard 制作实战：PV、IP、带宽、状态码统计与可视化面板</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>基于已采集进 Elasticsearch 的 Nginx 日志，手把手演示 Kibana 可视化：PV 统计、IP 统计、带宽统计、网站状态码统计、站点访问统计多维查询，以及如何将多个可视化拖拽组合成一张 Dashboard 面板并保存。</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-17">
-  2026年10月17日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 1 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to Kibana 查询与 Dashboard 制作实战：PV、IP、带宽、状态码统计与可视化面板" href="https://LMDAWN1127.github.io/posts/kibana-query-dashboard/"></a>
-</article>
-
-<article class="post-entry tag-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/posts/filebeat-nginx-log-collection/">Filebeat 采集 Nginx 日志实战：自定义 JSON 日志格式、NFS 配置共享与七层 Web 集群</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>围绕 ELK/EFK 日志采集实验展开：自定义 Nginx JSON 日志格式（dawn_nginx_json），基于 NFS 实现三节点 Filebeat 配置共享，EFK 架构采集 Nginx 日志至 Elasticsearch（索引 dawn-log-nginx），Filebeat 解析 JSON 格式日志（json.keys_under_root 关键配置），以及基于 Nginx 七层分流的 Web 集群部署与 Filebeat 日志采集实战。</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-16">
-  2026年10月16日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 6 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to Filebeat 采集 Nginx 日志实战：自定义 JSON 日志格式、NFS 配置共享与七层 Web 集群" href="https://LMDAWN1127.github.io/posts/filebeat-nginx-log-collection/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">

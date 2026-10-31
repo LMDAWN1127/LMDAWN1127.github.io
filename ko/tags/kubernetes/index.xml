@@ -11,8 +11,22 @@
     </image>
     <generator>Hugo</generator>
     <language>ko</language>
-    <lastBuildDate>Sat, 31 Oct 2026 15:13:00 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 31 Oct 2026 16:22:00 +0800</lastBuildDate>
     <atom:link href="https://LMDAWN1127.github.io/ko/tags/kubernetes/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>K8S 네임스페이스 관리 실전: 명령형/선언형 관리와 네임스페이스 간 서비스 접근</title>
+      <link>https://LMDAWN1127.github.io/ko/posts/k8s-namespace-management/</link>
+      <pubDate>Sat, 31 Oct 2026 16:22:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/ko/posts/k8s-namespace-management/</guid>
+      <description>이 글은 K8S 네임스페이스 관리를 체계적으로 다룬다. 먼저 네임스페이스의 역할과 네임스페이스 리소스/클러스터 전체 리소스 구분법（kubectl api-resources 의 NAMESPACED 열）. 이어 명령형 명령으로 네임스페이스 생성, 조회, 라벨링, 삭제를 하고, default 와 dawn 에 같은 이름의 Pod xiuxian-v1 을 각각 만들어 격리 효과와 네임스페이스 삭제 시 연쇄 삭제를 확인한다. 다음은 선언형 관리다. 기존 리소스에서 yaml 을 뽑아 빼기 작업을 한 뒤 apply 로 라벨 있는 네임스페이스를 만든다. 마지막으로 MySQL 은 dawn, WordPress 는 kube-public 에 두고 네임스페이스 간 축약형 db-svc.dawn 으로 DB 에 연결하며, 네임스페이스 간 A 레코드 세 가지 작성법과 실측 결과를 정리한다.</description>
+    </item>
+    <item>
+      <title>K8S Pod DNS 정책과 hostNetwork 실전: dnsPolicy 비교 실험</title>
+      <link>https://LMDAWN1127.github.io/ko/posts/k8s-pod-dns-policy-hostnetwork/</link>
+      <pubDate>Sat, 31 Oct 2026 16:21:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/ko/posts/k8s-pod-dns-policy-hostnetwork/</guid>
+      <description>이 글은 대조 실험으로 K8S Pod 의 dnsPolicy 와 hostNetwork 관계를 설명한다. 실험군은 hostNetwork: true 와 함께 dnsPolicy: ClusterFirstWithHostNet 을 명시한다. 컨테이너 안 /etc/resolv.conf 는 클러스터 CoreDNS 를 가리키고 svc 검색 도메인도 있어 db-svc, kubernetes, kube-dns 가 모두 해석된다. 대조군은 hostNetwork 만 켜고 dnsPolicy 는 기본값 ClusterFirst 로 둔다. resolv.conf 가 노드 자신의 DNS 가 되고 검색 도메인도 없어 db-svc 해석이 실패한다. 결론: Pod 가 호스트 네트워크를 쓰면 dnsPolicy 를 반드시 ClusterFirstWithHostNet 으로 바꿔야 한다.</description>
+    </item>
     <item>
       <title>K8S 실전: WordPress 배포, NFS 영속화 그리고 CoreDNS 이름 해석</title>
       <link>https://LMDAWN1127.github.io/ko/posts/k8s-wordpress-deploy-coredns/</link>

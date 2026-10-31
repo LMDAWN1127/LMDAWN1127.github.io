@@ -28,7 +28,7 @@
                 />
   </url><url>
     <loc>https://LMDAWN1127.github.io/ja/categories/</loc>
-    <lastmod>2026-10-31T15:13:00+08:00</lastmod>
+    <lastmod>2026-10-31T16:22:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
@@ -53,7 +53,7 @@
                 />
   </url><url>
     <loc>https://LMDAWN1127.github.io/ja/</loc>
-    <lastmod>2026-10-31T15:13:00+08:00</lastmod>
+    <lastmod>2026-10-31T16:22:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
@@ -78,7 +78,7 @@
                 />
   </url><url>
     <loc>https://LMDAWN1127.github.io/ja/categories/devops/</loc>
-    <lastmod>2026-10-31T15:13:00+08:00</lastmod>
+    <lastmod>2026-10-31T16:22:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
@@ -100,6 +100,131 @@
                 rel="alternate"
                 hreflang="ja"
                 href="https://LMDAWN1127.github.io/ja/categories/devops/"
+                />
+  </url><url>
+    <loc>https://LMDAWN1127.github.io/ja/posts/k8s-namespace-management/</loc>
+    <lastmod>2026-10-31T16:22:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://LMDAWN1127.github.io/posts/k8s-namespace-management/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://LMDAWN1127.github.io/en/posts/k8s-namespace-management/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="ko"
+                href="https://LMDAWN1127.github.io/ko/posts/k8s-namespace-management/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="ja"
+                href="https://LMDAWN1127.github.io/ja/posts/k8s-namespace-management/"
+                />
+  </url><url>
+    <loc>https://LMDAWN1127.github.io/ja/tags/kubernetes/</loc>
+    <lastmod>2026-10-31T16:22:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://LMDAWN1127.github.io/tags/kubernetes/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://LMDAWN1127.github.io/en/tags/kubernetes/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="ko"
+                href="https://LMDAWN1127.github.io/ko/tags/kubernetes/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="ja"
+                href="https://LMDAWN1127.github.io/ja/tags/kubernetes/"
+                />
+  </url><url>
+    <loc>https://LMDAWN1127.github.io/ja/posts/</loc>
+    <lastmod>2026-10-31T16:22:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://LMDAWN1127.github.io/posts/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://LMDAWN1127.github.io/en/posts/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="ko"
+                href="https://LMDAWN1127.github.io/ko/posts/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="ja"
+                href="https://LMDAWN1127.github.io/ja/posts/"
+                />
+  </url><url>
+    <loc>https://LMDAWN1127.github.io/ja/tags/</loc>
+    <lastmod>2026-10-31T16:22:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://LMDAWN1127.github.io/tags/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://LMDAWN1127.github.io/en/tags/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="ko"
+                href="https://LMDAWN1127.github.io/ko/tags/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="ja"
+                href="https://LMDAWN1127.github.io/ja/tags/"
+                />
+  </url><url>
+    <loc>https://LMDAWN1127.github.io/ja/posts/k8s-pod-dns-policy-hostnetwork/</loc>
+    <lastmod>2026-10-31T16:21:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://LMDAWN1127.github.io/posts/k8s-pod-dns-policy-hostnetwork/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://LMDAWN1127.github.io/en/posts/k8s-pod-dns-policy-hostnetwork/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="ko"
+                href="https://LMDAWN1127.github.io/ko/posts/k8s-pod-dns-policy-hostnetwork/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="ja"
+                href="https://LMDAWN1127.github.io/ja/posts/k8s-pod-dns-policy-hostnetwork/"
                 />
   </url><url>
     <loc>https://LMDAWN1127.github.io/ja/posts/k8s-wordpress-deploy-coredns/</loc>
@@ -125,81 +250,6 @@
                 rel="alternate"
                 hreflang="ja"
                 href="https://LMDAWN1127.github.io/ja/posts/k8s-wordpress-deploy-coredns/"
-                />
-  </url><url>
-    <loc>https://LMDAWN1127.github.io/ja/tags/kubernetes/</loc>
-    <lastmod>2026-10-31T15:13:00+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-    <xhtml:link
-                rel="alternate"
-                hreflang="zh-cn"
-                href="https://LMDAWN1127.github.io/tags/kubernetes/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="https://LMDAWN1127.github.io/en/tags/kubernetes/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="ko"
-                href="https://LMDAWN1127.github.io/ko/tags/kubernetes/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="ja"
-                href="https://LMDAWN1127.github.io/ja/tags/kubernetes/"
-                />
-  </url><url>
-    <loc>https://LMDAWN1127.github.io/ja/posts/</loc>
-    <lastmod>2026-10-31T15:13:00+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-    <xhtml:link
-                rel="alternate"
-                hreflang="zh-cn"
-                href="https://LMDAWN1127.github.io/posts/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="https://LMDAWN1127.github.io/en/posts/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="ko"
-                href="https://LMDAWN1127.github.io/ko/posts/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="ja"
-                href="https://LMDAWN1127.github.io/ja/posts/"
-                />
-  </url><url>
-    <loc>https://LMDAWN1127.github.io/ja/tags/</loc>
-    <lastmod>2026-10-31T15:13:00+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-    <xhtml:link
-                rel="alternate"
-                hreflang="zh-cn"
-                href="https://LMDAWN1127.github.io/tags/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="https://LMDAWN1127.github.io/en/tags/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="ko"
-                href="https://LMDAWN1127.github.io/ko/tags/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="ja"
-                href="https://LMDAWN1127.github.io/ja/tags/"
                 />
   </url><url>
     <loc>https://LMDAWN1127.github.io/ja/posts/k8s-rc-svc-replicas-service-discovery/</loc>

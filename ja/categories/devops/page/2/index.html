@@ -163,6 +163,50 @@
 <article class="post-entry tag-entry"> 
   <header class="entry-header">
     <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/ja/posts/k8s-troubleshooting-explain-cp-logs/">K8S トラブルシューティング三種の神器実践：kubectl explain、cp、logs</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>本記事は K8S の日常トラブルシューティングで最もよく使う 3 つのコマンドをまとめた。まず実行すると即座に終了する troubleshooting 用テストイメージをビルドし、次に kubectl explain で API Server の OpenAPI Schema を直接読んでフィールドの所属を調べる（ネットワーク不要）。続いて Pod 定義の command &#43; args でイメージのデフォルト CMD を上書きし、一度きりで終了するコンテナを常駐させ exec で調査できるようにする。最後に kubectl cp でホストと Pod 間を双方向にファイルコピーし（設定を入れ、ログを出す）、Pod 異常時に最初に見るべき kubectl logs —— CrashLoopBackOff はこれで特定する。</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-30">
+  2026年10月30日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 2 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to K8S トラブルシューティング三種の神器実践：kubectl explain、cp、logs" href="https://LMDAWN1127.github.io/ja/posts/k8s-troubleshooting-explain-cp-logs/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/ja/posts/k8s-volumes-emptydir-hostpath-nfs/">K8S ストレージボリューム実践：emptyDir、hostPath と NFS</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>本記事は K8S の 3 種類のボリュームを実践する。emptyDir は Pod のライフサイクルに紐づき、マルチコンテナ Pod で同じボリュームを各コンテナにマウントすると両方から同じデータが見えることを検証する。hostPath はホストのディレクトリを直接 Pod にマウントする。Elasticsearch 7.17.16 を使い、Pod を削除して再作成してもインデックスが残ることで単一ノードの永続化を証明する。NFS はノード間共有を解決する。master で nfs-kernel-server を構成し、3 ノードに nfs-common を入れ、MySQL 8.3.0 をデプロイしてテストデータを書き込み、Pod を worker01 から worker02 へ漂移させてもデータが完全に残ることを確認する。最後に選択基準をまとめる。Pod 内の共有は emptyDir、単一ノードの永続化は hostPath、ノード間の漂移が必要なら NFS（または分散ストレージ）。</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-30">
+  2026年10月30日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 4 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to K8S ストレージボリューム実践：emptyDir、hostPath と NFS" href="https://LMDAWN1127.github.io/ja/posts/k8s-volumes-emptydir-hostpath-nfs/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
       <a href="https://LMDAWN1127.github.io/ja/posts/k8s-core-resources-pod-basics/">K8S コアリソース管理と Pod 基礎実践：マニフェスト、マルチコンテナ Pod、ラベルと hostNetwork</a>
     </h2>
   </header>
@@ -224,50 +268,6 @@
 </span>
 </footer>
   <a class="entry-link" aria-label="post link to containerd コンテナランタイムの導入と runc/ctr による管理実践" href="https://LMDAWN1127.github.io/ja/posts/containerd-runc-ctr-management/"></a>
-</article>
-
-<article class="post-entry tag-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/ja/posts/harbor-self-signed-https/">Harbor 自己署名証明書による HTTPS デプロイ実践</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>本実践では自己署名証明書を用いた HTTPS で Harbor を構成する。証明書ディレクトリを作成し、openssl で自己署名証明書（ドメイン harbor.dawn.com、SAN に DNS と IP 11.0.1.122 を含む）を生成、harbor.yml を編集して 443 ポートの HTTPS を有効化、install.sh で再インストールする。最後に ss と curl で 80 ポートが自動的に 443 へリダイレクトされ WebUI にアクセスできることを確認する。自己署名証明書はクライアント側の信頼が必要で、本番環境では公式 CA が発行した証明書を使用して警告を回避すべきである。</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-29">
-  2026年10月29日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 1 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to Harbor 自己署名証明書による HTTPS デプロイ実践" href="https://LMDAWN1127.github.io/ja/posts/harbor-self-signed-https/"></a>
-</article>
-
-<article class="post-entry tag-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/ja/posts/harbor-keepalived-vip/">Harbor 高可用性：keepalived による VIP フェイルオーバーの実現</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>本実践では keepalived を用いた VIP フェイルオーバーで Harbor の高可用性構成を構築する。docker01 と docker02 に keepalived をインストールし、ポートチェックスクリプトを作成して、仮想 IP 11.0.1.250 を共有する VRRP インスタンス（docker01 を priority 100 の MASTER、docker02 を priority 90 の BACKUP）を設定する。VIP が現在 docker01 の Harbor を指していることを確認後、docker01 の keepalived を手動で停止し、VIP が docker02 に漂着して Harbor サービスが切り替わることを観察し、keepalived の HA 構成が機能することを証明する。</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-29">
-  2026年10月29日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 2 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to Harbor 高可用性：keepalived による VIP フェイルオーバーの実現" href="https://LMDAWN1127.github.io/ja/posts/harbor-keepalived-vip/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">

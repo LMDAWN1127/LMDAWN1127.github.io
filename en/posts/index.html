@@ -195,6 +195,50 @@
 <article class="post-entry"> 
   <header class="entry-header">
     <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/en/posts/k8s-namespace-management/">K8S Namespace Management in Practice: Imperative and Declarative Management, Cross-Namespace Service Access</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>This article walks through K8S namespace management. It starts with what namespaces do and how to tell namespaced from cluster-scoped resources (the NAMESPACED column of kubectl api-resources). Then it creates, lists, labels and deletes namespaces with imperative commands, and creates a Pod named xiuxian-v1 in both default and dawn to demonstrate isolation and the cascade delete that happens when a namespace is removed. Next it switches to declarative management: export a YAML from an existing resource and subtract from it, then apply to create a labeled namespace. Finally it puts MySQL in dawn and WordPress in kube-public, connects them using the cross-namespace short form db-svc.dawn, and lists the three ways to write a cross-namespace A record with the measured results.</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-31">
+  2026年10月31日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 11 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to K8S Namespace Management in Practice: Imperative and Declarative Management, Cross-Namespace Service Access" href="https://LMDAWN1127.github.io/en/posts/k8s-namespace-management/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/en/posts/k8s-pod-dns-policy-hostnetwork/">K8S Pod DNS Policy and hostNetwork in Practice: A dnsPolicy Comparison</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>This article uses a control experiment to explain how a K8S Pod’s dnsPolicy interacts with hostNetwork. The test Pod sets hostNetwork: true and explicitly sets dnsPolicy: ClusterFirstWithHostNet; inside the container /etc/resolv.conf points at the cluster CoreDNS and carries the svc search domains, so db-svc, kubernetes and kube-dns all resolve. The control Pod only enables hostNetwork and leaves dnsPolicy at its ClusterFirst default; resolv.conf becomes the node’s own DNS with no search domains, and db-svc fails to resolve outright. Conclusion: once a Pod uses the host network, you must set dnsPolicy to ClusterFirstWithHostNet.</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-31">
+  2026年10月31日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 3 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to K8S Pod DNS Policy and hostNetwork in Practice: A dnsPolicy Comparison" href="https://LMDAWN1127.github.io/en/posts/k8s-pod-dns-policy-hostnetwork/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
       <a href="https://LMDAWN1127.github.io/en/posts/k8s-wordpress-deploy-coredns/">K8S in Practice: WordPress Deployment, NFS Persistence and CoreDNS Name Resolution</a>
     </h2>
   </header>
@@ -234,50 +278,6 @@
 </span>
 </footer>
   <a class="entry-link" aria-label="post link to K8S Replica Control and Service Discovery in Practice: RC, ClusterIP and NodePort" href="https://LMDAWN1127.github.io/en/posts/k8s-rc-svc-replicas-service-discovery/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/en/posts/k8s-troubleshooting-explain-cp-logs/">K8S Troubleshooting Trio in Practice: kubectl explain, cp and logs</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>This article covers the three commands I reach for most when troubleshooting K8S. First build a troubleshooting test image that exits immediately, then use kubectl explain to read the OpenAPI Schema straight from the API Server and find out where a field belongs (no internet needed). Next, override the image’s default CMD with command &#43; args in the Pod definition so a one-shot container stays running and can be inspected with exec. Finally, kubectl cp copies files both ways between the host and a Pod (config in, logs out), and kubectl logs is the first thing to check when a Pod misbehaves — it is how you track down CrashLoopBackOff.</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-30">
-  2026年10月30日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 3 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to K8S Troubleshooting Trio in Practice: kubectl explain, cp and logs" href="https://LMDAWN1127.github.io/en/posts/k8s-troubleshooting-explain-cp-logs/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/en/posts/k8s-volumes-emptydir-hostpath-nfs/">K8S Volumes in Practice: emptyDir, hostPath and NFS</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>This article puts three K8S volume types to work. emptyDir is tied to the Pod lifecycle — a multi-container Pod shows both containers seeing the same data when the volume is mounted into each. hostPath mounts a host directory directly into the Pod; using Elasticsearch 7.17.16, indices survive deleting and recreating the Pod, proving single-node persistence. NFS solves cross-node sharing: configure nfs-kernel-server on the master, install nfs-common on all three nodes, deploy MySQL 8.3.0, write test data, then drift the Pod from worker01 to worker02 with the data fully intact. It closes with the selection rule: emptyDir for sharing inside a Pod, hostPath for single-node persistence, NFS (or distributed storage) when the workload must move across nodes.</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-30">
-  2026年10月30日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 5 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to K8S Volumes in Practice: emptyDir, hostPath and NFS" href="https://LMDAWN1127.github.io/en/posts/k8s-volumes-emptydir-hostpath-nfs/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">

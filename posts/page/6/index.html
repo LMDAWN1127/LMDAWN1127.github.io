@@ -173,6 +173,50 @@
 <article class="post-entry"> 
   <header class="entry-header">
     <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/posts/docker-container-states/">Docker 实战：容器状态详解——Up / Exited / Created / Paused</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>逐个复现 docker ps 中四种容器状态的产生方式——Up、Exited（含退出状态码语义：0 为正常退出、137 为被 SIGKILL）、Created（docker create 后尚未 start）、Paused（暂停对外服务，且与 restart 的时间重新计时行为不同）。</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-28">
+  2026年10月28日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 2 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to Docker 实战：容器状态详解——Up / Exited / Created / Paused" href="https://LMDAWN1127.github.io/posts/docker-container-states/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/posts/docker-namespace-cgroup-resource-limit/">Docker 实战：Linux Namespace 网络隔离与 CGroup 资源限制</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>用 ip netns 手工搭建 Linux 网络命名空间，经 veth pair 与 NAT 打通外网；再看 Docker 容器共享 net namespace；最后用 cgroup v2 做 CPU/内存限额压测并复现 OOM kill，完整串起容器的隔离(Namespace)与限制(CGroup)两大底层机制。</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-28">
+  2026年10月28日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 9 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to Docker 实战：Linux Namespace 网络隔离与 CGroup 资源限制" href="https://LMDAWN1127.github.io/posts/docker-namespace-cgroup-resource-limit/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
       <a href="https://LMDAWN1127.github.io/posts/docker-overlay-cross-host-networking/">Docker 实战：Overlay 实现容器跨主机网络互联与 WordPress 实战</a>
     </h2>
   </header>
@@ -234,50 +278,6 @@
 </span>
 </footer>
   <a class="entry-link" aria-label="post link to Docker 实战：Docker 部署 Zabbix 监控与 WordPress 应用" href="https://LMDAWN1127.github.io/posts/docker-zabbix-wordpress-deployment/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/posts/docker-single-host-network/">Docker 实战：单机网络类型与容器间通信方案详解</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>Docker 单机网络：none/bridge/host/container/custom 五种类型与案例，以及容器间通信三方案——/etc/hosts 解析、–link 关联、自定义网络（含创建/inspect/prune/自定义子网与手动 IP）。</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-27">
-  2026年10月27日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 14 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to Docker 实战：单机网络类型与容器间通信方案详解" href="https://LMDAWN1127.github.io/posts/docker-single-host-network/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/posts/docker-multi-bridge-network-isolation/">Docker 实战：基于多 Bridge 网络的容器隔离与跨网络通信</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>通过 xixi 与 haha 两个自定义 Bridge 网络，演示 Docker 默认网络隔离机制，以及 docker network connect/disconnect 在运行时动态加入/退出网络、实现跨网络容器互通的轻量组网手段。</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-27">
-  2026年10月27日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 6 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to Docker 实战：基于多 Bridge 网络的容器隔离与跨网络通信" href="https://LMDAWN1127.github.io/posts/docker-multi-bridge-network-isolation/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">

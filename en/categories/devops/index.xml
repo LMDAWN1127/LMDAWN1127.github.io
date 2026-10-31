@@ -11,7 +11,7 @@
     </image>
     <generator>Hugo</generator>
     <language>en</language>
-    <lastBuildDate>Sat, 31 Oct 2026 15:13:00 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 31 Oct 2026 16:22:00 +0800</lastBuildDate>
     <atom:link href="https://LMDAWN1127.github.io/en/categories/devops/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Harbor Active-Standby Deployment: From Installation to HTTPS and Replication</title>
@@ -19,6 +19,20 @@
       <pubDate>Tue, 04 Aug 2026 00:00:00 +0000</pubDate>
       <guid>https://LMDAWN1127.github.io/en/posts/harbor-master-slave/</guid>
       <description>Complete guide to deploying Harbor enterprise Docker registry with active-standby architecture, HTTP/HTTPS modes, self-signed certificates, and cross-host replication.</description>
+    </item>
+    <item>
+      <title>K8S Namespace Management in Practice: Imperative and Declarative Management, Cross-Namespace Service Access</title>
+      <link>https://LMDAWN1127.github.io/en/posts/k8s-namespace-management/</link>
+      <pubDate>Sat, 31 Oct 2026 16:22:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/posts/k8s-namespace-management/</guid>
+      <description>This article walks through K8S namespace management. It starts with what namespaces do and how to tell namespaced from cluster-scoped resources (the NAMESPACED column of kubectl api-resources). Then it creates, lists, labels and deletes namespaces with imperative commands, and creates a Pod named xiuxian-v1 in both default and dawn to demonstrate isolation and the cascade delete that happens when a namespace is removed. Next it switches to declarative management: export a YAML from an existing resource and subtract from it, then apply to create a labeled namespace. Finally it puts MySQL in dawn and WordPress in kube-public, connects them using the cross-namespace short form db-svc.dawn, and lists the three ways to write a cross-namespace A record with the measured results.</description>
+    </item>
+    <item>
+      <title>K8S Pod DNS Policy and hostNetwork in Practice: A dnsPolicy Comparison</title>
+      <link>https://LMDAWN1127.github.io/en/posts/k8s-pod-dns-policy-hostnetwork/</link>
+      <pubDate>Sat, 31 Oct 2026 16:21:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/posts/k8s-pod-dns-policy-hostnetwork/</guid>
+      <description>This article uses a control experiment to explain how a K8S Pod&amp;rsquo;s dnsPolicy interacts with hostNetwork. The test Pod sets hostNetwork: true and explicitly sets dnsPolicy: ClusterFirstWithHostNet; inside the container /etc/resolv.conf points at the cluster CoreDNS and carries the svc search domains, so db-svc, kubernetes and kube-dns all resolve. The control Pod only enables hostNetwork and leaves dnsPolicy at its ClusterFirst default; resolv.conf becomes the node&amp;rsquo;s own DNS with no search domains, and db-svc fails to resolve outright. Conclusion: once a Pod uses the host network, you must set dnsPolicy to ClusterFirstWithHostNet.</description>
     </item>
     <item>
       <title>K8S in Practice: WordPress Deployment, NFS Persistence and CoreDNS Name Resolution</title>

@@ -173,6 +173,50 @@
 <article class="post-entry"> 
   <header class="entry-header">
     <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/posts/k8s-troubleshooting-explain-cp-logs/">K8S 排障三板斧实战：kubectl explain、cp 与 logs</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>本文总结 K8S 日常排障最常用的三个命令。先构建一个执行完立即退出的 troubleshooting 测试镜像，再用 kubectl explain 直接读取 API Server 的 OpenAPI Schema 查字段归属（无需联网查文档）；随后用 Pod 定义中的 command &#43; args 覆盖镜像默认 CMD，把一次性退出的容器改成长驻运行以便 exec 排查；最后演示 kubectl cp 在宿主机与 Pod 之间双向拷贝文件（拷配置进去、拷日志出来），以及 Pod 异常时第一手要看的 kubectl logs——CrashLoopBackOff 就靠它定位。</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-30">
+  2026年10月30日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 2 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to K8S 排障三板斧实战：kubectl explain、cp 与 logs" href="https://LMDAWN1127.github.io/posts/k8s-troubleshooting-explain-cp-logs/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/posts/k8s-volumes-emptydir-hostpath-nfs/">K8S 存储卷实战：emptyDir、hostPath 与 NFS</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>本文实战 K8S 三类存储卷。emptyDir 生命周期与 Pod 绑定，用多容器 Pod 验证同一卷挂载到两个容器后数据共享；hostPath 把宿主机目录直接挂进 Pod，以 Elasticsearch 7.17.16 为例建索引后删除 Pod 重建，验证单节点持久化；NFS 解决跨节点共享问题，master 上配 nfs-kernel-server、三节点装 nfs-common，部署 MySQL 8.3.0 写入测试数据后把 Pod 从 worker01 漂移到 worker02，数据完整保留。最后给出选型结论：Pod 内共享用 emptyDir，单节点持久化用 hostPath，需要跨节点漂移用 NFS 或分布式存储。</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-30">
+  2026年10月30日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 4 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to K8S 存储卷实战：emptyDir、hostPath 与 NFS" href="https://LMDAWN1127.github.io/posts/k8s-volumes-emptydir-hostpath-nfs/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
       <a href="https://LMDAWN1127.github.io/posts/k8s-core-resources-pod-basics/">K8S 核心资源管理与 Pod 基础实战：资源清单、多容器 Pod、标签与 hostNetwork</a>
     </h2>
   </header>
@@ -234,50 +278,6 @@
 </span>
 </footer>
   <a class="entry-link" aria-label="post link to containerd 容器运行时部署与 runc/ctr 管理实战" href="https://LMDAWN1127.github.io/posts/containerd-runc-ctr-management/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/posts/harbor-self-signed-https/">Harbor 基于自签名证书的 HTTPS 部署实战</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>本文实战演示为 Harbor 配置基于自签名证书的 HTTPS 访问。依次创建证书目录、用 openssl 生成自签名证书（域名 harbor.dawn.com，SAN 同时包含 DNS 与 IP 11.0.1.122）、修改 harbor.yml 启用 443 端口 HTTPS、重新执行 install.sh 安装，最后通过 ss 与 curl 验证 80 端口已自动重定向到 443、WebUI 可正常访问。自签名证书需客户端信任，生产环境建议改用官方 CA 签发的证书以避免告警。</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-29">
-  2026年10月29日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 1 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to Harbor 基于自签名证书的 HTTPS 部署实战" href="https://LMDAWN1127.github.io/posts/harbor-self-signed-https/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/posts/harbor-keepalived-vip/">Harbor 高可用方案：用 keepalived 实现 VIP 漂移</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>本文实战演示用 keepalived 为 Harbor 实现 VIP 漂移的高可用方案。在 docker01、docker02 两台节点安装 keepalived，编写端口检测脚本，配置共享虚拟 IP 11.0.1.250 的 VRRP 实例（docker01 为 priority 100 的 MASTER、docker02 为 priority 90 的 BACKUP）。先验证 VIP 当前指向 docker01 的 Harbor，再手动停止 docker01 的 keepalived，观察 VIP 漂移到 docker02、Harbor 服务随之切换，证实 keepalived 高可用方案可行。</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-29">
-  2026年10月29日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 2 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to Harbor 高可用方案：用 keepalived 实现 VIP 漂移" href="https://LMDAWN1127.github.io/posts/harbor-keepalived-vip/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">

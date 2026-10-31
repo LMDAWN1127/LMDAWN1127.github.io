@@ -154,6 +154,55 @@
 <article class="post-entry"> 
   <header class="entry-header">
     <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/posts/docker-binary-script-install/">Docker 安装实战：二进制部署与一键脚本部署</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>Docker 安装实战：二进制部署与一键脚本部署 1. docker基于包的方式安装 以 Ubuntu 为例，通过 apt 包管理方式安装最为简单，一条命令即可完成：
+1 root@docker01:~# apt update &amp;&amp; apt install -y docker.io 这种方式安装的版本由 Ubuntu 软件源决定，适合快速验证；如需安装最新版本或指定版本，可参照 Docker 官方文档添加软件源后安装 docker-ce，或使用下面的二进制部署方式。
+参考链接:
+https://docs.docker.com/engine/install/ubuntu/
+2. 二进制部署docker环境 下载软件包 1 root@docker01:~# wget https://download.docker.com/linux/static/stable/x86_64/docker-27.0.3.tgz 解压软件包 1 root@docker01:~# tar xf docker-27.0.3.tgz 拷贝到PATH变量 1 root@docker01:~# cp docker/* /usr/bin/ 启动docker 1 root@docker01:~# dockerd 查看docker的版本号 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 root@docker01:~# docker version Client: Version: 27.0.3 API version: 1.46 Go version: go1.21.11 Git commit: 7d4bcd8 Built: Sat Jun 29 00:01:25 2024 OS/Arch: linux/amd64 Context: default Server: Docker Engine - Community Engine: Version: 27.0.3 API version: 1.46 (minimum version 1.24) Go version: go1.21.11 Git commit: 662f78c Built: Sat Jun 29 00:03:05 2024 OS/Arch: linux/amd64 Experimental: false containerd: Version: v1.7.18 GitCommit: ae71819c4f5e67bb4d5ae76a6b735f29cc25774e runc: Version: 1.1.13 GitCommit: v1.1.13-0-g58aa920 docker-init: Version: 0.19.0 GitCommit: de40ad0 3. 卸载二进制的docker环境 注意：下面的卸载命令通过遍历当前目录下的 docker 文件夹来删除 /usr/bin 中的相关文件，执行前需先进入当初解压 docker-27.0.3.tgz 时生成的 docker 目录。
+...</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-23">
+  2026年10月23日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 2 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to Docker 安装实战：二进制部署与一键脚本部署" href="https://LMDAWN1127.github.io/posts/docker-binary-script-install/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/posts/elfk-kafka-pipeline/">ELFK 实战：Filebeat 经 Kafka 到 Logstash 再到 ES 的数据管道</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>打通 ELFK 与 Kafka 的数据管道：Filebeat tcp 输入经 output.kafka 写入集群，Logstash 以 kafka input &#43; json filter 消费并按天写入 ES 索引，Kibana 端到端验证。</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-22">
+  2026年10月22日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 1 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to ELFK 实战：Filebeat 经 Kafka 到 Logstash 再到 ES 的数据管道" href="https://LMDAWN1127.github.io/posts/elfk-kafka-pipeline/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
       <a href="https://LMDAWN1127.github.io/posts/kafka-producer-consumer/">Kafka 生产者与消费者实战：消息收发、offset 与消费者组</a>
     </h2>
   </header>
@@ -215,50 +264,6 @@
 </span>
 </footer>
   <a class="entry-link" aria-label="post link to Kafka topic 操作实战：增删改查与副本分区约束" href="https://LMDAWN1127.github.io/posts/kafka-topic-operations/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/posts/kafka-deployment-terminology/">Kafka 实战：单点与集群部署及核心术语</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>Kafka 3.7.1 实战：单点部署（对接已有 ZooKeeper 集群）、三节点集群搭建（broker.id 差异化配置与启动验证）、临时 znode 注册关系印证，以及 cluster/broker/producer/consumer/topic/partition/replica 核心术语梳理。</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-22">
-  2026年10月22日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 1 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to Kafka 实战：单点与集群部署及核心术语" href="https://LMDAWN1127.github.io/posts/kafka-deployment-terminology/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/posts/zookeeper-four-letter-jvm-tuning/">ZooKeeper 四字命令与 JVM 调优实战</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>ZooKeeper 四字命令实战：srvr/ruok/conf 查看运行时状态与集群配置，以及 JVM 堆内存调优（ZK_SERVER_HEAP）全流程验证与生产容量建议。</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-22">
-  2026年10月22日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 2 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to ZooKeeper 四字命令与 JVM 调优实战" href="https://LMDAWN1127.github.io/posts/zookeeper-four-letter-jvm-tuning/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">

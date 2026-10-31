@@ -185,6 +185,50 @@
 <article class="post-entry tag-entry"> 
   <header class="entry-header">
     <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/posts/k8s-namespace-management/">K8S 名称空间管理实战：响应式与声明式管理、跨命名空间服务访问</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>本文系统讲 K8S 名称空间管理。先介绍名称空间的作用与局部资源/全局资源的区分方法（看 kubectl api-resources 的 NAMESPACED 列）；再用响应式命令完成名称空间的创建、查看、打标签、删除，并用同名 Pod 在 default 与 dawn 两个名称空间各建一个，直观验证隔离效果与删除名称空间时的级联清理；随后切到声明式管理：先从已有资源导出 yaml 做减法，再用 apply 创建带标签的名称空间；最后把 MySQL 放进 dawn、WordPress 放进 kube-public，用跨命名空间短写 db-svc.dawn 连通数据库，并给出跨命名空间 A 记录的三种写法与实测结果。</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-31">
+  2026年10月31日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 9 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to K8S 名称空间管理实战：响应式与声明式管理、跨命名空间服务访问" href="https://LMDAWN1127.github.io/posts/k8s-namespace-management/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/posts/k8s-pod-dns-policy-hostnetwork/">K8S Pod DNS 策略与 hostNetwork 实战：dnsPolicy 对照实验</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>本文用一组对照实验讲清 K8S Pod 的 dnsPolicy 与 hostNetwork 的关系。实验组把 Pod 设为 hostNetwork: true 并显式指定 dnsPolicy: ClusterFirstWithHostNet，进容器看 /etc/resolv.conf 指向集群 CoreDNS 且带 svc 搜索域，能解析 db-svc、kubernetes、kube-dns 等名称；对照组只开 hostNetwork、不改 dnsPolicy（默认 ClusterFirst），resolv.conf 变成节点自己的 DNS 且没有搜索域，db-svc 直接解析失败。结论：Pod 一旦使用宿主机网络，就必须把 dnsPolicy 改成 ClusterFirstWithHostNet。</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-31">
+  2026年10月31日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 2 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to K8S Pod DNS 策略与 hostNetwork 实战：dnsPolicy 对照实验" href="https://LMDAWN1127.github.io/posts/k8s-pod-dns-policy-hostnetwork/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
       <a href="https://LMDAWN1127.github.io/posts/k8s-wordpress-deploy-coredns/">K8S 实战：WordPress 部署、NFS 持久化与 CoreDNS 域名解析</a>
     </h2>
   </header>
@@ -224,50 +268,6 @@
 </span>
 </footer>
   <a class="entry-link" aria-label="post link to K8S 副本控制与服务发现实战：RC、ClusterIP 与 NodePort" href="https://LMDAWN1127.github.io/posts/k8s-rc-svc-replicas-service-discovery/"></a>
-</article>
-
-<article class="post-entry tag-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/posts/k8s-troubleshooting-explain-cp-logs/">K8S 排障三板斧实战：kubectl explain、cp 与 logs</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>本文总结 K8S 日常排障最常用的三个命令。先构建一个执行完立即退出的 troubleshooting 测试镜像，再用 kubectl explain 直接读取 API Server 的 OpenAPI Schema 查字段归属（无需联网查文档）；随后用 Pod 定义中的 command &#43; args 覆盖镜像默认 CMD，把一次性退出的容器改成长驻运行以便 exec 排查；最后演示 kubectl cp 在宿主机与 Pod 之间双向拷贝文件（拷配置进去、拷日志出来），以及 Pod 异常时第一手要看的 kubectl logs——CrashLoopBackOff 就靠它定位。</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-30">
-  2026年10月30日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 2 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to K8S 排障三板斧实战：kubectl explain、cp 与 logs" href="https://LMDAWN1127.github.io/posts/k8s-troubleshooting-explain-cp-logs/"></a>
-</article>
-
-<article class="post-entry tag-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/posts/k8s-volumes-emptydir-hostpath-nfs/">K8S 存储卷实战：emptyDir、hostPath 与 NFS</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>本文实战 K8S 三类存储卷。emptyDir 生命周期与 Pod 绑定，用多容器 Pod 验证同一卷挂载到两个容器后数据共享；hostPath 把宿主机目录直接挂进 Pod，以 Elasticsearch 7.17.16 为例建索引后删除 Pod 重建，验证单节点持久化；NFS 解决跨节点共享问题，master 上配 nfs-kernel-server、三节点装 nfs-common，部署 MySQL 8.3.0 写入测试数据后把 Pod 从 worker01 漂移到 worker02，数据完整保留。最后给出选型结论：Pod 内共享用 emptyDir，单节点持久化用 hostPath，需要跨节点漂移用 NFS 或分布式存储。</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-30">
-  2026年10月30日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 4 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to K8S 存储卷实战：emptyDir、hostPath 与 NFS" href="https://LMDAWN1127.github.io/posts/k8s-volumes-emptydir-hostpath-nfs/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">

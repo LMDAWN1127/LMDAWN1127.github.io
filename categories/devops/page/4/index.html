@@ -163,6 +163,50 @@
 <article class="post-entry tag-entry"> 
   <header class="entry-header">
     <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/posts/docker-compose-multi-service/">基于 docker-compose 编译多服务镜像并启动容器</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>通过一个 docker-compose 案例演示如何用一个 YAML 文件统一编排两个 HTML5 游戏服务（斗地主 doudizhu、摩托 motuo）的镜像构建与容器管理：编写 compose 文件（build context &#43; 各自 Dockerfile）与 nginx 虚拟主机、启动脚本，用 docker-compose build 一次编译出两个镜像、up -d 后台启动、ps/stop/start/restart/down 管理生命周期，再配置固定端口加 restart: always 与随机端口并验证访问与重启策略，最后给出常用命令对照表。</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-29">
+  2026年10月29日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 8 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to 基于 docker-compose 编译多服务镜像并启动容器" href="https://LMDAWN1127.github.io/posts/docker-compose-multi-service/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/posts/docker-dockerfile-multistage-build/">Dockerfile 多阶段构建镜像实战</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>通过多阶段构建（Multi-Stage Build）演示如何大幅减小 Docker 镜像体积：第一部分用三个 FROM 阶段（xixi/haha/最终）构建 v3.0，前两个阶段生成的 24MB/2048MB 大文件不进入最终镜像，最终只 COPY 两个小日志（7.8MB）；第二部分以 Golang 为例，第一阶段用 Go SDK 编译出 hello 二进制，第二阶段只 COPY –from=0 拷贝二进制，v3.2 仅 9.71MB，对比单阶段 v3.1 的 259MB，证明多阶段构建的精简镜像完全可用。</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-29">
+  2026年10月29日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 4 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to Dockerfile 多阶段构建镜像实战" href="https://LMDAWN1127.github.io/posts/docker-dockerfile-multistage-build/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
       <a href="https://LMDAWN1127.github.io/posts/docker-dockerfile-onbuild-instruction/">Dockerfile 之 ONBUILD 指令实战</a>
     </h2>
   </header>
@@ -224,50 +268,6 @@
 </span>
 </footer>
   <a class="entry-link" aria-label="post link to Dockerfile 核心指令实战：WORKDIR/EXPOSE/VOLUME、ENV/ARG、HEALTHCHECK、ENTRYPOINT" href="https://LMDAWN1127.github.io/posts/docker-dockerfile-core-instructions/"></a>
-</article>
-
-<article class="post-entry tag-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/posts/docker-image-tag-maintainer-label-metadata/">Docker 实战：镜像打标签 MAINTAINER 与 LABEL 及元数据查看</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>以 dawn-games 镜像为例，演示如何在 Dockerfile 中用已弃用的 MAINTAINER 与官方推荐的 LABEL 写入作者/学校/邮箱等元数据，构建后用 docker image inspect -f 读取 .Author 与 .Config.Labels 核对，并用 –network host 直接起容器以 host 网络访问验证；含一张访问截图。</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-28">
-  2026年10月28日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 2 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to Docker 实战：镜像打标签 MAINTAINER 与 LABEL 及元数据查看" href="https://LMDAWN1127.github.io/posts/docker-image-tag-maintainer-label-metadata/"></a>
-</article>
-
-<article class="post-entry tag-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/posts/docker-dockerfile-optimization-and-run-tips/">Docker 实战：Dockerfile 优化技巧与容器启动技巧</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>梳理 Docker 实战中的高频提效技巧：构建侧讲清镜像层缓存(Using cache)的命中逻辑、用 .dockerignore 把 1GB 的 build context 砍到约 1.6MB；运行侧演示 docker exec -w 指定工作目录、匿名存储卷在宿主机的落盘路径(/var/lib/docker/volumes//_data)、以及 -p :80 随机端口映射(32768~60999)。</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-28">
-  2026年10月28日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 2 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to Docker 实战：Dockerfile 优化技巧与容器启动技巧" href="https://LMDAWN1127.github.io/posts/docker-dockerfile-optimization-and-run-tips/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">

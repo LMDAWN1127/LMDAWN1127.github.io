@@ -163,6 +163,50 @@
 <article class="post-entry tag-entry"> 
   <header class="entry-header">
     <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/posts/k8s-namespace-management/">K8S 名称空间管理实战：响应式与声明式管理、跨命名空间服务访问</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>本文系统讲 K8S 名称空间管理。先介绍名称空间的作用与局部资源/全局资源的区分方法（看 kubectl api-resources 的 NAMESPACED 列）；再用响应式命令完成名称空间的创建、查看、打标签、删除，并用同名 Pod 在 default 与 dawn 两个名称空间各建一个，直观验证隔离效果与删除名称空间时的级联清理；随后切到声明式管理：先从已有资源导出 yaml 做减法，再用 apply 创建带标签的名称空间；最后把 MySQL 放进 dawn、WordPress 放进 kube-public，用跨命名空间短写 db-svc.dawn 连通数据库，并给出跨命名空间 A 记录的三种写法与实测结果。</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-31">
+  2026年10月31日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 9 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to K8S 名称空间管理实战：响应式与声明式管理、跨命名空间服务访问" href="https://LMDAWN1127.github.io/posts/k8s-namespace-management/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/posts/k8s-pod-dns-policy-hostnetwork/">K8S Pod DNS 策略与 hostNetwork 实战：dnsPolicy 对照实验</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>本文用一组对照实验讲清 K8S Pod 的 dnsPolicy 与 hostNetwork 的关系。实验组把 Pod 设为 hostNetwork: true 并显式指定 dnsPolicy: ClusterFirstWithHostNet，进容器看 /etc/resolv.conf 指向集群 CoreDNS 且带 svc 搜索域，能解析 db-svc、kubernetes、kube-dns 等名称；对照组只开 hostNetwork、不改 dnsPolicy（默认 ClusterFirst），resolv.conf 变成节点自己的 DNS 且没有搜索域，db-svc 直接解析失败。结论：Pod 一旦使用宿主机网络，就必须把 dnsPolicy 改成 ClusterFirstWithHostNet。</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-31">
+  2026年10月31日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 2 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to K8S Pod DNS 策略与 hostNetwork 实战：dnsPolicy 对照实验" href="https://LMDAWN1127.github.io/posts/k8s-pod-dns-policy-hostnetwork/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
       <a href="https://LMDAWN1127.github.io/posts/k8s-wordpress-deploy-coredns/">K8S 实战：WordPress 部署、NFS 持久化与 CoreDNS 域名解析</a>
     </h2>
   </header>
@@ -224,50 +268,6 @@
 </span>
 </footer>
   <a class="entry-link" aria-label="post link to K8S 排障三板斧实战：kubectl explain、cp 与 logs" href="https://LMDAWN1127.github.io/posts/k8s-troubleshooting-explain-cp-logs/"></a>
-</article>
-
-<article class="post-entry tag-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/posts/k8s-volumes-emptydir-hostpath-nfs/">K8S 存储卷实战：emptyDir、hostPath 与 NFS</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>本文实战 K8S 三类存储卷。emptyDir 生命周期与 Pod 绑定，用多容器 Pod 验证同一卷挂载到两个容器后数据共享；hostPath 把宿主机目录直接挂进 Pod，以 Elasticsearch 7.17.16 为例建索引后删除 Pod 重建，验证单节点持久化；NFS 解决跨节点共享问题，master 上配 nfs-kernel-server、三节点装 nfs-common，部署 MySQL 8.3.0 写入测试数据后把 Pod 从 worker01 漂移到 worker02，数据完整保留。最后给出选型结论：Pod 内共享用 emptyDir，单节点持久化用 hostPath，需要跨节点漂移用 NFS 或分布式存储。</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-30">
-  2026年10月30日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 4 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to K8S 存储卷实战：emptyDir、hostPath 与 NFS" href="https://LMDAWN1127.github.io/posts/k8s-volumes-emptydir-hostpath-nfs/"></a>
-</article>
-
-<article class="post-entry tag-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/posts/k8s-core-resources-pod-basics/">K8S 核心资源管理与 Pod 基础实战：资源清单、多容器 Pod、标签与 hostNetwork</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>本文系统梳理 K8S 核心资源管理与 Pod 基础操作。先给出常用资源类型缩写速查表并用 kubectl api-resources 概览集群资源；再做日常基础巡检（worker 节点列表、master 组件、flannel 网卡与各节点 cni0/flannel.1 虚拟网卡）；随后编写单容器与多容器 Pod 的资源清单 YAML，对比 kubectl create 与 apply 的差异，并用 kubectl exec 进入指定容器；接着讲声明式 API 与响应式 API 的区别、标签的增删改查与基于标签过滤/删除资源、kubectl describe 查看资源详情，最后演示 hostNetwork 模式让 Pod 共享宿主机网络，并清理实验环境。</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-30">
-  2026年10月30日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 8 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to K8S 核心资源管理与 Pod 基础实战：资源清单、多容器 Pod、标签与 hostNetwork" href="https://LMDAWN1127.github.io/posts/k8s-core-resources-pod-basics/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">

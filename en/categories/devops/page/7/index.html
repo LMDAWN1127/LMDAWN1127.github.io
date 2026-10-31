@@ -163,6 +163,50 @@
 <article class="post-entry tag-entry"> 
   <header class="entry-header">
     <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/en/posts/docker-multi-bridge-network-isolation/">Docker in Practice: Container Isolation and Cross-Network Communication with Multiple Bridge Networks</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>Using two custom Bridge networks, xixi and haha, this walkthrough demonstrates Docker’s default network isolation mechanism and shows how docker network connect/disconnect lets a container join or leave a network at runtime to achieve cross-network container communication.</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-27">
+  2026年10月27日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 7 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to Docker in Practice: Container Isolation and Cross-Network Communication with Multiple Bridge Networks" href="https://LMDAWN1127.github.io/en/posts/docker-multi-bridge-network-isolation/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/en/posts/docker-overlayfs-storage-driver/">Docker in Practice: OverlayFS Union Mounts and the Storage Driver Explained</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>How the Docker OverlayFS storage driver works: the lower/upper/work directories and the LowerDir/Upperdir/MergedDir layers (including the init layer), and copy-on-write into the read-write layer; then a manual mount -t overlay demo of layering and read-only behavior, and finally docker run to confirm that a container is backed by overlay2.</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-26">
+  2026年10月26日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 17 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to Docker in Practice: OverlayFS Union Mounts and the Storage Driver Explained" href="https://LMDAWN1127.github.io/en/posts/docker-overlayfs-storage-driver/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
       <a href="https://LMDAWN1127.github.io/en/posts/docker-chroot-minimal-root/">Docker in Practice: Hand-Building a Minimal Container Root with chroot to Understand What a Container Is</a>
     </h2>
   </header>
@@ -224,50 +268,6 @@
 </span>
 </footer>
   <a class="entry-link" aria-label="post link to Docker in Practice: Building a Multi-Game Image with Dockerfile and ADD Auto-Extraction" href="https://LMDAWN1127.github.io/en/posts/docker-dockerfile-multi-game-image-add/"></a>
-</article>
-
-<article class="post-entry tag-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/en/posts/docker-bind-mount-volume/">Docker in Practice: Container Data Persistence - bind Mounts and Volumes</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>Mount host paths into containers with -v, share one mount point across containers, attach several mount points to a single container and set rw/ro permissions, then cover the whole docker volume workflow: create, inspect, delete, anonymous volumes and re-mounting a running container.</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-26">
-  2026年10月26日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 9 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to Docker in Practice: Container Data Persistence - bind Mounts and Volumes" href="https://LMDAWN1127.github.io/en/posts/docker-bind-mount-volume/"></a>
-</article>
-
-<article class="post-entry tag-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/en/posts/docker-container-lifecycle/">Docker in Practice: Container Lifecycle Management - Start, Stop and Restart Policies</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>Walk through container lifecycle management: docker stop, start and restart plus custom startup commands, then the five restart policies - create five containers with different policies, kill them with kill -9 to compare restart counters, and see which ones come back after dockerd restarts.</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-26">
-  2026年10月26日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 8 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to Docker in Practice: Container Lifecycle Management - Start, Stop and Restart Policies" href="https://LMDAWN1127.github.io/en/posts/docker-container-lifecycle/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">

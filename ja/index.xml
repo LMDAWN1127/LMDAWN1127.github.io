@@ -11,7 +11,7 @@
     </image>
     <generator>Hugo</generator>
     <language>ja</language>
-    <lastBuildDate>Sat, 31 Oct 2026 15:13:00 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 31 Oct 2026 16:22:00 +0800</lastBuildDate>
     <atom:link href="https://LMDAWN1127.github.io/ja/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Harbor アクティブスタンバイデプロイ：インストールからHTTPS・レプリケーションまで</title>
@@ -19,6 +19,20 @@
       <pubDate>Tue, 04 Aug 2026 00:00:00 +0000</pubDate>
       <guid>https://LMDAWN1127.github.io/ja/posts/harbor-master-slave/</guid>
       <description>HarborエンタープライズDockerレジストリのアクティブスタンバイアーキテクチャ、HTTP/HTTPSモード、自己署名証明書、クロスホストレプリケーションを完全にカバーするデプロイガイドです。</description>
+    </item>
+    <item>
+      <title>K8S 名前空間管理実践：命令的・宣言的管理と名前空間をまたぐサービス接続</title>
+      <link>https://LMDAWN1127.github.io/ja/posts/k8s-namespace-management/</link>
+      <pubDate>Sat, 31 Oct 2026 16:22:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/ja/posts/k8s-namespace-management/</guid>
+      <description>本記事は K8S の名前空間管理を体系的に解説する。まず名前空間の役割と、名前空間リソースとクラスタ全体リソースの見分け方（kubectl api-resources の NAMESPACED 列）。次に命令的なコマンドで名前空間の作成・表示・ラベル付け・削除を行い、default と dawn の両方に同名 Pod xiuxian-v1 を作って分離効果と、名前空間削除時のカスケード削除を実証する。続いて宣言的管理へ移る。既存リソースから yaml を書き出して引き算し、apply でラベル付き名前空間を作成する。最後に MySQL を dawn、WordPress を kube-public に置き、名前空間をまたぐ短縮形 db-svc.dawn で DB に接続し、名前空間をまたぐ A レコードの 3 つの書き方と実測結果を示す。</description>
+    </item>
+    <item>
+      <title>K8S Pod の DNS ポリシーと hostNetwork 実践：dnsPolicy の比較実験</title>
+      <link>https://LMDAWN1127.github.io/ja/posts/k8s-pod-dns-policy-hostnetwork/</link>
+      <pubDate>Sat, 31 Oct 2026 16:21:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/ja/posts/k8s-pod-dns-policy-hostnetwork/</guid>
+      <description>本記事は比較実験で K8S Pod の dnsPolicy と hostNetwork の関係を説明する。実験群は hostNetwork: true に加えて dnsPolicy: ClusterFirstWithHostNet を明示指定する。コンテナ内の /etc/resolv.conf はクラスタの CoreDNS を指し svc の検索ドメインも持つため、db-svc、kubernetes、kube-dns はいずれも名前解決できる。対照群は hostNetwork だけを有効にし dnsPolicy は既定の ClusterFirst のまま。resolv.conf はノード自身の DNS になり検索ドメインもなく、db-svc は解決に失敗する。結論：Pod がホストネットワークを使うなら、dnsPolicy は必ず ClusterFirstWithHostNet に変更する。</description>
     </item>
     <item>
       <title>K8S 実践：WordPress デプロイ、NFS 永続化と CoreDNS 名前解決</title>
