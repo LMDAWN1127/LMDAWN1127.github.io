@@ -2,8 +2,8 @@
 title: "MySQL 数据库基础管理：用户·权限·连接与初始化配置"
 date: 2026-10-14T10:00:00+08:00
 draft: false
-categories: ["DevOps"]
-tags: ["DevOps", "MySQL", "数据库", "用户管理", "权限管理"]
+categories: ["MySQL"]
+tags: ["MySQL", "数据库", "用户管理", "权限管理"]
 showToc: true
 summary: "围绕 MySQL 数据库服务的基础管理展开：用户的创建/查询/改密/删除/锁定，权限的授予与回收及 Role 角色，内置客户端/DBeaver/程序三种连接方式，以及源码编译、my.cnf、启动传参三种初始化配置，并对比 MySQL 5.7 与 8.0 的用户管理差异。"
 ---
