@@ -163,6 +163,28 @@
 <article class="post-entry tag-entry"> 
   <header class="entry-header">
     <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/posts/k8s-troubleshooting-explain-cp-logs/">K8S 排障三板斧实战：kubectl explain、cp 与 logs</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>本文总结 K8S 日常排障最常用的三个命令。先构建一个执行完立即退出的 troubleshooting 测试镜像，再用 kubectl explain 直接读取 API Server 的 OpenAPI Schema 查字段归属（无需联网查文档）；随后用 Pod 定义中的 command &#43; args 覆盖镜像默认 CMD，把一次性退出的容器改成长驻运行以便 exec 排查；最后演示 kubectl cp 在宿主机与 Pod 之间双向拷贝文件（拷配置进去、拷日志出来），以及 Pod 异常时第一手要看的 kubectl logs——CrashLoopBackOff 就靠它定位。</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-30">
+  2026年10月30日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 2 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to K8S 排障三板斧实战：kubectl explain、cp 与 logs" href="https://LMDAWN1127.github.io/posts/k8s-troubleshooting-explain-cp-logs/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
       <a href="https://LMDAWN1127.github.io/posts/k8s-volumes-emptydir-hostpath-nfs/">K8S 存储卷实战：emptyDir、hostPath 与 NFS</a>
     </h2>
   </header>

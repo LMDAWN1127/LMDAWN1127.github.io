@@ -154,6 +154,28 @@
 <article class="post-entry"> 
   <header class="entry-header">
     <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/ko/posts/k8s-rc-svc-replicas-service-discovery/">K8S 레플리카 제어와 서비스 디스커버리 실전: RC, ClusterIP 그리고 NodePort</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>이 글은 K8S 의 레플리카 제어와 서비스 디스커버리를 실습한다. ReplicationController 로 레플리카 3개를 선언하고, 자가 치유（Pod 를 지우면 자동으로 채워짐）와 RC 삭제 시 관리하던 Pod 가 연쇄적으로 정리되는 것을 검증한다. 이어 ClusterIP 타입 Service 로 두 노드에 흩어진 Pod 3개에 고정 진입점을 하나 제공하고, 각 Pod 의 nginx 가 자기 Pod 이름을 반환하게 한 뒤 5회 연속 요청으로 라운드로빈 로드밸런싱을 확인한다. 마지막으로 NodePort 타입으로 모든 노드의 30080 포트에 노출해 클러스터 밖에서 접근하면서 동일한 로드밸런싱을 확인한다.</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-30">
+  2026年10月30日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 4 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to K8S 레플리카 제어와 서비스 디스커버리 실전: RC, ClusterIP 그리고 NodePort" href="https://LMDAWN1127.github.io/ko/posts/k8s-rc-svc-replicas-service-discovery/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
       <a href="https://LMDAWN1127.github.io/ko/posts/k8s-troubleshooting-explain-cp-logs/">K8S 트러블슈팅 3종 세트 실전: kubectl explain, cp, logs</a>
     </h2>
   </header>
@@ -237,28 +259,6 @@
 </span>
 </footer>
   <a class="entry-link" aria-label="post link to K8S kubeadm 클러스터 구축 실전: 자체 CA Harbor 와 Flannel CNI" href="https://LMDAWN1127.github.io/ko/posts/k8s-kubeadm-cluster-harbor-ca/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/ko/posts/containerd-runc-ctr-management/">containerd 컨테이너 런타임 구축과 runc/ctr 관리 실전</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>이 실습에서는 먼저 docker02 노드의 Docker 바이너리를 제거한 뒤, containerd 1.7.20 런타임（cri-containerd-cni 압축 해제, systemd 유닛 설치, config.toml 에서 SystemdCgroup 활성화 및 sandbox_image 교체）을 구축하고 runc 1.1.12 와 ctr 클라이언트를 설치한다. 이후 ctr 로 이미지 풀/태그, 컨테이너 생성/시작/일시정지/재개/삭제, 네임스페이스 관리, 그리고 docker01 Harbor（HTTP, 비 TLS）로의 이미지 푸시 및 풀 전체 작업을 시연한다.</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-30">
-  2026年10月30日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 5 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to containerd 컨테이너 런타임 구축과 runc/ctr 관리 실전" href="https://LMDAWN1127.github.io/ko/posts/containerd-runc-ctr-management/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">

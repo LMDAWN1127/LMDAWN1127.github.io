@@ -173,6 +173,28 @@
 <article class="post-entry"> 
   <header class="entry-header">
     <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/en/posts/containerd-runc-ctr-management/">Deploying containerd Runtime and Managing with runc/ctr in Practice</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>This hands-on walkthrough first uninstalls the Docker binaries on the docker02 node, then deploys the containerd 1.7.20 runtime (extracting cri-containerd-cni, installing the systemd unit, and editing config.toml to enable SystemdCgroup and replace the sandbox_image), and installs runc 1.1.12 along with the ctr client. It then demonstrates the full ctr workflow: pulling and tagging images, creating/starting/pausing/resuming/removing containers, namespace management, and pushing to and pulling from the docker01 Harbor (HTTP, non-TLS).</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-30">
+  2026年10月30日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 5 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to Deploying containerd Runtime and Managing with runc/ctr in Practice" href="https://LMDAWN1127.github.io/en/posts/containerd-runc-ctr-management/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
       <a href="https://LMDAWN1127.github.io/en/posts/harbor-self-signed-https/">Harbor HTTPS Deployment with a Self-Signed Certificate</a>
     </h2>
   </header>
@@ -256,28 +278,6 @@
 </span>
 </footer>
   <a class="entry-link" aria-label="post link to Building a Custom Image Without a Base Image: Using scratch" href="https://LMDAWN1127.github.io/en/posts/docker-scratch-custom-image/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/en/posts/docker-harbor-private-registry/">Hands-on with Private Image Registries: docker registry and VMware Harbor</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>Build two private image registries from scratch: first use the lightweight docker registry to complete image deployment, push, pull, and delete (including manually deleting metadata &#43; GC to reclaim storage); then deploy the enterprise-grade VMware Harbor (HTTP mode), demonstrating hosts resolution, insecure-registries configuration, creating a project, three docker login methods, and the full image push/pull/delete flow; finally summarize the differences between registry and Harbor in size, deployment, WebUI, project management, deletion, and use cases with a comparison table.</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-29">
-  2026年10月29日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 8 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to Hands-on with Private Image Registries: docker registry and VMware Harbor" href="https://LMDAWN1127.github.io/en/posts/docker-harbor-private-registry/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">

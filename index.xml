@@ -11,7 +11,7 @@
     </image>
     <generator>Hugo</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sat, 31 Oct 2026 16:22:00 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 31 Oct 2026 18:29:00 +0800</lastBuildDate>
     <atom:link href="https://LMDAWN1127.github.io/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Harbor 主备部署实战：从安装到 HTTPS 与主备复制</title>
@@ -19,6 +19,13 @@
       <pubDate>Tue, 04 Aug 2026 00:00:00 +0000</pubDate>
       <guid>https://LMDAWN1127.github.io/posts/harbor-master-slave/</guid>
       <description>完整记录 Harbor 企业级镜像仓库的主备部署过程，涵盖 HTTP/HTTPS 双模式安装、自签名证书配置、跨主机主备复制等核心运维技能。</description>
+    </item>
+    <item>
+      <title>K8S Pod 端口暴露与 SVC 多端口映射实战：hostPort、多端口映射与 targetPort 名称匹配</title>
+      <link>https://LMDAWN1127.github.io/posts/k8s-pod-ports-svc-multiport/</link>
+      <pubDate>Sat, 31 Oct 2026 18:29:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/posts/k8s-pod-ports-svc-multiport/</guid>
+      <description>本文讲 K8S 里 Pod 端口暴露与 SVC 多端口映射两件事。前半段用 hostPort 把容器 80 端口直接映射到 Pod 所在节点的 8888，外部绕过 SVC 直达容器，Windows 上实测访问成功，并对比 hostPort 与 NodePort 的差异（hostPort 只在 Pod 所在节点生效、Pod 漂移地址跟着变；NodePort 在所有节点开同一端口、漂移不影响访问）；后半段写一个同时暴露 80/TCP 与 53/UDP 的 Pod，配套 SVC 做多端口映射，观察 PORT(S) 列与 describe 的 TargetPort/Endpoints，最后用 kubectl patch 把 targetPort 改成按端口名称匹配，验证即便容器端口号变化，只要名称不变 SVC 仍能自动跟踪。</description>
     </item>
     <item>
       <title>K8S 名称空间管理实战：响应式与声明式管理、跨命名空间服务访问</title>

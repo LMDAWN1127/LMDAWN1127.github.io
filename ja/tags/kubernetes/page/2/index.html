@@ -163,6 +163,28 @@
 <article class="post-entry tag-entry"> 
   <header class="entry-header">
     <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/ja/posts/k8s-troubleshooting-explain-cp-logs/">K8S トラブルシューティング三種の神器実践：kubectl explain、cp、logs</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>本記事は K8S の日常トラブルシューティングで最もよく使う 3 つのコマンドをまとめた。まず実行すると即座に終了する troubleshooting 用テストイメージをビルドし、次に kubectl explain で API Server の OpenAPI Schema を直接読んでフィールドの所属を調べる（ネットワーク不要）。続いて Pod 定義の command &#43; args でイメージのデフォルト CMD を上書きし、一度きりで終了するコンテナを常駐させ exec で調査できるようにする。最後に kubectl cp でホストと Pod 間を双方向にファイルコピーし（設定を入れ、ログを出す）、Pod 異常時に最初に見るべき kubectl logs —— CrashLoopBackOff はこれで特定する。</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-30">
+  2026年10月30日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 2 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to K8S トラブルシューティング三種の神器実践：kubectl explain、cp、logs" href="https://LMDAWN1127.github.io/ja/posts/k8s-troubleshooting-explain-cp-logs/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
       <a href="https://LMDAWN1127.github.io/ja/posts/k8s-volumes-emptydir-hostpath-nfs/">K8S ストレージボリューム実践：emptyDir、hostPath と NFS</a>
     </h2>
   </header>

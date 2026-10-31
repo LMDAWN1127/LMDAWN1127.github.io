@@ -11,7 +11,7 @@
     </image>
     <generator>Hugo</generator>
     <language>ja</language>
-    <lastBuildDate>Sat, 31 Oct 2026 16:22:00 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 31 Oct 2026 18:29:00 +0800</lastBuildDate>
     <atom:link href="https://LMDAWN1127.github.io/ja/categories/devops/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Harbor アクティブスタンバイデプロイ：インストールからHTTPS・レプリケーションまで</title>
@@ -19,6 +19,13 @@
       <pubDate>Tue, 04 Aug 2026 00:00:00 +0000</pubDate>
       <guid>https://LMDAWN1127.github.io/ja/posts/harbor-master-slave/</guid>
       <description>HarborエンタープライズDockerレジストリのアクティブスタンバイアーキテクチャ、HTTP/HTTPSモード、自己署名証明書、クロスホストレプリケーションを完全にカバーするデプロイガイドです。</description>
+    </item>
+    <item>
+      <title>K8S Pod のポート公開と SVC のマルチポートマッピング実践：hostPort、マルチポートと targetPort の名前マッチング</title>
+      <link>https://LMDAWN1127.github.io/ja/posts/k8s-pod-ports-svc-multiport/</link>
+      <pubDate>Sat, 31 Oct 2026 18:29:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/ja/posts/k8s-pod-ports-svc-multiport/</guid>
+      <description>本記事は K8S の Pod ポート公開と SVC マルチポートマッピングの 2 つを扱う。前半は hostPort でコンテナの 80 番を Pod 配置ノードの 8888 に直接マッピングし、SVC を経由せず外部からコンテナへ直接届かせる。Windows からのアクセス検証が成功し、hostPort と NodePort を比較する（hostPort は Pod のいるノードでしか有効でなく漂移するとアドレスも変わる。NodePort は全ノードの同じポートを開く Service なので漂移しても影響しない）。後半は 80/TCP と 53/UDP を同時に公開する Pod を書き、SVC でマルチポートマッピングし、PORT(S) 列と describe の TargetPort/Endpoints を確認する。最後に kubectl patch で targetPort を名前マッチングに変更し、コンテナのポート番号が変わっても名前が同じなら SVC が追従し続けることを検証する。</description>
     </item>
     <item>
       <title>K8S 名前空間管理実践：命令的・宣言的管理と名前空間をまたぐサービス接続</title>

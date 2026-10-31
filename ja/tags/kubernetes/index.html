@@ -163,6 +163,28 @@
 <article class="post-entry tag-entry"> 
   <header class="entry-header">
     <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/ja/posts/k8s-pod-ports-svc-multiport/">K8S Pod のポート公開と SVC のマルチポートマッピング実践：hostPort、マルチポートと targetPort の名前マッチング</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>本記事は K8S の Pod ポート公開と SVC マルチポートマッピングの 2 つを扱う。前半は hostPort でコンテナの 80 番を Pod 配置ノードの 8888 に直接マッピングし、SVC を経由せず外部からコンテナへ直接届かせる。Windows からのアクセス検証が成功し、hostPort と NodePort を比較する（hostPort は Pod のいるノードでしか有効でなく漂移するとアドレスも変わる。NodePort は全ノードの同じポートを開く Service なので漂移しても影響しない）。後半は 80/TCP と 53/UDP を同時に公開する Pod を書き、SVC でマルチポートマッピングし、PORT(S) 列と describe の TargetPort/Endpoints を確認する。最後に kubectl patch で targetPort を名前マッチングに変更し、コンテナのポート番号が変わっても名前が同じなら SVC が追従し続けることを検証する。</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-31">
+  2026年10月31日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 3 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to K8S Pod のポート公開と SVC のマルチポートマッピング実践：hostPort、マルチポートと targetPort の名前マッチング" href="https://LMDAWN1127.github.io/ja/posts/k8s-pod-ports-svc-multiport/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
       <a href="https://LMDAWN1127.github.io/ja/posts/k8s-namespace-management/">K8S 名前空間管理実践：命令的・宣言的管理と名前空間をまたぐサービス接続</a>
     </h2>
   </header>
@@ -246,28 +268,6 @@
 </span>
 </footer>
   <a class="entry-link" aria-label="post link to K8S レプリカ制御とサービスディスカバリ実践：RC、ClusterIP と NodePort" href="https://LMDAWN1127.github.io/ja/posts/k8s-rc-svc-replicas-service-discovery/"></a>
-</article>
-
-<article class="post-entry tag-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/ja/posts/k8s-troubleshooting-explain-cp-logs/">K8S トラブルシューティング三種の神器実践：kubectl explain、cp、logs</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>本記事は K8S の日常トラブルシューティングで最もよく使う 3 つのコマンドをまとめた。まず実行すると即座に終了する troubleshooting 用テストイメージをビルドし、次に kubectl explain で API Server の OpenAPI Schema を直接読んでフィールドの所属を調べる（ネットワーク不要）。続いて Pod 定義の command &#43; args でイメージのデフォルト CMD を上書きし、一度きりで終了するコンテナを常駐させ exec で調査できるようにする。最後に kubectl cp でホストと Pod 間を双方向にファイルコピーし（設定を入れ、ログを出す）、Pod 異常時に最初に見るべき kubectl logs —— CrashLoopBackOff はこれで特定する。</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-30">
-  2026年10月30日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 2 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to K8S トラブルシューティング三種の神器実践：kubectl explain、cp、logs" href="https://LMDAWN1127.github.io/ja/posts/k8s-troubleshooting-explain-cp-logs/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">

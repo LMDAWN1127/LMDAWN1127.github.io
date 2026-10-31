@@ -163,6 +163,28 @@
 <article class="post-entry tag-entry"> 
   <header class="entry-header">
     <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/en/posts/k8s-pod-ports-svc-multiport/">K8S Pod Port Exposure and SVC Multi-Port Mapping in Practice: hostPort, Multi-Port Mapping and targetPort Name Matching</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>This article covers two things in K8S: exposing Pod ports and mapping multiple ports on a SVC. The first half uses hostPort to map container port 80 straight to 8888 on the node hosting the Pod, so external traffic reaches the container without going through a SVC; the access test from Windows succeeds, and hostPort is compared against NodePort (hostPort only works on the Pod’s node and its address follows the Pod when it moves, while NodePort is a Service that opens the same port on every node so movement does not affect access). The second half writes a Pod exposing both 80/TCP and 53/UDP, maps both through a SVC, inspects the PORT(S) column and the describe TargetPort/Endpoints, and finally patches targetPort to match by port name, verifying that the SVC keeps tracking the endpoint as long as the name is unchanged even if the container port number changes.</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-31">
+  2026年10月31日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 4 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to K8S Pod Port Exposure and SVC Multi-Port Mapping in Practice: hostPort, Multi-Port Mapping and targetPort Name Matching" href="https://LMDAWN1127.github.io/en/posts/k8s-pod-ports-svc-multiport/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
       <a href="https://LMDAWN1127.github.io/en/posts/k8s-namespace-management/">K8S Namespace Management in Practice: Imperative and Declarative Management, Cross-Namespace Service Access</a>
     </h2>
   </header>
@@ -246,28 +268,6 @@
 </span>
 </footer>
   <a class="entry-link" aria-label="post link to K8S Replica Control and Service Discovery in Practice: RC, ClusterIP and NodePort" href="https://LMDAWN1127.github.io/en/posts/k8s-rc-svc-replicas-service-discovery/"></a>
-</article>
-
-<article class="post-entry tag-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/en/posts/k8s-troubleshooting-explain-cp-logs/">K8S Troubleshooting Trio in Practice: kubectl explain, cp and logs</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>This article covers the three commands I reach for most when troubleshooting K8S. First build a troubleshooting test image that exits immediately, then use kubectl explain to read the OpenAPI Schema straight from the API Server and find out where a field belongs (no internet needed). Next, override the image’s default CMD with command &#43; args in the Pod definition so a one-shot container stays running and can be inspected with exec. Finally, kubectl cp copies files both ways between the host and a Pod (config in, logs out), and kubectl logs is the first thing to check when a Pod misbehaves — it is how you track down CrashLoopBackOff.</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-30">
-  2026年10月30日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 3 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to K8S Troubleshooting Trio in Practice: kubectl explain, cp and logs" href="https://LMDAWN1127.github.io/en/posts/k8s-troubleshooting-explain-cp-logs/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">

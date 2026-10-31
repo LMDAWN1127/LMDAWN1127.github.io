@@ -190,6 +190,28 @@
 <article class="post-entry"> 
   <header class="entry-header">
     <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/en/posts/k8s-pod-ports-svc-multiport/">K8S Pod Port Exposure and SVC Multi-Port Mapping in Practice: hostPort, Multi-Port Mapping and targetPort Name Matching</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>This article covers two things in K8S: exposing Pod ports and mapping multiple ports on a SVC. The first half uses hostPort to map container port 80 straight to 8888 on the node hosting the Pod, so external traffic reaches the container without going through a SVC; the access test from Windows succeeds, and hostPort is compared against NodePort (hostPort only works on the Pod’s node and its address follows the Pod when it moves, while NodePort is a Service that opens the same port on every node so movement does not affect access). The second half writes a Pod exposing both 80/TCP and 53/UDP, maps both through a SVC, inspects the PORT(S) column and the describe TargetPort/Endpoints, and finally patches targetPort to match by port name, verifying that the SVC keeps tracking the endpoint as long as the name is unchanged even if the container port number changes.</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-31">
+  2026年10月31日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 4 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to K8S Pod Port Exposure and SVC Multi-Port Mapping in Practice: hostPort, Multi-Port Mapping and targetPort Name Matching" href="https://LMDAWN1127.github.io/en/posts/k8s-pod-ports-svc-multiport/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
       <a href="https://LMDAWN1127.github.io/en/posts/k8s-namespace-management/">K8S Namespace Management in Practice: Imperative and Declarative Management, Cross-Namespace Service Access</a>
     </h2>
   </header>
@@ -251,28 +273,6 @@
 </span>
 </footer>
   <a class="entry-link" aria-label="post link to K8S in Practice: WordPress Deployment, NFS Persistence and CoreDNS Name Resolution" href="https://LMDAWN1127.github.io/en/posts/k8s-wordpress-deploy-coredns/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/en/posts/k8s-rc-svc-replicas-service-discovery/">K8S Replica Control and Service Discovery in Practice: RC, ClusterIP and NodePort</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>This article works through replica control and service discovery in K8S. A ReplicationController declares 3 replicas; we verify its self-healing (deleting a Pod is automatically replenished) and that deleting the RC cascades to clean up the Pods it manages. Then a ClusterIP Service gives the 3 Pods spread across two nodes a single fixed entry point; with each Pod’s nginx returning its own Pod name, five consecutive requests reveal round-robin load balancing. Finally a NodePort Service exposes the workload on port 30080 of every node, reachable from outside the cluster and load balanced the same way.</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-30">
-  2026年10月30日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 4 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to K8S Replica Control and Service Discovery in Practice: RC, ClusterIP and NodePort" href="https://LMDAWN1127.github.io/en/posts/k8s-rc-svc-replicas-service-discovery/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">

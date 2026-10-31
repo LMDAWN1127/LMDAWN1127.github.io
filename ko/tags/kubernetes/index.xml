@@ -11,8 +11,15 @@
     </image>
     <generator>Hugo</generator>
     <language>ko</language>
-    <lastBuildDate>Sat, 31 Oct 2026 16:22:00 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 31 Oct 2026 18:29:00 +0800</lastBuildDate>
     <atom:link href="https://LMDAWN1127.github.io/ko/tags/kubernetes/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>K8S Pod 포트 노출과 SVC 멀티포트 매핑 실전: hostPort, 멀티포트 매핑 그리고 targetPort 이름 매칭</title>
+      <link>https://LMDAWN1127.github.io/ko/posts/k8s-pod-ports-svc-multiport/</link>
+      <pubDate>Sat, 31 Oct 2026 18:29:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/ko/posts/k8s-pod-ports-svc-multiport/</guid>
+      <description>이 글은 K8S 에서 Pod 포트 노출과 SVC 멀티포트 매핑 두 가지를 다룬다. 전반부는 hostPort 로 컨테이너 80 포트를 Pod 가 있는 노드의 8888 로 직접 매핑해 SVC 없이 외부에서 컨테이너에 직접 도달한다. Windows 에서 접근 테스트가 성공하고, hostPort 와 NodePort 를 비교한다（hostPort 는 Pod 가 있는 노드에서만 동작하고 Pod 가 옮겨지면 주소도 바뀐다. NodePort 는 모든 노드의 같은 포트를 여는 Service 라서 옮겨져도 영향이 없다）. 후반부는 80/TCP 와 53/UDP 를 동시에 노출하는 Pod 를 쓰고 SVC 로 멀티포트 매핑한 뒤 PORT(S) 열과 describe 의 TargetPort/Endpoints 를 확인한다. 마지막으로 kubectl patch 로 targetPort 를 이름 매칭으로 바꿔, 컨테이너 포트 번호가 바뀌어도 이름만 같으면 SVC 가 계속 추적함을 검증한다.</description>
+    </item>
     <item>
       <title>K8S 네임스페이스 관리 실전: 명령형/선언형 관리와 네임스페이스 간 서비스 접근</title>
       <link>https://LMDAWN1127.github.io/ko/posts/k8s-namespace-management/</link>

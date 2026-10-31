@@ -173,6 +173,28 @@
 <article class="post-entry"> 
   <header class="entry-header">
     <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/ja/posts/containerd-runc-ctr-management/">containerd コンテナランタイムの導入と runc/ctr による管理実践</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>本実践ではまず docker02 ノードの Docker バイナリをアンインストールし、containerd 1.7.20 ランタイム（cri-containerd-cni の展開、systemd ユニットの設置、config.toml で SystemdCgroup を有効化し sandbox_image を置換）を導入、さらに runc 1.1.12 と ctr クライアントをインストールする。その後、ctr によるイメージのプルとタグ付け、コンテナの作成/起動/一時停止/再開/削除、名前空間管理、および docker01 の Harbor（HTTP、非 TLS）へのプッシュとプルの一連の操作を実演する。</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-30">
+  2026年10月30日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 4 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to containerd コンテナランタイムの導入と runc/ctr による管理実践" href="https://LMDAWN1127.github.io/ja/posts/containerd-runc-ctr-management/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
       <a href="https://LMDAWN1127.github.io/ja/posts/harbor-self-signed-https/">Harbor 自己署名証明書による HTTPS デプロイ実践</a>
     </h2>
   </header>
@@ -256,28 +278,6 @@
 </span>
 </footer>
   <a class="entry-link" aria-label="post link to ベースイメージを指定せずに独自イメージを構築：scratch の活用" href="https://LMDAWN1127.github.io/ja/posts/docker-scratch-custom-image/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/ja/posts/docker-harbor-private-registry/">プライベートイメージレジストリ実践：docker registry と VMware Harbor</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>2 つのプライベートイメージレジストリをゼロから構築する。まず軽量な docker registry でイメージの展開・プッシュ・プル・削除（メタデータの手動削除 &#43; GC によるストレージ回収を含む）を完了し、次にエンタープライズグレードの VMware Harbor（HTTP モード）を展開する。hosts 解決、insecure-registries 設定、プロジェクト作成、3 つの docker login 方式、イメージのプッシュ/プル/削除の全フローを示し、最後にサイズ・展開・WebUI・プロジェクト管理・削除・適用シナリオの違いを対照表でまとめる。</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-29">
-  2026年10月29日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 7 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to プライベートイメージレジストリ実践：docker registry と VMware Harbor" href="https://LMDAWN1127.github.io/ja/posts/docker-harbor-private-registry/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">

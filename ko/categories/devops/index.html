@@ -185,6 +185,28 @@
 <article class="post-entry tag-entry"> 
   <header class="entry-header">
     <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/ko/posts/k8s-pod-ports-svc-multiport/">K8S Pod 포트 노출과 SVC 멀티포트 매핑 실전: hostPort, 멀티포트 매핑 그리고 targetPort 이름 매칭</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>이 글은 K8S 에서 Pod 포트 노출과 SVC 멀티포트 매핑 두 가지를 다룬다. 전반부는 hostPort 로 컨테이너 80 포트를 Pod 가 있는 노드의 8888 로 직접 매핑해 SVC 없이 외부에서 컨테이너에 직접 도달한다. Windows 에서 접근 테스트가 성공하고, hostPort 와 NodePort 를 비교한다（hostPort 는 Pod 가 있는 노드에서만 동작하고 Pod 가 옮겨지면 주소도 바뀐다. NodePort 는 모든 노드의 같은 포트를 여는 Service 라서 옮겨져도 영향이 없다）. 후반부는 80/TCP 와 53/UDP 를 동시에 노출하는 Pod 를 쓰고 SVC 로 멀티포트 매핑한 뒤 PORT(S) 열과 describe 의 TargetPort/Endpoints 를 확인한다. 마지막으로 kubectl patch 로 targetPort 를 이름 매칭으로 바꿔, 컨테이너 포트 번호가 바뀌어도 이름만 같으면 SVC 가 계속 추적함을 검증한다.</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-31">
+  2026年10月31日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 4 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to K8S Pod 포트 노출과 SVC 멀티포트 매핑 실전: hostPort, 멀티포트 매핑 그리고 targetPort 이름 매칭" href="https://LMDAWN1127.github.io/ko/posts/k8s-pod-ports-svc-multiport/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
       <a href="https://LMDAWN1127.github.io/ko/posts/k8s-namespace-management/">K8S 네임스페이스 관리 실전: 명령형/선언형 관리와 네임스페이스 간 서비스 접근</a>
     </h2>
   </header>
@@ -246,28 +268,6 @@
 </span>
 </footer>
   <a class="entry-link" aria-label="post link to K8S 실전: WordPress 배포, NFS 영속화 그리고 CoreDNS 이름 해석" href="https://LMDAWN1127.github.io/ko/posts/k8s-wordpress-deploy-coredns/"></a>
-</article>
-
-<article class="post-entry tag-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/ko/posts/k8s-rc-svc-replicas-service-discovery/">K8S 레플리카 제어와 서비스 디스커버리 실전: RC, ClusterIP 그리고 NodePort</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>이 글은 K8S 의 레플리카 제어와 서비스 디스커버리를 실습한다. ReplicationController 로 레플리카 3개를 선언하고, 자가 치유（Pod 를 지우면 자동으로 채워짐）와 RC 삭제 시 관리하던 Pod 가 연쇄적으로 정리되는 것을 검증한다. 이어 ClusterIP 타입 Service 로 두 노드에 흩어진 Pod 3개에 고정 진입점을 하나 제공하고, 각 Pod 의 nginx 가 자기 Pod 이름을 반환하게 한 뒤 5회 연속 요청으로 라운드로빈 로드밸런싱을 확인한다. 마지막으로 NodePort 타입으로 모든 노드의 30080 포트에 노출해 클러스터 밖에서 접근하면서 동일한 로드밸런싱을 확인한다.</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-30">
-  2026年10月30日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 4 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to K8S 레플리카 제어와 서비스 디스커버리 실전: RC, ClusterIP 그리고 NodePort" href="https://LMDAWN1127.github.io/ko/posts/k8s-rc-svc-replicas-service-discovery/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">

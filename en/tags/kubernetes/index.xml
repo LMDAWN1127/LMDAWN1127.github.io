@@ -11,8 +11,15 @@
     </image>
     <generator>Hugo</generator>
     <language>en</language>
-    <lastBuildDate>Sat, 31 Oct 2026 16:22:00 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 31 Oct 2026 18:29:00 +0800</lastBuildDate>
     <atom:link href="https://LMDAWN1127.github.io/en/tags/kubernetes/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>K8S Pod Port Exposure and SVC Multi-Port Mapping in Practice: hostPort, Multi-Port Mapping and targetPort Name Matching</title>
+      <link>https://LMDAWN1127.github.io/en/posts/k8s-pod-ports-svc-multiport/</link>
+      <pubDate>Sat, 31 Oct 2026 18:29:00 +0800</pubDate>
+      <guid>https://LMDAWN1127.github.io/en/posts/k8s-pod-ports-svc-multiport/</guid>
+      <description>This article covers two things in K8S: exposing Pod ports and mapping multiple ports on a SVC. The first half uses hostPort to map container port 80 straight to 8888 on the node hosting the Pod, so external traffic reaches the container without going through a SVC; the access test from Windows succeeds, and hostPort is compared against NodePort (hostPort only works on the Pod&amp;rsquo;s node and its address follows the Pod when it moves, while NodePort is a Service that opens the same port on every node so movement does not affect access). The second half writes a Pod exposing both 80/TCP and 53/UDP, maps both through a SVC, inspects the PORT(S) column and the describe TargetPort/Endpoints, and finally patches targetPort to match by port name, verifying that the SVC keeps tracking the endpoint as long as the name is unchanged even if the container port number changes.</description>
+    </item>
     <item>
       <title>K8S Namespace Management in Practice: Imperative and Declarative Management, Cross-Namespace Service Access</title>
       <link>https://LMDAWN1127.github.io/en/posts/k8s-namespace-management/</link>

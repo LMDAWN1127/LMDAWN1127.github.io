@@ -154,6 +154,28 @@
 <article class="post-entry"> 
   <header class="entry-header">
     <h2 class="entry-hint-parent">
+      <a href="https://LMDAWN1127.github.io/ko/posts/docker-dockerfile-multi-game-image-add/">Docker 실전: Dockerfile 로 멀티 게임 이미지 빌드와 ADD 자동 압축 해제</a>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>올인원 구형 이미지 dawn-games-dawn:v0.6 에서 중계 컨테이너로 두 게임 (골드 마이너, 플래피 버드) 의 정적 파일을 꺼내 각각 tar.gz 로 묶고, Dockerfile 의 ADD 명령으로 빌드 시 Alpine&#43;nginx 컨테이너에 자동 압축 해제합니다. 마지막으로 이미지를 빌드하고 컨테이너를 띄워 도메인으로 두 게임에 접속하며, ADD 와 COPY 의 핵심 차이 (ADD 는 tar.gz 를 자동 해제) 도 정리합니다.</p>
+  </div>
+  <footer class="entry-footer">
+
+<time class="meta-date" datetime="2026-10-26">
+  2026年10月26日
+</time>
+<span class="meta-separator">·</span>
+<span class="meta-reading-time">
+  阅读需 4 分钟
+</span>
+</footer>
+  <a class="entry-link" aria-label="post link to Docker 실전: Dockerfile 로 멀티 게임 이미지 빌드와 ADD 자동 압축 해제" href="https://LMDAWN1127.github.io/ko/posts/docker-dockerfile-multi-game-image-add/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
       <a href="https://LMDAWN1127.github.io/ko/posts/docker-bind-mount-volume/">Docker 실전: 컨테이너 데이터 영속화 - bind 마운트와 볼륨(Volume)</a>
     </h2>
   </header>
@@ -237,28 +259,6 @@
 </span>
 </footer>
   <a class="entry-link" aria-label="post link to Docker 실전: inspect로 컨테이너 PID・ID・네트워크 정보 확인" href="https://LMDAWN1127.github.io/ko/posts/docker-inspect-pid-id-network/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-      <a href="https://LMDAWN1127.github.io/ko/posts/docker-nginx-load-balancing/">Docker 실전: Nginx 로드 밸런싱과 컨테이너 트래픽 분산</a>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>lb 컨테이너와 web 컨테이너 2개를 띄우고, lb 의 Nginx default.conf 를 수정해 web01/web02 로 리버스 프록시한 뒤 lb 에 10 회 curl 하여 트래픽이 두 백엔드 사이에서 번갈아 분산되는 것을 확인합니다.</p>
-  </div>
-  <footer class="entry-footer">
-
-<time class="meta-date" datetime="2026-10-26">
-  2026年10月26日
-</time>
-<span class="meta-separator">·</span>
-<span class="meta-reading-time">
-  阅读需 3 分钟
-</span>
-</footer>
-  <a class="entry-link" aria-label="post link to Docker 실전: Nginx 로드 밸런싱과 컨테이너 트래픽 분산" href="https://LMDAWN1127.github.io/ko/posts/docker-nginx-load-balancing/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">
