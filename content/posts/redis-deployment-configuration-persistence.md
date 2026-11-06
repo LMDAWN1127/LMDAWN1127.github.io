@@ -110,10 +110,10 @@ tcp6       0      0 :::6379                 :::*                    LISTEN      
 
 # 连接客户端进行基础读写存取
 [root@master redis]# redis-cli
-127.0.0.1:6379> set a oldboy
+127.0.0.1:6379> set a dawn
 OK
 127.0.0.1:6379> get a
-"oldboy"
+"dawn"
 127.0.0.1:6379> quit
 
 # 干净关闭当前前台测试服务

@@ -110,10 +110,10 @@ tcp6       0      0 :::6379                 :::*                    LISTEN      
 
 # Connect client for basic read/write verification
 [root@master redis]# redis-cli
-127.0.0.1:6379> set a oldboy
+127.0.0.1:6379> set a dawn
 OK
 127.0.0.1:6379> get a
-"oldboy"
+"dawn"
 127.0.0.1:6379> quit
 
 # Cleanly stop current foreground test service

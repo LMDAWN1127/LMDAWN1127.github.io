@@ -110,10 +110,10 @@ tcp6       0      0 :::6379                 :::*                    LISTEN      
 
 # 클라이언트 접속 및 기본 읽기/쓰기 테스트
 [root@master redis]# redis-cli
-127.0.0.1:6379> set a oldboy
+127.0.0.1:6379> set a dawn
 OK
 127.0.0.1:6379> get a
-"oldboy"
+"dawn"
 127.0.0.1:6379> quit
 
 # 현재 포그라운드 테스트 서비스 정상 종료
